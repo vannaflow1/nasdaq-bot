@@ -124,7 +124,7 @@
   "  TODAY: NFLX earnings after close"
  ],
  "nerd": [
-  "LIVE options read - Tue 20 Oct 23:50 Lux (17:50 NY), quotes ~15 min delayed, QQQ 718.81",
+  "LIVE options read - Wed 21 Oct 00:18 Lux (18:18 NY), quotes ~15 min delayed, QQQ 718.81",
   "",
   "VOLATILITY: 30-day IV 21.3% -> higher than 72% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -133,10 +133,10 @@
   "TERM STRUCTURE - what each expiry prices (QQQ move to expiry):",
   "  Wed 21 Oct (1d): \u00b10.99% (~298 NQ pts), ATM IV 23.7%",
   "  Thu 22 Oct (2d): \u00b11.43% (~428 NQ pts), ATM IV 24.1%",
-  "  Fri 23 Oct (3d): \u00b11.74% (~520 NQ pts), ATM IV 23.9%",
-  "  Mon 26 Oct (6d): \u00b12.06% (~616 NQ pts), ATM IV 20.1%",
-  "  Tue 27 Oct (7d): \u00b12.28% (~683 NQ pts), ATM IV 20.6%",
-  "  Wed 28 Oct (8d): \u00b12.62% (~786 NQ pts), ATM IV 22.2%",
+  "  Fri 23 Oct (3d): \u00b11.74% (~521 NQ pts), ATM IV 23.9%",
+  "  Mon 26 Oct (6d): \u00b12.06% (~617 NQ pts), ATM IV 20.1%",
+  "  Tue 27 Oct (7d): \u00b12.28% (~684 NQ pts), ATM IV 20.6%",
+  "  Wed 28 Oct (8d): \u00b12.62% (~787 NQ pts), ATM IV 22.2%",
   "  normal upward slope (front 20.1% < month 21.9%): calm near term",
   "",
   "SKEW (~30d): 25-delta puts +5.8 vol pts vs calls; wings +0.2 pts vs ATM",
