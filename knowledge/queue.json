@@ -249,5 +249,41 @@
   "score": 99,
   "queued": "2026-10-20",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W2033772453",
+  "title": "Risk Taking by Mutual Funds as a Response to Incentives",
+  "abstract": "This paper examines a potential agency conflict between mutual fund investors and mutual fund companies. Investors would like the fund company to use its judgment to maximize risk\u2010adjusted fund returns. A fund company, however, in its desire to maximize its value as a concern, has an incentive to take actions that increase the inflow of investments. We use a semiparametric model to estimate the shape of the flow\u2010performance relationship for a sample of growth and growth and income funds observed over the 1982\u201392 period. The shape of the flow\u2010performance relationship creates incentives for fund managers to increase or decrease the riskiness of the fund that are dependent on the fund's year\u2010to\u2010date return. We examine portfolio holdings of mutual funds in September and December and show that mutual funds do alter the riskiness of their portfolios at the end of the year in a manner consistent with these incentives.",
+  "url": "https://doi.org/10.1086/516389",
+  "source": "Must-read (curated)",
+  "date": "1997-12-01",
+  "curated": true,
+  "score": 99,
+  "queued": "2026-10-20",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W3125339824",
+  "title": "The cross-section of speculator skill: Evidence from day trading",
+  "abstract": "(No abstract available from the open index - this is a well-known paper; use reliable knowledge of it and say so.)",
+  "url": "https://escholarship.org/content/qt7k75v0qx/qt7k75v0qx.pdf",
+  "source": "Must-read (curated)",
+  "date": "2013-07-02",
+  "curated": true,
+  "score": 99,
+  "queued": "2026-10-20",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W3124880542",
+  "title": "Savings by and for the Poor: A Research Review and Agenda",
+  "abstract": "The poor can and do save, but often use formal or informal instruments that have high risk, high cost, and limited functionality. This could lead to undersaving compared to a world without market or behavioral frictions. Undersaving can have important welfare consequences: variable consumption, low resilience to shocks, and foregone profitable investments. We lay out five sets of constraints that may hinder the adoption and effective usage of savings products and services by the poor: transaction costs, lack of trust and regulatory barriers, information and knowledge gaps, social constraints, and behavioral biases. We discuss each in theory, and then summarize related empirical evidence, with a focus on recent field experiments. We then put forward key open areas for research and practice.",
+  "track": "prop",
+  "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/roiw.12101",
+  "source": "OpenAlex (prop mission)",
+  "topic": "prop: optimal betting drawdown constraint",
+  "score": 5,
+  "queued": "2026-10-20",
+  "text_failed": true
  }
 ]
