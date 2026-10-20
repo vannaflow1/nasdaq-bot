@@ -1,0 +1,27 @@
+name: prop-search
+on:
+  schedule:
+    - cron: "17 1 * * *"      # every night, ~2.5 hours of systematic prop-strategy search
+  workflow_dispatch:
+    inputs:
+      minutes: { description: "search minutes", required: false, default: "150" }
+permissions:
+  contents: write
+concurrency:
+  group: prop-search
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 210
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt scipy
+      - run: python prop_search.py
+        env:
+          SEARCH_MINUTES: ${{ github.event.inputs.minutes || '150' }}
+          PYTHONUNBUFFERED: "1"
+      - if: always()
+        run: bash .github/actions_common.sh "prop search"

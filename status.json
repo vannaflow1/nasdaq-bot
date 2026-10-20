@@ -244,5 +244,17 @@
   "pw_takes_pdl": 0.8772,
   "pw_gap_fill": 0.681,
   "pw_tail_day": 0.1217
- }
+ },
+ "prop_search": [
+  "PROP STRATEGY SEARCH - night 1: 21 new strategies tonight, 21 tested in total (grid 144,060 + mutations)",
+  "Stage A (2014-21, EV after fee > 0): 7 | Stage B (still positive on unseen 2022-23): 2 | exams taken: 2",
+  "",
+  "LEADERBOARD (ranked by EV per eval on unseen 2022-23):",
+  "- short at 08:31, not Monday | lucid_pro_50k risk 30%/50% | 2014-21 EV +13 (pass 28%) | 2022-23 EV +73 (pass 22%) | 1565 trades, -0.04R",
+  "- with overnight at 08:31, high dealer gamma | lucid_pro_50k risk 30%/50% | 2014-21 EV +282 (pass 20%) | 2022-23 EV +10 (pass 8%) | 505 trades, -0.12R",
+  "",
+  "EXAM: short at 08:31, not Monday -> NOT CONFIRMED on my data: in-sample 2014-2023: 1972 trades, win 50%, avg -0.03R (+0.4 pts/trade after costs), PF 1.03, positive in 2/10 years, max drawdown -78.2R | PROP SIM best plan lucid_pro_50k: pass 27%, $118 paid out per eval, EV after the $104 fee +14 (",
+  "",
+  "EXAM: with overnight at 08:31, high dealer gamma -> NOT CONFIRMED on my data: in-sample 2014-2023: 681 trades, win 36%, avg -0.14R (-1.4 pts/trade after costs), PF 0.78, positive in 3/10 years, max drawdown -103.9R | PROP SIM best plan lucid_pro_50k: pass 18%, $324 paid out per eval, EV after the $104 fee +220 "
+ ]
 }
