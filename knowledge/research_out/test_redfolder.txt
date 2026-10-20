@@ -1,0 +1,2 @@
+86 events this week; high USD: []
+TODAY: {"k_red_any": 0.0, "k_red_count": 0.0, "k_red_premarket": 0.0, "k_red_session": 0.0, "k_fomc_day": 0.0, "red_events": []}
