@@ -1,0 +1,26 @@
+{
+ "date": "2026-10-20",
+ "pool_size": 5,
+ "pick_years": [
+  2020,
+  2021,
+  2022
+ ],
+ "test_years": [
+  2023,
+  2024,
+  2025
+ ],
+ "chosen": [
+  "log(impl) * rank(iv30, 252)",
+  "next_opex"
+ ],
+ "gain_pick": 1.76,
+ "gain_test": [
+  -0.73,
+  -0.63,
+  -0.02
+ ],
+ "avg_test": -0.46,
+ "verdict": "NOT CONFIRMED - the combination does not hold on unseen years"
+}
