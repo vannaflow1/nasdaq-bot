@@ -1,5 +1,94 @@
 [
 {
+"title": "China credit impulse as a 6-12 month lead for the Nasdaq",
+"learned": "Credit impulse = change in China's 12-month credit flow vs a year earlier, as % of credit. Claimed to lead risk assets by 6-12 months.",
+"concepts": [
+"credit impulse",
+"China",
+"macro regime"
+],
+"relevance": 3,
+"verdict": "TESTED 2000-2024: corr with the next 6m NDX +0.15, next 12m +0.20 (positive in 2000-09, 2010-17, 2018-26), but only ~25-50 independent periods -> not significant. A 'long while the impulse rises' rule did WORSE than buy-and-hold. BIS data ends 2024-12; monthly TSF data would be needed live.",
+"url": "https://en.macromicro.me/charts/35559/china-credit-impulse-index",
+"date": "2026-10-20"
+},
+{
+"title": "MS GJR-GARCH + neural network for S&P 500 volatility (VIX as target)",
+"learned": "Markov-switching GJR-GARCH volatility fed to a backprop neural net improved S&P 500 volatility forecasts, especially in crises.",
+"concepts": [
+"MS-GJR-GARCH",
+"BPNN",
+"VIX"
+],
+"relevance": 3,
+"verdict": "TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding them to the brain changes nothing (-0.2% to -0.7%, 2019-2025). My brain already uses implied vol, which beats GARCH. A neural blend already exists in my live tracker (+3%).",
+"url": "",
+"date": "2026-10-20"
+},
+{
+"title": "GJR-GARCH / EGARCH analytic option pricing (Duan, Gauthier, Simonato, Sasseville)",
+"learned": "Black-Scholes plus skewness/kurtosis adjustment terms approximates GJR-GARCH and EGARCH option prices well, especially short maturities.",
+"concepts": [
+"GARCH option pricing",
+"skewness",
+"kurtosis"
+],
+"relevance": 3,
+"verdict": "TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding them to the brain changes nothing (-0.2% to -0.7%, 2019-2025). My brain already uses implied vol, which beats GARCH. A neural blend already exists in my live tracker (+3%).",
+"url": "",
+"date": "2026-10-20"
+},
+{
+"title": "Volatility Forecasting using GARCH Processes with Exogenous Variables (thesis)",
+"learned": "Advanced GARCH variants did not beat simple ones on average; training length mattered; exogenous variables helped for big US/EU indices like S&P 500 and Russell 2000.",
+"concepts": [
+"GARCH-X",
+"exogenous variables"
+],
+"relevance": 3,
+"verdict": "TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding them to the brain changes nothing (-0.2% to -0.7%, 2019-2025). My brain already uses implied vol, which beats GARCH. A neural blend already exists in my live tracker (+3%).",
+"url": "",
+"date": "2026-10-20"
+},
+{
+"title": "Hybrid LSTM-GARCH Framework for Financial Market Volatility Risk Prediction (Nasdaq 100)",
+"learned": "GARCH parameters fed into an LSTM beat standalone LSTM and GARCH variants on Nasdaq-100 volatility (MSE/RMSE).",
+"concepts": [
+"LSTM-GARCH",
+"Nasdaq 100"
+],
+"relevance": 3,
+"verdict": "TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding them to the brain changes nothing (-0.2% to -0.7%, 2019-2025). My brain already uses implied vol, which beats GARCH. A neural blend already exists in my live tracker (+3%).",
+"url": "",
+"date": "2026-10-20"
+},
+{
+"title": "Should you use GARCH models for forecasting volatility? A comparison to GRU neural networks",
+"learned": "Walk-forward comparison of GARCH, Markov-switching GARCH, HMM and GRU: GRU forecast volatility best, HMM identified regimes best.",
+"concepts": [
+"GRU",
+"regime switching",
+"walk-forward"
+],
+"relevance": 3,
+"verdict": "TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding them to the brain changes nothing (-0.2% to -0.7%, 2019-2025). My brain already uses implied vol, which beats GARCH. A neural blend already exists in my live tracker (+3%).",
+"url": "",
+"date": "2026-10-20"
+},
+{
+"title": "Unified GARCH-Recurrent Neural Networks in Financial Volatility Forecasting (Wei, Yang, Cui 2025)",
+"learned": "GARCH(1,1) update embedded inside GRU/LSTM gates; out-of-sample on US indices the GARCH-GRU beat plain GARCH, pipeline hybrids and a Transformer.",
+"concepts": [
+"GARCH-GRU",
+"hybrid volatility model",
+"out-of-sample R2"
+],
+"relevance": 3,
+"verdict": "TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding them to the brain changes nothing (-0.2% to -0.7%, 2019-2025). My brain already uses implied vol, which beats GARCH. A neural blend already exists in my live tracker (+3%).",
+"url": "",
+"date": "2026-10-20"
+},
+{
 "title": "Chronology-Constrained Residual Option Pricing with Local Strike-Shape Diagnostics across BTC and ETH Windows",
 "learned": "The paper compares several option pricing models, including a chronology\u2011constrained residual network (CCRP), against Black\u2011Scholes, SVI and simple benchmarks on 24\u2011hour BTC and ETH option windows, and finds no consistent winner and mixed arbitrage\u2011consistency results.",
 "concepts": [
