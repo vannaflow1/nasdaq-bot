@@ -8,18 +8,24 @@ import numpy as np, pandas as pd
 os.makedirs("knowledge/research_out", exist_ok=True)
 UA = {"User-Agent": "Mozilla/5.0"}
 def fred(sid):
-    raw = urllib.request.urlopen(urllib.request.Request(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}", headers=UA), timeout=60).read().decode()
+    raw = urllib.request.urlopen(urllib.request.Request(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}", headers=UA), timeout=120).read().decode()
     d = pd.read_csv(io.StringIO(raw)); d.columns = ["date", "v"]; d["date"] = pd.to_datetime(d.date)
     return d.set_index("date").v.replace(".", np.nan).astype(float).dropna()
 out = []
-cands = ["CRDQCNAPABIS", "QCNPAM770A", "QCNN628BIS"]
-credit = None
-for sid in cands:
+def dbnomics(code):
+    u = f"https://api.db.nomics.world/v22/series/{code}?observations=1&format=json"
+    j = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120).read())
+    d = j["series"]["docs"][0]
+    return pd.Series(pd.to_numeric(pd.Series(d["value"]), errors="coerce").values, index=pd.PeriodIndex(d["period"], freq="Q").to_timestamp(how="end").normalize()).dropna()
+credit = None; used = None
+for name, fn in (("DBnomics BIS/WS_TC/Q.CN.P.A.M.XDC.A (credit to private non-fin. sector, CNY)", lambda: dbnomics("BIS/WS_TC/Q.CN.P.A.M.XDC.A")),
+                 ("DBnomics BIS/WS_TC/Q.CN.P.B.M.XDC.A (bank credit)", lambda: dbnomics("BIS/WS_TC/Q.CN.P.B.M.XDC.A")),
+                 ("FRED CRDQCNAPABIS", lambda: fred("CRDQCNAPABIS"))):
     try:
-        s = fred(sid); out.append(f"FRED {sid}: {len(s)} obs {s.index[0].date()} -> {s.index[-1].date()}, last {s.iloc[-1]:.1f}")
-        if credit is None and len(s) > 60: credit = s; used = sid
+        s = fn(); out.append(f"{name}: {len(s)} obs {s.index[0].date()} -> {s.index[-1].date()}, last {s.iloc[-1]:,.0f}")
+        if credit is None and len(s) > 60: credit = s; used = name
     except Exception as e:
-        out.append(f"FRED {sid}: failed {type(e).__name__}")
+        out.append(f"{name}: failed {type(e).__name__} {str(e)[:80]}")
 u = "https://query1.finance.yahoo.com/v8/finance/chart/%5ENDX?interval=1mo&period1=631152000&period2=1800000000"
 r = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=60).read())["chart"]["result"][0]
 ndx = pd.Series(r["indicators"]["quote"][0]["close"], index=pd.to_datetime(r["timestamp"], unit="s")).dropna()

@@ -33,13 +33,16 @@ LOG, EXAMS = os.path.join(K, "strategies.jsonl"), os.path.join(K, "strategy_exam
 STATIC = ["open", "yday_high", "yday_low", "yday_close", "yday_mid", "asia_high", "asia_low", "london_high", "london_low",
           "on_high", "on_low", "midnight_open", "or15_high", "or15_low"]
 DYNAMIC = ["vwap", "vwap_up1", "vwap_dn1", "vwap_up2", "vwap_dn2"]
-STATIC += ["pivot", "r1", "s1", "r2", "s2", "exp50_up", "exp50_dn", "exp70_up", "exp70_dn", "exp90_up", "exp90_dn"]
+STATIC += ["pivot", "r1", "s1", "r2", "s2", "exp50_up", "exp50_dn", "exp70_up", "exp70_dn", "exp90_up", "exp90_dn",
+           "atr10_up", "atr10_dn", "atr15_up", "atr15_dn", "atr20_up", "atr20_dn", "atr25_up", "atr25_dn", "atr30_up", "atr30_dn",
+           "ewma1_up", "ewma1_dn", "ewma2_up", "ewma2_dn"]
 LEVELS = STATIC + DYNAMIC
 LEVEL_HELP = ("open (NY open 08:30 CT), yday_high/yday_low/yday_close/yday_mid (yesterday's NY session), asia_high/asia_low "
               "(18:00-02:00 CT), london_high/london_low (02:00-07:00 CT), on_high/on_low (whole overnight), midnight_open "
               "(00:00 New York), or15_high/or15_low (first 15 minutes, usable from 08:45), pivot/r1/s1/r2/s2 (classic floor "
               "pivots from yesterday), exp50_up/exp50_dn/exp70_up/exp70_dn/exp90_up/exp90_dn (open +- 50/70/90% of Volta's expected "
-              "day range: exhaustion levels), vwap and its 1/2 standard-deviation "
+              "day range: exhaustion levels), atr10/atr15/atr20/atr25/atr30 _up/_dn (open +- 1-3x the 14-day ATR), "
+              "ewma1/ewma2 _up/_dn (yesterday's close +- 1/2 EWMA-0.94 daily sigmas), vwap and its 1/2 standard-deviation "
               "bands vwap_up1/vwap_dn1/vwap_up2/vwap_dn2 (anchored at midnight New York)")
 
 
@@ -56,6 +59,15 @@ def data():
         _DATA.update({k: z[k].astype(np.float64) for k in ("O", "H", "L", "C", "V")})
         M = pd.read_csv(os.path.join(K, "strat_sessions.csv"))
         M["yday_mid"] = (M.yday_high + M.yday_low) / 2
+        # ATR (14 sessions, NY range, past only) and EWMA volatility (lambda 0.94, close-to-close, past only)
+        C = _DATA["C"][:, -1]; rng_ = _DATA["H"].max(1) - _DATA["L"].min(1)
+        M["atr14"] = pd.Series(rng_).shift(1).rolling(14, min_periods=5).mean().values
+        r = pd.Series(np.log(C)).diff()
+        var = np.full(len(r), np.nan); v = np.nanvar(r.values[1:60]) if len(r) > 60 else 1e-4
+        for j in range(1, len(r)):
+            var[j] = v                                          # variance known BEFORE session j
+            if np.isfinite(r.iloc[j]): v = 0.94 * v + 0.06 * r.iloc[j] ** 2
+        M["ewma_sd"] = np.sqrt(var)
         _DATA["M"] = M
     return _DATA
 
@@ -89,6 +101,12 @@ def level_path(D, i, name):
         P = (yh + yl + yc) / 3
         v = {"pivot": P, "r1": 2 * P - yl, "s1": 2 * P - yh, "r2": P + (yh - yl), "s2": P - (yh - yl)}[name]
         return np.full(390, v)
+    if name.startswith("atr"):                                            # open +- 1/1.5/2/2.5/3 x the 14-session ATR
+        k = int(name[3:5]) / 10; a = float(M.get("atr14", np.nan))
+        return np.full(390, D["O"][i][0] + (k if name.endswith("up") else -k) * a)
+    if name.startswith("ewma"):                                           # yesterday's close +- 1/2 EWMA(0.94) daily sigmas
+        k = int(name[4]); c = float(M.get("yday_close", np.nan)); sd = float(M.get("ewma_sd", np.nan))
+        return np.full(390, c * (1 + (k if name.endswith("up") else -k) * sd))
     if name.startswith("exp"):                                            # exhaustion levels: open +- 50/70/90% of the brain's expected range
         k = int(name[3:5]) / 100; R = float(M.get("fc_frac", np.nan)) * D["O"][i][0]
         return np.full(390, D["O"][i][0] + (k if name.endswith("up") else -k) * R)

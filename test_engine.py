@@ -79,7 +79,7 @@ COLS_HELP = {"r1": "today's QQQ return", "r20": "20-day QQQ return", "iv30": "30
              "k_open_vs_asia": "open position vs Asia range (0=low,1=high)", "k_open_vs_london": "open vs London range",
              "k_london_took_asia_high": "1 if London took the Asia high", "k_london_took_asia_low": "1 if London took the Asia low",
              "k_open_vs_yday": "open position vs yesterday's NY range", "k_yday_range": "yesterday's NY range (%)",
-             "k_range20": "20-day avg NY range (%)", "k_dow": "weekday 0=Mon",
+             "k_range20": "20-day avg NY range (%)", "k_dow": "weekday 0=Mon", "k_hurst": "Hurst exponent of the last 100 daily NY returns (< 0.5 mean-reverting, > 0.5 trending)",
              "y_range": "OUTCOME NY range (%)", "y_return": "OUTCOME open-to-close return (%)", "y_close_loc": "OUTCOME close position in the day's range 0-1",
              "y_body": "OUTCOME |close-open| / range", "y_up_from_open": "OUTCOME high minus open (%)", "y_down_from_open": "OUTCOME open minus low (%)",
              "y_high_minute": "OUTCOME minutes after the open when the high was set", "y_low_minute": "OUTCOME minutes after the open of the low",
