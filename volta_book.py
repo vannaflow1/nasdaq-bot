@@ -52,7 +52,8 @@ def todays_trades(a, today):
             key = f"strat:{today}:{r.id}"
             if key in a["booked"]: continue
             stop = abs(float(r.pnl_pts) / float(r.R)) if float(r.R) else None
-            out.append({"key": key, "edge": f"strategy: {r['name']}", "side": "LONG" if r.side > 0 else "SHORT",
+            mk = str(r.get("market", "NQ")) if "market" in r and isinstance(r.get("market"), str) else "NQ"
+            out.append({"key": key, "edge": f"strategy: {r['name']}", "side": "LONG" if r.side > 0 else "SHORT", "market": mk,
                         "pts": float(r.pnl_pts), "R": float(r.R), "stop_pts": stop, "kind": "futures",
                         "why": "passed the locked 2024-26 exam, traded with the exact backtest rules"})
     # 2. short-vol iron fly on high-gamma days (settles at expiry)
@@ -70,14 +71,15 @@ def todays_trades(a, today):
 
 def book(a, t, day_pnl):
     if t["kind"] == "futures":
+        pv, micro = {"NQ": (2.0, "MNQ"), "GC": (10.0, "MGC"), "CL": (100.0, "MCL")}.get(t.get("market", "NQ"), (2.0, "MNQ"))
         if not t["stop_pts"]:
-            n = max(1, int(risk_budget(a) // (15 * MNQ)))
+            n = 1
         else:
-            n = int(risk_budget(a) // (t["stop_pts"] * MNQ))
+            n = int(risk_budget(a) // (t["stop_pts"] * pv))
         n = min(n, 20)
         if n == 0:
-            return None, "skipped: stop too wide for my risk budget (even 1 MNQ risks more than 10% of my buffer)"
-        usd = round(n * t["pts"] * MNQ, 2); size = f"{n} MNQ"
+            return None, f"skipped: stop too wide for my risk budget (even 1 {micro} risks more than 10% of my buffer)"
+        usd = round(n * t["pts"] * pv, 2); size = f"{n} {micro}"
     else:
         ml = max(t["maxloss_per_lot"], 1.0); buffer = a["balance"] - a["floor"]
         lots = int((0.01 * a["balance"]) // ml)                     # 1% of the account at risk (the tested sizing)

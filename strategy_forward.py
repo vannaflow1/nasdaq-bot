@@ -101,37 +101,53 @@ def today_known(meta, st):
     return memdate, row
 
 
+YSYM = {"NQ": "NQ%3DF", "GC": "GC%3DF", "CL": "CL%3DF"}
+
+
 def forward(cands, st):
+    """Trade every exam-passed strategy on today's real 1-minute bars of ITS market (NQ, gold or oil)."""
     import test_engine as T
     day = datetime.now(CT).date()
     if datetime.now(CT).hour < 15 or day.weekday() >= 5:
         print("session not finished yet"); return []
-    built = today_session(yahoo_bars(), day)
-    if not built: print("no full session today"); return []
-    meta, arrs = built
-    memdate, row = today_known(meta, st)
-    if row is None: return []
-    D = S.data(); Mx = D["M"]
-    meta["date"] = memdate
-    keep = (Mx.session != meta["session"]).values                       # keep table and bar arrays in lock-step
-    D["M"] = pd.concat([Mx[keep], pd.DataFrame([meta])], ignore_index=True)
-    for k in "OHLCV": D[k] = np.vstack([D[k][keep], arrs[k][None, :]])
-    i = len(D["M"]) - 1
-    _, X = T.frame()
-    X = pd.concat([X[X.index != pd.Timestamp(memdate)], pd.DataFrame([row], index=[pd.Timestamp(memdate)])]).sort_index()
-    out = []
-    for c in cands:
-        spec = c["spec"]
+    _, X0 = T.frame(); out = []; memdate = None
+    for mk in sorted({(c["spec"].get("market") or "NQ").upper() for c in cands}):
         try:
-            allow, side = S._filters(spec, X)
-            r = S.simulate_session(D, i, spec, side=side[i]) if allow[i] else None
+            built = today_session(yahoo_bars(YSYM[mk]), day)
         except Exception as e:
-            print("forward failed for", c["name"], e); continue
-        out.append({"date": meta["session"], "id": S.spec_id(spec), "name": c["name"], "traded": bool(r),
-                    "pnl_pts": round(r[0], 2) if r else 0.0, "R": round(r[1], 2) if r else 0.0, "side": int(r[2]) if r else 0})
+            print(mk, "bars failed:", e); continue
+        if not built: print(mk, "no full session today"); continue
+        meta, arrs = built
+        if mk == "NQ":
+            memdate, row = today_known(meta, st)
+            if row is None: continue
+        else:                                                   # gold/oil: own expected range from its last 20 sessions
+            Dm = S.data(mk); rr = (Dm["H"].max(1) - Dm["L"].min(1)) / Dm["O"][:, 0]
+            meta["fc_frac"] = float(np.nanmean(rr[-20:]))
+            nq_meta = today_session(yahoo_bars(YSYM["NQ"]), day)
+            memdate, row = today_known(nq_meta[0], st) if nq_meta else (None, None)
+            if row is None: continue
+        D = dict(S.data(mk)); Mx = D["M"]
+        meta["date"] = memdate
+        keep = (Mx.session != meta["session"]).values                   # keep table and bar arrays in lock-step
+        D["M"] = pd.concat([Mx[keep], pd.DataFrame([meta])], ignore_index=True); D["M"].attrs = Mx.attrs
+        for k in "OHLCV": D[k] = np.vstack([D[k][keep], arrs[k][None, :]])
+        i = len(D["M"]) - 1
+        X = pd.concat([X0[X0.index != pd.Timestamp(memdate)], pd.DataFrame([row], index=[pd.Timestamp(memdate)])]).sort_index()
+        S._MK[mk] = D if mk != "NQ" else S._MK.get(mk)                  # filters read the extended table
+        if mk == "NQ": S._DATA.update(D)
+        for c in [c for c in cands if (c["spec"].get("market") or "NQ").upper() == mk]:
+            spec = c["spec"]
+            try:
+                allow, side = S._filters(spec, X)
+                r = S.simulate_session(D, i, spec, side=side[i]) if allow[i] else None
+            except Exception as e:
+                print("forward failed for", c["name"], e); continue
+            out.append({"date": meta["session"], "market": mk, "id": S.spec_id(spec), "name": c["name"], "traded": bool(r),
+                        "pnl_pts": round(r[0], 4) if r else 0.0, "R": round(r[1], 2) if r else 0.0, "side": int(r[2]) if r else 0})
     if out:
         F = pd.read_csv(FWD) if os.path.exists(FWD) else pd.DataFrame()
-        F = pd.concat([F[~((F.get("date") == meta["session"]))] if len(F) else F, pd.DataFrame(out)], ignore_index=True)
+        F = pd.concat([F[~((F.get("date") == out[0]["date"]))] if len(F) else F, pd.DataFrame(out)], ignore_index=True)
         F.to_csv(FWD, index=False)
     return out
 
