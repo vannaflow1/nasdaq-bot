@@ -1,0 +1,768 @@
+UNIVERSITÀ DEGLI STUDI DI SIENA 
+
+QUADERNI DEL DIPARTIMENTO 
+DI ECONOMIA POLITICA E STATISTICA 
+
+Samuel Bowles 
+Sandra Polania-Reyes 
+
+Economic incentives and social preferences: 
+substitutes or complements? 
+
+n. 617 – Ottobre 2011 
+
+Abstract - Explicit economic incentives designed to increa se contributions to public goods and to promote 
+other pro-social behavior sometimes are counterproductiv e or less effective than would be predicted among 
+entirely self-interested individuals. This may occur wh en incentives adversely affect individuals’ altruism, 
+ethical norms, intrinsic motives to serve the public, a nd other social preferences. In the 50 experimental 
+studies that we survey these effects are common, so th at incentives and social pr eferences may be either 
+substitutes (crowding out) or complements. We provide evidence for four mechanisms that may account for 
+these incentive effects on preferences, based on the fact that incentives may (i) provide information about the 
+person who implemented the incentive, (ii) frame th e decision situation so as to suggest appropriate 
+behavior, (iii) compromise a control averse individual ’s sense of autonomy and (iv) affect the process by 
+which people learn new preferences. An implication of the fact that incentives aff ect preferences is that the 
+evaluation of public policy must be restricted to al locations that are supportable as Nash equilibria when 
+account is taken of these crowding effects. We show that well designed fines, subsidies and the like 
+minimize crowding out and may even do the oppos ite, making incentives and social preferences 
+complements rather than substitutes. 
+
+JEL codes : A13 (Relation of Economics to Social Values); C90 (Experiments); D02 (Institutions); D63 
+(Equity, Justice, Inequality, and Other Normative Cr iteria and Measurement); D64 (Altruism); H41 (Public 
+goods); D78 (Policy making and implementation); E61 (Policy Objectives; Policy Designs and Consistency); 
+Z13 (Social norms and social capital) 
+
+Keywords: Public goods, behavioral experiments, social preferences, endogenous preferences, 
+motivational crowding, explicit incentives 
+
+For their contributions to this paper we thank Mahzarin Banaji, Abigail Barr, Iris Bohnet, Stephen Burks, Juan Camilo 
+Cardenas, Jeff Carpenter, David Echeverry, Ernst Fehr, Urs Fischbacher, Christina Fong, Simon Gächter, Roberto 
+Galbiati, Joshua Greene, Sung-Ha Hwang, Jonathan Haidt, Daniel Houser, Steffen Huck, Bernd Irlenbusch, Magnus 
+Johannesson, Esther Kessler, Nicola Lacetera, Maria Claudi a Lopez, Thomas Schelling, Carlos Sickert-Rodriguez, 
+David Skuse, Joel Sobel, John Stranlund, Elisabeth Wood as well as three anonymous referees and the editor. Financial 
+support by the Behavioral Sciences Program of the Santa Fe Institute, the U.S. National Science Foundation, the 
+University of Siena and the European Science Foundation is gratefully acknowledged. 
+
+Samuel Bowles, Santa Fe’ Institute and University of Siena 
+Sandra Polania-Reyes, University of Siena and University College London 
+
+1. Introduction 
+Thomas Schelling recalls his “exciting and stimulating times” in the early 1950s as a 
+young staffer in the Executive Office of the President. “People worked long hours,” he 
+remembered in a recent communication to one of us, “and felt compensated by the sense of 
+accomplishment and ... personal importance. Regularly a Friday afternoon meeting at the 
+White House would go on until 8 or 9, when the chairman would suggest resuming Saturday 
+morning. Nobody demurred. We all knew it was important, and we were important. ... What 
+happened when the President issued an order that anyone who worked on Saturday was to 
+receive overtime pay…? Saturday meetings virtually disappeared.” 
+ Was Schelling’s experience atypical? Incentives wo rk, often affecting the targeted 
+behavior almost exactly as conventional economic theory predicts: textbook examples include 
+the work response of Tunisian sharecroppers and American windshield installers, and the 
+reduced criminal activities of former Italian convicts who could expect more severe sentences 
+if convicted (Laffont and Matoussi (1995), Lazear (2000), Drago, Galbiati, and Vertova 
+(2009). 
+But explicit economic incentives sometimes have surprisingly limited effects and may 
+even be counterproductive. Substantial rewards for high school matriculation in a randomized 
+experiment in Israel had no impact on boys and little effect on girls except among those 
+already quite likely to matriculate (Angrist and Lavy (2009)). Large and in most cases 
+immediate cash payment in return for tested scholastic achievement in 250 urban schools in 
+the U.S. were almost entirely ineffective, while incentives for student inputs (reading a book, 
+for example) had the intended, if modest effects (Fryer (2011)). In an unusual natural 
+experiment, the imposition of fines designed to reduce hospital stays in Norway had the 
+opposite effect (Holmås, Kjerstad, Lurås, et al. (2010)) while in England hospital stays were 
+greatly reduced by a policy designed to evoke shame and pride in hospital managers rather 
+than the calculus of profit and loss (Besley, Bevan, and Burchardi (2009)). 
+Anecdotal accounts of what appear to be even more dramatic cases of counterproductive 
+incentives are common. On December 1, 2001 the Boston Fire Department terminated its 
+policy of unlimited paid sick days, replacing it with a 15Wday sick day limit; pay would be 
+docked for firemen exceeding the limit. The firemen responded to the new incentives: those 
+calling in sick on Christmas and New Year’s Day increased tenfold over the previous year. 
+The Fire Commissioner retaliated by cancelling their holiday bonus checks (Belkin (2002)). 
+The firemen were unimpressed: the year following they claimed 13,431 sick days; up from 
+1
+
+6,432 the previous year (Greenberger (2003)). Many of the firemen, apparently angered by 
+the new system, abused it or abandoned their previous ethic of serving the public even when 
+injured or not feeling well. 
+Not surprisingly, then, since Richard Titmuss’ The Gift Relationship: From Blood 
+Donations to Social Policy, economists have been intrigued by the claim that policies based 
+on explicit economic incentives may be counterproductive when they induce people to adopt 
+what Titmuss called a ‘market mentality’ or in some other way compromise preWexisting 
+values to act in socially beneficial ways. But few were persuaded (Solow (1971), Arrow 
+(1972), Bliss (1972)). 
+At the time of its publication there were two strong reasons to doubt Titmuss’ claim: 
+there was little hard evidence that social preferences are important influences on individual 
+behavior; and there was even less evidence (in the Titmuss (1971) book or elsewhere) that 
+social preferences would be undermined by explicit economic incentives (which we will call 
+simply “incentives” without the adjectives, meaning interventions to influence behavior by 
+altering the economic costs or benefits of some targeted activity.) 
+Theoretical and empirical advances over the intervening years provide the basis for a 
+reconsideration of these issues (Kreps (1997), Elster (1998), Rabin (1998), Loewenstein 
+(2000), Sobel (2002)). First, evidence from both the behavioral experimental laboratory and 
+the field is consistent with the view that social preferences are important influences on 
+economic behavior (Fehr, Gächter, and Kirchsteiger (1997), Bewley (1999), Fehr and 
+Schmidt (1999), Fehr and Gächter (2000), Young and Burke (2001), Bandiera, Barankay, and 
+Rasul (2005), Falk, Fehr, and Fischbacher (2005), Fehr, Klein, and Schmidt (2007), 
+DellaVigna (2009), Leider, Möbius, Rosenblat, et al. (2009), Sloof and Sonnemans (2011)). 
+Second, the importance of incomplete contracts has been widely recognized in 
+theoretical works and studied empirically (Stiglitz (1987), Laffont and Matoussi (1995), 
+Tirole (1999)). Partly as a result, the terms trust, reciprocity, fairness, gift exchange and social 
+capital now appear in the modeling and empirical study of principalWagent relationships, the 
+provision of public goods, and other standard economic applications, often referring to the 
+social norms and identities that underwrite mutually beneficial exchange in the absence of 
+complete contracts (Arrow (1971), Becker (1976), Akerlof (1984), Helsley and Strange 
+(2000), Benabou and Tirole (2006), MacLeod (2007), Sliwka (2007), Ellingsen and 
+Johannesson (2008), Akerlof and Kranton (2010)). 
+Finally, advances in the theory of public policy have addressed cases in which 
+incentives affect both beliefs and preferences and may thus have unintended effects (Lucas 
+2
+
+(1976), Taylor (1987), Bowles (1989), Aaron (1994), Sunstein (1996), Frey (1997), Cooter 
+(2000), Bowles (2004), BarWGill and Fershtman (2005), Sobel (2005), Cervellati, Esteban, and 
+Kranich (2010)) 
+
+2. Overview: Incentives and social preferences as substitutes or complements 
+We use the term “social preferences” to refer to motives such as altruism, reciprocity, 
+intrinsic pleasure in helping others, inequity aversion, ethical commitments and other motives 
+that induce people to help others more than would an ownWmaterialWpayoff maximizing 
+individual. Our use of the term is thus not restricted to cases in which the actor assigns some 
+value to the payoffs received by another person, as in the utility functions of Fehr and 
+Schmidt (1999), Rabin (1993) and Levine (1998). While these functions provide a convenient 
+way to model some of the motivations for proWsocial behavior, we use the broader definition 
+because moral, intrinsic, or other reasons unrelated to a concern for another’s payoffs often 
+motivate people to help others, adhere to social norms, and act in other proWsocial ways even 
+when it is personally costly to do so. A person, for example, may adhere to a social norm not 
+because of the harm that a transgression would do to others, but because of the kind of person 
+she would like to be; helping the homeless may be motivated by Andreoni’s “warm glow” of 
+giving rather than a concern with the wellbeing of the poor (Andreoni (1990)). 
+The standard (if generally implicit) assumption in economics is that the behavioral 
+functions relevant for mechanism design, public economics and related fields are separable in 
+social preferences (should they exist) and incentives. This means, for example, that the 
+citizen’s response to variations in a subsidy for contributions to a public good is independent 
+of her preWexisting level of social preferences. It also means that the effect of variations in her 
+preWexisting nonWeconomic motivations on the citizen’s level of contributions does not depend 
+on the presence or magnitude of incentives. 
+We call this the separability assumption. It implies that taxes, subsidies, and other 
+incentives affect behavior only by altering the economic costs and benefits of the targeted 
+activities. But where the separability assumption does not hold, social preferences may be 
+either heightened by incentives appealing to selfWinterest or, the more commonly observed 
+case, affected adversely by incentives. 
+This is illustrated in Figure 1 where, due to the effect of incentives on preferences, the 
+total – direct and indirect WW effect of the incentive may fall short of that which works directly 
+on the costs and benefits of the targeted activity. In this case we say that incentives crowd out 
+social preferences and that incentives and social preferences are substitutes: the effect of each 
+3
+
+on the targeted activity declines, the greater is the level of the other. Where the effect on 
+social preferences is positive, crowding in occurs and social preferences and incentives are 
+complements, the level of each enhancing the effect of the other. 
+
+[Figure 1 here] 
+
+The possibility that incentives designed for material payoffWmaximizers might have 
+adverse effects is a familiar theme in political science (Taylor (1987), Grant (2011)), 
+psychology (Deci (1975)), sociology (Healy (2006)), and the other social sciences; but it has 
+found few adherents in economics. The reason is that we have adopted a simplifying strategy 
+that goes back at least to John Stuart Mill (1867[1848]): 97) 
+[Political economy] does not treat of the whole of man's nature... it is concerned with 
+him solely as a being who desires to possess wealth,… it predicts only such 
+...phenomena ...as take place in consequence of the pursuit of wealth. It makes entire 
+abstraction of every other human passion or motive. 
+
+In other words, we ignore the two lower arrows in Figure 1. But recent experimental and other 
+evidence has prompted many economists to reconsider Mill’s simplification. To further this 
+reconsideration we here provide a taxonomy of incentive effects on preferences based on two 
+distinctions: their nature and their causes. 
+Concerning the first, people often react to the mere presence of incentives rather than 
+their extent (Gneezy (2003)): giving to charity when tax breaks are involved (whatever their 
+magnitude) may feel different or send a different signal than would be the case in the absence 
+of these incentives. But the extent of the incentive may also matter. Thus the effects of 
+incentives on social preferences may be either marginal (depending continuously on the level 
+of the incentive) or categorical (the presence of incentives affecting social preferences 
+independently of their level) or a combination of the two. 
+We also distinguish between two causes of incentive effects on preferences. First, 
+behavior is acutely sensitive to the nature of the decision situation (Ross and Nisbett (1991), 
+Tversky and Kahneman (1981)); and, as we will see, the presence or extent of incentives 
+provides information about the situation. A psychologist might say that preferences are 
+“situationWdependent” and that incentives provide situational clues. We say that the 
+preferences are stateWdependent, with differing incentives constituting different states. In the 
+next section we offer a model of incentiveWstateWdependent preferences and provide data 
+indicating that both categorical and marginal crowding out occurs. 
+4
+
+State dependence arises because actions are motivated by a heterogeneous 
+repertoire of preferences –from spiteful to payoffWmaximizing to generous, for 
+example WW the salience of which depends on the nature of the decision situation – 
+interacting with a domineering supervisor, shopping, or relating to one’s neighbors, 
+for example. To see how this works, think about gifts. Economists know that money is 
+the perfect gift – it replaces the giver’s less wellWinformed choice of a present by the 
+recipient’s own choice. But when the holidays come around few economists give 
+money to their friends, family and colleagues. This is because we also know that 
+money cannot convey thoughtfulness, concern, whimsy, or any of the other messages 
+that nonWmonetary gifts sometimes express. A gift, we know, is more than a transfer of 
+resources; it is a signal about the giver and her relationship to the recipient, and money 
+changes the signal. 
+Can the same be said of incentives? A long tradition in psychology has 
+concluded that it can: 
+The multiple meanings of ... tangible rewards are reflected in our everyday 
+distinction among bribes and bonuses, incentives and salaries. … they carry 
+different connotations concerning, for example, (i) the likely conditions under 
+which the reward was offered, (ii) the presumed motives of the person 
+administering the reward, and (iii) the relationship between the agent and the 
+recipient of the reward (Lepper, Sagotsky, Dafoe, et al. (1982) numbers added). 
+
+As Mark Lepper and his coauthors say, incentives may affect preferences for a reason familiar 
+to economists, that is because they indicate “the presumed motives of the person 
+administering the reward.” By implementing an incentive, a principal reveals information 
+about his or her intentions (own payoff maximizing vs. fairWminded, for example) as well as 
+beliefs about the target of the incentives (hardworking or not) and the targeted behavior (how 
+onerous it is, for example.) This information, in turn, may then affect the target’s nonW
+economic motivation to undertake the task at hand. In section 5 we present experimental 
+evidence that the information provided about the principal can sometimes attenuate or even 
+reverse the intended effect of the incentive. Of course when an incentive provides good news 
+about the principal’s intentions or type—when rewards are offered, for example, rather than 
+fines– it may recruit the target’s social preferences to work synergistically with the direct 
+effect of the incentive on the net material benefits to the agent of taking the targeted action. In 
+this case incentives and social preferences become complements rather than substitutes. We 
+will see (in section 9 and 11) that this crowding in phenomenon is sometimes observed in 
+5
+
+experiments, for example, when the principals implementing incentives are peers in a public 
+goods game who pay to fine free riders in order to support cooperative norms. 
+ But there are other reasons, less familiar to economists, for stateWdependence: reasons 
+that do not concern information about the principal, and that may be at work even in nonW
+strategic settings. A second mechanism is that incentives provide cues about (as Lepper and 
+his coauthors put it) “the likely conditions under which the reward was offered:” by framing a 
+decision situation, economic incentives may provide cues for appropriate behavior. This 
+second mechanism is distinguished from the first in the experimental evidence by the fact that 
+in the former the incentives are implemented by a principal who is a player in the game; while 
+in the latter the targets of the incentive are not playing against the incentive designer; rather 
+the incentives are introduced by the experimenter. 
+Situational cues may be very subtle, and our responses to them unwitting. When 
+experimental subjects had the opportunity to cheat on a test and as a result to gain higher 
+monetary rewards, less than quarter did so when the room was brightly lit, but more than half 
+cheated when the room was slightly less well lit (the variations in lighting had no effect on the 
+observability of cheating.) In another experiment subjects who wore (nonprescription) dark 
+glasses were much less generous to their partner in a Dictator Game than were those outfitted 
+with clear glasses (Zhong, Gino, and Bohns (2010)). The dark glasses and darkened room 
+gave the subjects a sense of anonymity, the researchers found. But it was entirely illusory: it is 
+difficult to imagine that a subject could really think that his own wearing dark glasses would 
+make him less observable, especially given that the experiment was conducted at computer 
+terminals in closed cubicles. 
+The degree of anonymity differs dramatically as we move between family, workplace, 
+marketplace and other domains of social interaction. Fiske (1992) provides a taxonomy of 
+four psychological models corresponding to distinct kinds of social relationships: 
+authoritarian, communal, egalitarian and market, each with culturally prescribed patterns of 
+appropriate behavior. Depending on the information they convey, incentives may signal that 
+the situation corresponds to any one of these four types, and therefore evoke distinctive 
+responses. 
+We will see that a plausible explanation of some of the framing effects of incentives 
+observed in experiments is that it occurs because marketWlike incentives trigger what 
+psychologists term “moral disengagement” (Bandura (1991), a process that occurs because 
+“people can switch their ethicality on and off” (Shu, Gino, and Bazerman (2009):31). In 
+section 6 we review experiments in which crowding out appears to have been the result of 
+6
+
+moral disengagement. Depending on the information they convey, incentives may also trigger 
+the opposite – moral engagement – and, as we will see in section 9, experiments provide a few 
+examples of this form of crowding in, illustrating the possible synergy or complementarity 
+between social preferences and incentives. 
+The third mechanism that makes social preferences state dependent is the crowding out 
+of intrinsic motives by incentives (or constraints) that compromise a subject’s sense of 
+autonomy (Deci and Ryan (1985), Deci, Koestner, and Ryan (1999)). These effects may occur 
+in strategic situations where the bad news that incentives convey concerns the desire of a 
+principal to control the agent. But most of the experimental evidence for this third crowding 
+out mechanism comes from nonWstrategic settings (the experimenters, not a principal 
+implements the incentive.) The underlying psychological mechanism appears to be a 
+fundamental desire for “feelings of competence and selfWdetermination” that are associated 
+with intrinsically motivated behavior (Deci (1975)). 
+According to this interpretation, where people derive pleasure from an action per se in 
+the absence of other rewards, the introduction of incentives may 'overWjustify' the activity and 
+reduce the individual's sense of autonomy. This selfWdetermination mechanism differs from 
+the previous two mechanisms WW bad news about a principal and moral disengagement– 
+because it arises from the target’s desire for autonomy and does not depend on the target 
+inferring negative information about a principal or clues about appropriate behavior. This is 
+particularly evident in some early “overWjustification” experiments in which when a financial 
+reward was offered by the experimenter, children often forsook previously uncompensated 
+activities in which they had enthusiastically engaged, like painting. More recent experiments 
+show the same negative effects of incentives on altruistic behavior (Warneken and Tomasello 
+(2008)). In the absence of rewards kids less than two years old avidly helped an adult retrieve 
+an out of reach object; but after being rewarded with a toy for their helping behavior the 
+helping rate fell by forty percent. 
+The fact that the incentive was a reward rather than a penalty suggests that it did not 
+convey negative information about the incentive designer, but instead altered the meaning of 
+the activity itself from one that expressed autonomy to one that expressed compliance. The 
+interpretation that selfWdetermination is involved in the negative response to incentives is 
+consistent with the fact that close supervision or arbitrary temporal deadlines for completion 
+of an otherwise enjoyable activity have effects very similar to financial rewards (Lepper, et al. 
+(1982)). In section 7 we survey experimental evidence for this “control aversion” mechanism 
+for state dependent preferences. 
+7
+
+We have just described three (partially overlapping) reasons why the state dependent 
+nature of preferences might lead to crowding out. For ease of reference we will call them “bad 
+news,” “moral disengagement,” and “control aversion.” But in addition to incentives altering 
+the preferences that motivate an individual’s action by altering the subject’s sense of the 
+situation, there is a second and quite different way that incentives may affect preferences. The 
+type and extent of a society’s use of economic incentives also may affect the process of 
+preferenceWupdating by which individuals acquire new tastes or social norms that will persist 
+over long periods. Models from biology, anthropology, and economics allow us to formalize 
+this learning process (CavalliWSforza and Feldman (1981), Boyd and Richerson (1985), Guth 
+and Kliemt (1994), Bowles (1998), Bisin and Verdier (2011), Bowles and Gintis (2011)). 
+The key difference between endogenous and stateWdependent preferences is that in the 
+former case the effect of the incentive on preferences persists in the long run because the 
+updating process on which cultural transmission is based typically occurs during youth and its 
+effect endures over decades if not entire lifetimes. We say that incentives affect preferences in 
+both the stateWdependent and endogenous preference case, but the mechanism of the effect is 
+different: in the former case the incentive is a reversible signal about the principal or the 
+situation, in the latter the incentive alters the preferenceWupdating process. 
+An example unrelated to incentives may clarify the difference between endogenous and 
+stateWdependent preferences. As Italian residents, your authors now eat a lot more pasta than 
+we did in our countries of origin. Abstracting from possible international price differences, 
+this could be another case of “when in Rome, do as the Romans.” Or it might be that we have 
+newly come to enjoy the taste of pasta, perhaps through extensive exposure to it while in 
+Italy. Which case it is – stateWdependent or endogenous preferences – would be revealed by 
+what we will eat back in Bogotá or Santa Fe. If we go back to arepas or potatoes, then our 
+taste for pasta was stateWdependent. If we remain pastaphiles, then our preferences have 
+endogenously changed. 
+Preferences may be endogenous in this sense because the extent to which a society 
+relies on economic incentives – as opposed to other kinds of motivations and controls – may 
+affect how people learn new preferences (evidence for the endogeneity of preferences is 
+surveyed in Bowles (1998) and (2004), Bowles and Gintis (2011).) The learning on which 
+preference endogeneity is based is of course a long term process unlikely to be observed in a 
+brief experiment. Nonetheless experiments may provide clues that learning is affected: we 
+take as evidence consistent with preference endogeneity those cases in which crowding 
+8
+
+effects of incentives persist after the removal of the incentive. (Other explanations not 
+involving endogenous preferences are generally also possible in these situations.) 
+In sections 3 and 4 we make explicit the underlying causal mechanisms through the use 
+of models of stateWdependent and endogenous preference formation, Table 1 summarizes the 
+differences. 
+[Table 1 here] 
+
+Our empirical strategy (based on experimental results) is to observe the total effect of 
+incentives on behavior and to note whether this differs from the predicted direct effect (the top 
+arrows in Figure 1) in order to infer the effects of incentives on (unobserved) social 
+preferences and thereby on actions (the bottom two arrows). Our data set includes all the 
+economic experiments we have been able to locate that allow a test of the separability 
+assumption. Our tables include more than a hundred different subject pools, over twentyWsix 
+thousand subjects from 36 countries, playing Dictator, Trust, Ultimatum, Public Goods, Third 
+Party Punishment, Common Pool Resource, Gift Exchange and other principalWagent games. 
+These are all settings in which one’s actions affect the payoffs of others so that social 
+preferences may affect a subject’s experimental behavior. We find evidence of non 
+separability in all of these games. Because non separability, as we will see, arises from the 
+social relationships among those imposing incentives and their targets and the nature of the 
+incentive, and because game structures differ in this respect, it would be surprising if the 
+nature and degree of non separability did not differ across these games. However, lacking a 
+metric for nonWseparability that is comparable across games, we have not explored this 
+possibility. 
+Few experiments have thus far been designed to address the causes of nonWseparability, 
+so the inferences that we draw must be provisional. The experimental methods that have 
+become standard in economics include playing for real stakes, excluding deception, and 
+making explicit use of game theoretic concepts to clarify the role of incentives. As 
+experimental methods differ considerably across disciplines, and for reasons of space, we 
+limit the entries in the tables to experiments done by economists. We refer to a number of 
+important experiments done using other methods in the text. All reported results are 
+statistically significant at conventional levels unless noted. 
+Incentives may have counterWintuitive and counterproductive effects for reasons other 
+than nonWseparability (Seabright (2009)). Strong monetary incentives, for example, may overW
+motivate an agent leading to greater than the optimal level of arousal. This appears to be the 
+9
+
+mechanism underlying the negative effects of high incentives found in three experiments by 
+Ariely, Gneezy, Loewenstein, et al. (2009). In other cases incentives alter individuals’ beliefs 
+about the actions of others, with possibly counterWintended effects. This is often thought to be 
+the case when tax authorities announce stiff penalties for underpayment, unwittingly letting 
+the public know that that cheating is common and thereby promoting rather than deterring it. 
+We do not consider these and other cases of counterproductive incentives where the 
+mechanisms are unrelated to the nonWseparability of incentives and social preferences, which 
+is the focus of this paper. 
+Some of the experimental results presented below may be explained by more than one 
+of our four mechanisms that account for nonWseparability, either because the mechanisms are 
+not mutually exclusive so that multiple mechanisms are at work, or because the experiment 
+does not provide sufficient information to say which mechanism accounts for the evidence of 
+nonWseparability. In these ambiguous cases we classified the experiment as an illustration of 
+the mechanism which we thought best accounted for for the crowding result that we report 
+(We indicate in each table where such ambiguities occur and which other mechanisms may 
+have been at work). As a preview, Figure 2 presents a summary of our findings, the size of the 
+ellipses indicating the total number of studies that exhibit each of the four crowding out 
+mechanisms in question, and the intersections giving the cases where multiple mechanisms 
+may be involved. 
+There are two reasons why despite the considerable number of experiments in which 
+preference effects of incentives appear to be at work it is difficult to estimate how prevalent 
+these effects are in real economies. First, the experimental games involved are about social 
+dilemmas or sharing with others, that is, settings in which social preferences are likely to be 
+important and therefore there is something to be crowded out or in. While the experimental 
+evidence suggests that crowding out may affect blood donations or participation in 
+community service projects, it does not have much to say about the effect of incentives on 
+shopping behavior or cleaning hotel rooms. Second, while section 10 presents evidence that 
+experimental play in these social dilemmas predicts behavior in some nonWexperimental 
+situations, isolating social preferences from other influences on behavior in natural settings is 
+difficult. We conclude in sections 11 and 12 with policy implications. 
+
+[Figure 2 here] 
+
+3. Incentives as signals: a model of state-dependent preferences 
+10
+
+In this section (following Hwang and Bowles (2011a) and Bowles and Hwang (2008)) 
+we model incentive effects on stateWdependent preferences and clarify the distinction between 
+categorical and marginal incentive effects by means of an empirical illustration. We consider 
+an individual who may bear a cost to take an action that confers benefits on others, which may 
+be encouraged by a subsidy implemented by a social planner. Citizens also have values that 
+may motivate such proWsocial actions even in the absence of the subsidy. We study a single 
+member of a community of identical citizens who may contribute to a public project by taking 
+an action /gΛ853 at a cost /gΛ859/g4666/gΛ853/g4667 that is increasing and convex in its argument, and that may be offset 
+partially by a subsidy /gΛ87Λ, that is proportional to the individual’s level of contribution. The 
+output of the project is available in equal measure to all, and it varies positively and linearly 
+with /gΛ8≤7, the sum of the n members’ contributions, according to /g≤030/gΛ8≤7 where /g≤030 is a positive 
+constant. 
+We express the individual's social preferences as /gΛ874, the effect of an increase in the 
+contribution level on the individual’s utility that is unrelated to material payoffs. Thus we 
+have the individual’s utility 
+(1) /gΛ873 = /g≤030/gΛ8≤7−/gΛ859/g4666/gΛ853/g4667+/gΛ853/gΛ87Λ+/gΛ853/gΛ874 
+we make explicit the sources of nonWseparability by the value function: 
+(2) /gΛ874/g4666/gΛ87Λ;λ /g≤868,λ/g3030,λ/g3040/g4667 = λ/g≤868/g46661+/g≤778 /g4668/gΛ87Λ > 0/g4669λ/g3030+/gΛ87Λλ /g3040/g4667 
+where the indicator /g≤778/g4668/gΛ87Λ > 0/g4669 = 1 if /gΛ87Λ > 0 and zero otherwise. In equation (2) λ/g≤868 ≥
+0 measures the citizen’s baseline social preferences namely the citizens values in the absence 
+of a subsidy or /gΛ874/g4666/gΛ87Λ;/g≤777/g4667 , λ/g3030 (which may be of either sign) measures the categorical effect of the 
+presence of an incentive, and λ/g3040 (which also may be of either sign) measures the marginal 
+effect of variations in s on values for /gΛ87Λ > 0. The crowding effects represented by λ/g3030 and λ/g3040 in 
+(2) may arise because of any of the three mechanisms by which state dependent preferences 
+arise: bad news, moral disengagement or control aversion. 
+ The individual's utility is thus 
+(3) /gΛ873 = /g≤030/gΛ8≤7−/gΛ859/g4666/gΛ853/g4667+/gΛ853/g3435/gΛ87Λ+λ /g≤868/g46661+/g≤778 /g4668/gΛ87Λ > 0/g4669λ/g3030+/gΛ87Λλ /g3040/g4667/g3439 
+and the individual's utility maximizing contribution (/gΛ853∗) equates the marginal cost of 
+contributing to the marginal benefits (the returns from the public good plus the subsidy plus 
+the effect on the individual’s values), or: 
+(4) /gΛ859′/g4666/gΛ853∗/g4667= /g≤030+/gΛ87Λ+λ /g≤868/g46661 +/g≤778 /g4668/gΛ87Λ > 0/g4669λ/g3030+/gΛ87Λλ /g3040/g4667 
+11
+
+We assume that in the absence of a subsidy the contributions of the citizens to the public good 
+given by (4) are inefficient in the sense that there exists a mutual increase in contributions that 
+would make all citizens better off. The causal structure of the model is illustrated in Figure 3. 
+
+[Figure 3 here] 
+
+The introduction of a subsidy increases contributions by raising the marginal benefits of 
+contributing, the right hand side of (4) which we denote, /g≤0Λ6. Considering the case in which 
+there initially is no incentive, the effect of an incentive on the net benefits of contributing 
+(expressed in discrete terms so as to be able to account for the discontinuity in the value 
+function at /gΛ87Λ = 0) is 
+(5) Δθ/Δs = 1+λ/g≤868/g467≤
+/g≤97Λ/g3≤78
+/g≤940/g≤9≤9 +λ /g3040/g4673 
+and is composed (as expected) of a direct effect (that is, 1, the top arrow in Figure 1),and the 
+indirect stateWdependent effect which will be negative in the case of crowding out (λ/g3030 or λ/g3040 
+negative), and larger in absolute value the greater are the baseline values of the individual 
+(λ/g≤868/g4667. We likewise see that 
+(6) Δθ/Δλ/g≤868 = 1 +/g≤778 /g4668/gΛ87Λ > 0/g4669λ/g3030+/gΛ87Λλ /g3040 
+which, in the case of crowding out, is declining in /gΛ87Λ. 
+ Equations (5) and (6) make it clear that when λ/g3030 and λ/g3040 are negative, incentives and 
+baseline values are substitutes: the effect of each on the marginal benefits of contributing 
+varies inversely with the level of the other. The fact (from equation 5) that the crowding effect 
+is larger for those with greater baseline social preferences makes sense and is consistent with 
+experiments that have identified the strength of individuals’ social preferences independently 
+of incentives and found that crowding out effects are larger for those with greater baseline 
+values (Bohnet and Baytelman (2007), Kessler (2008), Carpenter and Myers (2010)). This 
+substitutability between incentives and baseline values will be important when we address 
+questions of public policy in the penultimate section. 
+ Using (5) we say that a particular change in incen tives ∆/gΛ87Λ has crowded out social 
+preferences if Δθ ∆/gΛ87Λ⁄ < 1, that is, if the total effect of the incentive is less than the direct 
+effect, and conversely for the case of crowding in. Crowding will not occur if λ/g3030 and λ/g3040 or λ/g≤868 
+are zero (that is, if social preferences are not state dependent, or they are absent). What we 
+term strong crowding out holds if Δθ ∆/gΛ87Λ⁄ < 0, which can occur if categorical crowding out is 
+large relative to the size and marginal effect of the subsidy, or if the marginal effect is 
+12
+
+negative. 
+ The two forms of nonWseparability are illustrated by crowding out in Figure 4. Crowding 
+in, which we do not show, would either shift the “separability” function upwards – categorical 
+crowding in WW or increase its slope – marginal crowding in. Because the functions in Figure 4 
+represent the citizens’ best responses to the planner’s choice of an incentive and thus 
+constitute one of the constraints making up the planner’s optimizing problem, we call these 
+functions the planner’s implementation technology. 
+
+[Figure 4 here] 
+
+An experiment allows an estimate of both categorical and marginal crowding out. Bernd 
+Irlenbusch and Gabriele Ruchala implemented a public goods experiment in which the 192 
+German student subjects faced three conditions: no incentives to contribute and a bonus, 
+given to the highest contributing individual, that was either high or low (Irlenbusch and 
+Ruchala (2008) details are in Table 2, results are shown in Figure 5). Payoffs were such that 
+even with no incentive individuals would maximize their payoffs by contributing 25 units. In 
+the noWincentive case contributions averaged 37 units, or 48 percent above what would have 
+occurred if the participants had been motivated only by the material rewards of the game. 
+Contributions in the lowWbonus case were not significantly different from the noWbonus 
+treatment. In the highWbonus case, significantly higher contributions occurred, but the amount 
+contributed (53 units) barely (and insignificantly) exceeded that predicted for selfWinterested 
+subjects (50 units). 
+
+[Figure 5 here] 
+
+In Figure 5 we use the observed behavior in the high and low bonus case along with the 
+assumption that marginal crowding affects the slope of the citizens’ best response function by 
+a given amount (so that the function remains linear as in Figure 4) to estimate the marginal 
+effect of the bonus. We find that a unit increase in the bonus is associated with a 0.31 increase 
+in contributions. This contrasts with the marginal effect of 0.42 that would have occurred 
+under separability, that is, had subjects without social preferences simply best responded to 
+the incentive. Crowding out thus affected a 26 percent reduction in the marginal effect of the 
+incentive. The estimated response to the incentive also gives us the level of categorical 
+crowding out, namely the difference between the observed contributions (37.04) in the 
+13
+
+absence of any incentive and the predicted contributions had an arbitrarily small incentive 
+been in effect (the vertical intercept of the observed line in Figure 5) or 34.55. The incentive 
+thus categorically crowded out 21 percent of the effect of social preferences (measured by the 
+excess in contribution levels above Nash equilibrium for selfWinterested subjects, 12.04). 
+Categorical crowding out is also evident in other experiments. In one, reported 
+willingness to help a stranger load a sofa into a van was much lower under a small money 
+incentive than with no incentive at all, yet a moderate incentive increased the willingness to 
+help (over the no incentive condition (Heyman and Ariely (2004)). Using these data as we did 
+in the Irlenbusch and Ruchala study, we estimate that the mere presence of the incentive 
+reduced the willingness to help by 27 percent (compared to the no incentive condition). 
+Another experiment that allows us to distinguish categorical and marginal crowding was 
+implemented by Juan Camilo Cardenas (2004), but here (as in some other experiments) we 
+observe categorical crowding in. Cardenas implemented an experimental Common Pool 
+Resource Game very similar in structure to the kind of real world commons problem faced by 
+his subjects – rural Colombian ecoWsystem users. In the absence of any explicit incentives, the 
+villagers on average extracted 44 percent less of the experimental “resource” than would have 
+maximized their individual payoffs, providing evidence of a significant willingness to 
+sacrifice individual gain so as to protect the resource and raise groupWaverage payoffs. When 
+they were liable to pay a small fine (imposed by the experimenter) if they overWextracted the 
+resource, as expected, they extracted even less than without the fine, showing that the fine had 
+the intended effect. 
+The fact that the average extraction under the small fine treatment was 55 percent less 
+than the Nash equilibrium for selfWinterested subjects (when account is taken of the fine) 
+suggests that the fine had increased the salience of the villagers’ social preferences (by 25 
+percent, if the 44% deviation from the selfWinterested Nash behavior is taken as the measure of 
+social preferences). Interestingly, raising the fine from a low to a high level had virtually no 
+effect. Variations in the fine thus did not work as an incentive, but rather (in Cardenas’ view) 
+the very presence of the fine (high or low) was a signal, one that alerted subjects to the public 
+good nature of the interaction. We will present other examples of fines as signals (section 3) 
+and crowding in (section 9). These cases hold important lessons for why incentives sometimes 
+are counterproductive and how wellWdesigned policies can make incentives and social 
+preferences complements rather than substitutes. 
+Unfortunately, unlike the Irlenbusch and Ruchala and Cardenas studies, many 
+experiments do not establish the response to incentives that would be observed under 
+14
+
+separability, so it is impossible to determine if incentives are “underWperforming.” A common 
+misinterpretation of experimental results is to infer from the observation that an incentive has 
+an effect in the intended direction that crowding out has not occurred (Rigdon (2009)). But 
+observing a positive incentive effect in an experiment does not preclude crowding out. It is 
+clear from Figure 4 (or equation 5 and the definition of crowding out) that a positive incentive 
+effect may occur in the presence of marginal crowding out (as long as it is not “strong”) and 
+in the presence of categorical crowding out (as long as the incentive is sufficiently large.) For 
+example, consider some substantial incentive indicated by s+ in the figure. Under both 
+marginal and categorical crowding out, the action taken (points a and b respectively) is 
+greater than in the absence of the incentive (d), so the incentive “worked”: it affected the 
+action in the intended direction. But the diagnostic for the presence of crowding is a 
+comparison of these two action levels with the level that would have occurred under 
+separability, namely point c, and this comparison makes it clear that crowding out occurred. 
+
+4. Incentives alter cultural learning: a model of endogenous preferences. 
+A quite different mechanism by which crowding might occur has also been studied, one 
+in which preferences are endogenous so that one or more of the parameters of the individual's 
+value function WW λ/g≤868, λ/g3030 and λ/g3040WW are altered by incentives (BarWGill and Fershtman (2005), 
+Hwang and Bowles (2011b)). Hwang and Bowles present a model of cultural evolution in 
+which the presence or level of incentives affects the process by which preferences are 
+acquired or abandoned, so that a population's equilibrium distribution of preferences depends 
+on incentives. By equilibrium preferences they mean a configuration of incentives and 
+preferences such that the latter are stationary given the process of preferenceWupdating. 
+In the SungWHa Hwang and Bowles model preferences are endogenous because i) 
+schools, families, religious organizations and other societal institutions seek to promote civic 
+minded values and ii) individuals periodically alter their preferences in response to their own 
+recent experiences. Their model of endogenous preferences is based on two empirical 
+regularities. The first is the powerful effect of mere exposure on preferences, documented by 
+the social psychologist Zajonc (1968) and in subsequent works (Birch and Marlin (1982), 
+Murphy and Zajonc (1993), Murphy, Monahan, and Zajonc (1995)). The exposure effect is 
+one of the reasons that cultural transmission may favor the numerous over the rare, 
+independently of their economic success (See Boyd and Richerson (1985):223ff, Ross and 
+Nisbett (1991):30ff, Bowles (1998) and the works cited there.) Following Robert Boyd and 
+Peter Richerson, Hwang and Bowles assume a degree of conformist cultural transmission, so 
+15
+
+that the likelihood that an individual will adopt a particular preference varies not only with 
+relative payoffs associated with the behaviors motivated by the preference but also with the 
+prevalence of individuals with that preference in the population. 
+The second empirical regularity captured in their model of individual updating is that 
+the presence and extent of incentives to contribute to a public project (or to engage in similar 
+activities that benefit others) make the action (contribution) a less convincing signal of an 
+individual's social preferences, resulting in observers interpreting some generous acts as 
+merely selfWinterested. This is the key mechanism in the model of of Roland Benabou and 
+Jean Tirole showing how incentives may crowd out proWsocial behavior (Benabou and Tirole 
+(2006)). Similarly, in his “Generous actors, selfish actions” paper, and in his subsequent work 
+with Dufwenberg, Heidhues, Kirchsteiger, et al. (2011), Joel Sobel (2009) and his co authors 
+provide not very restrictive conditions on individual utility functions such that “agents who 
+care directly about the welfare and opportunities of others cannot be distinguished from 
+selfish agents in market settings” (p.19). The reason is that for a class of utility functions 
+admitting such other regarding preferences as inequality aversion, (paraphrasing the main 
+theorem in their 2011 paper, p. 6) the “set of Walrasian equilibria of an economy [with other 
+regarding preferences] coincides with the set of Walrasian equilibria of its corresponding ... 
+economy [in which] agents care only about their own direct consumption.” Thus the use of 
+marketWlike incentives may make it impossible to infer generous or fairWminded behaviors 
+from the observed actions of ones fellow citizens. 
+There are two reasons why the presence of an incentive may lead people to mistake a 
+generous act – helping another at a cost to oneself WW for a selfWinterested one. The first is that 
+the incentive provides a competing explanation of the generous act: “he did it for the money”. 
+The second is that incentives often induce individuals to shift from an ethical to a payoff 
+maximizing frame (even relocating the neural activity to different regions of the brain); and 
+knowing this, the presence of an incentive for an individual to help another may suggest to an 
+observer that the action was self interested (Gneezy and Rustichini (2000b), Heyman and 
+Ariely (2004), Irlenbusch and Sliwka (2005), Li, Xiao, Houser, et al. (2009)). The first “he 
+did it for the money” reason depends on the magnitude of the incentive because in order to 
+provide a convincing selfWinterested interpretation for the helping act the subsidy would have 
+to exceed the cost of helping. The second reason WW“when incentives are in force, everyone 
+maximizes their payoffs” WW is categorical; it is simply the presence of the incentive that 
+matters. Of course, an observer could make the opposite mistake, inferring that the generous 
+act that was motivated entirely by an incentive, was done for ethical rather than payoff 
+16
+
+maximizing reasons. In the model that follows the incentive is assumed on balance to degrade 
+helping as the signal of a generous individual’s type rather than motivating self interested 
+individuals to act in ways that are mistakenly taken as signals of a generous type. 
+Taken together, these two assumptions imply that the extensive use of incentives may 
+reduce the perceived population frequency of individuals with social preferences, leading (via 
+the conformist learning effect) to an evolutionary disadvantage of generosity over selfWinterest 
+in the preferenceWupdating process. To show this Hwang and Bowles (2011b) adapt the model 
+of endogenous preferences in Bowles (1998) and (2004) to study the effects of incentives on 
+the preferenceWupdating process. In terms of the state dependent model of the previous 
+section, they study the effect of incentives on the equilibrium fraction of the population for 
+whom λ/g≤868 is positive and sufficient to motivate contribution to a public good. 
+Suppose there are two types: a Civic gives to the public good at a personal cost equal to 
+/gΛ859 that may be partially offset by a subsidy /gΛ87Λ, while Homo economicus does not contribute and 
+receives no subsidy. Both types update their traits by myopic best response, observing the 
+material payoffs and public goods contribution of a sample of the population (they do not 
+observe the utility of others) and a signal /gΛ868 /g3556 (possibly inaccurate when the planner implements 
+a subsidy, /gΛ87Λ > 0) of the frequency of the Civics in the population, /gΛ868, /gΛ868 /g3556 = /gΛ868 /g3556/g4666/gΛ87Λ,/gΛ868/g4667 which is 
+decreasing in s . To capture the fact that the effect of the incentive on citizen’s perception of 
+the fraction of their fellow citizens who are Civics may depend on the mere presence of the 
+incentive or on its extent, let 
+(7) /gΛ868 /g3556 = /gΛ868/g46661+/g≤778/g4668/g≤≤0Λ > 0/g4669Λ/g3030+/gΛ87ΛΛ /g3040/g4667 
+where as before the indicator /g≤778/g4668/gΛ87Λ > 0/g4669 = 1 if /gΛ87Λ > 0 and zero otherwise and Λ/g3030 ≤ 0 measures 
+the categorical effect of the presence of an incentive on one's inference about another 
+individual's type based on observing his or her contribution to the public good and Λ/g3040 ≤ 0 
+measures the marginal effect of the level of an incentive on one's inference. Note that when 
+/gΛ868 = 0 or /gΛ87Λ = 0, /gΛ868 /g3556 = /gΛ868 so in the absence of the subsidy or when Civics are absent, the 
+citizen’s perception of the fraction of the population who are Civics is accurate. 
+The incentive has two offsetting effects on the distribution of types in the population, 
+one intended and the other not: it raises the relative payoffs of the Civics, but it also reduces 
+their apparent prevalence in the population. To see how this affects the equilibrium 
+distribution of types in the population, suppose that individuals live forever but they 
+periodically may switch their type. Denote the cultural fitness of trait /gΛ86Λ as /gΛ870/g3036 (/gΛ86Λ = /gΛ8≤9,/gΛ834 for 
+Civic and Homo economicus) defined as the expected number of replicas that each individual 
+17
+
+bearing the trait will leave in the subsequent period. (If person k switches to j’s type and j 
+does not switch then k has left no replica and /gΛ86≤ has two replicas.) To capture the effect of 
+socialization institutions on the evolution of preferences in this population the authors 
+suppose that in any period some fraction /g≤0ΛΛ of the HWtypes will be converted to a CWtype. 
+(Because it plays little role in what follows, Hwang and Bowles do not model the manner in 
+which socialization institutions accomplish this, other than to assume that the process is not 
+affected by the level of incentives). Then define /g≤009 ∈ /g46660,1] as the relative weight of 
+conformism rather than payoffs in the updating process, /g≤0Λ0 as the weight of payoff differences 
+relative to the socialization effect and /g≤0≤4/g3004,/g≤0≤4/g3009 as the expected payoffs of the two types, so that 
+the cultural fitness of the two traits can be written: 
+(8) /gΛ870/g3004 = /gΛ870/g≤868+/g≤009/g467≤/gΛ868 /g3556−/g≤869/g≤870/g4673+/g46661−/g≤009/g4667/g4674/g≤0Λ0 /g4666 /g≤0≤4/g3004 −/g≤0≤4 /g3009/g4667+γ /g≤869/g≤879/g3043/g3043 /g4675 and 
+(9) /gΛ870/g3009 = /gΛ870/g≤868+/g≤009/g467≤ /g≤869/g≤870−/gΛ868 /g3556/g4673+/g46661−/g≤009/g4667/g4670/g≤0Λ0/g4666 /g≤0≤4/g3009 −/g≤0≤4 /g3004/g4667−γ] 
+ The first term in both equations is the conformism effect, and it favors the Civics if it is 
+perceived that they constitute more than half of the population. The second term is the net 
+effect of socialization and payoff based updating. The socialization effect in equation (8) (the 
+second term in the square brackets) is derived as follows: noting that poulation size is 
+normalized to unity, each of the 1−/gΛ868 H types in the population has a /g≤0ΛΛ probability of 
+converting to C (shown in (9)) and thus appearing as /g≤0ΛΛ/g46661−/gΛ868/g4667 replicas assigned to the /gΛ868 Cs in 
+the population. The final expression in (8) is just the per C share of these socialized former 
+H’s. 
+From these cultural fitness equations one readily derives the familiar replicator equation 
+for the movement of p over time: 
+(10) /gΛ856/gΛ868 /gΛ856/gΛ87≤⁄ = /gΛ868/g46661−/gΛ868/g4667/g4666/gΛ870 /g3004 −/gΛ870 /g3009/g4667 
+Introducing the costs of contributing to the public good and the subsidy and noting the 
+payoff difference between the types /g≤0≤4/g3009−/g≤0≤4 /g3004 is just /gΛ859−/gΛ87Λ , the resulting stationary condition 
+for an interior value of /gΛ868 (namely /gΛ870/g3004 −/gΛ870 /g3009 = 0 ) is 
+(11) /g467≤/gΛ868 /g3556−
+/g≤869
+/g≤870/g4673
+/g3080
+/g≤869/g≤879/g3080 = /g≤0Λ0/g4666/gΛ859−/gΛ87Λ/g4667−
+/g308≤
+/g≤870/g3043 
+which requires that the conformist effect favoring the more common trait (the left hand side) 
+offset the net effect of that trait's payoff disadvantages and the societal level socialization 
+effects (the right hand side). Values of /gΛ868 satisfying (11) are termed the population’s 
+equilibrium preferences and denoted as /gΛ868∗/g4666/gΛ87Λ/g4667. Figure 6 summarizes the relationship between 
+the incentive and the prosocial action in the presence of endogenous preferences and Figure 7 
+18
+
+illustrates the cultural equilibrium condition (11). 
+
+[Figure 6 and 7 here] 
+
+ The solid lines in Figure 7 show the two sides of equation (11) – the conformist effect 
+and the payoff plus socialization effects WW and their intersection, satisfying equation (11) 
+when /gΛ87Λ = 0 and giving /gΛ868∗/g46660/g4667 that is, the equilibrium distribution of preferences in the 
+absence of incentives. The dotted lines show the effect of the implementation of a subsidy. 
+The intended effect is to reduce the payoff advantage of the H types (they do not receive the 
+subsidy) shifting downward the payoff cum socialization function. A naive social planner, 
+unaware of the conformist effect would thus expect the introduction of the incentive to 
+increase the fraction of C’s in the population to /gΛ868/g30Λ5/g4666/gΛ87Λ/g4667. 
+ But the unintended effect of the subsidy is to red uce the perceived fraction of the 
+population who are C’s and thereby to diminish the conformist advantage of the C’s. The 
+downward shift in the conformist effect function thus partially offsets the payoff effect, with 
+the resulting stationary distribution equal to /gΛ868∗/g4666/gΛ87Λ/g4667. In the case of strong crowding out (not 
+shown), the second effect would more than offset the first, resulting in a /gΛ868∗/g4666/gΛ87Λ/g4667< /gΛ868∗/g46660/g4667. 
+The source of the nonWseparability between the socializations and incentives is clear if 
+we return to equation (11) and consider the effect of an increase in /gΛ87Λ on the cultural fitness of 
+the C types relative to the H types, evaluated at the status quo distribution of types in the 
+population. This is just the vertical distance at /gΛ868∗/g46660/g4667 between the two functions that have been 
+displaced by the introduction of the incentive (the dashed lines). Because this effect is the 
+cultural fitness advantage of the CWtypes following the introduction of the incentive, Hwang 
+and Bowles term it the evolutionary impact of the incentive, denoted by /g≤0Λ8. ( analogous to /g≤0Λ6 in 
+the state dependent model of the previous section.) The direct effect of incentives on /g≤0Λ8 is just 
+/g≤0Λ0, but as is clear from the following expression, there also is an indirect effect: 
+(12) 
+/g3057/g3089
+/g3057/g3046|/g3043∗ = /g≤0Λ0+ /g3080/g≤869/g≤879/g3080/gΛ868∗/g4666/g≤0ΛΛ,/gΛ87Λ/g4667/g4674Λm+ΛcΔ/g3046/g4675 
+where the left hand side means the change in the equilibrium condition associated with the 
+change in /gΛ87Λ, for the given level of /gΛ868, namely /gΛ868∗. (As in the model of stateWdependent 
+preferences, we consider discrete changes here rather than simply differentiating (11), in this 
+case because of the discontinuity of /gΛ868 /g3556 at /gΛ87Λ = 0 in the presence of categorical crowding). 
+The indirect effect will be negative in the case of crowding out, so the total effect of the 
+incentive is less than the direct effect. The absolute size of the indirect effect (the second term 
+19
+
+on the right of (12)) is (as expected) increasing in the extent of conformism in updating and in 
+the (absolute magnitude of the) crowding parameters. Importantly, the negative indirect 
+crowding out effect will be larger in absolute value, the greater is /gΛ868∗. Because /gΛ868∗ varies 
+positively with the socialization effect (/g≤0ΛΛ), the total effect of the incentive is less, the more 
+effective is a society's socialization institutions. The crowding effect will absent (separability 
+will hold) if Λ/g3040 = Λ/g3030 = 0 in which case /gΛ868 /g3556 = /gΛ868, in which case there are no misperceptions of 
+the fraction of C’s in the population or /g≤0ΛΛ = 0 in which case there are no C’s to misperceive 
+as selfWinterested, or /g≤009 = 0 in which case there is no conformism in updating so the misW
+perceptions induced by the incentives have no effect. 
+We also have that the evolutionary impact of socialization institutions is 
+(13) 
+/g3057/g3089
+/g3057/g≤963|/g3043∗ = /g≤869/g≤870/g3043∗/g4666/g308≤,/g3046/g4667 
+which diminishes with greater use of incentives because (in the absence of strong crowding 
+out) incentives raise /gΛ868∗. 
+Thus where crowding out occurs incentives and socialization institutions are substitutes 
+in the sense that the marginal effect of one on the evolutionary advantages of the civic minded 
+types diminishes with the level of the other. We will return to the property of incentives and 
+socialization as substitutes and the possibility of making them complements when we 
+consider the policy implications of these models and the data to follow. 
+A summary of the two sources of nonWseparability – state dependence and endogeneity 
+of preferences – and the mechanisms involved is provided in Table 2. 
+
+[Table 2 here] 
+
+The design of effective incentives in cases where separability may not hold requires a 
+better understanding of the cognitive or affective effects of incentives that explain the 
+categorical and marginal crowding out effects observed in experiments. We turn in the next 
+three sections to the mechanisms that make preferences incentiveWstateWdependent, resulting in 
+crowding out effects before considering (in section 8) the evidence for the adverse effects of 
+incentives on preferenceWupdating. (We consider crowding in WWthe case where incentives and 
+social preferences are complementsWW in section 9). 
+
+5. Bad news: Incentives provide information about the principal 
+20

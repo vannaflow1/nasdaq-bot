@@ -117,7 +117,7 @@
   "  tested: TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding th",
   "This week's tests: 114 run - 1 promising, 59 not confirmed, 27 don't fit my data, 27 translation failures",
   "",
-  "25 papers waiting in my queue."
+  "26 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

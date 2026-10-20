@@ -297,5 +297,17 @@
   "score": 8,
   "queued": "2026-10-20",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W2130725370",
+  "title": "Economic Incentives and Social Preferences: Substitutes or Complements?",
+  "abstract": "Explicit economic incentives designed to increase contributions to public goods and to promote other pro-social behavior sometimes are counterproductive or less effective than would be predicted among entirely self-interested individuals. This may occur when incentives adversely affect individuals' altruism, ethical norms, intrinsic motives to serve the public, and other social preferences. The opposite also occurs\u2014crowding in \u2014though it appears less commonly. In the fifty experiments that we survey, these effects are common, so that incentives and social preferences may be either substitutes (crowding out) or complements (crowding in). We provide evidence for four mechanisms that may account for these incentive effects on preferences: namely that incentives may (i) provide information about the person who implemented the incentive, (ii) frame the decision situation so as to suggest appropriate behavior, (iii) compromise a control averse individual's sense of autonomy, and (iv) affect the process by which people learn new preferences. An implication is that the evaluation of public policy must be restricted to allocations that are supportable as Nash equilibria when account is taken of these crowding effects. We show that well designed fines, subsidies, and the like minimize crowding out and may even do the opposite, making incentives and social preferences complements rather than substitutes. (JEL D02, D03, D04, D83, E61, H41, Z13)",
+  "track": "prop",
+  "url": "http://repec.deps.unisi.it/quaderni/617.pdf",
+  "source": "OpenAlex (prop mission)",
+  "topic": "prop: tournament behavior mutual fund managers",
+  "score": 8,
+  "queued": "2026-10-20",
+  "text_file": "knowledge/papers/openalex_W2130725370.txt"
  }
 ]
