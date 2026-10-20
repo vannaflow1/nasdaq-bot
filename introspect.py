@@ -53,6 +53,17 @@ def digest():
     if W: out.append("MY WISHES ALREADY FILED: " + "; ".join(f"#{w['id']} [{w['status']}] {w['title'][:70]}" for w in W[-12:]))
     rec = [x for x in sorted(lib, key=lambda x: x.get("date", ""))[-12:] if (x.get("relevance") or 0) >= 4]
     if rec: out.append("RECENT GOOD PAPERS: " + "; ".join(x["title"][:80] for x in rec[-5:]))
+    pr = [x for x in lib if x.get("track") == "prop" and x.get("lesson")][-6:]
+    if pr: out.append("WHAT I READ ABOUT PROP-FIRM TRADING (my mission; paper -> lesson): " + " || ".join(f"{x['title'][:70]} -> {x['lesson'][:200]}" for x in pr))
+    try:
+        import prop_sim
+        out.append("PROP FIRMS IN MY SIMULATOR: " + "; ".join(f"{P['name']} (fee ${P['fee']}, target ${P['target']}, max loss ${P['mll']} {P['mll_type']})" for P in prop_sim.plans().values())
+                   + ". To add another firm, file a wish for Claude with the firm name - Claude researches and adds its exact rules.")
+        S_ = [json.loads(l) for l in open(os.path.join(K, "strategies.jsonl")) if l.strip()] if os.path.exists(os.path.join(K, "strategies.jsonl")) else []
+        sc = sorted([e for e in S_ if e.get("prop")], key=lambda e: -e["prop"][0]["ev_per_eval"])[:3]
+        if sc: out.append("BEST PROP SCORES SO FAR (EV per eval after fee): " + "; ".join(f"{e['name'][:50]}: {e['prop'][0]['ev_per_eval']:+.0f} on {e['prop'][0]['plan']}" for e in sc))
+    except Exception:
+        pass
     me = [x for x in lib if x.get("track") == "self" and x.get("lesson")][-6:]
     if me: out.append("WHAT I READ ABOUT IMPROVING MYSELF (paper -> lesson): " + " || ".join(f"{x['title'][:70]} -> {x['lesson'][:200]}" for x in me))
     try:

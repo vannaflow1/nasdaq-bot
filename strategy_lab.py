@@ -227,16 +227,68 @@ def _week():
     d = datetime.now(timezone.utc).isocalendar(); return f"{d[0]}-W{d[1]:02d}"
 
 
-def prop_score(T, M, plan="flex25"):
-    """Run the strategy's day-by-day results through Lucid's rules (prop_sim.py). Sizing: largest MNQ count whose stop
-    risks <= 25% of the buffer to the max-loss floor (at most 10% of the buffer per trade on average days)."""
-    import prop_sim
+def _prop_inputs(T, M):
     ses = M.session.values; ses = ses[(ses >= T.session.min()) & (ses <= T.session.max())] if len(T) else ses
     pts = pd.Series(0.0, index=ses); pts[T.session.values] = T.pnl.values
     stop = float(np.median(np.abs(T.pnl[T.pnl < 0]))) if (T.pnl < 0).any() else 20.0
-    worst = np.where(pts.values != 0, -stop, 0.0)
-    size = lambda phase, profit, buf: int((0.25 * buf) // (stop * prop_sim.MNQ))
-    return prop_sim.evaluate(pts.values, worst, plan, size, step=5)
+    return pts.values, np.where(pts.values != 0, -stop, 0.0), stop
+
+
+def _sizer(spec, stop):
+    """Sizing from the spec's optional "prop" block: {"risk": share of the buffer to the max loss risked per trade (default
+    0.25), "eval_risk": override during the evaluation}. Contracts = floor(risk * buffer / (stop * $2 per MNQ point))."""
+    import prop_sim
+    pr = spec.get("prop") or {}; r = float(pr.get("risk", 0.25)); re_ = float(pr.get("eval_risk", r))
+    r, re_ = min(max(r, 0.02), 0.9), min(max(re_, 0.02), 0.9)
+    return lambda phase, profit, buf: int(((re_ if phase == "eval" else r) * buf) // (stop * prop_sim.MNQ))
+
+
+def prop_score(T, M, spec=None, plan=None, starts=None):
+    """The mission metric: run the strategy's day-by-day results through every prop plan in knowledge/prop_firms.json
+    (or one plan). Returns the results, best expected payout minus fee first."""
+    import prop_sim
+    pts, worst, stop = _prop_inputs(T, M)
+    size = _sizer(spec or {}, stop)
+    if plan: return [prop_sim.evaluate(pts, worst, plan, size, starts, step=4)]
+    return prop_sim.best_plan(pts, worst, lambda P: size, starts)
+
+
+def prop_path(spec, X, T, M, out, head):
+    """Prop-mission protocol: positive EV after fees in both halves of 2014-2023 (checked before), beats random entries on
+    the same days under the same rules, survives double costs, then the locked 2024-2026 exam must also pay out > fee."""
+    import prop_sim
+    best = out["prop"][0]; plan = best["plan"]
+    D = data(); rng = np.random.default_rng(11); e = spec["entry"]
+    lo = mins(e["window"][0]) if e["type"] == "level" else 1
+    hi = mins(e["window"][1]) if e["type"] == "level" else min(mins(spec.get("exit", "14:55")) - 5, 380)
+    lo, hi = max(lo, 1), max(hi, lo + 2)
+    evs = []
+    for _ in range(20):
+        rows = []
+        for s_, i, sd in zip(T.session.values, T.i.values, T.side.values):
+            r = simulate_session(D, int(i), spec, entry_override=(int(rng.integers(lo, hi)), int(sd)))
+            if r: rows.append((s_, i, r[0], r[1], r[2], r[3]))
+        P = pd.DataFrame(rows, columns=["session", "i", "pnl", "R", "side", "k"])
+        evs.append(prop_score(P, M, spec, plan)[0]["ev_per_eval"] if len(P) else -best["fee"])
+    p = float((np.array(evs) >= best["ev_per_eval"]).mean()); out["prop_placebo"] = {"mean_ev": round(float(np.mean(evs)), 1), "p": p}
+    if p >= 0.10:
+        return f"NOT CONFIRMED (prop path): random entries on the same days pay about as much (random EV {np.mean(evs):+.0f}, p={p:.2f}). {head}"
+    ins = np.where(M.session < EXAM_FROM)[0]
+    T2 = backtest(spec, X, ins, cost_mult=2.0); ev2 = prop_score(T2, M, spec, plan)[0]["ev_per_eval"] if len(T2) else -1
+    if ev2 <= 0:
+        return f"NOT CONFIRMED (prop path): fragile - with double costs the EV per eval is {ev2:+.0f}. {head}"
+    ex = json.load(open(EXAMS)) if os.path.exists(EXAMS) else {}
+    w = _week(); ex.setdefault(w, 0)
+    if ex[w] >= EXAMS_PER_WEEK:
+        return f"PASSED IN-SAMPLE (prop path), WAITING FOR EXAM (weekly exam budget used up). {head}"
+    ex[w] += 1; json.dump(ex, open(EXAMS, "w"), indent=1)
+    exam = np.where(M.session >= EXAM_FROM)[0]; E = backtest(spec, X, exam)
+    pe = prop_score(E, M, spec, plan)[0] if len(E) >= 30 else {"ev_per_eval": -1, "pass_rate": 0, "avg_payout_per_eval": 0}
+    out["prop_exam"] = pe
+    txt = f"LOCKED EXAM 2024-2026 on {plan}: pass {pe['pass_rate']:.0%}, ${pe['avg_payout_per_eval']:.0f} paid out per eval, EV {pe['ev_per_eval']:+.0f}"
+    if pe["ev_per_eval"] > 0:
+        return f"PROMISING STRATEGY (prop path, passed the locked exam): {txt}. {head}; beats random entries (p={p:.2f}), survives double costs"
+    return f"NOT CONFIRMED - failed the locked exam (prop path): {txt}. {head}"
 
 
 def evaluate(spec, X, source="engine", name=None):
@@ -251,11 +303,18 @@ def evaluate(spec, X, source="engine", name=None):
             f"max drawdown {m.get('max_dd_R', 0)}R") if m.get("n") else "in-sample: no trades"
     PROP_NOTE = ""
     out = {"date": datetime.now(timezone.utc).date().isoformat(), "name": label, "spec": spec, "source": source, "insample": m}
-    try:                                                      # the mission metric: payouts per Lucid evaluation
-        out["prop"] = prop_score(T, M)
-        head_prop = f" | prop sim (LucidFlex 25K, 2014-2023 starts): pass {out['prop']['pass_rate']:.0%}, ${out['prop']['avg_payout_per_eval']:.0f} paid out per eval"
+    head_prop, prop_ok = "", False
+    try:                                                      # the mission metric: payouts minus fee per prop evaluation
+        PS = prop_score(T, M, spec); best = PS[0]; out["prop"] = PS
+        half = [prop_score(T[T.session.str[:4].astype(int) <= 2018], M, spec, best["plan"])[0],
+                prop_score(T[T.session.str[:4].astype(int) >= 2019], M, spec, best["plan"])[0]]
+        out["prop_halves"] = half
+        prop_ok = best["ev_per_eval"] > 0 and all(h["ev_per_eval"] > 0 for h in half)
+        head_prop = (f" | PROP SIM best plan {best['plan']}: pass {best['pass_rate']:.0%}, ${best['avg_payout_per_eval']:.0f} paid out "
+                     f"per eval, EV after the ${best['fee']} fee {best['ev_per_eval']:+.0f} (2014-18 {half[0]['ev_per_eval']:+.0f}, "
+                     f"2019-23 {half[1]['ev_per_eval']:+.0f})")
     except Exception as e:
-        head_prop = ""
+        head_prop = f" | prop sim failed: {type(e).__name__}"
     def done(verdict):
         out["verdict"] = verdict + head_prop
         with open(LOG, "a") as f: f.write(json.dumps(out) + "\n")
@@ -264,6 +323,8 @@ def evaluate(spec, X, source="engine", name=None):
         return done(f"NOT CONFIRMED on my data: too few trades ({m.get('n', 0)} in 2014-2023, need 150). {head}")
     yp, yt = map(int, m["years_pos"].split("/"))
     if m["avg_R"] <= 0 or yp < 0.7 * yt:
+        if prop_ok:                                           # the mission path: pays out under prop rules even without a big R edge
+            return done(prop_path(spec, X, T, M, out, head))
         return done(f"NOT CONFIRMED on my data: {head}")
     pl = placebo(spec, T); p = float((pl >= m["avg_R"]).mean()); out["placebo"] = {"mean_R": round(float(pl.mean()), 3), "p": p}
     if p >= 0.05:
@@ -300,7 +361,8 @@ SPEC_HELP = f"""{{"kind": "strategy", "name": "<short name>",
          or {{"type": "time", "at": "09:00", "side": "long|short|<formula: > 0 long, < 0 short>"}},
    "filter": "<optional formula over known columns; trade only when > 0>",
    "stop": {{"points": 15}} or {{"range": 0.25}},   "target": {{"R": 3}} or {{"points": 40}} or {{"level": "<LEVEL>"}},
-   "exit": "14:55", "explain": "<one line>"}}
+   "exit": "14:55", "prop": {{"risk": 0.25, "eval_risk": 0.4}}, "explain": "<one line>"}}
+   (prop = optional sizing for prop accounts: share of the buffer to the max-loss floor risked per trade, funded / eval)
    (A COMPLETE intraday NQ strategy, backtested on 1-minute data 2014-2023 with pessimistic fills and costs, then a
    locked 2024-2026 exam. fade = limit order at the level against the approach; break = stop order through it.
    stop range = fraction of the options-implied day range. LEVELS: {LEVEL_HELP}.

@@ -462,7 +462,7 @@ target "y_range / k_range20", expr "gex_rank". Do not repeat a question already 
 {{"kind":"question","question":"...","target":"...","expr":"...","explain":"which research idea inspired it"}}"""
     user = ("Recent research:\n" + "\n".join(f"- {x['title'][:120]}: {(x.get('learned') or '')[:260]}" for x in seeds)
             + "\n\nQuestions already asked:\n" + "\n".join(f"- {q[:140]}" for q in past[-40:]))
-    want_strategy = st["n"] % 2 == 1
+    want_strategy = st["n"] % 3 != 0                      # mission: 2 of every 3 curiosity slots design prop strategies
     if want_strategy:
         import strategy_lab
         tried = [json.loads(l).get("name", "") for l in open(strategy_lab.LOG)] if os.path.exists(strategy_lab.LOG) else []
@@ -475,6 +475,11 @@ testable intraday strategy inspired by the research below and by what Volta alre
 - Volta's powers (use as filters): pw_takes_pdh / pw_takes_pdl (chance NY takes yesterday's high/low), pw_gap_fill, pw_tail_day.
 - Already FAILED mechanically: fading yesterday's high/low, Asia/London highs/lows, VWAP bands and the midnight open with a
   15-point stop and 4R target (stops run ~70% of the time; price overshoots levels by ~11 pts), also with level confluence.
+- PROP BASELINE: simple daily brackets at the open with NO edge pay ~$0-70 per evaluation (fee $64-104) -> the structure
+  alone does not pay; you need an edge AND sizing/shape that fits the rules (use the "prop" sizing block).
+- SMT divergence as a trade and every "tilt" so far failed after stops and costs.
+""" + (lambda L: ("- WHAT I READ ABOUT PROP TRADING (paper -> lesson): " + " || ".join(L)) if L else "")(
+      [f"{x['title'][:60]} -> {x['lesson'][:160]}" for x in lib if x.get("track") == "prop" and x.get("lesson")][-5:]) + """
 Strategy format:
 """ + strategy_lab.SPEC_HELP.replace("{{", "{").replace("}}", "}") + """
 Known columns for filters/side formulas:

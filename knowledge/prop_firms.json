@@ -1,0 +1,22 @@
+[
+ {"id": "lucid_flex_25k", "firm": "Lucid", "name": "LucidFlex 25K", "fee": 64, "activation": 0, "size": 25000, "target": 1250,
+  "mll": 1000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": 0.5, "eval_max_mnq": 20,
+  "fund_consistency": null, "fund_max_tiers": [[0, 10], [1000, 20]], "payout_days": 5, "day_min": 100, "cycle_min": 0,
+  "payout_frac": 0.5, "caps": [1000], "min_req": 500, "buffer": 0, "split": 0.9, "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026; fee $64 paid by the owner (Oct 2026)"},
+ {"id": "lucid_pro_25k", "firm": "Lucid", "name": "LucidPro 25K", "fee": 64, "activation": 0, "size": 25000, "target": 1250,
+  "mll": 1000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": null, "eval_max_mnq": 20,
+  "fund_consistency": 0.4, "fund_max_tiers": [[0, 20]], "payout_days": 3, "day_min": 0, "cycle_min": 250,
+  "payout_frac": 1.0, "caps": [1000, 1500], "min_req": 500, "buffer": 100, "split": 0.9, "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026; fee assumed equal to Flex ($64) - verify"},
+ {"id": "lucid_flex_50k", "firm": "Lucid", "name": "LucidFlex 50K", "fee": 104, "activation": 0, "size": 50000, "target": 3000,
+  "mll": 2000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": 0.5, "eval_max_mnq": 40,
+  "fund_consistency": null, "fund_max_tiers": [[0, 20], [2000, 40]], "payout_days": 5, "day_min": 150, "cycle_min": 0,
+  "payout_frac": 0.5, "caps": [2000], "min_req": 500, "buffer": 0, "split": 0.9, "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026 (funded scaling tiers approximate); fee $104 paid by the owner"},
+ {"id": "lucid_pro_50k", "firm": "Lucid", "name": "LucidPro 50K", "fee": 104, "activation": 0, "size": 50000, "target": 3000,
+  "mll": 2000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": null, "eval_max_mnq": 40,
+  "fund_consistency": 0.4, "fund_max_tiers": [[0, 40]], "payout_days": 3, "day_min": 0, "cycle_min": 500,
+  "payout_frac": 1.0, "caps": [2000, 2500], "min_req": 500, "buffer": 100, "split": 0.9, "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026 (eval daily loss limit $1,200 not modelled); fee assumed $104"}
+]

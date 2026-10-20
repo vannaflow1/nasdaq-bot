@@ -128,6 +128,27 @@ SELF_KEYS = {r"overfit|data.snooping|multiple (testing|hypothes)|false discover|
              r"uncertainty|ensemble": 2,
              r"time series|forecast": 2, r"trading|financ|market": 1}
 SELF_STATE = os.path.join(K, "self_track.json")
+# third track (Volta's mission since Oct 2026): everything about prop-firm trading - passing evaluations and collecting
+# payouts. Convex payoffs (an eval is an option: lose the fee, win payouts), drawdown-constrained sizing, ruin and
+# first-passage probabilities, trader incentive contracts, risk management under trailing limits.
+PROP_TOPICS = ["proprietary trading firm traders performance", "funded trader evaluation program", "optimal betting drawdown constraint",
+               "Kelly criterion drawdown", "portfolio optimization maximum drawdown constraint", "gambler's ruin probability",
+               "first passage time random walk barrier", "convex compensation risk taking fund managers", "option-like incentive contracts traders",
+               "tournament behavior mutual fund managers", "risk shifting convex payoff", "day trader profitability",
+               "intraday momentum stock index futures", "optimal stopping trading", "position sizing risk of ruin",
+               "time-varying volatility position sizing volatility targeting", "trailing stop optimal", "optimal stop loss rules",
+               "barrier probability Brownian motion drift", "high water mark incentive fees", "risk management trading limits",
+               "expected utility of a lottery-like payoff", "prospect theory trading", "retail traders futures losses",
+               "volatility managed portfolios", "opening range breakout futures", "time series momentum futures intraday",
+               "risk of ruin capital requirements trading"]
+PROP_KEYS = {r"drawdown|ruin|first.passage|barrier|absorbing|survival|stopping time": 4,
+             r"kelly|optimal (bet|growth|leverage|position|sizing)|fractional|bet siz": 4,
+             r"convex|option.like|incentive|compensation|high.water|tournament|risk.shifting|fee structure": 4,
+             r"proprietary trad|prop(rietary)? firm|funded trader|evaluation|day.?trad": 4,
+             r"stop.loss|trailing stop|take.profit|profit target": 3,
+             r"volatility (target|managed|scaling)|risk management|risk limit|value.at.risk": 3,
+             r"intraday|futures|momentum|breakout|opening range": 2, r"trading|financ|market|portfolio": 1}
+PROP_STATE = os.path.join(K, "prop_track.json")
 
 
 def self_score(text, title=""):
@@ -136,12 +157,14 @@ def self_score(text, title=""):
     return s - (6 if re.search(NEG, t) else 0)
 
 
-def self_papers(n=2):
-    """1-2 well-cited open-access papers per run about methods Volta can use on itself."""
-    st = json.load(open(SELF_STATE)) if os.path.exists(SELF_STATE) else {"topic": 0, "page": {}}
+def self_papers(n=2, track="self"):
+    """1-2 well-cited open-access papers per run about methods Volta can use on itself (track "self") or about prop-firm
+    trading (track "prop", Volta's mission)."""
+    topics, state = (PROP_TOPICS, PROP_STATE) if track == "prop" else (SELF_TOPICS, SELF_STATE)
+    st = json.load(open(state)) if os.path.exists(state) else {"topic": 0, "page": {}}
     out = []
     for _ in range(3):
-        t = SELF_TOPICS[st["topic"] % len(SELF_TOPICS)]; pg = st["page"].get(t, 1)
+        t = topics[st["topic"] % len(topics)]; pg = st["page"].get(t, 1)
         st["topic"] += 1; st["page"][t] = pg + 1
         u = ("https://api.openalex.org/works?" + urllib.parse.urlencode({
             "search": t, "filter": "is_oa:true,has_abstract:true", "sort": "cited_by_count:desc", "per-page": 8, "page": pg,
@@ -154,11 +177,11 @@ def self_papers(n=2):
             inv = w.get("abstract_inverted_index") or {}
             ab = " ".join(k for _, k in sorted((p, k) for k, ps in inv.items() for p in ps))
             if w.get("title") and len(ab) >= 200:
-                out.append({"id": "openalex:" + w["id"].rsplit("/", 1)[-1], "title": w["title"], "abstract": ab, "track": "self",
+                out.append({"id": "openalex:" + w["id"].rsplit("/", 1)[-1], "title": w["title"], "abstract": ab, "track": track,
                             "url": (w.get("open_access") or {}).get("oa_url") or w.get("doi") or w["id"],
-                            "source": "OpenAlex (about itself)", "topic": "self: " + t})
+                            "source": "OpenAlex (prop mission)" if track == "prop" else "OpenAlex (about itself)", "topic": f"{track}: " + t})
         if len(out) >= 8: break
-    json.dump(st, open(SELF_STATE, "w"))
+    json.dump(st, open(state, "w"))
     return out
 
 
@@ -327,6 +350,18 @@ def main(max_new=10):
             new += sorted(cand, key=lambda p: -p["score"])[:2 - waiting]
     except Exception as e:
         errs.append(f"self: {type(e).__name__}")
+    try:                                                     # prop track (the mission): keep ~3 papers waiting, read first
+        waiting = sum(1 for q in queue if q.get("track") == "prop")
+        if waiting < 3:
+            cand = []
+            for p in self_papers(track="prop"):
+                if p["id"] in seen or any(q["id"] == p["id"] for q in queue): continue
+                t = (p["title"] + " " + p["abstract"]).lower()
+                p["score"] = sum(w for k, w in PROP_KEYS.items() if re.search(k, t)) - (6 if re.search(NEG, t) else 0); seen.add(p["id"])
+                if p["score"] >= 4: cand.append(p)
+            new += sorted(cand, key=lambda p: -p["score"])[:3 - waiting]
+    except Exception as e:
+        errs.append(f"prop: {type(e).__name__}")
     for p in new:
         p["abstract"] = p["abstract"][:2500]; p["queued"] = datetime.now(timezone.utc).date().isoformat()
     queue += new
