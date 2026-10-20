@@ -3,3 +3,4 @@ numpy
 tzdata
 pypdf
 arch
+pyarrow
