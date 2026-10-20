@@ -33,10 +33,13 @@ LOG, EXAMS = os.path.join(K, "strategies.jsonl"), os.path.join(K, "strategy_exam
 STATIC = ["open", "yday_high", "yday_low", "yday_close", "yday_mid", "asia_high", "asia_low", "london_high", "london_low",
           "on_high", "on_low", "midnight_open", "or15_high", "or15_low"]
 DYNAMIC = ["vwap", "vwap_up1", "vwap_dn1", "vwap_up2", "vwap_dn2"]
+STATIC += ["pivot", "r1", "s1", "r2", "s2", "exp50_up", "exp50_dn", "exp70_up", "exp70_dn", "exp90_up", "exp90_dn"]
 LEVELS = STATIC + DYNAMIC
 LEVEL_HELP = ("open (NY open 08:30 CT), yday_high/yday_low/yday_close/yday_mid (yesterday's NY session), asia_high/asia_low "
               "(18:00-02:00 CT), london_high/london_low (02:00-07:00 CT), on_high/on_low (whole overnight), midnight_open "
-              "(00:00 New York), or15_high/or15_low (first 15 minutes, usable from 08:45), vwap and its 1/2 standard-deviation "
+              "(00:00 New York), or15_high/or15_low (first 15 minutes, usable from 08:45), pivot/r1/s1/r2/s2 (classic floor "
+              "pivots from yesterday), exp50_up/exp50_dn/exp70_up/exp70_dn/exp90_up/exp90_dn (open +- 50/70/90% of Volta's expected "
+              "day range: exhaustion levels), vwap and its 1/2 standard-deviation "
               "bands vwap_up1/vwap_dn1/vwap_up2/vwap_dn2 (anchored at midnight New York)")
 
 
@@ -81,6 +84,14 @@ def level_path(D, i, name):
         h, l = D["H"][i][:15].max(), D["L"][i][:15].min()
         p = np.full(390, np.nan); p[15:] = h if name == "or15_high" else l; return p
     if name == "open": return np.full(390, D["O"][i][0])
+    if name in ("pivot", "r1", "s1", "r2", "s2"):                       # classic floor pivots from yesterday's NY session
+        yh, yl, yc = (float(M.get(k, np.nan)) for k in ("yday_high", "yday_low", "yday_close"))
+        P = (yh + yl + yc) / 3
+        v = {"pivot": P, "r1": 2 * P - yl, "s1": 2 * P - yh, "r2": P + (yh - yl), "s2": P - (yh - yl)}[name]
+        return np.full(390, v)
+    if name.startswith("exp"):                                            # exhaustion levels: open +- 50/70/90% of the brain's expected range
+        k = int(name[3:5]) / 100; R = float(M.get("fc_frac", np.nan)) * D["O"][i][0]
+        return np.full(390, D["O"][i][0] + (k if name.endswith("up") else -k) * R)
     v = M.get(name, np.nan)
     return np.full(390, float(v) if pd.notna(v) else np.nan)
 
