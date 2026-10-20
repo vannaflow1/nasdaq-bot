@@ -122,14 +122,21 @@ def main():
     R = pd.read_csv(RES) if os.path.exists(RES) else pd.DataFrame()
     ALL = all_results()
     done = set(ALL.spec_id) if len(ALL) else set()
-    G = [g for j, g in enumerate(grid()) if j % SHARDS == SHARD]; tried = validated = 0; new_rows = []
+    G_all = [g for j, g in enumerate(grid()) if j % SHARDS == SHARD]; tried = validated = 0; new_rows = []
+    GM = {mk: [g for g in G_all if g.get("market", "NQ") == mk] for mk in MARKETS}
+    pref = preferences(ALL)                                    # Volta's market focus, learned from its own results
+    st.setdefault("pos_m", {mk: 0 for mk in MARKETS})
+    print("market focus:", pref["weights"], "|", pref["why"])
+    G = G_all
     while time.time() - t0 < BUDGET_MIN * 60:
         if rng.random() < 0.3 and len(ALL) and (ALL.get("ev_val", pd.Series(dtype=float)) > 0).any():
             top = ALL[ALL.ev_val > 0].sort_values("ev_val", ascending=False).head(20)
             spec = mutate(json.loads(top.sample(1, random_state=rng.randint(0, 10**6)).spec.iloc[0]), rng)
         else:
-            if st["pos"] >= len(G): st["pos"] = 0
-            spec = G[st["pos"]]; st["pos"] += 1
+            mk = rng.choices(list(pref["weights"]), weights=list(pref["weights"].values()))[0]
+            Gm = GM[mk]
+            if st["pos_m"].get(mk, 0) >= len(Gm): st["pos_m"][mk] = 0
+            spec = Gm[st["pos_m"].get(mk, 0)]; st["pos_m"][mk] = st["pos_m"].get(mk, 0) + 1
         try:
             S.validate(spec); sid = S.spec_id(spec)
         except Exception:
@@ -172,7 +179,47 @@ def main():
             R.loc[i, "exam"] = verdict[:300]; exams.append((c["name"], verdict))
     R.to_csv(RES, index=False)
     st["nights"] += 1; json.dump(st, open(STATE, "w"))
-    write_status(all_results(), len(grid()), st, tried, validated, exams)
+    pref = preferences(all_results(), save=(SHARD == 0))
+    write_status(all_results(), len(grid()), st, tried, validated, exams, pref)
+
+
+BASE_FOCUS = {"NQ": 0.50, "GC": 0.25, "CL": 0.25}           # the owner's starting split
+PREF = os.path.join(OUT, "preferences.json")
+
+
+def preferences(A=None, save=False):
+    """Volta's market focus. Starts at the owner's split (NQ 50 / GC 25 / CL 25). Once every market has 300+ tested
+    strategies, the split follows the evidence: each market's smoothed rate of strategies that stayed positive on the
+    unseen 2022-23 years, boosted by how good its best validated payouts are. Every market keeps at least 10% so Volta
+    never stops exploring; the focus moves gradually (at most halfway to the new target per run)."""
+    A = all_results() if A is None else A
+    old = json.load(open(PREF)) if os.path.exists(PREF) else {"weights": dict(BASE_FOCUS), "history": []}
+    if not len(A) or "spec" not in A:
+        return old if "why" in old else {**old, "why": "owner's starting split - not enough results yet"}
+    mk = A.spec.map(lambda x: json.loads(x).get("market", "NQ") if isinstance(x, str) else "NQ")
+    stats = {}
+    for m in MARKETS:
+        a = A[mk == m]; ev = a.get("ev_val", pd.Series(dtype=float)); evp = ev[ev > 0] if len(a) else ev
+        stats[m] = {"tested": int(len(a)), "validated": int((ev > 0).sum()) if len(a) else 0,
+                    "top5": float(evp.sort_values(ascending=False).head(5).mean()) if len(evp) else 0.0}
+    if min(v["tested"] for v in stats.values()) < 300:
+        w = dict(old["weights"]); why = "owner's starting split until every market has 300+ tested strategies (" + \
+            ", ".join(f"{m} {v['tested']}" for m, v in stats.items()) + ")"
+    else:
+        rate = {m: (v["validated"] + 1) / (v["tested"] + 50) for m, v in stats.items()}; mr = np.mean(list(rate.values()))
+        perf = {m: (rate[m] / mr) * (1 + max(stats[m]["top5"], 0) / 200) for m in MARKETS}
+        tgt = {m: BASE_FOCUS[m] * perf[m] for m in MARKETS}; t = sum(tgt.values()); tgt = {m: v / t for m, v in tgt.items()}
+        w = {m: 0.5 * old["weights"].get(m, BASE_FOCUS[m]) + 0.5 * tgt[m] for m in MARKETS}
+        w = {m: max(v, 0.10) for m, v in w.items()}; t = sum(w.values()); w = {m: round(v / t, 3) for m, v in w.items()}
+        why = "evidence: " + ", ".join(f"{m} {stats[m]['validated']}/{stats[m]['tested']} held up on 2022-23"
+                                       + (f" (top EV {stats[m]['top5']:+.0f})" if stats[m]["top5"] else "") for m in MARKETS)
+    out = {"weights": w, "why": why, "stats": stats, "history": (old.get("history") or [])[-60:]}
+    if save:
+        moved = [m for m in MARKETS if abs(w[m] - old["weights"].get(m, BASE_FOCUS[m])) >= 0.10]
+        out["history"].append({"date": datetime.now(timezone.utc).date().isoformat(), "weights": w})
+        out["shifted"] = moved
+        json.dump(out, open(PREF, "w"), indent=1)
+    return out
 
 
 def all_results():
@@ -181,13 +228,16 @@ def all_results():
     return pd.concat([pd.read_csv(f) for f in fs], ignore_index=True) if fs else pd.DataFrame()
 
 
-def write_status(R, gsize, st, tried, validated, exams):
+def write_status(R, gsize, st, tried, validated, exams, pref=None):
     tot = len(R); a = R[(R.get("ev", 0) > 0) & (R.get("n", 0) >= 150)] if tot else R
     v = R[R.get("ev_val", pd.Series(dtype=float)) > 0] if "ev_val" in R else R.iloc[0:0]
     lines = [f"PROP STRATEGY SEARCH - run {st['nights']} (job {SHARD + 1}/{SHARDS}): {tried} new strategies this run, {tot:,} tested in total "
              f"(grid {gsize:,} + mutations, {tot / gsize:.1%} covered)",
              f"Stage A (2014-21, EV after fee > 0): {len(a)} | Stage B (still positive on unseen 2022-23): {len(v)} | "
              f"exams taken: {int(R['exam'].notna().sum()) if 'exam' in R else 0}"]
+    if pref:
+        lines.append("Market focus: " + " / ".join(f"{m} {v:.0%}" for m, v in pref["weights"].items()) + f"  ({pref['why'][:200]})")
+        if pref.get("shifted"): lines.append("FOCUS SHIFT: Volta moved its attention (" + ", ".join(pref["shifted"]) + ") based on its own test results.")
     if len(v):
         lines += ["", "LEADERBOARD (ranked by EV per eval on unseen 2022-23):"]
         for _, r in v.sort_values("ev_val", ascending=False).head(6).iterrows():

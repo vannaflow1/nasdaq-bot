@@ -484,6 +484,9 @@ testable intraday strategy inspired by the research below and by what Volta alre
 - PROP BASELINE: simple daily brackets at the open with NO edge pay ~$0-70 per evaluation (fee $64-104) -> the structure
   alone does not pay; you need an edge AND sizing/shape that fits the rules (use the "prop" sizing block).
 - SMT divergence as a trade and every "tilt" so far failed after stops and costs.
+- MARKETS: you can design for NQ, GC (gold) or CL (crude oil) with "market". """ + (lambda: (lambda p: (
+      "Your current market focus from your own search results: " + " / ".join(f"{m} {v:.0%}" for m, v in p["weights"].items())
+      + " - design for markets in roughly that proportion."))(__import__("prop_search").preferences()))() + """
 """ + (lambda L: ("- WHAT I READ ABOUT PROP TRADING (paper -> lesson): " + " || ".join(L)) if L else "")(
       [f"{x['title'][:60]} -> {x['lesson'][:160]}" for x in lib if x.get("track") == "prop" and x.get("lesson")][-5:]) + """
 Strategy format:
