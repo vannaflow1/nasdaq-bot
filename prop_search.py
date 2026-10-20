@@ -42,25 +42,40 @@ EXITS = ["14:55", "11:30"]
 SIZINGS = [{"risk": 0.12, "eval_risk": 0.2}, {"risk": 0.2, "eval_risk": 0.35}, {"risk": 0.3, "eval_risk": 0.5}]
 
 
+MARKETS = ["NQ", "GC", "CL"]          # Nasdaq, gold, crude oil (micros: MNQ / MGC / MCL)
+OWN_SIDES = {"long": "long", "short": "short", "with its gap": "own:gap", "fade its gap": "own:-gap",
+             "with its move since midnight": "own:mid", "against its move since midnight": "own:-mid",
+             "with its overnight-range side": "own:pos", "against its overnight-range side": "own:-pos"}
+OTHER_FILTERS = ["every day", "calm VIX (below 60d avg)", "VIX curve inverted", "not Monday", "Fri",
+                 "no red-folder news", "red-folder news day", "no FOMC"]
+
+
 def grid():
-    """Every grid point as a spec (deterministic order, shuffled with a fixed seed)."""
+    """Every grid point as a spec (deterministic order, shuffled with a fixed seed). Gold and oil use stops sized by
+    their own expected range (point stops are NQ-sized) and skip the NQ-only power filters."""
     G = []
-    for t, (sn, sd), (fn, fl), st, tg, ex in itertools.product(TIMES, SIDES.items(), FILTERS.items(), STOPS, TARGETS, EXITS):
-        if ex == "11:30" and t >= "10:30": continue
-        G.append({"kind": "strategy", "name": f"{sn} at {t}, {fn}", "entry": {"type": "time", "at": t, "side": sd},
-                  **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": ex})
-    for (up, dn), act, w, (fn, fl), st, tg in itertools.product(LEVEL_SETS, ("fade", "break"), WINDOWS, FILTERS.items(), STOPS, TARGETS):
-        if up.startswith("or15") and w[0] < "08:45": continue
-        for lv in (up, dn):
-            G.append({"kind": "strategy", "name": f"{act} {lv} {w[0]}-{w[1]}, {fn}", "entry": {"type": "level", "level": lv, "action": act, "window": w},
-                      **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": "14:55"})
+    for mk in MARKETS:
+        stops = STOPS if mk == "NQ" else [x for x in STOPS if "range" in x]
+        filters = FILTERS if mk == "NQ" else {k: v for k, v in FILTERS.items() if k in OTHER_FILTERS}
+        sides = SIDES if mk == "NQ" else OWN_SIDES
+        tag = "" if mk == "NQ" else f"[{mk}] "
+        for t, (sn, sd), (fn, fl), st, tg, ex in itertools.product(TIMES, sides.items(), filters.items(), stops, TARGETS, EXITS):
+            if ex == "11:30" and t >= "10:30": continue
+            G.append({"kind": "strategy", "market": mk, "name": f"{tag}{sn} at {t}, {fn}", "entry": {"type": "time", "at": t, "side": sd},
+                      **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": ex})
+        for (up, dn), act, w, (fn, fl), st, tg in itertools.product(LEVEL_SETS, ("fade", "break"), WINDOWS, filters.items(), stops, TARGETS):
+            if up.startswith("or15") and w[0] < "08:45": continue
+            for lv in (up, dn):
+                G.append({"kind": "strategy", "market": mk, "name": f"{tag}{act} {lv} {w[0]}-{w[1]}, {fn}",
+                          "entry": {"type": "level", "level": lv, "action": act, "window": w},
+                          **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": "14:55"})
     random.Random(2026).shuffle(G)
     return G
 
 
 def mutate(spec, rng):
     s = json.loads(json.dumps(spec)); k = rng.choice(["stop", "target", "filter", "time", "exit", "window"])
-    if k == "stop": s["stop"] = rng.choice(STOPS)
+    if k == "stop": s["stop"] = rng.choice(STOPS if (s.get("market") or "NQ") == "NQ" else [x for x in STOPS if "range" in x])
     elif k == "target": s["target"] = rng.choice(TARGETS)
     elif k == "filter":
         fn, fl = rng.choice(list(FILTERS.items())); s.pop("filter", None)
@@ -73,8 +88,16 @@ def mutate(spec, rng):
     return s
 
 
+def stage_idx(S, spec, stage):
+    ses = S.data(spec.get("market"))["M"].session.values
+    return np.where(ses <= SEARCH_END)[0] if stage == "A" else np.where((ses > SEARCH_END) & (ses <= VAL_END))[0]
+
+
 def score(spec, X, D, S, P, idx, plan=None, sizings=SIZINGS):
-    """Backtest on the sessions idx, then the prop simulator for each sizing (all plans, or one). Returns rows."""
+    """Backtest on the sessions idx (or "A"/"B" = search/validation years of the spec's market), then the prop simulator
+    for each sizing (all plans, or one). Returns rows."""
+    if isinstance(idx, str): idx = stage_idx(S, spec, idx)
+    D = S.data(spec.get("market"))
     T = S.backtest(spec, X, idx)
     if len(T) < 30: return [], T
     m = S.metrics(T); rows = []
@@ -114,7 +137,7 @@ def main():
         if sid in done: continue
         done.add(sid); tried += 1
         try:
-            rows, T = score(spec, X, D, S, None, idxA)
+            rows, T = score(spec, X, D, S, None, "A")
         except Exception as e:
             print("skip", spec["name"], type(e).__name__, e); continue
         best = max(rows, key=lambda r: r["ev"]) if rows else None
@@ -122,7 +145,7 @@ def main():
         if best: row.update({k: best[k] for k in ("n", "win", "avg_R", "years_pos", "plan", "risk", "eval_risk", "pass", "paid", "ev", "fee")})
         if best and best["n"] >= 150 and best["ev"] > 0:          # stage B: validation on 2022-2023, never used to choose
             sz = {"risk": best["risk"], "eval_risk": best["eval_risk"]}
-            vr, _ = score(spec, X, D, S, None, idxB, plan=best["plan"], sizings=[sz])
+            vr, _ = score(spec, X, D, S, None, "B", plan=best["plan"], sizings=[sz])
             if vr:
                 row.update({"n_val": vr[0]["n"], "pass_val": vr[0]["pass"], "paid_val": vr[0]["paid"], "ev_val": vr[0]["ev"]})
                 validated += 1

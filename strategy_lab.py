@@ -53,23 +53,47 @@ class Bad(Exception):
 _DATA = {}
 
 
-def data():
+MARKETS = {  # tick, round-trip cost in points, $ per point for the MICRO contract (prop accounts trade micros)
+    "NQ": {"tick": 0.25, "comm": 0.25, "pv": 2.0, "micro": "MNQ"},
+    "GC": {"tick": 0.10, "comm": 0.10, "pv": 10.0, "micro": "MGC"},
+    "CL": {"tick": 0.01, "comm": 0.01, "pv": 100.0, "micro": "MCL"}}
+
+
+def data(market="NQ"):
+    market = (market or "NQ").upper()
+    if market != "NQ":
+        if market not in _MK:
+            z = np.load(os.path.join(K, f"strat_bars_{market.lower()}.npz"))
+            D = {k: z[k].astype(np.float64) for k in ("O", "H", "L", "C", "V")}
+            M = pd.read_csv(os.path.join(K, f"strat_sessions_{market.lower()}.csv"))
+            M["yday_mid"] = (M.yday_high + M.yday_low) / 2
+            _add_vol_cols(D, M); M.attrs["pv"] = MARKETS[market]["pv"]; D["M"] = M; D.update(MARKETS[market]); D["market"] = market
+            _MK[market] = D
+        return _MK[market]
     if not _DATA:
         z = np.load(os.path.join(K, "strat_bars.npz"))
         _DATA.update({k: z[k].astype(np.float64) for k in ("O", "H", "L", "C", "V")})
+        _DATA.update(MARKETS["NQ"]); _DATA["market"] = "NQ"
         M = pd.read_csv(os.path.join(K, "strat_sessions.csv"))
         M["yday_mid"] = (M.yday_high + M.yday_low) / 2
-        # ATR (14 sessions, NY range, past only) and EWMA volatility (lambda 0.94, close-to-close, past only)
-        C = _DATA["C"][:, -1]; rng_ = _DATA["H"].max(1) - _DATA["L"].min(1)
-        M["atr14"] = pd.Series(rng_).shift(1).rolling(14, min_periods=5).mean().values
-        r = pd.Series(np.log(C)).diff()
-        var = np.full(len(r), np.nan); v = np.nanvar(r.values[1:60]) if len(r) > 60 else 1e-4
-        for j in range(1, len(r)):
-            var[j] = v                                          # variance known BEFORE session j
-            if np.isfinite(r.iloc[j]): v = 0.94 * v + 0.06 * r.iloc[j] ** 2
-        M["ewma_sd"] = np.sqrt(var)
+        _add_vol_cols(_DATA, M); M.attrs["pv"] = 2.0
         _DATA["M"] = M
     return _DATA
+
+
+_MK = {}
+
+
+def _add_vol_cols(D, M):
+    """ATR (14 sessions, past only) and EWMA volatility (lambda 0.94, close-to-close, known before each session)."""
+    C = D["C"][:, -1]; rng_ = D["H"].max(1) - D["L"].min(1)
+    M["atr14"] = pd.Series(rng_).shift(1).rolling(14, min_periods=5).mean().values
+    r = pd.Series(np.log(C)).diff()
+    var = np.full(len(r), np.nan); v = np.nanvar(r.values[1:60]) if len(r) > 60 else 1e-4
+    for j in range(1, len(r)):
+        var[j] = v
+        if np.isfinite(r.iloc[j]): v = 0.94 * v + 0.06 * r.iloc[j] ** 2
+    M["ewma_sd"] = np.sqrt(var)
 
 
 def mins(hhmm):
@@ -116,6 +140,7 @@ def level_path(D, i, name):
 
 def validate(spec):
     if not isinstance(spec, dict): raise Bad("spec must be an object")
+    if (spec.get("market") or "NQ").upper() not in MARKETS: raise Bad(f"market must be one of {', '.join(MARKETS)}")
     e = spec.get("entry") or {}
     if e.get("type") not in ("level", "time"): raise Bad("entry.type must be level or time")
     if e["type"] == "level":
@@ -125,6 +150,8 @@ def validate(spec):
         if not (0 <= mins(w[0]) < mins(w[1]) <= 385): raise Bad("window must be within 08:30-14:55")
     else:
         if not (0 <= mins(e.get("at", "")) <= 380): raise Bad("entry.at must be 08:30-14:50")
+        sd = str(e.get("side", "long"))
+        if sd.startswith("own:") and sd[4:].lstrip("-") not in ("gap", "mid", "pos"): raise Bad("own: side must be gap, mid or pos")
     st, tg = spec.get("stop") or {}, spec.get("target") or {}
     if not (("points" in st and 2 <= float(st["points"]) <= 200) or ("range" in st and 0.03 <= float(st["range"]) <= 1.5)):
         raise Bad("stop must be {points: 2-200} or {range: 0.03-1.5}")
@@ -138,7 +165,7 @@ def validate(spec):
 def _filters(spec, X):
     """Per-session trade side/filter arrays from formulas over known columns (leak-guarded by the engine)."""
     import test_engine as T
-    D = data(); M = D["M"]; n = len(M); dates = pd.to_datetime(M.date)
+    D = data(spec.get("market")); M = D["M"]; n = len(M); dates = pd.to_datetime(M.date)
     allow = np.ones(n, bool); side = np.zeros(n)
     if spec.get("filter"):
         f = T.evaluate(spec["filter"], X); allow = (f.reindex(dates).values > 0)
@@ -146,6 +173,11 @@ def _filters(spec, X):
     if e["type"] == "time":
         sd = e.get("side", "long")
         if sd in ("long", "short"): side[:] = 1 if sd == "long" else -1
+        elif sd.startswith("own:"):                            # direction from THIS market's own pre-open moves
+            k = sd[4:]; neg = k.startswith("-"); k = k.lstrip("-")
+            v = {"gap": M.open - M.yday_close, "mid": M.open - M.midnight_open,
+                 "pos": (M.open - M.on_low) / (M.on_high - M.on_low).replace(0, np.nan) - 0.5}[k].values
+            side = np.sign(np.nan_to_num(v)) * (-1 if neg else 1)
         else:
             s = T.evaluate(sd, X).reindex(dates).values; side = np.sign(np.nan_to_num(s))
     return allow, side
@@ -154,18 +186,19 @@ def _filters(spec, X):
 def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, stop_mult=1.0, tgt_mult=1.0, win_shift=0):
     """One session -> (pnl points, R, side) or None if no trade."""
     O, H, L, C = D["O"][i], D["H"][i], D["L"][i], D["C"][i]; M = D["M"].iloc[i]
+    tk, cm = D.get("tick", TICK), D.get("comm", COMM)
     e = spec["entry"]; xe = min(mins(spec.get("exit", "14:55")), 389)
     st = spec["stop"]
     stop_pts = float(st["points"]) if "points" in st else float(st["range"]) * float(M.fc_frac) * O[0]
     if not np.isfinite(stop_pts): return None
-    stop_pts = max(round(stop_pts * stop_mult / TICK) * TICK, 2.0)
+    stop_pts = max(round(stop_pts * stop_mult / tk) * tk, 8 * tk)
     if entry_override is not None:                                     # placebo: market entry at a random minute
         k, s = entry_override
-        ep = O[k] + s * TICK
+        ep = O[k] + s * tk
     elif e["type"] == "time":
         k = mins(e["at"]); s = side
         if s == 0: return None
-        ep = O[k] + s * TICK
+        ep = O[k] + s * tk
     else:
         w0 = max(mins(e.get("window", ["08:30"])[0]), 0); w1 = min(mins(e.get("window", ["08:30", "11:00"])[1]) + win_shift, xe - 1)
         lv = level_path(D, i, e["level"])
@@ -173,20 +206,20 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
         if w1 <= w0 or not np.isfinite(lv[w0]): return None
         ref = O[w0] if w0 == 0 else C[w0 - 1]
         above = lv[w0] > ref
-        if abs(lv[w0] - ref) < TICK: return None
+        if abs(lv[w0] - ref) < tk: return None
         if e["action"] == "fade":
             s = -1 if above else 1
-            hit = (H[w0:w1 + 1] >= lv[w0:w1 + 1] + TICK) if above else (L[w0:w1 + 1] <= lv[w0:w1 + 1] - TICK)
+            hit = (H[w0:w1 + 1] >= lv[w0:w1 + 1] + tk) if above else (L[w0:w1 + 1] <= lv[w0:w1 + 1] - tk)
         else:
             s = 1 if above else -1
-            hit = (H[w0:w1 + 1] >= lv[w0:w1 + 1] + TICK) if above else (L[w0:w1 + 1] <= lv[w0:w1 + 1] - TICK)
+            hit = (H[w0:w1 + 1] >= lv[w0:w1 + 1] + tk) if above else (L[w0:w1 + 1] <= lv[w0:w1 + 1] - tk)
         if not hit.any(): return None
         k = w0 + int(np.argmax(hit)); lvl = lv[k]
         conf = e.get("confluence")                                    # only trade if another level sits close by
         if conf:
             near = [abs(level_path(D, i, c)[k] - lvl) for c in conf.get("levels", []) if c != e["level"] and c in LEVELS]
             if not any(np.isfinite(x) and x <= float(conf.get("within", 10)) for x in near): return None
-        ep = lvl if e["action"] == "fade" else lvl + s * 2 * TICK
+        ep = lvl if e["action"] == "fade" else lvl + s * 2 * tk
     if k >= xe: return None
     stop = ep - s * stop_pts
     tg = spec["target"]
@@ -194,28 +227,28 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
     elif "points" in tg: tgt = ep + s * float(tg["points"]) * tgt_mult
     else:
         tl = level_path(D, i, tg["level"])[k]
-        if not np.isfinite(tl) or (tl - ep) * s <= 2 * TICK: return None
+        if not np.isfinite(tl) or (tl - ep) * s <= 2 * tk: return None
         tgt = tl
     # fill bar: only the stop can hit (pessimistic)
     if (s == 1 and L[k] <= stop) or (s == -1 and H[k] >= stop):
-        xp = stop - s * TICK
+        xp = stop - s * tk
     else:
         j0, j1 = k + 1, xe
         if j0 >= j1:
-            xp = O[xe] - s * TICK
+            xp = O[xe] - s * tk
         else:
             hs = (L[j0:j1] <= stop) if s == 1 else (H[j0:j1] >= stop)
-            ht = (H[j0:j1] >= tgt + TICK) if s == 1 else (L[j0:j1] <= tgt - TICK)
+            ht = (H[j0:j1] >= tgt + tk) if s == 1 else (L[j0:j1] <= tgt - tk)
             a = int(np.argmax(hs)) if hs.any() else 10 ** 6; b = int(np.argmax(ht)) if ht.any() else 10 ** 6
-            if a == b == 10 ** 6: xp = O[xe] - s * TICK                   # time exit at the exit bar's open
-            elif a <= b: xp = stop - s * TICK                             # stop first (or same bar)
+            if a == b == 10 ** 6: xp = O[xe] - s * tk                   # time exit at the exit bar's open
+            elif a <= b: xp = stop - s * tk                             # stop first (or same bar)
             else: xp = tgt
-    pnl = (xp - ep) * s - COMM * cost_mult
+    pnl = (xp - ep) * s - cm * cost_mult
     return pnl, pnl / stop_pts, s, k
 
 
 def backtest(spec, X, sessions=None, **kw):
-    D = data(); M = D["M"]
+    D = data(spec.get("market")); M = D["M"]
     allow, side = _filters(spec, X)
     idx = np.arange(len(M)) if sessions is None else sessions
     rows = []
@@ -238,7 +271,7 @@ def metrics(T):
 
 def placebo(spec, T, reps=100, seed=7):
     """Same days, same side, same stop/target and exit - but entered at a random minute instead of the strategy's entry."""
-    D = data(); rng = np.random.default_rng(seed); e = spec["entry"]
+    D = data(spec.get("market")); rng = np.random.default_rng(seed); e = spec["entry"]
     lo = mins(e["window"][0]) if e["type"] == "level" else 1
     hi = mins(e["window"][1]) if e["type"] == "level" else min(mins(spec.get("exit", "14:55")) - 5, 380)
     lo, hi = max(lo, 1), max(hi, lo + 2)
@@ -258,8 +291,11 @@ def _week():
 
 def _prop_inputs(T, M):
     ses = M.session.values; ses = ses[(ses >= T.session.min()) & (ses <= T.session.max())] if len(T) else ses
-    pts = pd.Series(0.0, index=ses); pts[T.session.values] = T.pnl.values
-    stop = float(np.median(np.abs(T.pnl[T.pnl < 0]))) if (T.pnl < 0).any() else 20.0
+    pv = float(M.attrs.get("pv", 2.0)) if hasattr(M, "attrs") else 2.0
+    eq = T.pnl.values * pv / 2.0                                       # dollars per micro, expressed in MNQ points ($2/pt)
+    pts = pd.Series(0.0, index=ses); pts[T.session.values] = eq
+    neg = np.abs(eq[eq < 0])
+    stop = float(np.median(neg)) if len(neg) else 20.0
     return pts.values, np.where(pts.values != 0, -stop, 0.0), stop
 
 
@@ -287,7 +323,7 @@ def prop_path(spec, X, T, M, out, head):
     the same days under the same rules, survives double costs, then the locked 2024-2026 exam must also pay out > fee."""
     import prop_sim
     best = out["prop"][0]; plan = best["plan"]
-    D = data(); rng = np.random.default_rng(11); e = spec["entry"]
+    D = data(spec.get("market")); rng = np.random.default_rng(11); e = spec["entry"]
     lo = mins(e["window"][0]) if e["type"] == "level" else 1
     hi = mins(e["window"][1]) if e["type"] == "level" else min(mins(spec.get("exit", "14:55")) - 5, 380)
     lo, hi = max(lo, 1), max(hi, lo + 2)
@@ -323,7 +359,7 @@ def prop_path(spec, X, T, M, out, head):
 def evaluate(spec, X, source="engine", name=None):
     """Full protocol. Returns (verdict, how)."""
     validate(spec)
-    D = data(); M = D["M"]
+    D = data(spec.get("market")); M = D["M"]
     ins = np.where(M.session < EXAM_FROM)[0]; exam = np.where(M.session >= EXAM_FROM)[0]
     T = backtest(spec, X, ins); m = metrics(T)
     label = spec.get("name") or name or "strategy"
@@ -383,11 +419,12 @@ def spec_id(spec):
     return hashlib.sha1(json.dumps(spec, sort_keys=True).encode()).hexdigest()[:10]
 
 
-SPEC_HELP = f"""{{"kind": "strategy", "name": "<short name>",
+SPEC_HELP = f"""{{"kind": "strategy", "name": "<short name>", "market": "NQ|GC|CL" (default NQ; GC = gold, CL = crude oil - use range stops there),
    "entry": {{"type": "level", "level": "<LEVEL>", "action": "fade|break", "window": ["08:30", "11:00"],
              "confluence": {{"levels": ["<LEVEL>", "..."], "within": 10}}}}   (confluence optional: trade only if one of
              those levels is within N points of the entry level at the touch)
-         or {{"type": "time", "at": "09:00", "side": "long|short|<formula: > 0 long, < 0 short>"}},
+         or {{"type": "time", "at": "09:00", "side": "long|short|<formula: > 0 long, < 0 short>|own:gap|own:-gap|own:mid|own:-mid|own:pos|own:-pos"}},
+         (own:* = direction from the traded market's own gap / move since midnight / side of its overnight range; "-" = against it)
    "filter": "<optional formula over known columns; trade only when > 0>",
    "stop": {{"points": 15}} or {{"range": 0.25}},   "target": {{"R": 3}} or {{"points": 40}} or {{"level": "<LEVEL>"}},
    "exit": "14:55", "prop": {{"risk": 0.25, "eval_risk": 0.4}}, "explain": "<one line>"}}
