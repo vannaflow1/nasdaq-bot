@@ -1,15 +1,15 @@
-== Tue Oct 20 09:57:09 UTC 2026
+== Tue Oct 20 16:06:33 UTC 2026
 
- ⛅️ wrangler 3.90.0 (update available 4.151.2)
+ ⛅️ wrangler 3.90.0 (update available 4.151.3)
 ----------------------------------------------
 
-Total Upload: 21.49 KiB / gzip: 8.48 KiB
+Total Upload: 21.70 KiB / gzip: 8.54 KiB
 Your worker has access to the following bindings:
 - AI:
   - Name: AI
-Uploaded minivanna (1.71 sec)
-Deployed minivanna triggers (0.07 sec)
-Current Version ID: 17000bb7-025d-4c5e-829c-88b11e744358
+Uploaded minivanna (2.45 sec)
+Deployed minivanna triggers (0.21 sec)
+Current Version ID: 7b74e20a-4c09-4322-a013-8832af2587ab
 
 health check -> Volta is running
 == workers on this account:
