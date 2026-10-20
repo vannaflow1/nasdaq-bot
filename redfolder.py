@@ -8,6 +8,10 @@ from zoneinfo import ZoneInfo
 HERE = os.path.dirname(os.path.abspath(__file__)); CACHE = os.path.join(HERE, "knowledge", "redfolder_week.json")
 NY = ZoneInfo("America/New_York")
 URL = "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
+import re
+# the same 12 event types as the history file (it counts weekly claims and consumer sentiment as red too)
+RED = re.compile(r"\bCPI\b|Non-Farm|Nonfarm|Unemployment Claims|\bPPI\b|Retail Sales|\bGDP\b|ISM (Manufacturing|Services)|"
+                 r"CB Consumer Confidence|Consumer Sentiment|JOLTS|FOMC|Federal Funds Rate", re.I)
 
 
 def week():
@@ -23,7 +27,7 @@ def today_flags(day=None):
     day = str(day or datetime.now(NY).date())
     ev = []
     for e in week():
-        if e.get("country") != "USD" or str(e.get("impact", "")).lower() != "high": continue
+        if e.get("country") != "USD" or not (str(e.get("impact", "")).lower() == "high" or RED.search(e.get("title", ""))): continue
         try:
             t = datetime.fromisoformat(e["date"]).astimezone(NY)
         except Exception:
