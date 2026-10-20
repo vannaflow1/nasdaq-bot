@@ -85,6 +85,11 @@ def main():
     d = plan_data(st); L = lines_for(d)
     if st.get("spx_morning") and (st.get("brain_pred") or {}).get("spx_factor"):
         L.insert(2, st["spx_morning"][0])
+    try:
+        import volta_book
+        L.append(""); L.append(volta_book.armed_line())
+    except Exception as e:
+        print("book line skipped:", e)
     st["plan"] = L; st["plan_data"] = d; json.dump(st, open(STATUS, "w"), indent=1)
     json.dump({"date": str(now.date())}, open(STATE, "w"))
     print("\n".join(L))

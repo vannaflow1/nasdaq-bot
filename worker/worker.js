@@ -21,6 +21,7 @@ const HELP = [
   "/shortvol - short-vol paper trade on high-gamma days + live score",
   "/plan buffer:<$> [stop:<pts>] [contract:MNQ|NQ] - today's size and loss limits for your account",
   "/wishes - Volta's self-check: its diary and what it needs to get better",
+  "/book - Volta as a trader: its virtual prop account, trades, balance and journal",
   "/strategies - the strategy lab: what Volta built and tested, what passed, live forward results",
   "/powers - today's open read: odds for yesterday's high/low, gap fill, tail day, Asia/London levels",
   "/nerd - options nerd: dealer greeks, vol surface, skew, implied moves, max pain",
@@ -157,7 +158,7 @@ Rules:
 
 async function answer(i, env, s) {
   const q = ((i.data.options || []).find((o) => o.name === "question") || {}).value || "";
-  const keys = ["for", "updated", "level", "advice", "live", "gamma", "range", "walls", "brain", "brain_journal", "playbook", "nerd", "shortvol", "powers", "strategies", "wishes", "plan",
+  const keys = ["for", "updated", "level", "advice", "live", "gamma", "range", "walls", "brain", "brain_journal", "playbook", "nerd", "shortvol", "powers", "strategies", "wishes", "plan", "book",
                 "events", "earnings", "trump", "news", "recap"];
   let data = keys.filter((k) => s[k]).map((k) => `## ${k}\n` + (Array.isArray(s[k]) ? s[k].join("\n") : s[k])).join("\n\n");
   data = data.slice(0, 10000);
@@ -330,6 +331,8 @@ export default {
       }
       case "plan":
         return reply(planReply(i, s), true);
+      case "book":
+        return reply((s.book || ["Volta's book opens with the next evening run."]).join("\n"));
       case "wishes":
         return reply((s.wishes || ["Volta's first self-check runs with today's learning runs."]).join("\n"));
       case "strategies":

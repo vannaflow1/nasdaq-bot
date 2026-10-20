@@ -55,6 +55,13 @@ def digest():
     if rec: out.append("RECENT GOOD PAPERS: " + "; ".join(x["title"][:80] for x in rec[-5:]))
     me = [x for x in lib if x.get("track") == "self" and x.get("lesson")][-6:]
     if me: out.append("WHAT I READ ABOUT IMPROVING MYSELF (paper -> lesson): " + " || ".join(f"{x['title'][:70]} -> {x['lesson'][:200]}" for x in me))
+    try:
+        import volta_book
+        a = volta_book.load(); J = _jl(volta_book.JOURNAL)[-5:]
+        out.append(f"MY TRADING BOOK (virtual 25K prop account #{a['account']}, blown so far {a['blown']}): balance ${a['balance']:,.0f}, "
+                   f"{a['trades']} trades. Last journal: " + " | ".join(str(j.get('result') or j.get('decision'))[:80] for j in J))
+    except Exception:
+        pass
     D = _jl(DIARY)
     if D: out.append("MY LAST DIARY ENTRIES: " + " || ".join(d["diary"][:200] for d in D[-3:]))
     return "\n".join(out)
