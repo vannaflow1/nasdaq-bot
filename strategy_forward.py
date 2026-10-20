@@ -79,6 +79,11 @@ def today_known(meta, st):
             return None, None
     except Exception as e:
         print("no evening features:", e); return None, None
+    try:                                                       # today's red-folder news flags (live calendar)
+        import redfolder
+        row.update({k: v for k, v in redfolder.today_flags(meta["session"]).items() if k.startswith("k_")})
+    except Exception as e:
+        print("no news flags:", e)
     pr = st.get("powers_raw") or {}
     if pr.get("date") == meta["session"]:
         row.update({k: v for k, v in pr.items() if k.startswith("pw_")})
