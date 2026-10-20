@@ -1,0 +1,28 @@
+name: macro
+on:
+  schedule:
+    - cron: "15 22 * * 1-5"      # after the US close
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: |
+          python fetch_macro.py 2>&1 | tail -30 > knowledge/macro.log
+          python spx_collect.py 2>&1 | tail -20 > knowledge/spx.log || true
+        env:
+          PYTHONUNBUFFERED: "1"
+      - if: always()
+        run: bash .github/actions_common.sh "macro"

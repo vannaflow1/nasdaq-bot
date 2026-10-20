@@ -1,0 +1,660 @@
+/G87/G79/G82/G75/G73/G78/G71/G32/G80/G65/G80/G69/G82/G32/G78/G79/G46/G32/G50/G48/G52
+/G65/G83/G89/G77/G77/G69/G84/G82/G73/G67/G32/G68/G89/G78/G65/G77/G73/G67/G83/G32/G73/G78
+/G84/G72/G69/G32/G67/G79/G82/G82/G69/G76/G65/G84/G73/G79/G78/G83/G32/G79/G70
+/G71/G76/G79/G66/G65/G76/G32/G69/G81/G85/G73/G84/G89/G32/G65/G78/G68
+/G66/G79/G78/G68/G32/G82/G69/G84/G85/G82/G78/G83
+/G66/G89/G32/G76/G79/G82/G69/G78/G90/G79/G32/G67/G65/G80/G80/G73/G69/G76/G76/G79/G44
+/G82/G79/G66/G69/G82/G84/G32/G70/G46/G32/G69/G78/G71/G76/G69/G32/G65/G78/G68
+/G75/G69/G86/G73/G78/G32/G83/G72/G69/G80/G80/G65/G82/G68
+/G74/G97/G110/G117/G97/G114/G121/G32/G50/G48/G48/G51
+/G69/G85/G82/G79/G80/G69/G65/G78/G32/G67/G69/G78/G84/G82/G65/G76/G32/G66/G65/G78/G75
+/G87/G79/G82/G75/G73/G78/G71/G32/G80/G65/G80/G69/G82/G32/G83/G69/G82/G73/G69/G83
+
+/G87/G79/G82/G75/G73/G78/G71/G32/G80/G65/G80/G69/G82/G32/G78/G79/G46/G32/G50/G48/G52
+/G65/G83/G89/G77/G77/G69/G84/G82/G73/G67/G32/G68/G89/G78/G65/G77/G73/G67/G83/G32/G73/G78
+/G84/G72/G69/G32/G67/G79/G82/G82/G69/G76/G65/G84/G73/G79/G78/G83/G32/G79/G70
+/G71/G76/G79/G66/G65/G76/G32/G69/G81/G85/G73/G84/G89/G32/G65/G78/G68
+/G66/G79/G78/G68/G32/G82/G69/G84/G85/G82/G78/G83/G49
+/G66/G89/G32/G76/G79/G82/G69/G78/G90/G79/G32/G67/G65/G80/G80/G73/G69/G76/G76/G79/G50/G44
+/G82/G79/G66/G69/G82/G84/G32/G70/G46/G32/G69/G78/G71/G76/G69/G51/G32/G65/G78/G68
+/G75/G69/G86/G73/G78/G32/G83/G72/G69/G80/G80/G65/G82/G68/G52
+/G74/G97/G110/G117/G97/G114/G121/G32/G50/G48/G48/G51
+/G49 /G83/G111/G102/G116/G119/G97/G114/G101/G32/G117/G115/G101/G100/G32/G105/G110/G32/G116/G104/G101/G32/G101/G115/G116/G105/G109/G97/G116/G105/G111/G110/G32/G111/G102/G32/G116/G104/G105/G115/G32/G112/G97/G112/G101/G114/G32/G99/G97/G110/G32/G98/G101/G32/G102/G111/G117/G110/G100/G32/G97/G116/G32/G104/G116/G116/G112/G58/G47/G47/G119/G101/G98/G101/G114/G46/G117/G99/G115/G100/G46/G101/G100/G117/G47/G126/G107/G115/G104/G101/G112/G112/G97/G114/G32/G105/G110/G32/G116/G104/G101/G32/G114/G101/G115/G101/G97/G114/G99/G104/G32/G115/G101/G99/G116/G105/G111/G110/G46/G32/G75/G101/G118/G105/G110/G32/G83/G104/G101/G112/G112/G97/G114/G100
+/G119/G111/G117/G108/G100/G32/G108/G105/G107/G101/G32/G116/G111/G32/G97/G99/G107/G110/G111/G119/G108/G101/G100/G103/G101/G32/G102/G105/G110/G97/G110/G99/G105/G97/G108/G32/G115/G117/G112/G112/G111/G114/G116/G32/G102/G114/G111/G109/G32/G116/G104/G101/G32/G69/G117/G114/G111/G112/G101/G97/G110/G32/G67/G101/G110/G116/G114/G97/G108/G32/G66/G97/G110/G107/G46/G32/G87/G104/G105/G108/G101/G32/G97/G108/G108/G32/G101/G102/G102/G111/G114/G116/G115/G32/G104/G97/G118/G101/G32/G98/G101/G101/G110/G32/G109/G97/G100/G101/G32/G116/G111/G32/G101/G110/G115/G117/G114/G101/G32/G116/G104/G97/G116/G32/G116/G104/G101/G114/G101
+/G97/G114/G101/G32/G110/G111/G32/G101/G114/G114/G111/G114/G115/G32/G105/G110/G32/G116/G104/G101/G32/G112/G97/G112/G101/G114/G44/G32/G114/G101/G109/G97/G105/G110/G105/G110/G103/G32/G101/G114/G114/G111/G114/G115/G32/G97/G114/G101/G32/G116/G104/G101/G32/G115/G111/G108/G101/G32/G114/G101/G115/G112/G111/G110/G115/G105/G98/G105/G108/G105/G116/G121/G32/G111/G102/G32/G116/G104/G101/G32/G97/G117/G116/G104/G111/G114/G115/G46/G32/G84/G104/G101/G32/G111/G112/G105/G110/G105/G111/G110/G115/G32/G101/G120/G112/G114/G101/G115/G115/G101/G100/G32/G104/G101/G114/G101/G105/G110/G32/G97/G114/G101/G32/G116/G104/G111/G115/G101/G32/G111/G102/G32/G116/G104/G101
+/G97/G117/G116/G104/G111/G114/G115/G32/G97/G110/G100/G32/G100/G111/G32/G110/G111/G116/G32/G110/G101/G99/G101/G115/G115/G97/G114/G105/G108/G121/G32/G114/G101/G112/G114/G101/G115/G101/G110/G116/G32/G116/G104/G111/G115/G101/G32/G111/G102/G32/G116/G104/G101/G32/G69/G117/G114/G111/G112/G101/G97/G110/G32/G67/G101/G110/G116/G114/G97/G108/G32/G66/G97/G110/G107/G46/G32/G84/G104/G105/G115/G32/G112/G97/G112/G101/G114/G32/G99/G97/G110/G32/G98/G101/G32/G100/G111/G119/G110/G108/G111/G97/G100/G101/G100/G32/G119/G105/G116/G104/G111/G117/G116/G32/G99/G104/G97/G114/G103/G101/G32/G102/G114/G111/G109
+/G104/G116/G116/G112/G58/G47/G47/G119/G119/G119/G46/G101/G99/G98/G46/G32/G105/G110/G116/G32/G111/G114/G32/G102/G114/G111/G109/G32/G116/G104/G101/G32/G83/G111/G99/G105/G97/G108/G32/G83/G99/G105/G101/G110/G99/G101/G32/G82/G101/G115/G101/G97/G114/G99/G104/G32/G78/G101/G116/G119/G111/G114/G107/G32/G101/G108/G101/G99/G116/G114/G111/G110/G105/G99/G32/G108/G105/G98/G114/G97/G114/G121/G32/G97/G116/G58/G32/G104/G116/G116/G112/G58/G47/G47/G112/G97/G112/G101/G114/G115/G46/G115/G115/G114/G110/G46/G99/G111/G109/G47/G97/G98/G115/G116/G114/G97/G99/G116/G95/G105/G100/G61/G120/G120/G120/G120/G120/G120
+/G50 /G69/G117/G114/G111/G112/G101/G97/G110/G32/G67/G101/G110/G116/G114/G97/G108/G32/G66/G97/G110/G107/G44/G32/G101/G109/G97/G105/G108/G58/G32/G108/G111/G114/G101/G110/G122/G111/G46/G99/G97/G112/G112/G105/G101/G108/G108/G111/G64/G101/G99/G98/G46/G105/G110/G116
+/G51 /G78/G89/G85/G32/G83/G116/G101/G114/G110/G32/G83/G99/G104/G111/G111/G108/G32/G111/G102/G32/G66/G117/G115/G105/G110/G101/G115/G115/G32/G97/G110/G100/G32/G85/G110/G105/G118/G101/G114/G115/G105/G116/G121/G32/G111/G102/G32/G67/G97/G108/G105/G102/G111/G114/G110/G105/G97/G32/G97/G116/G32/G83/G97/G110/G32/G68/G105/G101/G103/G111/G44/G32/G101/G109/G97/G105/G108/G58/G32/G114/G111/G98/G101/G114/G116/G46/G101/G110/G103/G108/G101/G64/G115/G116/G101/G114/G110/G46/G110/G121/G117/G46/G101/G100/G117
+/G52 /G85/G110/G105/G118/G101/G114/G115/G105/G116/G121/G32/G111/G102/G32/G67/G97/G108/G105/G102/G111/G114/G110/G105/G97/G32/G97/G116/G32/G83/G97/G110/G32/G68/G105/G101/G103/G111/G44/G32/G101/G109/G97/G105/G108/G58/G32/G107/G115/G104/G101/G112/G112/G97/G114/G64/G101/G99/G111/G110/G46/G117/G99/G115/G100/G46/G101/G100/G117/G46
+/G69/G85/G82/G79/G80/G69/G65/G78/G32/G67/G69/G78/G84/G82/G65/G76/G32/G66/G65/G78/G75
+/G87/G79/G82/G75/G73/G78/G71/G32/G80/G65/G80/G69/G82/G32/G83/G69/G82/G73/G69/G83
+
+/G169 /G69/G117/G114/G111/G112/G101/G97/G110/G32/G67/G101/G110/G116/G114/G97/G108/G32/G66/G97/G110/G107/G44/G32/G50/G48/G48/G51
+/G65/G100/G100/G114/G101/G115/G115 /G75/G97/G105/G115/G101/G114/G115/G116/G114/G97/G115/G115/G101/G32/G50/G57
+/G68/G45/G54/G48/G51/G49/G49/G32/G70/G114/G97/G110/G107/G102/G117/G114/G116/G32/G97/G109/G32/G77/G97/G105/G110
+/G71/G101/G114/G109/G97/G110/G121
+/G80/G111/G115/G116/G97/G108/G32/G97/G100/G100/G114/G101/G115/G115 /G80/G111/G115/G116/G102/G97/G99/G104/G32/G49/G54/G32/G48/G51/G32/G49/G57
+/G68/G45/G54/G48/G48/G54/G54/G32/G70/G114/G97/G110/G107/G102/G117/G114/G116/G32/G97/G109/G32/G77/G97/G105/G110
+/G71/G101/G114/G109/G97/G110/G121
+/G84/G101/G108/G101/G112/G104/G111/G110/G101 /G43/G52/G57/G32/G54/G57/G32/G49/G51/G52/G52/G32/G48
+/G73/G110/G116/G101/G114/G110/G101/G116 /G104/G116/G116/G112/G58/G47/G47/G119/G119/G119/G46/G101/G99/G98/G46/G105/G110/G116
+/G70/G97/G120 /G43/G52/G57/G32/G54/G57/G32/G49/G51/G52/G52/G32/G54/G48/G48/G48
+/G84/G101/G108/G101/G120 /G52/G49/G49/G32/G49/G52/G52/G32/G101/G99/G98/G32/G100
+/G65/G108/G108/G32/G114/G105/G103/G104/G116/G115/G32/G114/G101/G115/G101/G114/G118/G101/G100/G46
+/G82/G101/G112/G114/G111/G100/G117/G99/G116/G105/G111/G110/G32/G102/G111/G114/G32/G101/G100/G117/G99/G97/G116/G105/G111/G110/G97/G108/G32/G97/G110/G100/G32/G110/G111/G110/G45/G99/G111/G109/G109/G101/G114/G99/G105/G97/G108/G32/G112/G117/G114/G112/G111/G115/G101/G115/G32/G105/G115/G32/G112/G101/G114/G109/G105/G116/G116/G101/G100/G32/G112/G114/G111/G118/G105/G100/G101/G100/G32/G116/G104/G97/G116/G32/G116/G104/G101/G32/G115/G111/G117/G114/G99/G101/G32/G105/G115/G32/G97/G99/G107/G110/G111/G119/G108/G101/G100/G103/G101/G100/G46
+/G84/G104/G101/G32/G118/G105/G101/G119/G115/G32/G101/G120/G112/G114/G101/G115/G115/G101/G100/G32/G105/G110/G32/G116/G104/G105/G115/G32/G112/G97/G112/G101/G114/G32/G100/G111/G32/G110/G111/G116/G32/G110/G101/G99/G101/G115/G115/G97/G114/G105/G108/G121/G32/G114/G101/G102/G108/G101/G99/G116/G32/G116/G104/G111/G115/G101/G32/G111/G102/G32/G116/G104/G101/G32/G69/G117/G114/G111/G112/G101/G97/G110/G32/G67/G101/G110/G116/G114/G97/G108/G32/G66/G97/G110/G107/G46
+/G73/G83/G83/G78/G32/G49/G53/G54/G49/G45/G48/G56/G49/G48/G32/G40/G112/G114/G105/G110/G116/G41
+/G73/G83/G83/G78/G32/G49/G55/G50/G53/G45/G50/G56/G48/G54/G32/G40/G111/G110/G108/G105/G110/G101/G41
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G51
+/G67/G111/G110/G116/G101/G110/G116/G115
+/G65/G98/G115/G116/G114/G97/G99/G116 /G52
+/G78/G111/G110/G45/G116/G101/G99/G104/G110/G105/G99/G97/G108/G32/G115/G117/G109/G109/G97/G114/G121 /G53
+/G73/G46 /G73/G110/G116/G114/G111/G100/G117/G99/G116/G105/G111/G110 /G55
+/G73/G73/G46 /G67/G111/G110/G100/G105/G116/G105/G111/G110/G97/G108/G32/G99/G111/G118/G97/G114/G105/G97/G110/G99/G101/G32/G108/G105/G116/G101/G114/G97/G116/G117/G114/G101 /G49/G48
+/G73/G73/G73/G46 /G69/G99/G111/G110/G111/G109/G101/G116/G114/G105/G99/G32/G109/G101/G116/G104/G111/G100/G111/G108/G111/G103/G121 /G49/G50
+/G73/G86/G46 /G68/G97/G116/G97 /G49/G54
+/G86 /G46 /G69/G109/G112/G105/G114/G105/G99/G97/G108/G32/G114/G101/G115/G117/G108/G116/G115 /G50/G48
+/G86/G46/G49 /G83/G112/G101/G99/G105/G102/G105/G99/G97/G116/G105/G111/G110/G32/G116/G101/G115/G116/G105/G110/G103/G50/G50
+/G86/G46/G50 /G86/G111/G108/G97/G116/G105/G108/G105/G116/G121/G32/G100/G121/G110/G97/G109/G105/G99/G115/G32/G97/G110/G100/G32/G108/G105/G110/G107/G97/G103/G101/G115 /G50/G52
+/G86/G46/G51 /G67/G111/G114/G114/G101/G108/G97/G116/G105/G111/G110/G32/G100/G121/G110/G97/G109/G105/G99/G115 /G50/G53
+/G86/G73/G46 /G67/G111/G110/G99/G108/G117/G115/G105/G111/G110 /G50/G56
+/G65/G112/G112/G101/G110/G100/G105/G120/G32/G65/G58/G32/G67/G111/G117/G110/G116/G114/G105/G101/G115/G32/G115/G101/G108/G101/G99/G116/G101/G100 /G51/G49
+/G65/G112/G112/G101/G110/G100/G105/G120/G32/G66/G58/G32/G69/G120/G97/G99/G116/G32/G115/G112/G101/G99/G105/G102/G105/G99/G97/G116/G105/G111/G110/G115 /G51/G50
+/G66/G105/G98/G108/G105/G111/G103/G114/G97/G112/G104/G121 /G51/G53
+/G84/G97/G98/G108/G101/G115/G32/G38/G32/G102/G105/G103/G117/G114/G101/G115 /G51/G56
+/G69/G117/G114/G111/G112/G101/G97/G110/G32/G67/G101/G110/G116/G114/G97/G108/G32/G66/G97/G110/G107/G32/G119/G111/G114/G107/G105/G110/G103/G32/G112/G97/G112/G101/G114/G32/G115/G101/G114/G105/G101/G115 /G54/G48
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G52
+Abstract
+This paper investigates the presence of asymmetric conditional second moments in international equity and bond
+returns. The analysis is carried out through an asymmetric version of the Dynamic Conditional Correlation
+model of Engle (2002). Widespread evidence is found that national equity index return series show strong
+asymmetries in conditional volatility, while little evidence is seen that bond index returns exhibit this behaviour.
+However, both bonds and equities exhibit asymmetry in conditional correlation. Worldwide linkages in the
+dynamics of volatility and correlation are examined. It is also found that beginning in January 1999, with the
+introduction of the Euro, there is significant evidence of a structural break in correlation, although not in
+volatility. The introduction of a fixed exchange rate regime leads to near perfect correlation among bond returns
+within EMU countries. However, equity return correlation both within and outside the EMU also increases after
+January 1999.
+
+JEL Codes: F3, G1, C5 
+Keywords: International Finance, Correlation, Variance Targeting, Multivariate GARCH, 
+International Stock and Bond correlation 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G53
+Non technical summary
+Among other empirical regularities, (conditional) estimates of the second moments of equities often
+exhibit the so-called “asymmetric volatility” phenomenon, where volatility increases more after a
+negative shock than after a positive shock of the same magnitude. In fact, evidence has been proffered
+that volatility may fail to increase or even fall subsequent to a positive shock for certain assets. 1
+Asymmetric effects have also been recently found in conditional correlations, although the economic
+reasoning behind these effects has not been widely researched.2
+Surprisingly, while there has been a proliferation of conditional econometric models able to
+capture asymmetry in volatility (see Hentscell (1995) for a synthesis), conditional econometric
+specifications able to explicitly model asymmetry in covariances and, specifically, correlations are far
+less common. However, as argued by Kroner and Ng (1998), if the expected return on one asset
+changes due to the occurrence of an asymmetric volatility effect, the correlation (and thus the
+covariance) between returns on that asset and returns on other assets which have not had a change in
+their expected returns should also change.
+A second stylised fact which emerges from surveying empirical research is that while the
+asymmetric phenomenon in (conditional) variances has been widely explored for individual stocks,
+equity portfolios, and/or stock market indices, day-to-day changes in government bond return
+volatility has received little attention, instead focusing on the impacts of (macroeconomic) news
+announcements on conditional volatility of bonds and T-bills.
+Finally, a number of studies documents that correlation between equity returns increases during
+bear markets and decreases when stock exchanges rally, indicating that correlation is dynamic and
+varies over time, thereby changing the amount of portfolio diversification within a given asset
+allocation.
+The goals of this paper are twofold. First, it is investigated whether, in addition to stocks,
+government fixed income securities also exhibit asymmetry in conditional second moments. Second,
+this paper explores the dynamics and changes in the correlation of international asset markets,
+focusing attention on whether the correlation of both bonds and stocks demonstrate evidence of
+asymmetric response to negative returns. Unlike previous research, we will not investigate whether
+conditional second moments of fixed income securities change when (macroeconomics) news are
+released. We will test, instead, whether conditional variances, covariances, and correlations of such
+assets are sensitive to the sign of past innovations. The analysis is carried out through an asymmetric
+
+1 Two explanations have been put forth for this phenom enon: the leverage effect hypothesis, due to Black (1976)
+and Christie (1982), and the volatility feedback effect proposed by Campbell and Hentschell (1992) and
+extended by Wu (2000).
+2 See, for instance, Kroner and Ng (1998), Errunza and Hung (1999), and Bekaert and Wu (2001).
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G54
+version of the Dynamic Conditional Correlation (DCC) model of Engle (2002), which is particularly
+well suited to examine correlation dynamics among assets. The robust conditional moment test
+suggested by Kroner and Ng is employed to check whether the model specification adequately
+characterised the linear dependence shown by the data. We also explore the asymmetric volatility
+impact of an innovation through “news impact curves” of Engle and Ng (1993), and asymmetry in
+conditional covariances by the “news impact surfaces” of Kroner and Ng.
+We find strong evidence of asymmetries in conditional covariance of both equity and bond
+returns, although the asymmetries are present in markedly different manners. While national equity
+index return series show asymmetry in conditional volatility, little evidence is found indicating
+asymmetry in bond index return volatility. However, despite the lack of evidence of asymmetric
+conditional volatilities, bonds (as well as equities) exhibit asymmetry in conditional correlation,
+although, equities showed a stronger response to joint bad news than bonds do. Strong evidence of
+market volatility correlation is also presented for equity returns: in particular, annualised average
+volatility series for European, EMU, American and Australasian equities show linkages during easily
+identifiable periods of financial turmoil such as the crash of ’87, the beginning of the Gulf war, and the
+Asian financial crisis. Again, unlike equity returns, bond market volatilities demonstrate less clear
+linkages, instead, exhibiting increases to region specific events which do not appear to be contagious
+across regions.
+Upon the creation of the Euro, initially without a circulating currency when EMU exchange
+rates were irrevocably fixed, significant evidence of a structural break is found in the level of
+conditional correlation but not in the levels of the conditional volatilities. Conditional equity
+correlation for the major markets of Europe, i.e. France, Germany and Italy (which are part of the
+EMU) and UK (which is not part of the EMU), has increased since the introduction. In addition to the
+expected increase in the Euro-area, evidence is also found of a meaningful increase in correlation of
+other markets with the EMU nations, possibly signalling stronger economic ties. Further, the
+introduction of a fixed exchange rate regime has led to near perfect correlation among bond returns
+within EMU countries, which is not surprising considering the monetary policy harmonisation within
+the EMU. This increase in correlation among asset returns within the EMU area may have induced
+investors, when diversifying their portfolios, to move capital from Europe to the US, possibly
+contributing to the depreciation of the euro vis-à-vis the US dollar in the months following the
+introduction for the fixed rate regime.
+Conditional equity correlation series among regional groups increases dramatically when bad
+news hit financial markets. This is an important implication for international investors; diversification
+sought by investing in multiple markets is likely to be lowest when it is most desirable. However, it is
+also evidenced that conditional correlation between equity and bond returns typically declines when
+stock markets suffer from financial turmoil, an indication of a “flight to quality phenomenon”, where
+investors move capital from equities to safer assets.
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G55
+I. Introduction 
+Typically, portfolio diversification is achieved using two main strategies: investing in different 
+classes of assets thought to have little or negative correlation or investing in similar classes of 
+assets in multiple markets through international diversification. While these two strategies have 
+solid theoretical justification and strong empirical evidence exists as to the benefits, investors 
+must be aware that correlation is dynamic and varies over time, changing the amount of portfolio 
+diversification within a given asset allocation. In particular, a number of studies document that 
+correlation between equity returns increases during bear markets and decreases when stock 
+exchanges rally (see, among others, Erb, Harvey and Viskanta, (1994), De Santis and Gerard, 
+(1998), Ang and Bekaert, (2001), Das and Uppal, (2001), and Longin and Solnik, (2001)). 
+ Over the past 20 years, a tremendous literature has developed where the dynamics of the 
+covariance of assets has been explored, although the primarily focus has been on univariate 
+volatilities and not correlations (or covariances). Among other regularities, (conditional) 
+estimates of the second moments of equities often exhibit the so-called “asymmetric volatility” 
+phenomenon, where volatility increases more after a negative shock than after a positive shock of 
+the same magnitude; in fact, evidence has been proffered that volatility may fail to increase or 
+even fall subsequent to a positive shock for certain assets. 1 Asymmetric effects have also been 
+recently found in conditional correlations, although the economic reasoning behind these effects 
+has not been widely researched.2 
+ The need to take into account the asymmetric effects on conditional second moments has 
+an appealing economic justification. Assume, for instance, that a negative return shock generates 
+more volatility than a positive innovation of the same magnitude. When, as commonly done, a 
+traditional symmetric Generalized Autoregressive Conditionally Heteroskedasticity (GARCH) 
+process is used to model second moments, the estimated conditional volatility which occurs after 
+a price drop will be too small; similarly, the estimated conditional volatility following a price 
+increase will be too large. Consequences such as asset mispricing and poor in- and out-of-sample 
+forecasts will be, therefore, unavoidable. Accurate estimates of the variance and correlation 
+structure of returns on equities as well as other classes of assets are crucial for portfolio selection, 
+risk management, and pricing of primary and derivative securities. 
+ Surprisingly, while there has been a proliferation of conditional econometric models able 
+to capture asymmetry in volatility (see Hentscell (1995) for a synthesis), conditional econometric 
+
+1 Two explanations have been put forth for this phenomenon: the leverage effect hypothesis, due to Black 
+(1976) and Christie (1982), and the volatility feedback effect proposed by Campbell and Hentschell (1992) 
+and extended by Wu (2000). 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G56
+specifications able to explicitly model asymmetry in covariances and, specifically, correlations 
+are far less common. However, as argued by Kroner and Ng (1998), if the expected return on one 
+asset changes due to the occurrence of an asymmetric volatility effect, the correlation (and thus 
+the covariance) between returns on that asset and returns on other assets which have not had a 
+change in their expected returns should also change. Although there exist studies which account 
+for asymmetric effects in conditional covariances, (see, for instance, Braun, Nelson, and Sunier 
+(1995), Koutmos and Booth (1995), Koutmos (1996), Booth, Martikainen, and Tse (1997), 
+Scruggs (1998), and Christiansen (2000)), the econometric methodology employed address the 
+phenomenon through a simplified and not necessarily satisfactorily approach. Apart from the 
+research of Braun et al.3, time-varying covariances are parameterized in the spirit of Bollerslev 
+(1990) where the covariance is proportional to the product of the corresponding conditional 
+standard deviations4; the correlation coefficient is the proportionality factor and it is assumed to 
+be constant over the sample period. Although assuming the correlation coefficient constant 
+greatly simplifies the computational burden in estimation, not only there are no theoretical 
+justifications for that assumption, it is not robust to the empirical evidence. 
+ A second generation of multivariate conditional variance models, where the assumption 
+of constant correlation coefficients is relaxed and asymmetry is explicitly introduced in variances 
+as well as covariances, has been introduced by Kroner and Ng. Subsequent applications (see, for 
+instance, Bekaert and Wu (2000), Brooks and Henry (2000), and Isakov and Pérignon (2000)) 
+build on this model. As with most multivariate GARCH model, though, all these representations 
+suffer from a shortcoming: they usually have too many coefficients to estimate, and the models 
+are typically of limited scope or significant parameter restrictions must be imposed. 
+ A second stylized fact which emerges from surveying empirical research is that while the 
+asymmetric phenomenon in (conditional) variances has been widely explored for individual 
+stocks, equity portfolios, and/or stock market indices, day-to-day changes in government bond 
+return volatility has received little attention, instead focusing on the impacts of (macroeconomic) 
+news announcements on conditional volatility of bonds and T-bills. 5 Jones, Lamont and 
+Lumsdaine (1998) detect an increase in the conditional bond market variance on days where 
+
+2 See, for instance, Kroner and Ng (1998), Errunza and Hung (1999), and Bekaert and Wu (2001). 
+3 Braun et al., who analyze a portfolio of two assets, model the second moment matrix by splitting it into 
+three pieces: The two conditional variances associated with each security and the conditional beta. Also in 
+this case conditional covariances do not exhibit explicit asymmetric effects. 
+4 The conditional covariances will show an asymmetric response to negative shocks when asymmetric 
+univariate GARCH models are used for the volatilities in the Constant Correlation Coefficient (CCC) 
+model of Bollerslev. However, despite the asymmetric covariances, correlations are constant. 
+5 In fact, little has been done to explore the correlation structure of bond returns across countries. 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G57
+employment and producer price index data are announced. Li and Engle (1998) examine the 
+effects of macroeconomic announcements on the volatility of US Treasury bond futures. 
+Scheduled announcements trigger strong asymmetric effects: it is shown that whereas positive 
+shocks depress conditional volatility, negative shocks increase it. Christiansen (2000) documents 
+that macroeconomic news releases raise the conditional second moment coefficients of US 
+government bond returns. 
+The goals of this paper are twofold. First, it is investigated whether, in addition to stocks, 
+government fixed income securities also exhibit asymmetry in conditional second moments. 
+Second, this paper explores the dynamics and changes in the correlation of international asset 
+markets, focusing attention on whether the correlation of both bonds and stocks demonstrate 
+evidence of asymmetric response to negative returns. Unlike previous research, we will not 
+investigate whether conditional second moments of fixed income securities change when 
+(macroeconomics) news are released. We will test, instead, whether conditional variances, 
+covariances, and correlations of such assets are sensitive to the sign of past innovations. The 
+robust conditional moment test suggested by Kroner and Ng is employed to check whether the 
+model specification adequately characterized the linear dependence shown by the data. We also 
+explore the asymmetric volatility impact of an innovation through “news impact curves” of Engle 
+and Ng (1993), and asymmetry in conditional covariances by the “news impact surfaces” of 
+Kroner and Ng. 
+We also investigate certain interesting questions: has the formation of the monetary union 
+in Europe increased the correlation among national assets? If national asset correlation has really 
+increased along with the monetary integration, and if the Euro-area is considered more and more 
+as a unified economic-financial block, do investors move capital, which before were allocated 
+within the Euro-area, towards other regions, with obvious consequences on exchange rates? 
+Moreover, what are the consequences of growing asset correlation, if any, on international 
+portfolio diversification? Has the overall return correlation of both bond and equities increased 
+over the latter part of the 1990s and into the early years of the new millennium, as evidenced in 
+Moskowitz (2002)? 
+Financial market linkages have been highlighted by several studies. Fleming, Kirby and 
+Ostdiek (1998) show that information plays an important role in creating volatility linkages 
+across US stock, bond, and money markets. On one hand, common information, notably 
+macroeconomics news, affect investors’ expectations in different markets at the same time. On 
+the other hand, information events that alter expectations in one market bring about portfolio re-
+balancing and hence an information spillover in other markets. This cross-market hedging, in 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G49/G48
+turn, generates trade and volatility across markets. Fratzscher (2001) finds that financial 
+integration among European Monetary Union (EMU) members has increased due to reduction 
+and elimination of exchange rate volatility as well as to, though to less extent, monetary policy 
+convergence, a result which is consistent with our findings. Hartmann, Straetmans, and de Vries 
+(2001) put emphasis to linkages between financial markets during turmoil periods and find that 
+the probability of a crash in a market conditioned on a crisis in another market is high, where 
+contagion propagates across national borders. Moreover, crisis in equity markets may generate 
+flight-to-quality phenomena. We also observe volatility spillovers from equity to bond markets, 
+which may reflect a flight-to-quality. 
+We use the Financial Time All-World indices for international equity markets as a 
+measure of overall equity return in a given country and DataStream constructed bond indices as a 
+measure of bond performance to model the covariance structure of world investment markets. 
+The paper is laid out as follows: section 2 presents a review of the recent literature and 
+describes the stylized facts about financial return GARCH modeling, while section 3 covers the 
+econometric methodology employed in this paper. In section 4, the data used in the paper is 
+described and both unconditional and univariate conditional properties are explored. Section 5 
+covers the multivariate conditional results and examines the specification and section 6 concludes 
+and discusses areas for further research. 
+
+II. Conditional Covariance Literature 
+As pointed out by Nelson (1991), among others, the traditional symmetric GARCH process 
+introduced by Engle (1982) and Bollerslev (1986) suffers from an important limitation. Although 
+it elegantly captures volatility clustering, it does not allow negative and positive past shocks to 
+have a different effect on future conditional second moments. In other words, only the 
+magnitude, not the sign of lagged innovations determines conditional variance. Therefore a 
+model that captures the asymmetric responses of conditional second moments should be 
+preferable for asset pricing applications. To better see this, consider a portfolio made of equities 
+and what occurs after a large price drop, like the one that occurred in October 1987. If a negative 
+return innovation generates more volatility than a positive return innovation of the same 
+magnitude, a symmetric GARCH process will underestimate the conditional volatility which 
+occurs after bad news, and similarly will overestimate the conditional volatility following good 
+news. In CAPM-type models, conditional volatility directly affects risk premia investors require 
+to hold risky assets. But the premia forecast by the traditional GARCH differ from those implied 
+by an asymmetric GARCH, with a consequence of probable asset mispricing. 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G49/G49
+While the univariate GARCH literature began by assuming that return volatility was a 
+linear process of past squared innovations, researchers soon realized that other processes were 
+both better performing and theoretically justified. Hentschell (1995) proposed a general model 
+which accommodates several types of univariate asymmetric GARCH parametrisations, where 
+asymmetry is reflected by the news impact curves of Engle and Ng (1993). Recent evidence 
+(Hansen and Lunde (2001)) has shown that not only do asymmetric volatility models perform 
+better in-sample, but they also produce superior forecasts. 
+ While asymmetries in conditional volatilities have been thoroughly empirically verified, 
+the efforts to capture asymmetric effects in multivariate settings, however, have been rarer. 
+Presently, there are only two models capable of capturing asymmetric effects in correlation in a 
+multivariate GARCH model. The first to model asymmetric effects was Kroner and Ng (1998). 
+The model they proposed allows for asymmetric effects in both the variances and covariance. An 
+alternative multivariate GARCH parameterization which permits to capture asymmetries in 
+variances (but not in correlations) is the Dynamic Conditional Correlation (DCC) GARCH model 
+of Engle (2002). As pointed out in Engle and Sheppard (2001), any univariate GARCH model 
+which is covariance stationary and assumes normally distributed errors (irrespective of the true 
+error distribution) can be used to model the variances, as the model is estimated in two steps: the 
+first in which variances are estimated using a univariate GARCH specification, and the second 
+where the parameters of the dynamic correlation are considered. Sheppard (2002) has recently 
+extended the DCC model to allow for asymmetric dynamics in the correlation in addition to the 
+asymmetric response in variances (which were available in the original DCC model). Moreover, 
+while the original DCC model assumed that all assets shared the same news impact curve for 
+correlation, Sheppard’s specification is able to accommodate different news impact curves for 
+correlations across distinct assets. 
+ Economically, asymmetric volatility can be explained by two models: leverage effect and 
+time-varying risk premia (volatility feedback). The leverage effect, due to Black (1976) and 
+Christie (1982), states that after a negative shock, the debt-to-equity ratio of a firm has increased. 
+Thus, the volatility of the whole firm, which is assumed to remain constant, must be reflected by 
+an increase in volatility in the non-leveraged part of the firm (equity). An alternative explanation 
+of the larger increase in volatility after a negative shock proffered by Campbell and Hentschel 
+(1992) is that after a negative shock and variance increase, the expected return must become 
+sufficiently high to compensate the investor for the increased volatility, thus creating more 
+volatility (volatility feedback). These two explanations for asymmetries in volatility are not 
+exclusive, and Bekaert and Wu (2000) have combined these two explanations in an empirical 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G49/G50
+model and have shown that the leverage effect alone does not adequately explain the changes in 
+volatility after a decrease in the asset price. 
+ Both of these explanations for larger volatility subsequent to a negative shock have 
+primarily focused on the volatility of equities, although the Campbell and Hentschel model is 
+applicable to bonds as well as stocks, through the CAPM, treating bonds as risky assets (see 
+Cappiello, 2000). However, as bonds do not have leverage, the leverage effect is implausible. 
+Further, while there is compelling evidence that bond volatility increases after announcement 
+about macroeconomics news, it is yet to be seen if the asymmetric effect is present in the day to 
+day volatility dynamics of government bonds. 
+In addition to possible explanations for asymmetries in bond return volatility, little 
+theoretical framework is available to explain the recent evidence of asymmetric response to joint 
+bad news in correlations (joint bad news refers to both returns being negative). While certain 
+models can capture these effects, there has been little done to explain their presence. One 
+possible explanation rests on time-varying risk premia. More precisely, if, due to negative 
+shocks, the variances of two securities increase, in a CAPM-type world, investors will require 
+higher returns to compensate the larger risk they face. As a consequence, prices of both assets 
+will decrease and asset correlation will go up, as it usually happens in down markets. Correlation 
+may therefore be higher after a negative innovation than after a positive innovation of the same 
+magnitude, indicating its sensitivity to the sign of past shocks. However, this idea has not yet 
+been formalized in a multivariate model. Another plausible explanation is that dependence in 
+returns is higher for large negative returns, and possibly nonlinear. In this case the increased 
+correlation observed is simply a linear approximation to the nonlinear dependence. Recently, 
+Patton (2002) has shown that correlation provides a good approximation to the dependence 
+structure of portfolios of large and small cap stocks. However, it is yet to be seen how 
+widespread this phenomenon is. 
+
+III. Econometric Methodology 
+While there has been wide empirical evidence of asymmetries in volatilities, recent studies 
+(Kroner and Ng (1998), Baekert and Wu (2000), and Cappiello (2000)) have also provided 
+limited evidence for asymmetries in covariance above those which would be present under an 
+assumption of asymmetric volatilities but with constant correlation. In order to investigate the 
+properties of international equity and bond returns, we have chosen to use a recently introduced 
+generalization of the DCC (Engle (2002)) model. The general form of the model employed in 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G49/G51
+this paper was developed in Sheppard (2002), and includes two modifications to the original DCC 
+model: asset specific correlation news impact curves and asymmetric dynamics in correlation. 
+ All DCC class models (including the Constant Correlation Coefficient-GARCH (CCC-
+GARCH) of Bollerslev (1990)) assume that a 1×k vector of asset returns tr are conditionally 
+normal with mean zero and covariance matrix tH 
+ () ttt HNr ,0~| 1−ℑ , (1) 
+and use the fact that Ht can be decomposed as follows: 
+tttt DRDH = , (2) 
+where tD is the kk × diagonal matrix of time-varying standard deviations from univariate 
+GARCH models with t,ih on the ith diagonal and tR is the (possibly) time-varying correlation 
+matrix.6 The DCC model was designed to allow for two-stage estimation of the conditional 
+covariance matrix tH : in the first stage univariate volatility models are fitted for each of the 
+assets and estimates of t,ih are obtained; in the second stage asset returns, transformed by their 
+estimated standard deviations resulting from the first stage, are used to estimate the parameters of 
+the conditional correlation. The original DCC estimator had the dynamics of correlation evolving 
+as a scalar process with a single news impact parameters and a single smoothing parameter. 
+However, for higher dimensional models and certain assets, this proved to be inadequate, and the 
+Asymmetric Generalized DCC (AG-DCC) estimator was developed to capture the heterogeneity 
+present in the data. The model used in this paper is a restricted version of the AG-DCC model. 
+ As asymmetries in volatilities are a widely accepted empirical fact, the univariate 
+volatility models will be selected using the Schwartz Information Criterion (BIC) from a class of 
+models capable of capturing the common properties of equity return variance. 7 The following 
+models were included in the specification search (all with one lag of the innovation and one lag of 
+volatility) 
+• GARCH (Bollerslev (1996)) 
+• AVGARCH (Taylor (1986)) 
+• NARCH (Higgins and Bera (1992)) 
+• EGARCH (Nelson (1991)) 
+
+6 The assumption of conditional normality is not crucial and in the absence of conditional normality, these 
+results have a standard QMLE interpretation. 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32/G50/G48/G48/G51/G49/G52
+• ZARCH (Zakonian (1994)) 
+• GJR-GARCH (Glosten, Jaganathan, and Runkle (1993)) 
+• APARCH (Ding, Engle and Granger (1993)) 
+• AGARCH (Engle (1990)) 
+• NAGARCH (Engle and Ng (1993)) 
+Appendix B contains exact specification employed for these models. 
+ Once the univariate volatility models are estimated, the standardized residuals, 
+ititit hr=ε , are used to estimate the dynamics of the correlation. The evolution of the 
+correlation in the standard DCC model (Engle (2002)) is given by 
+ 111)1( −−− +′+−−= tttt bQaQbaQ εε (3) 
+ 1*1* −−= tttt QQQR (4) 
+where [] ttEQ εε ′= and where a and b are scalars. However, as this model does not allow for 
+asset specific news impact parameters nor asymmetries, the evolution equation has been modified 
+(See Sheppard (2002)) to be 
+ () GnnGBQBAAGNGBQBAQAQQ tttttt 11111 −−−−− ′′+′+′′+′−′−′−= εε (5) 
+where A , B , and G are diagonal parameter matrixes, [] ttt In ε<ε= $0 (with $ indicating the 
+Hadamard product), [] tt nnEN ′= . For Q and N , expectations are infeasible and are replaced 
+with sample analogues, =− ε′εTt ttT 11 and =− ′Tt tt nnT 11 , respectively. [] [ ]t,ii* t,ii*t qqQ == is a 
+diagonal matrix with the square root of the i th diagonal element of Qt on its i th diagonal position. 
+In other words, *tQ is a matrix which guarantees 1*1* −−= tttt QQQR is a correlation matrix with 
+ones on the diagonal and every other element less than one in absolute value, as long as tQ is 
+positive definite. 8 The typical element of tR w i l l b e o f t h e f o r m t,jjt,iit,ijt,ij qqq=ρ . The 
+immediate implication is that tR will necessarily be a correlation matrix by the Cauchy-Schwartz 
+inequality (see Engle and Sheppard (2001) for a formal proof). 9 It is also simple to extend the 
+
+7 While there are many information criteria available, in addition to likelihood ratio testing using nested 
+models, we felt that the use of the BIC was appropriate as it will lead to asymptotically correct model 
+specification selection. 
+8 tQ will be positive definite with probability one if () GQGBQBAQAQ ′−′−′− is positive definite. 
+9 Four special cases of this model (equations 3 and 4) exist, the CCC multivariate GARCH []() 0=G,A , 
+the DCC multivariate GARCH [] [] [ ]( ,aaA,G ij === 0 [] [ ])bbB ij == , the Asymmetric DCC 
+∑∑
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G49/G53
+model to allow for structural breaks in either mean or dynamics. For instance, let d be 0 or 1, 
+depending on whether Tt <> τ . Then to examine whether a structural break has in the mean 
+occurred, the model can be modified to 
+()
+GnnGBQBAA
+GNGdGNGBQBdBQBAQAdAQAQdQQ
+ttttt
+t
+11111
+~~~
+−−−−− ′′+′+′′
++′+′−′+′−′+′−−=
+εε
+ (6) 
+where [] τεε <′= tEQ tt , , and [] τεε ≥′−= tEQQ tt ,~ , with N and N~ analogously 
+defined, which is equivalent to the following parameterization (where 
+[] [] ττ ≥=<= teeEQteeEQ tttt ,',,' 21 ) when mean reversion is enforced 
+() ()
+.' 11111
+22221111
+GnnGBQBAA
+GNGBQBAQAQGNGBQBAQAQQ
+ttttt
+t
+−−−−− ′′+′+′
++′−′−′−+′−′−′−=
+εε
+ (7) 
+As the model in equation 6 nests the standard model (equation 3), it is straight forward to test for 
+breaks in the mean of the process. The test can be conducted using standard likelihood ratio tests 
+with k(k-1)/2 degrees of freedom (d.o.f.). Breaks in dynamics as well as breaks in both dynamics 
+and mean can be tested for analogously (although with different d.o.f.). 
+Kroner and Ng (1998) introduced a notion for multivariate GARCH models analogous to 
+a news impact curve for univariate models, a news impact surface. For the model considered in 
+this paper, the news impact surface for correlation will be asymmetric, having (potentially) 
+greater response to joint bad news (both returns less than zero) than to joint good news. The 
+news impact surface for correlation is given by 
+() ( )
+() otherwiseaacf
+forggaacf
+jijiij
+jijijiij
+,~,
+0,,~,
+21
+2121
+εεεε
+εεεεεε
++≈
+<++≈
+, (8) 
+where 21 ,i,i =ε are the standardized residuals. 10 The news impact surface for covariance will 
+simply be the news impact surface for correlations multiplied by the appropriate portion of the 
+news impact curve for the univariate models, which can be very different should the models for 
+the univariate volatilities be drastically different, producing asymmetries in covariance in all four 
+directions from the origin. 
+
+(ADCC) multivariate GARCH [] [ ]( ,aaA ij == [] [ ],bbB ij == [] [ ])ggG ij == , and the 
+generalized diagonal DCC (GDDCC) multivariate GARCH model []() 0=G . 
+10 This formula is approximate, due to the non-linear transformation needed. The exact news impact 
+surface is given in appendix B.2. 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G49/G54
+IV. Data 
+The data employed for this paper consists of FTSE All-World Indices for 21 countries and 
+DataStream constructed 5 year average maturity bond indices for 13. 11 The FTSE All-World 
+Index Series are a measure of a well diversified investment in a particular country using a value 
+weighted average. These indices are constructed using 90% of the equity value in a country 
+consisting of large- and medium-caps, and represent the total return on equities as the indices are 
+dividend adjusted. The DataStream Benchmark bond indices consist of the most liquid 
+government bonds and follow the European Federation of Financial Analysts (EFFAS) 
+methodology. These bond indices are available daily and are chain linked allowing the addition 
+and removal of bonds without affecting the value of the index. All data were taken from 
+DataStream and converted to US dollar denominated returns (appendix A contains a complete list 
+of the equity and bond indices included in this study). The selected 21 countries contain most of 
+the present day EU, the major markets of the Americas, both developed and developing, and the 
+major markets of Australasia. 12 One of the primary concerns when working with international 
+data, specifically asset correlation, is that non-synchronous trading issues can arise which will 
+lead to a downward bias in the estimated correlation. Martens and Poon (2001) have shown that 
+using non-synchronous data results in a significant downward bias in correlation, as compared to 
+pseudo-closes.13 However, with the global scope for this paper, there is never a time when all 21 
+markets are open. Thus, weekly returns were used instead of daily to alleviate the problem of 
+asynchronous closes. 
+The data contain 15 years of weekly price observations, for a total of 790 observations from 
+January 2, 1987 until February 15, 2001. All weekly returns were calculated as log differences 
+using Friday to Friday closing prices. To begin analyzing this data set, it is informative to 
+examine the unconditional correlation among the various stock and bond series. 14 Table 1 
+summarizes information about the distribution of correlations between the equity series, the bond 
+series, and correlations between the equity series and the bond indices, while table 2 (a, b, and c) 
+contains the unconditional correlation for each of the 34 assets. While the distribution of the 
+average correlation for groups of assets is difficult to calculate, we were able to conduct 
+
+11 The actual series were the DataStream Benchmark Bond Indices with 5 years average maturity (code 
+BMXX05Y where XX is the country code). 
+12 The 13 included bond markets are a proper subset of the 21 included equity markets and include all of the 
+major world government bond markets. 
+13 Pseudo-closes are simply constructed by sampling all prices at the same time GMT. 
+14 The unconditional correlation could be considered as a naïve estimate in the presence of 
+heteroskedasticity, and will underestimate the average conditional correlation between the innovations. 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G49/G55
+significance test using the bootstrap distributions of these statistics. 15 The bootstrap distribution 
+was tabulated using the stationary bootstrap (Politis and Romano (1994)) with an average 
+window length of 13 weeks (based on initial estimates of the persistence of correlation across all 
+assets). When statistical significance is indicated, it means that the empirical quantile of the 
+bootstrap distribution is less than (or greater than, depending on the test) the statistic. 
+Overall the assets are reasonably correlated with a median correlation of 0.2986. However, 
+there is a wide range of correlation among the assets, ranging from an average of 0.0808 for US 
+bond index returns to 0.4498 for Dutch equities. The average correlation for the equity series 
+(.3401) is similar to the overall average correlation for the bond indices (.3270). However, while 
+on average they appear the same, asset returns are highly correlated with their own type and less 
+correlated with the other type, or in other word, the equity-equity and bond-bond correlations are 
+far higher than equity-bond correlations. In fact, median bond-bond return correlation was 
+0.7276, median equity-equity correlation was 0.4435, and median equity-bond correlation was 
+only 0.1849, with all three means being statistically different from the other two at the 1% level. 
+Among the equity index return series, the mean correlation was 0.4137. The equity market 
+with the highest average correlation was The Netherlands with 0.5355 while both Japan and 
+Mexico exhibited the lowest average correlations at 0.2604 and 0.2826 respectively. The intra-
+stock index return correlations demonstrated a strong increase in correlation when considered at 
+the regional level. In this sample, there exist three clear geographic groups for the data: 
+Australasia, Europe and North America. 16 Within the Australasian subgroup the average 
+correlation was 0.4032, while the average correlation between equity index returns in the 
+Australasian group and the European group was 0.3858, and 0.3052 with North American 
+markets. Average correlation among the European markets was 0.5289, while European and 
+North American markets had an average correlation of 0.3386. Finally, the average correlation 
+within the North American equity markets was 0.4590. 17 The correlations within both the 
+European and American were statistically significantly higher than were the correlations between 
+these two groups and the others. In addition, the correlation within the Australasian group was 
+
+15 While the correlations should be asymptotically multivariate normally distributed, the computation of the 
+asymptotic covariance matrix would be made more difficult as the models are dynamically misspecified 
+requiring an adjustment to the White robust standard errors to account for autocorrelation in the scores of 
+the correlation estimator. 
+16 Group membership is listed in Appendix A. 
+17 The correlation between the US and Canadian equity index returns was 0.6924. The correlation between 
+Canadian and US markets with Mexican equities was much lower, 0.3040 and 0.3806, respectively. 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G49/G56
+statistically higher than the correlation between the North American group and the Australasian 
+group. 
+Turning attention to the correlation between the bond indices, there also appears to be distinct 
+groups for the unconditional correlation of bond returns: Europe, Japan, and North America. 
+Within European bond markets, average correlation between returns was 0.7894, while average 
+correlation between European markets and Japan was 0.4134 and average correlation between 
+European bond index returns and North American bond returns was 0.1508. Correlation among 
+North American bond returns (Canada and the United States) 0.4523 while average correlation 
+between American bond returns and Japanese bond returns was 0.0225. 18 As was the case with 
+the mean equity indices, the mean intra-region correlations were statistically greater than the 
+mean inter-region correlations. 
+Finally, the average correlation (as per expectations) between the equity index returns and the 
+bond index returns was significantly lower than the intra-stock or intra-bond index return 
+correlation. The mean inter-stock-bond correlation was 0.1500, significantly lower than the 
+average intra-stock correlation of 0.4137 or the average intra-bond correlation of 0.5535. Further, 
+the inter stock-bond correlations were the only subset of the correlation to have any statistically 
+significant negative values. In addition, every equity return series had at least one bond index for 
+which it was either insignificantly correlated with or significantly negatively correlated. This is 
+clearly an important point in that one would expect efficient portfolios to generally hold both 
+equity and bonds as they provide insurance (although in a limited fashion) against the other. This 
+further confirms that the negative correlation between bonds and equities ubiquitous across 
+nations. 
+ Turning our attention from unconditional second moments to univariate properties of the 
+data, we find that the data possess the standard properties of financial returns. Namely, both bond 
+and stock returns are leptokurtotic, with stock returns having negative skew and bonds, on 
+average, positive skew. Table 4 contains a summary of the univariate statistics for the system. 19 
+All markets, save New Zealand and Japan produced an average positive return during the sample, 
+with Mexico producing by far the highest average return, annualized at 21.2%. All except two of 
+the equity index return series were left skewed, with an average skewness of -.68. The raw equity 
+index returns also exhibited extreme excess kurtosis, with an averaging 6.45. It is well know that 
+while heteroskedastic return series can exhibit skewness and fat-tails, returns standardized by 
+
+18 Only the average correlation between North American bond returns and Japanese bond returns was 
+insignificantly different from zero (.0382). 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51/G50/G48
+6 of the bond series exhibited this behavior. Table 3 contains the estimated conditional volatility 
+and conditional correlation for the equity and bond market returns. 
+
+V. Empirical Results 
+The first stage of the model building consisted of fitting the univariate GARCH models for each 
+of the 34 data series and selecting the best one using information criteria. Table 5 contains the 
+specification of the GARCH processes selected by the BIC and the estimated parameters from 
+these models. Eighteen of the 21 models selected for the equity return series contained a 
+significant asymmetry term. Of the 18 models with asymmetries, the vast majority (16) preferred 
+the introduction of the asymmetry via the inclusion of threshold effects and two preferred a re-
+centering of the news impact curve (both using the AGARCH model). As widespread as the 
+evidence of asymmetry volatility was in the equity series, it was equally absent from the bond 
+index return series. Only 3 of the 13 models selected exhibited asymmetric effects, all of the 
+threshold variety. This is consistent with the earlier evidence of little conditional difference in 
+variances after negative shocks for bond returns. Interestingly, though, as explained below, bond 
+(as well as equity) returns exhibit asymmetry in conditional correlation. Figure 1 contains the 
+news impact curves for five of the assets. The dramatically different shapes highlight the 
+flexibility of this modeling approach. For instance, the model selected for Swedish equity returns 
+was an EGARCH with a negative parameter on the innovation and a positive parameter on 
+absolute value of the innovation resulting in a news impact curve which is extremely asymmetric, 
+indicating a much smaller increase in volatility after a positive shock. Likewise, the news impact 
+curve for Canadian bond return volatility is near zero for all positive shocks and only increases 
+for negative ones, while the Swiss bond returns show an asymmetric response to good news with 
+a larger increase in volatility subsequent to a positive shock. 
+Four different models were estimated for the dynamics of the correlation. The first, and 
+simplest model, was a standard scalar DCC (i.e. each of the matrices, A and B, are diagonal with 
+the same value on each diagonal element and no asymmetric terms are included). Next the full 
+diagonal version of the model was estimated allowing for no asymmetries in the correlation 
+dynamics. The two forms of model estimated were an asymmetric DCC model ( A, B and G each 
+consist of a single unique element) and the full diagonal version of this model where asymmetric 
+terms were introduced allowing for different news impact and smoothing parameters across the 
+assets. Upon inspection of the fit correlation and the data, it became obvious that a large number 
+of the series have undergone a significant structural break when the exchange rates were 
+/G69/G67/G66/G32/G149/G32 /G87/G111/G114/G107/G105/G110/G103/G32/G80/G97/G112/G101/G114/G32/G78/G111/G32/G50/G48/G52/G32/G149/G32/G74/G97/G110/G117/G97/G114/G121/G32 /G50/G48/G48/G51 /G50/G49
+irrevocably fixed. In order to correct for this obvious deficiency, all of the 4 base models were 
+modified to allow for a structural break in the mean and for both a structural break in the mean 
+and in the dynamics across the introduction of the Euro. Tables 6 and 6a contains the results of 
+the estimated models, with the results presented for the parameters of the models where the mean 
+was allowed to change but not the dynamics. Almost all of parameters in the models estimated 
+were significant, with exceptions noted in the table. The first observation is that the diagonal 
+versions of the models significantly outperform the scalar versions of the same model. In 
+addition, both of the asymmetric DCC models outperform their non-asymmetric DCC 
+counterparts, with p-values of zero. The shocks to correlation were typically highly persistent, 
+with a half-life of more than 14 weeks for the simplest symmetric scalar DCC model. For the 
+diagonal DCC model, two of the assets series exhibited no (or nearly no) innovation, and for 
+those which did, the half-life of the innovation ranged from 9 to over 63 weeks. In order to 
+calculate the expected half life of an innovation for the asymmetric model, it is necessary to use 
+expected value or by assuming symmetry for the distribution. Overall, the asymmetric models 
+produces slightly less persistence, but were also highly persistent. 
+We also found significant evidence of a structural break when the EMU 20 exchange rates 
+were irrevocably fixed21. We tested for both a structural break in the mean and a structural break 
+in both the mean and the dynamics. The likelihoods of these 12 models (3 treatments of the 
+original 4 models) are in Table 6a. We overwhelmingly reject the null of no structural break in 
+the mean for all models (typical likelihood ratios were approximately 1800 wit

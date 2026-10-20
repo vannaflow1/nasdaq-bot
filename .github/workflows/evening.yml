@@ -1,0 +1,37 @@
+name: evening
+on:
+  schedule:
+    - cron: "40 20,21 * * 1-5"   # US close +40 min in summer and winter time
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: python nasdaq_bot.py --evening
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+          DISCORD_WEBHOOK_NERD: ${{ secrets.DISCORD_WEBHOOK_NERD }}
+          PYTHONUNBUFFERED: "1"
+      - run: python strategy_forward.py || true         # forward-test strategies that passed the exam + /strategies status
+        env:
+          DISCORD_WEBHOOK_LEARN: ${{ secrets.DISCORD_WEBHOOK_LEARN }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+      - run: python volflag.py --grade || true          # settle short-vol paper trades
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_NERD: ${{ secrets.DISCORD_WEBHOOK_NERD }}
+      - if: always()
+        run: bash .github/actions_common.sh "evening"

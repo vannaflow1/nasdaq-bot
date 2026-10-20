@@ -1,0 +1,110 @@
+[
+ {
+  "id": "openalex:W4389410587",
+  "title": "Forecasting cryptocurrencies volatility using statistical and machine learning methods: A comparative study",
+  "idea": "Can simple linear models like HAR and ridge regression outperform complex machine learning models like LSTM and RF in forecasting volatility of a specific cryptocurrency or index, such as Nasdaq/S&P?",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W2900554501",
+  "title": "HYBRID FUZZY NEURAL NETWORK TO PREDICT PRICE DIRECTION IN THE GERMAN DAX-30 INDEX",
+  "idea": "Can a hybrid fuzzy neural network predict the direction of the Nasdaq/S&P index using technical indicators and oscillators as inputs?",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W2166672289",
+  "title": "Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model",
+  "idea": "Can the HAR-CJ-M model's performance be replicated in Nasdaq/S&P index futures and options using daily realized volatility and momentum effect data?",
+  "relevance": 3,
+  "added": "2026-10-20"
+ },
+ {
+  "id": "openalex:W3110420963",
+  "title": "A CNN-LSTM-Based Model to Forecast Stock Prices",
+  "idea": "Can a CNN-LSTM model trained on historical stock price data (e.g., QQQ) outperform a simple moving average model in predicting next-day log returns (y_r)?",
+  "relevance": 3,
+  "added": "2026-10-20"
+ },
+ {
+  "id": "openalex:W4323528528",
+  "title": "Uncovering the asymmetric information content of high-frequency options",
+  "idea": "Build OTM call/put realized semivariances from intraday QQQ option prices and add them to the range forecast. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W3124639629",
+  "title": "Time Series Momentum",
+  "idea": "Go long QQQ the next day when its past 12-month return is positive and short when negative (the paper's 12-month lookback). (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W4250762315",
+  "title": "Momentum crashes",
+  "idea": "Trade next-day QQQ in the direction of the 20-day return, but go flat in panic states (20-day return negative and 20-day realized vol in its top 30% of the past year). (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W3122511260",
+  "title": "Intraday Price Formation in U.S. Equity Index Markets",
+  "idea": "Measure intraday lead-lag between NQ futures and QQQ to time QQQ option entries. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W4406740838",
+  "title": "Profitability of selected 0DTE index options strategies",
+  "idea": "Selling a same-day iron condor pays when the realized move stays inside the options-priced move; my memory has only daily close-to-close returns and daily ranges, not intraday option prices or the condor's strikes, so the strategy itself cannot be simulated with idea_lab. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W3123181790",
+  "title": "Profitability of technical stock trading: Has it moved from daily to intraday data?",
+  "idea": "Check the paper's daily-data claim on QQQ: follow the 20-day trend (long if the last 20 days were up, short if down) for the next day. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W2135513499",
+  "title": "Transmission of Information across International Equity Markets",
+  "idea": "Check whether the volatility spike from US CPI or payrolls fades within about 30 minutes for NQ; this needs intraday bars and release surprise data, which my daily memory does not have (scheduled-event days are already captured by event_prem). (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W3153001253",
+  "title": "Intraday volatility transmission among precious metals, energy and stocks during the COVID-19 pandemic",
+  "idea": "Intraday volatility transmission among precious metals, energy and stocks during the COVID-19 pandemic (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3
+ },
+ {
+  "id": "openalex:W2052556512",
+  "title": "Limited Arbitrage and Short Sales Restrictions: Evidence from the Options Markets",
+  "idea": "Investigate the relationship between put-call parity violations and future stock returns, using the rebate rate spread as a predictor.",
+  "relevance": 3,
+  "added": "2026-10-20"
+ },
+ {
+  "id": "openalex:W3216327941",
+  "title": "Predicting the Direction Movement of Financial Time Series Using Artificial Neural Network and Support Vector Machine",
+  "idea": "Can an ANN model outperform an SVM model in predicting the direction of daily Nasdaq-100 index movements using technical indicators derived from trading data?",
+  "relevance": 3,
+  "added": "2026-10-20"
+ },
+ {
+  "id": "arxiv:2610.26324v1",
+  "title": "The Control Layer Behind Rule-Following Agents Trading Across Market Conditions",
+  "idea": "Can an AI trading agent maintain high rule adherence during different market conditions?",
+  "relevance": 3,
+  "added": "2026-10-20"
+ },
+ {
+  "id": "openalex:W7222900652",
+  "title": "Black\u2013Scholes Pricing and Market Mispricing of XSP European Index Options",
+  "idea": "Short (sell) near\u2011ATM XSP calls that have a high absolute relative pricing error (e.g., ARPE > 30%) and buy the corresponding puts of similar moneyness, betting that the market will correct the call overprice while the put is fairly priced.",
+  "relevance": 3,
+  "added": "2026-10-20"
+ },
+ {
+  "id": "openalex:W3083609828",
+  "title": "Equilibrium Effects of Intraday Order-Splitting Benchmarks",
+  "idea": "Would need intraday data (opening move vs. rest-of-day drift) and institutional order-flow imbalance; my memory has one row per day with next-day range and return only, so the intraday fade cannot be checked. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 2
+ }
+]

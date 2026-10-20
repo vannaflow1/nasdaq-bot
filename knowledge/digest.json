@@ -1,0 +1,2972 @@
+[
+{
+"title": "Chronology-Constrained Residual Option Pricing with Local Strike-Shape Diagnostics across BTC and ETH Windows",
+"learned": "The paper compares several option pricing models, including a chronology\u2011constrained residual network (CCRP), against Black\u2011Scholes, SVI and simple benchmarks on 24\u2011hour BTC and ETH option windows, and finds no consistent winner and mixed arbitrage\u2011consistency results.",
+"concepts": [
+"residual learning",
+"chronology\u2011constrained training",
+"cryptocurrency options",
+"arbitrage diagnostics",
+"model comparison"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.70267/icrafm.202617541548",
+"date": "2026-10-20"
+},
+{
+"title": "emcee : The MCMC Hammer",
+"learned": "The paper presents emcee, an affine\u2011invariant ensemble MCMC sampler that needs only 1\u20132 tunable parameters and scales well with dimensionality, offering low autocorrelation and easy parallelisation across CPU cores.",
+"concepts": [
+"affine\u2011invariant ensemble sampling",
+"low\u2011dimensional hyperparameter tuning",
+"autocorrelation time as efficiency metric",
+"parallel execution of walkers"
+],
+"relevance": 3,
+"verdict": "about myself - feeds my self-check",
+"url": "https://iopscience.iop.org/article/10.1086/670067/pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Black\u2013Scholes Pricing and Market Mispricing of XSP European Index Options",
+"learned": "On a single day, Black\u2011Scholes using a common 20\u2011day historical volatility over\u2011prices XSP calls (especially near\u2011the\u2011money) and under\u2011prices puts, with mean absolute errors up to 1.43 for ATM calls and ARPE around 56% for calls versus 60% for puts.",
+"concepts": [
+"Black\u2011Scholes pricing error",
+"moneyness bias",
+"ATM call overpricing",
+"historical volatility input",
+"relative pricing error"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://aemps.ewapub.com/article/view/37764.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Stan : A Probabilistic Programming Language",
+"learned": "Stan provides an imperative probabilistic language that compiles to efficient C++ code, exposing log densities, gradients, and Hessians for advanced inference (NUTS, L-BFGS, variational methods). Its modular interface and detailed diagnostics enable reproducible Bayesian inference.",
+"concepts": [
+"imperative probabilistic programming",
+"Hamiltonian Monte Carlo / NUTS",
+"automatic differentiation of log\u2011density",
+"gradient\u2011based optimization (L\u2011BFGS)",
+"exposed diagnostics and posterior analysis"
+],
+"relevance": 3,
+"verdict": "about myself - feeds my self-check",
+"url": "https://www.jstatsoft.org/index.php/jss/article/view/v076i01/v76i01.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting",
+"learned": "The paper introduces ConvLSTM, which replaces fully\u2011connected transitions in LSTM with convolutions to capture spatial and temporal correlations in grid\u2011like data, and shows it improves multi\u2011step spatiotemporal forecasts such as precipitation nowcasting.",
+"concepts": [
+"convolutional recurrent cells",
+"spatiotemporal encoding\u2011forecasting",
+"gate\u2011controlled memory with locality",
+"end\u2011to\u2011end training",
+"multi\u2011step prediction"
+],
+"relevance": 4,
+"verdict": "about myself - feeds my self-check",
+"url": "https://arxiv.org/pdf/1506.04214",
+"date": "2026-10-20"
+},
+{
+"title": "AutoResearch Lite: a reproducible paper-inspired experiment runner (Adam mechanism reproduction and convergence-speed comparison)",
+"learned": "The paper presents a method for designing complex materials using a deep-learning guided genetic algorithm, which combines simulation and machine learning to explore a large design space. The approach uses a convolutional neural network to classify and score material designs, and a genetic algorithm to evolve and converge on optimal designs.",
+"concepts": [
+"Deep Learning",
+"Genetic Algorithm",
+"Material Design",
+"Simulation"
+],
+"relevance": 2,
+"verdict": "about myself - feeds my self-check",
+"url": "https://drops.dagstuhl.de/storage/00lipics/lipics-vol238-dna28/LIPIcs.DNA.28.4/LIPIcs.DNA.28.4.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "A review of machine learning experiments in equity investment decision-making: why most published research findings do not live up to their promise in real life",
+"learned": "The paper reviews 27 academic experiments on machine learning in equity investment decision-making, finding a gap between published research claims and real-life performance. Most research findings do not translate to profitable investment strategies in real life. The authors criticize 'cherry-picking' of best-performing models and offer recommendations for future experiments.",
+"concepts": [
+"Machine Learning",
+"Equity Investment",
+"Model Validation"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://link.springer.com/content/pdf/10.1007/s41060-021-00245-5.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Alternative data and sentiment analysis: Prospecting non-standard data in machine learning-driven finance",
+"learned": "The paper discusses 'alternative data' in finance, which includes non-standard data sources like social media commentary, satellite imagery, and GPS data. These data are used for stock price prediction, risk exposure detection, and discovering new price movement indicators. Machine learning analytics tools are making alternative data more useful in investment management and algorithmic trading.",
+"concepts": [
+"alternative data",
+"sentiment analysis",
+"machine learning"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.1177/20539517211070701",
+"date": "2026-10-20"
+},
+{
+"title": "HAR Inference: Recommendations for Practice",
+"learned": "The paper discusses methods for improving heteroscedasticity- and autocorrelation-robust (HAR) inference in time series regression. It recommends using a larger-than-usual truncation parameter to estimate the long-run variance, combined with fixed-b critical values, to reduce size distortions.",
+"concepts": [
+"HAR inference",
+"long-run variance",
+"truncation parameter"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://discovery.ucl.ac.uk/10160486/1/har_JBES_v8.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "An International Comparison of Implied, Realized, and GARCH Volatility Forecasts",
+"learned": "The paper compares the performance of implied, realized, and GARCH volatility models for 13 equity indices from 10 countries. It finds that the Heterogeneous Autoregressive (HAR) model is superior at the daily horizon, while an implied volatility model that corrects for the volatility risk premium is superior at the monthly horizon. GARCH models have inferior performance in almost all cases.",
+"concepts": [
+"Volatility forecasting",
+"Implied Volatility",
+"GARCH",
+"Realized Volatility"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://ueaeprints.uea.ac.uk/id/eprint/58088/1/An_International_Comparison_of_Implied_Realized_and_GARCH_Volatility_Forecasts.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "The Control Layer Behind Rule-Following Agents Trading Across Market Conditions",
+"learned": "This study tested four AI trading agents to see if they followed their strategies and risk rules. The agents were analyzed over 2,627 closed positions from February 12 to August 27, 2026, with a 0.09% round-trip fee. The agents showed high rule adherence, with 97.5% of gross loss within declared stops.",
+"concepts": [
+"AI trading agents",
+"rule adherence",
+"risk management"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://arxiv.org/abs/2610.26324v1",
+"date": "2026-10-20"
+},
+{
+"title": "Predicting the Direction Movement of Financial Time Series Using Artificial Neural Network and Support Vector Machine",
+"learned": "This study compares the performance of Artificial Neural Networks (ANN) and Support Vector Machines (SVM) in predicting the direction of daily stock price index movements for several international indexes.",
+"concepts": [
+"ANN",
+"SVM",
+"Technical Indicators",
+"Financial Time Series"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://downloads.hindawi.com/journals/complexity/2021/2906463.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Expected Option Returns",
+"learned": "The paper finds that expected call option returns are higher than the underlying security and increase with strike price, while expected put option returns are lower than the risk-free rate and also increase with strike price. S&P index options show these characteristics. Zero-beta straddle positions tend to produce average losses.",
+"concepts": [
+"option returns",
+"asset-pricing theory",
+"stochastic volatility"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/0022-1082.00352",
+"date": "2026-10-20"
+},
+{
+"title": "Enhancing stock market anomalies with machine learning",
+"learned": "The study examines the use of machine learning to enhance stock market anomalies, finding that machine learning models can generate significant monthly returns of 1.8-2.0%. Over 80% of the models outperformed a linearly constructed baseline factor. The results suggest that non-linear models can reveal market inefficiencies that are hard to explain by risk-based factors.",
+"concepts": [
+"Machine Learning",
+"Anomaly Detection",
+"Market Efficiency"
+],
+"relevance": 3,
+"verdict": "not testable with my data yet",
+"url": "https://link.springer.com/content/pdf/10.1007/s11156-022-01099-z.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Limited Arbitrage and Short Sales Restrictions: Evidence from the Options Markets",
+"learned": "The paper investigates put-call parity violations in the presence of short sale restrictions. It finds that violations are asymmetric, related to the rebate rate spread, and persist even with transactions costs. The study also shows that violations predict future stock returns, with cumulative abnormal returns exceeding 65% over a 2.5-year period.",
+"concepts": [
+"put-call parity",
+"short sale restrictions",
+"arbitrage",
+"options pricing"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://doi.org/10.3386/w9423",
+"date": "2026-10-20"
+},
+{
+"title": "Machine Learning Portfolio Allocation",
+"learned": "This paper uses machine learning for portfolio allocation between a market index and a risk-free asset, finding significant gains in utility, risk-adjusted returns, and maximum drawdowns. Two Random Forest models forecast monthly excess returns and volatility. Machine learning improves portfolio allocation by timing expected returns and volatility.",
+"concepts": [
+"Machine Learning",
+"Portfolio Allocation",
+"Volatility Timing"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://www.sciencedirect.com/science/article/pii/S2405918821000155/pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Improving Generalization in Reinforcement Learning\u2013Based Trading by Using a Generative Adversarial Market Model",
+"learned": "The paper discusses using a generative adversarial model (LOB-GAN) to simulate a financial market for training reinforcement learning (RL) agents in portfolio management. This approach aims to improve the agent's generalization capabilities by accounting for market impact and causal relationships. The framework shows a 4% improvement in out-of-sample portfolio performance.",
+"concepts": [
+"Reinforcement Learning",
+"Generative Adversarial Model",
+"Market Simulation"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://ieeexplore.ieee.org/ielx7/6287639/9312710/09383217.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "A CNN-LSTM-Based Model to Forecast Stock Prices",
+"learned": "The paper proposes a CNN-LSTM model for stock price forecasting, which combines the strengths of Convolutional Neural Networks (CNN) for feature extraction and Long Short-Term Memory (LSTM) networks for time series prediction. The model is compared to other machine learning models, including MLP, CNN, RNN, LSTM, and CNN-RNN, using daily stock price data from 1991 to 2020. The CNN-LSTM model shows the highest prediction accuracy.",
+"concepts": [
+"CNN-LSTM",
+"Stock Price Forecasting",
+"Machine Learning"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://downloads.hindawi.com/journals/complexity/2020/6622927.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model",
+"learned": "The paper introduces the HAR-CJ-M model, an extension of the HAR-CJ model, which incorporates momentum effect and adjusted realized volatility (ARV) to forecast volatility in the Chinese stock market. The HAR-CJ-M model outperforms HAR-ARV and HAR-CJ models in forecasting future volatility. The study finds that continuous sample path variation, momentum effect, and ARV have good forecasting performance, while discontinuous jump variation has poor performance.",
+"concepts": [
+"HAR-CJ-M model",
+"volatility forecasting",
+"realized volatility"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://downloads.hindawi.com/journals/aaa/2013/143194.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Neural Network\u2013Based Financial Volatility Forecasting: A Systematic Review",
+"learned": "This paper reviews 35 studies on using neural networks for financial volatility forecasting, published after 2015. It highlights issues with comparing models and a gap between modern machine learning and those used in volatility forecasting. The authors propose a shared task to evaluate models and suggest ways to bridge the gap.",
+"concepts": [
+"Neural Networks",
+"Volatility Forecasting",
+"Machine Learning"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://dl.acm.org/doi/pdf/10.1145/3483596",
+"date": "2026-10-20"
+},
+{
+"title": "Forecasting of Realised Volatility with the Random Forests Algorithm",
+"learned": "The paper explores using the Random Forests algorithm to forecast realized volatility in financial time series, building on the heterogeneous autoregressive (HAR) model and incorporating purified implied volatility.",
+"concepts": [
+"HAR model",
+"Random Forests",
+"Realized Volatility",
+"Implied Volatility"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://www.mdpi.com/1911-8074/11/4/61/pdf?version=1539302744",
+"date": "2026-10-20"
+},
+{
+"title": "Nonparametric Estimation and Forecasting for Time-Varying Coefficient Realized Volatility Models",
+"learned": "The paper introduces a new specification for the heterogeneous autoregressive (HAR) model for the realized volatility of S&P 500 index returns, allowing the coefficients to be time-varying with unspecified functional forms. The authors use a local linear method with cross-validation bandwidth selection to estimate the time-varying coefficient HAR (TVC-HAR) model and find that it outperforms parametric HAR and its extensions in terms of multi-step out-of-sample forecasting.",
+"concepts": [
+"HAR model",
+"time-varying coefficients",
+"nonparametric estimation",
+"realized volatility"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 56.6% (always-long 56.6%), strategy +8.1 bps/day vs +8.2 for the same average exposure held constantly -> timing adds -0.1 bps/day, t=-0.06, positive in 3/9 years",
+"url": "https://eprints.whiterose.ac.uk/id/eprint/97244/1/Nonparametric_Estimation_and_Forecasting_for_Time_Varying_Coefficient_Realized_Volatility_Models.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Deep Neural Network and Time Series Approach for Finance Systems",
+"learned": "This paper explores the use of machine learning algorithms, including deep neural networks, to predict the next-day trend in index prices for the Indian National Stock Exchange (NSE). The authors use historical NSE closing price data and technical indicators to train their models.",
+"concepts": [
+"Machine Learning",
+"Deep Neural Networks",
+"Time Series Prediction"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 50.5% (always-long 56.6%), strategy -1.1 bps/day vs +1.6 for the same average exposure held constantly -> timing adds -2.7 bps/day, t=-0.83, positive in 2/9 years",
+"url": "https://www.igi-global.com/ViewTitle.aspx?TitleId=280571&isxn=9781799867487",
+"date": "2026-10-20"
+},
+{
+"title": "Time-varying relationship of news sentiment, implied volatility and stock returns",
+"learned": "The relationship between news sentiment, implied volatility (VIX), and S&P 500 returns is dynamic and asymmetric. Changes in VIX are negatively related to news sentiment and stock returns, with larger changes following negative news or market declines.",
+"concepts": [
+"VIX",
+"News Sentiment",
+"Stock Returns"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - unknown column 'news_sentiment'",
+"url": "https://doi.org/10.2139/ssrn.2186267",
+"date": "2026-10-20"
+},
+{
+"title": "Intraday time\u2010series momentum: Evidence from China",
+"learned": "Intraday time-series momentum exists in Chinese commodity futures, where the first half-hour return predicts the last half-hour return. This momentum is stronger in high-volume or high-volatility trading sessions.",
+"concepts": [
+"Intraday momentum",
+"Time-series momentum",
+"Commodity futures"
+],
+"relevance": 3,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://doi.org/10.2139/ssrn.3493927",
+"date": "2026-10-20"
+},
+{
+"title": "Rachev-Ratio Portfolio Optimization with TimeGAN Scenarios: Replacement versus Supplementation",
+"learned": "This paper studies the use of TimeGAN-generated scenarios in Rachev-ratio portfolio optimization. The study finds that generated scenarios can understate volatility and tail losses, and distort dependence. The results are mixed, with higher-mass hybrids earning larger average net returns in some configurations, but not consistently.",
+"concepts": [
+"TimeGAN",
+"Rachev ratio",
+"portfolio optimization",
+"scenario generation",
+"tail risk"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs generated scenarios from TimeGAN, which cannot be calculated from the provided daily trading data",
+"url": "https://arxiv.org/abs/2610.24544v1",
+"date": "2026-10-20"
+},
+{
+"title": "The probability of backtest overfitting",
+"learned": "The paper discusses the issue of backtest overfitting in investment strategies and proposes a new framework, Combinatorially Symmetric Cross-Validation (CSCV), to estimate the probability of backtest overfitting (PBO). This framework aims to improve the reliability of backtests used by firms and portfolio managers.",
+"concepts": [
+"backtest overfitting",
+"probability of backtest overfitting (PBO)",
+"Combinatorially Symmetric Cross-Validation (CSCV)"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 50.1% (always-long 56.6%), strategy -2.6 bps/day vs +1.1 for the same average exposure held constantly -> timing adds -3.7 bps/day, t=-1.16, positive in 2/9 years",
+"url": "https://doi.org/10.2139/ssrn.2326253",
+"date": "2026-10-20"
+},
+{
+"title": "The Statistical and Economic Role of Jumps in Continuous\u2010Time Interest Rate Models",
+"learned": "The paper examines the role of jumps in continuous-time short rate models, finding evidence of jumps in Treasury bill rates and a significant statistical role of jumps, which are often triggered by unexpected macroeconomic news.",
+"concepts": [
+"jump-diffusion model",
+"interest rate models",
+"continuous-time models"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6321.2004.00632.x",
+"date": "2026-10-20"
+},
+{
+"title": "Classification-based financial markets prediction using deep neural networks",
+"learned": "This paper explores the use of deep neural networks (DNNs) for predicting financial market movements and backtesting a simple trading strategy. The authors applied DNNs to 43 Commodity and FX future mid-prices at 5-minute intervals.",
+"concepts": [
+"Deep Neural Networks",
+"Algorithmic Trading",
+"Backtesting"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - data is not available at daily interval, 5-minute interval data is required",
+"url": "https://content.iospress.com:443/download/algorithmic-finance/af176?id=algorithmic-finance%2Faf176",
+"date": "2026-10-20"
+},
+{
+"title": "The diversification benefits of cryptocurrency asset categories and estimation risk: pre and post Covid-19",
+"learned": "Cryptocurrencies can provide significant diversification benefits in a portfolio, especially for investors with lower risk aversion. These benefits persist even in uncertain economic environments like the post-Covid-19 period.",
+"concepts": [
+"Cryptocurrency diversification",
+"Estimation risk",
+"Bayes-Stein model",
+"Stochastic volatility"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.1080/1351847x.2022.2033806",
+"date": "2026-10-20"
+},
+{
+"title": "Empirical asset pricing via machine learning: evidence from the European stock market",
+"learned": "Machine learning models, particularly neural networks and support vector machines, can improve the prediction of European stock returns and outperform linear benchmark models. These models benefit from interactions and nonlinear effects, but require careful training and tuning to avoid overfitting. The most important predictors are price trends and fundamental signals from valuation ratios.",
+"concepts": [
+"Machine Learning",
+"Neural Networks",
+"Support Vector Machines",
+"Asset Pricing"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday stock prices, fundamental data like valuation ratios, and a way to train/test a neural network",
+"url": "https://link.springer.com/content/pdf/10.1057/s41260-021-00237-x.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Investigating Explainability Methods in Recurrent Neural Network Architectures for Financial Time Series Data",
+"learned": "This study applies explainable AI (XAI) methods to recurrent neural networks (RNNs) for financial time series prediction, specifically using S&P 500 stocks data. The study compares the performance of four XAI methods across different RNN architectures, including GRU, LSTM, and RNN. The results show that these XAI methods can be applied to financial forecasting, but may require further development for hybrid prediction systems.",
+"concepts": [
+"Explainable AI",
+"Recurrent Neural Networks",
+"Financial Time Series",
+"Machine Learning"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://www.mdpi.com/2076-3417/12/3/1427/pdf?version=1643379379",
+"date": "2026-10-20"
+},
+{
+"title": "M\u00e9thodes d'apprentissage par renforcement pour les strat\u00e9gies syst\u00e9matiques de market making",
+"learned": "The paper explores using reinforcement learning for market making strategies, focusing on improving decision-making for market makers who provide liquidity by quoting buy and sell prices. It proposes modifications to LSTM structures and neural networks to estimate execution probabilities, enhancing the efficiency of reinforcement learning.",
+"concepts": [
+"Reinforcement Learning",
+"Market Making",
+"LSTM",
+"Neural Networks"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://theses.hal.science/tel-04913317v1/file/131459_RAGEL_2024_archivage.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Modelling and forecasting multivariate realized volatility",
+"learned": "The paper discusses a methodology for modeling and forecasting multivariate realized volatility using fractionally integrated processes, which ensures positive definiteness of the forecast. This approach allows for flexible dependence patterns and has been shown to outperform other methods in terms of statistical precision and mean-variance trade-off in investment decisions.",
+"concepts": [
+"realized volatility",
+"covariance matrices",
+"fractionally integrated processes"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 46.4% (always-long 56.6%), strategy -3.9 bps/day vs -1.2 for the same average exposure held constantly -> timing adds -2.6 bps/day, t=-0.80, positive in 4/9 years",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jae.1152",
+"date": "2026-10-20"
+},
+{
+"title": "Cooperative Multi-Agent Reinforcement Learning for Market Making on Prediction-Market Order Books",
+"learned": "This paper studies market makers trained with multi-agent reinforcement learning on prediction markets, specifically Polymarket. The authors address challenges such as adverse selection, delayed consequences of quotes, and limited data, and propose a cooperative multi-agent decomposition into a quoter and a risk manager.",
+"concepts": [
+"Multi-agent reinforcement learning",
+"Market making",
+"Prediction markets"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday order book data and multiple agent interactions",
+"url": "https://arxiv.org/abs/2610.26789v1",
+"date": "2026-10-20"
+},
+{
+"title": "When Does Attention Matter? The Effect of Investor Attention on Stock Market Volatility Around News Releases",
+"learned": "The study examines how retail and institutional investor attention affects stock market volatility around news releases for 360 S&P 500 stocks. It finds that higher retail investor attention increases post-announcement volatility, while institutional investor attention slightly decreases it. These effects vary by news type and topic.",
+"concepts": [
+"investor attention",
+"stock market volatility",
+"news releases"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.0%), better in 4/9 unseen years",
+"url": "https://www.sciencedirect.com/science/article/pii/S1057521922001466/pdf",
+"date": "2026-10-20"
+},
+{
+"title": "The predictive capacity of GARCH-type models in measuring the volatility of crypto and world currencies",
+"learned": "This paper compares the performance of various GARCH-type models in forecasting the volatility of six cryptocurrencies (Bitcoin, Ripple, Litecoin, Monero, Dash, and Dogecoin) and six world currencies (Euro, British Pound, Canadian Dollar, Australian Dollar, Swiss Franc, and Japanese Yen) from 2015 to 2019. The IGARCH model outperformed others for world currencies, while the best model varied for cryptocurrencies.",
+"concepts": [
+"GARCH",
+"Volatility",
+"Cryptocurrencies",
+"Value at Risk"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.589% (-0.3%), better in 0/6 unseen years",
+"url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0245904&type=printable",
+"date": "2026-10-20"
+},
+{
+"title": "Implied volatility directional forecasting: a machine learning approach",
+"learned": "This study explores forecasting the direction of US implied volatility (VIX index) using machine learning techniques and compares them to traditional econometric models. The results suggest that machine learning approaches are more effective in predicting implied volatility direction. This has implications for investment strategies, particularly for volatility trading and risk management.",
+"concepts": [
+"Implied Volatility",
+"Machine Learning",
+"Forecasting",
+"VIX Index"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1499 signal days, hit 49.4% (always-long 56.0%), strategy -2.7 bps/day vs +0.4 for the same average exposure held constantly -> timing adds -3.0 bps/day, t=-1.10, positive in 3/9 years",
+"url": "https://www.tandfonline.com/doi/pdf/10.1080/14697688.2021.1905869?needAccess=true",
+"date": "2026-10-20"
+},
+{
+"title": "The forecasting power of EPU for crude oil return volatility",
+"learned": "Economic policy uncertainty (EPU) has a positive impact on crude oil return volatility, but the effect is short-lived (about one year). The US EPU index has the best forecasting power for crude oil return volatility over the long-term, while China's EPU index performs better in the short-term.",
+"concepts": [
+"EPU",
+"GARCH",
+"volatility",
+"crude oil"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://www.sciencedirect.com/science/article/pii/S2352484718304190/pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Probabilistic Limit Order Book Forecasting with Conditional Diffusion Models",
+"learned": "The paper introduces LOBGrad, a conditional diffusion model for probabilistic limit order book (LOB) forecasting, combining an autoregressive RNN encoder with a diffusion-based generator. It establishes statistical guarantees and shows improved performance over baselines in experiments on BTC/USDT, GOOGL, and META. LOBGrad reproduces key stylized facts of LOB microstructure and yields calibrated predictive intervals.",
+"concepts": [
+"Conditional Diffusion Models",
+"Limit Order Book Forecasting",
+"Autoregressive RNN Encoder"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/abs/2610.25495v1",
+"date": "2026-10-20"
+},
+{
+"title": "Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage",
+"learned": "The paper discusses using a Neural Filter Estimator (NFE) to estimate the posterior distribution of a residual spread in statistical arbitrage, which helps in correctly accounting for uncertainty in trading decisions. The NFE is trained on simulated paths of a mean-reverting process and can return the posterior over the latent state of every spread in a cross-section in one forward pass. The method reduces the gap between forecasted and realized returns by a factor of two to eight.",
+"concepts": [
+"Neural Filter Estimator",
+"Statistical Arbitrage",
+"Posterior Distribution",
+"Uncertainty Estimation"
+],
+"relevance": 4,
+"verdict": "DOESN'T FIT MY DATA - needs intraday data and/or residuals from a statistical arbitrage strategy to train a neural filter estimator",
+"url": "https://arxiv.org/abs/2610.25802v1",
+"date": "2026-10-20"
+},
+{
+"title": "HYBRID FUZZY NEURAL NETWORK TO PREDICT PRICE DIRECTION IN THE GERMAN DAX-30 INDEX",
+"learned": "The paper proposes a hybrid fuzzy neural network (HyFIS) to predict the one-day ahead direction of the German DAX-30 stock index. The model uses technical indicators and oscillators as inputs, and the results show that reducing the dimensionality of the inputs through factor analysis generates more profitable and less risky strategies.",
+"concepts": [
+"Hybrid fuzzy neural network",
+"Technical indicators",
+"Factor analysis",
+"Predictive modeling"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday data and complex fuzzy neural network implementation beyond simple mathematical operations",
+"url": "https://journals.vgtu.lt/index.php/TEDE/article/download/6394/5541",
+"date": "2026-10-20"
+},
+{
+"title": "Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales",
+"learned": "The paper proposes Additive Martingale (AddMart), a framework for reconstructing a continuous implied volatility (IV) surface from sparse option quotes, ensuring static no-arbitrage conditions by construction.",
+"concepts": [
+"Additive Martingale",
+"Implied Volatility Surface",
+"No-Arbitrage Conditions",
+"Risk-Neutral Density"
+],
+"relevance": 4,
+"verdict": "DOESN'T FIT MY DATA - requires intraday option quotes and a method to interpolate the volatility surface, not directly feasible with the provided daily closing data",
+"url": "https://arxiv.org/abs/2610.25671v1",
+"date": "2026-10-20"
+},
+{
+"title": "Essays on equity option behavior surrounding macroeconomic announcements",
+"learned": "This dissertation studies the behavior of equity options around macroeconomic announcements. It finds that implied volatilities of S&P 500 options can predict underlying index returns on macroeconomic news days, and that delta-neutral straddles have high returns when realized volatility is higher than expected or when price jumps occur.",
+"concepts": [
+"Implied Volatility",
+"Macroeconomic Announcements",
+"Delta-Neutral Straddles",
+"Risk Premium"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 119 signal days, hit 51.3% (always-long 53.8%), strategy +0.4 bps/day vs +0.2 for the same average exposure held constantly -> timing adds +0.2 bps/day, t=0.15, positive in 4/9 years",
+"url": "https://udspace.udel.edu/bitstreams/879677d2-246c-4088-ab76-5e3bde45ad13/download",
+"date": "2026-10-20"
+},
+{
+"title": "Market making and liquidity provision: The role of market makers in financial markets",
+"learned": "Market makers play a crucial role in financial markets by providing continuous liquidity through bid and ask quotes. They help with price discovery, reduce volatility, and improve transaction cost efficiency. Their risk management strategies include hedging, mitigating adverse selection, and stress testing.",
+"concepts": [
+"Market Making",
+"Liquidity Provision",
+"Risk Management"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://journalwjaets.com/sites/default/files/fulltext_pdf/WJAETS-2025-0535.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "CLVSA: A Convolutional LSTM Based Variational Sequence-to-Sequence Model with Attention for Predicting Trends of Financial Markets",
+"learned": "The paper proposes a hybrid model called CLVSA, which combines convolutional LSTM units, sequence-to-sequence architecture, and attention mechanisms to predict financial market trends. The model outperforms basic models like CNN, LSTM, and Seq2Seq with attention on backtesting results of six futures from 2010 to 2017.",
+"concepts": [
+"Convolutional LSTM",
+"Sequence-to-Sequence",
+"Attention Mechanism",
+"Variational Model",
+"Kullback-Leibler Divergence"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - requires intraday data and complex model implementation",
+"url": "https://www.ijcai.org/proceedings/2019/0514.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Journal of Forecasting",
+"learned": "The study introduces IntraFormer, a novel Transformer architecture for multivariate stock price prediction, which outperforms state-of-the-art models in terms of accuracy and robustness. IntraFormer achieves significant error reductions and demonstrates potential for improving trading strategies and portfolio risk management.",
+"concepts": [
+"Transformer architecture",
+"multivariate stock price prediction",
+"regime shifts"
+],
+"relevance": 3,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/for.70211?download=true",
+"date": "2026-10-20"
+},
+{
+"title": "A joint quantile and expected shortfall regression framework",
+"learned": "The paper introduces a new regression framework that jointly models the quantile and Expected Shortfall (ES) of a response variable given a set of covariates. This framework allows for M- and Z-estimation of the joint regression parameters, with a focus on M-estimation due to numerical stability issues with Z-estimation.",
+"concepts": [
+"Quantile Regression",
+"Expected Shortfall",
+"M-estimation"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://projecteuclid.org/journals/electronic-journal-of-statistics/volume-13/issue-1/A-joint-quantile-and-expected-shortfall-regression-framework/10.1214/19-EJS1560.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Global financial stress index and long-term volatility forecast for international stock markets",
+"learned": "The global financial stress index (GFSI) has strong predictive power for long-term equity market volatility, outperforming other indicators like VIX and economic policy uncertainty. GFSI is particularly effective during times of high global financial stress, such as the COVID-19 pandemic. This index can help policymakers and investors make better risk-aversion strategies.",
+"concepts": [
+"GFSI",
+"Volatility Forecast",
+"Financial Stress Index"
+],
+"relevance": 3,
+"verdict": "not testable with my data yet",
+"url": "https://www.sciencedirect.com/science/article/pii/S1042443123000938",
+"date": "2026-10-20"
+},
+{
+"title": "Enhancing Time-Series Momentum Strategies Using Deep Neural Networks",
+"learned": "The paper introduces Deep Momentum Networks, a hybrid approach combining deep learning with time-series momentum strategies. It uses deep learning to simultaneously estimate trends and size positions, optimizing the Sharpe ratio. Backtested on 88 futures contracts, it outperformed traditional methods by over two times without transaction costs and up to 2-3 bps with costs.",
+"concepts": [
+"Deep Learning",
+"Time-Series Momentum",
+"Sharpe Ratio"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 53.1% (always-long 56.6%), strategy +4.5 bps/day vs +2.8 for the same average exposure held constantly -> timing adds +1.7 bps/day, t=0.48, positive in 4/9 years",
+"url": "https://jfds.pm-research.com/content/iijjfds/1/4/19.full.pdf",
+"date": "2026-10-20"
+},
+{
+"title": "Forecasting cryptocurrencies volatility using statistical and machine learning methods: A comparative study",
+"learned": "The paper compares various statistical and machine learning methods for forecasting cryptocurrency volatility, finding no single best method for all cryptocurrencies. Simple linear models like HAR and ridge regression perform as well as complex models like LSTM and RF. Linear SVR is consistently among the best models for daily forecasts.",
+"concepts": [
+"GARCH",
+"HAR",
+"Machine Learning",
+"Volatility Forecasting",
+"Cryptocurrency"
+],
+"relevance": 3,
+"verdict": "TRANSLATION FAILED - translator output unusable (Expecting property name enclosed in double quotes: line 1 column 2 (char 1))",
+"url": "https://doi.org/10.1016/j.asoc.2023.111132",
+"date": "2026-10-19"
+},
+{
+"title": "The end-of-month option in futures contracts and the Gittins index of holding the underlying",
+"learned": "The paper discusses the end-of-month option in futures contracts, which allows the short to choose when to deliver during a window with a fixed delivery price. The authors characterize optimal delivery through a universal index obtained from the Bank-El Karoui representation theorem.",
+"concepts": [
+"Gittins index",
+"optimal stopping",
+"futures pricing",
+"stochastic convenience yield"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://arxiv.org/pdf/2610.21196",
+"date": "2026-10-19"
+},
+{
+"title": "An Overview of Machine Learning, Deep Learning, and Reinforcement Learning-Based Techniques in Quantitative Finance: Recent Progress and Challenges",
+"learned": "The paper provides an overview of machine learning, deep learning, reinforcement learning, and deep reinforcement learning techniques in quantitative finance, particularly in stock market forecasting and algorithmic trading. These techniques have been used to create predictive models, anticipate market trends, and develop automated trading systems.",
+"concepts": [
+"Machine Learning",
+"Deep Learning",
+"Reinforcement Learning",
+"Quantitative Finance"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://www.mdpi.com/2076-3417/13/3/1956/pdf?version=1675334107",
+"date": "2026-10-19"
+},
+{
+"title": "Theoretical and Empirical properties of Dynamic Conditional Correlation Multivariate GARCH",
+"learned": "The paper discusses the Dynamic Conditional Correlation Multivariate GARCH (DCC MV-GARCH) model, which estimates large time-varying covariance matrices by first estimating univariate GARCH models for each asset and then estimating a conditional correlation matrix. This approach simplifies the estimation process and reduces the number of parameters to be estimated.",
+"concepts": [
+"GARCH",
+"Multivariate GARCH",
+"Dynamic Conditional Correlation"
+],
+"relevance": 4,
+"verdict": "DOESN'T FIT MY DATA - DCC MV-GARCH requires asset returns, covariances, and a portfolio definition, which are not provided in the data. The data only contains QQQ returns and volatility-related features.",
+"url": "https://doi.org/10.3386/w8554",
+"date": "2026-10-19"
+},
+{
+"title": "Forecasting volatility of Bitcoin",
+"learned": "The study compares GARCH and HAR models for forecasting Bitcoin volatility, finding that EGARCH and APARCH perform best among GARCH models, and HAR models based on realized variance outperform GARCH models, especially for short-term forecasts.",
+"concepts": [
+"GARCH",
+"HAR",
+"volatility forecasting",
+"Bitcoin"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.587% (+0.0%), better in 3/6 unseen years",
+"url": "https://www.sciencedirect.com/science/article/pii/S0275531921001616/pdf",
+"date": "2026-10-19"
+},
+{
+"title": "A Simple Approximate Long-Memory Model of Realized Volatility",
+"learned": "The paper introduces a simple model called HAR-RV for forecasting realized volatility. It breaks down volatility into components over different time periods, reproducing key features of financial returns like long memory and fat tails. The model shows good forecasting performance.",
+"concepts": [
+"HAR-RV model",
+"realized volatility",
+"long memory"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://autopapers.ssrn.com/sol3/papers.cfm?abstract_id=1365738",
+"date": "2026-10-19"
+},
+{
+"title": "The Pricing of Tail Risk and the Equity Premium: Evidence From International Option Markets",
+"learned": "The paper explores the pricing of tail risk in index options across international equity markets, finding that the tail risk premium is a potent predictor of future equity returns, while option-implied volatility only forecasts future return variation. The compensation for negative jump risk is the primary driver of the equity premium, whereas the reward for pure diffusive variance risk is unrelated to future equity returns.",
+"concepts": [
+"Tail Risk",
+"Equity Premium",
+"Variance Risk Premium",
+"Option-Implied Volatility"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1974 signal days, hit 49.7% (always-long 55.9%), strategy +0.3 bps/day vs -1.3 for the same average exposure held constantly -> timing adds +1.6 bps/day, t=0.53, positive in 4/9 years",
+"url": "https://pure.au.dk/ws/files/120299496/rp18_02.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "A Systematic Literature Review of Volatility and Risk Management on Cryptocurrency Investment: A Methodological Point of View",
+"learned": "This study reviews literature from 2009-2021 on volatility and risk management in cryptocurrency investment, focusing on methodologies used to model cryptocurrency volatility.",
+"concepts": [
+"Volatility",
+"Risk Management",
+"Cryptocurrency",
+"Markov-switching regime",
+"Machine Learning"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://www.mdpi.com/2227-9091/10/5/107/pdf?version=1652964991",
+"date": "2026-10-19"
+},
+{
+"title": "A Practical Guide to Harnessing the HAR Volatility Model",
+"learned": "The HAR (Heterogeneous Autoregressive) model is a popular benchmark for forecasting return volatility. Its predictive accuracy can be improved by choosing the right estimator, transformation, or combination scheme. Simple remedies can outperform standard HAR and state-of-the-art HARQ forecasts.",
+"concepts": [
+"HAR model",
+"volatility forecasting",
+"realized variance"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.530% -> 0.531% (-0.1%), better in 4/9 unseen years",
+"url": "https://doi.org/10.2139/ssrn.3369484",
+"date": "2026-10-19"
+},
+{
+"title": "Deep learning for financial forecasting: A review of recent trends",
+"learned": "The paper reviews 187 studies on deep learning applications for financial forecasting from 2020-2024, focusing on architectures, forecasting tasks, and model types. It finds that RNN-based models, particularly LSTMs, dominate the field, while hybrid architectures combining convolutional and recurrent components are increasingly used. The review highlights the need for more robust models under extreme market conditions and standardized evaluation protocols.",
+"concepts": [
+"Deep Learning",
+"Financial Forecasting",
+"LSTM",
+"Hybrid Architectures"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://doi.org/10.1016/j.iref.2025.104719",
+"date": "2026-10-19"
+},
+{
+"title": "VOLATILITY FORECASTS, TRADING VOLUME, AND THE ARCH VERSUS OPTION\u2010IMPLIED VOLATILITY TRADE\u2010OFF",
+"learned": "The paper investigates the role of trading volume in predicting the relative informativeness of volatility forecasts produced by ARCH models versus option-implied volatility forecasts. It finds that when trading volume is low, ARCH models are at least as important as options for forecasting future stock market volatility, while when volume is high, option-implied volatility is more important.",
+"concepts": [
+"ARCH",
+"option-implied volatility",
+"trading volume"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 46.4% (always-long 56.6%), strategy -3.7 bps/day vs -4.1 for the same average exposure held constantly -> timing adds +0.4 bps/day, t=0.14, positive in 6/9 years",
+"url": "https://www.econstor.eu/bitstream/10419/100968/1/wp2004-06.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Pseudo-Mathematics and Financial Charlatanism: The Effects of Backtest Overfitting on Out-of-Sample Performance",
+"learned": "The abstract discusses the limitations of testing vague theories and the potential for overfitting in backtesting, which can lead to poor out-of-sample performance. It highlights the importance of rigorous testing and validation. The author warns against the misuse of backtesting results.",
+"concepts": [
+"backtest overfitting",
+"out-of-sample performance",
+"vague theories"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://doi.org/10.1090/noti1105",
+"date": "2026-10-19"
+},
+{
+"title": "Large Dynamic Covariance Matrices",
+"learned": "The paper discusses estimating second moments of asset returns, crucial for risk management and portfolio selection. It combines time series and cross-sectional approaches to improve large dynamic covariance matrix estimation.",
+"concepts": [
+"Dynamic Conditional Correlation",
+"GARCH",
+"Random Matrix Theory",
+"covariance matrix",
+"risk management"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://www.zora.uzh.ch/id/eprint/170824/1/econwp231.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "How Do Exchanges Select Stocks for Option Listing?",
+"learned": "Exchanges tend to list options on stocks with high trading volume, volatility, and market capitalization. The importance of these factors has shifted over time, with volatility becoming more prominent after 1980. There is no evidence that volatility declines with option introduction.",
+"concepts": [
+"option listing",
+"volatility",
+"trading volume",
+"market capitalization"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.2004.00638.x",
+"date": "2026-10-19"
+},
+{
+"title": "Buzzwords build momentum: Global financial Twitter sentiment and the aggregate stock market",
+"learned": "The study examines the relationship between Twitter sentiment and stock market developments in five major economic regions. Expert Twitter users, whose tweets focus on finance, drive the interdependence between Twitter sentiment and financial markets. Their sentiment metrics can predict stock index returns, especially during times of negative market returns.",
+"concepts": [
+"Twitter sentiment",
+"expert users",
+"stock index returns",
+"momentum strategies"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs Twitter sentiment data, not available in the provided dataset",
+"url": "https://www.sciencedirect.com/science/article/pii/S0957417419304270/pdf",
+"date": "2026-10-19"
+},
+{
+"title": "The role of oil futures intraday information on predicting US stock market volatility",
+"learned": "Oil futures intraday information can help predict US stock market volatility. Using oil futures realized volatility in a HAR (Heterogeneous Autoregressive) framework improves predictive ability. Multivariate HAR models outperform univariate models in forecasting volatility.",
+"concepts": [
+"HAR framework",
+"oil futures",
+"stock market volatility",
+"realized volatility"
+],
+"relevance": 3,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://www.sciencedirect.com/science/article/pii/S2096232020300494/pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Elements of Volatility at High Frequency",
+"learned": "This dissertation explores volatility using high-frequency data, focusing on time-varying behavior, scaling laws, and long-memory in volatility series. It also examines the impact of decimalization on volatility and market microstructure noise.",
+"concepts": [
+"volatility",
+"high-frequency data",
+"scaling laws",
+"long-memory"
+],
+"relevance": 3,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "http://hdl.handle.net/10138/21793",
+"date": "2026-10-19"
+},
+{
+"title": "Option Pricing when the Variance Changes Randomly: Theory, Estimation, and an Application",
+"learned": "The paper discusses option pricing when stock variance changes randomly, requiring a riskless hedge with the stock and two options. The option price depends on the risk premium associated with random standard deviation, but can be simplified by assuming volatility risk can be diversified away.",
+"concepts": [
+"stochastic volatility",
+"option pricing",
+"riskless hedge"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1722 signal days, hit 49.0% (always-long 56.4%), strategy -2.0 bps/day vs +0.9 for the same average exposure held constantly -> timing adds -2.9 bps/day, t=-0.90, positive in 3/9 years",
+"url": "https://www.ideals.illinois.edu/items/29299/bitstreams/97732/data.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Are There Structural Breaks in Realized Volatility?",
+"learned": "The paper investigates structural breaks in realized volatility (RV) of the S&P 500 index using a Bayesian approach. It finds strong evidence of a structural break in early 1997, mainly due to a reduction in the variance of log-volatility.",
+"concepts": [
+"realized volatility",
+"structural break",
+"Bayesian approach",
+"HAR model"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://www.economics.utoronto.ca/public/workingPapers/tecipa-304.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Volume-Synchronized Probability of Informed Trading (VPIN), Market Volatility, and High-Frequency Liquidity",
+"learned": "The study examines the relationship between Volume-Synchronized Probability of Informed Trading (VPIN) and market volatility, as well as high-frequency liquidity. It finds that VPIN has a positive association with market volatility and a feedback effect with liquidity, where a negative liquidity shock can boost VPIN and lead to further liquidity drain.",
+"concepts": [
+"VPIN",
+"Market Volatility",
+"High-Frequency Liquidity"
+],
+"relevance": 3,
+"verdict": "PROMISING (stress test: survived) : power 'tail_day' (base 8%): lowest-fifth days 4% vs highest-fifth 11%, Brier skill +1.2%, better than the base rate in 7/9 unseen years",
+"url": "http://hdl.handle.net/10464/6711",
+"date": "2026-10-19"
+},
+{
+"title": "The relation between implied and realized volatility",
+"learned": "Implied volatility from S&P 100 index options can be a better predictor of future volatility than past realized volatility. It even supersedes the information from past volatility in certain cases. A regime shift around the 1987 crash affects the bias of implied volatility.",
+"concepts": [
+"Implied Volatility",
+"Realized Volatility",
+"Regime Shift"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.528% (+0.5%), better in 3/9 unseen years",
+"url": "https://doi.org/10.1016/s0304-405x(98)00034-8",
+"date": "2026-10-19"
+},
+{
+"title": "Volatility risk premia and exchange rate predictability",
+"learned": "The paper explores the concept of volatility risk premia in predicting currency returns and creating a profitable trading strategy. It finds that selling high insurance-cost currencies and buying low insurance-cost currencies can generate desirable returns and diversification benefits.",
+"concepts": [
+"Volatility risk premium",
+"Exchange rate predictability",
+"Currency strategy"
+],
+"relevance": 3,
+"verdict": "not testable with my data yet",
+"url": "http://hdl.handle.net/10044/1/39815",
+"date": "2026-10-19"
+},
+{
+"title": "Intraday volatility transmission among precious metals, energy and stocks during the COVID-19 pandemic",
+"learned": "The COVID-19 pandemic significantly impacted volatility linkages among financial markets, causing a peak in volatility connectedness among assets like equities, oil, gold, silver, and natural gas.",
+"concepts": [
+"Volatility connectedness",
+"MCS-GARCH model",
+"Spillover index"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://www.sciencedirect.com/science/article/pii/S030142072100115X/pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Machine learning in the Chinese stock market",
+"learned": "This study uses machine learning to predict stock returns in the Chinese market, finding liquidity to be a key predictor and retail investors' presence to impact short-term predictability, especially for small stocks.",
+"concepts": [
+"Machine Learning",
+"Return Prediction",
+"Liquidity"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday liquidity data, such as order book imbalance or bid-ask spreads",
+"url": "https://www.sciencedirect.com/science/article/pii/S0304405X21003743/pdf",
+"date": "2026-10-19"
+},
+{
+"title": "The Information Content of Option Demand",
+"learned": "This paper explores the relationship between option demand and future stock price movements, suggesting that option demand contains valuable information for predicting stock returns.",
+"concepts": [
+"Option Demand",
+"Predictive Information",
+"Stock Returns"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 50.7% (always-long 56.6%), strategy +3.8 bps/day vs -0.1 for the same average exposure held constantly -> timing adds +3.8 bps/day, t=1.27, positive in 5/9 years",
+"url": "https://doi.org/10.2139/ssrn.2005763",
+"date": "2026-10-19"
+},
+{
+"title": "The Price of Political Uncertainty: Theory and Evidence from the Option Market",
+"learned": "Political uncertainty affects option prices, particularly for options expiring around political events like elections and global summits. These options are more expensive due to their protective value against price, variance, and tail risks. The effect is more pronounced in weaker economies and with higher political uncertainty.",
+"concepts": [
+"political uncertainty",
+"option pricing",
+"event risk"
+],
+"relevance": 3,
+"verdict": "NOT TESTABLE (fewer than 100 signal days)",
+"url": "https://doi.org/10.1111/jofi.12406",
+"date": "2026-10-19"
+},
+{
+"title": "The cross-section of intraday and overnight returns",
+"learned": "This paper examines the cross-section of intraday and overnight returns, providing insights into how returns are distributed during different trading periods.",
+"concepts": [
+"Intraday returns",
+"Overnight returns",
+"Cross-section"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: power 'trend_day' (base 39%): lowest-fifth days 40% vs highest-fifth 36%, Brier skill -0.8%, better than the base rate in 1/6 unseen years",
+"url": "https://doi.org/10.2139/ssrn.2869624",
+"date": "2026-10-19"
+},
+{
+"title": "A tug of war: Overnight versus intraday expected returns",
+"learned": "This paper explores the relationship between overnight and intraday expected returns, suggesting a tug-of-war between the two. It implies that understanding this dynamic can provide insights into market behavior and potentially inform trading strategies.",
+"concepts": [
+"overnight returns",
+"intraday returns",
+"market behavior"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: power 'trend_day' (base 37%): lowest-fifth days 38% vs highest-fifth 36%, Brier skill -0.3%, better than the base rate in 6/9 unseen years",
+"url": "https://www.sciencedirect.com/science/article/pii/S0304405X19300650",
+"date": "2026-10-19"
+},
+{
+"title": "FOMO: FLEX Options and Market Outcomes",
+"learned": "The paper studies the impact of FLEX options, customized exchange-traded contracts, on regular listed-option markets and underlying equities. It finds that FLEX activity is associated with increased listed-option open interest, particularly in high implied-volatility environments, and predicts execution-stressed short-straddle returns.",
+"concepts": [
+"FLEX options",
+"implied volatility",
+"listed-option open interest",
+"volatility carry"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 926 signal days, hit 56.0% (always-long 56.0%), strategy +2.5 bps/day vs +3.1 for the same average exposure held constantly -> timing adds -0.6 bps/day, t=-0.39, positive in 5/9 years",
+"url": "https://arxiv.org/pdf/2610.13044",
+"date": "2026-10-19"
+},
+{
+"title": "An Empirical Study of Machine Learning Algorithms for Stock Daily Trading Strategy",
+"learned": "This study compares the performance of traditional machine learning algorithms and deep neural network models for daily stock trading strategies, considering transaction costs. The results show that traditional machine learning algorithms perform well, but deep neural networks perform better when transaction costs are considered.",
+"concepts": [
+"Machine Learning",
+"Deep Neural Networks",
+"Transaction Cost"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 48.8% (always-long 56.6%), strategy -1.0 bps/day vs -0.3 for the same average exposure held constantly -> timing adds -0.7 bps/day, t=-0.22, positive in 4/9 years",
+"url": "http://downloads.hindawi.com/journals/mpe/2019/7816154.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "The Dynamics of Leveraged and Inverse Exchange-Traded Funds",
+"learned": "Leveraged and inverse ETFs have unique characteristics due to their embedded leverage, which can lead to increased market volatility and liquidity impact, particularly towards the close. Their structure can result in value destruction for buy-and-hold investors due to path-dependent options and high transaction costs.",
+"concepts": [
+"Leveraged ETFs",
+"Inverse ETFs",
+"Market Volatility",
+"Microstructure Effects"
+],
+"relevance": 3,
+"verdict": "not testable with my data yet",
+"url": "http://onlinetradersforum.com/attachments/leveraged-etfs-pdf.4272/",
+"date": "2026-10-19"
+},
+{
+"title": "Options Trading Costs Are Lower than You Think",
+"learned": "Options trading costs are often overestimated due to failure to account for traders timing their executions. By predicting price changes and buying/selling at favorable times, traders can significantly reduce their effective spreads. This means the actual cost of trading options can be lower than conventionally estimated.",
+"concepts": [
+"Effective Spreads",
+"Price Impact",
+"Options Trading Costs"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 44.0% (always-long 56.6%), strategy -6.9 bps/day vs -6.8 for the same average exposure held constantly -> timing adds -0.2 bps/day, t=-0.16, positive in 6/9 years",
+"url": "https://doi.org/10.1093/rfs/hhaa010",
+"date": "2026-10-19"
+},
+{
+"title": "The VIX, the variance premium and stock market volatility",
+"learned": "The paper explores the relationship between the VIX index, the variance premium, and stock market volatility, providing insights into how these measures can be used to understand market behavior and volatility. It discusses the concept of the variance premium, which is the difference between the expected variance of returns under the risk-neutral measure and the physical measure. The study likely sheds light on how the VIX and variance premium can be used as indicators of market sentiment and potential future volatility.",
+"concepts": [
+"VIX",
+"Variance Premium",
+"Volatility"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1432 signal days, hit 58.4% (always-long 58.4%), strategy +8.5 bps/day vs +4.8 for the same average exposure held constantly -> timing adds +3.7 bps/day, t=2.44, positive in 7/9 years",
+"url": "https://doi.org/10.1016/j.jeconom.2014.05.008",
+"date": "2026-10-19"
+},
+{
+"title": "Delta-Hedged Gains and the Negative Market Volatility Risk Premium",
+"learned": "The study examines delta-hedged option portfolios and finds that they tend to underperform, with the underperformance being greater at times of higher volatility. This suggests a negative market volatility risk premium, which significantly affects delta-hedged gains.",
+"concepts": [
+"delta-hedging",
+"volatility risk premium",
+"stochastic volatility"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 52.9% (always-long 56.6%), strategy +7.2 bps/day vs +1.2 for the same average exposure held constantly -> timing adds +6.0 bps/day, t=1.94, positive in 7/9 years",
+"url": "https://doi.org/10.1093/rfs/hhg002",
+"date": "2026-10-19"
+},
+{
+"title": "Variance Risk Premiums",
+"learned": "The paper discusses a method to quantify the variance risk premium, which is the difference between the risk-neutral expected variance and the realized variance. It proposes using a portfolio of options to approximate the variance swap rate, and then calculates the variance risk premium as the difference between realized variance and this synthetic rate.",
+"concepts": [
+"Variance Risk Premium",
+"Variance Swap Rate",
+"Realized Variance"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1145 signal days, hit 58.5% (always-long 58.5%), strategy +7.0 bps/day vs +3.8 for the same average exposure held constantly -> timing adds +3.2 bps/day, t=2.09, positive in 7/9 years",
+"url": "https://doi.org/10.1093/rfs/hhn038",
+"date": "2026-10-19"
+},
+{
+"title": "Expected Stock Returns and Variance Risk Premia",
+"learned": "The variance risk premium, which is the difference between implied and realized volatility, can predict stock market returns. High variance risk premia are associated with high future returns, while low premia are associated with low future returns.",
+"concepts": [
+"Variance Risk Premium",
+"Implied Volatility",
+"Realized Volatility",
+"Stock Market Returns"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 52.9% (always-long 56.6%), strategy +7.2 bps/day vs +1.2 for the same average exposure held constantly -> timing adds +6.0 bps/day, t=1.94, positive in 7/9 years",
+"url": "https://doi.org/10.1093/rfs/hhp008",
+"date": "2026-10-19"
+},
+{
+"title": "Volatility forecast comparison using imperfect volatility proxies",
+"learned": "The paper 'Volatility forecast comparison using imperfect volatility proxies' compares different methods for forecasting volatility when using imperfect proxies for volatility. It evaluates the performance of various volatility forecasting models, considering the impact of noise in volatility proxies on forecast accuracy. The study provides insights into the reliability of different approaches for estimating and predicting volatility.",
+"concepts": [
+"Volatility forecasting",
+"Imperfect proxies",
+"Model evaluation"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.587% (-0.0%), better in 4/6 unseen years",
+"url": "https://doi.org/10.2139/ssrn.932890",
+"date": "2026-10-19"
+},
+{
+"title": "Intraday periodicity and volatility persistence in financial markets",
+"learned": "This paper explores intraday periodicity and volatility persistence in financial markets, highlighting patterns in volatility throughout the trading day. It is a well-known study in the field of financial markets and volatility analysis.",
+"concepts": [
+"Intraday periodicity",
+"Volatility persistence",
+"Financial markets"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: power 'first_hour_continues' (base 54%): lowest-fifth days 51% vs highest-fifth 58%, Brier skill +0.1%, better than the base rate in 8/9 unseen years",
+"url": "https://doi.org/10.1016/s0927-5398(97)00004-2",
+"date": "2026-10-19"
+},
+{
+"title": "Modeling and Forecasting Realized Volatility",
+"learned": "The paper discusses using high-frequency intraday data to model and forecast daily volatility and return distributions. It introduces the concept of 'realized volatility' constructed from intraday returns, allowing for traditional time series modeling and forecasting. A simple long-memory Gaussian vector autoregression model for logarithmic daily realized volatilities performs well in forecasting volatility.",
+"concepts": [
+"Realized Volatility",
+"High-Frequency Data",
+"Volatility Forecasting"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.587% (-0.0%), better in 4/6 unseen years",
+"url": "https://doi.org/10.1111/1468-0262.00418",
+"date": "2026-10-19"
+},
+{
+"title": "A Simple Approximate Long-Memory Model of Realized Volatility",
+"learned": "The paper introduces a simple model called HAR-RV for forecasting realized volatility. It breaks down volatility into components over different time periods, reproducing key features of financial returns like long memory and fat tails. The model shows good forecasting performance.",
+"concepts": [
+"HAR-RV model",
+"realized volatility",
+"long memory"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1104 signal days, hit 55.7% (always-long 55.7%), strategy +3.9 bps/day vs +3.7 for the same average exposure held constantly -> timing adds +0.2 bps/day, t=0.14, positive in 4/9 years",
+"url": "https://doi.org/10.1093/jjfinec/nbp001",
+"date": "2026-10-19"
+},
+{
+"title": "Stock Returns Over the FOMC Cycle",
+"learned": "The paper 'Stock Returns Over the FOMC Cycle' examines the relationship between stock market returns and the Federal Open Market Committee (FOMC) cycle, which includes FOMC meetings and monetary policy decisions. It is a well-known study that has likely identified patterns or anomalies in stock returns around FOMC events.",
+"concepts": [
+"FOMC",
+"monetary policy",
+"stock returns"
+],
+"relevance": 3,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://doi.org/10.2139/ssrn.2687614",
+"date": "2026-10-19"
+},
+{
+"title": "The Pre-FOMC Announcement Drift",
+"learned": "The Pre-FOMC Announcement Drift refers to the observed phenomenon where the stock market tends to drift upward before a Federal Open Market Committee (FOMC) announcement. This drift is often attributed to the market's anticipation and positioning ahead of the announcement.",
+"concepts": [
+"FOMC",
+"Announcement Drift",
+"Market Anticipation"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 1452 signal days, hit 51.6% (always-long 56.1%), strategy -2.6 bps/day vs +2.1 for the same average exposure held constantly -> timing adds -4.7 bps/day, t=-1.82, positive in 4/9 years",
+"url": "https://papers.ssrn.com/sol3/Delivery.cfm?abstractid=1923197",
+"date": "2026-10-19"
+},
+{
+"title": "Retail Traders Love 0DTE Options... But Should They?",
+"learned": "This paper discusses the growing popularity of 0DTE (zero days to expiration) options among retail traders and raises concerns about their suitability for this group of investors.",
+"concepts": [
+"0DTE options",
+"retail traders",
+"options trading"
+],
+"relevance": 4,
+"verdict": "NOT TESTABLE (fewer than 100 trade days)",
+"url": "https://doi.org/10.2139/ssrn.4404704",
+"date": "2026-10-19"
+},
+{
+"title": "0DTEs: Trading, Gamma Risk and Volatility Propagation",
+"learned": "This paper discusses the impact of 0-Day-To-Expiration (0DTE) options on trading, gamma risk, and volatility propagation, particularly in the context of the Nasdaq and S&P index futures and options.",
+"concepts": [
+"0DTE options",
+"gamma risk",
+"volatility propagation"
+],
+"relevance": 5,
+"verdict": "NOT CONFIRMED on my data: 0 sell-vol + 1039 buy-vol trades on real QQQ option prices, avg -6.9 bp of QQQ per trade (placebo avg -5.3, p=0.733), halves -10.9/-3.0, win 41%, worst -662 bp, positive in 2/9 years",
+"url": "https://doi.org/10.2139/ssrn.4692190",
+"date": "2026-10-19"
+},
+{
+"title": "Stock price clustering on option expiration dates",
+"learned": "The paper explores stock price clustering on option expiration dates, a phenomenon where stock prices tend to cluster at certain levels, such as round numbers or strike prices, particularly on days when options expire. This clustering can be attributed to various factors, including market microstructure, investor behavior, and the impact of option trading on underlying stock prices.",
+"concepts": [
+"Option Expiration",
+"Stock Price Clustering",
+"Market Microstructure"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday stock price data and option trading activity data, specifically option expiration dates and stock prices at specific times (e.g., at the close, or at specific intervals), to investigate price clustering",
+"url": "https://doi.org/10.1016/j.jfineco.2004.08.005",
+"date": "2026-10-19"
+},
+{
+"title": "Does Option Trading Have a Pervasive Impact on Underlying Stock Prices?",
+"learned": "This paper examines the impact of option trading on underlying stock prices, suggesting that option trading can have a significant influence on stock prices.",
+"concepts": [
+"Options",
+"Volatility",
+"Stock Prices"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 49.9% (always-long 56.6%), strategy +1.3 bps/day vs -1.2 for the same average exposure held constantly -> timing adds +2.5 bps/day, t=0.86, positive in 7/9 years",
+"url": "https://doi.org/10.2139/ssrn.2867461",
+"date": "2026-10-19"
+},
+{
+"title": "A New Interpretation of Information Rate",
+"learned": "The abstract discusses a new interpretation of information rate in a communication channel, relating it to a gambler's ability to grow their capital exponentially using received symbols and fair odds. This growth rate equals the information transmission rate over the channel. The concept is also generalized for arbitrary odds.",
+"concepts": [
+"Information Rate",
+"Communication Channel",
+"Exponential Growth"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.1002/j.1538-7305.1956.tb03809.x",
+"date": "2026-10-19"
+},
+{
+"title": "The Adaptive Markets Hypothesis",
+"learned": "The Adaptive Markets Hypothesis (AMH) reconciles the Efficient Markets Hypothesis (EMH) with behavioral finance by applying evolutionary principles to financial interactions. It suggests that market participants adapt to changing environments using simple heuristics, which can lead to seemingly irrational behavior. This perspective offers implications for portfolio management.",
+"concepts": [
+"Adaptive Markets Hypothesis",
+"Efficient Markets Hypothesis",
+"Behavioral Finance",
+"Evolutionary Dynamics"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://doi.org/10.3905/jpm.2004.442611",
+"date": "2026-10-19"
+},
+{
+"title": "Conditional Heteroskedasticity in Asset Returns: A New Approach",
+"learned": "The paper introduces an exponential ARCH model that improves upon the GARCH model by allowing correlation between returns and volatility innovations, eliminating inequality constraints on parameters, and providing a straightforward interpretation of volatility shock persistence.",
+"concepts": [
+"ARCH",
+"GARCH",
+"volatility",
+"risk premium"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.587% (+0.0%), better in 3/6 unseen years",
+"url": "https://doi.org/10.2307/2938260",
+"date": "2026-10-19"
+},
+{
+"title": "High-frequency trading in a limit order book",
+"learned": "The paper discusses the role of a dealer in securities markets, specifically how they provide liquidity by quoting bid and ask prices to buy and sell assets.",
+"concepts": [
+"limit order book",
+"high-frequency trading",
+"liquidity provision"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.1080/14697680701381228",
+"date": "2026-10-19"
+},
+{
+"title": "Pairs Trading: Performance of a Relative-Value Arbitrage Rule",
+"learned": "Pairs trading involves matching stocks with similar historical price movements and betting on their relative value. This strategy yielded average annualized excess returns of up to 11% over 1962-2002. The profits seem to come from temporary mispricing of closely related stocks.",
+"concepts": [
+"Pairs Trading",
+"Relative-Value Arbitrage",
+"Market Efficiency"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 50.7% (always-long 56.6%), strategy +2.0 bps/day vs -0.9 for the same average exposure held constantly -> timing adds +2.9 bps/day, t=0.92, positive in 5/9 years",
+"url": "https://doi.org/10.1093/rfs/hhj020",
+"date": "2026-10-19"
+},
+{
+"title": "Simple Technical Trading Rules and the Stochastic Properties of Stock Returns",
+"learned": "The paper tests simple technical trading rules (moving average and trading range break) on the Dow Jones Index from 1897 to 1986 and finds strong support for these strategies, with buy signals generating higher and less volatile returns than sell signals.",
+"concepts": [
+"Moving Average",
+"Trading Range Break",
+"Bootstrap Techniques",
+"GARCH"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 49.2% (always-long 56.6%), strategy -3.7 bps/day vs +0.8 for the same average exposure held constantly -> timing adds -4.4 bps/day, t=-1.40, positive in 2/9 years",
+"url": "https://doi.org/10.1111/j.1540-6261.1992.tb04681.x",
+"date": "2026-10-19"
+},
+{
+"title": "A New Approach to the Economic Analysis of Nonstationary Time Series and the Business Cycle",
+"learned": "The paper presents a new approach to analyzing nonstationary time series, focusing on discrete shifts in growth rates. It applies this technique to the US business cycle, suggesting that recessions are characterized by a shift from positive to negative growth rates. The model estimates a typical recession results in a 3 percent permanent drop in GNP.",
+"concepts": [
+"nonstationary time series",
+"discrete shifts",
+"business cycle"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.2307/1912559",
+"date": "2026-10-19"
+},
+{
+"title": "The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality",
+"learned": "The deflated Sharpe ratio (DSR) corrects for performance inflation caused by selection bias and non-normally distributed returns in backtesting investment strategies. This helps distinguish genuine findings from statistical flukes. DSR is particularly relevant in the era of big data and machine learning, where numerous strategies can be backtested.",
+"concepts": [
+"Sharpe Ratio",
+"Selection Bias",
+"Backtest Overfitting",
+"Non-Normality"
+],
+"relevance": 4,
+"verdict": "DOESN'T FIT MY DATA - needs strategy return distribution, not just daily market data",
+"url": "https://doi.org/10.3905/jpm.2014.40.5.094",
+"date": "2026-10-19"
+},
+{
+"title": "Empirical properties of asset returns: stylized facts and statistical issues",
+"learned": "The paper discusses stylized empirical facts about asset returns in financial markets, including distributional properties, tail properties, and pathwise regularity. It highlights common statistical properties across various markets and instruments.",
+"concepts": [
+"asset returns",
+"stylized facts",
+"statistical properties"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://doi.org/10.1080/713665670",
+"date": "2026-10-19"
+},
+{
+"title": "The Pricing of Options and Corporate Liabilities",
+"learned": "The paper discusses a theoretical valuation formula for options and its applicability to corporate liabilities. It suggests that if options are correctly priced, it shouldn't be possible to make risk-free profits by combining long and short positions in options and stocks.",
+"concepts": [
+"Option Pricing",
+"Arbitrage",
+"Corporate Liabilities"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://doi.org/10.1086/260062",
+"date": "2026-10-19"
+},
+{
+"title": "A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options",
+"learned": "The paper presents a closed-form solution for European call options with stochastic volatility, allowing for arbitrary correlation between volatility and spot-asset returns. It also extends the model to include stochastic interest rates and applies it to bond and currency options. The solution technique uses characteristic functions.",
+"concepts": [
+"stochastic volatility",
+"characteristic functions",
+"option pricing"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.532% (-0.3%), better in 3/9 unseen years",
+"url": "https://doi.org/10.1093/rfs/6.2.327",
+"date": "2026-10-19"
+},
+{
+"title": "Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation",
+"learned": "The paper introduces the concept of Autoregressive Conditional Heteroscedasticity (ARCH) processes, which model time-varying variances in financial data. It presents a new approach to estimate variance, showing that recent past data can inform future variance forecasts. The ARCH model is applied to UK inflation data, revealing significant ARCH effects and increased variances during the 1970s.",
+"concepts": [
+"ARCH",
+"Volatility Clustering",
+"Time-Varying Variance"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://doi.org/10.2307/1912773",
+"date": "2026-10-19"
+},
+{
+"title": "Generalized autoregressive conditional heteroskedasticity",
+"learned": "The paper introduces the Generalized Autoregressive Conditional Heteroskedasticity (GARCH) model, which is used to analyze and forecast volatility in financial time series. The GARCH model captures the volatility clustering phenomenon, where periods of high volatility tend to be followed by periods of high volatility, and periods of low volatility tend to be followed by periods of low volatility.",
+"concepts": [
+"GARCH",
+"volatility clustering",
+"heteroskedasticity"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.529% (+0.4%), better in 7/9 unseen years",
+"url": "http://www.eeri.eu/documents/wp/EERI_RP_1986_01.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Market intraday momentum",
+"learned": "The paper 'Market Intraday Momentum' explores the concept of intraday momentum in financial markets, suggesting that returns tend to be positively autocorrelated within a trading day. This means that stocks or indices that experience high returns during the morning tend to continue performing well in the afternoon.",
+"concepts": [
+"Intraday Momentum",
+"Autocorrelation",
+"Market Microstructure"
+],
+"relevance": 4,
+"verdict": "TRANSLATION FAILED - 'y_first_hour_return' can't be used on this side (it would peek at the answer)",
+"url": "https://doi.org/10.2139/ssrn.2440866",
+"date": "2026-10-19"
+},
+{
+"title": "Hedging demand and market intraday momentum",
+"learned": "This paper explores the relationship between hedging demand and market intraday momentum, suggesting that hedging activities contribute to intraday market trends.",
+"concepts": [
+"hedging demand",
+"intraday momentum",
+"market microstructure"
+],
+"relevance": 4,
+"verdict": "CAN'T TEST PROPERLY with my data - the paper's effect is within the day (rest-of-day return predicting the last 30 minutes) and my memory only has daily closes",
+"url": "https://www.sciencedirect.com/science/article/pii/S0304405X21001598",
+"date": "2026-10-19"
+},
+{
+"title": "Gamma positioning and market quality",
+"learned": "In a simulated market with simple random traders plus option hedgers who must re-hedge as prices move, the authors find that when hedgers are net long gamma (they buy dips and sell rips) volatility falls and liquidity holds up even under stress, while net short gamma (they sell into drops and buy into rallies) raises volatility, drains liquidity in stressed moments and makes the market more likely to break. More hedging activity of either sign made price discovery worse. I worked from the abstract only because the full text could not be downloaded, so I have no effect sizes.",
+"concepts": [
+"dealer gamma positioning",
+"dynamic hedging",
+"liquidity under stress",
+"negative gamma volatility",
+"agent-based simulation"
+],
+"relevance": 4,
+"verdict": "NO EDGE: range-forecast miss 0.530% -> 0.529% (+0.2%), better in 4/9 unseen years",
+"url": "https://doi.org/10.1016/j.jedc.2024.104880",
+"date": "2026-10-19"
+},
+{
+"title": "Transmission of Information across International Equity Markets",
+"learned": "Using minute-by-minute Korean and Thai stock index data (mostly 1995-2000) and announcement surprises, the author finds that big developed-market releases such as US nonfarm payrolls, US CPI and Japanese industrial production cause large but short-lived jumps in emerging-market volatility, lasting about 30 minutes, and trading volume spikes lasting about 45 minutes. With daily data the same effect shows up as no evidence at all, which is why earlier studies missed it. Bigger disagreement among forecasters before a US CPI or payrolls release went with bigger volatility.",
+"concepts": [
+"macro announcements",
+"intraday volatility",
+"information transmission",
+"trading volume",
+"forecast dispersion"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "http://www.federalreserve.gov/pubs/ifdp/2003/759/ifdp759.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Role of Managerial Incentives and Discretion in Hedge Fund Performance",
+"learned": "Using a large hedge fund database, the authors find funds perform better when managers have stronger incentives: a higher 'delta' of the option-like performance fee, more of the manager's own money in the fund, and a high-water mark. The fee percentage by itself does not explain performance, and funds with longer lockup, notice and redemption periods, which give managers more freedom, also do better. I worked from the abstract only because no full text was available, so I do not have the effect sizes.",
+"concepts": [
+"hedge fund performance",
+"incentive fees",
+"high-water mark",
+"managerial ownership",
+"lockup periods"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.2139/ssrn.889008",
+"date": "2026-10-19"
+},
+{
+"title": "Using genetic algorithms to find technical trading rules",
+"learned": "The authors let a genetic algorithm evolve technical trading rules on daily S&P 500 prices from 1928 to 1995. After transaction costs the rules did not beat simple buy-and-hold out of sample. What the rules did learn was to be in the market when daily returns were positive and volatility low, and out otherwise, and that pattern is mostly explained by small day-to-day return autocorrelation. I worked from the abstract only because no full text was available.",
+"concepts": [
+"genetic algorithm",
+"technical trading rules",
+"data snooping",
+"serial correlation",
+"transaction costs"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 645 days, hit 56.0% (always-long 56.0%), avg +4.2 bps/day, t=1.07, positive in 5/9 years",
+"url": "https://doi.org/10.1016/s0304-405x(98)00052-x",
+"date": "2026-10-19"
+},
+{
+"title": "Short-Sale Strategies and Return Predictability",
+"learned": "Using SEC-mandated short-sale data for US stocks in 2005, the authors find short selling is huge: 24% of NYSE and 31% of Nasdaq share volume. Short sellers step up their selling after a stock has risen, and those stocks then go on to underperform, so a strategy following daily short-selling activity earned significant positive returns in that year. Their reading is that short sellers bet against short-term overreaction. I worked from the abstract only because no full text was available.",
+"concepts": [
+"short selling",
+"return predictability",
+"short-term overreaction",
+"Regulation SHO data",
+"informed trading"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 238 days, hit 49.2% (always-long 50.8%), avg +12.5 bps/day, t=1.15, positive in 5/9 years",
+"url": "https://scholarsarchive.byu.edu/cgi/viewcontent.cgi?article=10102&context=facpub",
+"date": "2026-10-19"
+},
+{
+"title": "Why Do Markets Move Together? An Investigation of U.S.\u2010Japan Stock Return Comovements",
+"learned": "Using 1988-1992 transaction data on Japanese stocks traded as ADRs in New York and a matched set of US stocks, the authors ask what makes US and Japanese returns move together. US macro announcements, yen/dollar shocks, T-bill moves and industry effects had no measurable effect on the correlation; only large shocks to the broad indexes (Nikkei and S&P 500) raised both how strongly and how long the two markets moved together. I worked from the abstract only because no full text was available, so I do not have the size of the effect.",
+"concepts": [
+"cross-market correlation",
+"ADRs",
+"overnight returns",
+"market shocks",
+"contagion"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.7916/d87p95w7",
+"date": "2026-10-19"
+},
+{
+"title": "The Price of a Smile: Hedging and Spanning in Option Markets",
+"learned": "Using daily S&P 500 index options from 1986 to 1995, the authors test whether options beyond the at-the-money one carry information that the index and ATM option alone cannot replicate. After the 1987 crash, out-of-the-money and in-the-money options (they look out to 4% from the money) clearly add information at any confidence level, while before the crash they were redundant (only 34% confidence). In plain terms, the shape of the smile prices a separate risk such as volatility shocks or jumps, so models that just bend the volatility curve to fit prices miss something.",
+"concepts": [
+"volatility smile",
+"spanning test",
+"stochastic volatility",
+"pricing kernel",
+"1987 crash"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.530% -> 0.532% (-0.3%), better in 3/9 unseen years",
+"url": "https://kops.uni-konstanz.de/server/api/core/bitstreams/c0166dca-3fd1-4a38-9478-f8e97a07692d/content",
+"date": "2026-10-19"
+},
+{
+"title": "Essays in International Finance",
+"learned": "This is a PhD thesis in international finance with three chapters on what drives exchange-rate swings: deviations from interest rate parity, extreme currency moves, and how capital flows respond to them, plus a look at stablecoins as digital currencies meant to avoid exchange-rate volatility. The abstract describes the topics and methods in general terms but reports no concrete numbers or findings.",
+"concepts": [
+"exchange rates",
+"interest rate parity",
+"capital flows",
+"stablecoins",
+"macroprudential policy"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://research.cbs.dk/files/101779241/julian_fernandez_meji_phd_series_15_2024.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Do Jumps Matter for Volatility Forecasting? Evidence from Energy Markets",
+"learned": "Using high-frequency data on four major energy futures markets from 2007 to 2012, the authors split daily realized volatility into a smooth part and a jump part, and find jumps are common. But when they add separate jump terms to standard HAR volatility forecasting models, forecasts do not get significantly better, in or out of sample, across all four markets, horizons and error measures. In plain terms, recent overall volatility already tells you most of what jumps would add.",
+"concepts": [
+"realized variance",
+"price jumps",
+"HAR model",
+"volatility forecasting",
+"energy futures"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.531% (+0.0%), better in 5/9 unseen years",
+"url": "https://centaur.reading.ac.uk/48497/1/Do%20Jumps%20Matter%20for%20Volatility%20Forecasting_R1.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "The impact of Covid-19 on G7 stock markets volatility: Evidence from a ST-HAR model",
+"learned": "Using a smooth-transition HAR volatility model, which lets volatility behave differently once the market slides into a crisis regime, the authors find that every G7 stock market and every business sector switched into a crisis regime during Covid-19, though how hard and when differed. Health Care and Consumer Services were hit worst, Technology was hit last and least (lockdowns pushed people online), and the US and UK were the most affected countries. Markets reacted to Covid more like a financial crisis than like earlier pandemics.",
+"concepts": [
+"smooth-transition HAR",
+"volatility regimes",
+"Covid-19 crisis",
+"sector volatility",
+"G7 stock markets"
+],
+"relevance": 1,
+"verdict": "NO EDGE: range-forecast miss 0.529% -> 0.531% (-0.3%), better in 1/9 unseen years",
+"url": "https://doi.org/10.1016/j.irfa.2021.101671",
+"date": "2026-10-19"
+},
+{
+"title": "Dynamics in the VIX Complex",
+"learned": "This paper models the 'VIX complex': the VIX itself, the curve of VIX futures (summarised by its level, slope and curvature), and the exchange-traded products that hold those futures. It finds evidence that buying and selling in VIX ETPs moves the VIX futures curve, but no evidence that it moves the VIX index itself. In plain terms, VIX ETP flows can distort the futures you trade, while the spot fear gauge is still driven by S&P 500 option prices.",
+"concepts": [
+"VIX futures term structure",
+"VIX ETPs",
+"level slope curvature factors",
+"volatility demand"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.2139/ssrn.3723728",
+"date": "2026-10-19"
+},
+{
+"title": "Equilibrium Effects of Intraday Order-Splitting Benchmarks",
+"learned": "This is a theory paper (no market data) that models big institutions slicing their orders through the day to track TWAP or VWAP benchmarks, a style the authors note makes up roughly half of institutional trading. In the model, a net buy (sell) imbalance in these sliced orders pushes prices up (down) at the open, and that price pressure then fades over the session, so prices drift against the opening push on average. Tracking these benchmarks also makes the market less liquid and more volatile than if the same investors only cared about where they ended the day.",
+"concepts": [
+"TWAP/VWAP order splitting",
+"intraday price pressure",
+"market liquidity",
+"equilibrium model",
+"institutional execution"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/1803.08336",
+"date": "2026-10-19"
+},
+{
+"title": "The Impact of Market Maker Competition on Market Quality: Evidence from an Options Exchange",
+"learned": "This study tracked market makers entering and leaving 134 Australian stock option classes from 2000 to 2006. Market makers crowd into the busiest names (about 8.5 per liquid class versus 1.8 per illiquid one) and decide to join or quit based on spreads, volume, volatility and how many rivals are already there, yet competition stays thin: the concentration score (Herfindahl) averaged 0.17 for liquid classes and 0.45 for illiquid ones, far above the level a fully competitive market would show. Adding a dealer improves things most in the liquid classes, so more market makers do not automatically mean better prices in thinly traded options.",
+"concepts": [
+"market maker entry and exit",
+"market concentration",
+"Herfindahl index",
+"bid-ask spread",
+"options liquidity"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://www.uowoajournals.org/aabfj/article/id/1326/download/pdf/",
+"date": "2026-10-19"
+},
+{
+"title": "What is the Expected Return on the Market?*",
+"learned": "Ian Martin (Quarterly Journal of Economics) shows that index option prices give a lower bound on the stock market's expected return above cash, via a volatility index he calls SVIX. The bound averages about 5% a year but swings wildly, rising above 20% at the height of the 2008 crisis, and predictive regressions do not reject the idea that it is roughly the true equity premium. He argues that the high expected returns available in stressed, high-volatility periods are concentrated over the very short run, and he also derives a market-crash probability and 'simple variance swaps' traded on SVIX.",
+"concepts": [
+"SVIX",
+"equity premium lower bound",
+"risk-neutral variance",
+"crash probability",
+"simple variance swaps"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 971 days, hit 56.1% (always-long 56.1%), avg +7.0 bps/day, t=1.15, positive in 7/9 years",
+"url": "https://academic.oup.com/qje/article-pdf/132/1/367/17098108/qjw034.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Volatility Information Trading in the Option Market",
+"learned": "This Journal of Finance paper built a measure of how much volatility non-market-maker traders were buying or selling, from the trading volume of individual stock options, and found that this net volatility demand predicted the stocks' later realized volatility. Buying volatility also pushed option prices up, and that price impact grew by about 40% in the days before earnings announcements, when some traders may know more about the coming move, then fell back to normal once the news was out. In short, option order flow can carry information about future volatility, especially ahead of scheduled events.",
+"concepts": [
+"volatility demand",
+"informed option trading",
+"option price impact",
+"earnings announcements",
+"realized volatility"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.2008.01352.x",
+"date": "2026-10-19"
+},
+{
+"title": "Journal of Economic Surveys",
+"learned": "Despite its catalogue title, this entry is a survey of interest-rate models (from the Journal of Economic Surveys) that organises the field into five layers: building the yield curve, arbitrage-free rate dynamics, representing the volatility smile, collateral and post-LIBOR risk-free-rate conventions, and numerical implementation. It walks through the history from Vasicek and Cox-Ingersoll-Ross to Hull-White, HJM, the LIBOR market model, SABR and post-LIBOR forward market models, arguing each arose to handle new products and market practices rather than one model 'winning'. It warns that fitting today's vanilla option prices exactly can still hide risks in correlation, future smile behaviour and numerical error; the abstract gives no empirical numbers.",
+"concepts": [
+"interest-rate models",
+"yield curve construction",
+"SABR volatility smile",
+"HJM / LIBOR market model",
+"calibration risk"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/joes.70161?download=true",
+"date": "2026-10-19"
+},
+{
+"title": "AI Adoption and Trading Performance Analysis: Study on Retail Futures and Options Traders of Karnataka",
+"learned": "This survey asked 401 retail futures-and-options traders in six cities of Karnataka, India, on 1-5 agreement scales, about their use of AI trading tools, the quality of their decisions and their own trading performance. In a structural model, AI adoption was linked to better self-rated decision quality and performance (direct effect 0.49, with about one third of the total effect running through decision quality), and the link was stronger for traders with more financial literacy. Performance was self-reported, not measured from actual profit and loss, while the paper itself notes that regulator data show most Indian retail derivative traders lose money.",
+"concepts": [
+"AI trading tools",
+"retail F&O traders",
+"financial literacy",
+"survey (PLS-SEM)",
+"self-reported performance"
+],
+"relevance": 0,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://ijcope.org/wp-content/uploads/2026/10/AI-Adoption-and-Trading-Performance-Analysis-Study-on-Retail-Futures-and-Options-Traders-of-Karnataka-1.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "The behavior and performance of major types of futures traders",
+"learned": "Changyun Wang (Journal of Futures Markets, 2003) used the CFTC's Commitments of Traders reports for 15 US futures markets (including S&P 500, T-bond and commodities) from October 1992 to March 2000, measured monthly. Large speculators tended to trade against recent price moves but with market sentiment, while hedgers chased price moves and traded against sentiment. Speculators' position changes lined up with later abnormal returns and hedgers' did not, but the author attributes this to speculators being paid for absorbing hedging pressure rather than to better forecasting.",
+"concepts": [
+"Commitments of Traders (COT)",
+"speculators vs hedgers",
+"hedging pressure",
+"positive feedback trading",
+"futures positioning"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://mpra.ub.uni-muenchen.de/36426/1/MPRA_paper_36426.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "A hybrid adaptive trading strategy integrating investor sentiment for precious metal ETFs",
+"learned": "The authors combine a support-vector-regression price forecast with a reinforcement-learning trading agent (PPO) and switch between them to trade four precious-metal ETFs (GLD, SLV, PPLT, PALL), feeding in the VIX and a news-based sentiment index. They report higher cumulative returns, Sharpe ratios and win rates than buy-and-hold and a 5-day moving average, and say the sentiment data improved forecasts for gold, silver and platinum. Only the abstract was available, so the actual numbers, test period and costs are not known.",
+"concepts": [
+"support vector regression",
+"reinforcement learning (PPO)",
+"investor sentiment",
+"precious metal ETFs",
+"hybrid trading strategy"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://link.springer.com/content/pdf/10.1186/s40854-026-00911-2.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Event\u2010Day Options",
+"learned": "This paper (Jonathan Wright) uses the new options on US Treasury futures that expire every Wednesday and Friday to measure how much interest-rate uncertainty the market prices for a single Fed (FOMC) decision or jobs report. It compares the implied variance the night before those events with the same weekday when nothing is scheduled, compares that priced uncertainty with what actually happened, and builds the implied probability curves on event eves. Only the abstract was available, so the measured sizes are not known.",
+"concepts": [
+"event-day options",
+"FOMC announcements",
+"employment report",
+"implied variance",
+"Treasury futures options"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/jtsa.12819",
+"date": "2026-10-19"
+},
+{
+"title": "Option Volume Imbalance as a predictor for equity market returns",
+"learned": "Michael, Cucuringu and Howison (Oxford) build an 'option volume imbalance': bullish option volume (call buys plus put sells) minus bearish volume (call sells plus put buys), divided by the total, using Nasdaq Options Market and PHLX data from 2015 to 2019 split into five trader classes. Trading the sign of this imbalance predicted next overnight excess returns of mostly single stocks, with the strongest signal coming from market-maker volume, most of the information in high-implied-volatility contracts, and puts more informative than calls. The paper reports results as Sharpe ratios of hypothetical long/short portfolios rather than one headline number.",
+"concepts": [
+"option volume imbalance",
+"signed option volume",
+"market-maker flow",
+"overnight returns",
+"informed options trading"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2201.09319",
+"date": "2026-10-19"
+},
+{
+"title": "Benchmark dataset for mid\u2010price forecasting of limit order book data with machine learning methods",
+"learned": "This paper (the FI-2010 dataset by Ntakaris and co-authors) publishes a free benchmark dataset of limit order book data for five stocks on Nasdaq Nordic over 10 trading days, about 4 million samples, so machine-learning methods for predicting the next mid-price move can be compared fairly. It also sets a day-by-day cross-validation protocol and gives baseline model results. Only the abstract was available, so the baseline accuracy numbers are not known.",
+"concepts": [
+"limit order book",
+"mid-price prediction",
+"benchmark dataset",
+"high-frequency data",
+"machine learning"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/for.2543",
+"date": "2026-10-19"
+},
+{
+"title": "Two are better than one: Volatility forecasting using multiplicative component GARCH\u2010MIDAS models",
+"learned": "This paper (Conrad and Kleen) studies GARCH-MIDAS models, which split market volatility into a fast-moving short-term part and a slow long-term part driven by an economic series, and works out their statistical properties. On S&P 500 data, the version whose long-term part is driven by US housing starts beat many rival models (HAR, realized GARCH, HEAVY, regime-switching GARCH) when forecasting volatility 2 and 3 months ahead. Only the abstract was available, so the size of the improvement is not known.",
+"concepts": [
+"GARCH-MIDAS",
+"long- and short-term volatility components",
+"macro-driven volatility",
+"volatility forecasting",
+"S&P 500"
+],
+"relevance": 1,
+"verdict": "NO EDGE: range-forecast miss 0.530% -> 0.531% (-0.2%), better in 4/9 unseen years",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jae.2742",
+"date": "2026-10-19"
+},
+{
+"title": "Profitability of technical stock trading: Has it moved from daily to intraday data?",
+"learned": "Stephan Schulmeister (WIFO, 2008) ran 2,580 moving-average and momentum trading rules on the S&P 500. On daily prices their average yearly gross return fell from 8.6% (1960-71) to about zero in 1983-91 and -5.1% in 1992-2000, so daily chart rules stopped working. The same rules on 30-minute S&P futures prices still made about 7.2% a year gross from 1983 to 2007 (contrarian rules 9.1%, trend rules 4.8%), with roughly 0.01% cost per trade assumed, though results weakened in 2001-07.",
+"concepts": [
+"technical trading rules",
+"moving averages",
+"intraday momentum and reversal",
+"S&P 500 futures",
+"declining profitability"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 2226 days, hit 53.1% (always-long 56.6%), avg +4.5 bps/day, t=1.48, positive in 7/9 years",
+"url": "https://www.econstor.eu/bitstream/10419/128874/1/wp_323.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "The Time\u2013Target Trade-off in Expiry-Day Call Option Buying: Evidence from a Rule-Based Intraday Strategy in the Indian Index Derivatives Market",
+"learned": "Two Indian researchers logged 24 expiry-day trades buying index call options around 2:00 PM and selling later that afternoon: 14 made money, 9 lost and 1 was flat, with a median gain of about 3.7% but a range from -95% to +77% of the premium paid. The average trade lasted about 25 minutes, and longer holds tended to do worse (correlation about -0.55 between holding time and return), while higher India VIX did not help (correlation about -0.31). The authors suggest smaller profit targets and short holds, but admit the sample is tiny.",
+"concepts": [
+"expiry-day option buying",
+"holding period",
+"profit targets",
+"India VIX",
+"time decay"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://rsisinternational.org/journals/ijrsi/uploads/vol13-iss8-pg4203-4207-202609_pdf.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Short\u2010Term Market Risks Implied by Weekly Options",
+"learned": "Andersen, Fusari and Todorov (Journal of Finance, 2017) use weekly S&P 500 options, which mostly price the risk of sudden moves over the next few days, to measure how much the market fears a crash separately from overall volatility. They find this downside-jump fear moves on its own, is not captured by the VIX level, and helps predict future equity returns, so it can flag nervous periods that a calm volatility reading misses. Only the abstract was available, so the size of the effect is not known.",
+"concepts": [
+"weekly options",
+"negative jump tail risk",
+"crash fear vs volatility",
+"return predictability",
+"short-dated SPX options"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 51.3% (always-long 56.6%), strategy -1.2 bps/day vs +0.6 for the same average exposure held constantly -> timing adds -1.8 bps/day, t=-0.57, positive in 6/9 years",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/jofi.12486",
+"date": "2026-10-19"
+},
+{
+"title": "The VIX Premium",
+"learned": "Ing-Haw Cheng (Review of Financial Studies, 2019) measures the 'VIX premium', the extra price VIX futures carry over the VIX level expected at expiry, and finds it predicts VIX futures returns almost one-for-one (coefficient 0.92) over 2004-2015. Puzzlingly, the premium falls or stays flat when risk rises, and a falling premium warns of higher risk ahead: a one-standard-deviation drop predicted about 3 points more S&P 500 realized volatility. Shorting VIX futures only while the premium was positive raised the Sharpe ratio from 0.57 (always short) to 0.87.",
+"concepts": [
+"VIX premium",
+"volatility risk premium",
+"VIX futures",
+"hedging demand",
+"risk timing"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 2226 signal days, hit 54.2% (always-long 56.6%), strategy +9.6 bps/day vs +2.1 for the same average exposure held constantly -> timing adds +7.5 bps/day, t=2.44, positive in 7/9 years",
+"url": "https://utoronto.scholaris.ca/bitstreams/682f3c99-5d7d-4dee-b4b4-dafa83785523/download",
+"date": "2026-10-19"
+},
+{
+"title": "The Joint Cross Section of Stocks and Options",
+"learned": "An, Ang, Bali and Cakici looked at US stocks from 1996 to 2011 and found that stocks whose call implied volatility rose most over the past month went on to beat those where it fell most by about 1.09% per month (t=3.45), while stocks whose put implied volatility rose most lagged by about 0.42% per month (t=-2.03). The effect lasted up to six months and fits the idea that informed traders act in options first. In the other direction, stocks that had risen tended to see their option implied volatility climb the next month even as realized volatility fell.",
+"concepts": [
+"call and put implied volatility changes",
+"cross-sectional return predictability",
+"informed options trading",
+"decile portfolios"
+],
+"relevance": 1,
+"verdict": "NO EDGE: 2001 days, hit 51.6% (always-long 56.6%), avg +4.2 bps/day, t=1.28, positive in 5/9 years",
+"url": "https://doi.org/10.3386/w19590",
+"date": "2026-10-19"
+},
+{
+"title": "Derivatives and Market (Il)liquidity",
+"learned": "Huang, Yueshen and Zhang (JFQA 2023) build a theory model of how options and other non-linear derivatives change liquidity in the underlying stock or index. Informed investors who expect calm markets sell derivatives, and when buyers and sellers delta-hedge, the hedging trades dilute informed trading, so each trade moves the price less (liquidity looks better). Whether prices bounce back after moves depends on the derivatives' gamma, and the model warns that usual illiquidity measures may not line up with the liquidity risk premium once derivatives trade. It is pure theory with no numbers, and only the abstract was available.",
+"concepts": [
+"market liquidity",
+"price impact",
+"delta hedging",
+"gamma and price reversal",
+"informed trading"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/E157483FF813393044E8FF1B77BFF789/S0022109023000224a.pdf/div-class-title-derivatives-and-market-il-liquidity-div.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Volatility Parametrizations with Random Coefficients: Analytic Flexibility for Implied Volatility Surfaces",
+"learned": "Standard curve formulas used to describe the implied-volatility smile (SABR, SVI) often cannot match very short-dated options, so the authors let one formula parameter be random, which turns the smile into a blend of two curves while staying arbitrage-free and fast to compute. On SPX options on 31 July 2024, the fitting error for the August 2024 expiry fell from 4.8e-4 (regular SABR) to 1.2e-5 (randomized SABR), and the needed randomness shrank as expiry got longer. A variant that randomizes the spot price fits the W-shaped smiles seen in near-expiry AMZN options on an earnings day (April 2018), when the market prices two possible outcomes.",
+"concepts": [
+"implied volatility smile",
+"SABR parametrization",
+"randomized parameters",
+"bimodal risk-neutral distribution",
+"earnings-day options"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2411.04041",
+"date": "2026-10-19"
+},
+{
+"title": "Risks and Hedges of Providing Liquidity in Complex Securities: The Impact of Insider Trading on Options Market Makers",
+"learned": "This 2009 law-journal article by Stanislav Dolgopolov argues that options market makers lose more from insider trading than stock market makers, because they must quote both sides, carry leveraged non-linear positions and hedge their greeks (delta, gamma, vega), so a trader with secret news can pick them off before a big price jump. It reviews US court cases on whether options traders can claim damages and sketches how such losses could be calculated. It is a legal analysis with no market data or numbers.",
+"concepts": [
+"insider trading",
+"options market makers",
+"adverse selection",
+"delta hedging",
+"fraud-on-the-market"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://ir.lawnet.fordham.edu/jcfl/vol15/iss2/2",
+"date": "2026-10-19"
+},
+{
+"title": "Local Estimation for Option Pricing: Improving Forecasts with Market State Information",
+"learned": "Federal Reserve researchers keep standard option-pricing models (Heston-Nandi GARCH and Heston stochastic volatility) but fit them giving more weight to past days that look like today, measured by VIX, recent realized volatility or simply how recent the day is. On S&P 500 options (14-183 days to expiry, 2011-2023, tested out of sample 2015-2023), this beat the usual equal-weight fit: for the GARCH model the VIX-weighted fit had the lowest implied-volatility forecast error with a Diebold-Mariano t-stat of -5.85 against the benchmark. Gains were largest in calm periods like 2017 and small after 2019 or in high-volatility stretches.",
+"concepts": [
+"local (kernel-weighted) estimation",
+"state-dependent parameters",
+"Heston-Nandi GARCH",
+"implied volatility forecasting",
+"VIX as state variable"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.557% -> 0.557% (+0.1%), better in 5/8 unseen years",
+"url": "https://www.federalreserve.gov/econres/feds/files/2025076pap.pdf",
+"date": "2026-10-19"
+},
+{
+"title": "Profitability of selected 0DTE index options strategies",
+"learned": "This study back-tested two versions of a same-day (0DTE) Iron Condor on SPX options, using one-minute index and option prices over 12 months, and reports that both versions were profitable. The authors link this to 0DTE implied volatility being priced higher than the volatility that actually followed, so option sellers collected a premium. Only the abstract was available, so the size of the profits, costs and drawdowns is not known.",
+"concepts": [
+"0DTE options",
+"iron condor",
+"implied vs realized volatility",
+"volatility risk premium",
+"SPX"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.2139/ssrn.7162898",
+"date": "2026-10-19"
+},
+{
+"title": "Inferring Latent Market Forces: Evaluating LLM Detection of Gamma Exposure Patterns via Obfuscation Testing",
+"learned": "Regan and Xie fed an AI language model end-of-day SPY dealer-gamma numbers for 242 trading days of 2024, with dates and tickers hidden, and asked whether it saw dealer-hedging patterns; it flagged one 71.5% of the time (100% when given hints), and they say 91.2% of flags 'materialized'. But by their own concrete test (next-day move above 0.3% or intraday range above 1%) only 41.6% materialized, every single day in the sample was classed as negative gamma, and gamma only weakly predicted volatility two days later (p=0.042 at lag 2, not significant at lags 1, 3, 4, 5). Net profit after costs faded from +16 bps in Q1 to 0 by Q4.",
+"concepts": [
+"gamma exposure (GEX)",
+"dealer hedging",
+"LLM pattern detection",
+"obfuscation testing",
+"Granger causality"
+],
+"relevance": 1,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.532% (-0.1%), better in 2/9 unseen years",
+"url": "https://arxiv.org/pdf/2512.17923",
+"date": "2026-10-19"
+},
+{
+"title": "Ultra-short-term volatility surfaces",
+"learned": "Options expiring within a week now make up about 70% of SPX option volume (2023), and their at-the-money implied volatility jumps around from one expiry to the next instead of forming a smooth curve, which classic pricing models cannot fit. Bandi, Fusari, Gazzani and Ren\u00f2 propose Edgeworth++, a jump model with flexible volatility plus a per-expiry shift, that prices all six shortest SPX expiries together quickly in closed form. On 247 trading days (May 2022-May 2023, sampled at 10:30, FOMC days removed) its average error was about 1.0 volatility point, against 1.9 for a two-factor Heston-jump model and 2.8 for a rough-Heston model, with roughly 37-38% of its prices inside the bid-ask spread.",
+"concepts": [
+"ultra-short-term options",
+"ATM implied-volatility term structure",
+"Edgeworth++ model",
+"jump-diffusion",
+"0DTE pricing"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2603.29430",
+"date": "2026-10-18"
+},
+{
+"title": "Short\u2010Selling Bans Around the World: Evidence from the 2007\u201309 Crisis",
+"learned": "Beber and Pagano study the short-selling bans that regulators around the world imposed in 2007-09, using the fact that bans started, ended and applied differently across countries and stocks. Banned stocks became much less liquid: in the U.S. their median bid-ask spread rose 243% versus 54% for exempt stocks, and a covered-short ban added roughly 1.6-2.0 percentage points to spreads against a 3.9% average, with the damage about three times larger for stocks without listed options. Bans also slowed price discovery, especially in falling markets, and did not hold prices up, except possibly for U.S. financial stocks. The repo text covers the liquidity results and the start of the price-discovery section.",
+"concepts": [
+"short-selling ban",
+"bid-ask spread",
+"price discovery",
+"market liquidity",
+"listed options as a substitute"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "http://papers.tinbergen.nl/10106.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Crashes, Volatility, and the Equity Premium: Lessons from S&P 500 Options",
+"learned": "Santa-Clara and Yan pull two risk measures out of S&P 500 option prices every day: smooth (diffusive) volatility and the expected rate of crashes (jump intensity). Turned into a required return, the premium investors demand for these forward-looking risks averages 70% more than the premium for volatility that actually happened, and this option-implied equity premium significantly predicts later stock market returns. Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"option-implied equity premium",
+"jump intensity",
+"ex ante risk",
+"return predictability",
+"crash risk"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 1149 signal days, hit 58.5% (always-long 58.5%), strategy +6.3 bps/day vs +3.8 for the same average exposure held constantly -> timing adds +2.5 bps/day, t=1.61, positive in 8/9 years",
+"url": "https://direct.mit.edu/rest/article-pdf/92/2/435/1617563/rest.2010.11549.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Specification Analysis of Option Pricing Models Based on Time\u2010Changed L\u00e9vy Processes",
+"learned": "The authors (Huang and Wu) compare many option-pricing models for S&P 500 index options that are built by speeding up or slowing down a jump process's clock. The best fit needs frequent small jumps in returns and two separate sources of changing volatility, one tied to the jumps and one to the smooth part of price moves. Worked from the abstract only (no full text in the repo), so no fit statistics are given.",
+"concepts": [
+"time-changed L\u00e9vy processes",
+"high-frequency jumps",
+"stochastic volatility",
+"S&P 500 index options",
+"model specification"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.2004.00667.x",
+"date": "2026-10-18"
+},
+{
+"title": "Model Specification and Risk Premia: Evidence from Futures Options",
+"learned": "Using S&P 500 futures option prices from 1987 to 2003, the authors find strong evidence that both prices and volatility itself can jump, not just drift smoothly. They also find that investors pay a sizeable, statistically significant premium for protection against those jumps, and say this jump premium is key to understanding why options (especially puts) earn the returns they do. Worked from the abstract only (no full text in the repo), so the size of the premia is not given.",
+"concepts": [
+"jump risk premium",
+"volatility jumps",
+"diffusive risk premium",
+"S&P futures options",
+"model specification"
+],
+"relevance": 2,
+"verdict": "NOT CONFIRMED on my data: 1084 signal days, hit 57.7% (always-long 57.7%), strategy +2.8 bps/day vs +3.6 for the same average exposure held constantly -> timing adds -0.8 bps/day, t=-0.50, positive in 5/9 years",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.2007.01241.x",
+"date": "2026-10-18"
+},
+{
+"title": "Real-Time Probabilistic Pricing of Short-Horizon on-Chain Range-Prediction Markets",
+"learned": "The paper designs a pricing engine (TESSERA) for crypto 'range-prediction' bets where a user wagers the price stays inside a band for a few seconds to minutes, quoting a payout about once per second from a live price feed. Its volatility estimate is a recency-weighted average with a shock mode, and its anti-exploit rules (re-price on acceptance, kill stale quotes) drive stale-quote leakage from 0.78% to zero in simulation. On simulated data it was well calibrated (0.88% error at a 4.67% house margin), but on real 1-second BTC/USD ticks it failed at first (26% error) until one volatility-floor setting was re-fitted (5.5%), and jumps remained its main weakness.",
+"concepts": [
+"range-prediction markets",
+"EWMA volatility",
+"calibration error",
+"latency arbitrage",
+"jump risk"
+],
+"relevance": 1,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.532% (-0.1%), better in 4/9 unseen years",
+"url": "https://rsisinternational.org/journals/ijrias/uploads/vol11-iss8-pg2102-2115-202609_pdf.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Differential Machine Learning for 0DTE Options with Stochastic Volatility and Jumps",
+"learned": "The author trains a neural network to price 0DTE options and their Greeks under a model with both changing volatility and sudden jumps (Bates), learning prices and Greeks together so that one fast evaluation gives price, delta and gamma. A three-stage training that separately supervises the jump part cut the jump-term error from about 0.093 to 0.014 while keeping price errors similar, and adding jump-sensitivity labels brought the estimated jump intensity much closer to the truth (0.569 vs a true 0.60, compared with 0.739 without them). Everything is on simulated data; the author says applying it to real market data is future work, and notes gamma near the money remains the hardest thing to get right for 0DTE.",
+"concepts": [
+"differential machine learning",
+"jump-diffusion (Bates model)",
+"0DTE Greeks",
+"delta hedging",
+"model calibration"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2603.07600",
+"date": "2026-10-18"
+},
+{
+"title": "From Arbitrage Removal to Density Extraction: A Model-Free Framework for Short-Dated Options",
+"learned": "Very short-dated options (a few hours to a week to expiry) have tiny premiums and wide bid-ask spreads, so mid prices are unreliable and quotes can even seem to allow free-money (static arbitrage) trades. The authors first strip out quotes that would allow such arbitrage at the actual bid and ask prices (ARIES), then fit the smoothest, least-assuming price distribution that stays inside every bid-ask range (SEDEx). On a synthetic Heston test the recovered distribution matched the true one to within about 0.0001 in price, and they apply it to SPXW options from 2012-2023 (five-minute quotes, snapshot 15 minutes before the close) to build short-dated volatility smiles.",
+"concepts": [
+"risk-neutral density",
+"static arbitrage",
+"bid-ask constraints",
+"0DTE volatility smile",
+"SPXW options"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2605.22792",
+"date": "2026-10-18"
+},
+{
+"title": "The Earnings Call Risk and Confidence Analyzer (ERCA)",
+"learned": "The authors argue that retail traders buy short-dated options before company earnings calls and lose money when implied volatility collapses after the release, even when they guess the direction right (the 'volatility trap'). They build a complex system (social-media activity model, sentiment indicator, machine-learning forecasters, quarter-Kelly sizing with a 15% drawdown stop) and report on 500 S&P 500 earnings events (2020-2026) that their sentiment-divergence score correlates with the size of the earnings surprise (Spearman 0.48). Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"IV crush",
+"earnings events",
+"sentiment velocity",
+"fractional Kelly sizing",
+"Hawkes process"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.5281/zenodo.20044961",
+"date": "2026-10-18"
+},
+{
+"title": "Temporal Obfuscation Testing for LLM Structural Reasoning: From Single-Day Dealer Constraints to Persistent Market Regimes",
+"learned": "The paper is mainly about checking whether a large language model really reasons or just remembers: it strips dates and tickers from dealer gamma exposure (GEX) data and asks the model to spot hedging patterns from the numbers alone, over 2,221 evaluations from 2020-2025. It reports 91.2% predictive accuracy on single-day patterns, and that raw strike-level data beat pre-computed GEX numbers by 30.8 points (92.3% vs 61.5%). For multi-day regimes, detection rose from 3.7% in 2021 to 100% in 2024 alongside 0DTE growth and GEX size growing from $3.0B to $20.3B, while the related strategy's Sharpe fell from 1.8 to 0.1, which the author reads as a real structure that is no longer profitable. Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"temporal obfuscation",
+"LLM validation",
+"gamma exposure regimes",
+"0DTE adoption",
+"strike-level data"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.3390/jrfm19060382",
+"date": "2026-10-18"
+},
+{
+"title": "Forecasting the worst: is implied volatility forward-looking enough?",
+"learned": "The authors backtest a simple 1-day Value-at-Risk (the loss size you expect to exceed only rarely) on the S&P 500 using different volatility inputs. VaR built from the 30-day VIX underestimated risk in turbulent periods: losses broke the limit too often and the overshoots were too large. Preliminary evidence suggests the newer VIX1D, priced from 0DTE/1-day options, does a better job than VIX and the time-series alternatives. Worked from the abstract only (no full text in the repo), so exact breach counts are not available.",
+"concepts": [
+"value-at-risk",
+"VIX1D",
+"implied vs historical volatility",
+"tail risk",
+"0DTE options"
+],
+"relevance": 3,
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
+"url": "https://link.springer.com/content/pdf/10.1057/s41261-025-00306-w.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "The Death of Fundamental Analysis? How Option Market Makers Now Dictate Spot Equity Prices",
+"learned": "This is a second listing of the same Vishal Chopra working paper on Gamma Exposure (GEX), framed as 'market makers now dictate spot prices'. It argues that dealers' mechanical delta hedging anchors prices when they are long gamma and accelerates moves when they are short gamma, and it describes trader tools such as the 'gamma flip' level, call walls and put walls as support, resistance and speed-change zones. No sample, test or numbers are given in the description. Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"gamma flip",
+"call wall / put wall",
+"dealer hedging flows",
+"0DTE options",
+"reflexivity"
+],
+"relevance": 1,
+"verdict": "NO EDGE: 418 days, hit 46.2% (always-long 58.6%), avg -4.3 bps/day, t=-0.50, positive in 4/9 years",
+"url": "https://doi.org/10.5281/zenodo.20572981",
+"date": "2026-10-18"
+},
+{
+"title": "Institutional Equity Derivatives & Market Microstructure: Analyzing the Mechanics of Option Gamma Exposure (GEX) and its Empirical Impact on Underlying Asset Volatility",
+"learned": "This working paper explains Gamma Exposure (GEX): adding up option gamma across the chain tells you roughly how many dollars of stock dealers must buy or sell for each 1% move. When dealers are net long gamma they sell rallies and buy dips, which damps volatility and can pin price near big strikes; when they are net short gamma (often after heavy put buying) they chase the move and can amplify crashes or squeezes. The abstract describes formulas and mechanisms but reports no tested data, sample or numbers. Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"gamma exposure (GEX)",
+"dealer delta hedging",
+"positive vs negative gamma regime",
+"gamma squeeze",
+"strike pinning"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.533% (-0.4%), better in 5/9 unseen years",
+"url": "https://doi.org/10.5281/zenodo.20572275",
+"date": "2026-10-18"
+},
+{
+"title": "Does Options Open Interest Pin the Underlying? Five Tests on 2,294 Trading Days",
+"learned": "Using 1.6 million near-expiry SPY option records matched to one-minute E-mini S&P futures over 2,294 trading days (2016-2025), the author runs five tests and finds no sign that big open interest 'pins' the index to a strike at expiry, unlike studies of the pre-2009 market. The only significant result (p < 0.001) goes the other way: days with the highest at-the-money open interest had about 16% wider daily ranges than days with the lowest. The author reads this as a shift from pinning to gamma-driven amplification, possibly tied to the growth of weekly and 0DTE options. Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"strike pinning",
+"open interest",
+"gamma amplification",
+"0DTE options",
+"options expiration"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: power 'trend_day' (base 37%): lowest-fifth days 36% vs highest-fifth 35%, Brier skill -0.3%, better than the base rate in 6/9 unseen years",
+"url": "https://doi.org/10.5281/zenodo.19540115",
+"date": "2026-10-18"
+},
+{
+"title": "Deep learning in the stock market\u2014a systematic survey of practice, backtesting, and applications",
+"learned": "This survey reviews deep-learning research on stock markets, keeping only studies that actually backtest their models so a practitioner could judge real-world use. The qualifying work falls into seven areas, mostly trading strategy, price prediction and portfolio management, with few studies on market simulation, stock selection, hedging or risk management; returns and volatility are the metrics that matter most for judging these models. The authors find reproducibility has improved but explainability is still weak, and say longer-horizon prediction remains a big unsolved problem. Worked from the abstract only (no full text in the repo), so no counts or performance figures are given.",
+"concepts": [
+"deep learning",
+"backtesting",
+"reproducibility",
+"model explainability",
+"price prediction"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://link.springer.com/content/pdf/10.1007/s10462-022-10226-0.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Asymmetric Dynamics in the Correlations of Global Equity and Bond Returns",
+"learned": "Cappiello, Engle and Sheppard modelled how volatility and correlations of national stock and government bond indexes change over time, using 15 years of weekly returns (790 weeks, January 1987 to February 2001) and an asymmetric correlation model. Stock indexes get more volatile after bad news than after good news of the same size, while bond volatility shows little such asymmetry; yet both stocks and bonds become more correlated with each other after joint bad news, with stocks reacting more strongly, so diversification shrinks exactly when markets fall. After the euro's launch in January 1999 correlations jumped (bond returns inside the euro area became nearly perfectly correlated) while volatility levels did not break. The repo text was glyph-encoded and was decoded for reading.",
+"concepts": [
+"asymmetric volatility",
+"dynamic conditional correlation",
+"correlation in downturns",
+"stock-bond correlation",
+"structural break"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.541% (-1.9%), better in 3/9 unseen years",
+"url": "http://www.ecb.europa.eu/pub/pdf/scpwps/ecbwp204.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Does herding affect volatility? Implications for the Spanish stock market",
+"learned": "Blasco, Corredor and Ferreruela measured herding (traders piling into the same side at the same time) in intraday Spanish stock trades, using the Patterson-Sharma herding intensity measure. They found herding raises volatility in a straight-line way across historical, realized and implied volatility, though the size of the effect differs by measure, and herding variables helped forecast volatility. The repo's text file is only the repository landing page (essentially the abstract), so no effect sizes are available.",
+"concepts": [
+"herding",
+"uninformed trading",
+"realized volatility",
+"implied volatility",
+"volatility forecasting"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://hdl.handle.net/2454/18653",
+"date": "2026-10-18"
+},
+{
+"title": "Dilemma not Trilemma: The Global Financial Cycle and Monetary Policy Independence",
+"learned": "Rey shows there is one global financial cycle: capital flows, credit growth, bank leverage and risky asset prices around the world rise and fall together, and the cycle moves opposite to the VIX (low VIX = money pours in, high VIX = flows collapse). A single global factor explains about 25% of the variation in returns across 858 risky assets worldwide, and in her quarterly VAR a cut in the Fed funds rate is followed by a lower VIX after about 5 quarters and more credit flows after about 12 quarters; other studies she cites find Fed rate shocks explain roughly 20-30% of VIX variation at horizons beyond 7-10 quarters. Her policy conclusion is that with free capital flows, countries lose monetary independence even with floating exchange rates unless they manage capital flows or use macroprudential limits on leverage.",
+"concepts": [
+"global financial cycle",
+"VIX as risk appetite",
+"capital flows",
+"bank leverage",
+"Fed policy spillovers"
+],
+"relevance": 1,
+"verdict": "NO EDGE: 1215 signal days, hit 56.9% (always-long 56.9%), strategy +4.3 bps/day vs +4.1 for the same average exposure held constantly -> timing adds +0.2 bps/day, t=0.13, positive in 5/9 years [re-tested 19 Oct with drift-corrected test]",
+"url": "https://doi.org/10.3386/w21162",
+"date": "2026-10-18"
+},
+{
+"title": "Central Bank Participation in Currency Options Markets",
+"learned": "The paper asks whether a central bank can calm an exchange rate by trading currency options instead of buying and selling the currency itself. Its key point is that if the central bank sells options, market makers end up long those options and their delta-hedging pushes against price moves (they sell rallies and buy dips), which dampens volatility; selling a strangle can also make a target zone more credible and may cost less than spot intervention, but it exposes the bank to unlimited losses. Worked from the abstract only (no full text in the repo), so no cost or volatility figures are given.",
+"concepts": [
+"dealer long gamma",
+"dynamic delta hedging",
+"short strangle",
+"target zone",
+"FX intervention"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.534% (-0.5%), better in 5/9 unseen years",
+"url": "https://www.elibrary.imf.org/downloadpdf/view/journals/001/1999/140/001.1999.issue-140-en.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "The lead\u2013lag relation between VIX futures and SPX futures",
+"learned": "The authors studied how VIX futures and S&P 500 futures move against each other minute by minute. When markets are calm the two are only loosely connected, but when volatility is high they move strongly in opposite directions and VIX futures tend to move first, with S&P futures following. The lead is so short that, after transaction costs, it could not be turned into a profitable strategy; whichever market is relatively more liquid tends to lead, and market-maker hedging also shapes the relation. Worked from the abstract only (no full text in the repo), so no correlation or lag figures are given.",
+"concepts": [
+"lead-lag",
+"VIX futures",
+"volatility regimes",
+"price discovery",
+"market-maker hedging"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 1041 days, hit 48.4% (always-long 55.1%), avg -8.3 bps/day, t=-1.51, positive in 2/9 years",
+"url": "https://doi.org/10.1016/j.finmar.2023.100851",
+"date": "2026-10-18"
+},
+{
+"title": "Price Formation and Liquidity in the U.S. Treasury Market: The Response to Public Information",
+"learned": "Fleming and Remolona studied how US Treasury prices, volume and bid-ask spreads react to major macro announcements. In a brief first stage the price jumps almost instantly while trading volume actually drops and spreads widen sharply, showing prices can reprice to news without much trading. In a longer second stage volume surges, volatility stays elevated and spreads remain somewhat wide as traders reconcile their different readings of the news. Worked from the abstract only (no full text in the repo), so no timing or size figures are given.",
+"concepts": [
+"macro announcements",
+"price discovery",
+"bid-ask spreads",
+"post-announcement volatility",
+"Treasury market liquidity"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.531% (-0.0%), better in 5/9 unseen years",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/0022-1082.00172",
+"date": "2026-10-18"
+},
+{
+"title": "An Empirical Investigation of Continuous\u2010Time Equity Return Models",
+"learned": "Andersen, Benzoni and Lund fitted continuous-time models to daily equity-index returns and found that a realistic model needs both stochastic (changing) volatility and sudden jumps, with jump frequency that can vary over time. Volatility shocks are strongly negatively tied to returns, so falling markets come with rising volatility (the leverage effect). These same features line up with what index option prices show, such as steep put skew, meaning the options market prices them. Worked from the abstract only (no full text in the repo), so no parameter values are given.",
+"concepts": [
+"stochastic volatility",
+"Poisson jumps",
+"leverage effect",
+"jump-diffusion",
+"option-implied skew"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.532% (-0.2%), better in 5/9 unseen years",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/1540-6261.00460",
+"date": "2026-10-18"
+},
+{
+"title": "By Force of Habit: A Consumption-Based Explanation of Aggregate Stock Market Behavior",
+"learned": "Campbell and Cochrane build a model in which people judge their well-being against a slowly moving 'habit' level of consumption, so they become much more risk-averse in bad times when consumption falls close to that habit. This single feature explains why stock prices rise in booms and fall in busts, why high prices predict low returns over long horizons, and why stock market volatility is higher in downturns, and the model tracks much of the history of US stock prices using only consumption data. The repo's text file is unreadable scanned OCR, so this summary is from the abstract only.",
+"concepts": [
+"habit formation",
+"time-varying risk aversion",
+"equity premium",
+"countercyclical volatility",
+"long-horizon return predictability"
+],
+"relevance": 1,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.530% (+0.2%), better in 3/9 unseen years",
+"url": "https://doi.org/10.3386/w4995",
+"date": "2026-10-18"
+},
+{
+"title": "Betting against beta",
+"learned": "Frazzini and Pedersen argue that many investors cannot borrow, so they buy high-beta (extra-jumpy) assets to get more market exposure, which bids those assets up and leaves them with lower risk-adjusted returns. A 'betting against beta' portfolio, long leveraged low-beta assets and short high-beta assets, earned significant positive risk-adjusted returns in US stocks, 20 international stock markets, Treasuries, corporate bonds and futures. It does badly when funding conditions tighten, and tighter funding pushes betas toward one. Worked from the abstract only (no full text in the repo), so no return figures are given.",
+"concepts": [
+"betting against beta",
+"leverage constraints",
+"low-beta anomaly",
+"funding liquidity",
+"factor investing"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://www.sciencedirect.com/science/article/pii/S0304405X13002675/pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Carry Trades and Currency Crashes",
+"learned": "Brunnermeier, Nagel and Pedersen show that the currency carry trade (borrow in low-rate currencies like the yen, invest in high-rate ones like the Australian dollar) earns small steady gains but carries crash risk: its returns are negatively skewed, and across currencies the link between interest-rate gap and skewness is very tight (R-squared of 81%). The crashes come from sudden unwinds when risk appetite and funding liquidity dry up, for example in weeks when the VIX or the TED spread rises. After carry losses, speculators hold smaller positions and pay more for crash insurance (risk reversals), and future crash risk actually falls. Read from the repo's full text.",
+"concepts": [
+"carry trade",
+"crash risk",
+"negative skewness",
+"funding liquidity",
+"risk reversals"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 211 days, hit 51.2% (always-long 51.2%), avg -15.8 bps/day, t=-0.98, positive in 4/9 years",
+"url": "http://www.nber.org/papers/w14473.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Safe Haven Currencies",
+"learned": "Ranaldo and S\u00f6derlind used high-frequency exchange-rate data from 1993 to 2008 and a factor model linking currencies to stocks, bonds, volatility and liquidity. They find that the Swiss franc and Japanese yen strengthen against the US dollar when US stocks fall, US bond prices rise and FX volatility increases. This safe-haven behaviour shows up from a few hours to several days, grows non-linearly with volatility and in crises, and was especially strong for the yen in 2008. Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"safe haven currencies",
+"Swiss franc",
+"Japanese yen",
+"risk-off flows",
+"FX volatility"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://academic.oup.com/rof/article-pdf/14/3/385/26300055/rfq007.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Intraday Price Formation in U.S. Equity Index Markets",
+"learned": "Hasbrouck studied where prices are actually discovered among the instruments that track U.S. stock indexes: floor-traded futures, E-mini futures, ETFs and sector ETFs. For both the S&P 500 and the Nasdaq-100, most price discovery happens in the E-mini futures, meaning futures tend to move first and ETFs like QQQ follow. For the S&P 400 MidCap it is shared between the regular futures and the ETF, and SPY leads the sector ETFs far more than they lead it. Worked from the abstract only (no full text in the repo), so no numeric shares are given.",
+"concepts": [
+"price discovery",
+"E-mini futures",
+"ETFs",
+"information shares",
+"intraday lead-lag"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1046/j.1540-6261.2003.00609.x",
+"date": "2026-10-18"
+},
+{
+"title": "The Flash Crash: High\u2010Frequency Trading in an Electronic Market",
+"learned": "Kirilenko, Kyle, Samadi and Tuzun used audit-trail, trade-by-trade data from the E-mini S&P 500 futures on May 6, 2010 (the Flash Crash) and the three days before. During the crash a large automated sell program was executed very quickly, and the most active non-designated intermediaries, classified as high-frequency traders, did not change their trading pattern as prices fell: they neither stepped in to absorb the selling nor clearly pulled away. Worked from the abstract only (no full text in the repo), so no further numbers are available.",
+"concepts": [
+"Flash Crash",
+"high-frequency trading",
+"E-mini futures",
+"intraday liquidity",
+"selling pressure"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.17863/cam.51324",
+"date": "2026-10-18"
+},
+{
+"title": "Momentum crashes",
+"learned": "Daniel and Moskowitz show that momentum strategies (buy recent winners, short recent losers) usually pay well but occasionally suffer long, painful losing streaks called momentum crashes. These crashes are partly predictable: they happen in panic states, after the market has fallen and when volatility is high, and they coincide with sharp market rebounds that lift the beaten-down losers. A dynamic version that scales momentum down when its forecast mean is low and its variance high roughly doubled the alpha and Sharpe ratio of plain momentum. Worked from the abstract only (no full text in the repo).",
+"concepts": [
+"momentum crashes",
+"panic states",
+"market rebounds",
+"dynamic risk scaling",
+"time-varying volatility"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 1804 days, hit 54.7% (always-long 57.2%), avg +6.4 bps/day, t=2.39, positive in 7/9 years",
+"url": "https://www.sciencedirect.com/science/article/pii/S0304405X16301490/pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Does Net Buying Pressure Affect the Shape of Implied Volatility Functions?",
+"learned": "Bollen and Whaley show that implied volatility moves with public order flow: when more customers buy options than sell them, implied vol rises, so the shape of the volatility smile is partly driven by demand, not only by expected risk. For S&P 500 index options the biggest driver is buying pressure in index puts, while for single-stock options it is call demand. Delta-neutral option-writing strategies earned abnormal returns roughly matching how far implied vol sat above realized vol. Worked from the abstract only (no full text in the repo), so no specific numbers are available.",
+"concepts": [
+"net buying pressure",
+"implied volatility smile",
+"index put demand",
+"limits to arbitrage",
+"option writing premium"
+],
+"relevance": 3,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.532% (-0.2%), better in 4/9 unseen years",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.2004.00647.x",
+"date": "2026-10-18"
+},
+{
+"title": "Can Large Language Models Beat Wall Street? Unveiling the Potential of AI in Stock Selection",
+"learned": "MarketSenseAI uses GPT-4 to read news, fundamentals, price trends and macro data and issue buy/hold/sell calls on S&P 100 stocks with written explanations. Over a 15-month test it reported excess returns of 10% to 30% and a cumulative return of up to 72%, with risk similar to the market. The test is short and covers a single period, and the paper is by the framework's own developers.",
+"concepts": [
+"large language models",
+"GPT-4 stock selection",
+"chain-of-thought",
+"news and fundamentals analysis",
+"explainable signals"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2401.03737",
+"date": "2026-10-18"
+},
+{
+"title": "Risk Everywhere: Modeling and Managing Volatility",
+"learned": "Using high-frequency data on more than 50 commodities, currencies, equity indices and bonds over 20+ years, the authors (Bollerslev, Hood, Huss and Pedersen) find that realized volatility behaves in very similar ways across markets. Fitting realized-volatility models jointly across many assets (panel estimation) gave better out-of-sample risk forecasts than fitting each asset alone, with significant economic gains in a utility-based test that also accounts for trading costs. The abstract gives no specific error numbers.",
+"concepts": [
+"realized volatility",
+"HAR models",
+"panel estimation",
+"volatility forecasting",
+"risk management"
+],
+"relevance": 3,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.533% (-0.3%), better in 5/9 unseen years",
+"url": "https://academic.oup.com/rfs/article-pdf/31/7/2729/25102779/hhy041.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Book-to-Market, Mispricing, and the Cross Section of Corporate Bond Returns",
+"learned": "Corporate bonds whose book value is high relative to their market price tend to earn more later: senior bonds, even investment grade, in the top 20% by this ratio beat the bottom 20% by about 3-4% a year after controlling for yield, spread, rating, duration, liquidity and past returns. The edge fades when trading is delayed and appears even where risk differences are small, which the authors read as mispricing rather than compensation for risk.",
+"concepts": [
+"corporate bonds",
+"book-to-market",
+"mispricing",
+"cross-sectional returns",
+"bond liquidity"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/9F30CC8EE3077365BDF05E801333CB26/S0022109024000048a.pdf/div-class-title-book-to-market-mispricing-and-the-cross-section-of-corporate-bond-returns-div.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Frictions as a Constraint on Tax Planning",
+"learned": "This law-review article argues that narrow tax reforms aimed at specific tax-avoidance tricks work only when 'frictions' (fees, accounting or regulatory treatment, credit risk) make the workaround costly, and that sharp, all-or-nothing frictions deter end-runs best. It compares two US rules on derivatives, Section 1259 (constructive sales of appreciated stock) and Section 1260 (using derivatives to mimic hedge-fund ownership), which use almost the same wording yet drew different taxpayer responses because of differing frictions.",
+"concepts": [
+"tax planning",
+"frictions",
+"constructive sale (Section 1259)",
+"constructive ownership (Section 1260)",
+"derivatives"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.2139/ssrn.262174",
+"date": "2026-10-18"
+},
+{
+"title": "Finance-Informed Operator Learning for Option Pricing with Quantum-Compatible Realizations",
+"learned": "The authors train a neural network to price European options quickly under a local-volatility model by letting it learn only a correction on top of a Black-Scholes starting price, with a layer that keeps prices within no-arbitrage bounds. On test data from the same model family it cut overall relative pricing error by nearly ten times versus plain neural-network baselines, but on real index-option quotes it stayed accurate without retraining while still not beating the plain Black-Scholes formula on the same inputs. A 'quantum-compatible' version is also described, with no speed-up claimed.",
+"concepts": [
+"neural operator (DeepONet)",
+"local volatility",
+"no-arbitrage bounds",
+"near-expiry curvature",
+"quantum computing"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2609.33213",
+"date": "2026-10-18"
+},
+{
+"title": "Option Volume and Stock Prices: Evidence on Where Informed Traders Trade",
+"learned": "This classic paper (Easley, O'Hara and Srinivas) models informed traders choosing between the stock and its options, and shows when they prefer options, for example for the leverage. Testing with intraday option data, the authors find that option volume split into bullish ('positive', such as call buys and put sells) and bearish ('negative') trades carries information about where the stock price goes next. The abstract gives no specific numbers.",
+"concepts": [
+"informed trading",
+"option volume",
+"price discovery",
+"asymmetric information",
+"signed option flow"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/0022-1082.194060",
+"date": "2026-10-18"
+},
+{
+"title": "Empirical Asset Pricing via Machine Learning",
+"learned": "This well-known study (Gu, Kelly and Xiu) compares machine-learning methods for forecasting stock returns and finds that trees and neural networks beat standard regressions, in some cases doubling the performance of the best regression-based strategies. Their edge comes from capturing nonlinear interactions between predictors, and every method agreed that the strongest signals are variations on momentum, liquidity and volatility. The abstract gives no other specific figures.",
+"concepts": [
+"machine learning asset pricing",
+"neural networks",
+"regression trees",
+"nonlinear interactions",
+"momentum and volatility signals"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.532% (-0.1%), better in 5/9 unseen years",
+"url": "https://academic.oup.com/rfs/article-pdf/33/5/2223/33209812/hhaa009.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Cross\u2010Market Convergence Trading in Options Order Flow",
+"learned": "The authors separate options order flow driven by arbitrage-style 'convergence' trading (using matched calls and puts to build synthetic stock or futures positions when options are mispriced against the futures or spot market) from flow driven by traders with private information. This convergence flow grows as the options-futures mispricing widens and predicts returns in the related market in the opposite direction, unlike informed flow. Foreign investors mostly respond to options-versus-futures mispricing and domestic investors to options-versus-spot mispricing, and traders react more to spot underpricing than overpricing, consistent with limits on short selling.",
+"concepts": [
+"convergence trading",
+"options order imbalance",
+"put-call parity mispricing",
+"informed trading",
+"short-sale constraints"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/fut.70142",
+"date": "2026-10-18"
+},
+{
+"title": "LiveOption: Evaluating LLM Agents in Structured Option Trading with Nonlinear Payoffs",
+"learned": "LiveOption is a test bed where six AI language-model agents traded options live in three tasks: hedging or covered-call overlays on stocks, earnings bets, and intraday 0DTE trading over 102 sessions. None beat simply holding the stock in the overlay task, every model had a negative median return on earnings bets, and in 0DTE each model lost on 62-76 of the 102 sessions with medians of -3.20% to -0.26% per session. The few positive 0DTE averages came from a handful of big winning days and turned negative once the real bid-ask half-spread was charged, mainly because agents kept paying time decay (theta) on bought options.",
+"concepts": [
+"LLM trading agents",
+"0DTE intraday trading",
+"time decay (theta)",
+"bid-ask costs",
+"benchmarking"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2609.33470",
+"date": "2026-10-18"
+},
+{
+"title": "Empirical Performance of Alternative Option Pricing Models",
+"learned": "This classic study (Bakshi, Cao and Chen) builds an option model where volatility, interest rates and sudden jumps can all vary, and tests simpler versions against it on S&P 500 options. Adding changing volatility and jumps matters most for pricing options accurately and for making the implied numbers line up with actual market behavior. For hedging, though, a model with changing volatility alone worked best; the abstract gives no specific error numbers.",
+"concepts": [
+"stochastic volatility",
+"jump risk",
+"option pricing models",
+"hedging performance",
+"S&P 500 options"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.1997.tb02749.x",
+"date": "2026-10-18"
+},
+{
+"title": "Harvesting the Volatility Risk Premium: A Learning-to-Rank Approach",
+"learned": "The author uses a machine-learning ranker each morning at 10:00 ET to choose which of eight same-day (0DTE) SPX short puts to sell, from 5-delta to 45-delta, or to skip the day, with position size scaled up when 0DTE implied volatility is rich versus recent realized volatility. After margin, fees and bid-to-mid fills, the 2025 hold-out year showed Sharpe ratios of 4.31-5.76 and a -2.28% max drawdown, versus 1.90-3.11 in the 2021-2024 walk-forward, and returns rose with realized volatility. Most of the edge came from choosing the strike and when to skip; the extra risk controls added only 0.54 Sharpe, and the hold-out is a single year.",
+"concepts": [
+"volatility risk premium",
+"0DTE short puts",
+"learning-to-rank",
+"implied vs realized vol edge",
+"margin-aware sizing"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1145 signal days, hit 58.5% (always-long 58.5%), strategy +7.0 bps/day vs +3.8 for the same average exposure held constantly -> timing adds +3.2 bps/day, t=2.09, positive in 7/9 years",
+"url": "https://arxiv.org/pdf/2608.24786",
+"date": "2026-10-18"
+},
+{
+"title": "The Synergistic Impact of AI-Driven Strategies on Retail Options Trading within the European Derivatives Market: A Comparative Analysis of Liquidity and Market Efficiency",
+"learned": "This descriptive study compares US and European index options and argues that AI trading tools work better where markets are deeper: SPX trades about 1.2 million contracts a day versus about 300,000 for Euro Stoxx 50, with spreads of roughly 0.25% versus 0.40%. It cites options volume rising 18% in the US versus 9% in Europe after CPI releases and claims AI reduces retail behavioral biases, but this rests largely on industry reports rather than a tested model.",
+"concepts": [
+"AI trading",
+"retail options",
+"liquidity",
+"bid-ask spread",
+"US vs Europe market structure"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.51483/ijaiml.5.2.2025.1-15",
+"date": "2026-10-18"
+},
+{
+"title": "A bid\u2013ask constrained calibration framework for 0DTE SPX option pricing rough versus jump\u2013diffusion volatility models",
+"learned": "The authors fit four 'rough volatility' models and one simpler jump model to intraday SPX same-day (0DTE) volatility smiles over five days, counting a fit as good only if model prices land inside the bid-ask spread. One rough model (QRH+) fit best on days with a sharply curved downside smile, but the simpler jump-diffusion model matched or beat every rough model on the other days and on average. The takeaway is that fancy rough-volatility models are not required to price 0DTE options well.",
+"concepts": [
+"rough volatility",
+"0DTE smile calibration",
+"bid-ask constraint",
+"jump-diffusion",
+"Quadratic Rough Heston"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://www.sciencedirect.com/science/article/pii/S3050700626000824/pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Where Does the Hedging Error Go? A Greek-by-Greek Decomposition for At-the-Money 0DTE Options under Heston",
+"learned": "The authors split the hedging error of at-the-money same-day (0DTE) options into seven Greek pieces across 1,015 SPY sessions and find gamma explains about 66% of the error's variance and vega about 38%; a delta-hedged position lost 2.41 basis points per session on average (t = -8.87). Most of the error cannot be hedged away by trading faster: about 86% of SPY's one-minute error (85% for SPX) is a fixed floor, and hedging every 10 seconds on tick data still leaves 93-98% of it. QQQ and NDX showed the same ranking, with gamma the biggest source.",
+"concepts": [
+"0DTE hedging error",
+"gamma risk",
+"vega risk",
+"delta hedging frequency",
+"Heston model"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday option and stock prices, as well as dealer gamma positions, which are not available in the provided data",
+"url": "https://doi.org/10.5281/zenodo.23271888",
+"date": "2026-10-18"
+},
+{
+"title": "A New Star Is Born: Does the VIX1D Render Common Volatility Forecasting Models for the US Equity Market Obsolete?",
+"learned": "VIX1D is Cboe's index of how much the S&P 500 is expected to move over just the next day, built from the shortest-dated (largely 0DTE) options. The authors find it usually sits below the 30-day VIX but jumps around more, drifts upward during the trading day, and on average overstates the next day's actual move because it contains a risk premium. After a simple adjustment for that premium, VIX1D alone forecast next-day S&P volatility more accurately than the standard HAR forecasting models (the abstract gives no exact error figures).",
+"concepts": [
+"VIX1D",
+"one-day implied volatility",
+"volatility risk premium",
+"HAR model",
+"0DTE options"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 1257 sell-vol + 838 buy-vol trades on real QQQ option prices, avg -8.0 bp of QQQ per trade (placebo avg -4.9, p=0.917), halves -8.7/-7.2, win 47%, worst -973 bp, positive in 1/9 years, sell trades return -3.9% of max risk; 36% of its sell days are high-gamma days (the known edge)",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/fut.70023",
+"date": "2026-10-18"
+},
+{
+"title": "Revisiting local expansions for zero days-to-expiry option pricing",
+"learned": "Same-day-expiry (0DTE) options are hard to price because over a few hours prices move in jumps and lopsided ways that the normal bell-curve model misses. The authors price them with a fast 'local expansion' formula that adds corrections for skew and fat tails, and find that letting jumps follow a fat-tailed (tempered stable) shape prices SPX 0DTE options clearly better than assuming bell-shaped jumps; the method also held up on DAX and Euro Stoxx 50 0DTE options. The abstract gives no specific error numbers.",
+"concepts": [
+"0DTE options",
+"jump-diffusion",
+"Edgeworth expansion",
+"tempered stable jumps",
+"fat tails"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.1016/j.finr.2025.100053",
+"date": "2026-10-18"
+},
+{
+"title": "Retail Trading in Options and the Rise of the Big Three Wholesalers",
+"learned": "Retail trading in US options has surged and now exceeds 60% of total market volume, helped by payment for order flow, and nearly 90% of that payment comes from three wholesalers. Using new trade flags to isolate wholesaler-executed trades, the authors build a measure of retail options activity that drops during brokerage outages. Retail traders favor cheap weekly options with an average bid-ask spread of 12.6%, and they lose money on average.",
+"concepts": [
+"retail options trading",
+"payment for order flow",
+"wholesalers",
+"weekly options",
+"bid-ask spread"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday options trade data with wholesaler flags",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/jofi.13285",
+"date": "2026-10-18"
+},
+{
+"title": "Illiquidity Premia in the Equity Options Market",
+"learned": "This peer-reviewed paper (Review of Financial Studies, 2017) studies whether less liquid equity options earn different returns than liquid ones. The queue held no real abstract and the full text could not be opened (the site blocks automated reading), so no results or numbers could be checked in this session. Nothing more is claimed here.",
+"concepts": [
+"option illiquidity",
+"bid-ask spread",
+"equity options",
+"liquidity premium"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://utoronto.scholaris.ca/bitstreams/e68dd3e1-7442-48ae-b2ad-1bd9980a8452/download",
+"date": "2026-10-18"
+},
+{
+"title": "An Empirical Analysis of Stock and Bond Market Liquidity",
+"learned": "Modelling bid-ask spreads, depth, returns, volatility and order flow in stocks and Treasuries together, the authors find that liquidity and volatility shocks in the two markets are significantly correlated, so common forces drive both. Volatility shocks help predict later changes in liquidity, and in crises monetary easing goes with better liquidity. Money flowing into government bond funds forecasts bond market liquidity. The abstract gives no specific numbers.",
+"concepts": [
+"market liquidity",
+"bid-ask spread",
+"cross-market dynamics",
+"volatility shocks",
+"fund flows"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.2139/ssrn.289219",
+"date": "2026-10-18"
+},
+{
+"title": "Option Return Predictability",
+"learned": "For single-stock options, the return to writing delta-hedged calls can be predicted from company traits: it is lower for high-priced, more profitable firms and higher for firms with lots of cash, volatile cash flows, new share issuance, distress risk and analysts who disagree. Long-short option portfolios built this way had annual Sharpe ratios above two and stayed profitable after trading costs. Two option-specific factors explain the profits; ordinary stock risk factors do not.",
+"concepts": [
+"delta-hedged option returns",
+"cross-section",
+"firm characteristics",
+"option factors"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://utoronto.scholaris.ca/bitstreams/5c530340-f282-4a35-a281-76336e3757b1/download",
+"date": "2026-10-18"
+},
+{
+"title": "The Determinants of Stock and Bond Return Comovements",
+"learned": "Using a model that ties stock-bond co-movement to interest rates, inflation, growth, cash flows, risk aversion, uncertainty and liquidity, the authors find that macro fundamentals explain little of how stocks and bonds move together; liquidity measures matter more. Macro factors help explain bond volatility, while the variance premium is key for explaining stock volatility. The model mostly fails to fit the stock-bond covariance itself. The abstract gives no specific numbers.",
+"concepts": [
+"stock-bond correlation",
+"dynamic factor model",
+"liquidity",
+"variance premium"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.3386/w15260",
+"date": "2026-10-18"
+},
+{
+"title": "Time Series Momentum",
+"learned": "Across 58 liquid futures (equity indexes, currencies, commodities, bonds), an asset's own past 1-12 month return predicts its next month: winners keep rising and losers keep falling, with some reversal over longer horizons. A diversified portfolio of these trend trades earned strong returns with little exposure to normal risk factors and did best in extreme markets. Speculators profit from it at the expense of hedgers.",
+"concepts": [
+"time series momentum",
+"trend following",
+"futures",
+"under-reaction"
+],
+"relevance": 2,
+"verdict": "NO EDGE: 2226 days, hit 56.4% (always-long 56.6%), avg +3.4 bps/day, t=1.10, positive in 6/9 years",
+"url": "https://www.sciencedirect.com/science/article/pii/S0304405X11002613/pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Risk Premia in the Bitcoin Market",
+"learned": "Bitcoin is far more volatile than the S&P 500 and its options carry a larger variance risk premium (sellers of volatility are paid more). Most of the S&P 500's equity premium comes from mildly negative return days, while for Bitcoin those moderate down moves explain only about a third of its premium. Bitcoin's premia shift between two regimes: in calm markets investors pay more for variance and upside, and in volatile markets the premium is more balanced and smaller.",
+"concepts": [
+"variance risk premium",
+"bitcoin options",
+"risk-neutral density",
+"volatility regimes"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/pdf/2410.15195",
+"date": "2026-10-18"
+},
+{
+"title": "High-Frequency Trading and Price Discovery",
+"learned": "High-frequency traders help prices find their correct level: their aggressive (liquidity-taking) orders trade in the direction of lasting price changes and against temporary mispricings, even on the most volatile days. Their passive quotes, on the other hand, tend to get picked off by better-informed traders. Their trading direction predicts price moves only over seconds and is tied to public news, market moves and order book imbalance.",
+"concepts": [
+"high-frequency trading",
+"price discovery",
+"adverse selection",
+"order book imbalance"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://www.econstor.eu/bitstream/10419/154035/1/ecbwp1602.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Demand-Based Option Pricing",
+"learned": "Because dealers cannot hedge options perfectly, heavy end-user demand for an option pushes its price up, by an amount tied to how much of its risk cannot be hedged away. Using data on actual dealer and end-user positions, the authors show end users are net long index options, especially out-of-the-money puts, which helps explain why index puts look expensive and why the volatility smirk exists. In short, skew is partly a price of demand, not only a forecast of crashes.",
+"concepts": [
+"demand pressure",
+"dealer positioning",
+"unhedgeable risk",
+"volatility smirk",
+"expensive index puts"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday option order flow data to measure end-user net demand by strike",
+"url": "https://academic.oup.com/rfs/article-pdf/22/10/4259/24453427/hhp005.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Informed Trading around Stock Split Announcements: Evidence from the Option Market",
+"learned": "Looking at option implied volatility around stock-split announcements, the authors find that option traders correctly expect a stock to get more volatile after it splits. There is only weak evidence that options traders anticipate the positive price drift splitting firms tend to show. The option measures help predict post-split volatility levels and changes, but not returns.",
+"concepts": [
+"stock splits",
+"implied volatility",
+"informed trading",
+"event study"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/82E163122F360CD32299EAF002B4B6AC/S0022109017000023a.pdf/div-class-title-informed-trading-around-stock-split-announcements-evidence-from-the-option-market-div.pdf",
+"date": "2026-10-18"
+},
+{
+"title": "Machine Learning-Based Latency-Aware Smart Order Routing for U.S. Treasury Securities",
+"learned": "The authors built a machine-learning order router for US Treasuries that tries to account for quotes going stale while an order travels to a venue, and tested it on a simulated order book calibrated to FRED yield volatility. Although the classifier scored 80.1% accuracy, the router beat a simple best-price router on only 2.2% of test rounds and was actually slightly more expensive (6.561 vs 6.548 basis points, t = -3.86). The honest lesson: a high-accuracy model can still make worse decisions when it is confidently wrong on the cases that matter.",
+"concepts": [
+"smart order routing",
+"latency",
+"stale quotes",
+"precision vs recall",
+"simulated order book"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://journal.esrgroups.org/jes/article/download/9815/6353",
+"date": "2026-10-18"
+},
+{
+"title": "Volatility of Volatility and Leverage Effect from Options",
+"learned": "The paper builds model-free estimators of how much volatility itself moves around ('vol of vol') and of the leverage effect (prices falling as volatility rises), using high-frequency prices of short-dated options. It extracts spot volatility from the options and corrects for the noise in option quotes. It is a statistics/methods paper: it shows how to measure these quantities precisely, not a trading result, and the abstract has no market numbers.",
+"concepts": [
+"volatility of volatility",
+"leverage effect",
+"spot volatility",
+"short-dated options",
+"nonparametric estimation"
+],
+"relevance": 2,
+"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.534% (-0.5%), better in 3/9 unseen years",
+"url": "https://arxiv.org/pdf/2305.04137",
+"date": "2026-10-18"
+},
+{
+"title": "Decomposing the Theta Cliff: A SIMDEC Filtering of Asymptotic Time-Decay in Long-Call Options with a Real-Money Intraday Illustration",
+"learned": "This paper proposes scaling the normal Black-Scholes theta (time decay) by a factor that depends on the stock's sector and market regime, found with a sensitivity-analysis method called SIMDEC. Its main 'evidence' is three real-money long-call positions tracked through eleven intraday snapshots plus output from the author's own AI pipeline. There are no clear performance numbers, and the sample is far too small to show that the adjusted theta predicts anything.",
+"concepts": [
+"theta decay",
+"effective theta",
+"SIMDEC decomposition",
+"long calls"
+],
+"relevance": 0,
+"verdict": "not testable with my data yet",
+"url": "https://www.mdpi.com/2673-2688/7/7/257/pdf?version=1783853566",
+"date": "2026-10-18"
+},
+{
+"title": "Uncovering the asymmetric information content of high-frequency options",
+"learned": "The authors split the high-frequency moves of option prices into up-moves and down-moves (semivariances) and signed jumps, using SPY options and 15 single stocks. The downside moves of out-of-the-money calls and the upside moves of OTM puts help predict future volatility, the variance risk premium and next-month excess returns, beyond plain total option volatility. A volatility-timing strategy built on these measures gained up to 206 basis points a year out of sample for a risk-averse investor.",
+"concepts": [
+"realized semivariance",
+"signed jumps",
+"OTM option returns",
+"volatility timing",
+"variance risk premium"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.1016/j.jbankfin.2026.107720",
+"date": "2026-10-18"
+},
+{
+"title": "Stock Market Uncertainty and the Stock-Bond Return Relation",
+"learned": "This older study links daily stock and Treasury bond moves to stock-market uncertainty, measured by index option implied volatility and unusually high trading volume. When implied volatility is high, stocks and bonds tend to move less together in the following period, and on days when implied volatility jumps, bonds tend to do well relative to stocks (a flight to safety). In plain terms: bonds diversify a stock portfolio best exactly when fear is high. The abstract gives no specific numbers.",
+"concepts": [
+"stock-bond correlation",
+"implied volatility",
+"flight to quality",
+"stock turnover"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.17615/6dzv-pw48",
+"date": "2026-10-18"
+},
+{
+"title": "Deep hedging 0DTE options",
+"learned": "Using high-frequency SPX option data with real transaction costs, the authors train a reinforcement-learning agent to delta-hedge 0DTE options and find it beats standard Black-Scholes delta hedging at that horizon. The learned hedge kept working during the COVID-19 crash even though it was trained only on calm periods, and the paper also studies how it behaves around price jumps. The abstract gives no headline numbers for the size of the improvement.",
+"concepts": [
+"0DTE options",
+"deep hedging",
+"reinforcement learning",
+"Black-Scholes delta",
+"transaction costs"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - needs intraday option quotes and trades, as well as a reinforcement learning model implementation",
+"url": "https://doi.org/10.1016/j.jfs.2026.101535",
+"date": "2026-10-18"
+},
+{
+"title": "One Premium in Four Disguises: Volatility Arbitrage, Implied Correlation and the (Apparent) Decay of the Dispersion Premium, 2006\u20132026",
+"learned": "Testing 2006-2026 data, this paper finds that four popular 'volatility arbitrage' trades (implied-vs-realized, VIX calendar, dispersion, skew-gated short vol) are really the same bet: each has a 0.71-0.95 daily correlation with simply shorting VIX futures, and none earns a significant extra return after correcting for testing many variants (best t-stat 2.16, failing a Holm test at p=0.09). The Cboe SKEW index was neither a source of return nor a reliable warning sign. The only add-on that held up out of sample was sizing short-vol positions in proportion to VIX (Sharpe 0.57 to 0.79), and even that is still just the plain variance premium.",
+"concepts": [
+"variance risk premium",
+"multiple-testing correction",
+"implied correlation",
+"SKEW index",
+"VIX-proportional sizing"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 258 signal days, hit 44.2% (always-long 55.8%), strategy -0.7 bps/day vs -0.9 for the same average exposure held constantly -> timing adds +0.2 bps/day, t=0.16, positive in 2/9 years",
+"url": "https://doi.org/10.5281/zenodo.23355138",
+"date": "2026-10-18"
+},
+{
+"title": "Arbitrage Scenario in India's Option Market - A mathematical modelling breakdown",
+"learned": "Using Nifty 50 and Bank Nifty minute and tick data from January 2025 to April 2026, this self-published paper argues that big institutional selling 'slams' on Wednesday/Thursday expiry afternoons set off retail stop-loss cascades, with a window of about 180-300 seconds between the slam and the peak of the cascade. It claims its 18-model 'Threshold Causal Calculus' suite was right 68.2% of the time during the March 2026 volatility spikes and cut slippage by 85.8% compared with moving-average crossovers. The claims are big, the method is vaguely described, and the comparison is only against a weak baseline.",
+"concepts": [
+"expiry-day gamma trap",
+"stop-loss cascades",
+"intraday price slams",
+"walk-forward backtest",
+"market fragility index"
+],
+"relevance": 1,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.6084/m9.figshare.34492029",
+"date": "2026-10-18"
+},
+{
+"title": "Overcoming Execution Drag in Volatility Harvesting: Hysteresis and Partial PCA Orthogonalization",
+"learned": "A self-published (not peer-reviewed) Nifty50 study shows that a volatility-risk-premium strategy that looked good on paper (17.85% gross, Sharpe 1.84) turned into an 18.5% net loss once the cost of constantly re-hedging delta and slippage were counted. Only re-hedging less often (a 'deadband' that ignores small delta changes) and stripping out the index's main market factor brought it back to a claimed 11.44% net, Sharpe 2.03. The takeaway for a retail trader: hedging and trading costs can wipe out an options edge entirely, so trade less often and count costs first.",
+"concepts": [
+"volatility risk premium",
+"delta-hedging costs",
+"hysteresis deadband",
+"PCA factor neutralisation",
+"dispersion trading"
+],
+"relevance": 2,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.532% (-0.1%), better in 5/9 unseen years",
+"url": "https://doi.org/10.5281/zenodo.23435585",
+"date": "2026-10-18"
+}
+]

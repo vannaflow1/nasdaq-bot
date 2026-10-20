@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+config.json
+worker/.wrangler/
+worker/node_modules/
+node_modules/
+.wrangler/
+atlas/volta-atlas.html

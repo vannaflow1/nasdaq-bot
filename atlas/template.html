@@ -1,0 +1,304 @@
+<title>Volta Atlas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a night trading-desk atlas — three stacked instruments (flow map, knowledge graph, live neural net), amber as the single signal colour */
+:root {
+  --bg: #F4F5F7; --panel: #FFFFFF; --fg: #18202C; --muted: #5C6778; --line: #D7DCE4;
+  --amber: #B5650A; --teal: #1F7E8C; --green: #2E8B4E; --coral: #C2503F; --paper: #7B8798; --grid: #E8EBF0; --pink: #B83270;
+  --display: "Syne", "Avenir Next", "Segoe UI", sans-serif; --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0D131D; --panel: #141C29; --fg: #DCE3EE; --muted: #8A96A8; --line: #263244;
+  --amber: #F2A541; --teal: #4FB3BF; --green: #6CC48A; --coral: #E5735F; --paper: #6D7A8E; --grid: #1A2433; --pink: #E06C9F; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0D131D; --panel: #141C29; --fg: #DCE3EE; --muted: #8A96A8; --line: #263244;
+  --amber: #F2A541; --teal: #4FB3BF; --green: #6CC48A; --coral: #E5735F; --paper: #6D7A8E; --grid: #1A2433; --pink: #E06C9F; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 48px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 40px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 6vw, 60px); line-height: 1; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 24px; margin: 0; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 64ch; margin: 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.stats b { color: var(--fg); font-weight: 500; font-variant-numeric: tabular-nums; }
+section { display: grid; gap: 14px; }
+.sub { color: var(--muted); margin: 0; max-width: 70ch; }
+.frame { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.scroll { overflow-x: auto; }
+svg text { font-family: var(--mono); fill: var(--fg); }
+/* flow map */
+.flow-node rect { stroke-width: 1.2; }
+.flow-label { font-size: 12px; }
+.flow-sub { font-size: 10px; fill: var(--muted); }
+/* graph */
+.graph-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
+@media (max-width: 860px) { .graph-wrap { grid-template-columns: minmax(0, 1fr); } }
+#graph { width: 100%; height: 620px; display: block; cursor: grab; touch-action: none; }
+.side { border-left: 1px solid var(--line); padding: 16px; display: grid; align-content: start; gap: 10px; min-width: 0; max-height: 620px; overflow-y: auto; }
+@media (max-width: 860px) { .side { border-left: 0; border-top: 1px solid var(--line); max-height: none; } }
+.side h3 { font-family: var(--body); font-weight: 600; font-size: 16px; margin: 0; line-height: 1.35; }
+.side p { margin: 0; font-size: 13.5px; }
+.tag { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+.verdict { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.side a { color: var(--amber); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--mono); font-size: 12px; background: transparent; color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.chip[aria-pressed="false"] { opacity: .45; }
+.chip:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+#search { font-family: var(--mono); font-size: 13px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; min-width: 0; flex: 1 1 200px; max-width: 320px; }
+/* nn */
+#nn { width: 100%; height: 520px; display: block; }
+.nn-bar { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; padding: 12px 16px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.nn-bar button { font-family: var(--mono); font-size: 12px; background: var(--amber); color: var(--bg); border: 0; border-radius: 4px; padding: 7px 14px; cursor: pointer; font-weight: 500; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; }
+footer { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">NQ · QQQ options · research log</div>
+    <h1>Volta Atlas</h1>
+    <p class="lede">How the bot is wired, everything it has read and how each idea fared on 12 years of market data, and the neural network that re-estimates the day's range during the session.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section>
+    <h2>The system</h2>
+    <p class="sub">Data comes in on the left, gets turned into forecasts in the middle, and reaches Discord on the right. Green paths are proven on unseen years; dashed paths are context only.</p>
+    <div class="frame scroll"><svg id="flow" viewBox="0 0 1180 470" style="min-width:820px;width:100%;display:block" role="img" aria-label="System flow map"></svg></div>
+  </section>
+
+  <section>
+    <h2>Knowledge graph</h2>
+    <p class="sub">Every paper Volta has read, linked to the concepts it shares with other papers, the verdict of its test, and the part of Volta it touches. Drag to move, scroll or pinch to zoom, click a dot to read it.</p>
+    <div class="filters" id="filters">
+      <input id="search" type="search" placeholder="Search papers or concepts" aria-label="Search papers or concepts">
+    </div>
+    <div class="frame graph-wrap">
+      <svg id="graph" role="img" aria-label="Knowledge graph"></svg>
+      <aside class="side" id="side">
+        <span class="tag">Volta</span>
+        <h3>Click any dot</h3>
+        <p>Amber is the system, green the proven findings, coral the test verdicts, teal the concepts that connect several papers, and grey the papers themselves (ringed if they're on the must-read list).</p>
+      </aside>
+    </div>
+  </section>
+
+  <section>
+    <h2>The neural net in #live</h2>
+    <p class="sub">One of the five live networks, drawn from its real trained weights: <span id="nnshape"></span>. Brighter lines are stronger connections, amber pushes the range forecast up, teal pushes it down. Press Run to send a sample session moment through it.</p>
+    <div class="frame">
+      <canvas id="nn" aria-label="Neural network diagram"></canvas>
+      <div class="nn-bar">
+        <button id="run" type="button">Run a forward pass</button>
+        <span id="nnout">__SAMPLE_TEXT__</span>
+        <span class="legend"><span><span class="dot" style="background:var(--amber)"></span> raises forecast</span><span><span class="dot" style="background:var(--teal)"></span> lowers forecast</span></span>
+      </div>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+const DATA = __DATA__;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const COL = () => ({ system: css("--amber"), finding: css("--green"), verdict: css("--coral"), concept: css("--teal"), paper: css("--paper"), question: css("--pink") });
+
+/* ---------- stats ---------- */
+(() => {
+  const s = DATA.stats, v = s.verdicts;
+  const tested = (v["NOT CONFIRMED"] || 0) + (v["PROMISING"] || 0);
+  document.getElementById("stats").innerHTML =
+    `<span><b>${s.papers}</b> papers read</span><span><b>${s.concepts}</b> shared concepts</span>` +
+    `<span><b>${tested}</b> fair tests from papers</span><span><b>${v["PROMISING"] || 0}</b> promising</span>` +
+    `<span><b>${s.questions || 0}</b> questions Volta asked itself</span><span><b>${s.pool}</b> near-misses in the pool</span><span><b>3</b> proven edges, all about size</span>`;
+  document.getElementById("foot").textContent = "Snapshot of the knowledge base. The Obsidian vault in the repo is rebuilt after every learning run.";
+})();
+
+/* ---------- flow map ---------- */
+(() => {
+  const svg = d3.select("#flow");
+  const cols = [
+    { x: 30, title: "DATA IN", items: [["QQQ option chains", "CBOE, every evening + intraday"], ["NQ 1-minute prices", "2014 to today"], ["Options history", "15M rows, Heston fits"], ["Research papers", "OpenAlex, arXiv, classics"], ["Calendar & news", "Fed, CPI, jobs, Trump posts"]] },
+    { x: 440, title: "VOLTA", items: [["Brain", "next-day range, 0.53% miss"], ["Neural net + live model", "in-session range, 3% better"], ["Short-vol check", "high gamma: sell the fly"], ["Options nerd", "greeks, skew, context"], ["Research engine", "reads, translates, tests"], ["Near-miss pool", "monthly combined re-test"]] },
+    { x: 860, title: "DISCORD", items: [["#briefings", "morning + evening"], ["#brain", "forecast + self-grading"], ["#live", "16:00 update, alerts"], ["#options", "nerd + paper trades"], ["#learning-queue", "papers + verdicts"], ["/commands", "status, range, odds, ask…"]] },
+  ];
+  const W = 290, H = 52, top = 60, gap = 66, pos = {};
+  cols.forEach(c => {
+    svg.append("text").attr("x", c.x).attr("y", 34).attr("font-size", 11).attr("letter-spacing", "0.14em").style("fill", "var(--muted)").text(c.title);
+    c.items.forEach((it, i) => { pos[it[0]] = { x: c.x, y: top + i * gap }; });
+  });
+  const L = [
+    ["QQQ option chains", "Brain", "p"], ["NQ 1-minute prices", "Brain", "p"], ["NQ 1-minute prices", "Neural net + live model", "p"],
+    ["QQQ option chains", "Short-vol check", "p"], ["QQQ option chains", "Options nerd", "c"], ["Options history", "Research engine", "c"],
+    ["Research papers", "Research engine", "c"], ["Research engine", "Near-miss pool", "c"], ["Near-miss pool", "Brain", "c"],
+    ["Calendar & news", "Brain", "c"], ["Brain", "Neural net + live model", "p"],
+    ["Brain", "#briefings", "p"], ["Brain", "#brain", "p"], ["Neural net + live model", "#live", "p"], ["Short-vol check", "#options", "p"],
+    ["Options nerd", "#options", "c"], ["Research engine", "#learning-queue", "c"], ["Calendar & news", "#briefings", "c"], ["Brain", "/commands", "p"], ["Options nerd", "/commands", "c"],
+  ];
+  const g = svg.append("g");
+  L.forEach(([a, b, k]) => {
+    const A = pos[a], B = pos[b]; if (!A || !B) return;
+    const same = A.x === B.x;
+    const x1 = same ? A.x + W - 18 : A.x + W, y1 = A.y + H / 2, x2 = same ? B.x + W - 18 : B.x, y2 = B.y + H / 2;
+    const path = same ? `M${x1},${y1} C${x1 + 50},${y1} ${x2 + 50},${y2} ${x2},${y2}` : `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`;
+    g.append("path").attr("d", path).attr("fill", "none").style("stroke", k === "p" ? "var(--green)" : "var(--muted)")
+      .attr("stroke-width", k === "p" ? 1.8 : 1.1).attr("stroke-dasharray", k === "p" ? null : "4 4").attr("opacity", k === "p" ? .85 : .55);
+  });
+  cols.forEach((c, ci) => c.items.forEach(([t, s]) => {
+    const p = pos[t], n = svg.append("g").attr("class", "flow-node");
+    n.append("rect").attr("x", p.x).attr("y", p.y).attr("width", W).attr("height", H).attr("rx", 4)
+      .style("fill", "var(--panel)").style("stroke", ci === 1 ? "var(--amber)" : "var(--line)");
+    n.append("text").attr("class", "flow-label").attr("x", p.x + 14).attr("y", p.y + 22).text(t);
+    n.append("text").attr("class", "flow-sub").attr("x", p.x + 14).attr("y", p.y + 39).text(s);
+  }));
+})();
+
+/* ---------- knowledge graph ---------- */
+(() => {
+  const svg = d3.select("#graph"), el = svg.node();
+  const nodes = DATA.nodes.map(d => ({ ...d })), links = DATA.links.map(([s, t]) => ({ source: s, target: t }));
+  const deg = {}; links.forEach(l => { deg[l.source] = (deg[l.source] || 0) + 1; deg[l.target] = (deg[l.target] || 0) + 1; });
+  const R = d => d.t === "question" ? 5.5 : d.t === "system" ? 13 : d.t === "finding" ? 11 : d.t === "verdict" ? 10 : d.t === "concept" ? 4 + Math.sqrt(d.n || 2) * 2 : 3.2 + (d.rel || 0) * .6;
+  const types = [["system", "System"], ["finding", "Proven findings"], ["verdict", "Verdicts"], ["concept", "Concepts"], ["question", "Volta's questions"], ["paper", "Papers"]];
+  const on = Object.fromEntries(types.map(t => [t[0], true]));
+  const F = document.getElementById("filters");
+  types.forEach(([k, lab]) => {
+    const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.setAttribute("aria-pressed", "true");
+    b.innerHTML = `<span class="dot" data-k="${k}"></span>${lab}`;
+    b.onclick = () => { on[k] = !on[k]; b.setAttribute("aria-pressed", on[k]); paint(); };
+    F.insertBefore(b, document.getElementById("search"));
+  });
+  const root = svg.append("g");
+  const linkG = root.append("g"), nodeG = root.append("g"), labG = root.append("g");
+  const line = linkG.selectAll("line").data(links).join("line").attr("stroke-width", .7);
+  const dot = nodeG.selectAll("circle").data(nodes).join("circle").attr("r", R).attr("stroke-width", d => d.cur ? 1.8 : 0).style("cursor", "pointer");
+  const lab = labG.selectAll("text").data(nodes.filter(d => d.t !== "paper" && (d.t !== "concept" || (d.n || 0) >= 3))).join("text")
+    .attr("font-size", d => d.t === "concept" ? 9.5 : 11.5).attr("font-weight", d => d.t === "concept" ? 400 : 500)
+    .attr("dx", d => R(d) + 4).attr("dy", 3.5).text(d => d.label).style("pointer-events", "none");
+  function paint() {
+    const C = COL(), q = (document.getElementById("search").value || "").toLowerCase();
+    document.querySelectorAll(".dot[data-k]").forEach(e => e.style.background = C[e.dataset.k]);
+    const vis = d => on[d.t];
+    const hit = d => !q || (d.label || "").toLowerCase().includes(q) || (d.learned || "").toLowerCase().includes(q);
+    dot.style("fill", d => C[d.t]).style("stroke", css("--amber")).attr("opacity", d => !vis(d) ? 0 : hit(d) ? 1 : .12).style("pointer-events", d => vis(d) ? "auto" : "none");
+    lab.style("fill", css("--fg")).attr("opacity", d => !vis(d) ? 0 : hit(d) ? .95 : .15);
+    line.style("stroke", css("--line")).attr("opacity", l => vis(l.source) && vis(l.target) ? (q ? .25 : .8) : 0);
+  }
+  document.getElementById("search").addEventListener("input", paint);
+  const sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(l => l.source.t === "paper" ? 34 : 70).strength(.6))
+    .force("charge", d3.forceManyBody().strength(d => d.t === "paper" ? -26 : -170))
+    .force("collide", d3.forceCollide(d => R(d) + 2))
+    .force("x", d3.forceX(0).strength(.045)).force("y", d3.forceY(0).strength(.06));
+  const size = () => { const r = el.getBoundingClientRect(); svg.attr("viewBox", [-r.width / 2, -r.height / 2, r.width, r.height]); };
+  size(); window.addEventListener("resize", size);
+  sim.on("tick", () => {
+    line.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+    dot.attr("cx", d => d.x).attr("cy", d => d.y); lab.attr("x", d => d.x).attr("y", d => d.y);
+  });
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { sim.stop(); for (let i = 0; i < 300; i++) sim.tick(); sim.on("tick")(); }
+  svg.call(d3.zoom().scaleExtent([.3, 5]).on("zoom", e => root.attr("transform", e.transform)));
+  svg.call(d3.zoom().transform, d3.zoomIdentity.scale(.8));
+  root.attr("transform", "scale(0.8)");
+  dot.call(d3.drag().on("start", (e, d) => { if (!e.active) sim.alphaTarget(.2).restart(); d.fx = d.x; d.fy = d.y; })
+    .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; }).on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+  const side = document.getElementById("side");
+  const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const tagName = { system: "Volta", finding: "Proven finding", verdict: "Verdict", concept: "Concept", paper: "Paper", question: "Question Volta asked" };
+  dot.on("click", (e, d) => {
+    const nb = links.filter(l => l.source.id === d.id || l.target.id === d.id).map(l => l.source.id === d.id ? l.target : l.source);
+    const papers = nb.filter(n => n.t === "paper"), other = nb.filter(n => n.t !== "paper");
+    let h = `<span class="tag">${tagName[d.t]}</span><h3>${esc(d.label)}</h3>`;
+    if (d.t === "question") { h += `<p>${esc(d.text)}</p>`; } else if (d.t === "paper") {
+      h += `<p class="verdict">${"★".repeat(d.rel)}${"☆".repeat(5 - d.rel)}${d.cur ? " · must-read" : ""}</p>`;
+      if (d.learned) h += `<p>${esc(d.learned)}</p>`;
+      if (d.idea) h += `<p><b>Idea:</b> ${esc(d.idea)}</p>`;
+      h += `<p class="verdict">${esc(d.verdict)}</p>`;
+      if (d.url) h += `<p><a href="${esc(d.url)}" target="_blank" rel="noopener">Open the paper</a></p>`;
+    } else if (d.text) h += `<p>${esc(d.text)}</p>`;
+    if (other.length) h += `<p class="verdict">Linked: ${other.map(n => esc(n.label)).join(" · ")}</p>`;
+    if (papers.length) h += `<p class="verdict">${papers.length} paper${papers.length > 1 ? "s" : ""}: ${papers.slice(0, 12).map(n => esc(n.label.slice(0, 60))).join(" · ")}${papers.length > 12 ? " …" : ""}</p>`;
+    side.innerHTML = h;
+    const ids = new Set([d.id, ...nb.map(n => n.id)]);
+    dot.attr("opacity", n => on[n.t] ? (ids.has(n.id) ? 1 : .15) : 0);
+    line.attr("opacity", l => (l.source.id === d.id || l.target.id === d.id) ? 1 : .08).style("stroke", l => (l.source.id === d.id || l.target.id === d.id) ? css("--amber") : css("--line"));
+  });
+  svg.on("click", e => { if (e.target === el) paint(); });
+  paint();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", paint);
+  new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+})();
+
+/* ---------- neural net ---------- */
+(() => {
+  const N = DATA.nn, cv = document.getElementById("nn"), ctx = cv.getContext("2d");
+  const names = { lp: "brain forecast", lso: "range so far", lr30: "last-30-min range", lrv30: "30-min vol", lrvs: "session vol", mv: "move from open",
+    pos: "position in range", lvol: "volume vs normal", lvol30: "30-min volume", gex: "gamma rank", ev: "event premium" };
+  const feats = N.features.map(f => names[f] || ("checkpoint " + f.slice(1)));
+  const shown = feats.map((f, i) => i).filter(i => i < 11 || i % 2 === 1);
+  document.getElementById("nnshape").textContent = `${N.features.length} inputs → ${N.W1[0].length} → ${N.W2[0].length} → 1 output (the day's range)`;
+  const SMP = __SAMPLE__; const sample = SMP.z;
+  let act = null, t0 = 0;
+  function forward(x) {
+    const relu = v => Math.max(0, v);
+    const h1 = N.W1[0].map((_, j) => relu(x.reduce((s, xi, i) => s + xi * N.W1[i][j], N.b1[j])));
+    const h2 = N.W2[0].map((_, j) => relu(h1.reduce((s, a, i) => s + a * N.W2[i][j], N.b2[j])));
+    const out = h2.reduce((s, a, i) => s + a * N.W3[i], N.b3);
+    return { x, h1, h2, out };
+  }
+  function draw(now) {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== w * dpr) { cv.width = w * dpr; cv.height = h * dpr; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    const amber = css("--amber"), teal = css("--teal"), fg = css("--fg"), muted = css("--muted");
+    const labW = Math.min(150, w * .26), X = [labW + 12, labW + (w - labW) * .38, labW + (w - labW) * .68, w - 46];
+    const ys = (n, i) => 22 + (h - 44) * (n === 1 ? .5 : i / (n - 1));
+    const L = [shown.length, N.W1[0].length, N.W2[0].length, 1];
+    const prog = act ? Math.min(1, (now - t0) / 1600) : 1;
+    ctx.lineWidth = .8;
+    const edges = (A, B, Wf, li) => {
+      for (let a = 0; a < A; a++) for (let b = 0; b < B; b++) {
+        const wv = Wf(a, b); if (Math.abs(wv) < .12) continue;
+        let o = Math.min(.8, Math.abs(wv) * .6);
+        if (act) { const lit = prog > li / 3; o = lit ? o * (li === 0 ? Math.min(1, Math.abs(act.x[shown[a]] || 0)) * 1.4 + .05 : 1) : o * .15; }
+        ctx.strokeStyle = wv > 0 ? amber : teal; ctx.globalAlpha = o;
+        ctx.beginPath(); ctx.moveTo(X[li], ys(A, a)); ctx.lineTo(X[li + 1], ys(B, b)); ctx.stroke();
+      }
+    };
+    edges(L[0], L[1], (a, b) => N.W1[shown[a]][b], 0);
+    edges(L[1], L[2], (a, b) => N.W2[a][b], 1);
+    edges(L[2], 1, (a) => N.W3[a], 2);
+    ctx.globalAlpha = 1;
+    const layerActs = act ? [shown.map(i => act.x[i]), act.h1, act.h2, [act.out]] : null;
+    L.forEach((n, li) => { for (let i = 0; i < n; i++) {
+      const r = li === 3 ? 9 : li === 0 ? 4.5 : 3.2;
+      let a = layerActs ? Math.abs(layerActs[li][i]) : 0; const lit = act && prog > li / 3;
+      ctx.beginPath(); ctx.arc(X[li], ys(n, i), r, 0, 7);
+      ctx.fillStyle = lit && a > .05 ? amber : muted; ctx.globalAlpha = lit ? Math.min(1, .35 + a * .6) : .55; ctx.fill(); ctx.globalAlpha = 1;
+    }});
+    ctx.font = "11px " + css("--mono"); ctx.fillStyle = fg; ctx.textAlign = "right"; ctx.textBaseline = "middle";
+    shown.forEach((fi, i) => ctx.fillText(feats[fi], X[0] - 9, ys(L[0], i)));
+    ctx.textAlign = "center"; ctx.fillStyle = muted;
+    ["inputs", N.W1[0].length + " neurons", N.W2[0].length + " neurons", "range"].forEach((t, i) => ctx.fillText(t, X[i], h - 8));
+    if (act && prog < 1) requestAnimationFrame(draw);
+    else if (act) document.getElementById("nnout").textContent =
+      `This net: full-day range about ${(Math.exp(act.out) * 100).toFixed(2)}%. What actually happened: ${SMP.final}%. In #live it is averaged with four more nets and the linear model, then given an 80% band.`;
+  }
+  const resize = () => { cv.style.height = Math.max(420, Math.min(560, cv.clientWidth * .55)) + "px"; requestAnimationFrame(draw); };
+  window.addEventListener("resize", resize); resize();
+  document.getElementById("run").onclick = () => { act = forward(sample); t0 = performance.now();
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) t0 -= 2000; requestAnimationFrame(draw); };
+  new MutationObserver(() => requestAnimationFrame(draw)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => requestAnimationFrame(draw));
+})();
+</script>

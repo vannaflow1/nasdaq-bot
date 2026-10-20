@@ -1,0 +1,14 @@
+name: spx-morning-test
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -q -r requirements.txt scipy
+      - run: python spx_morning.py --features 2>&1 | tail -5 > knowledge/spx_morning_test.txt || true
+      - run: bash .github/actions_common.sh "spx morning test"

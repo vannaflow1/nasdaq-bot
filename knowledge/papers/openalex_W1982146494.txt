@@ -1,0 +1,898 @@
+The Price of a Smile:
+Hedging and Spanning in Option Markets
+Andrea Buraschi and Jens Jackwerth¤
+London Business School and University of Wisconsin at Madison
+First Draft: November 12, 1997
+This Draft: May 7, 2000
+¤Andrea Buraschi (corresponding author) is from London Business School, Sussex Place, Regent's Park, London
+NW1 4SA, United Kingdom. Tel: +44-20-7262-5050, fax: +44-20-7724-3317, aburaschi@lbs.ac.uk. Jens Jackwerth
+is from the University of Wisconsin at Madison, Finance Department, School of Business, 975 University Avenue,
+Madison, WI 53706, Tel: 608-262-6032, Fax: 608-265-4195, jjackwerth@bus.wisc.edu. For helpful comments on this
+paper we wish to thank Sudipto Bhattacharya, Mark Britten-Jones, Ian Cooper, the editor Bernard Dumas, Julian
+Franks, Erzo Luttmer, Davide Menini, Anthony Neuberger, Stephen Schaefer, an anonymous referee, and seminar
+participants at EFMA Lisbon, WFA Conference, 1998 Computational Finance Conference New York, The University
+of Chicago, HEC Business School, London Business School, London School of Economics, City University of London,
+Oxford Business School, Konstanz University, University of Wisconsin at Madison, Georgetown University.
+i
+Abstract: The volatility smile changed drastically around the crash of 1987 and new option
+pricing models have been proposed in order to accommodate that change. Deterministic volatility
+models allow for more °exible volatility surfaces but refrain from introducing additional risk-factors.
+Thus, options are still redundant securities. Alternatively, stochastic models introduce additional
+risk-factors and options are then needed for spanning of the pricing kernel. We develop a statistical
+test based on this di®erence in spanning. Using daily S&P500 index options data from 1986-1995,
+our tests suggest that both in- and out-of-the-money options are needed for spanning. The ¯ndings
+are inconsistent with deterministic volatility models but are consistent with stochastic models which
+incorporate additional priced risk-factors such as stochastic volatility, interest rates, or jumps.
+ii
+Introduction
+What is a good model to price equity derivatives and to manage risk? Starting from Black
+and Scholes (1973), a common approach in the derivative pricing literature has been to model the
+underlying asset as a geometric Brownian motion with constant volatility. Early tests of options on
+stocks such as Rubinstein (1985) more or less supported the empirical implications of a geometric
+Brownian motion for the option market. However, after the 1987 crash, the empirical evidence
+is di®erent. Using observations on S&P500 index options from 1986 to 1992, Rubinstein (1994)
+documents that the violations of the Black and Scholes model are substantially larger after the 1987
+crash and increasing over time. Similar patterns have also been documented in the UK, German,
+and Japanese index option markets by Gemmill and Kamiyama (1997). In the post-crash period,
+S&P500 options exhibit a steep volatility smile, that is the implied volatility of options is often
+decreasing and convex in the strike price, instead of being constant as predicted by the Black and
+Scholes model. The size of the violations is such that they cannot be explained just by market
+imperfections.
+Several studies have suggested extensions of the Black and Scholes model to account for the
+volatility smile and other empirical violations of the original model. These extensions can be loosely
+grouped into two main approaches: deterministic volatility models and stochastic models. Among
+the deterministic volatility models we ¯nd (1) the constant elasticity of variance model of Cox
+and Ross (1976); (2) the implied binomial tree model of Rubinstein (1994); (3) the deterministic
+volatility models of Dupire (1994) and Derman and Kani (1994); (4) the kernel approach by Ait-
+Sahalia and Lo (1998). Among the stochastic models we ¯nd (5) the stochastic volatility models of
+Heston (1993), Hull and White (1987), Melino and Turnbull (1990, 1995), Scott (1987), Stein and
+Stein (1991), and Wiggins (1987); (6) the jump/di®usion models of Merton (1976), Bates (1991),
+and Madan and Chang (1996); (7) the stochastic interest rate models of Merton (1973) and Amin
+and Jarrow (1991).
+The choice of a speci¯c option pricing model has clearly important implications in terms of
+the pricing and the implementation of risk management strategies for portfolios of options and
+other derivatives securities. The focus of this paper is to provide a statistical test of deterministic
+volatility models versus stochastic models and to test if there is an additional priced risk-factor in
+1
+the option market, such as stochastic volatility, interest rates, or jumps.
+Deterministic volatility models are attractive for several reasons. First, markets are dynami-
+cally complete in these models. Thus, derivative securities can be priced by no-arbitrage without
+resorting to full blown general equilibrium models and without the need to estimate risk premia.
+Second, deterministic volatility models can potentially capture some empirical regularities, such as
+time-varying volatility, the correlation between volatility and the level of the underlying asset, and
+some forms of volatility clustering. Third, deterministic volatility models enable us to ¯t the smile
+exactly by calibrating the volatility surface of the underlying asset. The attraction here is that it
+is possible to generate state price densities that are consistent with current observed option prices.
+However, a natural concern regarding the practical use of deterministic volatility models is that
+the improved static pricing performance might be obtained at the cost of over¯tting. In this case,
+the use of these models in risk management applications and for pricing exotic options would be
+limited.
+Studies such as Bakshi, Cao, and Chen (1997), Dumas, Fleming and Whaley (1998), Bates
+(1998), and Jackwerth and Rubinstein (1998) have explored the empirical performance of competing
+option pricing models. These studies compare alternative models by measuring the models' dollar
+pricing and hedging errors. Jackwerth and Rubinstein (1998) run an extensive horse race including
+several deterministic volatility models and stochastic models. They point out that, although Black
+and Scholes is always outperformed by both deterministic volatility models and stochastic models,
+the empirical standard deviations of the pricing errors are so large that it is not possible to rank
+the competing models. Dumas, Fleming, and Whaley (1998) address a similar set of questions.
+They compare the out-of-sample performance of deterministic volatility models and characterize
+the trade-o® between in-sample explanatory power and out-of-sample goodness of ¯t. Although
+they do not compare the performance of their deterministic volatility models to stochastic models,
+they show the extent of over¯tting that deterministic volatility models can generate.
+In this paper, we revisit the problem of which option pricing model is superior, and we introduce
+a formal statistical test. We do not run another horse race among a number of option pricing models
+based on alternative parametric speci¯cations of the underlying asset. Instead, we construct a test
+of the main testable implication of any deterministic volatility model, namely, that options are
+redundant securities. In that case, there are no additional priced risk-factors, such as stochastic
+2
+volatility, interest rates, or jumps. Then, the payo® of any asset can be replicated with a dynamic
+trading strategy, which includes two primitive assets, such as the underlying asset and the risk-free
+rate or, equivalently, the underlying asset and the at-the-money option. Our statistical test has
+the added advantage that we do not need to resort to exogenous assumptions on the shape of
+the potential measurement errors. The test is asymptotically consistent even when the data are
+measured with errors.
+We ask two questions. First, do the returns on the underlying and the at-the-money option
+span the prices in the economy, or do we need additional information from other option returns or
+the risk-free rate? Second, is there any di®erence before and after the 1987 crash in terms of the
+spanning properties of the option market? We cast these questions into martingale restrictions on
+the pricing kernel. Testing our hypotheses within this framework has the advantage, with respect
+to previous empirical studies, that we can adopt a semi-parametric approach so that the empirical
+results are not model-speci¯c. The only assumption that we make is that there are no arbitrage
+opportunities.
+The only other empirical studies of the martingale restriction in option pricing are Longsta®
+(1995) and Brenner and Eom (1997). They provide a dollar-valued measure of the di®erence
+between the spot price and the option implied price of the underlying asset using a polynomial
+approximation of the pricing kernel. Longsta® (1995) tests the martingale restriction for a sample
+of S&P100 American options from 1988 to 1989 using Hermite polynomials to approximate the
+pricing kernel. He rejects the null hypothesis that the implied level of the underlying is equal
+to the observed value. Brenner and Eom (1997) run a similar test using a di®erent polynomial
+approximation and weekly data on S&P500 European options from January 1993 to December
+1994. They ¯nd that the implied value of the underlying in the option market is close, in economic
+terms, to the observed value in the spot market.
+For the actual estimation of our test statistics we use two metrics. The ¯rst is the Generalized
+Method of Moments (GMM) metric, which is known to be optimal in the sense of attaining the
+asymptotic e±ciency bound. A well-known problem with the GMM metric is that the optimal
+weighting matrix is model-dependent and asymptotic chi-square tests typically reward models that
+generate highly volatile pricing errors. For this reason, we also present results based on the ±-
+metric of Hansen and Jagannathan (1997) which has the advantage of being model-independent.
+3
+For each metric, we run conditional and unconditional tests based on the Principle of No Arbitrage,
+which requires that assets with the same payo® have the same price and that the state prices are
+non-negative in every state.
+When we run the tests unconditionally, we ¯nd that both tests strongly reject the null hypoth-
+esis that in- and out-of-the-money options are redundant securities when the at-the-money option
+and the underlying asset are used to span the payo® space. The rejection is generally sharper
+post-crash. The conditional tests con¯rm these ¯ndings. The results reject generalizations of the
+Black and Scholes (1973) model based on deterministic volatility models as in the models (1)-(4)
+above. However, they support the alternative stochastic models where options are not redundant
+securities. The stochastic models (5)-(7) are characterized by their additional priced risk-factors
+such as stochastic volatility, interest rates, or jumps.
+The structure of the paper is as follows. In section 2, we link the option returns to the pricing
+kernel for the economy and describe the unconditional tests based on the GMM metric. Section
+3 describes the data set. Section 4 discusses the conditional tests based on the GMM metric.
+Section 5 investigates the small sample properties of the tests and the robustness with respect to
+the presence of measurement errors in option prices. The tests based on the model-independent
+±-metric are discussed in Section 6. Section 7 concludes.
+1 The Martingale Representation and the Cross Section of Option
+Prices
+In this section, we describe the methodology used to test deterministic volatility models. All no-
+arbitrage pricing models derive the theoretical prices of contingent claims by requiring their prices to
+be equal to the cost of a replicating portfolio constructed from a set of securities that are presumed
+to span the state space. For example, any option can be replicated in the Black-Scholes economy
+by a portfolio consisting of the underlying asset and the bond. In the absence of transaction costs
+and other market frictions, this restriction is equivalent to a martingale representation of option
+prices. This martingale restriction is the main source of testable empirical implications, and it will
+be the base of our empirical analysis.
+Cox and Ross (1976) develop a theory of option pricing by linking dynamic replication and
+4
+risk neutral valuation. Harrison and Kreps (1979) and Hansen and Richard (1987) generalize this
+approach to a very general class of economies with the minimum requirement that securities have
+payo®s with ¯nite second moments. We follow their set-up and consider a frictionless economy
+endowed with an objective probability space fI; B; Qg. In this economy there are securities with
+square integrable payo®s bi 2 L2 and non-singular second-moment matrix E (bb0jI). In absence of
+market frictions, the space of attainable payo®s P is a linear space obtained as linear combinations
+with portfolio weights ci of the basis fbig :
+P ´ fp 2 L2 : p = X
+i
+bi ¢ ci; for some ci in the information set Ig (1)
+The ci need not be constant and can in general be time-varying functions of the information set
+I. Let ¼(p) be the price of a portfolio with payo® p. Harrison and Kreps (1979), Chamberlain and
+Rothschild (1983), and Hansen and Richard (1987) show that in order for the Law of One Price
+to hold, the price functional ¼(¢) must be linear1 and continuous in p. Since derivative securities
+include payo®s h that are non-linear in the basis bi we would like to study the empirical properties
+of asset pricing models that extend ¼(¢) from P to all of L2. The weakest requirement for any such
+derivative pricing model is to satisfy the Principle of No Arbitrage.
+De¯nition (Principle of No Arbitrage). A pricing model ¼(¢) does not admit arbitrage
+opportunities in L2 if, for any h 2 L2 such that h ¸ 0, and Eh2 > 0; it is the case that ¼(h) > 0.
+Harrison and Kreps (1987) and Hansen and Richard (1987) explore the testable restrictions
+induced by the Principle of No Arbitrage. They show that the absence of arbitrage (a) implies the
+Law of One Price and (b) is equivalent to the existence of a positive pricing kernel m > 0 such that
+scaled payo®s are martingales under the objective probability measure Q:
+Proposition (Hansen and Richard, 1987). The Principle of No Arbitrage is satis¯ed if
+and only if there exists a positive pricing kernel m such that the price of any square integrable
+derivative security admits the following representation under the objective probability measure Q:
+¼m(h) = EQ(mhjI); with m > 0 almost surely (2)
+5
+1.1 Example 1: the lognormal process
+An example of a simple economy in which the pricing kernel m has well known properties is given
+by Black and Scholes (1973). They discuss a dynamically complete economy in which it is possible
+to replicate and price not only any linear portfolio in P but also non-linear contingent claims, such
+as European options. The replicating portfolio uses dynamic trading strategies applied to a basis
+of P, consisting of the underlying asset and the risk-free rate. In this economy, the exogenous
+dynamics of the underlying asset are assumed to be:
+dSt = ¹Stdt + ¾StdWt
+Then, there exists a unique process »T > 0 such that: (a) »0 = 1, (b) »t = Et(»t+¢t) and such
+that (c) »tSt is a martingale. This process is given by:
+»T = exp
+·
+¡12
+Z T
+0
+¡¹
+¾
+¢2 dt ¡ Z T
+0
+¡¹
+¾
+¢
+dWt
+¸
+= exp
+h
+¡12 ¹2¾2 T ¡ ¹¾ WT i (3)
+so that »T is lognormally distributed with mean zero and variance equal to ¹2¾2 . The price of a
+call option with strike price K, expressed in terms of the objective probability measure, is C0 =
+EQ [m0;T ¢ max(0; ST ¡ K)jI0] with m0;T ´ »T»0 and with the solution given by the Black-Scholes
+formula. We note that the logarithm of the pricing kernel mt;t+¢t is exactly spanned by the log
+return of a portfolio formed by two assets. When these two assets are the underlying asset and a
+cash account Bt, with Bt+¢t = er¢tBt, then the kernel-replicating portfolio is
+ln(mt;t+¢t) = 12 ¹r¾2 (¹ ¡ ¾2)| {z }
+¯1
+ln(Bt+¢tBt )| {z }
+Return Asset 1
++ ¡¹¾2|{z}
+¯2
+ln(St+¢tSt )| {z }
+Return Asset 2
+(4)
+= ¯0R¤t+¢t
+with R¤t+¢t being the two dimensional vector of log returns that constitutes the basis.
+In a Black and Scholes economy the kernel-replicating portfolio has constant weights £12 ¹r¾2 (¹ ¡ ¾2); ¡¹¾2 ¤.
+This property is not shared by the option-replicating portfolio where the delta of the option is a
+function of the level of the underlying. It follows that returns on options with any strike price in
+a Black and Scholes economy must satisfy the following testable restriction, under the objective
+probability measure:
+1 = EQ
+h
+e¯0R¤t+¢t Rt+¢tjIti (5)
+6
+1.2 Example 2: the deterministic volatility model
+Even when volatility is not constant, the pricing kernel is uniquely spanned by a portfolio of two
+assets as long as the volatility is deterministic. In these deterministic volatility models the price St
+of the underlying asset is assumed to follow a generalized geometric Brownian motion
+dSt
+St = ¹(St; Ht; t)dt + ¾(St;Ht;t)dWt (6)
+with ¹(¢) and ¾(¢) depending on the current price of the underlying asset, time, and the history
+Ht = fSt¡h; h > 0g of the underlying asset up to time t. In this class of models the pricing kernel
+»T is uniquely given by:
+»T = exp
+·
+¡12
+Z T
+0
+³¹t
+¾t
+´2
+dt ¡
+Z T
+0
+³¹t
+¾t
+´
+dWt
+¸
+(7)
+»T has the property that, under the objective probability, the scaled process »T ST is a martingale2
+with respect to It. Any well-behaved non-linear contingent claim with terminal payo® pT =
+p(ST ;HT ;T) can be priced by calculating the expected value of »T pT under the objective probability
+measure. The price of a call option with terminal payo® max(0;ST ¡K) is therefore C0 = EQ[m0;T
+¢max(0;ST ¡ K) jI0] with m0;T ´ »T»0 . Since there are no priced risk-factors, such as stochastic
+volatility, interest rates, or jumps, in the deterministic volatility model the logarithm of mt;t+¢t
+can always be replicated by the log returns of a portfolio formed by two assets. However, as the
+deterministic volatility is time-varying the portfolio weights are no longer constant but are functions
+of the information set I¿ :
+ln mt;t+¢t =
+Z t+¢t
+t
+¯0¿ R¤¿ d¿ (8)
+with R¤¿ being the two dimensional vector of log-returns that constitutes the basis, such as the
+underlying asset and the risk-free asset. This implies that, in a deterministic volatility model, option
+returns must satisfy the following testable restriction, expressed under the objective probability
+measure:
+1 = EQ
+·
+e
+R t+¢t
+t ¯0¿ R¤¿ d¿ Rt+¢tjIt
+¸
+(9)
+Under this hypothesis, given observations on the underlying asset and an at-the-money option,
+any information on other securities, such as away-from-the-money options, is redundant and not
+needed in order to span the pricing kernel. The advantage of considering this speci¯cation for the
+7
+basis of the payo® space, as opposed to the more common choice of the underlying asset and the risk-
+free asset, is that it is independent of the observability of the risk-free asset by the econometrician.
+Alternatively, if stochastic volatility, interest rates, or jumps were priced in equilibrium then the
+pricing kernel would also be a function of any such additional risk-factor. Then, our above testable
+restriction fails to hold when ¯ is restricted to be two-dimensional as additional securities are
+needed for spanning. This observation constitutes the basis of our statistical test. We focus on
+one-period ahead pricing errors for all securities and measure the additional pricing error generated
+by assuming that volatility is deterministic. Equivalently, we measure the additional pricing error
+of assuming that just two assets span the pricing kernel.
+We now turn to describe the construction of the test statistics. We partition the set of securities
+under investigation into two subsets R¤ = [R¤a;R¤b ]. R¤a is the payo® space generated by the
+securities believed to span the entire investment opportunity set (e.g. the underlying asset and
+the at-the-money option), and R¤b is the payo® space of all remaining (redundant) securities, such
+as away-from-the-money options and the risk-free rate. If R¤(¿) is the instantaneous logarithmic
+return on a security, then
+ln mt;t+¢t =
+Z t+¢t
+t
+¯0a(¿)R¤a(¿) + ¯0b(¿)R¤b (¿)d¿ (10)
+in which the parameters ¯(¿) of the trading strategy are function of the information set I¿ and
+are approximated by a Taylor series expansion in the underlying asset. This parametrization of
+the pricing kernel has several desirable properties. First, since mt;t+¢t is an exponential of a linear
+combination of log returns it satis¯es the no-arbitrage condition that m ¸ 0 in any state of the
+world. Second, the payo®s Rt;t+¢t which are used to identify the discount factor always contain
+the unit payo®. Therefore, the expected value of m is equal to the value of a discount account:
+EQ[mt;t+1jIt] = Zt;t+¢t. Third, since we are concerned about the possibility of rejecting the null
+hypothesis of spanning due to market microstructure issues, such as staleness of prices in the
+cash and option markets, we deliberately omit the risk-free asset from R¤a, so that, in the second
+version of the test, R¤a contains elements of both the cash market (the underlying asset) and of
+the option market (the at-the-money option). We test the additional spanning provided by the
+away-from-the-money options.
+Finally, testing if options are redundant securities is equivalent to testing, in the Euler restriction
+in Equation (9), that the null hypothesis Ho : ¯0b(¿) = 0 holds. The intuition of the test statistic is
+8
+simple: under the null hypothesis that there are no additional priced risk-factors, such as stochastic
+volatility, interest rates, or jumps, option returns scaled by mt;t+¢t are martingales, and the sample
+average of (mt;t+¢tRt+¢t ¡1) needs to converge to zero. Alternatively, if there are additional priced
+risks then mt;t+¢t cannot be spanned by only two assets and the sample average of the scaled option
+returns minus one converges away from zero.
+Additionally, the statistical test has the following appealing economic interpretation. The ex-
+pected value of mt;t+¢tRt+¢t is the risk adjusted value of a one dollar position in an asset (or
+portfolio) with payo® R. Thus, EQ(mt;t+¢tRt+¢t ¡ 1) measures today's value of a trading strat-
+egy where we borrow one dollar to invest in a trading strategy with payo® Rt+¢t. Given any
+no-arbitrage model for mt;t+¢t, the value of this portfolio should be zero if its payo® could be
+replicated using the same basis assets which are suggested by the model. If the null hypothesis is
+true and away-from-the-money options are redundant then the pricing errors should not increase
+when these redundant assets are not used to span the pricing kernel. As constructed, our test
+goes beyond testing deterministic volatility models versus stochastic models. It tests also if any
+additional risk-factor, such as stochastic volatility, interest rates, or jumps, is priced in equilibrium.
+2 Data
+The empirical tests are based on the Berkeley database containing all minute by minute European
+option quotes and trades on the S&P500 index traded on the CBOE from April 2, 1986 to December
+29, 1995. The database also contains all futures trades and quotes on the S&P500. Our goal is to
+obtain a panel of daily return observations on the index, the risk-free rate, and on several options
+with di®erent strike price/index level ratios (moneyness) and constant maturity.
+It is important to use options with constant moneyness and maturity since our test statistics
+involve the conditional covariance matrix of option pricing errors. If the maturity and moneyness
+of options were not constant over time, then the conditional covariance matrix of the pricing errors
+would be time-varying, too. This would require additional exogenous assumptions on the structure
+of the covariance matrix and the estimation of several additional parameters, which could lead to
+additional estimation error in our test statistics.
+² Index Level. Traders typically use the index futures market rather than the cash market to
+9
+hedge their option positions. The reason is that the cash market prices lag futures prices by
+a few minutes due to lags in reporting transactions of the constituent stocks in the index.
+We check this claim by regressing the index on each of the ¯rst twenty minute lags of the
+futures price. The single regression with the highest adjusted R2 was assumed to indicate the
+lag for a given day. The median lag of the index over the 1542 days from 1986 to 1992 was
+seven minutes. Because the index is stale, we compute a future-based index for each minute
+from the future market St =
+¡rf
+d
+¢¡¢ Ft+¢. For each day, we use the median interest rate
+implied by all futures quotes and trades and the index level at that time. We approximate
+the dividend yield by assuming that the dividend amount and timing expected by the market
+were identical to the dividends actually paid on the S&P500 index. However, some limited
+tests indicate that the choice of the index does not seem to a®ect the results of this paper.
+² Interest Rates. We compute implied interest rates embedded in the European put-call parity
+relation. Armed with option quotes, we calculate separate lending and borrowing interest
+returns from put-call parity where we used the above future-based index. We assign, for each
+expiration date, a single lending and borrowing rate to each day which is the median of all
+daily observations across all striking prices. We then use the average of those two interest
+rates as our daily spot rate for the particular time-to-expiration. Finally, we obtain the
+interpolated 45 day interest rate from the implied forward curve. If there is data missing, we
+assume that the spot rate curve can be extrapolated horizontally for the shorter and longer
+times-to-expiration. Again, some limited tests indicate that the results are not a®ected by
+the exact choice of the 45 day interest rate. While we need the 45 day interest rate in order to
+compute the option returns, we also are interested in daily return observation of the risk-free
+rate. Thus, we also incorporate the federal funds (fed-funds) rate into our data-set.
+² Options with Constant Moneyness and Maturity. In our data-set, all puts are translated into
+calls using European put-call parity. Then, we compute daily rates of return on constant
+maturity 45 day options with moneyness of 0.96, 0.98, 1, 1.02 and 1.04. We choose 45 days
+as our target maturity, since, given the frequency at which new options are introduced by the
+exchange, every 30 days we observe options with exactly 45 days-to-expiration. In comparison,
+for 6 months options this happens only every 3 months. Moreover, most of the trading activity
+10
+in the option market is concentrated in the nearest (0 to 30 days-to-expiration) and second
+nearest contract (30 to 60 days-to-expiration).
+We choose 4% in- and out-of-the-money as our furthest moneyness levels since for short
+maturity options the measurement errors contained in very-deep-out-the-money options, say
+10%, are potentially very large as the price is relatively small with respect to the tick size.
+There will normally be four observed options straddling the target moneyness and maturity.
+One potential way of obtaining our target option would be to use a bilinear interpolation
+of the implied volatility surface, as described in Fleming, Ostdiek, and Whaley (1995) and
+Gruenbichler and Longsta® (1996) and used for the Market Volatility Index (VIX). However,
+from the perspective of this paper, such interpolated option is not a traded security. Thus, it
+should not expected to satisfy the martingale restriction. For this reason, we use a di®erent
+approach that is less °exible but more rigorous with respect to the purpose of our empirical
+analysis. Each trading day, we calculate the Greeks, namely delta, gamma, theta, and vega of
+the target (interpolated) option and the four neighboring options. Then, we ¯nd the portfolio
+consisting of the four market traded neighboring options which best matches the Greeks of
+the target option while limiting the weights to the interval 0 to 1. The portfolio weights are
+then kept ¯xed and the value of this tradable portfolio is marked-to-market the following day
+using available market quotes. The advantage of this approach is that, since this portfolio is a
+traded asset, then its return must be a martingale under the risk neutral probability measure.
+This fact holds even if the weights are incorrect because we misspeci¯ed the reference model
+that is used to compute the Greeks.
+² Arbitrage Violations. In the process of setting up the database, we check for a number of errors
+which might have been contained in the original minute by minute transaction level data. We
+eliminate a few obvious data-entry errors as well as a few quotes with excessive spreads {
+more than 200 cents for options and 20 cents for futures. General arbitrage violations are
+eliminated from the data-set. Within each minute we keep the largest set of option quotes
+which does not violate:
+Sd¡t ¸ Ci ¸ max[0;Sd¡t ¡ Kir¡tf ]
+We also check for violations of vertical and butter°y spreads.
+11
+Table 1, about here
+We restrict our attention on options which are no more than 4% away-from-the-money. The
+reason is due to the depth of the market and to the relative impact of measurement errors for
+options which are deep out-the-money. Table 1 presents the average daily notional volumes of
+traded S&P500 index options for the moneyness levels used in the empirical analysis. The volumes
+are aggregate numbers across the two contracts with maturities straddling 45 days. The total
+market value of at-the-money options has increased ten-fold over 10 years. In 1995, the aggregate
+volume of at-the-money options was $263m. For moneyness levels out to §5%, the CBOE option
+market is very active. In 1995, the volume of options with moneyness levels between 0.95 and 0.97
+was $119m, still almost half of the at-the-money volume. The volume of options with moneyness
+levels between 1.03 and 1.05 was $63m. However, beyond moneyness levels of 1.05 the option
+volumes are substantially lower.
+Tables 2a and 2b, about here
+Tables 2a and 2b report sample statistics of the data-set which consists of 2426 observations for
+each of our seven daily return series. These seven series are the returns of the underlying asset, the
+risk-free rate for which use the fed-funds rate as a proxy, and ¯ve 45 day options with moneyness
+levels of 0.96, 0.98, 1, 1.02, and 1.04. We term these options the deep-in-the-money, in-the-money,
+at-the-money, out-of-the-money, and deep-out-of-the-money call options, respectively. The mean
+returns and volatilities of the options may appear high with respect to the return and volatility of
+the market. This is due to the leverage implicit in option positions. Option volatilities and excess
+returns over short horizons such as the present one day are multiples of the market return, with
+the multiplier being the elasticity of the option price with respect to the index level (= ¢SC ). As
+a rough check, we use the Black-Scholes formula to calculate options prices and deltas based on
+the historical sample averages for the interest rate of 5.43%, the dividend yield of 3.12%, and the
+volatility of 16.16%. The index level is set to 1 without loss of generality and the strike prices are
+0.96, 0.98, 1.00, 1.02, and 1.04. Time-to-maturity is 45 days. The elasticities for the ¯ve options
+are 16, 19, 22, 26, and 30. That would imply returns on these options of 82, 97, 112, 132, and 152
+12
+basis points per trading day and volatilities of 1376, 1634, 1892, 2236 and 2580 basis points per
+trading day.
+The volatilities of the observed option returns line up nicely, except for the deep-out-of-the-
+money option which has an observed volatility of 3431. Potential reasons for such deviation are our
+assumption that the Black-Scholes formula holds with the same parameters for about a decade and
+the fact that the deep-out-of-the-money options are the least liquid of the ¯ve options. Continuing
+our comparisons, the average returns of the observed options are lower than in the Black and
+Scholes case, except for the deep-out-of-the-money options. However, the estimates of the average
+returns in the Black-Scholes case have very wide 99% con¯dence intervals which we base on §3 ¾pT
+(= 74, 89, 111, 147, and 208). Namely, the lower limits are 8, 8, 1, -15, and -56 and the upper
+limits are 156, 186, 223, 279, and 360. Then, all observed option returns lie within the §3 standard
+deviation band.
+Although this may be interpreted as an indication of a risk premium implicit in option prices,
+it can still be reconciled with more °exible deterministic volatility models in which volatility is not
+restricted to be °at and constant at 16.16%, as in the Black and Scholes reference case. Adjusting
+the option elasticities for the volatility smile, which associates higher (lower) implied volatilities
+with in-the-money (out-of-the-money) options, would lead to results more in line with the observed
+returns and volatilities.
+Still in Table 2a, we ¯nd that the autocorrelation coe±cients quickly decay to zero and, with
+the exception of the risk-free rate, are not signi¯cantly di®erent from zero. In the following Table 2b
+we report the contemporaneous correlation between the seven assets. As expected, the correlations
+are higher for options with more similar moneyness levels.
+2.1 The unconditional test
+A necessary condition for the Principle of No Arbitrage can be obtained by taking unconditional
+expectations of Equation (9), from which:
+1 = E (mt;t+¢tRt+¢t) (11)
+Let R¤t;t+¢t;n be the vector of log returns sampled at intervals3 ¢t=n that are used to span the
+¯nite sample analog of the pricing kernel mt;t+¢t in Equation (11). In the unconditional case, we
+13
+focus on the time-series properties of the one-period ahead unexpected returns:
+h0t+¢t(m(¯; R¤); R) ´ 10 ¡ m(¯; R¤)R0t;t+¢t (12)
+Under the null hypothesis that the model is correctly speci¯ed, ht+¢t is a martingale in sequence.
+Let the time average of the one period unexpected returns be hT = 1T PTt=1 ht so that, if Rt;t+¢t is
+stationary, hT ! E(ht+¢t). Hansen (1982) obtains a consistent estimators of ¯ by minimizing the
+GMM quadratic form of the average unexpected returns h0T W¡1T hT :
+^¯ ´ argmin £T ¢ h0T (¯)W¡1T hT (¯)¤ (13a)
+The weighting matrix WT is chosen to be a consistent estimator of the unconditional asymptotic
+covariance of the pricing errors ht. Such consistent estimators can be computed using the frequency
+zero spectral density estimators developed by Newey and West (1987) and Andrews (1991). The,
+Hansen (1982) shows that ^¯ is e±cient and pT[^¯ ¡¯o] is asymptotically normally distributed with
+covariance matrix [(E@h0T@¯ )W¡1T (E@hT@¯ )]¡1. Let hrT be the restricted counterpart of hT , under the
+null hypothesis that Ho : ¯b = 0, then the following asymptotic result holds:
+Test 1 (Unconditional Test, GMMmetric)
+Under the null hypothesis that the assets in Rb are redundant given Ra,
+dT ´ T [hrT (^¯a) ¡ hT (^¯)]0W¡1T [hrT (^¯a) ¡ hT (^¯)] ! Â2(nb) (14)
+is asymptotically distributed chi-square with nb degrees of freedom, where nb is the number of
+redundant securities.
+The statistic is a quadratic form of the increase in the unexpected returns due to the null
+hypothesis that only two are needed to span the pricing kernel. If the null hypothesis is satis¯ed
+then the pricing errors should not increase signi¯cantly as the null hypothesis is imposed and dT
+should be close to zero. Other examples of such region subset tests are Braun (1992), Cochrane
+and Hansen (1992), DeSantis (1993), Knez (1993), and Bekaert and Urias (1996).
+2.2 Empirical results: the unconditional test
+In a ¯rst series of tests we choose the sampling frequency ¢t to be one day. However, the results are
+robust to changes in the sampling frequency and we report the details below. The unconditional
+14
+test of the martingale condition in Equation (14) is based on seven pricing restrictions, with Rt+¢t
+being the (7£1) vector of returns on all the available unconditional investment opportunities, that
+is the underlying asset, the risk-free rate, and the ¯ve options. The weighting matrix WT is the
+Newey-West (1987) heteroskedastic and autocorrelation consistent estimator of the unconditional
+covariance matrix of the seven unexpected returns ht :
+WT = ¡0 +
+qX
+i=1
+(1 ¡ iq + 1)(^¡i + ^¡0¡i)
+^¡i = 1T TXt=i+1(ht ¡ ¹h)(ht¡i ¡ ¹h)0 and ¹h = 1T TXt=i+1 ht
+We choose q to be ¯ve trading days (one week). In Table 3 we show the empirical evidence
+from the unconditional chi-square test of Ho : ¯b = 0.
+Table 3, about here
+For our tests, we specify three di®erent sets of basis R¤a and non-basis R¤b returns. In test IIIa, the
+null hypothesis states that observations on deep-in- and deep-out-of-the-money options do not add
+relevant information to identify the pricing kernel beyond the information already contained in the
+returns on the underlying asset and the risk-free rate. In the post-crash and the overall samples,
+we strongly reject the hypothesis that the away-from-the-money option returns are redundant at
+any con¯dence level. We ¯nd that they price additional risk-factors that are not already spanned
+by at-the-money options and the underlying asset. However, in the pre-crash sample, the away-
+from-the-money options are redundant at the 34% con¯dence level.
+In test IIIb, we change the basis assets slightly and replace the risk-free rate with the at-
+the-money option. This speci¯cation allows us to address concerns about market microstructure
+di®erences between the cash market and the option market. If there were a su±ciently large lag
+between the time at which information is priced in the market for the underlying asset and in
+the option market then the null hypothesis might be rejected even if the underlying asset followed
+a deterministic volatility model. We can ameliorate these concerns by incorporating both the
+underlying asset and an option into the basis set of reference assets. The results of test IIIb
+indicate that the away-from-the-money-options are now needed in all three sample periods for
+spanning purposes. Even in the pre-crash period do we need the away-from-the-money options, as
+15
+opposed to the ¯ndings in IIIa. One potential reason might be that we do not have any information
+on the risk-free rate available for spanning the pricing kernel.
+Therefore, in test IIIc, we investigate if the risk-free rate adds information beyond the returns
+on the underlying and the at-the-money option. In the post-crash period we ¯nd that the risk-free
+rate does add information beyond what is already contained in the two basis securities. However,
+the risk-free rate is redundant in the pre-crash period at the 70% con¯dence level.
+The results of the spanning tests raise doubts on the e®ectiveness of using highly pliable de-
+terministic volatility models for risk management and pricing purposes. The results of the tests
+suggest that there is at least one additional priced risk-factor, such as stochastic volatility, interest
+rates, or jumps.
+3 The Conditional Test
+The unconditional pricing restriction in Equation (11) is only a necessary condition for the Principle
+of No Arbitrage to hold. For this reason, we now study the null hypothesis that the non-basis returns
+are redundant in a conditional setting:
+0 = E [ht+¢t j It] (15)
+with the unexpected returns ht+¢t de¯ned as in Equation (12). In contrast with the unconditional
+case, we assume that arbitrageurs may take hedging decisions conditional on non-trivial information
+about the state of the economy. Let Á(!t) be an It-measurable function of a set of ¯nancial variables
+measurable at time t such as the level of the underlying asset or the slope of the volatility smile.
+Then, we can construct managed portfolios with initial cost Á(!t) and payo® Rt+¢tÁ(!t). Any
+return in the economy, such as returns on the underlying asset, the risk-free rate, the options, or
+any managed portfolio, has to satisfy Equation (15), that is, both 0 = E(ht+¢tj It) and 0 = E[Á(!t)
+£ ht+¢t j It] need to be satis¯ed for any It-measurable function Á(!t). After taking unconditional
+expectations we obtain the following expression:
+0 = E
+2
+4 ht+¢t
+ht+¢t ­ Á(!t)
+3
+5 (16)
+Let m(¯t;R¤t;t+¢t;n) be the time-varying pricing kernel of the deterministic volatility model.
+The discrete and time-varying parameters ¯t 2 It are parameterized with polynomial expansions
+16
+in the state variable:
+Black{Scholes model: ¯(S;¿) = ¯o
+Model 1: ¯(S; ¿) = ¯o + ¯1S¿
+Model 2: ¯(S; ¿) = ¯o + ¯1S¿ + ¯2S2¿
+Model 3: ¯(S; ¿) = ¯o + ¯1(S¿ ¡ E¿ ¡1(S¿ ))
+Model 4: ¯(S; ¿) = ¯o + ¯1(S¿ ¡ E¿ ¡1(S¿ )) + ¯2(S¿ ¡ E¿ ¡1(S¿ ))2
+(17)
+So far, we have been using the Black-Scholes Model in our unconditional tests. Models 1 and 2
+are more general speci¯cations of deterministic volatility models along the lines of Dumas, Fleming,
+and Whaley (1998). Since the underlying asset is drifting over time, we consider two additional
+speci¯cations, models 3 and 4, that are expressed in terms of the conditionally demeaned level
+of the underlying asset. Model 4 is particularly interesting since it expresses the pricing kernel
+in terms of the square conditional innovations of the underlying asset. Although model 4 is still
+deterministic and its dynamics are generated by just one Brownian motion it may capture some of
+the volatility clustering e®ects that have partly motivated the development of stochastic volatility
+models. Finally, we again directly parametrize the functional form of the pricing kernel:
+mt;t+¢t = exp
+2
+4
+n¡1X
+j=0
+¯0a(Stj ;tj )R¤a;tj ;tj+1 + ¯0b(Stj ;tj )R¤b;tj ;tj+1
+3
+5
+with t0 = t and Pn¡1j=0 [tj+1 ¡ tj ] = ¢t.
+We estimate the parameters ¯t using the moment condition in Equation (16) and minimizing
+the quadratic GMM criterion:
+JT =
+2
+4 1p
+T
+TX
+t=1
+0
+@ ht+¢t
+ht+¢t ­ Á(!t)
+1
+A
+3
+5
+0
+W¡1T
+2
+4 1p
+T
+TX
+t=1
+0
+@ ht+¢t
+ht+¢t ­ Á(!t)
+1
+A
+3
+5 (18)
+Let the sample average of the conditional pricing errors be hT ´ 1T PTt=1[h0t+¢t;Á0(!t)­h0t+¢t]0,
+and let the superscript r denote the unexpected returns of the restricted model. If WT is chosen to
+be a consistent estimator of the asymptotic covariance matrix of [h0t+¢t; Á0(!t) ­ h0t+¢t]0 then the
+GMM estimator of ¯ is also e±cient. In this case, the following asymptotic result holds:
+Test 2 (ConditionalTest,GMMmetric)
+17
+Under the null hypothesis that the assets in R¤b are redundant given R¤a,
+dc ´ T [hrT (^¯a) ¡ hT (^¯)]0W¡1T [hrT (^¯a) ¡ hT (^¯)] ! Â2(n» nb)
+is asymptotically distributed chi-square with n» £ nb degrees of freedom, where n» and nb are re-
+spectively the number of conditioning variables and the number of redundant securities.
+Similar to the unconditional case, we consider a Newey-West autocorrelation and heteroskedas-
+ticity consistent estimator of the covariance matrix of the pricing errors with ¯ve lags.
+3.1 Empirical results: the conditional test
+We now present the empirical results of the conditional tests which incorporate returns on time-
+varying managed portfolios. The pricing kernel replicating portfolio will then also have time-varying
+portfolio weights ¯¿ as described above.
+Table 4, about here
+Test IVa presents the results of the test of redundancy of the away-from-the-money option
+returns while conditioning on functions of the level of the underlying asset. Across all models,
+we ¯nd the unconditional results repeated and for the most part more pronounced. The p-values
+in the pre-crash sample tend to be even higher than in the unconditional case while they were
+even lower than the unconditional case in the post-crash and overall samples. Test IVb shows
+that if the at-the-money option is included in the basis set then spanning is rejected even in the
+pre-crash sample and more strongly so in the post-crash and overall samples. Again, the results
+tend to be more pronounced than in the unconditional case. Test IVc investigates the redundancy
+of the risk-free rate, and the results strengthen the ¯ndings of the unconditional test. Overall, all
+unconditional results are con¯rmed both in the speci¯cation expressed in terms of the absolute
+level of the underlying asset (model 1 and model 2) and in the speci¯cation expressed in terms of
+conditionally demeaned levels of the underlying asset (model 3 and model 4).
+4 Robustness of the Tests
+Here we discuss the sensitivity of the results to some aspects of the empirical implementation of the
+tests. Namely, we consider the sampling frequency of our returns, the use of additional conditioning
+18
+variables, the dependence of our results on trading volume, and ¯nally, the di®erential spanning
+properties of option returns with di®erent moneyness. Thereafter, we explore the small sample
+properties of the tests without and with measurement errors.
+So far, the sampling frequency ¢tn of all returns on the seven assets was daily, that is ¢t = 1
+day and n = 1 day, and the results have been reported in Tables 3 and 4. We test the robustness
+of our results by re-running tests based on di®erent sampling frequencies ¢tn . First, we run the test
+statistics for ¢t = 1 day and n = 2 days, that is we measure two-day returns and can rebalance
+once after one day. Second, we use ¢t = 1 day and n = 5 days, that is we measure weekly returns
+and we can rebalance after every working day of the week. We ¯nd that the results closely track
+the ones for the original daily sampling and that the conclusions are not a®ected.
+Next, we check the sensitivity of the conclusions to di®erent choices for the conditioning variables
+used to obtain time-varying managed portfolios. In addition to polynomials in the absolute and
+conditionally demeaned level of the underlying asset, we also consider the slope of the smile and
+the level of the interest rate as conditioning variables. We ¯nd that the results closely mirror the
+ones in Table 4.
+We also consider the dependence of our results on trading volume. For this purpose we create
+two subsamples based on trading volumes. In the ¯rst subsample, we consider the returns on
+options only on those days where the daily aggregate trading volumes in the option market are in
+the top three deciles of the distribution. In the second subsample, we consider the days in which
+volumes are in the bottom three deciles. Then, we compare the test statistics. In the post-crash
+period, the hypothesis of redundancy of the away-from-the-money options is rejected less strongly
+in the subsample with the high trading volumes. However, even for the subsample with high
+trading volumes the null hypothesis is soundly rejected at con¯dence levels below 1%. In the pre-
+crash period, the cross-section of options remains redundant in both subsamples. As expected, we
+conclude that a relatively thin market may have an impact on the ability to replicate the options.
+Our ¯ndings are supported by the conditional tests and by the tests based on the ±-metric.
+Finally, we investigate if returns on options with di®erent moneyness have di®erential spanning
+properties. Out-of-the-money call or put options are much more liquid than in-the-money call
+or put options, and put option volume is higher than call option volume by a factor of about 3.
+Since we translate all put quotes into call quotes, we ¯nd as expected that the trading volume
+19
+at low moneyness levels (which is driven by the out-of-the-money puts) is higher than for high
+moneyness levels (which is driven by the out-of-the-money calls). Table 1 con¯rms that in 1995,
+the average daily trading volume of options with moneyness between 0.95-0.97 was twice as high
+as that of options with moneyness between 1.03-1.05. Such di®erence in cross-sectional liquidity
+could be responsible for di®erent spanning properties. We address this issue by running two sets of
+tests. In the ¯rst test, the basis is de¯ned as R¤a = [Rs;R0:96] while in the second test the basis is
+speci¯ed as R¤a = [Rs; R1:04]. We ask if the spanning properties of in-the-money and out-the-money
+options are symmetric, and our tests con¯rm that this is indeed the case. This suggests that the
+non-redundancy of the cross-section of option returns is not simply due to liquidity reasons.
+4.1 Small-sample properties
+The above empirical ¯ndings are all based on asymptotic test statistics. This might be considered
+adequate since the data-set contains 2426 daily observations throughout almost 10 years. Nonethe-
+less, since the previous tests sharply reject the null hypothesis that there are no priced additional
+risk-factors, we want to check the robustness of the tests. In our ¯rst simulation study, we study the
+performance of the test statistics in small samples and the approximation error generated by dis-
+cretizing the continuous time pricing kernel. In our second simulation study, we add measurement
+error, too.
+In order to see if the test rejects the null hypothesis even when the null hypothesis is true, we
+simulate 1000 days of a cross-section of option prices under the assumption that the underlying
+asset follows a constant elasticity of variance (CEV) process. The CEV model is a deterministic
+volatility model and only two basis returns are needed for spanning. We then run the spanning
+tests and report the results in Table 5.
+Table 5, about here
+Given a theoretical p-value of 5%, we measure the empirical frequency that the test rejects the
+null hypothesis, that is the simulated dT is higher than the rejection level implied by the chi-square
+distribution for a p-value of 5%. The di®erence between the empirical rejection frequency and the
+5% value is a measure of over-rejection. If there is no bias, this value should asymptotically be
+equal to zero. When measurement errors are zero, we ¯nd that the empirical rejection frequency is
+20
+very close to the theoretical level: we reject the null hypothesis 3.45% and 4.02% of times in test
+A and test B, respectively, and we ¯nd a slight under-rejection.
+We also consider the approximation error generated by discretizing the continuous time pricing
+kernel since we simulate the CEV process with 100 intermediate steps within each day. However,
+we only observe daily option returns and can only trade once a day. Still, our simulated rejection
+frequencies are very close to the theoretical 5% level.
+4.2 Small-sample properties with measurement errors
+For our second simulation study we consider the case in which option prices are observed with
+errors. Let Rt be the return on option prices simulated in a CEV environment and let ^Rt be the
+observed option return, with ^Rt = Rt + ¾""t. Given a value for ¾", the standard deviation of the
+measurement errors, we estimate the empirical frequency of rejection of the null hypothesis that
+options are generated by a deterministic volatility model. In order to run the simulation, we need
+a reasonable value for ¾". We adopt an extension of the model of Roll (1984) and assume that the
+option excess returns Rt+1 adhere to the following autoregressive process:
+Rt+1 = ¹ + ½Rt + ¾´´t+1; ´t+1 » i:i:d:(0;1) (19)
+If returns are observed with error "t+1 then:
+^Rt+1 = Rt+1 + ¾""t+1; "t+1 » i:i:d:(0;1) (20)
+Since measurement errors appear both on the left and right hand side of the equation, we can
+identify the sampling errors from the innovations of the true process. Straightforward calculations
+show that, given equations (19) and (20), the unconditional population moments of the observed
+returns satisfy the following restrictions:
+E0
+·
+bRt ¡ ¹1 ¡ ½¸ = 0 (21)
+E0
+h
+bRt¡1( bRt ¡ ¹ ¡ ½ bRt¡1)
+i
+= 0 (22)
+V ar0
+h
+¢ bRt
+i
+= 2¾2" + ¾2´
+µ 2
+1 + ½
+¶
+Cov0
+h
+¢ bRt; ¢ bRt¡1
+i
+= ¡¾2" ¡ ¾2´
+µ1 ¡ ½
+1 + ½
+¶
+21
+Cov0
+h
+¢ bRt; ¢ bRt¡2
+i
+= ½(1 ¡ ½)1 + 2½1 + ½ ¾2´ (23)
+The model is overidenti¯ed and we can estimate the four parameters using the ¯ve moment
+restrictions. We ¯nd that the noise to signal ratio in the data-set is ¾´¾" = 1:74% with ¾" = 38 basis
+points. This compares with an average bid/ask spread of 83 cents for the at-the-money-option. We
+conclude that there is sampling error, thus the need for a statistical test, but the size compares
+very favorably with daily bid-ask spreads. We then simulate the returns and conduct the spanning
+tests. For safety, we use a value for ¾" of 600 basis points which roughly matches the size of the
+bid/ask spread. Table 6 reports the results.
+Table 6, about here
+Even with such a large value for the measurement error, we ¯nd that the empirical rejection
+frequency is only 0.36% higher than the theoretical value when ½ = 12 . For test A, the highest
+level of small sample bias is found in the case of ½ = 1. In this case, we reject the null hypothesis
+1.63% more frequently than the 5% value implied by the asymptotic distribution. The size of the
+small sample bias is too small to explain the sharp rejections found when the test is run on actually
+observed option returns. It should be noticed that in order to better capture the small sample bias,
+we simulate time series of option prices for 1000 trading days, less than half the size of the data-set
+that we actually have. Therefore, the average small sample bias should be even smaller when we
+run the empirical test on 2426 observations. We conclude that the rejection of the null hypothesis
+based on empirical option returns is unlikely to be simply due to the presence of measurement
+error. This seems reasonable since the measurement errors induce a bias in the test statistics only
+if they are also priced.
+5 Tests Based on the Model-Independent ±-Metric
+Using both an unconditional and conditional approach, the tests based on the asymptotically
+e±cient GMM metric strongly reject the null hypothesis that there are no additional priced risk-
+factors. We are concerned that our results could be driven by the particular GMM metric used to
+weight the pricing errors. In any GMM metric, the pricing errors are weighted by an estimate of
+the inverse of the asymptotic covariance matrix. However, a well-known undesirable feature of the
+22
+GMM metric is that it rewards models characterized by pricing kernels with large variances. The
+larger the variance of the pricing kernel, the larger the variance of the pricing errors and therefore
+the smaller the weighted quadratic criterion, for any given average level of pricing error. Moreover,
+the GMM test need not be optimal in small samples.
+Thus, in order to evaluate the robustness of the GMM results, we consider the alternative
+approach by Hansen and Jagannathan (1997), which is not subject to the previous criticism. Let
+m(¯) be a candidate parametric pricing kernel that is used to generate approximate prices for
+securities with payo® p 2 P, so that ¼m(¯)(p) = E(m(¯)p). In deterministic volatility models,
+a candidate pricing kernel m(¯) can be written as an exponential function of the continuously
+compounded log return of a portfolio of two spanning assets. Since m(¯) completely describes the
+asset pricing implications of any candidate model, a ranking of alternative candidate models can
+be developed in terms of the pricing errors that are generated by di®erent candidate pricing factors
+m(¯). Since any measure of pricing performance of a model depends on the speci¯c assets used
+as benchmarks, Hansen and Jagannathan (1997) explore the properties of the maximum pricing
+error generated by the candidate pricing kernel m(¯) with respect to all portfolios with payo® p.
+Since any pricing deviation can be made arbitrarily large by increasing the leverage of the portfolio,
+they consider the payo®s with unit second moment, E(p2) = 1, and de¯ne the following measure
+of pricing performance:
+± ´ maxp2P;E(p2)=1
+¯¯¼m(¯)(p) ¡ ¼(p)¯¯ (24)
+where ¼(p) are observed prices of the securities with payo® p. Thus, a model m(¯) is said to be
+superior to an alternative model m(¯0) if the maximum pricing error, in absolute value, is lower
+than the one generated by m(¯0). Clearly, this metric of model performance does not require the
+two models to be nested. Hansen and Jagannathan (1997) show that a bound on the maximum
+pricing error is given by the smallest second moment distance between the candidate pricing kernel
+m(¯) and the space4 of admissible pricing kernels ~m 2 M:
+± =min~m2M E (m(¯) ¡ ~m)2 (25)
+The programming problem in Equation (25) is de¯ned with respect to an in¯nite dimensional
+control variable. By considering its dual representation Hansen and Jagannathan (1997) show that
+23
+its solution is given by:
+±2 = [Epm(¯) ¡ E¼(p)]0 Epp0 [Epm(¯) ¡ E¼(p)] (26)
+The measure of pricing performance di®ers from the usual GMM metric since it depends on a
+weighting matrix Epp0, which is invariant to the choice of the pricing kernel. There are two advan-
+tages to the ±-metric. First, it is directly related to an economic concept, namely, the maximum
+pricing error among all payo®s with standardized second moments. Second, it is invariant to the
+volatility of the pricing imprecision and, more generally, to the statistical properties of the model
+that is being tested.
+However, since the ±-metric is not based on the asymptotically optimal weighting matrix, the
+asymptotic distribution of the sample counterpart of ± is not chi-square. In order to describe the
+spanning test de¯ned in terms of the ±-metric, let QT be a consistent estimator of the second moment
+matrix of the unit cost payo®s (returns) QT ! Q ´ E(R0tRt) and similarly to previous sections,
+let hT be the sample average of the pricing errors of unit cost payo®s, hT = 1T PTt=1(1 ¡ Rtmt(¯)).
+Consistent estimators of ¯ can be obtained by minimizing the following sample analog of the ±-
+metric:
+d2T (¯) = hT (¯)0Q¡1T hT (¯) (27)
+Using results in Jagannathan and Wang (1997) we show in the appendix that:
+Test 3 (Unconditional Test, ±-metric)
+Under the null hypothesis that the assets in Rb are redundant given Ra and the unrestricted model
+is overidenti¯ed, T
+h
+d2T (^¯r) ¡ d2T (^¯)i converges in distribution to a weighted sum of nb chi-square
+distributions with one degree of freedom Pnbi=1 ¸iÂ2(1).
+The values of ¸i are the positive eigenvalues of a transformation of the score of the pricing errors
+and they are fully characterized in the Appendix. The distribution can be tabulated numerically.
+When the unrestricted model is exactly identi¯ed then d2T (^¯) is identically equal to zero. However,
+the unrestricted model is never exactly identi¯ed in our implementations.
+Next, we turn to the conditional test based on the ±-metric. The restriction E(mR ¡ 1) = 0 is
+only a necessary condition for E(mR¡1jIt) to hold. Therefore, we explore a conditional version of
+the test and we use the ±-metric to construct a spanning test valid also for time-varying managed
+24
+portfolios with initial cost Á(!t) and following period payo® Rt+¢tÁ(!t). Let Á(!t) be a function
+measurable with respect to the information set It. Multiplying the conditional moment restriction
+by Á(!t) and taking unconditional expectations, the conditional counterpart of Equation (27) is
+given by the following criterion:
+d2T (¯) =
+2
+4 1p
+T
+TX
+t=1
+0
+@ ht+¢t
+Á(!t) ­ ht+¢t
+1
+A
+3
+5
+0
+Q¡1T
+2
+4 1p
+T
+TX
+t=1
+0
+@ ht+¢t
+Á(!t) ­ ht+¢t
+1
+A
+3
+5 (28)
+with QT being a consistent estimator of Et
+2
+4
+0
+@ Rt+1
+Rt+1 ­ Á(!t)
+1
+A
+0
+@ Rt+1
+Rt+1 ­ Á(!t)
+1
+A
+03
+5.
+As usual, the weights of the time-varying kernel-replicating portfolio are parametrized as in
+Equation (17). This should capture more complex forms of non-linearities of the pricing kernel,
+beyond the exponentially linear case.
+Test 4 (Conditional Test, ±-metric)
+Under the null hypothesis that the assets in Rb are redundant given Ra and the unrestricted model is
+overidenti¯ed, T
+h
+d2T (^¯r) ¡ d2T (^¯)i converges in distribution to a weighted sum of n» ¢nb chi-square
+distributions with one degree of freedom Pn» nbi=1 ¸iÂ2(1), where n» is the number of conditioning
+variables de¯nin

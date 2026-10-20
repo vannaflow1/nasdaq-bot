@@ -1,0 +1,1085 @@
+1
+Cross-product Modelling in Continuous Intraday Electricity
+Markets via Hawkes Processes
+Ayoub Jhabli∗†, Tarek AlSkaif †, Kwabena E. Bennin †, Bedir Tekinerdogan †, and Joost M.E. Pennings §¶
+†Information Technology Group, Wageningen University, The Netherlands
+§Marketing and Consumer Behaviour, Wageningen University, The Netherlands
+¶School of Business and Economics, Maastricht University, The Netherlands
+Abstract—As renewable energy integration accelerates, intra-
+day continuous (IDC) electricity markets have become essential
+for short-term balancing. However, the simultaneous trading of
+overlapping contracts with varying granularities creates com-
+plex, hidden liquidity dependencies that are critical to market
+stability but remain poorly understood. This paper proposes a
+multivariate State-Dependent Hawkes Process (SDHP) to model
+cross-product liquidity dynamics between Quarter-Hourly and
+Hourly IDC contracts. To determine how cross-product effects
+vary under different market conditions, we classify the trading
+sessions into two distinct regimes: ’Normal’ and ’Stressed’, based
+on a composite metric of the bid-ask spread, mid-price volatility
+and queue imbalance. The model is calibrated on the first month
+of each quarter of 2024 using level 3 limit order book (LOB)
+data from the Dutch EPEX SPOT IDC market. We find that
+order flow is overwhelmingly self-driven, with roughly 95% of
+orders arriving in reaction to earlier orders in both regimes.
+Cross-excitation runs mainly from the Quarter-Hourly to the
+Hourly contract, but this leadership weakens under stress: the
+ratio of cumulative cross-excitation falls from 2.8 to 1.5, so the two
+contracts influence each other almost equally. Stress also makes
+the Quarter-Hourly to Hourly channel much faster, cutting its
+mean lag from 6.05 to 0.93 seconds. The strong seasonal variation
+found in calm periods largely disappears under stress, where all
+four months converge to the same structure.
+I. INTRODUCTION
+With rising shares of wind and solar generation, the intraday
+continuous (IDC) market has become the main venue for
+correcting imbalances between the day-ahead auction and real-
+time balancing [1]. Participants use it to adjust positions after
+the day-ahead result is known, typically in response to updated
+wind and solar PV power forecasts [2], plant outages or revised
+demand [3]. Unlike the day-ahead auction, which clears all
+orders at a single price, IDC markets match orders one by
+one as they arrive. A trade occurs whenever a buy and a sell
+order meet, so a single delivery period generates a sequence
+of prices rather than one, which exchanges summarise through
+volume-weighted indices such as EPEX’s IDFull, ID3 and ID1
+[4], [5], [6], [7].
+At European level, continuous intraday trading is coordi-
+nated through the Single Intraday Coupling (SIDC) project,
+implemented on the M7 Cross-Border Intraday (XBID) plat-
+form [8], [9]. XBID connects the Nominated Electricity Mar-
+ket Operators through a central Shared Order Book (SOB),
+where market participants across Europe are able to trade
+∗Corresponding author. Email: ayoub.jhabli@{wur.nl, cern.ch}
+This research is fully funded by the Starter Grant awarded to Dr. Tarek
+Alskaif and Dr. Kwabena Bennin at the Information Technology Group,
+Wageningen University. It is partly supported by Project HighLO a collabo-
+ration between Wageningen University & Research (WUR) and the European
+Organization for Nuclear Research (CERN), which aims to identify malicious
+trading behavior such as market manipulation, to better protect markets.
+electricity continuously, subject to available transmission and
+interconnection capacity. Contracts are classified as global,
+and therefore eligible for cross-border matching in the SOB,
+or local, and matched only on the domestic platform within
+their respective zone. Matching in the SOB is constrained by
+available cross-zonal transmission capacity, which is tracked
+by the Capacity Management Module (CMM). The SIDC
+system has grown quickly: quarterly executed trades rose from
+3.50 million in Q3 2018 to 73.26 million in Q2 2025 [10].
+EPEX SPOT, one of the largest European electricity ex-
+changes, lists contracts of several granularities for intraday
+continuous trading: Hourly, Half-hourly and Quarter-hourly
+individual contracts going 24/7 all year round [11]. Trading
+takes place through a limit order book (LOB), which makes the
+market structurally similar to an electronic financial market,
+though with important differences arising from the physical
+delivery [12].
+Liquidity determines how cheap trading can be. In a liquid
+book a participant can correct an imbalance quickly at a
+price close to the prevailing mid; in an illiquid one the same
+correction moves the price against them or cannot be executed
+at all. Liquidity in power markets has therefore been studied
+through the traded volume, bid-ask spread, market depth and
+resiliency [13]. Empirical work on the German market shows
+that bid-ask spreads widen with risk and narrow with trading
+activity and competition close to delivery [14]. Liquidity is
+also uneven across granularities: Quarter-hourly products are
+consistently thinner than Hourly products, which is why much
+of the forecasting and execution literature restricts attention to
+the Hourly contracts.
+The observation that contract dynamics change as delivery
+approaches is not specific to electricity. Samuelson [15] argued
+that the volatility of a futures contract rises as it nears maturity,
+because information about the terminal value arrives faster and
+matters more. In electricity this mechanism is present as well.
+Weather forecasts sharpen as delivery approaches, imbalances
+become known, and participants must close their positions
+before gate closure [16]. Empirical studies confirm the pattern
+in IDC power markets: volatility, trade frequency and order
+book activity all increase towards gate closure [17], [18]. The
+intensity of orders can therefore not be treated as constant
+through a session.
+Point processes provide a natural way to model the intensity
+of orders, because they describe events in continuous time
+rather than on a fixed grid. Hawkes process, introduced to
+model earthquake aftershocks [19], is the standard choice
+when events cluster. Its defining feature is self-excitation:
+each event excites further events for a period afterwards, with
+the increase decaying over time. The framework has been
+arXiv:2610.23619v1 [q-fin.TR] 16 Oct 2026
+2
+extended in several directions. Multivariate specifications treat
+several event types jointly and estimate the full matrix of
+self- and cross-excitation [20], [21]. Marked Hawkes processes
+attach a variable to each event, such as a trade size or a jump
+magnitude, allowing the strength of excitation to depend on it
+[22]. Regime-switching and Markov-modulated specifications
+let the parameters vary with a latent state, capturing alterna-
+tion between quiet and bursty periods [23]. State-dependent
+Hawkes processes (SDHP) instead couple the process to an
+observable state, so that excitation depends on the current
+condition of the market and the state itself evolves with the
+events [24].
+In financial markets these models have been applied ex-
+tensively to LOBs [25]. They have been used to estimate
+transaction-level volatility and to explain volatility clustering
+[20], to model the joint arrival of market orders, limit orders
+and cancellations [26], to specify multitype marked Hawkes
+processes nonparametrically with state-dependent baselines
+driven by order book imbalance [27], and to quantify how
+much activity is generated endogenously by the market itself
+rather than by external factors [28], [29]. That last strand is
+directly relevant here: branching-ratio estimates close to one
+imply that most observed activity is a reaction to previous
+activity, a property associated with long memory in order flow
+and with fragility, since shocks are damped only weakly [30].
+A parallel literature models the order book through its queues
+rather than its event intensities, with state-dependent arrival
+rates that respond to the configuration of the book [31], [32].
+Applications to electricity markets are more recent but
+growing. Hawkes models have been used to describe market
+order arrivals in the German IDC market, where self-excitation
+is found to be strong but short-lived and the estimated pa-
+rameters vary systematically across delivery hours [33]. They
+have been combined with transient price impact models to
+derive optimal execution strategies for participants trading
+large volumes, reproducing the intraday activity profile and
+the Samuelson effect [34]. They have also been extended with
+exogenous covariates, showing that trading activity responds
+not only to its own past but to vRES forecast errors and
+to activated balancing volumes [35]. Related point-process
+work models the transaction arrival process directly [36], and
+Hawkes specifications have also been used to detect manip-
+ulative order flow [37]. Alongside this, a separate literature
+studies intraday liquidity and order book structure without
+point processes, through spreads, depth and execution cost
+[14], [38], [39].
+The same contract can be traded in a liquid book with tight
+spreads for much of its session and in a thin, volatile book
+shortly afterwards, and conditions differ across delivery hours
+and seasons. If the way order flow propagates depends on these
+changing conditions, then a model with constant parameters
+estimates an average across regimes that may describe neither.
+This is a problem for cross-product analysis in particular.
+Whether activity in the quarter-hourly book drives the hourly
+book, or the reverse, is a statement about the structure of
+transmission, and there is no reason to expect that structure
+to be the same when the book is deep and when it is
+nearly empty. A constant-parameter model cannot answer this
+question, because it imposes the same structure across different
+conditions. Allowing the baseline intensity and the excitation
+kernel in Hawkes models to depend on an observable measure
+of liquidity stress separates the two cases: exogenous order
+arrivals and the market’s reaction to its own past are then
+estimated within each regime, and the difference between
+regimes becomes the object of study rather than an assumption.
+That conditioning on liquidity stress matters has already been
+shown for this market. In earlier work on Dutch intraday
+hourly products, regimes defined by a liquidity stress index
+built from the bid-ask spread, order book volume and mid-
+price volatility fitted the order flow considerably better than
+a single-regime benchmark, and order flow was found to be
+strongly self-exciting and near-critical [40].
+In the financial literature, the predominant methodology
+for measuring liquidity spillovers relies on the generalized
+vector autoregressive (V AR) framework and variance decom-
+position introduced by Diebold and Yilmaz [41]. This macro-
+econometric approach has been widely adapted to quantify
+directional spillovers across various domains, such as assessing
+global risk in foreign exchange markets [42] and analyzing
+the simultaneous dry-up of liquidity between ETFs and their
+underlying constituent stocks [43]. However, these variance
+decomposition methods operate on temporally aggregated,
+lower-frequency data, making them inadequate for model-
+ing event-based data. Multivariate Hawkes processes have
+emerged as an alternative by capturing the mutually exciting
+nature of market shocks [44], [45]. Yet, these existing point-
+process applications in this context still fall short of captur-
+ing continuous market microstructure dynamics; they either
+integrate Hawkes intensities with aggregated DCC-GARCH
+frameworks for macro-level contagion [45], or they restrict the
+event space to extreme, threshold-triggered illiquidity drops
+rather than modeling the continuous arrival of high-frequency
+events [44].
+Three research gaps follow. First, cross-product spillovers
+in IDC electricity markets are largely understudied. Most
+empirical work studies a single granularity, usually the hourly
+contract. How much activity in one transmits to the other, in
+which direction, and how quickly, is not established.
+Second, the effect of liquidity conditions on excitation
+across products is not understood. The endogeneity literature
+reports branching ratios close to one in financial markets, and
+[40] studies how stress reshapes excitation within a contract,
+how endogenous electricity markets are but it is unknown
+whether stress changes how much activity spills between
+different contracts, or in which direction.
+Third, kernel choice is usually asserted rather than tested, so
+the number of timescales in the market’s memory is imposed
+and not empirically established.
+The SDHP model, the LSI-based regimes, the regime-
+dependent baseline and excitation, and the spectral-radius
+penalty follow [40]. This paper makes the following contri-
+butions.
+•Kernel comparison:We replace the single-exponential
+kernel of [40] with three exponential-mixture kernels and
+a power-law kernel, and select the best performing one
+for economic interpretation.
+•Estimation at scale:We extend the analytical gradients
+of [40] to both kernel families, which makes it feasible
+to estimate the model separately for the first month of
+each quarter, covering 2,915 delivery contracts.
+•Cross-product spillovers:We measure spillovers between
+Hourly and Quarter-Hourly contracts with a spillover
+3
+multiplier, and show how liquidity conditions affect their
+strength, direction and timescales.
+The remainder of this paper is organised as follows. Sec-
+tion II describes the European power market and the mechanics
+of the IDC market, and presents empirical evidence on order
+clustering. Section III sets out the SDHP model, the kernel
+specifications and the estimation method. Section IV reports
+the kernel comparison, the selected specification and the em-
+pirical results. Section V concludes and discusses limitations.
+II. EUROPEANINTRADAYCONTINUOUSPOWERMARKETS
+In the IDC market, market participants can trade several
+products until shortly before delivery. In 2024, trading for
+intrazonal contracts remained open until 5 minutes before
+delivery, while XBID contracts closed 1 hour before delivery.
+For both intrazonal and XBID markets, several granulari-
+ties exist: hourly, half-hourly, and quarter-hourly. All these
+contracts open for trading at 14:00 CET on the day before
+delivery and can be traded simultaneously. Given the multitude
+of concurrent contracts available per delivery period, not all
+of them attract sufficient liquidity to support healthy trading
+dynamics. Figure 1 shows the total traded volume per contract
+type over time in the Netherlands. It reveals the rapid adoption
+and growing popularity of XBID products, particularly the
+hourly XBID contract. In fact, in the Netherlands in 2024, the
+hourly XBID was the most heavily traded contract in terms
+of the total number of trades, submitted orders, and trading
+volume, followed by the quarter-hourly XBID products. This
+suggests that market participants remain dependent on the
+classical hourly market structure while increasingly utilizing
+quarter-hourly contracts for finer balancing. This dynamic
+motivates our choice to study the relationship between these
+two specific products, which constituted 86% of the total
+traded volume in the Netherlands in 2024.
+A. Clustering of Orders
+Point processes are a class of stochastic processes where one
+realization is defined by a single point in time. The simplest
+example of a point process is the Poisson point process, in
+which events occur randomly and independently from each
+other over time at a constant rate. In a Poisson process, the
+occurrence of one event has no influence on the likelihood of
+future events, meaning the process has no memory and does
+not generate clustering beyond what would arise by chance.
+In contrast, a Hawkes process is a self-exciting point process
+in which past events increase the probability of future events
+occurring shortly afterward. This generates temporal clustering
+and dependence, as each event can trigger subsequent events,
+leading to bursts of activity followed by periods of calm.
+Figure 2 shows this phenomenon for IDC electricity
+markets. Rather than being evenly dispersed over time, order
+arrivals tend to occur in bursts, with periods of intense activity
+followed by relatively quiet intervals. The color scale repre-
+sents the density of order arrivals. The figure reveals that high-
+density regions are concentrated in the minutes immediately
+preceding delivery, indicating an intensification of trading
+activity as maturity approaches. This pattern is consistent
+with the Samuelson effect, which states that volatility and
+trading intensity tend to increase as a contract approaches its
+delivery time. This temporal clustering is inconsistent with
+the independence assumption of the Poisson process but is
+naturally explained by a self-exciting mechanism in which
+the arrival of an order increases the likelihood of subsequent
+orders.
+III. MODEL ANDTRAINING
+This section provides the full SDHP model. We start by
+briefly introducing the data and the training setup. We then
+define the model mathematically. Next, we present the likeli-
+hood, its gradients, the stability of the model and the spillover.
+A. Data and Training Setup
+We estimate SDHP models following [24] and extending
+their framework in two key directions. First, we allow the
+baseline intensities to be state-dependent, enabling the model
+to capture changes in autonomous order flow across different
+market regimes. Second, we replace the single exponential
+decay with a multi-exponential kernel to simultaneously cap-
+ture the disparate timescales of fast algorithmic reactions and
+slower, macro-level trading flow.
+For our empirical application, we define a single trading
+session as the order flow of one specific Hourly XBID
+contract alongside its four corresponding Quarter-Hourly (Q)
+constituent contracts spanning the same delivery hour. We
+focus on the final five hours of trading for every chosen
+session. However, because XBID contracts close exactly one
+hour prior to their specific delivery start time, the Gate Closure
+Times (GCT) of the Hourly and Quarter-Hourly contracts
+are staggered. To ensure the multivariate Hawkes process is
+calibrated strictly on synchronous LOB dynamics, we truncate
+the data to the overlapping active window (illustrated as the
+grey period in Figure 3), during which all five contracts
+are simultaneously open for trading. This truncation is a
+methodological necessity: including non-overlapping periods
+where certain contracts are closed would introduce artificial
+intervals of zero activity. The model would falsely interpret
+these structural market closures as a genuine lack of liquidity
+or cross-product interaction, severely biasing the estimation of
+both the baseline intensities and the cross-excitation kernels.
+Therefore, we treat each of these precisely defined, fully
+synchronous sessions as an independent realization.
+We fit each delivery contract independently. Our calibration
+uses contracts from the first month of each quarter of 2024
+(January, April, July, and October), which spans seasonal
+variation in the Dutch IDC market.
+B. The State-dependent Hawkes Process
+To quantify the dynamics between the Hourly (H) and
+Quarter-Hourly (Q) LOBs under varying market conditions,
+we model the arrival of limit orders as a multivariate SDHP.
+1) Event Types and States
+We define a2-dimensional event space (D= 2):
+E={H, Q}.
+Here,HandQdenote the submission of an order in the
+hourly and quarter-hourly contracts, respectively. Simultane-
+ously, we define the state processS(t)using a composite
+Liquidity Stress Indicator (LSI) constructed from three key
+microstructural features: the bid–ask spread, mid-price short-
+term volatility, and queue imbalance.
+4
+/uni00000015/uni00000013/uni00000014/uni00000018 /uni00000015/uni00000013/uni00000014/uni00000019 /uni00000015/uni00000013/uni00000014/uni0000001a /uni00000015/uni00000013/uni00000014/uni0000001b /uni00000015/uni00000013/uni00000014/uni0000001c /uni00000015/uni00000013/uni00000015/uni00000013 /uni00000015/uni00000013/uni00000015/uni00000014 /uni00000015/uni00000013/uni00000015/uni00000015 /uni00000015/uni00000013/uni00000015/uni00000016 /uni00000015/uni00000013/uni00000015/uni00000017
+/uni0000003c /uni00000048/uni00000044/uni00000055
+/uni00000013
+/uni00000018/uni00000013/uni00000013/uni00000013
+/uni00000014/uni00000013/uni00000013/uni00000013/uni00000013
+/uni00000014/uni00000018/uni00000013/uni00000013/uni00000013
+/uni00000015/uni00000013/uni00000013/uni00000013/uni00000013
+/uni00000015/uni00000018/uni00000013/uni00000013/uni00000013/uni00000039 /uni00000052/uni0000004f/uni00000058/uni00000050/uni00000048/uni00000003/uni0000000b/uni0000002a/uni0000003a/uni0000004b/uni0000000c
+/uni0000003b/uni00000025/uni0000002c/uni00000027
+/uni0000002c/uni00000051/uni00000057/uni00000055/uni00000044/uni0000005d/uni00000052/uni00000051/uni00000048
+/uni00000015/uni00000013/uni00000014/uni00000018 /uni00000015/uni00000013/uni00000014/uni00000019 /uni00000015/uni00000013/uni00000014/uni0000001a /uni00000015/uni00000013/uni00000014/uni0000001b /uni00000015/uni00000013/uni00000014/uni0000001c /uni00000015/uni00000013/uni00000015/uni00000013 /uni00000015/uni00000013/uni00000015/uni00000014 /uni00000015/uni00000013/uni00000015/uni00000015 /uni00000015/uni00000013/uni00000015/uni00000016 /uni00000015/uni00000013/uni00000015/uni00000017
+/uni0000003c /uni00000048/uni00000044/uni00000055
+/uni00000013
+/uni00000018/uni00000013/uni00000013/uni00000013
+/uni00000014/uni00000013/uni00000013/uni00000013/uni00000013
+/uni00000014/uni00000018/uni00000013/uni00000013/uni00000013
+/uni00000015/uni00000013/uni00000013/uni00000013/uni00000013
+/uni00000015/uni00000018/uni00000013/uni00000013/uni00000013/uni00000039 /uni00000052/uni0000004f/uni00000058/uni00000050/uni00000048/uni00000003/uni0000000b/uni0000002a/uni0000003a/uni0000004b/uni0000000c
+/uni0000002c/uni00000051/uni00000057/uni00000055/uni00000044/uni0000005d/uni00000052/uni00000051/uni00000048/uni00000003/uni00000016/uni00000013/uni0000000a
+/uni0000002c/uni00000051/uni00000057/uni00000055/uni00000044/uni0000005d/uni00000052/uni00000051/uni00000048/uni00000003/uni00000019/uni00000013/uni0000000a
+/uni0000002c/uni00000051/uni00000057/uni00000055/uni00000044/uni0000005d/uni00000052/uni00000051/uni00000048/uni00000003/uni00000014/uni00000018/uni0000000a
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000016/uni00000013/uni0000000a
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000019/uni00000013/uni0000000a
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000014/uni00000018/uni0000000a
+Fig. 1. Annual traded volume across products. Left: Year-by-year evolution of traded volume for XBID and Intrazone product families (GWh) in the
+Netherlands. Right: Year-by-year evolution of traded volume for each individual product.
+/uni00000013/uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni00000014/uni00000013 /uni00000016
+/uni00000014/uni00000013 /uni00000015
+/uni00000014/uni00000013 /uni00000014
+/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000013/uni00000014
+/uni00000014/uni00000013/uni00000015
+/uni00000014/uni00000013/uni00000016
+/uni00000014/uni00000013/uni00000017
+/uni00000057/uni00000003/uni0000004c/uni00000051/uni00000057/uni00000048/uni00000055/uni00000044/uni00000055/uni00000055/uni0000004c/uni00000059/uni00000044/uni0000004f/uni00000003/uni0000000b/uni00000056/uni0000000c
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000019/uni00000013/uni0000000a/uni00000003/uni0000000b/uni00000014/uni00000018/uni0000001d/uni00000013/uni00000013/uni00000010/uni00000014/uni00000019/uni0000001d/uni00000013/uni00000013/uni0000000c
+/uni00000013/uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000014/uni00000018/uni0000000a/uni00000003/uni0000000b/uni00000014/uni00000018/uni0000001d/uni00000013/uni00000013/uni00000010/uni00000014/uni00000018/uni0000001d/uni00000014/uni00000018/uni0000000c
+/uni00000013/uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000014/uni00000018/uni0000000a/uni00000003/uni0000000b/uni00000014/uni00000018/uni0000001d/uni00000014/uni00000018/uni00000010/uni00000014/uni00000018/uni0000001d/uni00000016/uni00000013/uni0000000c
+/uni00000013/uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000014/uni00000018/uni0000000a/uni00000003/uni0000000b/uni00000014/uni00000018/uni0000001d/uni00000016/uni00000013/uni00000010/uni00000014/uni00000018/uni0000001d/uni00000017/uni00000018/uni0000000c
+/uni00000013/uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni0000003b/uni00000025/uni0000002c/uni00000027/uni00000003/uni00000014/uni00000018/uni0000000a/uni00000003/uni0000000b/uni00000014/uni00000018/uni0000001d/uni00000017/uni00000018/uni00000010/uni00000014/uni00000019/uni0000001d/uni00000013/uni00000013/uni0000000c
+/uni00000014/uni00000013 /uni0000001a
+/uni00000014/uni00000013 /uni00000019
+/uni00000014/uni00000013 /uni00000018
+/uni00000014/uni00000013 /uni00000017
+/uni00000027/uni00000048/uni00000051/uni00000056/uni0000004c/uni00000057/uni0000005c
+/uni00000030/uni0000004c/uni00000051/uni00000058/uni00000057/uni00000048/uni00000056/uni00000003/uni00000045/uni00000048/uni00000049/uni00000052/uni00000055/uni00000048/uni00000003/uni0000004a/uni00000044/uni00000057/uni00000048/uni00000003/uni00000046/uni0000004f/uni00000052/uni00000056/uni00000048/uni00000003/uni0000000b/uni00000013/uni00000003/uni00000020/uni00000003/uni0000004a/uni00000044/uni00000057/uni00000048/uni00000003/uni00000020/uni00000003/uni00000047/uni00000048/uni0000004f/uni0000004c/uni00000059/uni00000048/uni00000055/uni0000005c/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni0000000c
+Fig. 2. Scatter and density plots of order interarrival times against time-to-gate for an XBID hourly contract (2024-01-16 15:00-16:00) and its four constituent
+XBID quarter-hourly contracts (2024-01-16 15:00-15:15, 15:15-15:30, 15:30-15:45, 15:45-16:00).
+Fig. 3. Temporal alignment of Hourly and Quarter-Hourly contracts. The
+figure illustrates a single delivery hour (12:00–13:00) alongside its four
+nested quarter-hour products. The Hourly contract and the first Quarter-Hourly
+contract (Q1, 12:00–12:15) both close at 11:00. However, Q2 (12:15–12:30)
+closes at 11:15, Q3 (12:30–12:45) at 11:30, and Q4 (12:45–13:00) at 11:45.
+Therefore, between 11:00 and 11:45, some contracts are closed while others
+remain actively traded. Non-overlapping periods (in orange color) are removed
+to ensure that the Hawkes process is calibrated on purely synchronous LOB
+dynamics.
+The mid-price volatility captures short-term price uncer-
+tainty and is defined as the rolling standard deviation of the
+mid-price over the past 10 minutes:
+σmid(t) =
+vuut 1Nt Xi:t i∈(t−10min, t] Pmid(ti)− P mid(t)2,(1)
+where ¯Pmid(t)denotes the average mid-price over the same
+10-minute window andN t is the number of observations in
+that interval.
+Since our objective is to quantify the degree of liquidity
+imbalance irrespective of its direction, we use the absolute
+queue imbalance, which measures the magnitude of the liq-
+uidity asymmetry between the bid and ask sides,
+QIabs(t) =
+ Pi∈B(t) qi(t)− Pi∈A(t) qi(t)Pi∈B(t) qi(t) + Pi∈A(t) qi(t)  ,(2)
+withB(t)andA(t)denoting the sets of active bid and ask
+orders in the LOB at timet, respectively, andq i(t)the volume
+associated with orderi.
+The LSI is then defined as
+LSI(t) = 13 zslowspread(t) + 13 zslowvolatility(t) + 13 zslowQIabs (t).(3)
+wherez slow· (t)denotes the slow-baseline Z-score of the cor-
+responding feature.
+5
+The slow-baseline Z-score is constructed using exponen-
+tially weighted estimators for the mean and variance:
+µslowt = (1−λ)µ slowt−1 +λX t,(4)
+σ2,slowt = (1−λ)σ 2,slowt−1 +λ  Xt −µ slowt 2,(5)
+zslowt = Xt −µ slowtσslowt ,(6)
+whereX t denotes the feature value andλcontrols the
+adaptation speed. We setλ= 0.01, corresponding to an
+effective memory of approximately 100 observations. This
+slow adaptation helps ensure that persistent liquidity stress
+remains detectable, rather than being rapidly absorbed into the
+baseline level, which would otherwise mask sustained regime
+changes.
+The state process is then defined using the empirical distri-
+bution of the LSI. Letq 0.75 denote the75 th percentile ofLSI(t)
+computed over the full sample. The market state is defined as
+S(t) =
+(
+0,LSI(t)< q 0.75,(Normal regime)
+1,LSI(t)≥q 0.75,(Stressed regime). (7)
+The choice of the75 th percentile as the threshold is
+motivated by two key methodological considerations. First,
+calibrating a SDHP requires a statistically significant number
+of events in both regimes to robustly estimate the state-specific
+baseline intensities and cross-excitation kernels; selecting a
+higher threshold (e.g., the95 th percentile) would result in
+data sparsity and noisy parameter estimates for the stressed
+state. Second, this threshold ensures that the ”Stressed” regime
+represents a genuine, recurring structural state of the market,
+rather than simply capturing isolated microstructural anoma-
+lies or extreme outliers. Finally, this definition ensures that
+the stressed state corresponds to periods of persistently high
+volatility and wide bid–ask spreads, while the queue imbalance
+provides complementary information about the asymmetry of
+available liquidity between the bid and ask sides of the order
+book.
+Figure 4 shows the distribution of the LSI by delivery
+hour for the first month of each quarter (January, April, July
+and October 2024). The inter-quartile boxes are centered and
+essentially flat across all24hours, with no hour displacing
+its body upward or downward; only the heavy two-sided tails
+vary mildly. The intraday seasonality has therefore already
+been absorbed by the normalization and does not survive into
+the LSI, so a threshold defined on the pooled distribution does
+not covertly encode time of day.
+To confirm that a single fixed threshold transports across
+sessions, we compare the global75th percentile against its per-
+session counterparts and assess its out-of-sample calibration;
+results are summarized in Table I. The per-session thresholds
+cluster tightly around the global value, and the small median
+pairwise Wasserstein distance between session distributions
+indicates that sessions are similar though not identical. We also
+conducted a leave-one-session-out calibration: for each session
+we apply the threshold estimated on all remaining sessions and
+record the realized fraction of stressed events. This fraction is
+centered on the25%target and stays within[0.18,0.32]across
+every session. No session collapses to a single regime—even
+the calmest retains18%stressed events—so the state variable
+exercises both regimes in every session and the state-dependent
+kernels remain identifiable throughout.
+We therefore adopt the global thresholdq glob0.75 = 0.264.
+The LSI was introduced in our earlier work [40], where
+we assessed its robustness to the choice of components and
+threshold levels, as well as the contribution of each component
+to regime transitions. In that specification, the LSI combined
+the bid–ask spread, the mid-price volatility and the total depth
+of the LOB. The robustness checks showed that the sign with
+which depth entered the index had little effect on the resulting
+classification, indicating that the component carried limited
+information about stress. We therefore replace it here with the
+absolute queue imbalance (Eq. 2), a depth-based quantity with
+an unambiguous directional interpretation: values close to one
+indicate a one-sided, fragile book, while values close to zero
+indicate balanced liquidity on both sides.
+TABLE I
+TRANSPORTABILITY OF THE GLOBAL STRESS THRESHOLD ACROSS
+SESSIONS. PER-SESSION THRESHOLDS AND PAIRWISE DISTANCES ARE
+REPORTED RELATIVE TO THELSISTANDARD DEVIATION(σ LSI );THE
+LEAVE-ONE-SESSION-OUT(LOO)STRESSED FRACTION APPLIES THE
+THRESHOLD ESTIMATED ON ALL REMAINING SESSIONS TO EACH
+HELD-OUT SESSION.
+Quantity Value
+Global thresholdq glob0.75 0.264
+Per-sessionq 0.75: mean0.275
+Per-sessionq 0.75: std0.049(8.6%σ LSI)
+Per-sessionq 0.75:5–95%range[0.191,0.350]
+Median pairwise Wasserstein distance0.060(10.7%σ LSI)
+LOO stressed fraction: mean0.256
+LOO stressed fraction: min / max0.181/0.316
+C. The State-dependent Hawkes Process
+LetN(t) =
+ 
+NH(t), NQ(t)
+⊤
+be a bivariate counting
+process, whereN e(t)records the cumulative number of events
+of typee∈ E={H,Q}up to timet. We model its
+conditional intensity,λ e(t)dt=E[dN e(t)| Ht− ], as a self-
+exciting process that adapts to the prevailing market regime.
+By lettingS(t)∈ {0,1}denote the observed regime (Normal
+or Stressed, evaluated att −), we define the state-dependent
+conditional intensity for target eventedirectly as:
+λe(t) =
+1X
+x=0
+1{S(t) =x}
+
+µx,e +
+X
+e′∈E
+X
+ti<t:e i=e′
+κ(x)e′→e(t−t i)
+!
+.
+(8)
+This decomposes the arrival rate into two components:
+•Baseline intensity (µ x,e ≥0):the exogenous sponta-
+neous rate of arrival for evente, depending only on the
+current regimex=S(t).
+•Excitation integral:the cumulative endogenous impact
+of all past events of typee ′ on the current arrival
+probability of evente, modulated by the current regime.
+The functionκ (x)e′→e(τ)is theexcitation kernel: it determines
+how the impact of a past event of typee ′ on future events of
+typeedecays with the elapsed timeτ >0. The specification of
+κis a central modelling choice of this paper, and we consider
+four alternatives, introduced next.
+6
+/uni00000013 /uni00000018 /uni00000014/uni00000014 /uni00000014/uni0000001a /uni00000015/uni00000016
+/uni00000027/uni00000048/uni0000004f/uni0000004c/uni00000059/uni00000048/uni00000055/uni0000005c/uni00000003/uni0000004b/uni00000052/uni00000058/uni00000055
+/uni00000014
+/uni00000013
+/uni00000014
+/uni0000002f/uni00000036/uni0000002c
+/uni0000002d/uni00000044/uni00000051/uni00000058/uni00000044/uni00000055/uni0000005c
+/uni00000013 /uni00000018 /uni00000014/uni00000014 /uni00000014/uni0000001a /uni00000015/uni00000016
+/uni00000027/uni00000048/uni0000004f/uni0000004c/uni00000059/uni00000048/uni00000055/uni0000005c/uni00000003/uni0000004b/uni00000052/uni00000058/uni00000055
+/uni00000024/uni00000053/uni00000055/uni0000004c/uni0000004f
+/uni00000013 /uni00000018 /uni00000014/uni00000014 /uni00000014/uni0000001a /uni00000015/uni00000016
+/uni00000027/uni00000048/uni0000004f/uni0000004c/uni00000059/uni00000048/uni00000055/uni0000005c/uni00000003/uni0000004b/uni00000052/uni00000058/uni00000055
+/uni0000002d/uni00000058/uni0000004f/uni0000005c
+/uni00000013 /uni00000018 /uni00000014/uni00000014 /uni00000014/uni0000001a /uni00000015/uni00000016
+/uni00000027/uni00000048/uni0000004f/uni0000004c/uni00000059/uni00000048/uni00000055/uni0000005c/uni00000003/uni0000004b/uni00000052/uni00000058/uni00000055
+/uni00000032/uni00000046/uni00000057/uni00000052/uni00000045/uni00000048/uni00000055
+Fig. 4. Liquidity Stress Score (LSI) by delivery hour for the first month of each quarter (January, April, July, and October 2024), one panel per month. Each
+box gives the interquartile range and median of the LSI for contracts of the corresponding delivery hour; whiskers mark the 5th and 95th percentiles. Within
+each month the boxes are flat and centered across all hours, and the four panels are nearly identical, showing that the slow-znormalization absorbs intraday
+seasonality and that the LSI distribution is consistent across delivery hours and across the training sample.
+D. Kernel Specifications
+Financial microstructure exhibits multi-scale memory: algo-
+rithms react in milliseconds, while human traders and slower
+strategies react over seconds or minutes. A kernel specification
+must therefore accommodate several coexisting timescales.
+The following two kernel specification families are considered
+in this work.
+1) Exponential-mixture Kernels
+The first family superposesRexponential components,
+κ(x)e′→e(τ) =
+RX
+r=1
+α(x,r)e′→e exp  −β (x,r)e′→e τ , τ >0,(9)
+with magnitudesα (x,r)e′→e ≥0and decay ratesβ (x,r)e′→e >0. Each
+componentrisolates one characteristic timescale1/β (x,r)e′→e, so
+that increasingRallows progressively richer structure in the
+market’s memory. We estimate (9) for three alternatives:R∈
+{1,2,3}.
+2) Power-law Kernel
+The second family does not impose a single characteristic
+decay timescale,
+κ(x)e′→e(τ) =α (x)e′→e  τ+c (x)e′→e−η(x)e′ →e , τ >0,(10)
+withα (x)e′→e ≥0, tail exponentη (x)e′→e >1and regularisation
+c(x)e′→e >0, the latter bounding the kernel atτ→0 +.
+The constraintη >1guarantees an integrable kernel. This
+specification embodies long-memory dynamics: the excitation
+decays polynomially rather than geometrically, so remote
+events retain non-negligible influence.
+3) Relation between The Two Families
+The two families are more closely related than their func-
+tional forms suggest. Forη >0andc >0, the power-law
+kernel can be written as a weighted average of exponential
+kernels,
+(τ+c) −η = 1Γ(η) Z ∞0 uη−1e−uc| {z }weightm(u) e−uτ| {z }exponential kernel du,(11)
+in which each decay rateureceives weightm(u)∝u η−1e−uc.
+A power-law kernel is thus a continuous mixture of exponen-
+tial kernels with a continuum of decay rates. TheR-component
+mixture (9) approximates the same object by replacing that
+continuum withRrepresentative decay rates.
+Equation (11) can be verified directly. It is an instance of
+Bernstein’s theorem [46], which states that a function on the
+positive half-line can be written as a mixture of exponentials
+precisely when it is completely monotone. The power-law
+kernel satisfies this condition, so a representation of the
+form (11) necessarily exists; the Gamma weight identifies the
+corresponding mixture. The same representation holds for any
+completely monotone kernel.
+This identity reframes the comparison. Rather than opposing
+two unrelated functional forms, the choice between them
+comes back to an empirical question:how many distinct
+timescales (i.e., exponential components) are required to de-
+scribe the market’s memory?
+Figure 5 makes this relationship explicit. Panel (a) contrasts
+the continuum of decay rates underlying the power-law ker-
+nel with the finitely many rates selected by the exponential
+mixtures. Panel (b) shows that the approximation is accurate
+over the range of lags used for calibration and improves
+whenRincreases, while panel (c) reports the associated
+approximation error. Here the error is measured as the largest
+relative gap between the two kernels over the comparison lag
+range, expressed as a percentage of the power-law kernel.
+This represents a worst-case error, and the typical gap is
+considerably smaller at most lags. The exponential mixtures
+shown are those that approximate the power-law kernel as
+closely as possible for a givenR. Beyond the calibration range,
+every finiteRexponential mixture decays geometrically and
+therefore underestimates the power-law tail, however largeR
+becomes.
+E. Multi-Session Log-Likelihood
+Letj= 1, . . . , Jindex the independent trading sessions,
+each with event times and types{(t (j)k , e(j)k )}Kjk=1 observed on
+the window[0, Tj], alongside an observed state pathS (j)(t)
+evaluated just before each event att (j)−k . The joint log-
+likelihood over all sessions is
+L(θ) =
+JX
+j=1
+
+
+KjX
+k=1
+logλ (j)e(j)k  t(j)k  − Xe∈E Z Tj0 λ(j)e (t)dt  ,
+(12)
+where the intensityλ (j)e (t)follows (8) conditioned on the
+prevailing regimeS (j)(t−). Expression (12) holds for any
+kernel; only the evaluation ofλand of the compensator
+R Tj
+0 λe
+depends on the specification.
+7
+10 2
+ 10 1
+ 100 101 102 103
+Decay rate u (s 1)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0m(u) (normalised)
+(a) Continuum vs. discrete rates
+power-law: continuum m(u)
+1-Exp rates
+2-Exp rates
+3-Exp rates
+10 2
+ 10 1
+ 100 101 102
+Elapsed time (s)
+10 5
+10 4
+10 3
+10 2
+10 1
+100
+( ) / (0)
+calibration range
+(b) Exponential approximation
+Power-law
+1-Exp
+2-Exp
+3-Exp
+20-Exp
+1 2 3 20
+Number of components R
+100
+101
+102
+max. relative error (%)
+98.4%
+54.9%
+17.9%
+2.3%
+(c) Approximation error
+Fig. 5. Relationship between the exponential-mixture and power-law kernels.(a)The power-law kernel corresponds to a continuum of exponential decay
+rates, weighted by the mixing densitym(u)∝u η−1e−uc of (11) (shaded). Markers indicate the decay rates selected forR=1-,2- and3by exponential
+mixtures fitted to the same kernel; their horizontal positions, not their heights, are informative.(b)Normalised kernels on a log–log scale. Within the calibration
+range (shaded) the exponential mixtures track the power-law increasingly closely asRgrows; beyond it they decay geometrically while the power-law decays
+polynomially, so the tail is underestimated for every finiteR.(c)Largest relative gap between theR-component approximation and the power-law kernel
+over the calibration range, as a percentage of the latter; it decreases withRbut does not vanish. Parameters are illustrative (η= 1.8,c= 0.05), and the
+exponential mixtures are fitted to the power-law kernel overτ∈[10 −2,10]s.
+1) Computational Structure and History Truncation
+The two families differ in the cost of evaluating (12). For
+the exponential kernel, define the partial excitation sums as
+Λ(x,r)e′→e(t) = X
+ti<t:e i=e′
+α(x,r)e′→e exp  −β (x,r)e′→e(t−t i).(13)
+Memorylessness of the exponential gives the exact recursion,
+for consecutive events separated by∆ =t k+1 −t k,
+Λ(x,r)e′→e(tk+1) =e −β(x,r)e′ →e∆Λ(x,r)e′→e(tk) +α (x,r)e′→e 1{ek =e ′}.
+(14)
+The intensity therefore depends on the past only through the
+finitely many running sums
+ 
+Λ(x,r)e′→er≤R: the entire event
+history is summarised byRnumbers per(e ′, x, e)cell, each
+updated in constant time as new events arrive. Evaluating (12)
+therefore requires a single pass through the data.
+The power-law kernel admits no comparable summary. By
+(11) it corresponds to a continuum of decay rates, and no finite
+collection of running sums reproduces it, soλ e(t)depends
+on the full event history and every event must be compared
+with all of its predecessors. To keep estimation tractable, we
+truncate the excitation at a horizon∆ max, retaining in the
+sum (8) only those past events satisfyingt−t i ≤∆ max.
+The consequences of this approximation are discussed in
+Section III-I.
+F . Parameter Count and Computational Cost
+1) Parameter Counts
+WithE= 2event types andX= 2regimes, each kernel
+tensor is indexed by(e ′, x, e)and therefore carriesE2X= 8
+entries, while the baseline matrixµcarriesXE= 4. Each
+additional exponential component thus adds8parameters to
+αand8toβ. The power-law kernel replaces the decay tensor
+βby the pair(η, c), contributing8tail exponents and8
+regularisation constants. Table II summarizes the number of
+parameters inθfor each specification.
+The power-law specification is thusmore parsimonious
+than the two- and three-component exponential mixtures. It
+encodes multi-scale memory through a tail exponent rather
+TABLE II
+NUMBER OF ESTIMATED PARAMETERS PER SPECIFICATION(E= 2,
+X= 2).
+Modelµ α β(η, c)Total
+1-Exp 4 8 8 – 20
+2-Exp 4 16 16 – 36
+3-Exp 4 24 24 – 52
+Power-law 4 8 –8 + 828
+than through additional timescales. Its cost is computational
+rather than dimensional.
+2) Algorithmic Complexity
+The cost of a single likelihood evaluation differs across the
+two families, as summarised in Table III. Exponential kernels
+admit the recursive update (14): at each event the running
+sumsΛ e′,x,e,r, a tensor of sizeR E2X, are rescaled bye −β∆t ,
+at a cost ofO(RE 2X)operations that does not depend on
+how much history precedes the event. The total cost of one
+evaluation is thereforeO(N RE 2X): it growslinearlyin the
+number of eventsN, and doubling the sample doubles the
+cost.
+The power-law kernel admits no such recursion, since
+(∆t+c)−η cannot be decomposed across consecutive intervals.
+Each event must instead be compared with every preceding
+event retained inside the truncation window∆ max introduced
+in Section III-E1, at a cost ofO( ¯W E)per event, where
+¯W= ¯λ∆ max is the mean number of events falling inside a
+window and ¯λthe mean event rate. Two features of this bound
+matter in practice. First, without truncation ¯Wgrows with the
+sample itself and the total cost becomesquadratic,O(N 2E),
+so that doubling the sample quadruples the cost. Second, ¯W
+is proportional to the local event rate, so the cost per event is
+not uniform across the sample: it rises with book activity, and
+is therefore greatest during the dense, liquid periods that are
+of primary interest here.
+8
+TABLE III
+PER-EVALUATION ALGORITHMIC COMPLEXITY FORR-EXP ANDPOWER
+LAW.NDENOTES THE NUMBER OF EVENTS AND ¯W= ¯λ∆max THE MEAN
+NUMBER OF EVENTS PER TRUNCATION WINDOW.
+Model Per-event Total History
+R-ExpO(RE 2X)O(N RE 2X)Recursive
+Power-law (no trunc.)O(N E)O(N 2E)Full
+Power-law (∆max)O( ¯W E)O(N ¯W E)Windowed
+G. Branching Matrix, Stability, and Spillover
+For each regimex, the kernel integrals assemble into the
+branching matrixG (x) ∈R E×E+ ,
+G(x)e′e =
+Z ∞
+0
+κ(x)e′→e(τ)dτ,(15)
+whose entryG (x)e′e is the expected number ofdirectoffspring
+events of typeetriggered by a single event of typee ′ while the
+system is in regimex(rows index the sourcee ′, columns the
+targete). Equivalently, it is the total increment in the intensity
+ofeaccumulated over all future horizons following one event
+of typee ′. Specialising (15) to the two families gives
+G(x)e′e =
+RX
+r=1
+α(x,r)e′→e
+β(x,r)e′→e andG (x)e′e = α(x)e′→e  c(x)e′→e1−η(x)e′→eη(x)e′→e −1 ,(16)
+respectively, the latter requiringη (x)e′→e >1.
+Letρ x =ρ
+ 
+G(x) denote the spectral radius ofG (x), that
+is, the largest modulus among its eigenvalues. The stability
+condition for a multivariate Hawkes process is
+ρx <1, x∈ {0,1},(17)
+which guarantees asubcriticalprocess: each event triggers, on
+average, fewer than one direct successor, so activity initiated
+by an exogenous shock eventually dies out and the expected
+number of events it generates is finite. Whenρ x ≥1the
+process is supercritical: activity becomes self-sustaining and
+the expected number of events generated by a single shock is
+unbounded.
+The magnitude ofρ x has a direct economic interpretation as
+theendogeneity, or reflexivity, of the regime: it measures the
+share of order flow generated by the market’s own past activity
+rather than by exogenous information arrival. A value near
+zero describes a market driven by outside news; a value near
+one describes a market in which order flow is overwhelmingly
+a reaction to other order flow, so that shocks propagate with
+little attenuation.
+Under (17) the process admits a cluster representation: each
+exogenous event initiates a cluster of subsequent events, in
+which every event may in turn trigger further ones. The matrix
+power
+ 
+G(x)n then records the expected number of events
+arising at then-th order from the initiating event, and summing
+over all such rounds yields thespillover multiplier
+Ψ(x) =
+∞X
+n=0
+ 
+G(x)n =  I−G (x)−1,(18)
+whose entryΨ (x)e′e is the expected total number of events of
+typeebelonging to the cluster initiated by one exogenous
+event of typee ′. Then= 0term contributes the identity,
+so the diagonal entries count the initiating event itself; the
+geometric series converges precisely whenρ x <1.
+H. Estimation
+We estimateθby penalised maximum likelihood. For the
+exponential familyθ={µ, α, β}; for the power-law family
+θ={µ, α, η, c}.
+1) Per-state Spectral-radius Penalty
+Because stability strictly requiresρ x <1, we penalise
+subcriticality during optimisation above a target threshold
+ρ⋆ <1:
+P(θ) =
+1X
+x=0
+ωx
+
+max{0, ρx −ρ ⋆}2, ω x >0.(19)
+Crucially,ρ x in (19) is the spectral radius of theregime-
+specificmatrixG (x) defined in (15), evaluated separately
+for each regimex. The parameters are then estimated by
+maximising the penalised objective
+J(θ) =L(θ)− P(θ).(20)
+We setρ ⋆ = 0.95andω x =ω= 10 3 for both regimes. The
+penalty is a soft constraint: it is inactive whereverρ x ≤ρ ⋆,
+and it grows quadratically beyond the threshold to discourage
+the supercritical region. Because the constraint binds for some
+fits, we report the magnitude ofP( ˆθ)alongside the estimates.
+2) Parametrisation and Optimisation
+The objective (20) is maximised by the L-BFGS-B quasi-
+Newton algorithm, using analytical gradients of bothLand
+P; these are derived in Appendix C.
+Both families are estimated in logarithmic coordinates. For
+the exponential family we optimise in
+ 
+logµ,logα,logβ
+
+,
+which enforces positivity without explicit constraints and
+rescales each gradient by the magnitude of its own parameter,
+so that baselines and decay rates, which differ by several orders
+of magnitude, become comparably responsive. For the power-
+law family we parametrise as
+ 
+logµ,logα,log(η−1),logc
+
+;
+the logarithm ofη−1is bounded away from−∞because
+the branching integral (16) is singular asη↓1, a singular-
+ity that would otherwise render the objective ill-conditioned
+near that boundary. The initialisation of the decay rates and
+excitation coefficients, and the box constraints imposed during
+optimisation, are described in Appendix H.
+A fit is treated as converged only when the optimiser
+terminates on its first-order and relative-reduction criteria,
+rather than on an iteration or function-evaluation budget. Fits
+terminating on a budget are recorded as non-converged.
+I. Limitations of the Power-Law Approximation
+The truncation introduced in Section III-E1 warrants explicit
+discussion.
+The exponential kernels are evaluatedexactly: the recursion
+(14) is algebraically equivalent to the untruncated intensity.
+The power-law likelihood, by contrast, is evaluated on a
+kernel truncated at∆ max, and therefore approximates different
+quantity. Two consequences follow.
+First, the log-likelihood attained by the power-law specifi-
+cation is an approximation whose bias decreases with∆ max
+9
+but does not vanish. Any comparison of likelihood-based
+quantities across the two families must be read in that light,
+since one is computed exactly and the other is not.
+Second, the branching integral (16) for the power-law
+integrates the kernel over[0,∞), whereas the likelihood
+constrains the kernel only on[0,∆ max]. The tail mass beyond
+the truncation horizon is therefore extrapolated rather than
+estimated, andρ x inherits that extrapolation—an effect that
+grows asη (x)e′→e ↓1, precisely where the tail is heaviest. To
+quantify it, we report alongsideρ x the truncated branching
+radius obtained by integratingκonly to∆ max; a material gap
+between the two indicates that the stability estimate is driven
+by unobserved tail mass.
+These limitations follow from the absence of a recursive
+representation for the power-law kernel that makes it com-
+putationally heavy, and they are the price of relaxing the
+assumption of a finite number of timescales.
+IV. RESULTS
+A. Kernel Comparison and Model Selection
+We estimate the model separately for each contract, using
+the first month of each quarter of 2024: January, April, July
+and October of the Dutch XBID IDC market from EPEX
+SPOT. Each contract is fitted with four excitation kernels: the
+one-, two- and three-component exponential mixtures (1-Exp,
+2-Exp, 3-Exp) and the power-law kernel. This yields 2,915
+contract-level fits.
+This subsection compares the four kernels and selects the
+specification used in the remainder of the paper. The com-
+parison uses five criteria, reported in the following order. We
+begin with two formal tests on the time-rescaled residuals:
+the Kolmogorov–Smirnov test of the marginal distribution
+and the Ljung–Box test of residual independence. We then
+report the Wasserstein distance between the empirical residual
+distribution and its theoretical counterpart, which measures
+how far a model is from correct specification. We then turn to
+two likelihood-based criteria, the negative log-likelihood per
+event and the pairwise probability that one kernel attains a
+higher likelihood than another on the same contract. Finally,
+we report the share of estimations that converged, since a
+specification that fits well but converges rarely is not usable.
+All criteria are computed per contract and then aggregated,
+first by month and then across the four months.
+1) Time-rescaled Residuals
+Goodness of fit is assessed using residual analysis based on
+the Random Time Change Theorem. For each event typeewe
+compute the time-rescaled residuals
+rn,e =
+Z tn,e
+tn−1,e
+λe(t)dt,(21)
+which are i.i.d.Exp(1)under correct specification. Because
+the model is regime-dependent, we also compute state-
+conditional residuals
+r(x)k,e =
+Z t(x)k,e
+t(x)k−1,e
+1{S(t) =x}λ e(t)dt,(22)
+restricting attention to type-eevents occurring in statex;
+these are alsoExp(1)under correct regime-wise specification.
+Further detail is given in Appendix A.
+Equations (21) and (22) give four residual streams per
+contract: Hourly and Quarter-Hourly submissions, each in
+the Normal and Stressed regimes. Every criterion below is
+computed on these streams. Two properties of this construction
+matter for the comparison. First, the null distribution does not
+depend on the model parameters, so residual-based criteria
+are directly comparable across the exponential and power-
+law families, unlike likelihood-based criteria. Second, the
+residuals test two distinct implications of correct specification,
+the marginal distribution and independence, and a model may
+satisfy one while violating the other; we therefore report both.
+2) Distributional and Independence Tests
+Table IV reports the share of contract-level tests that do
+not reject the respective null hypotheses: the Kolmogorov–
+Smirnov test for theExp(1)null (left panel) and the Ljung–
+Box test of no residual serial correlation (right panel).
+For the Kolmogorov–Smirnov test, the 3-Exp kernel passes
+most often in three of the four months and pooled across all
+months, with the 2-Exp kernel close behind and marginally
+ahead in July. The single-exponential kernel passes least often
+in every month, and the power-law kernel lies between the
+single-exponential kernel and the richer mixtures. The ordering
+is the same in three months out of four.
+Pass rates are much lower for the Ljung–Box test than
+for the Kolmogorov–Smirnov test, between 9% and 35% de-
+pending on the kernel and month. Residual serial dependence
+therefore remains for a majority of contracts under all four
+specifications, and no kernel considered here can be regarded
+as correctly specified in this respect. The relative ordering is
+nevertheless consistent: the two- and three-component mix-
+tures leave the least serial dependence and are close to each
+other, while the power-law kernel leaves clearly the most,
+passing on only 14.4% of contract-stream pairs pooled across
+months.
+3) Distance to the Theoretical Distribution
+A test reports only whether a contract is rejected, not how
+large the departure from the null is. Two specifications can
+therefore show similar pass rates while differing in how closely
+they fit. We therefore also measure the size of the departure,
+using the first Wasserstein distanceW 1 between the empirical
+distribution of the residuals of a contract and theExp(1)law.
+Smaller values indicate a closer fit. Table V reports the median
+across contracts by month.
+The ranking matches that of the two tests and is stable across
+months. The gain from adding a second exponential compo-
+nent is substantial, from 0.0834 to 0.0661 pooled, a reduction
+of about 21%, while the further gain from a third component
+is small, from 0.0661 to 0.0651, about 1.5%. The power-law
+kernel has the largest distance in every month. Absolute fit
+is somewhat better in October than in the other months for
+all four kernels, indicating month-to-month variation in how
+well the model describes the data, but this does not alter the
+ranking.
+Figure 6 presents the same comparison graphically, together
+with the breakdown by event stream and regime.
+The breakdown by stream in Table VI shows where the
+kernels differ most.
+Differences between kernels are small in the Normal regime
+and larger in the Stressed regime, where the single-exponential
+10
+TABLE IV
+SHARE OF CONTRACT-LEVEL TESTS THAT DO NOT REJECT THE RESPECTIVE NULL HYPOTHESES,BY MONTH AND KERNEL. THE LEFT PANEL SHOWS THE
+KOLMOGOROV–SMIRNOV TEST FOR THEExp(1)NULL;THE RIGHT PANEL SHOWS THELJUNG–BOX TEST FOR THE ABSENCE OF RESIDUAL SERIAL
+CORRELATION. HIGHER IS BETTER;THE BEST KERNEL IN EACH ROW IS IN BOLD.
+Kolmogorov–Smirnov (Distribution) Ljung–Box (Independence)
+Month 1-Exp 2-Exp 3-Exp Power-law 1-Exp 2-Exp 3-Exp Power-law
+January 0.826 0.9100.9240.897 0.235 0.3380.3500.213
+April 0.857 0.9280.9310.886 0.245 0.2550.2630.159
+July 0.8720.9220.918 0.904 0.2150.2490.237 0.117
+October 0.869 0.9300.9320.914 0.1900.2260.220 0.087
+All 0.856 0.9220.9260.900 0.221 0.2670.2680.144
+/uni0000002d/uni00000044/uni00000051/uni00000058/uni00000044/uni00000055/uni0000005c /uni00000024/uni00000053/uni00000055/uni0000004c/uni0000004f /uni0000002d/uni00000058/uni0000004f/uni0000005c /uni00000032/uni00000046/uni00000057/uni00000052/uni00000045/uni00000048/uni00000055/uni00000013/uni00000011/uni00000013/uni00000013
+/uni00000013/uni00000011/uni00000013/uni00000015
+/uni00000013/uni00000011/uni00000013/uni00000017
+/uni00000013/uni00000011/uni00000013/uni00000019
+/uni00000013/uni00000011/uni00000013/uni0000001b
+/uni00000013/uni00000011/uni00000014/uni00000013/uni00000030/uni00000048/uni00000047/uni0000004c/uni00000044/uni00000051/uni00000003/uni0000003a/uni00000014/uni00000003/uni00000047/uni0000004c/uni00000056/uni00000057/uni00000044/uni00000051/uni00000046/uni00000048
+/uni0000000b/uni00000044/uni0000000c/uni00000003/uni00000025/uni0000005c/uni00000003/uni00000050/uni00000052/uni00000051/uni00000057/uni0000004b
+/uni00000028/uni0000005b/uni00000053/uni00000003/uni00000014
+/uni00000028/uni0000005b/uni00000053/uni00000003/uni00000015
+/uni00000028/uni0000005b/uni00000053/uni00000003/uni00000016
+/uni00000033/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni0000002f/uni00000044/uni0000005a
+/uni0000002b/uni00000052/uni00000058/uni00000055/uni0000004f/uni0000005c
+/uni00000031/uni00000052/uni00000055/uni00000050/uni00000044/uni0000004f
+/uni0000002b/uni00000052/uni00000058/uni00000055/uni0000004f/uni0000005c
+/uni00000036/uni00000057/uni00000055/uni00000048/uni00000056/uni00000056/uni00000048/uni00000047
+/uni00000034/uni0000002b
+/uni00000031/uni00000052/uni00000055/uni00000050/uni00000044/uni0000004f
+/uni00000034/uni0000002b
+/uni00000036/uni00000057/uni00000055/uni00000048/uni00000056/uni00000056/uni00000048/uni00000047
+/uni00000013/uni00000011/uni00000013/uni00000013
+/uni00000013/uni00000011/uni00000013/uni00000015
+/uni00000013/uni00000011/uni00000013/uni00000017
+/uni00000013/uni00000011/uni00000013/uni00000019
+/uni00000013/uni00000011/uni00000013/uni0000001b
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000015/uni00000030/uni00000048/uni00000047/uni0000004c/uni00000044/uni00000051/uni00000003/uni0000003a/uni00000014/uni00000003/uni00000047/uni0000004c/uni00000056/uni00000057/uni00000044/uni00000051/uni00000046/uni00000048
+/uni0000000b/uni00000045/uni0000000c/uni00000003/uni00000025/uni0000005c/uni00000003/uni00000048/uni00000059/uni00000048/uni00000051/uni00000057/uni00000003/uni00000056/uni00000057/uni00000055/uni00000048/uni00000044/uni00000050/uni00000003/uni00000044/uni00000051/uni00000047/uni00000003/uni00000055/uni00000048/uni0000004a/uni0000004c/uni00000050/uni00000048
+Fig. 6. Goodness of fit of the four kernels. Panel (a) reports the medianW 1 distance between the time-rescaled residuals and theExp(1)law, by month.
+Panel (b) reports the same quantity pooled across mon

@@ -1,0 +1,9 @@
+{
+ "c_gex": -0.00537,
+ "c_span_rel": 0.07401,
+ "m_gex": 1.5068,
+ "m_span_rel": 0.8637,
+ "n": 1691,
+ "oos_gain_pct": 1.89,
+ "fit": "2019-2025 log NQ range on brain features + VIX + SPX gex + wall span / its 60-day median"
+}

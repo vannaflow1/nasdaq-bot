@@ -1,0 +1,27 @@
+[
+ {
+  "id": 1,
+  "date": "2026-10-20",
+  "title": "Intraday Option Quotes and Trades",
+  "for": "claude",
+  "type": "data",
+  "why": "I need intraday option quotes and trades to improve my strategy tests and reduce translation failures.",
+  "evidence": "1x needs intraday option quotes and trades, as well as a reinforcement learning approach",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
+ },
+ {
+  "id": 2,
+  "date": "2026-10-20",
+  "title": "Dealer Gamma Positions Data",
+  "for": "owner",
+  "type": "data",
+  "why": "I need dealer gamma positions data to better understand market dynamics and improve my strategies.",
+  "evidence": "1x needs intraday option and stock prices, as well as dealer gamma positions",
+  "impact": "medium",
+  "status": "declined",
+  "votes": 1,
+  "note": "Volta already estimates dealer gamma from QQQ/NDX/SPX chains; true dealer positions aren't sold to retail. Declined by Claude (20 Oct)."
+ }
+]

@@ -1,0 +1,36 @@
+name: live
+on:
+  workflow_dispatch:
+    inputs:
+      dry:
+        description: "dry run (print only)"
+        default: "yes"
+      ping:
+        description: "post a hello to the live channel"
+        default: "no"
+      at:
+        description: "simulate a past moment, Chicago time, e.g. 2026-10-16 10:30 (dry runs only)"
+        default: ""
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          ARGS=""
+          [ "${{ github.event.inputs.ping }}" = "yes" ] && ARGS="--ping"
+          [ "${{ github.event.inputs.dry }}" = "yes" ] && [ "${{ github.event.inputs.ping }}" != "yes" ] && ARGS="--dry"
+          [ -n "${{ github.event.inputs.at }}" ] && ARGS="$ARGS --at"
+          if [ -n "${{ github.event.inputs.at }}" ]; then python3 live_tracker.py $ARGS "${{ github.event.inputs.at }}"; else python3 live_tracker.py $ARGS; fi 2>&1 | tee last_live.log
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_LIVE: ${{ secrets.DISCORD_WEBHOOK_LIVE }}
+      - if: always()
+        run: bash .github/actions_common.sh "live"

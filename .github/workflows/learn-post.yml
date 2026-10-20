@@ -1,0 +1,29 @@
+name: learn-post
+on:
+  push:
+    branches: [main]
+    paths: ["knowledge/learned_today.json", "knowledge/announce.json"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: python learn_post.py && python vault.py
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+          DISCORD_WEBHOOK_LEARN: ${{ secrets.DISCORD_WEBHOOK_LEARN }}
+      - if: always()
+        run: bash .github/actions_common.sh "learn-post"

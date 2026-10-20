@@ -1,0 +1,32 @@
+name: manual
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "test | evening | morning | trump | brain | brainping | nerd | nerdping"
+        default: test
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: python nasdaq_bot.py --${{ inputs.mode }} --force 2>&1 | tee last_manual_run.log
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+          DISCORD_WEBHOOK_NERD: ${{ secrets.DISCORD_WEBHOOK_NERD }}
+          PYTHONUNBUFFERED: "1"
+      - if: always()
+        run: bash .github/actions_common.sh "manual-${{ inputs.mode }}"

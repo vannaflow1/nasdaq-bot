@@ -1,0 +1,936 @@
+Equilibrium Eﬀects of Intraday Order-Splitting Benchmarks∗
+Jin Hyuk Choi
+Ulsan National Institute of Science and Technology (UNIST)
+Kasper Larsen
+Rutgers University
+Duane J. Seppi
+Carnegie Mellon University
+March 31, 2020
+Abstract: This paper presents a continuous-time model of intraday
+trading, pricing, and liquidity with dynamic TWAP and VWAP bench-
+marks. The model is solved in closed-form for the competitive equilib-
+rium and also for non-price-taking equilibria. The intraday trajectories
+of TWAP trading targets cause predictable intraday patterns of price
+pressure, and randomness in VWAP target trajectories induces ad-
+ditional randomness in intraday price-pressure patterns. TWAP and
+VWAP trading both reduce market liquidity and increase price volatil-
+ity relative to just terminal trading targets alone. The model is com-
+putationally tractable, which lets us provide a number of numerical
+illustrations.
+Keywords: Dynamic trading, TWAP, VWAP, portfolio rebalancing, liq-
+uidity, market-maker inventory, equilibria, market microstructure
+∗The authors have beneﬁted from helpful comments from Yashar Barardehi, Umut Cetin, Chris Frei,
+Steve Karolyi, Ajitesh Mehta, Johannes Muhle-Karbe, Dan Ocone, Tom Ruchti, Chester Spatt,
+Harvey Stein, Kim Weston, Ariel Zetlin-Jones, and seminar participants at Carnegie Mellon Univer-
+sity, Columbia University, IAQF/Thalesians, and Intech. Kasper Larsen is partly supported by the
+National Science Foundation (NSF) under Grant No. DMS 1812679 (2018 - 2021). Any opinions,
+ﬁndings, and conclusions or recommendations expressed in this material are those of the authors and
+do not necessarily reﬂect the views of the National Science Foundation (NSF). Jin Hyuk Choi has
+email: jchoi@unist.ac.kr and Duane J. Seppi has email: ds64@andrew.cmu.edu. The corresponding
+author is Kasper Larsen. Kasper Larsen has email: KL756@math.rutgers.edu.
+arXiv:1803.08336v6 [q-fin.MF] 28 Mar 2020
+Dynamic order-splitting strategies are a prominent feature of present-day ﬁnancial
+markets. As described in O’Hara (2015), large asset managers use sequences of small
+child orders to trade on large latent meta parent demands. These strategies include
+heuristically mimicking the time-weighted average price (TWAP) or volume-weighted
+average price (VWAP) and also optimized strategies from formal execution-cost mini-
+mization problems (see, e.g., Almgren and Chriss, 1999 and 2000). The scale of order
+splitting in present-day markets is substantial. The Financial Insights (2006) trading
+survey reports that one popular strategy, VWAP execution orders, represents around
+50% of all institutional trading. 1 Dynamic trading strategies can be price-sensitive
+in that they respond to the price of liquidity as investors trade oﬀ price improvement
+and trading proﬁts vs. tracking error relative to intraday trading targets. 2 In addi-
+tion, high frequency market makers use dynamic strategies to supply liquidity while
+attempting to keep their inventory close to an intraday target of zero.3 The result is a
+complex ecosystem in which asset managers, other position-taking traders, and high
+frequency market makers all use dynamic trading strategies to supply and demand
+liquidity given diﬀerent benchmarked intraday targets.
+Our paper is the ﬁrst to model the equilibrium impact of TWAP, VWAP, and
+other dynamic benchmarks on intraday trading and liquidity. Speciﬁcally, we focus
+on liquidity eﬀects of order splitting rather than on information aggregation as in
+Kyle (1985). We take intraday trading target trajectories and penalties as inputs
+to our model, and then show how they aﬀect price dynamics and liquidity over the
+trading day via their eﬀect on aggregate order imbalances. In particular, we model
+a market with multiple price-sensitive investors with heterogeneous trading targets
+who follow optimal continuous-time dynamic strategies. We solve for equilibria in
+closed-form. Our main results are as follows:
+• Order-splitting benchmarks like TWAP, Almgren-Chriss targets, and VWAP
+1Large asset managers conduct dynamic trading strategies using in-house trading desks and also
+via principal and agency trading with external brokers.
+2Madhavan (2002) discusses price improvement on order execution relative to VWAP. Domowitz
+and Yegerman (2005) estimate empirical order-execution costs benchmarked relative to VWAP.
+3Hagstr¨ omer and Nord´ en (2013) and Menkveld (2013) show that high-frequency (HFT) market
+makers are an important source of intraday liquidity. A common feature of HFT market makers is
+that they have “very short time-frames for establishing and liquidating positions” (SEC 2010), which
+is consistent with a zero target inventory level. Weller (2013) shows further that liquidity over the
+trading day is provided by a network of liquidity providers with slower and faster trading latencies
+who shift inventory between themselves over holding periods of diﬀerent lengths. This behavior is
+also consistent with zero intraday inventory targets.
+1
+lead to predictable intraday price pressure due to persistant latent trading-
+demand imbalances. In particular, aggregate latent buy (sell) imbalances lead
+to positive (negative) price pressure at the market open that then decays, i.e.,
+trends down (up) on average, over the trading day.
+• Trading benchmarks reduce intraday liquidity and increase price volatility rel-
+ative to when investors just have terminal end-of-day trading targets. This is
+because penalties for intraday deviations from trading target trajectories reduce
+the inventory-holding ﬂexibility of investors over the day.
+• Comparative static results lead to empirical predictions about price dynamics.
+For example, market illiquidity and price volatility in a competitive Radner equi-
+librium are increasing in investor order-execution costs and inventory penalties
+for trading deviations from trading target trajectories.
+• In a competitive Radner equilibrium, price-sensitive investors deviate from their
+ideal trading targets by a fraction of the aggregate latent trading-demand imbal-
+ance. In non-price-taking equilibria, investor target deviations can also depend
+on individual investor targets.
+Our research is related to several prior research literatures. First, there is a large
+optimal control literature on optimal order execution with exogenous price impact.
+This includes Bertsimas and Lo (1998); Almgren and Chriss (1999, 2000); Gatheral
+and Schied (2011); Engle et al., (2012); Predoiu et al., (2011); Boulatov et al., (2016)
+and other research surveyed in Gatheral and Shied (2013). In contrast, we model
+dynamic trading benchmarks and their eﬀects in an equilibrium framework. Second,
+the practice of benchmarking order-execution quality with VWAP and other metrics
+is described in Berkowitz, Logue, and Noser (1988) and Madhavan (2002). 4 Bal-
+dauf, Frei, and Mollner (2018) show that VWAP benchmarking is optimal for certain
+principal-agent problems in delegated order execution. In contrast, we model the
+market eﬀects of trading benchmarks rather than the reasons why investors use such
+strategies. Third, Korajczyk and Murphy (2019), van Kervel and Menkveld (2018),
+and van Kervel, Kwan, and Westerholm (2018) document empirical interactions be-
+tween dynamic trading by diﬀerent investors. Our work is most closely related to
+van Kerval et al. (2018), which shows theoretically and empirically how dynamic
+4Implementation shortfall is another alternative trading benchmark; see Perold (1988).
+2
+trading strategies interact across multiple strategic investors. In contrast, we model
+the equilibrium price eﬀects of dynamic trading as well as trading interaction eﬀects.
+Our analysis extends the costly inventory model of market making — see, e.g.,
+Garman (1976), Stoll (1978), and Grossman and Miller (1988) — by allowing for
+endogenous arriving orders from optimized order-splitting strategies. In particular,
+our model highlights the idea that, with endogenous investor trading demand, price
+pressure in equilibrium prices is not just due to inventory-holding costs of liquidity
+providers on executed transactions. Rather, equilibrium price pressure also depends
+on the underlying latent investor trading-demand imbalances. In order for markets to
+clear, equilibrium prices deter investors from trading on trading demands for which
+is there is no counterparty and, thus, which do not lead to executed transactions.
+This is a new perspective relative to more transactional market microstructure mod-
+els, but one that is consistent with empirical evidence in van Kerval et al. (2018)
+that large investors trade less in the direction of aggregate imbalances in underlying
+parent trading demands. Our modeling approach is related to previous research by
+Brunnermeier and Pedersen (2005) and Carlin, Lobo, and Viswanathan (2007) on
+optimal rebalancing and predatory trading. There are two main diﬀerences: First,
+investors in our model are subject to penalties tied to intraday trading target tra-
+jectories rather than to just a single hard terminal constraint at the end of the day.
+Second, there are no ad hoc intraday liquidity providers in our model. Instead, all
+intraday liquidity is provided endogenously by rational optimizing investors. As a
+result, there is no predatory trading in our model even when investors are strategic. 5
+Our paper also builds on the Vayanos (1999) dynamic trading model. Like Vayanos
+(1999) — and the continuous-time extension in Sannikov and Skrzypacz (2016) —
+our model includes investors who smooth a series of random intraperiod shocks but,
+in addition, we also have investors with private heterogeneous trading target trajec-
+tories they would like to follow over the day. The discrete-time model in Du and Zhu
+(2017) also has quadratic penalties but with zero targets and has private dividend
+information (whereas dividend information is public in our model).
+5Predatory trading is a manipulative strategy to buy (sell) to raise (lower) prices artiﬁcially and
+then unwind these positions at a proﬁt given price support from predictable persistent buying (sell-
+ing) by a large investor rebalancing its portfolio. In Brunnermeier and Pedersen (2005), predatory
+trading is possible because of ad hoc liquidity providers who trade using exogenous linear sched-
+ules that do not rationally anticipate predictable future price changes later in the day given earlier
+trading.
+3
+Our model is also related to Gˆ arleanu and Pedersen (2016) and the multi-investor
+extension in Bouchard, Fukasawa, Herdegen, and Muhle-Karbe (2018). In these com-
+petitive equilibrium models, traders incur penalties based on their stock holdings and
+their trading rates. Our model diﬀers because we allow for possible price-impact of
+individual trades and for non-zero trading targets that are ex ante private information.
+Lastly, there is no asymmetric information about future asset cash-ﬂow fundamen-
+tals in our model. Thus, our analysis here on trading and non-informational price
+pressure is complementary to Choi, Larsen, and Seppi (2019), which studies order-
+splitting and dynamic rebalancing in a Kyle (1985) style market in which a strategic
+informed investor with long-lived private information and a strategic rebalancer with
+a hard terminal trading target both follow dynamic trading strategies.
+1 Model primitives
+The goal of our analysis is to model the equilibrium eﬀects of TWAP and other intra-
+day trading benchmarks on prices and trading. Thus, the necessary model ingredi-
+ents are investors who have heterogeneous trading targets and penalties for deviating
+from their intraday targets and who are price-sensitive so that market-clearing can
+be endogenized. Moreover, given the high empirical frequency of child orders in dy-
+namic order-execution strategies in Korajczyk and Murphy (2019) and van Kervel
+and Menkveld (2018), modeling these eﬀects in continuous time is appropriate.
+We develop a continuous-time equilibrium model with a unit time horizon in which
+trade takes place at each time point t∈ [0, 1]. This can be interpreted as one trading
+day. There are two securities: A money market account with a constant unit price
+(i.e., the account pays a zero interest rate) and a stock with an endogenously deter-
+mined price process S = (St)t∈[0,1]. Information about future dividends is generated
+by an exogenous standard Brownian motion D = (Dt)t∈[0,1] with a given known ini-
+tial value D0∈ R, zero drift, and volatility normalized to one. Here Dt denotes the
+expected present value at time t≤ 1 of subsequent future dividends, where D1 is
+the expectation at the end of the day. The market microstructure literature calls Dt
+the “fundamental asset value.” In our model, the diﬀerence St−Dt is price pressure
+required to clear the stock market.
+Investors in our model all follow optimal trading strategies that trade oﬀ trading
+proﬁts/costs and diﬀerent types of inventory-holding penalties. For a generic investor
+4
+i, let θi,t denote the investor’s actual stock holdings at time t∈ [0, 1]. By subtracting
+any initial stock position, we can, without loss of generality, normalize initial stock
+positions θi,− to zero. Let θci,− denote the trader’s initial cash money-market bal-
+ance. Formally, the optimal stock holdings for each investor i over the day solve an
+optimization problem
+Vi(Xi,0) := sup
+θi∈Ai
+E
+[
+Xi,1−Li,1
+⏐⏐⏐Fi,0], (1.1)
+where Xi,1 is the investor’s terminal wealth at t = 1 given her trading gains or losses
+over the day given by the wealth process
+Xi,t :=θci,− +
+∫ t
+0
+θi,udSu, t ∈ [0, 1], (1.2)
+where Xi,0 :=θci,− is investori’s initial wealth (i.e., initial cash balance in her money
+market account) and where Li,1 in (1.1) is an investor-speciﬁc terminal cumulative
+inventory penalty at t = 1 that accrues over the day. The initial information set Fi,0
+in (1.1) is formally deﬁned in (1.12), and the admissible set of controls Ai is deﬁned
+in Deﬁnition 2.1.
+Two types of investors trade in our model with diﬀerent holding penalties:
+• There are M∈ N price-sensitive targeted investors whose terminal penalty Li,1
+accrues via a penalty process
+Li,t :=
+∫ t
+0
+κ(s)
+(
+θi,s−γ(s)˜ai
+)2
+ds, t ∈ [0, 1], i ∈{ 1,...,M}, (1.3)
+where ˜ai is investor i’s end-of-day target stock holdings and γ(t)˜ai is a trajec-
+tory of intraday target stock holdings. The function κ(t) describes the severity
+of penalties for deviations of actual holdings θi,t over time from the target tra-
+jectory γ(t)˜ai. The variables (˜ai,θci,−) are private knowledge of trader i but are
+partially revealed in equilibrium to other investors. At this point, we make no
+distributional assumptions about (˜a1,..., ˜aM) except that they are independent
+of the dividend-information Brownian motion D.6
+6We do not need to impose a Gaussian structure on the private information variables because
+our investors’ optimal strategies do not involve ﬁltering. This is because — as we shall see in (1.11)
+below — the equilibria we construct initially reveal a suﬃcient statistic for how investor rebalancing
+targets aﬀect price dynamics.
+5
+We diﬀerentiate between two types of targeted investors based on their trading
+targets ˜ai. We refer to traders with targets ˜ ai⁄= 0 as rebalancers. These are
+large asset managers who use dynamic order-execution algorithms to trade on
+their targets. Traders with ˜ai = 0 do not need to trade per se but can provide
+liquidity, and so we call these intraday liquidity providers.
+The target ratio γ(t) is a deterministic function that gives how much of her
+daily target ˜ai investori would ideally hold at each time t during the day. The
+trajectory γ(t)˜ai can be thought of as a time-weighted average price (TWAP)
+strategy or as, more generally, a variation on an Almgren-Chriss trading strat-
+egy.7 Realistically, the target ratio γ(t) should be non-decreasing over the day
+with γ(1) = 1 at the end of the day. For example, for a standard TWAP strat-
+egy, the target ratio grows linearly with time as γ(t) := t. Alternatively, for a
+more generalized strategy,γ(t) might follow the shape of the average cumulative
+volume curve over the trading day. The assumption that γ(t) is deterministic
+simpliﬁes the analysis. Later, Section 5 extends the model to allow for stochastic
+target ratios γt that are then related to VWAP trading in Section 6.
+• There areM∈ N price-sensitive realtime hedgers indexed byi∈{M +1,...,M +
+M}. These hedgers have have no private information. Their cumulative penalty
+Li,1 in (1.1) accrues via the process
+Li,t :=
+∫ t
+0
+κ(s)
+(
+θi,s−ϵBs
+)2
+ds, t ∈ [0, 1], i ∈{M + 1,...,M +M}, (1.4)
+which is similar to the common-value speciﬁcation in Sannikov and Skrzypacz
+(2016). In (1.4), the process B = (Bt)t∈[0,1] withB0 = 0 is a standard Brownian
+motion representing a publicly observable risk-factor that is independent of all
+other random variables, and ϵ≥ 0 scales the hedger target holdings relative to
+the risk-factor Bt.8 The hedgers’ penalty-severity function κ(s) is potentially
+diﬀerent from κ(s) in (1.3). In the special case κ(s) := 0, the hedgers reduce
+to risk-neutral Merton investors with potential price impact. Another special
+7It is a “variation” in the sense that Almgren and Chriss (1999, 2000) solve for optimal orders
+given speciﬁc risk and cost objectives, whereas we represent investor i’s risk and execution-cost
+objectives implicitly via the Li,t penalty.
+8For simplicity, we assume ϵ is constant. Alternatively, it could be a time-dependent function
+ϵ(t).
+6
+case isϵ := 0 in which the hedgers coincide with the intraday liquidity providers
+discussed above but with a possibly diﬀerent penalty-severity function κ.
+Trading by the hedgers injects intraday randomness (due toBt) in the aggregate
+trading-demand imbalances over the day. However, unlike noise traders, the
+hedgers are price-sensitive and optimize their trades.
+Investors optimize their trading in actual markets given a variety of considerations.
+These include both the underlying utility gains from changing their holdings and also
+bid-ask and other order-execution costs (if taking liquidity) or proﬁts (if providing
+liquidity), inventory and risk-management costs, and predictable wealth eﬀects due to
+trading with/against price pressure. Our analysis decomposes trading optimization
+for targeted investors into two parts: First, we interpret the intraday trajectoryγ(t)˜ai
+as a partially optimized strategy given the end-of-day latent target ˜ai and given order-
+execution, inventory, and risk-management costs but omitting wealth eﬀects due to
+price pressure. 9 Second, the targeted investor’s optimization problem in (1.1) then
+adjusts the partially optimized strategy γ(t)ai for price-pressure eﬀects to obtain
+the fully optimized strategy θi,t. In particular, (1.1) includes the expected gain/loss
+from how the holdings θi,t comove with/against price pressure and also an expected
+penalty, givenLi,t in (1.3), which is a reduced-form representing incremental increased
+order-execution, inventory, and risk-management costs given the deviation ofθi,t from
+the partially optimized trajectory γ(t)˜ai over the day.10 An analogous logic justiﬁes
+the hedger trading optimization (1.1) with the penalty in (1.4) except that now the
+partially optimized hedger strategy — given order-execution, risk-management, and
+inventory costs and ineﬃciency costs from incomplete hedging but not wealth eﬀects
+from price pressure — is the stochastic process ϵBt.
+Given this motivation, there are several speciﬁc points to note: First, the de-
+composition leading to (1.1) makes our model mathematically tractable, because the
+quantitiesγ(t), ϵ, κ(t), and κ(t) describing investor trading preferences are inputs in
+our analysis rather than something to be solved for formally.
+9In other words, γ(t)˜ai is the ideal trading trajectory if investor i could trade at prices Dt with
+just order-execution, risk, and inventory costs but without the price impact of order-ﬂow imbalances.
+10To keep the model parsimonious, we assume rebalancers and liquidity providers have the same
+penalty-severity functionκ(t) (where γ(t) does not matter for liquidity providers for whom ˜ai = 0).
+In a richer model, the liquidity-provider penalty severity might diﬀer due to additional market-
+making considerations such as funding costs, risk-aversion, moral hazard costs due to risk limits
+arising from in-ﬁrm principal-agent conﬂicts, and the fact that liquidity providers are more likely
+then rebalancers to earn than to pay the bid-ask spread.
+7
+Second, our analysis makes a distinction between price pressure St−Dt, which is
+explicitly modeled, and order-execution costs — like bid-ask spread add-ons, broker-
+age fees, and exchange fees — that are implicitly modeled as one of the determinants
+of the penalties Li,t in (1.3) and (1.4). 11 In particular, the target ratio function γ(t),
+hedging scalar ϵ, and penalty-severity functions κ(t) and κ(t) all implicitly depend
+on order-execution costs as well as on inventory and other costs. Intuitively, varia-
+tion in the target ratio γ(t) and penalty severity κ(t) over the day reﬂects, in part,
+time patterns in order-execution costs (e.g., U-shaped average bid-ask spreads, see
+McInish and Wood 1999, and price impacts, see Barardehi and Bernhardt 2018) and
+an intensifying inventory-holding preference to reach the target ˜ ai towards the end
+of the day. Our analysis allows, in particular, for penalty-severity functions κ(t) that
+explode towards the end of the trading day as t↑ 1 as well as for bounded penalty
+severities.
+Third, the targeted investors and hedgers are all price-sensitive, and so they ad-
+just their stock holdings θi,t relative to their intraday trading targets in response to
+premia and discounts in prices in order to clear the market over time given the aggre-
+gate latent trading-demand imbalances γ(t)˜aΣ + ¯MϵBt. In particular, their intraday
+targets are soft rather than hard constraints. Thus, there are two competing drivers
+in the objective (1.1). On one hand, neglecting the penalty term Li,1 in (1.1), investor
+i would maximize her expected trading proﬁt from liquidity provision. On the other
+hand, neglecting the wealth term Xi,1 in (1.1) means investor i would minimize the
+penalty Li,1. In this case, targeted investors i∈{ 1,...,M} would use the strategy
+γ(t)˜ai, and the hedgers i∈{ M + 1,...,M +M} would hold ϵBt. The equilibrium
+strategies ˆθi,t in (3.6) below strike an optimal balance between these two compet-
+ing forces where the penalty-severity functions κ(t) and κ(t) determine the relative
+importance of these two forces over the trading day [0 , 1].
+Fourth, an important point about the targeted investors is that they care, not just
+about their terminal trading targets ˜ai, but about the entire path of their holdings
+over the day relative to their intraday target trajectories γ(t)˜ai. In other words, the
+rebalancers’ latent stock demand over the day given ˜ai⁄= 0 has a time-varying trend
+controlled byγ(t). This aspect of our model — which allows us to study TWAP and
+other forms of targeted trading — is new relative to the previous literature, which
+11The implicit order-execution costs are add-ons on top of St for individual transactions of indi-
+vidual investors, whereas St−Dt is market-wide price pressure in all transactions for all investors.
+8
+has modeled constant zero targets (Du and Zhu 2017), driftless stochastic targets
+(Vayanos 1999 and Sannikov and Skrzypacz 2016), and ﬁxed terminal targets but no
+intraday targets (Brunnermeir and Pedersen 2005).
+Market clearing in the model takes the following form: Recall that all initial
+stock positions θi,− have been normalized to zero. Given an aggregate stock supply
+normalized to zero, market clearing requires equilibrium investor-holdings ˆθi,t over
+the day to satisfy 12
+M+M∑
+i=1
+ˆθi,t = 0 for all times t∈ [0, 1]. (1.5)
+The money market is also normalized to be in zero supply. By Walras law, clearing
+in the stock market implies clearing in the money market because investors use self-
+ﬁnancing strategies. In particular, we assume the initial money-market endowments
+θc1,−,...,θ cM+M,− clear the money market
+M+M∑
+i=1
+θci,− = 0. (1.6)
+The following analysis distinguishes between conceptually diﬀerent stock-price
+processes. Let S = (St)t∈[0,1] denote a generic stock-price process deﬁned in terms of
+its dynamics
+dSt :=µtdt +dNt, S 0 := ˆS0, (1.7)
+whereµ = (µt)t∈[0,1] is a generic drift process,N = (Nt)t∈[0,1] is a ﬁxed martingale, and
+ˆS0 is a ﬁxed initial stock price. The equilibrium price process we seek to determine
+is denoted by ˆS = ( ˆSt)t∈[0,1] and has two boundary conditions at times t∈{ 0, 1}:
+First, the equilibrium stock price ˆS1 at the end of the trading day at t = 1 is
+12It is possible to extend our model to include noise-trader orders such that the ﬂoating stock sup-
+ply becomes an exogenous stochastic processa(t)+b(t)Zt +c(t)Bt wherea,b , andc are deterministic
+functions of time t∈ [0, 1], Bt is the risk-factor Brownian motion in (1.4), and Zt is a Brownian
+motion independent of all other random variables.
+9
+pinned down by a reduced-form end-of-day requirement 13
+ˆS1 =D1 +ϕ0ϵB1 +ϕ1˜aΣ (1.8)
+where ϕ0,ϕ 1∈ R are exogenous constants and the total target imbalance is denoted
+by
+˜aΣ :=
+M∑
+i=1
+˜ai. (1.9)
+When our model is applied to a short time horizon (e.g., a trading day), the end-of-day
+price ˆS1 is assumed to be the overnight valuation that clears the stock market given
+the latent trading-demand imbalances due to the aggregate rebalancer and hedger
+targets. In particular, market-clearing at t = 1 at the end of the day is assumed to
+reﬂect overnight stock-holding by the rebalancers, market-makers, and hedgers and
+also possibly additional net stock demand from overnight liquidity providers who do
+not trade during the day. If ϕ1 > 0, then a positive aggregate latent target ˜aΣ pushes
+up the end-of-day price ˆS1 relative to D1 in order for markets to clear. Similarly, if
+ϕ0 > 0, then a positive hedging target ϵB1 also raises ˆS1 relative toD1. Both eﬀects
+are qualitatively natural for how latent trading-demand imbalances might aﬀect end-
+of-day prices. A special case of (1.8) is
+ˆS1 =D1. (1.10)
+This case applies if D1 is a liquidating dividend paid at time t = 1 (as in, e.g.,
+Grossman and Stiglitz 1980 and Kyle 1985) or, alternatively, if there are no overnight
+liquidity eﬀects in pricing at t = 1. For ( ˆSt)t∈[0,1] to satisfy (1.8) or (1.10), the price
+dynamics in (1.7) must be restricted as time approaches maturity (i.e., as t↑ 1).
+As we shall see in Theorem 3.2 below, the equilibrium stock-price process is linear
+in (Dt, ˜aΣ,Bt) with time-varying deterministic coeﬃcients. The terminal restriction
+(1.8) gives boundary conditions for these time-varying coeﬃcient functions. This
+allows us to derive endogenous intraday price and investor holding processes that are
+13If the terminal restriction (1.8) is eliminated, our model becomes simpler because the stock
+volatility becomes a free parameter and can, for example, be set to be one. The fact that competitive
+Radner equilibrium models without dividends have free volatilities is well-known; see, e.g., Theorem
+4.6.3 in Karatzas and Shreve (1998).
+10
+consistent with the assumed end-of-day price in (1.8).
+Second, all investors act as price-takers at time t = 0. This means the initial
+price S0 = ˆS0 in (1.7) is unaﬀected by individual investor holdings θi,0. This is for
+tractability. In addition, in equilibrium, the initial orders of investors cause the en-
+dogenous opening price ˆS0 to adjust to clear the market given the underlying latent
+trading-demand imbalance due to the aggregate target ˜aΣ. From a modeling perspec-
+tive, the initial stock price ˆS0 at time t = 0 is required to reveal the aggregate target
+˜aΣ deﬁned in (1.9) in the sense that
+σ( ˆS0) =σ(˜aΣ). (1.11)
+The measurability requirement (1.11) allows investors to avoid ﬁltering and thereby
+keeps the model tractable.
+The information structure of our model is as follows: For tractability, all traders
+have homogeneous beliefs in the sense that they all believe the processes ( D,B ) are
+the same independent Brownian motions. At each timet∈ [0, 1] over the trading day,
+the dividend-information process Dt and the real-time hedging factor Bt are publicly
+observed. At each time t∈ [0, 1], each investor i chooses a stock-holding position θi,t
+adapted to the ﬁltration 14
+Fi,t :=
+
+
+
+σ(Su,Du,Bu, ˜ai,θci,−)u∈[0,t], i = 1,...,M,
+σ(Su,Du,Bu,θci,−)u∈[0,t], i =M + 1,...,M +M. (1.12)
+While the risk factor Bt is observable, the requirement S0 = ˆS0 in (1.7) and the
+measurability property (1.11) ensure the total latent target ˜aΣ can be inferred from
+S0.
+2 Individual optimization problems
+This section gives a precise description of the optimization problem in (1.1) for the
+targeted investors and hedgers. Our analysis proceeds in two steps: First, we describe
+technical properties of the set of admissible holding strategiesAi in (1.1). Second, we
+14As usual in continuous-time models, certain stochastic integrals need to be martingales; see
+Deﬁnition 2.1 below for details. Also, as usual, we have implicitly augmented (1.12) with null-sets
+to ensure that the “usual conditions” hold (see, e.g., Protter 2004 for details).
+11
+construct perceptions of oﬀ-equilibrium market-clearing prices for a generic investor
+i in (1.1) when using an arbitrary holding strategy θi∈A i. Section 3 then derives
+equilibrium strategies ˆθi,t for investor i given these price beliefs.
+Step 1: The set of admissible strategiesAi for investori in (1.1) is deﬁned as follows
+where a c` agl` ad process is a left-continuous process with right limits:
+Deﬁnition 2.1. For a given stock-price processSt with driftµt and martingaleNt as
+in (1.7) with a predictable quadratic variation process ⟨N⟩t, we deﬁneFi,t by (1.12).
+A c` agl` ad processθi = (θi,t)t∈[0,1] adapted toFi,t is admissible, and we write θi∈A i,
+if the following integrability condition holds:
+E
+[∫ 1
+0
+(
+|θi,tµt|dt +θ2i,td⟨N⟩t)⏐⏐⏐Fi,0]<∞, i ∈{ 1,...,M +M}. (2.1)
+♦
+It is well-known that an integrability condition like (2.1) rules out doubling strategies
+(see, e.g., Chapters 5 and 6 in Duﬃe 2001). The equilibrium stock-holding process
+in (3.6) below is not bounded (because it depends linearly on Bt) but does still sat-
+isfy (2.1). There are two reasons for the left-continuity requirement placed on θi,t.
+First, left-continuity of the investor holding paths is suﬃcient to ensure that the
+state-process Yt appearing in (2.2) below is left-continuous (ultimately, Yt in (2.2)
+becomes the solution Yθit to the stock-market clearing equation (2.5)). In turn, Yt’s
+left-continuity is suﬃcient for investors to infer Yt from past and current stock-price
+observations (see Lemma A.1 in Appendix A). Second, in Example 5.3 in Section 5,
+which is an extension of our model to stochastic targets, the martingale Nt is only
+c` adl` ag (i.e., right-continuous with left limits). WhenNt has such points of discontinu-
+ity, left-continuity ofθi,t and the integrability condition (2.1) are suﬃcient to ensure
+martingality of the stochastic integral
+∫t
+0θi,udNu,t∈ [0, 1] (see, e.g., p.171 in Protter
+2004).15 Except for Example 5.3, however, strategies θi,t are continuous and, thus,
+are automatically left-continuous in Deﬁnition 2.1.
+15Veriﬁcation of optimality of conjectured optimizers in continuous-time stochastic control prob-
+lems always involves proving certain stochastic integrals are martingales. This is illustrated in Duﬃe
+(2001, Chapter 9C).
+12
+Step 2: This step constructs perceptions for a generic investor i about the market-
+clearing prices Sθit she faces given arbitrary holdings θi,t. In equilibrium, price dy-
+namics and price perceptions must agree. Oﬀ equilibrium, however, price perceptions
+must be reasonable. We describe two diﬀerent cases of reasonable oﬀ-equilibrium
+price beliefs. One case is standard pricing-taking. This is the simplest version of
+our model. The second case has price-impact in the sense that investors are strategic
+and believe their individual holdings aﬀect oﬀ-equilibrium market-clearing prices. In
+particular, although we assume investors are price-takers at the market open att = 0,
+our second case allows for price impact of investor holdings θi,t over the rest of the
+day for t∈ (0, 1).
+Case of price-taking perceptions: Optimal holdings for investors with price-
+taking beliefs are derived from (1.1) under the assumption that the oﬀ-equilibrium
+prices Sθit each investor i perceives herself as facing, the martingale Nt, and the
+perceived price drift µθit given holdings θi,t for investor i are all unaﬀected by her
+arbitrary holdings θi,t. The equilibrium construction for this case in Sections 3 and 4
+then derives an equilibrium price process such that the market clears given investor
+optimal holdings given the equilibrium price process with price-taking beliefs.
+Case of price-impact perceptions: There are many ways to model price-impact.
+For example, stock prices are aﬃne functions of investor orders in the discrete-time
+models in Vayanos (1999, Eq. (4.2)) and Kyle (1985, Eq. (3.12)). A discrete-time
+version of our model also takes price changes ∆Stn as aﬃne functions of the holdings
+θi,tn. However, modeling oﬀ-equilibrium prices in continuous-time as functions of the
+levels of arbitrary holdings over time is technically diﬃcult because, while θi,t can
+serve as an integrand, integration with respect to dθi,t might be ill-posed. Thus, in
+our continuous-time model of price impact, we assume that the perceived price drift
+µθit is an aﬃne function of the holdingsθi,t, but that the martingaleNt in (1.7) and the
+initial valueS0 = ˆS0 are both independent of the holding processθi,t. Thus, our model
+of price-impact is an aﬃne drift speciﬁcation in the general continuous-time price-
+impact setting in Cvitani´ c and Cuoco (1998). Given the perceived oﬀ-equilibrium
+price impacts, we derive optimal holding strategies for investors in our model.
+Our eventual goal is to construct a Subgame Perfect Nash equilibrium, so the
+oﬀ-equilibrium prices associated with oﬀ-equilibrium holdings by a given investor i
+13
+must be consistent with oﬀ-equilibrium beliefs for other investors such that, given
+the other investors’ optimal oﬀ-equilibrium holdings given their beliefs, the market
+clears to produce the prices perceived by investor i. We denote the other investors
+who respond to oﬀ-equilibrium holdings by investor i using an index j⁄=i. Next, we
+construct perceived market-clearing prices for investor i and the associated perceived
+responses θj,t of other investors j⁄=i to arbitrary holdings θi,t by investori.
+Our derivation of optimal investor holding strategies involves two diﬀerent oﬀ-
+equilibrium stock-price processes in the ﬁltrations in (1.12) and in the investor wealth
+dynamics in (1.2). First, let SYt denote the oﬀ-equilibrium prices as perceived by a
+generic investor j with j⁄=i given investor j’s own holdings θj,t and given a general
+state-process Yt representing the perceived net eﬀect of arbitrary holdings by other
+investors.16 Second, letSθit denote oﬀ-equilibrium prices perceived by investori given
+investori’s holdingsθi,t and given the state-processYθit induced by the market-clearing
+responses of investors j⁄= i to i’s holdings θi,t. The diﬀerence between these two
+perceived price processes is that SYt is for an arbitrary exogenous state-process Yt
+whereas Sθit is for an endogenous state-process Yθit given the eﬀect of θi,t on market-
+clearing. The prices SYt and Sθit are linked with each other and with the equilibrium
+prices ˆSt. First, the initial stock prices SY0 and Sθi0 are always pinned down to be
+ˆS0 in (1.7). Thus, all investors act like price takers at time t = 0. However, the
+perceived oﬀ-equilibrium terminal prices Sθi1 and SY1 are not required to satisfy the
+equilibrium terminal condition (1.8). This is permissible because these are perceived
+oﬀ-equilibrium prices that can diﬀer from equilibrium prices. Second, the equilibrium
+holdings ˆθi,t for all traders i∈{ 1,..,M +M} must produce the same equilibrium
+stock price S
+ˆθi
+t = ˆSt, which in turn must satisfy condition (1.8) at time t = 1.
+The aspect of price beliefs that matters for modeling the impact of oﬀ-equilibrium
+holdings on market-clearing is how θi,t for an investor i at time t aﬀects the market-
+clearing stock-price drift µt and, thus, the investment attractiveness of holding stock
+at time t. Thus, we start this step with an assumption that the perceived general
+price process SY = (SYt )t∈[0,1] for other investors j ⁄= i in trader j’s optimization
+problem (1.1) has the form in (1.7) where the perceived stock-price drift µ = µY is
+16The ﬁltrationFi,t in (1.12) also depends onS and thusFi,t varies depending on which stock-price
+process S∈{ ˆS,S θi,SY} we consider in the various steps of the equilibrium construction.
+14
+deﬁned as17
+µYt :=
+
+
+
+ν0(t)Yt +ν1(t)γ(t)˜aΣ +ν2(t)Bt +ν3(t)θj,t +ν4(t)γ(t)˜aj, j ∈{ 1,...,M},
+¯ν0(t)Yt + ¯ν1(t)γ(t)˜aΣ + ¯ν2(t)Bt + ¯ν3(t)θj,t, j ∈{ 1 +M,...,M +M},
+(2.2)
+whereY = (Yt)t∈[0,1] is an exogenous state-process with c` agl` ad paths andν0(t),...,ν 4(t)
+and ¯ν0(t),..., ¯ν3(t) are continuous deterministic functions with ν0(t)⁄= 0, ¯ν0(t)⁄= 0
+such that
+ν3(t)<κ (t) when M≥ 1 and ¯ν3(t)<κ(t) when M≥ 1, t ∈ [0, 1). (2.3)
+The martingale N in the price process (1.7) for SY has dynamics
+dNt :=dDt +ζ(t)ϵdBt, N 0 := 0, (2.4)
+where ζ(t) is a continuous deterministic function of time for t∈ [0, 1].
+The coeﬃcients ν0(t),..., ¯ν3(t) and ζ(t) in (2.2) and (2.4) describe the subjective
+perceptions (i.e., oﬀ-equilibrium beliefs) of investor j about the price process she
+faces. We assume all investors perceive the same pricing coeﬃcients. The coeﬃcients
+ν3(t) and ¯ν3(t) represent, speciﬁcally, an investor’s perception of how her own holdings
+θj,t directly aﬀect prices oﬀ-equilibrium. In the discussion here, the perceived price
+coeﬃcients are taken as given. However, they are endogenized in the equilibrium
+construction in Section 3.
+Because the state-process Yt is general (e.g., Yt need not be Markovian), it is
+crucial for tractability that investors have linear utilities as in (1.1). With linear
+preferences, investors’ optimal holding decisions at each time t∈ [0, 1] only depend
+on the perceived price drift and the associated holding penalties accruing at that time
+t. Thus, investors optimize pointwise given the impact their holdings have on the
+perceived price drift.18 19 These arguments lead to Lemma A.1 in Appendix A, which
+17The equilibrium construction in Section 3 explicitly solves for perceived prices with this conjec-
+tured form that are consistent with equilibrium.
+18More speciﬁcally, investors maximize the expectation of the integrand of a Riemann integral of
+a quadratic function of θi,t at each time t∈ [0, 1]. See Eqs. (A.2) and (A.3) in Appendix A.
+19An optimal trading strategy is typically computed as the solution to a Hamilton-Bellman-Jacobi
+equation that takes intertemporal trade-oﬀs into account. However, in our model the intraday target
+trajectory γ(t)˜ai and hedge positions ϵBt are interpreted as the solutions to the targeted investors’
+15
+gives the optimal response holdings θYj,t in (A.1) for targeted investors and hedgers
+given a perceived price process for investor j of the form described in (2.2) through
+(2.4).20 The restrictions in (2.3) ensure the second-order condition for optimality of
+(A.1) is satisﬁed.
+The optimal-response holdings θYj,t in Lemma A.1 in Appendix A are for an ar-
+bitrary left-continuous state-process Yt. However, to construct perceived prices for
+investori that also clear the stock market, the price perceptions of investori must take
+into account the fact that her holdings θi,t also aﬀect the state-process Yt perceived
+by other investors j⁄=i via the market-clearing condition:
+θi,t +
+M+M∑
+j⁄=i,j=1
+θYj,t = 0, t ∈ [0, 1], (2.5)
+where θYj,t denotes optimal responses of investors j ⁄= i in (A.1) in Lemma A.1 in
+Appendix A to a state-process Yt. Thus, given arbitrary holdings θi,t, we can then
+solve (2.5) for the associated state-process, which we denote by Yθit . The state-
+process Yθit ensures that the oﬀ-equilibrium optimal-response holdings for traders
+j∈{ 1,...,M +M}\{ i} clear the stock market as trader i varies her oﬀ-equilibrium
+holdings θi,t. The perceived oﬀ-equilibrium market-clearing stock-price process Sθit
+associated with θi,t has a drift process µθit given by (2.2) with Yt := Yθit . However,
+the initial price Sθi0 := ˆS0 and martingale Nt in dSθit in (1.7) do not depend on θi,t.
+Lemma 2.2. Assume that ν0(t)⁄= 0 , ¯ν0(t)⁄= 0 , t∈ [0, 1], and that (2.3) holds.
+The oﬀ-equilibrium stock-price process perceived by investor i∈{ 1,...,M +M} for
+arbitrary holdings θi∈A i is deﬁned by
+Sθit := ˆS0 +
+∫ t
+0
+µθiudu +Nt, t ∈ [0, 1], (2.6)
+and hedgers’ intertemporal partial optimization problems with order-execution, risk, and inventory
+costs but when price pressure from aggregate order-ﬂow imbalances is ignored. As a result, the full
+optimization problem in (1.1) involves a series of separable trade-oﬀs between incremental penalties
+for deviations of θi,t from the target trajectory and hedge positions at each time t∈ [0, 1] and the
+contemporaneous price drift (expected capital gain) at time t when investors adjust their position
+to trade on price pressure.
+20In Lemma A.1 in Appendix A with price-impact, the state-process Yt must be inferable, which
+is ensured by Yt having left-continuous paths, which follows from investor holdings having left-
+continuous paths as required by Deﬁnition 2.1. If investor strategies are continuous, then the state-
+process Yt can be taken to be continuous too.
+16
+where the stock-price drift is deﬁned by
+µθit :=
+
+
+
+2κν0(¯ν3−κ)+(¯ν3−κ)ν0ν4+M(κ−ν3)(ν1¯ν0−ν0¯ν1)
+(M−1)ν0(κ−¯ν3)+M ¯ν0(κ−ν3) γ˜aΣ− M(κ−ν3)(ν0¯ν2−ν2¯ν0+2κν0ϵ)(M−1)ν0(κ−¯ν3)+M ¯ν0(κ−ν3)Bt
++κ(−2κν0+2ν0¯ν3+ν3M ¯ν0)−ν3((M+1)ν0(¯ν3−κ)+ν3M ¯ν0)(M−1)ν0(κ−¯ν3)+M ¯ν0(κ−ν3) θi,t
++ 2κν0(κ−¯ν3)+Mν0ν4(κ−¯ν3)+ν4M ¯ν0(κ−ν3)(M−1)ν0(κ−¯ν3)+M ¯ν0(κ−ν3) γ˜ai, i ∈{ 1,...,M},
+− (κ−¯ν3)(¯ν0(2κ+Mν1+ν4)−Mν0¯ν1)Mν0(κ−¯ν3)+(M−1)¯ν0(κ−ν3) γ˜aΣ− M(κ−¯ν3)(ν2¯ν0−ν0¯ν2)+2κ(M−1)¯ν0ϵ(κ−ν3)Mν0(κ−¯ν3)+(M−1)¯ν0(κ−ν3) Bt
++ 2κ¯ν0(ν3−κ)+κMν0¯ν3−Mν0¯ν23+(M+1)¯ν0¯ν3(κ−ν3)Mν0(κ−¯ν3)+(M−1)¯ν0(κ−ν3) θi,t, i ∈{M + 1,...,M +M},
+(2.7)
+and where the martingale Nt is as in (2.4), and given an initial stock price ˆS0 that
+satisﬁes (1.11). The price process (2.6) clears the stock market in the sense that (2.5)
+holds.
+We note three consequences of Lemma 2.2: First, because the state-process Yθit
+in (A.5) in Appendix A is aﬃne in θi∈A i, we see that Yθit has left-continuous paths
+because θi,t has left-continuous paths (see Deﬁnition 2.1). Furthermore, from (A.1)
+in Lemma A.1 in Appendix A, investor j’s optimal response θYθij,t for j⁄= i is also
+aﬃne in trader i’s oﬀ-equilibrium holdings θi,t. Second, because the price drift (2.7)
+is aﬃne in θi,t, the corresponding optimization problem (1.1) is a quadratic problem
+when the stock price is deﬁned as in (2.6). These two properties are used to derive the
+equilibrium holdings ˆθi∈A i in Theorem 3.2 in Section 3. Third, the case of price-
+taking perceptions is a special case of the price-impact case in which the coeﬃcients
+multiplyingθi,t in (2.7) are zero. Our equilibrium construction in Section 3 is for the
+general price-impact case. Section 4 then derives conditions on the price-perception
+coeﬃcients in (2.2) for equilibrium with price-taking perceptions.
+3 Equilibria with deterministic targets
+Having described the individual investor optimization problems in Section 2, this
+section formally deﬁnes and constructs an equilibrium.
+Deﬁnition 3.1 (Equilibrium). A Subgame Perfect Nash equilibrium consists of per-
+ceived price coeﬃcients given by deterministic functionsν0(t),...,ν 4(t), and ¯ν0(t),..., ¯ν3(t)
+in (2.2) with ν0(t)⁄= 0 and ¯ν0(t)⁄= 0, an initial stock price ˆS0 satisfying (1.11), and
+a martingale N = (Nt)t∈[0,1] such that, given the perceived stock-price process (2.6),
+the resulting optimal stock-holding processes ˆθ1,t,..., ˆθM+M,t from (1.1) satisfy the
+following conditions:
+17
+(i) The optimal holdings ˆθi∈A i, i∈{ 1,...,M +M}, satisfy the intraday market-
+clearing condition (1.5).
+(ii) When θi,t is set to the optimizer ˆθi,t in (2.7), the resulting stock-price drifts
+µ
+ˆθi
+t are the same ˆµt for all investors i∈{ 1,...,M +M}. The corresponding
+equilibrium stock-price process from (2.6) with θi,t = ˆθi,t is denoted by ˆSt.
+(iii) The stock-price process ˆSt satisﬁes the terminal price condition (1.8) at time
+t = 1 for given constants ϕ0,ϕ 1∈ R.
+♦
+Our equilibrium concept is stronger than Nash because it involves beliefs for each
+investori about the perceptions of other investors j⁄= i that determine investor j’s
+optimal responses to hypothetical oﬀ-equilibrium holdings by investor i.
+Our main result is Theorem 3.2 below, which gives restrictions ensuring equilib-
+rium existence (proof is in Appendix A). As we shall see, there are two degrees of
+freedom in the perceived price coeﬃcients ν0(t),...,ν 4(t) and ¯ν0(t),..., ¯ν3(t), and so
+there are multiple (indeed, inﬁnitely many) equilibria. This situation is similar to
+Vayanos (1999, Sec. 5) and Sannikov and Skrzypacz (2016). Keeping the price im-
+pact coeﬃcients ν3(t) and ¯ν3(t) as the two free parameters simpliﬁes the exposition.
+In Section 4 we use the mathematical ﬂexibility of these free functions to consider
+equilibria with diﬀerent amounts of competition and strategic behavior.
+The equilibrium stock-price process ˆSt will be shown to have the form
+ˆSt :=Dt +g(t)˜aΣ +ζ(t)ϵBt, (3.1)
+for two continuously diﬀerentiable deterministic functions g,ζ : [0, 1]→ R. Con-
+sequently, the equilibrium stock-price drift ˆµt and martingale Nt in (1.7) are given
+by
+ˆµt =g′(t)˜aΣ +ζ′(t)ϵBt,
+dNt =dDt +ζ(t)ϵdBt, N 0 = 0.
+(3.2)
+We note three features about (3.1). First, equilibrium prices are expressed in (3.1)
+as functions of the underlying trading-demand variables ˜ aΣ and Bt. In particular,
+prices are functions of market-clearing investor holdings, which are functions of the
+18
+underlying latent trading-demand variables ˜ai (which aggregate to ˜aΣ) and Bt. The
+intuition is that equilibrium prices depend on the underlying latent total trading de-
+mand, which includes both trades that occur in equilibrium and also trading-demand
+imbalances that prices deter so that markets clear. Making the role of latent trading
+demand — and especially demand imbalances due to intraday TWAP trading targets
+— explicit is one of the contributions of our analysis. Second, given ˜ aΣ, the equilib-
+rium stock-price process is Gaussian. More speciﬁcally, the price process (3.1) is a
+Bachelier model with time-dependent coeﬃcients. 21 Third, the individual investors’
+perceived price processes in (2.6) exhibit path dependency in the sense that the path
+of (Bu)u∈[0,t] is needed to determine Sθit for t∈ [0, 1] for an arbitrary holding process
+θi,t. However, only the current value of Bt aﬀects the equilibrium prices ˆSt in (3.1).
+Theorem 3.2. Let γ : [0, 1]→ [0,∞) be a continuous function, let ν3, ¯ν3 : [0, 1)→
+R be continuous functions, let κ,κ : [0, 1)→ (0,∞) be continuous and integrable
+functions; i.e.,
+∫ 1
+0
+(
+κ(t) +κ(t)
+)
+dt< ∞, (3.3)
+that satisfy the second-order conditions (2.3), and let there be at least M +M≥ 2
+investors. In addition, assume that (1.6) holds in the money market. Deﬁne the
+functions in (3.1) by
+g(t) :=ϕ1−
+∫ 1
+t
+µ1(u)γ(u)du,
+ζ(t) :=ϕ0−
+∫ 1
+t
+µ2(u)du,
+(3.4)
+21While the equilibrium stock price can be negative with positive probability, such Gaussian
+models have been widely used in the market microstructure literature by, e.g., Grossman and Stiglitz
+(1980) and Kyle (1985). Gaussian models are also widely used in the optimal order-execution
+literature including Almgren and Chriss (1999, 2001); see, e.g., the discussion in the Gatheral and
+Schied (2013, Section 3.1) survey.
+19
+for t∈ [0, 1] where22
+µ1 :=− 2κ
+(
+2(M +M)κ− (1 +M +M)¯ν3
+)
+M
+(
+2(M +M)κ− (1 +M +M)¯ν3
+)
++M
+(
+2(M +M)κ− (1 +M +M)ν3
+),
+µ2 :=− 2Mκ
+(
+2(M +M)κ− (1 +M +M)ν3
+)
+M
+(
+2(M +M)κ− (1 +M +M)¯ν3
+)
++M
+(
+2(M +M)κ− (1 +M +M)ν3
+).
+(3.5)
+Provided that g(0)⁄= 0, price-perception functions ν0⁄= 0,ν 1,ν 2,ν 4, and ¯ν0, ¯ν1, ¯ν2 sat-
+isfying (A.10) and (A.12) in Appendix A together withNt in (3.2) form an equilibrium
+in which:
+(i) Investor equilibrium holdings are given by
+ˆθi,t =
+
+
+
+α1(t)γ(t)˜aΣ +α2(t)ϵBt +α3(t)γ(t)˜ai, i ∈{ 1,...,M},
+¯α1(t)γ(t)˜aΣ + ¯α2(t)ϵBt, i ∈{M + 1,...,M +M},
+(3.6)
+where
+α1 := (M +M− 1)µ1
+2(M +M)κ− (1 +M +M)ν3
+,
+α2 := (M +M− 1)µ2
+2(M +M)κ− (1 +M +M)ν3
+,
+α3 := 2κ(M +M− 1)2(M +M)κ− (1 +M +M)ν3,
+¯α1 = (M +M− 1)µ1
+2(M +M)κ− (1 +M +M)¯ν3
+,
+¯α2 :=− M(M +M− 1)µ2
+M
+(
+2(M +M)κ− (1 +M +M)ν3
+).
+(3.7)
+(ii) The equilibrium stock price ˆSt is given by (3.1) with g(t) and ζ(t) from (3.4).
+The associated equilibrium price drift in (3.2) is
+ˆµt :=µ1(t)γ(t)˜aΣ +µ2(t)ϵBt, (3.8)
+with µ1(t) and µ2(t) from (3.5).
+22For notational brevity, the time arguments for µ1(t),µ 2(t),κ (t),κ(t),ν 3(t), and ¯ν3(t) are sup-
+pressed.
+20
+Remark 3.1. We note several properties of this equilibrium here:
+1. From (3.1), the initial equilibrium stock price at t = 0 is
+ˆS0 =D0 +g(0)˜aΣ +ζ(0)ϵB0
+=D0 +g(0)˜aΣ,
+(3.9)
+where the second equality follows because B0 = 0. Therefore, whenever g(t)
+from (3.4) satisﬁes g(0)⁄= 0, the aggregate target ˜aΣ can be inferred from ˆS0
+and vice versa given that D0 is public information. Thus, when g(0)⁄= 0, we
+have σ( ˆS0) = σ(˜aΣ) as required in (1.11). By (3.4), the condition g(0)⁄= 0 is
+equivalent to
+ϕ1⁄=
+∫ 1
+0
+µ1(u)γ(u)du, (3.10)
+where µ1 is from (3.5). Consequently, for given functions ( γ,κ, κ,ν 3, ¯ν3) satis-
+fying the second-order conditions (2.3), there is just one value of the terminal-
+price coeﬃcient ϕ1 for which g(0) = 0. For all other ϕ1, we have g(0)⁄= 0 and
+an equilibrium exists.
+2. The equilibrium stock-price drift ˆµt and price levels ˆSt have the following qual-
+itative properties: The second-order conditions (2.3) ensure
+2(M +M)κ− (1 +M +M)ν3 >κ> 0,
+2(M +M)κ− (1 +M +M)¯ν3 >κ> 0,
+(3.11)
+so that the equilibrium price-drift coeﬃcients in (3.5) can be signed withµ1(t)<
+0 and µ2(t) < 0. This is intuitive. Larger latent aggregate trading-demand
+targets ˜aΣ and larger hedging needs ϵBt mean that the equilibrium price drift
+ˆµt must be lower in order to incentivize price-sensitive targeted investors and
+hedgers to adjust their holdings to clear the market. Given negative price-drift
+coeﬃcients µ1(t) and µ2(t), it then follows from (3.4) that, given end-of-day
+terminal pricing coeﬃcients ϕ0,ϕ 1≥ 0, the intraday price-level coeﬃcients g(t)
+and ζ(t) are both positive.
+3. The investor holding coeﬃcients α1(t),..., ¯α2(t) in (3.7) can also be signed us-
+ing (3.5) and (3.11). The targeted-investor coeﬃcients α1(t) and α2(t) on the
+21
+aggregate imbalance state variables ˜aΣ andϵBt are both negative. This is intu-
+itive because investors reduce their personal holdings in response to the lower
+price drifts induced in equilibrium by positive latent aggregate imbalances. A
+similar intuition applies for the negative hedger coeﬃcient ¯α1(t) on the latent
+aggregate rebalancer imbalance ˜aΣ. The coeﬃcient α3(t) on the targeted in-
+vestor’s personal target ˜ai is, as expected, positive. Similarly, the sign of the
+hedger’s coeﬃcient ¯α2(t) on the hedging imbalance state variable is positive.
+This is the net eﬀect of ϵBt both as a personal target in the hedger penalty Li,t
+in (1.4) and as a state variable for the impact of the aggregate latent hedger
+imbalance on the price drift in the investor trading proﬁts Xi,t in (1.2). Recall
+that all initial stock positions have been normalized to zero for all traders (with
+no loss of generality). Therefore, from (3.6), there are initial discrete orders
+(i.e., block trades θi,0−θi,−⁄= 0) at t = 0. This is related to why the initial
+price ˆS0 fully reveals ˜aΣ. However, afterwards trading evolves continuously for
+t∈ (0, 1].23
+4. Inserting ¯ν0(t) from (A.10) in Appendix A into (2.7) and rearranging using (3.6)
+and (3.7) for the equilibrium holdings ˆθi,t and (3.5) and (3.8) for the equilibrium
+price drift ˆµt lets us express the perceived price drift for an investor i in (2.7)
+as
+µθit =
+
+
+
+ˆµt + ν3(t)(M+M+1)−2κ(t)M+M−1 (θi,t− ˆθi,t), i ∈{ 1,...,M},
+ˆµt + ¯ν3(t)(M+M+1)−2κ(t)M+M−1 (θi,t− ˆθi,t), i ∈{M + 1,...,M +M}.
+(3.12)
+This is not surprising given the equilibrium requirement that each investor per-
+ceives the same price drift in equilibrium, i.e.,µ
+ˆθi
+t = ˆµt for alli∈{ 1,...,M +M}.
+Because the equilibrium holdings ˆθi,t include an ˜ai term, the representation
+(3.12) explains why there is an investor-speciﬁc ˜ai term in the perceived price
+drift µθit in (2.7).
+5. The speciﬁc price-perception functions ν0,ν 1, and ν2 for the targeted investors
+are irrelevant in Theorem 3.2 in the sense that, given ν3 and ¯ν3 and provided
+ν0(t)⁄= 0, all diﬀerent ν0⁄= 0, ν1, and ν2 produce the same equilibrium prices
+23The discontinuous model in Example 5.3 below has optimal discrete orders throughout the
+trading day.
+22
+and investor holdings. To provide some intuition, consider the drift in (2.2) for
+j∈{ 1,...,M + ¯M}. This drift is overparameterized because both Y and θj
+are expressible in terms of (˜aj, ˜aΣ,B ) when Y is replaced by the solution Yθj of
+(2.5). We also note here that, whileν0,ν1, andν2 do not aﬀect equilibrium prices
+and investor holdings, they do pin down the other perceived price coeﬃcients
+ν4,ν0,ν1, and ν2 via (A.10) and (A.12) in Appendix A, which are related to
+market-clearing and the common perceptions of equilibrium price conditions
+from Deﬁnition 3.1.
+There is an important diﬀerence between prices in equilibrium and perceived oﬀ-
+equilibrium prices. Both in-equilibrium and oﬀ-equilibrium, the stock-price drifts ˆµt
+and µθit are determined such that the market clears at each time t. In the one case,
+this is part of the deﬁnition of equilibrium, and, in the other case, it is a reasonable
+oﬀ-equilibrium belief. However, in equilibrium, the price level ˆSt adjusts at time t
+to be consistent with the required market-clearing drift ˆ µt and the terminal price
+condition in (1.8). For example, a large target ˜ aΣ leads from (3.1) and (3.4) to a
+high opening price ˆS0 at t = 0 so that the intraday drift ˆ µt from (3.5) and (3.8)
+can be predictably low with prices drifting down in expectation over the day to the
+terminal price ˆS1 in (1.8). Similarly, a positive random shock to Bt at time t leads
+from (3.1) and (3.4) to a random increase in prices ˆSt such that the market-clearing
+drift ˆµt can have a random decrease as required in (3.5) and (3.8). In contrast, for
+perceived oﬀ-equilibrium prices for investors with price-impact, we only specify how
+the perceived oﬀ-equilibrium price driftsµθit in (2.7) change at each timet so that the
+market clears given an investor’s holdingsθi,t. However, the perceived oﬀ-equilibrium
+price levelSθit at timet is not aﬀected byθi,t at timet. This simpliﬁes the speciﬁcation
+of oﬀ-equilibrium beliefs and is still reasonable for price beliefs since market-clearing
+depends on the price drift at time t, not on the contemporaneous price level (as per
+the discussion about the oﬀ-equilibrium price-impact model before (2.7)).
+Price pressure ˆSt−Dt is the eﬀect of intraday imbalances in latent trading demand.
+It can be positive or negative depending on the aggregate target imbalance ˜ aΣ and
+the hedging needϵBt. From (3.1), price pressure has a deterministic trendg(t)˜aΣ over
+the day given the total rebalancing target imbalance ˜aΣ and a stochastic component
+ζ(t)ϵBt due to the randomly evolving hedging target. For example, g(0)˜aΣ is the
+initial price impact of the aggregate latent trading-target imbalance ˜ aΣ revealed by
+23
+the opening order-ﬂow at time t = 0. Thereafter, the price impact g(t)˜aΣ of the
+imbalance ˜aΣ varies predictably over time with g(t). A similar phenomenon applies
+to price pressure due to hedging demand. In particular, ζ(t)ϵdBt is the immediate
+impact of an innovation ϵdBt in hedging demand at time t, and then ζ(s)ϵdBt is the
+predictable continuation impact of ϵdBt at times s > tlater in the day. From (3.4)
+and (3.5), we see that g(t) (the ˜aΣ coeﬃcient in ˆSt) is aﬃne in γ(t), and that ζ(t)ϵ
+(theBt coeﬃcient in ˆSt) is linear in ϵ (because ζ(t) does not depend on (γ,ϵ )). Thus,
+the path of intraday price pressure ˆSt−Dt at diﬀerent times t during the day has an
+intertemporal factor-type structure where ˜aΣ is a common factor (which is diﬀerent
+on diﬀerent days but ﬁxed over the course of a given day) that causes price pressure
+to change deterministically over the day given intraday variation in g(t), and Bt is
+a martingale that cause price pressure ˆSt−Dt to change randomly over the day.
+Thus, at a given times∈ [0, 1), the future random price pressure at subsequent times
+t∈ (s, 1] have the following conditional means and variances:
+E[ ˆSt−Dt|σ(˜aΣ,Bu)u∈[0,s]] =g(t)˜aΣ +ζ(t)ϵBs,
+V[ ˆSt−Dt|σ(˜aΣ,Bu)u∈[0,s]] =ζ(t)2ϵ2(t−s). (3.13)
+As a result, positive (negative) latent aggregate trading targets ˜aΣ lead to predictable
+positive (negative) price-pressure trends E[ ˆSt|σ(˜aΣ)]−Dt over the day. In addition,
+randomness in the intraday hedging factor Bt produces randomness in equilibrium
+price pressure, where higher hedging factors Bt are associate with higher prices and
+lower price drifts. Again, this is intuitive.
+Empirical predictions: Security prices are often decomposed econometrically into
+an informational component that follows a martingale and a residual liquidity eﬀect
+(as in, e.g., Hasbrouck 1991). A standard interpretation is that liquidity eﬀects in
+prices decay predictably over time as liquidity supply from initial liquidity providers
+is ﬁrst depleted by arriving order-ﬂow imbalances and then replenished as order-ﬂow
+imbalances are subsequently dispersed and absorbed by the broader market. Our
+model has two new empirical implications: First, our price pressureˆSt−Dt is driven by
+both arriving orders and also by what those orders reveal about the underlying latent
+trading-demand imbalances ˜aΣ andϵBt. Second, the source of intraday predictability
+in our price pressure diﬀers from the standard liquidity-supply interpretation. Price
+predictability here reﬂects the net eﬀect of predictable time variation in latent trading
+24
+demand (i.e., the targets γ(t)˜aΣ andϵBt) as well as predictability in liquidity supply
+(controlled by κ(t) and ¯κ(t)).
+Empirical predictions from our model are testable using diﬀerent types of data.
+First, using standard intraday price and order-ﬂow data (e.g., TAQ), the formula for
+equilibrium prices in (3.1) predicts intraday prices are driven by time-varying eﬀects
+(controlled by g(t)) of a daily aggregate parent target that is constant over the day
+(˜aΣ) plus a homoscedastic random walk ( Dt) and a second Brownian motion ( Bt)
+with heteroscedastic eﬀects (controlled by ζ(t)ϵ). Second, the price coeﬃcients g(t)
+and ζ(t) in (3.4) along with (3.5) give predictions for how the intraday eﬀects ( g
+and ζ in the ﬁrst prediction) vary across diﬀerent days given daily variation in the
+numbers of targeted rebalancers and hedgers (M andM) and given daily variation in
+order-execution costs due to variation in bid-ask spreads (since order-execution costs
+are implicitly represented byκ and ¯κ). This can be estimated using individual-trader
+data (e.g., from IIROC) and standard data on bid-ask quotes.
+4 Competitive equilibrium and welfare
+From Theorem 3.2, the deterministic functions ν3(t) and ¯ν3(t) for perceived own-
+order price-impacts are two degrees of freedom in our model. By imposing additional
+economically-motivated structure onν3(t) and ¯ν3(t), we can identify unique equilibria
+corresponding to diﬀerent forms of competition and market power. From Section 2,
+price taking is a special case of interest.
+In the competitive Radner equilibrium, investors act like price-takers over the
+whole day — not just at the market open — in that the perceived prices Sθit for
+each in

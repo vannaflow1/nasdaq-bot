@@ -1,0 +1,59 @@
+{
+ "colorGroups": [
+  {
+   "query": "path:Questions",
+   "color": {
+    "a": 1,
+    "rgb": 14037868
+   }
+  },
+  {
+   "query": "path:System",
+   "color": {
+    "a": 1,
+    "rgb": 7358696
+   }
+  },
+  {
+   "query": "tag:#finding",
+   "color": {
+    "a": 1,
+    "rgb": 3120708
+   }
+  },
+  {
+   "query": "tag:#verdict",
+   "color": {
+    "a": 1,
+    "rgb": 15764480
+   }
+  },
+  {
+   "query": "path:Concepts",
+   "color": {
+    "a": 1,
+    "rgb": 1867478
+   }
+  },
+  {
+   "query": "tag:#curated",
+   "color": {
+    "a": 1,
+    "rgb": 14692657
+   }
+  },
+  {
+   "query": "path:Papers",
+   "color": {
+    "a": 1,
+    "rgb": 8818326
+   }
+  }
+ ],
+ "showTags": false,
+ "showOrphans": true,
+ "nodeSizeMultiplier": 1.2,
+ "lineSizeMultiplier": 0.6,
+ "repelStrength": 12,
+ "linkDistance": 160
+}

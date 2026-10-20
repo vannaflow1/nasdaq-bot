@@ -1,0 +1,965 @@
+23 
+
+The Impact of Market Maker 
+Competition on Market Quality: 
+Evidence from an Options Exchange 
+
+Angelo Aspris*1, Alex Frino 1 and Andrew Lepone 1 
+
+Abstract 
+This paper examines the dynamic relationship between competition, li quidity 
+provision, and market structure. By examining the entry and exit of ma rket makers in 
+the Australian Options market, this study empirically analyse s the issue of market 
+maker competition. Results indicate that market maker entry depends on a broad 
+range of profit, risk and market concentration characteristics , but free market maker 
+movement does not explicitly result in a competitive market struc ture. This study also 
+finds that the degree of market concentration additionally affects the marginal impact 
+of market maker entry (exit), but the effect is significantly more pronounced for the 
+most liquid classes of options. The implication of this finding is pe rtinent to market 
+regulators since market maker competition may not necessarily contribute to 
+enhancing market quality for less liquid securities. 
+
+Keywords: Options, Market Makers, Liquidity, Market Quality 
+
+JEL Classification: G12 
+
+1 University of Sydney 
+* Corresponding author: Finance Discipline, Faculty of Economics and Business 
+angelo.aspris@sydney.edu.au 
+
+Acknowledgements: This research was funded by the Sydney Futures Exc hange under Corporations 
+Regulation 7.5.88(2). The authors thank the Securit ies Industry Research Centre of Asia-Pacific 
+(SIRCA) for providing data. 
+AABFJ | Volume 6, no. 5, 2012 
+ 24 
+Introduction 
+This paper examines the dynamic relationship between competition, li quidity 
+provision, and market structure. A common perception, widely entrenched i n the 
+economics literature, is that the price setting structure of a dealer market 
+approximately reflects the ideals engulfed in standard competi tive economic analysis. 
+In principle, the pervasive and (quasi) free movement of registere d market makers, 
+who underscore the liquidity provision and price discovery process, are ne cessary 
+conditions that form the primary basis of this association. 2 The advent of recent high 
+frequency data from dealer market equity structures, however, h as provided market 
+practitioners with a rare opportunity to further understand the dynami cs of dealer 
+market structures. 
+Recent literature on the dynamics of dealer market structures reveals that the 
+attainment of a competitive outcome is both infeasible and potentially less than 
+optimal in terms of its overall effect on market welfare (S chultz (2000), Ellis, 
+Michaely and O’Hara (2002)). The inability to reconcile differe nces between the 
+theoretical literature and these recent findings provides the moti vation for this 
+research. This study examines the mechanics of competition in a dealer market setting 
+as a means of addressing whether competitive price formation is achievable in modern 
+financial markets. 
+The widely publicised and cited findings of Christie, Harris and Sc hultz 
+(1994) and Christie and Schultz (1994) provide formative evidence of an appare nt 
+deviation from the underlying principles of competitive economic theor y. In an 
+examination of the NASDAQ market structure, these studies intr oduce evidence of 
+non-competitive pricing among market makers contrary to previous sugges tions that 
+the NASDAQ market operates as a competitive market. The a uthors conclude that the 
+divergence from competitive pricing is most likely the result of tacit collusion among 
+dealers. These findings are additionally attested to by Barcla y (1997) and 
+Bessembinder (1998), who suggest that the larger than average spreads o bserved on 
+NASDAQ cannot be explained by stock-specific characteristics, but rather by the 
+more plausible argument of collusive behaviour. 
+Despite evidence of a pronounced deviation from competitive dealer pricing , a 
+number of authors have vehemently disputed these claims. Both Wahal (1997) and 
+Klock and McCormick (1999), examine the contention that the NASDAQ mar ket 
+operates as a competitive structure and present resolute evidence t o contradict 
+previously asserted claims. The authors document a pervasive movement in market 
+makers and show that the net incremental effect of market ma ker entry is positively 
+associated with improvements in market quality. This evidence is therefore, consistent 
+with the competitive model of dealer pricing. 
+While there is confusion in the literature as to whether the NAS DAQ market 
+represents a competitive dealership, previous literature is also a t odds to explain the 
+possible sources of deviation from competitive pricing. For example, H uang and Stoll 
+(1996) conclude that structural impediments – such as internalisation, pr eferencing of 
+orders, and the presence of inter-dealer trading systems (whic h reduce incentives for 
+brokers and dealers to act as advocates for investors seeking price improvement) – are 
+
+2 Stigler (1957) outlines a number of additional con ditions relating to the pursuit of a competitive 
+outcome, including: that participants must operate independently of each other (not collusively); that 
+the economics units must posses tolerable knowledge of market opportunities; and that they must be 
+free to act on this knowledge. 
+Aspris, Frino & Lepone : Market Makers and the Australian Options Market 
+ 25 
+primary contributors. 3 Shultz (2000) further argues that since dealers are not equal in 
+terms of size, industry and geographical specialisation, potential deviations from 
+atomistic pricing are more than likely in dealership structures. This point is echoed by 
+Ellis, Michaely and O’Hara (2002), who show that despite minimal r estrictions to the 
+entry and exit of market makers, certain market makers are abl e to yield greater 
+market power which is likely to result in a divergence from competitive price setting. 
+The conflicting findings in the literature, narrowly based on the NASDAQ 
+market structure, shape the direction of this study. We also addres s issues including 
+whether or not free market maker entry is conducive to competitive price formation, 
+and if dealership structures more closely reflect specialist- like structures than models 
+of standard competitive economic analysis. 
+In particular, this study empirically analyses the issue of m arket maker 
+competition, specifically addressing three main issues in order t o promote a better 
+understanding of the effect of market maker dynamics. The issue s initially centre on 
+determining which factors are associated with maker entry and ex it. Following this 
+initial examination, the impact of dealer competition and marginal market maker entry 
+(exit) impact is analysed with respect to quoted bid-ask spreads . Lastly, the types of 
+affirmative market obligations, which are nestled with market m aker entry (exit), are 
+examined with respect to their effect on trading costs. The AS X options market is the 
+subject of this examination. 
+The remainder of this paper is organised as follows. The second sect ion 
+discusses the institutional framework of the ASX options market. T he third section 
+describes the dataset and provides summary statistics of the sa mpled data. The fourth 
+section outlines the research design, the fifth section presents the empirical results and 
+discusses the primary findings. The sixth section presents several additional 
+robustness tests and the final section provides a concluding summary. 
+
+Institutional Detail 
+The Australian Options Market (AOM) is a contemporary mixed mar ket dealer 
+structure. Like many international option exchanges, the AOM has undergone a 
+significant transformation over time evolving from a floor-traded de aler market 
+structure to a dealer structure superimposed on an electronic li mit order book. The 
+market is characterised by a competitive dealer price struc ture that operates with an 
+open electronic limit order book. ASX options are traded on a screen-ba sed system 
+over a range of leading shares that are viewable to all marke t participants. These 
+options are characterised by a standardised set of strike price s and expiry dates that 
+occur on the Thursday before the last Friday of the settlement mont h.4 Trades are 
+
+3 Additionally, whether deviation from the competiti ve outcome adversely affects the social welfare of 
+market participants is also a contestable issue. Ha nsch, Naik and Viswanathan (1998) investigate the 
+effect of preferencing and internalisation on sprea ds and dealer profits. The authors show that 
+preferenced trades pay higher spreads than unpreferenced order flow. While this finding is indicative of 
+the costs that result from violations to competitio n the authors do however, suggest that preferencing 
+overall does not impair market quality. Other opini ons expressed on this issue are provided by: Kandel 
+and Marx (1997), Chung, Chuwonganant, McCormick (2004). 
+4 The effect of excessive product differentiation th rough a range of expiries and moneyness levels has 
+the ability to foster market power. Requirements by the AOM for market makers to undertake 
+obligations in identical combinations of moneyness and expiry are designed to prevent possible market 
+failures. 
+AABFJ | Volume 6, no. 5, 2012 
+ 26 
+executed on a price then time priority basis, and quotes represe nt firm orders. In the 
+financial year ending 30 June 2007, nearly 23 million options contracts t raded on the 
+ASX market.5 
+Market makers play a pivotal role in the AOM. Market makers are charged 
+with maintaining a regular market presence by quoting maximum bid-ask spreads and 
+a minimum depth on a range of option series and maturities. The obliga tions for 
+market makers as at 8 February 2006, are tabulated in Table 1. These obligations are 
+ascertained from the liquidity category that a security is designated to. 6 This process 
+demonstrably contributes to the price discovery process by ensuring that option quotes 
+are informative, binding and continuous throughout the trading day. 7 Although the 
+exchange compensates market makers for providing liquidity, market makers are not 
+granted any special trading privileges over other market participants.8 
+
+ Table 1 
+Security Categories and Maximum Spread Obligations for Market Makers 
+
+ Category 1 Category 2 
+Premium Range Maximum Spread Maximum Spread 
+0 to 9.5 cents/pts 
+10 to 19.5 cents/pts 
+20 to 34.5 cents/pts 
+35 to 60 cents/pts 
+61 to 120 cents/pts 
+121 to 180 cents/pts 
+181 to 266 cents/pts 
+> 266 cents/pts 
+5 
+6 
+8 
+10 
+12 
+14 
+16 
+18 
+6 
+7 
+9 
+12 
+14 
+16 
+18 
+20 
+This table documents the maximum spread (the differ ence between the best bid and offer prices) that a dealer can quote when 
+making a market for an option security. The size of the maximum spread depends on whether a stock belongs to Category 1 or 2. 
+Category 1 securities represent the most actively traded option securities. As at 8 February 2006, there were 25 Category 1 option 
+securities and 60 Category 2 securities. 
+
+Market makers in the AOM can operate in one of three capaciti es: making a 
+market on a continuous basis only; making a market in response to quote r equests 
+only; or making a market both on a continuous basis and in response to quot e 
+
+5 This represents the equivalent of AUD 27 billion in turnover. 
+6 The two categories are referred to as Category 1 and Category 2 in order of the most liquid group. 
+7 Demsetz (1968) argues that the lack of ‘predictabl e immediacy of exchange in financial markets’ is a 
+trading problem that can be mitigated by the regular presence of market makers (pg.30). 
+8 This is distributed as a discount in trading fees. There is no public record of the monetary amounts 
+paid to market makers for maintaining obligations. Additionally, there is no public record specifying 
+which market makers have maintained these affirmative obligations. 
+Aspris, Frino & Lepone : Market Makers and the Australian Options Market 
+ 27 
+requests.9 Table 2 reports that there are on average 3 market makers for ea ch of the 
+134 securities for which options were written on between 18 September 2 000 and 29 
+September 2006. A dissection of these results reveals a heavy s kew of market makers 
+towards the more liquid securities group. The average number of da ily market makers 
+in Category 1 stocks is 8.5 as compared to an average of 1.8 market makers for 
+Category 2 stocks. Furthermore the results show that market makers most prominently 
+select to provide liquidity on a continuous basis where there is an av erage of 1.957 
+daily market makers per security. Additionally, there are an a verage of 0.749 market 
+makers with quote obligations and 0.304 with both continuous and quote obligations 
+for each security 10 . 
+
+Table 2 
+Market Maker Designated Obligations 
+
+Obligation Type Average Median Std Dev. Max Min 
+
+Panel A - Category 1 Stocks 
+(n= 8,075) 
+Continuous 5.81709 6 2.87108 15 0 
+Quote 1.48173 1 0.9602 6 0 
+Both (Continuous + Quote) 1.25845 1 1.13404 7 0 
+
+Panel B - Category 2 Stocks 
+(n= 38,437) 
+Continuous 1.14658 1 1.89057 11 0 
+Quote 0.59542 0 0.97853 5 0 
+Both (Continuous + Quote) 0.10297 0 0.37205 7 0 
+
+Panel B - ALL (n= 46,512) 
+Continuous 1.957 1 2.74 15 0 
+Quote 0.749 0 1.031 6 0 
+Both (Continuous + Quote) 0.304 0 0.727 7 0 
+
+Average 3.01 1 3.834 17 0 
+The following table presents descriptive characteri stics of the average number of market makers over 1 34 securities between 18 
+September 2000 and 29 September 2006. Market makers in the Australian Equity Options market operate in one of three 
+capacities: to make a market on a continuous basis only; to make a market in response to quote request s only; or to make a 
+market both on a continuous basis and in response t o quote requests. Summary statistics relating to th e segmentation of their 
+obligations are detailed below. 
+
+However the presence of market makers is not the sole source of competition on the 
+ASX Options market. Market makers may face direct competition for order flow from 
+limit order traders. Despite this direct competition, however, mar ket makers are the 
+
+9 A detailed outline of market maker obligations in the AOM is available from 
+http://www.asx.com.au/investor/options/trading_information/market_makers.htm 
+10 A difference in means test between obligations across the different categories of stocks reveals that 
+these results are statistically significant. 
+AABFJ | Volume 6, no. 5, 2012 
+ 28 
+primary providers of liquidity, representing approximately 80-85 pe r cent of executed 
+volume and a much greater percentage of overall quoting behaviour. 11 
+
+Data 
+The Reuters intra-day data used in this study are provided by the Securities Institute 
+Research Centre of Asia Pacific (SIRCA) and are captured i n real time from the 
+Australian Securities Exchange Integrated Trading System ( ITS).12 The data extends 
+from 18 September 2000 to 29 September 2006 for equity options contracts l isted on 
+corresponding ASX securities. Each record contains a date and tim e stamp to the 
+nearest second as well as fields outlining the trade price, volum e and prevailing 
+quotes. Quoted spreads are calculated using the best bid and offer pri ces.13 Option 
+trades are matched with prevailing and average underlying trade and quote data. 
+The derivation of option volatilities and hedging parameters are s olved 
+numerically via the Black-Sholes model (1973) at each trade price. 14 Estimates of 
+delta are given by )( 1dN=∆ for call options and 1 )( 1 −=∆ dN for put options. 
+Gamma risk is measured in the following way: 
+tTS
+dn
+S
+p
+−
+=∂∂=Γ σ )( 122 
+where: p is the price of a call (put) option; Γ represents the net change in delta over 
+the dollar change in the underlying price. 
+A series of market maker assignments from the Austr alian Clearing House 
+(ACH) is used to determine individual market maker movements from specified 
+classes of options.15 Table 3 reports a total of 2,845 market maker obli gation changes 
+over the sample period. Between Category 1 and Cate gory 2 securities, a similar 
+number of obligation changes are observed. However, while there are 27 securities in 
+Category 1, there are 107 securities in Category 2 over the defined sample period. 
+The event change category reported in Panel C of Ta ble 3, reflects the number 
+of independent market maker event changes. In this category, multiple market maker 
+increases and decreases, pertaining to a particular security on a particular event date, 
+are classified as a single event. Furthermore, wher e there is an opposing event – 
+where the entry of a market maker corresponds with the exit of a market maker on the 
+
+11 The AOM is primarily made up of institutional inve stors and therefore direct competition from 
+smaller limit order traders is limited. 
+12 The ITS is a modified version of the CLICK system developed by OMX Technology. This data is 
+cross-verified with data provided by ASX CORE in order to mitigate potential errors. 
+13 Most recent studies that examine bid-ask spreads i n the microstructure literature focus on the 
+effective rather than the quoted spread (see Christ ie, Harris and Schultz (1994)). Effective spreads 
+capture the actual cost of executing trades by calc ulating the deviation of the trade price from the t rue 
+price. Trading on the ASX is carried out on an elec tronic platform where the effective spread is equal 
+to the quoted spread since traders cannot trade inside the quotes. 
+14 To mitigate potential errors in this approach, imp lied volatilities are also calculated as the averag e of 
+option series at-the-money strike, one strike above , and one strike below. This is based on option ser ies 
+with more than 20 days to expiration, and is consis tent with the methodology of De Fontnouvelle et al. 
+(2003). This analysis also uses indicative volatili ty estimates provided by the Australian Clearing 
+House (ACH) and finds quantitatively similar results across all three measures. 
+15 The Exchange advises market participants of market maker movements in AOM securities. This 
+treatment is in accordance with ASX Market Procedur e 22.3. These reports are available at 
+http://www.asx.com.au/investor/options/notices/ 
+Aspris, Frino & Lepone : Market Makers and the Australian Options Market 
+ 29 
+same event date – the event is categorised as a no-change event. Under these criteria, 
+Table 3 reports 1,631 independent market maker chan ges and 514 ‘no change’ 
+events.16 
+
+Table 3 
+Frequency Distribution of Market Maker Changes 
+
+Panel A – Category 1 Stock Options (n = 27 securities) 
+
+ Change = 1 Change = -1 Change > 1 Change < - 1 No Change 
+Continuous 390 357 41 16 - 
+Quote 154 151 20 4 - 
+Both 96 118 2 12 - 
+
+Panel B – Category 2 Stock Options (n = 107 securities) 
+
+Continuous 378 304 48 36 - 
+Quote 266 255 25 20 - 
+Both 43 98 2 9 - 
+
+Panel C – Net Changes 
+
+Net Change in 
+Market Makers 748 697 102 84 514 
+
+This table documents the frequency distribution of market maker changes in relation to 134 equity opti on securities between 18 
+September 2000 and 29 September 2006. Panels A and B contain descriptive statistics regarding the type of market maker entry 
+and exit. Panel C tabulates the aggregate total of market maker changes across Category 1 and Category 2 securities. The Net 
+Changes calculation in Panel C examines the net movement in market makers in particular securities. For a particular security on 
+a particular event date, if a departing market maker is replaced by a new market maker, then it is classified as no change. 
+
+A series of standard filters were applied to the da ta. All records with time 
+stamps outside the range 10:00 to 16:20 (EST), and the opening and closing trades of 
+the day, are excluded. 17 Low Exercise Price Options (LEPOs), which are deep -in-the-
+money options and more accurately depict futures st yle contracts, are also deleted 
+from the sample. In accordance with Anand (2005), t rades and quotes that are more 
+than four standard deviations away from the average trade price, or bid or ask quotes, 
+for the particular option series per trading day are also excluded. The selection criteria 
+results in a sample size of 4,693,469 observations. 
+ Table 4 reports cross-sectional summary statistics of 134 option classes over a 
+seven year window. Consistent with the findings of Benston and Hagerman (1974) 
+and Stoll (1978), among others, Table 4 documents t hat the number of market makers 
+per security is positively related to trade volume, volatility and market capitalisation. 
+It is additionally negatively related to the bid-as k spread. 
+
+16 Instances where market makers simply change obliga tions (without leaving a security) are very rare. 
+They are not factored into the main analysis which only considers actual market maker movements. 
+17 Market makers are required to maintain their oblig ations between 10:20-13:00 and 14:00-16:00 per 
+trading day. 
+ 30 
+
+Table 4 
+Cross Sectional Summary Statistics 
+
+Market 
+Maker 
+Quintile N 
+Bid-Ask 
+Spread PBAS Depth 
+Daily 
+Series 
+Volume Volatility 
+Market 
+Capitalisation 
+No. 
+Market 
+Makers 
+MM-
+Both 
+MM-
+Continuous 
+MM-
+Quote 
+1 938,694 0.046 15.98% 46.84 100.00 26.65% $3,404,0 21,172 5.31 0.57 2.98 1.75 
+2 938,694 0.036 12.58% 39.00 196.81 27.22% $8,873,4 82,919 8.99 1.21 6.33 1.45 
+3 938,693 0.033 12.04% 46.46 254.73 25.73% $12,066, 900,540 10.78 1.37 7.81 1.59 
+4 938,694 0.031 10.44% 51.32 296.64 23.70% $14,214, 111,733 12.34 1.87 8.78 1.68 
+5 938,694 0.026 10.35% 42.33 407.74 24.18% $18,710, 873,124 14.43 2.32 9.80 2.30 
+Full 
+Sample 4,693,469 0.034 12.28% 55.09 251.19 25.50% $ 11,453,877,767 10.37 1.47 7.14 1.76 
+Summary statistics are reported for 134 securities between 18 September 2000 and 20 December 2006. The statistics are segmented in quintiles, where quintile 1 represents securities, on average, with the lowest 
+number of market makers, and quintile 5, the highest. Bid-Ask Spread is the average prevailing bid-ask spread measured in cents. PBAS is the average prevailing percentage bid-ask spread. Depth is the average 
+cumulative volume posted on the buy and sell sides of the limit order book prior to the execution of a trade. Daily Series Volume is measured in contracts (one contract equals 100 shares of the underlying stock). 
+Volatility is the implied volatility and is computed using the Black Scholes formula at each trade price. Market Capitalisation is the average market capitalisation of the securities in the respective market maker 
+quintiles. No. Market Makers is the average number of designated market makers per security. The former category is made up of MM-Both , MM-Continuous , MM-Quote which are categories denoting the number of 
+market makers as per their obligations. 
+ 31 
+Research Design 
+The design of appropriately structured methodologies relies exclusively on hypotheses 
+that predict that the pervasive movement of market makers to and from securities is 
+related to a range of profit, risk and market conce ntration considerations. The 
+selection of variables for this analysis is guided by a number of standard competitive 
+economic tenets, theoretical models of microstructu re and extant empirical findings. 
+The former two categories are largely bounded by mo delling restrictions, whilst to 
+date empirical findings are largely confounded by a range of contravening market 
+frictions symptomatic of anti-competitive behaviour. 
+The contravening market frictions documented in pre vious empirical studies 
+are largely averted in this study since the ASX forbids payment for order flow activity 
+and trade internalisation procedures. Furthermore, strict compliance guidelines 
+regarding market makers quote provision are enforce d by the ASX. This study 
+additionally differs from previous empirical studie s since it considers not only the 
+characteristics of the main market on which the sec urity is traded, but also associated 
+markets for which hedging characteristics are relevant. 
+The selection of relevant variables is both guided by perceived and actual 
+profit, risk and market concentration consideration s. Specifically, this analysis 
+considers stock-specific characteristics that are likely to have formed part of a dealer’s 
+information set at the time of entry (exit). As a c onsequence, lagged variables that 
+measure the spread, volume, volatility and the numb er of market makers of individual 
+securities are included. Furthermore, assuming that a market maker’s profit and risk 
+considerations largely depend on the liquidity of t he underlying market, (consistent 
+with the hypothesis of Cho and Engle (1999)), hedgi ng variables are included in the 
+analysis. 
+Both the dependent and independent variables are co mputed as fixed time-
+series means over two-week intervals. 18 This leads to the following general 
+specification: 
+ )( 1,, −= t it i XfE 
+where: 
+...., 2 , 1
+), ,,,,,,( ,,,,,,,
+ni
+MMakers Volume Gamma Delta IVOL USpread Spread X t i, t it it it it it it i
+=
+=
+
+t iE , denotes the probability of dealer entry (exit) in stock i in period t ; t iSpread , is 
+the percentage quoted bid-ask spread 19 ; t iUSpread , is the underlying bid-ask spread; 
+t iIVOL , is the implied volatility of an asset; t iDelta , is the option delta; t iGamma , is 
+
+18 The two-week timeframe is selected to ensure that the necessary parameters influencing a market 
+maker’s decision to enter and exit are captured. Fo r robustness purposes, monthly fixed intervals are 
+considered and the results are qualitatively similar. These results are available upon request. 
+19 Percentage quoted bid-ask spreads are used in this analysis rather than absolute quoted bid-ask 
+spreads since percentage spreads are better able to deal with price discreteness. Additionally, 
+percentage spreads provide a more equivalent method of comparing trading costs across different 
+series. 
+AABFJ | Volume 6, no. 5, 2012 
+ 32 
+the option gamma; t iVolume , is the log of the average daily trading volume; 
+t i, MMakers is the number of market makers, and is used to mea sure market 
+concentration. 
+The model is estimated using both Poisson and logis tic regressions. For these 
+specifications, the dependent variable is set to eq ual one when entry (exit) is positive 
+and zero otherwise. In both specifications, indepen dent variables are lagged by a 
+single period. To examine the possibility that market makers respond to different trade 
+characteristics for particular classes of securitie s, separate regressions are estimated 
+for Category 1 and 2 securities. 
+To examine if a dealer market which allows pervasiv e market maker 
+movement and price competition will approximately r eflect a competitive 
+equilibrium, the concentration ratio of the market is examined on a discrete yearly 
+basis.20 A Herfindahl Index proxy measure is employed which examines the 
+proportion of volume executed by active market makers. This measure is calculated as 
+the sum of squares of the market share of each mark et making participant as indicated 
+below: 
+ ∑
+=
+=
+N
+n
+t int i SHerfindahl 
+1
+2
+, ,, 
+where 2 , ,t inS is the percentage of daily traded volume in securi ty i traded by market 
+maker n . A Herfindahl index score will range from makers market of number 1 to 1. 
+This is the range between a perfectly competitive m arket and a single monopolistic 
+market. 
+To examine the association between market maker ent ry (exit) and the impact 
+on quoted bid-ask spreads, both 30-day and 60-day e vent windows are constructed 
+around the entry (exit) of single market maker even t changes. All overlapping event 
+windows which result from multiple dealer entry (ex it), from the time of the 
+originating event, are excluded so as not to confou nd empirical findings. Finally, to 
+control for other determinants of the bid-ask sprea d, a pooled regression analysis is 
+undertaken with the following specification: 
+Dummy Event aDelta aVolatility aExpiry To Time aMoneyness aion Concentrat Market a
+ Spread Underlying aVolume es Daily Seri aTick aPrice Option aaSpread 
+10 98765
+43
+7i
+1i
+210
++++++
++++++= ∑
+=
+=
+
+where: 
+Spread is the bid-ask spread prevailing at each trade; Option Price is the option price; 
+Tick are a set of dummy variables that indicate the maxi mum spread per price step, as 
+specified in Table 1. For example, where the option price is less than 9.5 cents, the 
+maximum allowable bid-ask spread is 5 basis points which rises to 6 basis points, 
+where the option price increases to 19.5 cents. 
+Daily Series Volume is the daily trade volume summed across option seri es; 
+Underlying Spread is the mean daily quoted underlying spread; Market Concentration 
+
+20 The inclusion of a concentration index as an indep endent variable was first purported in the market 
+microstructure literature by Tinic and West (1972). 
+Aspris, Frino & Lepone : Market Makers and the Australian Options Market 
+ 33 
+is an index of the sum of the squares of the percen tage market share of each market 
+maker; Moneyness describes the intrinsic value of the option; Time To Expiry is the 
+time to maturity of each trade; Volatility is the average implied standard deviation of 
+trades across daily option series; Delta is the average hedge ratio of trades across 
+daily option series; Event Dummy is a dummy variable assigned the value of one if the 
+observation occurs after the entry (exit) of a mark et maker and zero otherwise. If an 
+observed change in the bid-ask spread of an option security is related to the entry 
+(exit) of a market maker, it is expected that the coefficient of the event dummy will be 
+negative (positive) and significant.21 
+The previous specification implicitly assumes that the type of market maker 
+obligations associated with market maker entry (exi t) is irrelevant. Recent literature 
+on the examination of affirmation obligations, howe ver, suggests that the nature of 
+market maker obligations may in fact affect market welfare (see Bessembinder, Hao 
+and Lemmon 2007). In their survey, Charitou and Pan ayides (2009) document a 
+plethora of obligations that are adopted by interna tional security exchanges for 
+assigned market makers. 
+Thus, to examine the effect of differing affirmative obligations associated with 
+market maker entry (exit), separate regressions bas ed on the type of obligation 
+associated with market maker entry (exit) are perfo rmed. The following specification 
+is described below: 
+Dummy Event aDelta aVolatility aExpiry To Time aMoneyness aion Concentrat Market a
+Spread Underlying aVolume Series Daily aTick aPrice Option aaType Obligation 
+i
+i
+10 98765
+43
+7
+1
+210
++++++
++++++= ∑
+=
+=
+
+where: 
+Obligation Type represents one of three types of affirmative obliga tions: continuous, 
+quote or mixed quote-continuous. The regressions ar e performed across security 
+categories to examine whether particular obligation s associated with market maker 
+entry (exit) are affected by different trade charac teristics. Excluded from this sample 
+are events where multiple market maker movements ar e associated with differing 
+market maker obligations. Results of the following specifications are discussed in the 
+following section. 
+
+Empirical Results 
+Table 5 presents the results of the analysis descri bed in the previous section. The 
+results are based on both logistic and Poisson regr ession frameworks for which there 
+are 6,600 entry and 6,501 exit combinations over a seven year sample period. The 
+findings in Table 5 indicate that stock characteris tics, based on executed trades, 
+
+21 An issue with empirical analyses characterised by large samples is a tendency to reject the null 
+hypothesis at conventional significance levels, eve n when posterior odds favour the null hypothesis. 
+This propensity is commonly referred to as Lindley’ s paradox. In order to avoid Lindley’s paradox, the 
+critical t values are adjusted for the large sample size according to the following formula: 
+ )]( 1[*
+12
+kTTct TT −−= 
+where t* is the new critical t value; T and k denote the sample size and the number of regressors , 
+respectively, in the model. According to Bayesian i nference, a parameter is significantly different fr om 
+zero when t > t*. See Johnstone (2005) for the derivation and further discussion of this method. 
+AABFJ | Volume 6, no. 5, 2012 
+ 34 
+significantly influence the market maker entry and exit decision. However, the 
+direction and significance of these variables seemi ngly deviates, not only from the 
+expectations outlined in the previous section, but also from prior theoretical and 
+empirical analyses. 
+
+Table 5 
+Determinants of Market Maker Entry and Exit 
+
+ Market Maker Entry Market Maker Exit 
+
+Logistic 
+Regression 
+Poisson 
+Regression 
+Logistic 
+Regression 
+Poisson 
+Regression 
+
+Intercept -6.167* -5.916* -3.811* -3.789* 
+ (0.602) (0.572) (0.685) (0.646) 
+Spread 3.468* 3.150* 5.174* 4.642* 
+ (1.273) (1.200) (1.435) (1.336) 
+USpread 6.00 5.611 12.808 11.373 
+ (7.428) (7.079) (8.154) (7.644) 
+IVOL 1.158** 1.021** 0.817 0.685 
+ (0.505) (0.471) (0.619) (0.577) 
+Delta 2.387* 2.181* -0.414 -0.353 
+ (0.931) (0.885) (1.103) (1.044) 
+Gamma 0.242*** 0.217*** -0.1745 -0.152 
+ (0.133) (0.125) (0.151) (0.141) 
+Volume 0.400* 0.363* -0.330* -0.286* 
+ (0.056) (0.053) (0.063) (0.058) 
+MMakers -0.057* -0.051* 0.340* 0.299* 
+ (0.021) (0.020) (0.025) (0.023) 
+This table presents the results of the logistic and Poisson regressions used to model the determinants of market maker entry and 
+exit. The logistic and Poisson regression models ar e based on fixed two-week time-series intervals. In dependent variables are 
+lagged by a single period. Spread is the percentage quoted bid-ask spread; USpread is the underlying bid-ask spread; IVOL is the 
+implied volatility of the asset; Delta is the option delta; Gamma is the option gamma; Volume is the log of the average daily 
+trading volume; MMakers is the number of market makers. Standard errors ar e reported in parentheses. A single (double, triple ) 
+asterisk implies a 99% (95%, 90%) level of significance based on adjusted critical t-values. 
+
+Firstly, the results show that higher quoted bid-as k spreads are positively 
+associated with both market maker entry and exit. W hile this finding appears counter-
+intuitive (since wider spreads are traditionally co nnoted with greater market maker 
+income, which should lead to increased (decreased) market maker entry (exit)), it 
+cannot be simply discounted as statistically errone ous. While market makers are 
+attracted to the possibility of higher spreads, if higher spreads reflect higher market 
+maker costs, then market makers may leave the marke t if they are bounded by 
+exchange-mandated maximum spread rules. 22 This is particularly pertinent for 
+
+22 The continuous spread rules may lead to an overall social welfare loss (transfer to informed traders) 
+if market makers are forced to maintain two-sided q uotes in an environment characterised by large 
+information asymmetries. 
+Aspris, Frino & Lepone : Market Makers and the Australian Options Market 
+ 35 
+Category 2 securities, which are characterised, on average, by higher levels of 
+information asymmetry (Easley, Kiefer and O’Hara (1996) and Weston (2000)). 23 
+To examine the rigidity of the conjecture from the previous paragraph, a 
+comparison of determinants between Category 1 and 2 securities is required. If the 
+reason that higher quoted spreads are correlated wi th market maker exit is due to 
+higher adverse selection costs, which are exacerbat ed by exchange-mandated quoting 
+obligations, then it is expected that this associat ion will be significantly greater for 
+Category 2 securities. According to the results in Table 6, quoted bid-ask spreads, for 
+Category 2 securities, are on average, strongly ass ociated with market maker exit. 
+This relationship, for Category 1 securities, is on ly statistically significant at the 10 
+percent level. The nature of these findings lends s upport to the conjecture that if 
+market makers are forced to maintain two-sided mark ets in environments 
+characterised by higher levels of information asymmetry, then this may lead to market 
+maker exit which may affect overall competition. 
+In relation to market maker entry, the results in T able 5 emphasise that higher 
+levels of volatility, option delta costs and levels of trading activity are positively 
+associated with market maker entry. The positive co efficient pertaining to the level of 
+trading activity is largely intuitive and consisten t with competitive expectations. 
+Similarly, with implied volatility and option delta variables, the positive and 
+significant coefficients associated suggest that th ey are important determinants of 
+market maker entry. This latter result, however, co ntradicts competitive expectations 
+as well as extant empirical evidence (Wahal 1997). 
+This previous evidence argues that an increase in v olatility will increase the 
+risk of carrying inventory and as such deter market maker entry. While this finding is 
+suited to equities-based research, the nature of th is finding may be of limited 
+applicability to the options market, since in a mor e volatile pricing environment, 
+hedging and other risk management techniques become more relevant and profitable 
+for market makers. 24 Thus the nature of this finding is likely to vary from previous 
+microstructure results. Results in Table 6 suggest only limited support for this 
+hypothesis. On average, the coefficient associated with volatility is positive and 
+significant for Category 2 securities, yet insignif icant for Category 1 securities. 
+Finally, the results in Tables 5 and 6 also indicat e that for both Category 1 and 2 
+securities, stocks with fewer dealers have a higher probability of market maker entry. 
+The decision of a market maker to leave a particula r security is also analysed 
+with respect to a range of stock and option charact eristics. Table 5 indicates that the 
+decision of a market maker to exit a security is si gnificantly associated with the bid-
+ask spread, trading volume, and number of existing market makers. Table 6 provides 
+corroborative evidence of this pattern across Categ ory 1 and 2 securities. 25 Overall, 
+the decision of a market maker to enter (exit) from the quote provision process is 
+guided by rational and competitive, profit, risk an d market concentration 
+characteristics as predicted in the previous section. 
+
+23 This argument supposes that market makers may not always be able to hedge the risk associated with 
+increased levels of information asymmetry. This typ e of risk is inherently greater for smaller and les s 
+liquid securities that dominate the sample of securities examined. 
+24 In an environment characterised by higher volatili ty, hedging and other risk management techniques 
+become more relevant and importantly can be profita ble if strategies have been designed with a long 
+gamma and kappa or vega risk stance. 
+25 Table 6 additionally finds weak evidence of a rela tionship between higher levels of implied volatilit y 
+and market maker withdrawal from Category 2 securities. 
+AABFJ | Volume 6, no. 5, 2012 
+ 36 
+
+Table 6 
+Determinants of Market Maker Entry and Exit for Category 1 and 2 Securities 
+
+ Market Maker Entry Market Maker Exit 
+ Category 1 Category 2 Category 1 Category 2 
+
+Intercept -4.409* -6.440* -3.359* -4.277* 
+ (1.003) (0.779) (1.109) (0.896) 
+Spread 2.227 3.351* 5.444*** 5.447* 
+ (2.465) (1.556) (2.979) (1.786) 
+USpread 5.615 8.882 24.000*** 6.342 
+ (12.16) (9.266) (13.452) (10.600) 
+IVOL -0.186 2.333* -0171 1.703*** 
+ (0.744) (0.692) (0.854) (0.906) 
+Delta 1.597 2.630** -1.511 0.022 
+ (1.547) (1.191) (1.764) (1.442) 
+Gamma 0.231 0.059 0.017 -0.518** 
+ (0.206) (0.181) (0.221) (0.220) 
+Volume 0.361* 0.335* -0.289* -0.347* 
+ (0.085) (0.079) (0.096) (0.088) 
+MMakers -0.114* -0.077** 0.313* 0.415* 
+ (0.030) (0.035) (0.036) (0.043) 
+This table presents results of a logistic regressio n analysis used to examine the determinants of mark et maker entry and exit for 
+Category 1 and 2 securities. The logistic regressio n model is based on fixed two-week time-series inte rvals. Independent 
+variables are lagged by a single period. Spread is the percentage quoted bid-ask spread; USpread is the underlying bid-ask 
+spread; IVOL is the implied volatility of an asset; Delta is the option delta; Gamma is the option gamma; Volume is the log of the 
+average daily trading volume; MMakers is the number of market makers. Standard errors ar e reported in parentheses. A single 
+(double, triple) asterisk implies a 99% (95%, 90%) level of significance based on adjusted critical t-values. 
+
+Table 7 presents results of the analysis related to market concentration. According to 
+the examination, which involves analysing the avera ge Herfindahl concentration ratio 
+of securities in Category 1 and 2 security groups, a wide disparity in the nature of 
+competition exists between liquid and less liquid s ecurities. The results show that 
+Category 1 securities are less concentrated than Category 2 securities, with an average 
+Herfindahl index score of 0.172 for Category 1 secu rities and 0.447 for Category 2 
+securities. 
+The average concentration ratio of a perfectly competitive market, in which (in 
+theory), each market maker receives an equally dist ributed proportion of the order 
+flow, is also reported. The reporting of this stati stic provides a direct comparison of 
+the degree of market concentration for ASX option s ecurities. Relative to the average 
+concentration ratio of a perfectly competitive mark et, the results documented enforce 
+the view that low volume securities (Category 2) ar e more concentrated than high 
+volume securities (Category 1). This result is cons istent with Ellis, Michaely and 
+O’Hara’s (2002) analysis of the NASDAQ market. 
+
+Aspris, Frino & Lepone : Market Makers and the Australian Options Market 
+ 37 
+
+Table 7 
+Herfindahl Index Ratios 
+
+ Category 1 Category 2 
+Year Herfindahl Index 
+1 / number of 
+market makers Herfindahl Index 
+1 / number of 
+market makers 
+
+2000 0.16203 0.1275 0.36871 0.18574 
+2001 0.14208 0.11575 0.41902 0.17947 
+2002 0.15752 0.10692 0.42859 0.22663 
+2003 0.17334 0.09804 0.45854 0.22407 
+2004 0.17687 0.09615 0.49909 0.22341 
+2005 0.18255 0.10132 0.48586 0.22248 
+2006 0.21401 0.12018 0.47168 0.23811 
+This table documents Herfindahl index scores for Ca tegory 1 and Category 2 securities across discrete 
+time intervals. The Herfindahl index measure is cal culated as the sum of squares of the market share o f 
+each dealer as indicated below: 
+ ∑
+=
+=
+N
+n
+t int i SHerfindahl 
+1
+2
+, ,, 
+where 2 , ,t inS is the percentage of daily traded volume in security i traded by market maker n. 
+1/ (number of market makers) is a comparative ratio of a situation where market makers equally share 
+trade volume and thus is the benchmark for a competitive market. 
+
+The results in this study, however, show that low l iquidity securities yield a 
+greater degree of market power despite relatively f ree market maker entry and the 
+emphasis of price competition between market makers . Therefore, while free market 
+maker entry is viewed as a central requisite of com petitive price formation, a positive 
+association in this analysis also encompasses the level of overall liquidity. 
+Table 7 additionally highlights that the average He rfindahl index ratio is up-
+trending for both Category 1 and Category 2 securit ies. This result indicates that the 
+proportion of business taken by leading market make rs has increased over time. 
+Although this may stem from a range of factors, the most likely reason for this up-
+trend is that incumbent market makers accrue a grea ter degree of market power and 
+are therefore able to offer superior quotes. This m arket power may be the result of 
+incumbent market marker experience which is exhibit ed in terms of superior market 
+timing or greater industry specialisation. 26 As such, new competitors may be limited 
+in their ability to attract a similar degree of ord er flow. 27 The veracity of this 
+statement, however, warrants further research. 
+
+26 Schultz (2000) argues that the fact that not all d ealers are created equal in terms of capitalisation and 
+industry specialisation may lead to divergences fro m a competitive outcome. The ASX strictly forbids 
+order preferencing or trade internalisation so that this disparity in market power is most likely due to 
+the factors outlined above. 
+27 The average Herfindahl index ratio may also increa se if there is a decrease in the number of market 
+makers. This reasoning, however, is seemingly impla usible given the steady increase in market makers 
+over time. 
+AABFJ | Volume 6, no. 5, 2012 
+ 38 
+The previous set of results indicates that the mark et structure of AOM 
+securities diverges between a competitive (Category 1) and less than competitive 
+(Category 2) state. To examine whether the nature of this state has implications for the 
+entry (exit) of market makers, an event-study regre ssion analysis focusing on the 
+impact on quoted bid-ask spreads, is performed on Category 1 and 2 securities. Pooled 
+30-day and 60-day event estimates are presented in Table 8. The explanatory power 
+of the regression models ranges between 25.95 perce nt and 36.76 percent. The F-
+statistics indicate that the hypothesis that the estimated coefficients are jointly equal to 
+zero can be rejected at the 0.01 level. 28 The standard errors of the estimated 
+coefficients are corrected for heteroskedasticity using White’s (1980) method. 
+The results show that market maker entry (exit), pe rtaining specifically to 
+Category 1 securities, is on average associated wit h a significant decline (increase) in 
+quoted bid-ask spreads. This result is robust for 3 0-day and 60-day event windows. 
+The marginal economic impact associated with market entry (exit), is an average 
+decline (increase) in quoted spreads of 3.02 percen t (4.42 percent). In relation to 
+Category 2 securities, results show that market mak er entry (exit) has a statistically 
+insignificant impact on quoted bid-ask spreads. While these results contradict findings 
+pertaining to Category 1 securities, they are never theless consistent with expectations 
+that greater market power in less-liquid securities adversely affects the competitive 
+price formation process. 
+The results in Table 7 regarding Category 2 securit ies suggests that if market 
+makers enjoy disparate market power, then the abili ty of new market makers to 
+compete for order flow may be significantly compromised. On no condition, however, 
+does this finding suggest that by improving the degree of competitiveness then trading 
+costs will decrease. The results of this conjecture are tested and additionally presented 
+in Table 8. According to these results, a significant (insignificant) association between 
+the degree of market concentration and quoted bid-a sk spreads is documented for 
+Category 1 (2) securities. The implication of this finding for Category 1 securities is 
+that bid-ask spreads are wider (narrower) under mor e (less) concentrated market 
+structures. However, for Category 2 securities, irr espective of the level of market 
+concentration, the impact on bid-ask spreads is insignificant. 
+The findings in Table 8 inter alia, assume that obligations attached with 
+market maker entry (exit) have a negligible impact on the price formation process. To 
+examine this proposition further, three separate re gressions are performed, based on a 
+selection of obligations associated with market mak er entry (exit). Table 9 presents 
+the results of these regressions based on a 30-day event sample for Category 1 and 2 
+securities. 
+
+Focusing on affirmative market maker obligations th at are dually associated 
+with market maker entry and exit, the results in Ta ble 9 indicate that in Category 1 
+
+28 Conditional Index (CI) values furthermore indicate that multicollinearity is not a major issue in the 
+regression model framework. 
+ 39 
+Table 8 
+Market Maker Entry (Exit) and the Bid-Ask Spread 
+
+ Market Maker Entry Market Maker Exit 
+ 30 Day 60 Day 30 Day 60 Day 
+ Category 1 Category 2 Category 1 Category 2 Catego ry 1 Category 2 Category 1 Category 2 
+Intercept 0.138* 0.299* 0.142* 0.287* 0.092* 0.128 * 0.097* 0.145* 
+Option Price 0.018* 0.005* 0.019* 0.006* 0.015* 0. 020* 0.011* 0.023* 
+Tick Dummy (1) -0.044* -0.172* -0.040* -0.163* -0. 038* -0.058* -0.052* -0.070* 
+Tick Dummy (2) -0.040* -0.163* -0.035* -0.152* -0. 034* -0.051* -0.047* -0.061* 
+Tick Dummy (3) -0.036* -0.154* -0.032* -0.143* -0. 032* -0.045* -0.042* -0.057* 
+Tick Dummy (4) -0.032* -0.139* -0.027* -0.128* -0. 028* 0.039* -0.039* -0.051* 
+Tick Dummy (5) -0.024* -0.114* -0.018* -0.106* -0. 021* -0.026* -0.030* -0.039* 
+Tick Dummy (6) -0.011* -0.078* -0.006* -0.068* -0. 009* -0.009* -0.017* -0.021* 
+Tick Dummy (7) -0.003* -0.046* 0.003* -0.026* -0.0 02* -0.002* -0.008* -0.009 
+Daily Series Volume (‘000) -0.003* 2.06* -0.005* 0. 003** -0.003* 1.04* -0.003* 0.001 
+Underlying Spread 0.268* 0.423* 0.283* 0.414* 0.31 1* 0.470* 0.294* 0.537* 
+Market Concentration 0.004* 0.001 0.008* 0.003 0.0 15* 0.001 0.007* -0.002 
+Moneyness -0.106* -0.127* -0.122* -0.140* -0.064* -0.072* -0.055* -0.080* 
+Time to Expiry 0.022* 0.005* 0.024* -0.002 0.019* 0.012* 0.021* 0.009* 
+Volatility 0.014* 0.042* 0.017* 0.050* 0.012* 0.01 8* 0.015* 0.12* 
+Delta 0.022* -0.020* 0.037* 0.006 0.016* 9.35* 0.0 20* 0.007 
+Event Dummy -0.001* -0.001 -0.001* 3.27* 0.001* 3 .72* 0.001* 0.001 
+
+F-Value 12292.6 2166.82 11245.5 2783.03 8471.44 1165.99 10 229.9 1664.36 
+Adj. R-squared 0.3378 0.3676 0.3116 0.3289 0.2595 0.2855 0.2605 0 .2832 
+Critical t-value 
+-1% 4.695 4.492 4.699 4.539 4.696 4.465 4.715 4.50 6 
+-5% 4.330 4.108 4.334 4.160 4.331 4.078 4.351 4.12 3 
+-10% 4.179 3.949 4.183 4.002 4.180 3.918 4.201 3.9 65 
+This table presents estimates from regressing quoted bid-ask spreads, of Category 1 and 2 option securities, on independent market maker entry (exit) event changes between 18 September 2000 and 20 December 2006. 
+The estimates are based on 30 and 60-day event windows and are corrected for heteroskedasticity using White’s (1980) method. Independent control variables include Option Price , Daily Series Volume, Underlying 
+Spread , Market Concentration , Moneyness , Time to Expiry , Volatility and Delta . Underlying Spread is the mean daily quoted underlying spread; Market Concentration is the sum of squares of the percentage market 
+share of each market maker; Monyeness describes the intrinsic value of the option; Time to Expiry is the time to maturity of each trade; Volatility is the average implied standard deviation of trades across daily option 
+series; Delta is the average hedge ratio of trades across daily option series. Event Dummy is a dummy variable assigned the value of one if the observation occurs after the entry (exit) of a market maker and zero 
+otherwise.A single (double, triple) asterisk implies a 99% (95%, 90%) level of significance based on adjusted critical t-values. 
+AABFJ | Volume 6, no. 5, 2012 
+ 40 
+Table 9 
+Affirmative Obligations associated with Market Maker Entry (Exit) and the Bid-Ask Spread 
+ Market Maker Entry Market Maker Exit 
+ Category 1 Category 2 Category 1 Category 2 
+ Both Quote Continuous Both Quote Continuous Both Quote Continuous Both Quote Continuous 
+
+Intercept 0.091* 0.167* 0.142* 0.010 0.368* 0.248* 0.070* 0.095* 0.190* -0.066* 0.203* 0.082* 
+Option Price 0.013* 0.021* 0.016* 0.016* 0.023* 0. 012* 0.026* 0.014* 0.017* 0.023* 0.006* 0.034* 
+Tick Dummy (1) -0.019* -0.040* -0.055* -0.015 -0.1 95* -0.147* -0.006* -0.038* -0.072* -0.069* -0.116* -0.025* 
+Tick Dummy (2) -0.018* -0.035* -0.050* -0.015 -0.1 82* -0.137* -0.004* -0.034* -0.066* -0.074* -0.104* -0.021* 
+Tick Dummy (3) -0.016* -0.032* -0.046* -0.013 -0.1 70* -0.130* -0.003* -0.031* -0.060* -0.077* -0.096* -0.017* 
+Tick Dummy (4) -0.013* -0.028* -0.040* -0.016 -0.1 51* -0.119* -0.003* -0.028* -0.053* -0.084* -0.085* -0.014** 
+Tick Dummy (5) -0.005* -0.020* -0.031* -0.026 -0.1 24* -0.100* 0.004 -0.022* -0.039* -0.096* -0.061* -0.009*** 
+Tick Dummy (6) 0.009* -0.003** -0.021* 0.004 -0.09 0* -0.067* 0.013 -0.011* -0.022* -0.085* -0.041* 0.002 
+Tick Dummy (7) 0.019* 0.001 -0.009* -0.004 -0.055* -0.039* 0.017 -0.005* -0.003* -0.054* -0.028* 0.010 
+Daily Series Volume (‘000) -0.002* -0.006* -0.002* -0.005* -0.005* 4.62* -0.001* -0.003* 0.003* 0.001 -0.002 0.000 
+Underlying Spread 0.233* 0.240* 0.237* 0.125* 0.39 7* 0.395* 0.198* 0.307* 0.229* 0.134 0.426* 0.473* 
+Market Concentration 0.007* 0.009* 0.003** 0.003 - 0.009* -0.002 0.008* 0.012* 0.006* -0.002 0.002 -0.003** 
+Moneyness -0.063* -0.152* -0.094* -0.012 -0.163* - 0.106* -0.064* -0.063* -0.132* -0.015 -0.078* -0.065* 
+Time to Expiry 0.030* 0.014* 0.023* 0.014* 0.012* 4.65* 0.033* 0.016* 0.014* 0.029* 0.007* 0.014* 
+Volatility 0.020* 0.028* 0.010* 0.012* 0.051* 0.03 8* 0.023* 0.013* 0.050* 0.024* 0.038* 0.020* 
+Delta 0.002 0.040* 0.017* 2.87* 0.045* -0.002 0.022* 0.008* 0.003 0.027* -0.038 0.014* 
+Event Dummy -0.001* -0.002* 1.49* 4.58* 4.45* -0.0 01 8.05* ** 0.002* 3.20* 0.001 -7.34* 0.001 
+This table shows estimates from regressing quoted bid-ask spreads,of Category 1 and 2 option securities on independent market maker entry (exit) event changes associated with three types of affirmative obligations. 
+These obligations include Continuous , Quote and Both (mixed continuous/quoted) based on rules between 18 September 2000 and 20 December 2006. The estimates are based on a 30-day event window and are 
+corrected for heteroskedasticity using White’s (1980) method. Independent control variables include Option Price , Daily Series Volume, Underlying Spread , Market Concentration , Moneyness , Time to Expiry , 
+Volatility and Delta . Event Dummy is a dummy variable assigned the value of one if the observation occurs after the entry (exit) of a market maker and zero otherwise. A single (double, triple) asterisk implies a 99% 
+(95%, 90%) level of significance based on adjusted critical t-values. 
+ 41 
+securities, both quote and mixed quote-continuous b ased obligations are 
+significantly associated with narrower bid-ask spre ads. This finding, however, does 
+not extend to continuous-based obligations attached to market maker entry and exit. 
+Regarding Category 2 securities, results indicate t hat the extent of obligations 
+associated with market maker entry and exit are insignificant. 
+The implications of these findings are significant since they suggest that the 
+type of obligation associated with market maker ent ry (exit) affects quoted spreads. 
+While these findings do not necessarily suggest tha t quoted and mixed-based 
+obligations dominate continuous-based obligations, they indicate that the marginal 
+benefit of quote and mixed-based obligations is sig nificant for quoted bid-ask spreads 
+of Category 1 securities.29 
+The results documented in Tables 8 and 9 additional ly provide pertinent 
+evidence regarding the determinants of spreads in o ptions markets. Consistent with 
+previous empirical findings (including Neal (1987) and Mayhew (2002)), price, 
+volatility and time-to-expiry are significant deter minants of option bid-ask spreads. 
+Interestingly however, while volume is expected to vary inversely with quoted 
+spreads, the significance of this relationship is a ttributable to securities in Category 1. 
+A similar finding is also reported in terms of mark et concentration. In relation to the 
+underlying spread and the option delta variables, w hich are designed to capture the 
+costs of hedging on quoted spreads, the reported re sults are additionally inconclusive. 
+Specifically, the results related to Category 1 sec urities provide evidence that higher 
+hedging costs increase option spreads concurring wi th the “derivative hedge theory” 
+proposed by Cho and Engle (1999). There is however, only limited evidence to 
+support this theory for Category 2 securities. 
+
+Robustness Tests 
+A number of additional robustness tests are perform ed in this section to validate 
+findings documented in the previous section. For sp ace considerations, these results 
+are not reported but are available upon request fro m the authors. Firstly, to examine 
+the robustness of trade characteristics, used to explain the market maker entry and exit 
+decision, the sampling procedure is altered so that trade characteristics are defined 
+over a monthly rather than fortnightly period. In a ddition to the sampling changes, a 
+specification change is also imposed so that the de cision between entry, exit and no 
+change (neither entry nor exit) is analysed on an o rdinal rather than binomial scale. 
+This is consistent with the methodology of Wahal (1 997). As such, an ordered 
+regression analysis is used. This model encompasses a random utility framework 
+
+29 It cannot be said that quote and mixed-based oblig ations dominate continuous obligations since the 
+type of entry (exit) may be dependent on the overal l mix of prevailing obligations. Since continuous 
+market makers dominate the existing pool of dealers, as documented in Table 2, the addition of an extra 
+market maker with continuous obligations may be les s relevant than a market maker with quote-based 
+obligations. 
+AABFJ | Volume 6, no. 5, 2012 
+ 42 
+which assumes that the utility of an alternative de cision is a function of a set of 
+attributes plus a random variable. The structural model is described as follows: 
+;,......, 1 where ' niuxy iii =+= β 
+where a latent variable y* , ranging from - ∞ to ∞ , is defined by an observed y 
+according to the following underlying latent model: 
+ Jmymy mimi to 1for if *1 =<≤= − ττ 
+where mτ represents a range of cut-points. Accordingly, the ordered response model 
+is categorised as follows: iy = -1 for a decrease in market makers relative to th e 
+previous period, iy = 0 for no change in market makers relative to the previous 
+period, and iy = 1 for an increase in market makers relative to t he previous period. 
+Estimation is performed via maximum-likelihood proc edures. On average, the results 
+reveal that, based on stock characteristics from th e previous month, increases in delta 
+hedging costs and volume are associated with an inc rease in market maker entry 
+across all option securities. Furthermore, securiti es with a lower number of market 
+makers also have a higher probability of market entry. 
+It is furthermore documented in the previous sectio n that market maker entry 
+(exit), for Category 1 securities leads to a signif icant marginal decline (increase) in 
+quoted bid-ask spreads. To reduce the effects of in tra-day patterns, an examination of 
+this issue is undertaken by averaging all trades for a given security and trade series on 
+a given day. Results indicate that consistent with findings in the previous section, 
+market maker entry (exit) is on average negatively (positively) associated with quoted 
+bid-ask spreads for Category 1 securities. The rela tionship is however, insignificant 
+for Category 2 securities. This result is additiona lly robust in both 30-day and 60-day 
+event samples. 
+To address a methodological issue related to the ex iguously non-normal 
+(rightly skewed) distribution of quoted bid-ask spr eads, a non-parametric generalised 
+linear regression model (GLM) with a Poisson distrib ution is used to affirm the 
+quantitative trends presented in the fifth section. To additionally ensure that the results 
+are not driven by any market anomalies (and so that only the most active option series 
+are considered), the sampling procedure is also alt ered so that both longer term and 
+near-expiration options are excluded. Options that expire within the next 90 days, but 
+not within the next 7 calendar days are included wh ich is consistent with the 
+procedure of De Fontnouvelle, Fishe & Harris (2003) who argue that trades in the 
+near term are likely to be motivated to avoid deliv ering stock on in-the-money 
+options. The GLM regression use

@@ -1,0 +1,37 @@
+name: learn-fetch
+on:
+  schedule:
+    - cron: "*/20 * * * *"      # every 20 min: keep the reading queue full
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: python learn_fetch.py 2>&1 | tee knowledge/last_fetch.log
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+          DISCORD_WEBHOOK_LEARN: ${{ secrets.DISCORD_WEBHOOK_LEARN }}
+      - run: python learn_read.py 2>&1 | tee -a knowledge/last_fetch.log; python learn_post.py; python vault.py
+        shell: bash
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACC: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+          DISCORD_WEBHOOK_LEARN: ${{ secrets.DISCORD_WEBHOOK_LEARN }}
+      - if: always()
+        run: bash .github/actions_common.sh "learn-fetch"

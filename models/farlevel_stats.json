@@ -1,0 +1,1 @@
+{"up": {"far_hit_rate": 0.1, "beyond_median_pct": 0.271, "beyond_p80_pct": 0.711, "mid_hit_rate": 0.502, "closed_back_inside": 0.423}, "down": {"far_hit_rate": 0.099, "beyond_median_pct": 0.524, "beyond_p80_pct": 1.268, "mid_hit_rate": 0.504, "closed_back_inside": 0.518}}

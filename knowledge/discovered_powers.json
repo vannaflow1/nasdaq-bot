@@ -1,0 +1,29 @@
+[
+ {
+  "id": 1,
+  "date": "2026-10-20",
+  "question": "When London already took the Asia high, does NY close above yesterday's high more often?",
+  "target": "y_closed_above_yday_high",
+  "expr": "k_london_took_asia_high",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 35% of 2808 sessions (2014-19: 35%, 2020-25: 35%). Predictor: lowest-fifth days 26% vs highest-fifth 40%, skill +3.6% vs the base rate, better in 9/9 unseen years",
+  "active": true
+ },
+ {
+  "id": 2,
+  "date": "2026-10-20",
+  "question": "Does the size of the overnight range change how often NY takes the overnight high?",
+  "target": "y_took_overnight_high",
+  "expr": "k_on_vs_normal",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 65% of 2907 sessions (2014-19: 65%, 2020-25: 65%). Predictor: lowest-fifth days 51% vs highest-fifth 73%, skill +2.1% vs the base rate, better in 9/9 unseen years",
+  "active": true
+ },
+ {
+  "id": 3,
+  "date": "2026-10-20",
+  "question": "SMT at the Asia high: when only ONE of NQ/ES took its Asia high before the open, does NY take the overnight LOW more often? (vs 51% when both took it)",
+  "target": "y_took_overnight_low",
+  "expr": "k_smt_high",
+  "verdict": "PROMISING (tested by Claude on the owner's ES data): 66% vs 51% when both took the Asia high (n=333 vs 1661), better in 12/12 years, 2024-26 68% vs 50%, placebo p<0.001",
+  "active": true
+ }
+]

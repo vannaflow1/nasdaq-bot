@@ -1,0 +1,27 @@
+name: morning
+on:
+  schedule:
+    - cron: "45 12,13 * * 1-5"   # 14:45 Luxembourg in summer and winter time
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: python nasdaq_bot.py --morning
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          PYTHONUNBUFFERED: "1"
+      - if: always()
+        run: bash .github/actions_common.sh "morning"

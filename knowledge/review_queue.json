@@ -1,0 +1,17 @@
+[
+ {
+  "id": "openalex:W608545967",
+  "title": "Volume-Synchronized Probability of Informed Trading (VPIN), Market Volatility, and High-Frequency Liquidity",
+  "idea": "Volume-Synchronized Probability of Informed Trading (VPIN), Market Volatility, and High-Frequency Liquidity (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 4,
+  "verdict": "PROMISING (stress test: survived) : power 'tail_day' (base 8%): lowest-fifth days 4% vs highest-fifth 11%, Brier skill +1.2%, better than the base rate in 7/9 unseen years",
+  "how": "`rank(vrp, 30)` as a predictor of 'tail_day' (range 1.8x+ its 20-day norm) | stress: skill +1.20; nudged formulas kept >= half the skill in 2/2; stale copies (lag 1-12 months) clearly worse in 4/4",
+  "spec": {
+   "kind": "power",
+   "expr": "rank(vrp, 30)",
+   "power": "tail_day",
+   "explain": "higher VPIN (proxied by volatility risk premium rank) predicts a tail day (range \u22651.8\u00d7 normal) in the next session"
+  },
+  "date": "2026-10-20"
+ }
+]

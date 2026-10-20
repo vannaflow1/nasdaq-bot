@@ -1,0 +1,30 @@
+name: volflag
+on:
+  schedule:
+    - cron: "37 19,20 * * 1-5"     # 15:37 NY in summer and winter time (script checks the NY clock)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: |
+          set -o pipefail
+          python volflag.py 2>&1 | tail -30 > volflag.log
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_NERD: ${{ secrets.DISCORD_WEBHOOK_NERD }}
+          PYTHONUNBUFFERED: "1"
+      - if: always()
+        run: bash .github/actions_common.sh "volflag"

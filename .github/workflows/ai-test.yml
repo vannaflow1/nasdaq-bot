@@ -1,0 +1,20 @@
+name: ai-test
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "25 0 21 10 *"   # once, right after the free AI quota resets
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -q -r requirements.txt
+      - run: python ai_test.py | tee knowledge/ai_test.txt
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACC: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - run: bash .github/actions_common.sh "ai test"

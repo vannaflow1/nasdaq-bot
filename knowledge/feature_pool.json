@@ -1,0 +1,7 @@
+[
+ {"expr": null, "template": "garch", "gain": 0.4, "years": "7/9", "paper": "GARCH (Bollerslev) - via 'Can a GARCH model improve volatility forecasts'", "id": "seed-garch", "added": "2026-10-20"},
+ {"expr": "next_opex", "template": null, "gain": 0.2, "years": "7/9", "paper": "Expiry dynamics: monthly options expiration next session", "id": "seed-opex", "added": "2026-10-20"},
+ {"expr": "log(impl) * rank(iv30, 252)", "template": null, "gain": 0.2, "years": "3/8", "paper": "Volatility regime: options-implied move weighted by the IV regime", "id": "seed-regime", "added": "2026-10-20"},
+ {"expr": "where(gex_rank < 0.2, 1, 0)", "template": null, "gain": 0.2, "years": "4/9", "paper": "Negative gamma hurts most under stress", "id": "seed-lowg", "added": "2026-10-20"},
+ {"expr": "clip(r20, -1, 0)", "template": null, "gain": 0.2, "years": "3/9", "paper": "Countercyclical volatility (recent drawdown)", "id": "seed-dd", "added": "2026-10-20"}
+]

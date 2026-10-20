@@ -1,0 +1,28 @@
+{
+ "date": "2026-10-19",
+ "papers": [
+  {
+   "id": "openalex:W4397023990",
+   "title": "Gamma positioning and market quality",
+   "url": "https://doi.org/10.1016/j.jedc.2024.104880",
+   "source": "OpenAlex (classic)",
+   "date": "2026-10-19",
+   "learned": "In a simulated market with simple random traders plus option hedgers who must re-hedge as prices move, the authors find that when hedgers are net long gamma (they buy dips and sell rips) volatility falls and liquidity holds up even under stress, while net short gamma (they sell into drops and buy into rallies) raises volatility, drains liquidity in stressed moments and makes the market more likely to break. More hedging activity of either sign made price discovery worse. I worked from the abstract only because the full text could not be downloaded, so I have no effect sizes.",
+   "concepts": [
+    "dealer gamma positioning",
+    "dynamic hedging",
+    "liquidity under stress",
+    "negative gamma volatility",
+    "agent-based simulation"
+   ],
+   "relevance": 4,
+   "relevance_note": "Directly about the dealer gamma mechanism Volta already uses for NQ/QQQ range calls, but it is a simulation (not real-market evidence) and I only had the abstract.",
+   "idea": {
+    "text": "Paper says negative gamma hurts most under stress: add a low-gamma flag (gex_rank < 0.2), its interaction with IV stress (30d IV vs its past-year average) and (0.5 - gex_rank) x IV stress to the next-day NQ range forecast.",
+    "tested": true,
+    "verdict": "NO EDGE: range-forecast miss 0.530% -> 0.529% (+0.2%), better in 4/9 unseen years",
+    "detail": "lowg = 1 if gex_rank<0.2; stress = l_iv30 minus its trailing 252-day mean (min 120 days); features lowg, lowg*stress, (0.5-gex_rank)*stress, all known at the close. gex_rank is already in the base model, which likely captures most of this."
+   }
+  }
+ ]
+}

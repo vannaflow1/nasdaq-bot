@@ -1,0 +1,2 @@
+got 13.1 MB
+{'spot': 7721.92, 'gex': -3.064, 'call_wall': 7750.0, 'put_wall': 7700.0, 'span': 0.648, 'quotes_from': '2026-10-20', 'contracts': 2426}

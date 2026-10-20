@@ -1,0 +1,874 @@
+Board of Governors of the Federal Reserve System
+International Finance Discussion Papers
+Number 759
+February 2003
+Transmission of Information Across International Equity Markets
+Jon Wongswan
+NOTE: International Finance Discussion Papers are preliminary materials circulated to stimulate
+discussion and critical comment. References to International Finance Discussion Papers (other than
+an acknowledgment that the writer has had access to unpublished material) should be cleared with the
+author or authors. Recent IFDPs are available on the Web at www.federalreserve.gov/pubs/ifdp/.
+Transmission of Information Across International Equity Markets
+Jon Wongswan∗
+Abstract: This paper provides evidence of transmission of information from the U.S. and
+Japan to Korean and Thai equity markets during the period from 1995 through 2000.Infor-
+mation is deﬁned as important macroeconomic announcements in the U.S., Japan, Korea,
+and Thailand. Using high-frequency intraday data, I focus the study on return volatility
+and trading volume because the implications of new information are much clearer than for
+returns. I ﬁnd a large and signiﬁcant association between emerging-economy equity volatility
+and trading volume and developed-economy macroeconomic announcements at short-time
+horizons. This is the ﬁrst strong evidence of this sort of international information transmis-
+sion. Previous studies’ ﬁndings of at most weak evidence may be due to their use of lower
+frequency data and their focus on developed-economy ﬁnancial market innovations as the
+measure of information.
+Keywords: information, volatility, trading volume, high-frequency data, macroeconomic an-
+nouncements, dispersion of expectations
+JEL classiﬁcation: E44, G14, G15
+∗Division of International Finance, Board of Governors of the Federal Reserve System. I would like to
+thank John Ammer, Ravi Bansal, Tim Bollerslev, Mark Carey, Bjørn Eraker, Campbell Harvey, Pete Kyle,
+George Tauchen, and students in the Duke Econometrics and Finance Lunch Group for their suggestions. I
+thank Jon Faust, Thanomsri Fongarun-Rung, Duangporn Rodpengsangkaha, Kotaro Yoshida, and the staﬀ
+at the Bank of Thailand for providing information on macroeconomic announcements and expectations. Of
+course, I take responsibility for any and all errors. For questions and comments, please contact Jon Wongswan.
+Email: Jon.Wongswan@frb.gov. The views in this paper are solely the responsibility of the author and should
+not be interpreted as reﬂecting the views of the Board of Governors of the Federal Reserve System or of any
+other person associated with the Federal Reserve System.
+1 Introduction
+As world capital markets have become increasingly integrated, information originating from
+one market is likely to become more important to other markets. Understanding the trans-
+mission of information is crucial for asset valuation, risk sharing, and economic policy.
+An extensive literature has explored the transmission of information across global ﬁnan-
+cial markets, but only weak evidence of transmission from developed-economy equity markets
+to emerging-economy equity markets has been found (e.g., Bekaert and Harvey (1997) and
+Ng (2000)).1 This result is surprising because most emerging economies rely heavily on in-
+ternational trade, predominantly with developed economies (especially the U.S. and Japan).
+Table 1 shows that international trade relative to gross domestic product is large for sev-
+eral emerging economies. Information regarding macroeconomic fundamentals of developed
+economies should signiﬁcantly inﬂuence emerging-economy fundamentals and thus emerging
+equity market returns and volatility.2
+Existing evidence of information transmission to emerging markets may be weak because
+of the nature of the information that has been analyzed and because low-frequency data have
+been used. Existing studies have focused on transmission from one equity market to another,
+not directly on the impact of information about economic fundamentals.Information is typ-
+ically deﬁned as innovations from asset pricing models or as volatility changes and the focus
+is on the impact of innovations or volatility in one market on returns or volatility in another
+market. Measured information from a developed market is likely to be of varying impor-
+tance for an emerging market. Thus, the impact of material information about fundamentals
+might be masked by information that may be important to the developed market but that is
+approximately noise for the emerging market. For example, Table 1 shows that the fraction
+1Studies focusing on information transmission among developed markets are Eun and Shim (1989), Hamao,
+Masulis, and Ng (1990), Engle, Ito, and Lin (1990), Lin and Ito (1994), Karolyi (1995), and Karolyi and Stulz
+(1996). Studies focusing on transmission from developed markets (mainly the U.S. and Japan) to emerging
+markets are Cheung, He, and Ng (1994), Kim and Rogers (1995), Bekaert and Harvey (1997), and Ng (2000).
+2During the 1970’s through the mid-1980’s, most emerging economies had restrictions on capital ﬂows.
+However, this does not necessarily explain the weak ﬁnancial linkages found by earlier papers because most
+emerging economies relied heavily on international trade, so information regarding a trading partner’s economy
+should impact the domestic market even when there are capital controls.
+1
+of emerging market volatility that can be explained by developed market volatilities is small.
+Studies of transmission of information that use low-frequency data also may fail to capture
+short-run or mean-reverting dynamic eﬀects. Recent research has shown that the properties
+of equity prices can be better captured with a two-factor stochastic volatility model that
+includes (1) a short-run or mean-reverting factor and (2) a long-run or persistence factor
+(e.g., Alizadeh, Brant, and Diebold (2002), Gallant, Hsu, and Tauchen (1999), Engle and
+Lee (1999), and Chernov, Gallant, Ghysels, and Tauchen (2001)). 3 Moreover, it has been
+shown in the literature that the impact of information on volatility is short-lived (e.g., Eder-
+ington and Lee (1993), Andersen and Bollerslev (1998), Fleming and Remolona (1999), and
+Balduzzi, Elton, and Green (1999)). This may help explain why previous studies do not ﬁnd
+evidence of information transmission from developed markets to emerging markets, as infor-
+mation primarily aﬀects the short-run volatility factor, an eﬀect masked by the low-frequency
+data.
+This paper is the ﬁrst to study international transmission of economic fundamental in-
+formation using high-frequency data. I study information transmission from the U.S. and
+Japan to Korea and Thailand during 1995 through 2000.Information is deﬁned as important
+macroeconomic announcements in the U.S., Japan, Korea and Thailand. Using minute-by-
+minute intraday equity market data, macroeconomic announcements and expectation about
+such announcements, I investigate the impact of U.S. and Japanese macroeconomic an-
+nouncements on intraday return volatility and trading volume for Korea and Thailand. 4 I
+estimate two-factor stochastic models for volatility and trading volume in which the short-
+run component is allowed to vary with information. Empirical measures of information
+are dummy variables for each announcement, the size of announcement surprises (measured
+as the absolute value of the diﬀerence between the actual announcement and the median
+3Alternatively, many papers add a jump component to price dynamics (Pan, 1999; Jones, 1999; Eraker,
+Johannes, and Polson, 2000; Andersen, Benzoni, and Lund, 2001). It should be noted that both the two-factor
+model and one-factor model with a jump component imply observationally indistinguishable price dynamics.
+Which model is the correct speciﬁcation remains an open question and is beyond the scope of this paper.
+However, I prefer the two-factor model because the impact of information on volatility persists for a short
+time as opposed to a single period.
+4I also control for macroeconomic announcements from Korea and Thailand.
+2
+of analysts’ expectations), and the dispersion of announcement expectations (measured as
+the cross-sectional standard deviation of all analysts’ expectations for each announcement).
+With the ability to identify the sources of information, this paper avoids the problem of
+spurious relationships which could arise if we use ﬁnancial market innovations to proxy for
+information.5
+I ﬁnd that macroeconomic announcements in U.S. Nonfarm Payrolls (EMPNF) and
+Japanese Industrial Production Index (IPI) induce large but short-lived increases in Thailand
+return volatility (on average they last about 30 minutes). However, the results on Korean
+market volatility vary across time. Prior to the end of 1998, Japanese Monetary Policy
+Meeting (MPM) decisions and Japanese IPI have a large but short-lived eﬀect on volatility
+(on average they last about 30 minutes). After the end of 1998, only the announcement of
+the U.S. Consumer Price Index (CPI) has a large but short-lived eﬀect on Korean return
+volatility. It should be noted that these U.S. macroeconomic announcements have been found
+to have a signiﬁcantly short-lived burst of volatility eﬀect on various U.S. ﬁnancial markets
+(e.g., Ederington and Lee (1993) and Andersen and Bollerslev (1998)).
+The paper also assesses the impact of transmission of fundamental information across
+international markets on intraday trading volume.6 I estimate a two-factor trading volume
+model in which the short-run trading volume component is allowed to vary with macroe-
+conomic announcements. I ﬁnd that announcements that aﬀect Thailand’s volatility (U.S.
+EMPNF and Japanese IPI) and U.S. Federal Open Market Committee (FOMC) decisions
+induce large and signiﬁcant short-lived increases in trading volume for Thailand (on aver-
+age they last about 45 minutes). As for the Korean market, the same announcements that
+aﬀect its volatility (Japanese MPM and IPI) also have a large and signiﬁcant short-lived
+5To my knowledge, Connolly and Wang (2002) is the only paper which deﬁnes information as macroeco-
+nomic announcements that studies the transmission of information in an international context. This paper
+diﬀers from Connolly and Wang (2002) in that 1) they use open and close prices to proxy for intraday move-
+ment; 2) they focus on returns which can be problematic as described further below; and 3) they study
+transmission among the U.S., U.K., and Japan.
+6Several studies have examined the impact of information on trading volume within a single country
+(e.g., Li and Engle (1998), Fleming and Remolona (1999), and Balduzzi, Elton, and Green (1999)). To
+my knowledge, Lin and Ito (1994) is the only paper which studies the transmission of information across
+international equity market on trading volume. They based the study on daily data.
+3
+increases in trading volume (on average they last about 45 minutes). An examination of
+trading volume is helpful because it sheds light on the details of reactions to information
+that is not revealed by examining return volatility alone. Some macroeconomic announce-
+ments are expected by an average market participant (implying no measured announcement
+surprises), but the expectations of individual market participants may be dispersed. When
+announcements are made, uncertainty is resolved and individuals may rebalance portfolios,
+with the volume of rebalancing positively related to the dispersion of expectations. This idea
+is consistent with theoretical models put forwarded by Karpoﬀ (1986), Kim and Verrecchia
+(1991), Shalen (1993), and Harris and Raviv (1993). I ﬁnd a strong positive empirical rela-
+tionship between the dispersion of expectations about U.S. EMPNF, the FOMC decisions,
+and Japan IPI and post-announcement trading volume.
+Although short-lived eﬀects on volatility and volume are not themselves of great economic
+importance, such eﬀects are indirect evidence of an impact of international information trans-
+mission on returns, which might be quite important economically. Unfortunately, direct ex-
+amination of the impact of announcements on returns cannot provide convincing evidence in
+an international context because the sign of the impact surprise is unpredictable. Announce-
+ments aﬀect a variety of economic variables, including trade ﬂows, capital ﬂows, and exchange
+rates, and the net implication of any given announcement for emerging-economy equity re-
+turns can diﬀer with circumstances. Thus, any of a negative, zero, or positive unconditional
+average reaction of returns to announcements could be consistent or inconsistent with eco-
+nomically important international ﬁnancial linkages.7 Conditioning on circumstances would
+require taking a position about the details of a structural international macroeconomic model
+and such models remain in ﬂux at this time.
+In contrast, the eﬀects of announcements on volatility and volume are predictable, which
+motivates this paper’s empirical focus. Although it is logically possible that substantial
+volume eﬀects could occur even if announcements have only a small impact on returns,
+it seems more likely that agents trade more in the wake of announcements because asset
+7I estimated the impact of announcements on return processes for my sample and cannot reject the
+hypothesis of a zero impact.
+4
+prices are ﬁnding a new level. Moreover, because volatility is measured as absolute return
+deviation, the ﬁnding of signiﬁcant volatility is also a ﬁnding that prices move signiﬁcantly
+in response to information. Thus, I regard this paper as providing the ﬁrst evidence of
+substantial information transmission from developed economies to emerging-economy equity
+markets.
+The remainder of the paper is organized as follows. Section 2 describes data sources and
+presents summary statistics. In section 3, preliminary results are discussed. The model and
+estimation method are described in section 4. Section 5 presents empirical results. Finally,
+section 6 concludes and discusses directions for future research.
+2 Data Description
+2.1 Equity Market Data
+The intraday minute-by-minute Korea total market index and volume are from the Korea
+Stock Exchange and cover the period from January 3, 1995, through December 26, 2000.
+During this period the Korea Stock Exchange operates under four diﬀerent sets of trading
+hours. I labelled each period as Subsample I, II, III, and IV (see Figure 1). The intraday
+minute-by-minute Thailand total market index and volume are from the Stock Exchange
+of Thailand and cover the period from January 3, 1995, through December 29, 2000. The
+trading hours are shown in Figure 1.
+In order to mitigate the nonsynchronous trading problem for component securities in
+an index (Lo and MacKinlay (1990)), I compute return, both for Korea and Thailand, at
+ﬁfteen-minute intervals.8 To minimize the stale prices problem, the opening prices are taken
+after the market has been open for ﬁfteen minutes. The ﬁrst return of each day is computed
+from yesterday’s closing price and today’s opening price. Volatility is measured as absolute
+return deviation: |Rt,n − ¯Rt,n|, where Rt,n is return for interval n in day t and ¯Rt,n is the
+8The criterion in selecting the return interval is to ﬁnd the interval that has the lowest average intraday
+return autocorrelation. I compare autocorrelations for one-minute, ﬁve-minute, ten-minute, ﬁfteen-minute,
+twenty-minute, and thirty-minute periods. Results are available on request.
+5
+expected return for intervaln in day t. The expected return is computed as sample averages
+of return across all days, t, for a given time interval, n. Trading volume is computed as the
+number of shares traded over any ﬁfteen-minute interval.
+As it is often encountered in high-frequency data, I removed days when returns and
+trading volume are contaminated by recording errors. These errors often occur as either
+sequences of zeros in the total market market index and trading volume or sequences of
+negative values in trading volume. I removed days when the sequences are longer than an
+hour. With these criterions, I removed 23 days from Korea and 3 days from Thailand.
+Table 2 provides basic statistics summary. The average ﬁfteen-minute returns are all
+insigniﬁcantly diﬀerent from zero except for Thailand. The average intraday return auto-
+correlation, even at the ﬁfteen-minute interval which has the lowest autocorrelations, is all
+signiﬁcant except in the case of Korea Subsample I. As for volume, it is very highly cor-
+related. Figure 2 and 3 plot intraday return, volatility, and volume of Korea Subsample
+I and Thailand, respectively.9 The dashed line represents a two-standard deviation band.
+Intraday returns do not exhibit any pattern; however, intraday volatilities exhibit a U-shape
+similar to patterns documented in other markets (Andersen and Bollerslev (1997, 1998) and
+Ito, Lyons, and Melvin (1998)).10 The spike in the middle of the day is due to high activity
+when market reopens after the lunch-time break. The sharp decreases of Korean market’s
+volatility and volume in the last trading period are due to batch auction in the last ten
+minutes used for computing closing prices. During this batch auction period, there is no
+trade. Intraday volume and volatility exhibit similar patterns which is also similar to what
+has been documented in the literature for U.S. equity markets (Tauchen and Pitts (1983),
+Karpoﬀ (1987), and Foster and Viswanathan (1993)).
+It is worth pointing out that, due to the time diﬀerences between the U.S. and Asia,
+the impact of U.S. announcements would appear on the ﬁrst trading period of the following
+day. This delay might lead to a problem in diﬀerentiating the impact of U.S. information
+9To conserve space, I only report results for Korea Subsample I. Results for Korea other subsamples are
+qualitatively similar and are available on request.
+10See theoretical explanation in Admati and Pﬂeiderer (1988) and Foster and Viswanathan (1990).
+6
+from other overnight information.11 In response to this potential diﬃculty, I could have used
+high-frequency intraday data for Korean and Thai stocks trading in New York as American
+Depository Receipts (ADRs) (see Karolyi and Stulz (1996) for the case of Japan) or country
+funds (see Cohen and Remolona (2000) for the case of Southeast Asia). However, there are
+only a few ADRs and country funds listed on the New York exchange.12 In addition, these
+stocks are not actively traded and do not track the underlying assets well. 13 Given these
+drawbacks, I think the beneﬁt of using intraday domestic total market data outweights the
+cost.
+In addition to high-frequency data, I use the longer sample period of daily data. The
+sample for Korea is from January 3, 1990, through December 26, 2000, for a total of 3,081
+observations. The Thailand sample period is from July 2, 1987, through December 29, 2000,
+for a total of 3,284 observations.
+2.2 Macroeconomic Announcement Data
+The completed data set consists of date, time, median of analysts’ expectations about each
+macroeconomic announcement, and standard deviation of all analysts’ expectations. The
+sample covers the period from January 1995 through December 2000. Table 3 shows details
+on all announcements and their mnemonic abbreviations.
+The U.S. macroeconomic announcements include the Employment Report (EMP), the
+Producer Price Index (PPI), the Consumer Price Index (CPI), and the FOMC decisions. I
+separate the component of Employment Report into two parts that include Unemployment
+Rate (EMPU) and Nonfarm Payrolls (EMPNF). This separation is possible when I measure
+the announcements with the size of surprises (the sample correlation of the size of surprises is
+0.07). These announcements have been shown in the literature to have a large and signiﬁcant
+impact on U.S. ﬁnancial markets (e.g., Ederington and Lee (1993), Andersen and Bollerslev
+11Later in the estimation, I try to minimize this problem by using dummy variables to control for the ﬁrst
+trading period, Monday morning, and mornings after holidays.
+12There are ﬁve Korean stocks and no Thai stocks listed as ADRs. As for country funds, there are three
+Korean funds and two Thai funds traded on the New York Stock Exchange.
+13Korean ADRs sometimes trade at premium because of ownership limits.
+7
+(1998), and Jones, Lamont, and Lumsdaine (1998)). Data for the actual announcements are
+taken from the government agency that published them. Market expectations data are from
+Money Market Services (MMS).14
+Japanese macroeconomic announcements include Gross Domestic Product (GDP), the
+Industrial Production Index (IPI), the Wholesales Price Index (WPI), the Tankan Business
+Survey (TK), and the Monetary Policy Meeting (MPM) decisions. These announcements
+are chosen based on coverage in the major Japanese ﬁnancial newspaper ( Nikkei Kin-yu
+Shimbun) and on conversations with a Bank of Japan oﬃcer. It should be noted that the
+Japanese Monetary Policy Committee was set up in 1998, with the U.S. FOMC as its model.
+The Japanese committee meets twice a month.
+Korean announcements include GDP, IPI, CPI, and Trade Balance. Thai macroeconomic
+announcements consist of GDP, CPI, and Trade Balance. The oﬃcial statistic of trade bal-
+ance is reported by the Bank of Thailand in the end-of-month Press Release on Economic
+and Monetary Conditions . This release includes manufacturing production, private con-
+sumption, government cash balance, CPI and PPI (which are ﬁrst reported by the Ministry
+of Commerce at the beginning of month), trade balance, liquidity conditions in ﬁnancial
+markets, and exchange rate. I choose to focus on trade balance because it represents the
+most important macroeconomic factor.15
+For all Asian macroeconomic announcements, the actual announcements are from the
+government agency that published them. For some announcements which the agency do not
+provide date or time, I identiﬁed it as the date and time that it ﬁrst appeared on either
+Bloomberg News or the Dow Jones Interactive Database. Market expectations are from
+Consensus Economics: Asia Paciﬁc Consensus Forecasts and Bloomberg News. Information
+14Kuttner (2001) and Faust, Swanson, and Wright (2002) have shown that expectations of the FOMC
+decisions are better captured with the Federal Fund Futures. I choose to use MMS data because it provides
+a measure of market dispersion of expectations (proxy with standard deviation of all analysts’ expectations).
+The sample correlation of the median of expectations and expectation extracted from the Federal Fund
+F u t u r e si s0 . 9 9 .
+15Diﬀerent versions of the Thai trade balance are published independently by the Ministry of Finance (Cus-
+toms Department), Ministry of Commerce (Department of Foreign Trade), and Bank of Thailand. However,
+the statistic from the Bank of Thailand is considered the oﬃcial one.
+8
+on median and standard deviation of analysts’ expectations are available from 1997.
+Due to the time diﬀerences among countries, trading hours, and holidays, some announce-
+ments cannot impact the market until the next trading session. The day distribution, and
+the earliest time that each announcement can impact Korean and Thai equity markets are
+shown in Appendix A1 and A2.
+3 Preliminary Analysis
+As has been shown in the literature, studies using low-frequency data (weekly and monthly)
+and using developed-economy ﬁnancial market innovations as measure of information, ﬁnd
+little evidence of information transmission from developed markets to emerging markets
+(Bekaert and Harvey (1997) and Ng (2000)). Furthermore, recent studies ﬁnd that equity
+price dynamic can be well captured by a two-factor stochastic volatility model. Moreover, it
+has been shown that the impact of information (macroeconomic announcements) on volatility
+is short-lived. In other words, the implication is that information only impacts the short-run
+volatility factor. Therefore, in this section I study information transmission based on daily
+frequency and identify information as macroeconomic announcements. The key idea is to
+investigate whether daily data can provide some insights on the impact of information on the
+short-run volatility factor. In addition to the impact on volatility, this section also studies
+the impact of information on daily volume.
+To test for the impact of information transmission on volatility, I estimate an AR(1)-
+GARCH(1,1) model in which volatility is allowed to vary with information. I measure
+macroeconomic announcements with dummy variables. It should be noted that although
+the GARCH(1,1) model is not the best ﬁtted model, it provides a good approximation of
+volatility dynamic. Daily asset return is modelled as
+Rt = φ0 + φ1Rt−1 + ϵt (1)
+ht = ω + αϵ2t−1 + βh t−1 +
+NA∑
+k=1
+ψk Ikt +
+ND∑
+i=1
+ϕi Dit (2)
+where ϵt is an error term with mean zero and conditional varianceht, Ik is a dummy variable
+for macroeconomic announcement,Di is a dummy variable for day-of-the-week and days after
+9
+holidays. The estimation results, based on daily data from 1995 through 2000, for Korea
+and Thailand are shown in Table 4 (Additive Volatility). From these results, it is evident
+that, based on daily data, we cannot capture information transmission.
+The failure to capture information transmission may be explained by two issues as fol-
+lows. The ﬁrst issue relates to a geometric decay in volatility autocorrelation implied from
+the standard GARCH model. Under this autocorrelation structure, Andersen and Boller-
+slev (1997) pointed out that the standard GARCH model cannot capture strong regular
+seasonal patterns (e.g., macroeconomic announcement and day-of-the-week). To incorporate
+the seasonal patterns, I modify the standard GARCH model to the following form
+Rt = φ0 + φ1Rt−1 +
+√
+Stϵt (3)
+St =1+
+NA∑
+k=1
+ψk Ikt +
+ND∑
+i=1
+ϕi Dit (4)
+ht = ω + αϵ2t−1 + βh t−1 (5)
+where St denotes the regular seasonal patterns. 16 We can interpret this model as dummy
+variables enter multiplicatively into the volatility equation as opposed to additively in the ﬁrst
+model (equation (2)). Moreover, when there are no seasonal patterns, the modiﬁed GARCH
+model reduces to the standard GARCH model. The estimation results are shown in Table 4
+(Multiplicative Volatility ). Again, there is no evidence of information transmission.
+The second issue relates to the consistency of the GARCH model. It is well known
+that the consistency of the GARCH model requires a long sample period. To overcome this
+problem, I proceed with a two-step estimation. First, daily volatility is estimated from an
+AR(1)-GARCH(1,1) model using the full sample of daily data (1990 through 2000 for Korea
+and 1987 through 2000 for Thailand). In the second step, I run a simple ordinary least
+squares (OLS) of volatility estimate from the GARCH model on dummies for macroeconomic
+announcements for a sample from 1995 through 2000. I also control for day-of-the-week and
+days after holidays with dummy variables. Although the two-step estimation is consistent,
+16Andersen and Bollerslev (1997) introduced this modelling concept for the case of high-frequency intraday
+seasonal patterns (See Section 4.1). Applications on daily data were implemented in Jones, Lamont, and
+Lumsdaine (1998), Li and Engle (1998), and Bomﬁm (2000).
+10
+it is not eﬃcient. The results also show no evidence of information transmission. As a
+robust check of the result, I run a regression of absolute return on dummy variables for
+macroeconomic announcements, day-of-the-week, and days after holidays. The results show
+no evidence of information transmission. The results of the two-step GARCH model and
+absolute return are not shown. Results are available on request.
+To investigate the impact of information on daily volume, I run an OLS regression of
+volume on dummy variables for macroeconomic announcements, day-of-the-week, and days
+after holidays. Table 4 (Volume) shows OLS regression results. It is evident that we can not
+capture information transmission. To sum up, based on daily data and measure of informa-
+tion as macro announcements, there is no evidence of information transmission. Given the
+results, there are two possible scenarios. First, there is no information transmission from the
+U.S. and Japan to Korea and Thailand. Second, the impact of information transmission is
+short-lived and cannot be captured with daily frequency. In the next section I investigate
+whether the second scenario is true by using high-frequency intraday data.
+4 Methodology
+4.1 Impact of Information on Intraday Volatility
+From a recent development in price dynamic literature, volatility can be modelled as two
+factors: long-run (persistence) and short-run (mean-reverting) factors. An eﬃcient way to
+test for the impact of macroeconomic announcements on the short-run volatility factor is to
+estimate jointly a two-factor stochastic volatility model. However, it is impossible to estimate
+a stochastic volatility model in high-frequency data because of computation cost and noise
+of data series. Andersen and Bollerslev (1997, 1998) propose a simple way to model both
+volatility factors in a high-frequency setting.17 Asset return is decomposed into three parts
+as follows:
+Rt,n − ¯Rt,n = σt,n St,n Zt,n (6)
+17The methodology in this section is based primarily on Andersen and Bollerslev (1997, 1998).
+11
+where ¯Rt,n is the expected ﬁfteen-minute return for intervaln in day t, n denotes the ﬁfteen-
+minute interval within a day (n =1 , 2, ...,16 for Korea Subsample I and n =1 , 2, ...,18 for
+Thailand), Zt,n is an error term with mean zero and unit variance, St,n represents the pat-
+tern eﬀect (calendar, scheduled announcement, and potentially short-run or mean-reverting
+volatility factor), andσt,n is the remaining part (potentially long-run or persistence volatility
+factor). By squaring and taking log of equation (6), we get:
+2 log[|Rt,n − ¯Rt,n|] − log σ2t,n = c +2l o gSt,n + ut,n (7)
+where c = E[log Z2t,n]a n dut,n =l o gZ2t,n − E[log Z2t,n].
+To make the estimation tractable, three assumptions are imposed as follows. First, ¯Rt,n
+is constant. This implies that the expected return of each interval is constant across all days.
+This does not imply, however, that expected return is constant within a day. Second, the
+persistence factor, σ2t,n, is computed from integrated volatility (Andersen, Bollerslev, Diebold,
+and Labys (1999)), GARCH model, and unconditional variance. Lastly, the parametric
+function for E[log St,n] is imposed to be of the form f(θ; t, n)
+f(θ; t, n)=
+J∑
+j=0
+σjt
+
+µ0j + µ1jn + µ2jn2 +
+D∑
+k=1
+λkjIk(t, n)+
+P∑
+p=1
+(γpjcosp2πN n + δpjsinp2πN n)
+
+
+(8)
+where Ik(t, n) represents an indicator for the event k during interval n on day t. It should
+be noted that we can model the impact of event k to persist for more than one period
+by using Ik(t, n+ i), where i =0 , ..., Nk and Nk is the number of intervals during which
+event k persists. The indicator can account for time-of-the-day eﬀect, day-of-the-week eﬀect,
+macroeconomic announcements, and important economic events. 18 Later, in the empiri-
+cal section, I use a diﬀerent measure of macroeconomic announcements, namely, dummy
+variables, size of announcement surprises (measured as the absolute value of the diﬀerence
+between the actual announcement and the median of analysts’ expectations), and the dis-
+18I model ﬁve major important economic events: Thai currency crisis (July 2, 1997), Korean currency
+crisis (November 17, 1997), Russian crisis (August 17, 1998), Long-Term Capital Management (LTCM) crisis
+(September 24, 1998), and Brazilian crisis (January 13, 1999). All date and time for each event are identiﬁed
+as the ﬁrst news that appeared on the Bloomberg News monitor. See details in Appendix B. The modelling
+of these events can be viewed as controlling for outlying observations.
+12
+persion of announcement expectations (measured as the cross-sectional standard deviation
+of all analysts’ forecasts for each announcement). When J = 0 and D =0 , f(θ; t, n) reduces
+to a standard Flexible Fourier Functional form (Gallant (1981, 1982)). The motivation for
+using this functional form is its simplicity to capture the intraday pattern.
+Given the assumptions, we can rewrite equation (7) as
+ˆxt,n ≡ 2 log[|Rt,n − ¯Rt,n|] − log ˆσ2t,n =ˆc + f(θ; t, n)+ˆut,n (9)
+where ˆc = E[log Z2t,n]+ E[log σ2t,n − log ˆσ2t,n]a n d
+ˆut,n =
+(
+log S2t,n − E[log S2t,n]) + (log σ2t,n − log ˆσ2t,n − E[log σ2t,n − log ˆσ2t,n])
++
+(
+log Z2t,n − E[log Z2t,n]) .
+To estimate the model, Andersen and Bollerslev (1998) suggest a two-step estimation
+procedure. The ﬁrst step is to calculate ¯R,ˆσ2t,n, and specify the lag length in the intraday
+pattern (equation (8)). The second step is to estimate regression of ˆ xt,n on an intraday
+pattern function (equation (9)) by OLS. Although the two-step estimation is not eﬃcient, it
+is consistent.
+The last issue is to get an estimate for ˆσ2t,n to use in the ﬁrst estimation stage. The goal of
+this component is to capture persistence volatility factor. With several choices for estimating
+ˆσ2t,n, I use three diﬀerent measures as follows. First, as in Andersen, Bollerslev, Diebold, and
+Labys (1999) show when using high-frequency data, we can measure daily volatility and treat
+it as observable. They termed it integrated volatility. However, integrated volatility consists
+of both long and short-run factors. In order to extract a long-run component, I compute a
+one-day ahead forecast from a time series model ﬁtted on daily integrated volatility. The
+intraday estimate is
+ˆσt,n = ˆσIntt√N (10)
+where ˆσIntt is a one-day ahead forecast of integrated volatility, ˆσIntt is computed from an
+ARMA(1,1) model of integrated volatility (σIntt ), and integrated volatility is computed from
+σIntt =
+N∑
+n=1
+R2t,n (11)
+13
+The second method is perhaps the most widely used estimation method to model volatil-
+ity, I estimate GARCH(1,1) based on a full sample of daily data, ˆ σGARCHt . The intraday
+estimate is
+ˆσt,n = ˆσGARCHt √N (12)
+Lastly, as a robust check of the result, I assume that σt,n is constant by imposing it to
+equal the unconditional standard deviation of equity returns. The intraday estimate is
+ˆσt,n = ¯σ√N (13)
+where ¯σ is the unconditional standard deviation.
+4.2 Impact of Information on Intraday Volume
+To study the impact of information on trading volume, I need to diﬀerentiate between the
+intraday pattern of volume and the impact of information on volume. From Figure 2 and 3,
+intraday volumes exhibit a U-shape pattern. Following the same idea as intraday volatility,
+I model volume as consisting of two components: long-run and short-run components. The
+decomposition is analogous to equation (6), modelling intraday volume the same way as
+absolute return.
+Vt,n = V LRt,n St,n Zt,n (14)
+where Vt,n is trading volume for time interval n in day t, n denotes the ﬁfteen-minute
+interval within a day,Zt,n is an error term with mean zero and unit variance,St,n represents
+the pattern eﬀect (calendar and scheduled announcement), and V LRt,n is the remaining part
+(potentially long run factor).
+By taking log of equation (14), we get
+log Vt,n − log V LRt,n = c +l o gSt,n + ut,n (15)
+where c = E[log Zt,n], ut,n =l o gZt,n − E[log Zt,n], V LRt,n is computed as a one-step ahead
+forecast from an ARMA(1,1) model based on daily volume. In addition, E[log St,n]i si m -
+posed to be a parametric function of the form f(θ; t, n) similar to equation (8). Under this
+speciﬁcation, short-run trading volume is allowed to vary with information.
+14
+5 Empirical Results
+I estimate the impact of information with three diﬀerent empirical measures of information.
+Each measure, used one at a time, is allowed to vary with the short-run components of
+volatility and trading volume through Ik(t, n) in equation (8). In addition, I also allow the
+direct impact of information to persist over diﬀerent numbers of 15-minute time intervals.
+The three measures of information are as follows.
+With the Asian macroeconomic expectation data only started in 1997 and to utilize the
+full sample of high-frequency data which started in 1995, I measure macro announcement
+occurrences with dummy variables. Each macroeconomic announcement is assigned a unique
+dummy variable.
+The second measure is the size of announcement surprises (measured as the absolute
+value of the diﬀerence between the actual announcement and the median of analysts’ expec-
+tations). The medians of analysts’ expectations for the U.S. are obtained from the MMS.
+The expectations are made and reported on a monthly basis. The medians of analysts’ ex-
+pectations for Japan, Korea, and Thailand are made on a monthly basis but reported on a
+year-on-year growth rate. This leads to a problem in computing surprises for each monthly
+announcements. Appendix C explains the methodology and assumption used to convert
+year-on-year growth rate expectation to monthly expectation. Due to the fact that analysts’
+expectations for Asian announcements starts in 1997, I also estimate the model with the
+surprises in U.S. announcements and dummy variables for Asian announcements from 1995
+through 2000 (Subsample I and II for Korea and 1995-2000 for Thailand).
+Finally, I measure information with the dispersion of announcement expectations (mea-
+sured as the cross-sectional standard deviation of all analysts’ expectations for each an-
+nouncement). This measure is intended to capture the dispersion or disagreement of agents’
+beliefs which can be viewed as capturing the the size of uncertainty resolved when informa-
+tion arrive. Disagreement of agents’ belief is used widely in the microstructure theory to
+explain trading volume and the positive relationship between volatility and trading volume
+(e.g., Karpoﬀ (1987), Kim and Verrecchia (1991), and Shalen (1993)).
+With diﬀerent measures of information and diﬀerent operating hours for Korea, I estimate
+15
+the impact of information with each measure separately. In addition, the estimation results
+for Korea are performed for each subsample separately. To conserve space, I only discuss
+the summary results for each country as shown in Table 8 and 9.
+The estimation strategy starts from the full model then deletes and re-estimates the
+model until all retained information measures are signiﬁcant. To illustrate of the estimation
+strategy, I show results on volatility for Korea Subsample I and Thailand 1995-2000 when I
+measure information as dummy variables (Table 5 and 6). The estimation starts from the
+column labelled Full System then proceeds to the preferred models (Model I for Korea and
+Model II for Thailand). To check for the robustness of the volatility results, I re-estimate
+the preferred model (Model I for Korea and Model II for Thailand) using GARCH and
+unconditional standard deviation to capture the long-run or persistence volatility factor.
+The results are robust to diﬀerent measures of long-run volatility. This provides evidence
+that at a high-frequency level, the short-run component is the dominant factor similar to
+the results in foreign exchange market found in Andersen and Bollerslev (1998). The results
+for Korea Subsample I and Thailand 1995-2000 on trading volume, when information is
+measured as dummy variables, are shown in Table 7.
+5.1 Impact of Information on Intraday Volatility
+5.1.1 Korea
+The top panel of Table 8 reports summary results for all Korea subsamples. The label on top
+of each column shows the measure of information. The empirical results on Subsample I and
+II should be interpreted jointly since they cover the same periods diﬀering only on days of the
+week (Weekdays and Saturdays, respectively). I divided the estimation in these subsamples
+into two periods because the data on Asian macroeconomic expectations are only available
+after 1997 (Subsample I and Subsample I (From 1997) and Subsample II and Subsample II
+(From 1997)). The information that impact volatility are U.S. EMPNF, U.S. PPI, Japan
+16
+IPI, Japan MPM decisions, and Korea GDP.19 The results for Subsample III and IV show
+that U.S. EMPNF and U.S. CPI impacts Korean equity market volatility. These impacts
+are signiﬁcant but short-lived. On average the impact persists for about 30 minutes.
+Since I estimate the impacts for diﬀerent subsample, it is interesting to know how many
+announcements are in each subsample. Figure 4 plots the number of macro announcements
+that impact Korean market in each subsample. Prior to the end of 1998, most of U.S.
+EMPNF announcements and half of the U.S. PPI announcements impact the Korean market
+on Saturdays. However, I only ﬁnd the impact on weekdays. The results on weekdays should
+be interpreted with caution.
+The results on Japan MPM decisions deserve special attention. The decisions only im-
+pacted Korea’s volatility during 1998. This ﬁnding might be attributed to the fact that MPM
+was set up in 1998 with a strong commitment from the Japanese government (they passed a
+new law); therefore, initially people may have paid attention to the policy. However, after a
+year of implementation, market participants did not observe any progress in revitalizing the
+Japanese economy, which may have led to a diminished impact of MPM decisions.
+When I measure information from the dispersion of announcement expectations, I ﬁnd a
+positive relationship between U.S. CPI and U.S. EMPNF and volatility (Subsample III and
+IV). This result is consistent with a theoretical model put forwarded by Shalen (1993). The
+basic idea of Shalen’s model is that dispersion of agents’ beliefs lead to increase in volatility
+and trading volume which in turn explain the positive relationship between volatility and
+trading volume.
+5.1.2 Thailand
+The bottom panel of Table 8 provides summary results for Thailand. It shows that U.S. EMP,
+U.S. FOMC, Japan IPI, and Thailand TB have a large and signiﬁcant impact on market
+volatility. On average the impact persists for about 30 minutes. With the exception of U.S.
+FOMC decisions and Japan IPI, the results are robust to diﬀerent measure of information.
+19The detail on dynamic impact in the case of Korea Subsample I when measure information with dummy
+variables is in Appendix B.
+17
+When I measure information as the size of surprises, I distinguish the impact from the two
+components in the U.S. EMP, namely, unemployment rate (EMPU) and nonfarm payrolls
+(EMPNF). I ﬁnd that EMPNF is the important component. This announcement has also
+been shown in the literature as the most important announcement in the U.S. ﬁnancial mar-
+kets (e.g., Ederington and Lee (1993), Andersen and Bollerslev (1998), Jones, Lamont, and
+Lumsdaine (1998), Flannery and Protopapadakis (2002), and Andersen, Bollerslev, Diebold,
+and Vega (2002)). This is likely due to its timeliness and that it is perceived as a good indi-
+cator of the state of U.S. economy, and it may contain information that would help forecast
+the future direction of monetary policy.
+The results on U.S. FOMC show the impact of monetary policy transmission. Although
+I do not ﬁnd a signiﬁcant result during the sample of 1997 to 2000, but this is not surprising.
+During the full sample (1995-2000), there were 49 FOMC meetings but only four decision
+surprises, which occurred mostly prior to 1997. This might explained why we do not ﬁnd
+evidence in the latter sample. For results on Thailand’s TB, caution in interpretation is
+necessary because the trade balance is reported together with other economic variables in
+the Bank of Thailand’s monthly Press Release on Economic and Monetary Conditions (See
+Section 2).
+5.1.3 Economic Signiﬁcance of Information
+To put the estimates in perspective, I transform the estimates into impact on market volatility
+by converting equations (6) through (9) to
+|Rt,n − ¯Rt,n| = ˆσt√N exp (f(θ; t, n)2 ) exp ( ˆut,n2 ) (16)
+where ˆσt is the daily estimate standard deviation obtained from equation (10), (12), or (13).
+The impact response can be computed directly from equation (16) as
+M(k)=
+Nk∑
+i=0
+[
+exp
+(λk(i)
+2
+)
+− 1
+]
+(17)
+where M(k) is the cumulative response from event k and λk(i) is the response of market
+volatility to eventk after i interval. When i =0 , λk(i) denotes the immediate response. For
+example, consider the case of Korea Subsample I when information is measured as dummy
+18
+variables (Table 5). The announcement of U.S. EMP leads Korea market volatility to increase
+by [
+exp
+(1.169
+2
+)
+− 1
+]
++
+[
+exp
+(1.169 · (2/3)
+2
+)
+− 1
+]
++
+[
+exp
+(1.169 · (1/3)
+2
+)
+− 1
+]
+=7 9.41% + 47 .65% + 21 .51% = 148 .57%
+as compared to a regular period without macroeconomic announcements. In terms of volatil-
+ity level, the initial impact increases by 0.635% (initial jump of 79.41 % times mean of
+volatility over the ﬁrst trading period of 0.8%) while the second and third lags increase by
+0.152% (47.65% times 0.32%) and 0.058% (21.51% times 0.27%), respectively. It should be
+noted that the results indicate a very signiﬁcant impact of information transmission. Fig-
+ure 5 shows the impact of U.S. EMP on Korean return volatility. Figure 6 and 7 show the
+impact of the U.S. EMP and Thailand TB on Thai equity market volatility.
+The bottom part of Tables 5 and 6 gives estimates of the impact of important economic
+events, namely the Thai crisis, Korean crisis, Russian crisis, LTCM crisis, and Brazilian
+crisis. It is evident that the impacts are very pronounced and persistent (See details in
+Appendix B). This is not surprising since these events were unexpected and considered ex
+post to have been important events in the ﬁnancial markets. As I identiﬁed each event by its
+ﬁrst appearance on the Bloomberg News monitor, it is interesting to note that the impacts
+of these events are transmitted to Korea and Thailand very rapidly.
+To evaluate the performance of the model, I take an unconditional expectation of equa-
+tion (16). Figure 8 shows the average intraday volatility for Korea and Thailand and the
+ﬁtted average intraday volatility. Although it should be kept in mind that I estimate intra-
+day pattern of log volatility, it is evident that the model can capture the average intraday
+volatility pattern well.
+5.2 Impact of Information on Volume
+It is by now well-established that information impacts both volatility and volume (e.g.,
+Tauchen and Pitts (1983) and Karpoﬀ (1987)). However, there has been little study on
+volume. The results on trading volume can be used as a robust check of the results from
+volatility. In addition, studying volume is important to understand the transmission of
+19
+information in resolving diﬀerences of agents’ beliefs which I model with the dispersion of
+announcement expectations.
+5.2.1 Korea
+The upper panel of Table 9 summarizes empirical results on trading volume for Korea. The
+label on top of each column shows the empirical measure of information. The results show
+that prior to the end of 1998 (Subsample I and II) U.S. FOMC decisions, Japan IPI, Japan
+MPM decisions, Korea GDP, Korea CPI, and Korea TB have a robust large but short-
+lived impact on trading volume. In addition, I ﬁnd that the dispersion of announcement
+expectations about the U.S. FOMC decisions, Japan IP, and Korea CPI have a positive
+relationship with trading volume. This results are consistent with theoretical model in the
+microstructure literature. After the end of 1998 (Subsample III and IV), the announcement
+of Japan MPM decisions is the only information that impact Korean market trading volume.
+Comparing the results on trading volume and volatility, prior to the end of 1998, the in-
+formation that impact both variables are Japan IPI, Japan MPM decisions, and Korea GDP.
+This ﬁnding can also explain the positive relationship between volatility and trading volume
+(Tauchen and Pitts (1983), Admati and Pﬂeiderer (1988), and Foster and Viswanathan
+(1990)). However, it is interesting to note that after the end of 1998 Japan MPM deci-
+sions only aﬀected trading volume but not volatility. This ﬁnding is reassuring that there is
+information transmission from the Japan to Korea.
+5.2.2 Thailand
+The bottom of panel of Table 9 summarizes the results on impact of information on Thailand
+trading volume. I ﬁnd that announcements about the U.S. EMPNF, U.S. FOMC decisions,
+Japan IPI and Thailand GDP have a large and signiﬁcant on volume. I also ﬁnd a positive
+relationship between the dispersion of expectations of announcement about U.S. EMPNF
+and U.S. FOMC and trading volume.
+The results on the U.S. FOMC decisions are interesting. I only ﬁnd the impact on
+volatility for the full sample (Thailand 1995-2000). However, I ﬁnd a signiﬁcant and robust
+20
+positive relationships between the dispersion of expectations and trading volume. A plau-
+sible explanation can be linked to the fact that volume relates to the dispersion of agents’
+beliefs whereas volatility relates to an average agent expectation (e.g., Karpoﬀ (1986), Kim
+and Verrecchia (1991), Shalen (1993), and Harris and Raviv (1993)). While most announce-
+ments from the FOMC decisions are expected by an average market participant (implying no
+measured announcement surprises), but the expectations of individual market participants
+may be dispersed.20
+Comparing the results on volatility and trading volume, the announcements of U.S.
+EMPNF and Japan IPI have a signiﬁcant on the Thai equity market. This ﬁnding conﬁrms
+that there is information transmission from the U.S. and Japan to Thailand.
+5.2.3 Economic Signiﬁcance of Information
+To evaluate the impact of each announcement, I follow the methodology used in the Subsec-
+tion 5.1.3 (equation (16)). Figure 6 shows the response of Thailand trading volume to the
+announcement of the U.S. EMP. It is interesting to note that the impact from important
+economic events on volume are more persistent than the impact on volatility (See Appendix
+B).
+The performance of the model is evaluated by comparing the averages of the intraday
+volume with the averages of the ﬁtted intraday volume. Figure 9 shows the comparison for
+Korea Subsample I and Thailand when I measure information with dummy variables. The
+plots indicate that the model can capture intraday volume well.
+6 Conclusion
+To summarize, using a measure of high-frequency intraday volatility, I ﬁnd that information
+from the U.S. and Japan have a signiﬁcantly large but short-lived impact on Korean and
+Thai equity markets (on average they last about 30 minutes). This in turn explains why
+20From 1995 through 2000, there were forty-nine FOMC meetings. There were only four surprises. However,
+there were twenty-four announcements in which analysts have dispersed expectations.
+21
+previous studies based on lower frequency data have generally been unable to ﬁnd any eﬀects.
+Furthermore, unlike most previous studies, which only investigate information transmis-
+sion through the impact on return volatility, this paper makes a ﬁrst attempt to model the
+transmission through intraday volume. The results show strong and signiﬁcant evidence of
+information transmission through this channel as well. In addition, these eﬀects are also
+short-lived (on average they last about 45 minutes).
+Although the results on volatility and trading volume are not exactly the same, prior to
+the end of 1998 Japan IPI, Japan MPM decisions, and Korea GDP impact both ﬁnancial
+variables on Korean market. As for Thailand, U.S. EMPNF and Japan IPI aﬀect both
+Thai equity market trading volume and volatility. I regard this ﬁnding as providing the
+ﬁrst robust evidence of information transmission from developed economies to emerging
+economies’ equity markets. In addition, these results are reassuring as one of the main
+themes of ﬁnancial economics is the linkage between macroeconomic fundamentals and asset
+price dynamics.
+It might be surprising that we do not ﬁnd much evidence of the impact of domestic econ-
+omy announcements on domestic ﬁnancial market variables, volatility and trading volume.
+One plausible explanation is that on many occasions, announcements were leaked before
+the oﬃcial time. By searching Bloomberg News and Dow Jones Database, I ﬁnd several
+occasions when high level government cabinet members accidentally announced information
+before the actual oﬃcial times.
+Several issues merit further exploration. First, it would be interesting to investigate the
+impact of U.S. and Japanese macroeconomic announcements on other international equity
+markets. If a similar set of announcements are aﬀecting other countries, they might constitute
+good candidates for identifying risk factors in the international asset pricing model. Another
+possibility would be to compare the importance of the transmission of public and private
+information. This can be achieved by using high-frequency intraday data and estimating the
+impact of public information (e.g., macroeconomic announcements) on the U.S. and Japan’s
+equity market volatility. One could then try to decompose sources of volatility from the U.S.
+and Japan as coming from public and private information.
+22
+Appendix A1: Macroeconomic Announcements (Actual Impact on Korea)
+Announcement Total Monday Tuesday Wednesday Thursday Friday Saturday Time (Korea)
+U.S.
+Employment Report (EMP) 72 26 1 1 0 3 41 First Trading
+Unemployment Rate (EMPU)
+Nonfarm Payrolls (EMPNF)
+Producer Price Index (PPI) 72 13 1 6 11 21 20 First Trading
+Consumer Price Index (CPI) 72 9 0 20 20 15 8 First Trading
+Federal Open Market Committee Meeting (FOMC) 49 0 0 30 16 3 0 First Trading
+Total days with at least one announcement 256 48 2 54 42 41 69
+JAP AN
+Gross Domestic Product (GDP) 24 4 2 4 3 5 6 First Trading
+Industrial Production Index (IPI) 71 9 7 16 13 21 5 First Trading/13:30 1
+Wholesales Price Index (WPI) 71 16 14 11 8 19 3 First Trading/11:00 2
+Tankan Business Survey (TK) 24 8 2 8 2 3 1 14:00/11:00/First Trading 3
+Monetary Policy Meeting (MPM) 57 9 6 10 12 17 3 No ﬁxed time
+Total days with at least one announcement 232 44 31 46 34 61 16
+KOREA
+Gross Domestic Product (GDP) 24 2 6 6 10 0 0 13:00
+Industrial Production Index (IPI) 71 17 9 15 15 12 3 12:00
+Consumer Price Index (CPI) 71 16 15 11 14 13 2 12:00
+Trade Balance (TB) 70 27 12 8 12 8 3 No ﬁxed time
+Total days with at least one announcement 186 45 33 31 43 27 7
+THAILAND
+Gross Domestic Product (GDP)4 8 6 1 1 0 0 0 13:00
+Consumer Price Index (CPI) 71 12 18 15 12 10 4 No ﬁxed time
+Trade Balance (TB) 71 12 7 7 16 21 8 First trading
+Total days with at least one announcement 129 23 21 20 25 29 11
+Grand total days with at least one announcement 646 120 75 117 118 128 88
+Total trading days 1638 292 288 284 292 291 191
+The table shows the day distribution and time of each announcement when it impacts the Korea market. All times are in Korean local time (GMT +9). 1The Japan Industrial
+Production Index impacted Korea at 13:30 between the period of January 29, 1997, through October 29, 1997. 2The Japan Wholesale Price Index impacted Korea at 11:00
+between the period of August 9, 1996, through December 9, 1996. 3The Japan Tankan Business Survey impacted Korea at 11:00 between the period of August 28, 1996, through
+November 27, 1996, and the ﬁrst trading afterward. 4The ﬁrst available announcement date and time was on March 30, 1999. All announcements are made on a monthly basis
+except U.S. FOMC (every six weeks), Japan MPM (bi-monthly), and GDP (quarterly).
+23
+Appendix A2: Macroeconomic Announcements (Actual Impact on Thailand)
+Announcement Total Monday Tuesday Wednesday Thursday Friday Time (Thailand)
+U.S.
+Employment Report (EMP) 72 57 12 0 0 3 First Trading
+Unemployment Rate (EMPU)
+Nonfarm Payrolls (EMPNF)
+Producer Price Index (PPI) 72 32 4 6 11 19 First Trading
+Consumer Price Index (CPI) 72 14 4 21 17 16 First Trading
+Federal Open Market Committee (FOMC) Meeting 49 0 0 31 15 3 First Trading
+Total days with at least one announcement 253 101 19 54 39 40
+JAP AN
+Gross Domestic Product (GDP) 24 5 5 1 5 8 First Trading
+Industrial Production Index (IPI) 72 12 8 19 16 17 First Trading/11:30 1
+Wholesales Price Index (WPI) 71 17 16 10 16 12 First Trading
+Tankan Business Survey (TK) 24 9 2 7 2 4 12:00/First Trading 2
+Monetary Policy Meeting (MPM) 57 6 9 6 16 20 No ﬁxed time
+Total days with at least one announcement 230 47 39 39 52 53
+KOREA
+Gross Domestic Product (GDP) 24 2 6 7 9 0 11:00
+Industrial Production Index (IPI) 72 18 10 16 13 15 First Trading
+Consumer Price Index (CPI) 72 17 14 12 15 14 First Trading
+Trade Balance (TB) 70 27 13 10 10 10 No ﬁxed time
+Total days with at least one announcement 180 46 33 36 40 25
+THAILAND
+Gross Domestic Product (GDP)3 86 1 1 0 0 1 1 : 0 0
+Consumer Price Index (CPI) 71 22 19 10 11 9 No ﬁxed time
+Trade Balance (TB) 72 6 10 3 36 17 15:00
+Total days with at least one announcement 146 33 28 13 46 26
+Grand total days with at least one announcement 629 167 90 116 133 123
+Total trading days 1471 279 298 298 298 298
+The table shows the day distribution and time of each announcement when it impacts the Thailand market. All times are in Thai local time (GMT +7).
+1The Japan Industrial Production Index impacted Thailand at 11:30 between the period of January 29, 1997, through October 29, 1997.2The Japan Tankan
+Business Survey impacted Thailand at 12:00 between the period of August 28, 1996, through November 27, 1996, and the ﬁrst trading afterward. 3The ﬁrst
+available announcement date and time was on March 30, 1999. All announcements are made on a monthly basis except U.S. FOMC (every six weeks), Japan
+MPM (bi-monthly), and GDP (quarterly).
+24
+Appendix B: Dynamic Response Patterns of Macroeconomic
+Announcements and Important Economic Events
+To allow for dynamic response of macroeconomic announcements and important eco-
+nomic events with parsimonious and eﬃcient estimates, I follow the methodology used in
+Andersen and Bollerslev (1998). The dynamic response is captured by an order-p polynomial
+speciﬁcation,
+λk(i)= c0 + c1 · i + ... + cp · ip (18)
+where λk(i) is the response of event k after i interval (equation (8)), i =0 , ..., Nk,a n dNk is
+the number of intervals during which event k persists. It should be noted that when i =0 ,
+it represents the initial impacts from event k. To gain the eﬃciency from the estimates, the
+restriction on the end point is imposed ( λk(Nk + 1) = 0). The next step is to substitute
+i = Nk +1i n t oλk(i)a n ds o l v ef o rcp. Then substitute cp back into λk(i). This would
+reduce one parameter from the p-order polynomial,
+λk(i)= c0·[1−( iNk +1 )p]+ c1·[1−( iNk +1 )p−1]·i + ... + cp−1·[1−( iNk +1 )]·ip−1. (19)
+The date and time of important economic events are identiﬁed by their ﬁrst appearance on
+the Bloomberg News monitor. The events covered are
+Economic Events Date Time
+Thai Crisis July 2, 1997 1:12 GMT
+Korea Crisis November 17, 1997 7:45 GMT
+Russian Crisis August 17, 1998 6:19 GMT
+LTCM Crisis September 24, 1998 1:42 GMT
+Brazilian Crisis January 13, 1999 8:17 GMT
+The dynamic responses for each macroeconomic announcement and important economic
+event are as follows:
+25
+Korea V olatility
+U.S. Employment Report Nk =2 P =1
+Japan MPM Nk =1 P =1
+Thai Crisis Nk =3 P =2
+Korea Crisis Nk =3 P =2
+Russian Crisis Nk =2 P =1
+LTCM Crisis Nk =2 P =1
+Thailand V olatility
+U.S. Employment Report Nk =1 P =1
+Thailand Trade Balance Nk =1 P =1
+Thai Crisis Nk =3 P =1
+Korea Crisis Nk =2 P =1
+Russian Crisis Nk =3 P =2
+LTCM Crisis Nk =4 P =2
+Brazilian Crisis Nk =4 P =2
+Korea V olume
+Japan MPM Nk =1 P =1
+Thai Crisis Nk =2 P =1
+Korea Crisis Nk =3 P =1
+Russian Crisis Nk =6 P =1
+LTCM Crisis Nk =6 P =1
+Thailand V olume
+U.S. Employment Report Nk =1 P =1
+Thai Crisis Nk =7 P =2
+Korea Crisis Nk =3 P =2
+Russian Crisis Nk =3 P =2
+LTCM Crisis Nk =7 P =2
+Brazilian Crisis Nk =4 P =2
+26
+Appendix C: Converting Analysts’ Expectations Frequency
+In this appendix, I convert analysts’ average year-on-year growth rate expectations to
+monthly growth rate expectation.21 Average year-on-year growth rate is deﬁned as growth
+rate of year average. Year average is computed by averaging monthly index over a year
+( 112 ∑12i=1 monthly indexi). To illustrate the computation method, I use the Thailand con-
+sumer price index from 1997 through 1998 as an example. Consider t

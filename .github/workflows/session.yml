@@ -1,0 +1,45 @@
+name: session
+# GitHub often skips 5-minute schedules, so each run loops by itself for ~56 minutes (runs queue, so they overlap instead of leaving gaps):
+# live tracker every 5 min, /nerd refresh every 30 min, short-vol check (self-gated to 15:20-15:59 NY).
+on:
+  schedule:
+    - cron: "3,33 12-21 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: session
+  cancel-in-progress: false
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - name: loop
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_LIVE: ${{ secrets.DISCORD_WEBHOOK_LIVE }}
+          DISCORD_WEBHOOK_NERD: ${{ secrets.DISCORD_WEBHOOK_NERD }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          end=$(( $(date +%s) + 56*60 ))
+          last_nerd=0
+          while [ $(date +%s) -lt $end ]; do
+            ct=$(TZ=America/Chicago date +%H%M); dow=$(TZ=America/Chicago date +%u)
+            if [ "$dow" -ge 6 ] || [ "10#$ct" -lt 820 ] || [ "10#$ct" -gt 1520 ]; then echo "outside session ($ct CT)"; break; fi
+            python3 live_tracker.py 2>&1 | tail -20 > last_live.log || true
+            python3 discovered_read.py 2>&1 | tail -20 > knowledge/discovered.log || true
+            python3 plan.py 2>&1 | tail -30 > knowledge/plan.log || true
+            now=$(date +%s)
+            if [ $(( now - last_nerd )) -ge 1700 ]; then python3 nasdaq_bot.py --nerdlive 2>&1 | tail -20 > nerd_live.log || true; last_nerd=$now; fi
+            python3 volflag.py 2>&1 | tail -30 > volflag.log || true
+            bash .github/actions_common.sh "session" || true
+            sleep 285
+          done

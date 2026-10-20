@@ -1,0 +1,13 @@
+NQ futures / NDX basis: 1.00756
+downloading CBOE QQQ chain (can take a minute on a slow connection)...
+  got 4.8 MB
+  Options price a ±408 pt CLOSE-TO-CLOSE move in NQ futures (1.39%).
+  Gamma-adjusted: ±392 pts -> close likely between 29,000 and 29,784 (NQ futures prices)
+  (options price moves about right on days like this; ~58% of such days closed inside). This is where the day ENDS, not how far it
+  swings: the high-to-low range is usually ~1.5-2x wider - see /brain for the full-day range.
+
+  NQ futures prices: Call wall 29,910 | Put wall 29,400 | Gamma flip 30,079
+  (from QQQ + NDX options; in QQQ terms ~722 / 710 / 726)
+  NQ is BELOW the flip (dealers amplify moves)
+  Tested 2014-25: walls are NOT support/resistance (no better than random levels).
+  If the put wall breaks, drops tended to run a bit further. Below the flip = bigger days.

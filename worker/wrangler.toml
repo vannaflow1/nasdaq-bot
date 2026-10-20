@@ -1,0 +1,8 @@
+# Deployed automatically by .github/workflows/deploy-worker.yml whenever worker/ changes.
+name = "minivanna"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+keep_vars = true            # keep DISCORD_PUBLIC_KEY / REPO set in the Cloudflare dashboard
+
+[ai]
+binding = "AI"

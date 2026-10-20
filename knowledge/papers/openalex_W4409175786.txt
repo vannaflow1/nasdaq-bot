@@ -1,0 +1,726 @@
+International Journal of Social Science and Human Research 
+ISSN (print): 2644-0679, ISSN (online): 2644-0695 
+V olume 08 Issue 03 March 2025 
+DOI: 10.47191/ijsshr/v8-i3-72, Impact factor- 8.007 
+Page No:1931-1957 
+
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1931 
+Essays on Banking, Investment Banking, Insurance, Mutual 
+Funds, Exchange-Traded Funds, Hedge Funds, Private Equity 
+Funds, Securitization, Futures/Forward Contracts , a nd 
+Options Contracts 
+
+Donald L. Buresh, Ph.D., Esq. 
+Touro University Worldwide 
+
+ABSTRACT: This article discusses the features of banking, investment banking, insurance, mutual funds, exchange -traded funds, 
+hedge funds, private equity funds, securitization, futures/ forward contracts, and options contracts. The first essay outlines the 
+qualities of the banking industry. The second essay talks about investment banking, defining both it and a broker -dealer, and then 
+discussing the risks to the investment banking and broker -dealer businesses. The third essay outlines insurance, defines it, lists its 
+types, reviews the regulatory structure, and discusses the challenges insurance regulators face. The fourth essay is concerned with 
+mutual funds and exchange -traded funds. Both concepts are defined, and their characteristics are listed and compared. The fifth 
+essay addresses hedge funds and private equity funds. Again, both are defined and their characteristics are enumerated. This essay 
+also defines and discusses general and limited partners and the regulatory structure faced by hedge and private equit y funds. The 
+sixth essay deals with securitization, demonstrating how it works, listing the securitization steps, and comparing the advantages and 
+disadvantages of securitization to the issuer and the investor. The final essay examines futures/ forward and options contracts. 
+Examples are provided, and the benefits of futures/forwards and options contracts are considered. The conclusion summarizes the 
+information, noting that the financial institutions discussed have arisen due to compound interest and the om nipresent desire for 
+profit. 
+KEYWORDS: • Banking •Exchange-Traded Funds • Futures/Forward Contracts •Hedge Funds •Insurance, •Investment Banking 
+•Mutual Funds •Options Contracts • Private Equity Funds •Securitization 
+
+DONALD L. BURESH BIOGRAPHY 
+Donald L. B uresh earned his Ph.D. in engineering and technology management from Northcentral University. His 
+dissertation assessed customer satisfaction for both agile-driven and plan-driven software development projects. Dr. Buresh earned 
+a J.D. from The John Marshall Law School in Chicago, Illinois, focusing on cyber law and intellectual property. He also earned an 
+LL.M in intellectual property from the University of Illinois Chicago Law School (formerly, The John Marshall Law School) and 
+an LL.M. in cybersecurity a nd privacy from Albany Law School, graduating summa cum laude. Dr. Buresh received an M.P.S. in 
+cybersecurity policy and an M.S. in cybersecurity, concentrating in cyber intelligence, both from Utica College. He has an M. B.A. 
+from the University of Massach usetts Lowell, focusing on operations management, an M.A. in economics from Boston College, 
+and a B.S. from the University of Illinois -Chicago, majoring in mathematics and philosophy. Dr. Buresh is a member of Delta Mu 
+Delta, Sigma Iota Epsilon, Epsilon Pi Tau, Phi Delta Phi, Phi Alpha Delta, and Phi Theta Kappa. He has over 25 years of paid 
+professional experience in Information Technology and has taught economics, project management, negotiation, managerial ethics, 
+and cybersecurity at several universities. Dr. Buresh is an avid Chicago White Sox fan and keeps active by fencing épée and foil at 
+a local fencing club. Dr. Buresh is a member of the Florida Bar. 
+
+LIST OF ABBREVIATIONS 
+Abbreviation Description 
+ABS Asset-Backed Security 
+AUM Assets Under Management 
+CA14 Clayton Act of 1914 
+CBO Collateralized Bond Obligation 
+
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1932 
+CD Certificate of Deposit 
+CDO Collateralized Debt Obligation 
+CDO-Cubed Tranches of CDO-Squared Securities 
+CDO-Squared Tranches of other CDO Securities 
+CEA36 Commodity Exchange Act of 1936 
+CFBB Consumer Financial Protection Bureau 
+CFTC Commodity Futures Trading Commission 
+CLO Collateralized Loan Obligation 
+CMBS Commercial Mortgage-Backed Security 
+CMO Collateralized Mortgage Obligation 
+Dodd-Frank Dodd-Frank Wall Street Reform and Co nsumer Protection Act of 2010 
+DoJ Department of Justice 
+ETF Exchange-Traded Fund 
+ FCEN Financial Crimes Enforcement Network 
+FDIC Federal Deposit Insurance Company 
+FFIEC Federal Financial Institutions Examination Council 
+FinCEN Financial Crimes Enforcement Network 
+FINRA Financial Industry Regulatory Authority 
+FTC Federal Trade Commission 
+FTCA Federal Trade Commission Act of 1914 
+GLBA Gramm-Leach-Bliley Act of 1999 
+GSA Glass-Steagall Act of 1933 
+IAA40 Investment Advisers Act of 1940 
+ICA40 Investment Company Act of 1940 
+IPO Initial Public Offering 
+IRS Internal Revenue Service 
+JOBS Jumpstart Our Business Startups Act of 2012 
+M&A Mergers and Acquisitions 
+MBS Mortgage-Backed Security 
+MFA McCarren-Ferguson Act of 1945 
+NAIC National Association of Insurance Commissioners 
+NA V Net Asset Value 
+OCC Office of the Comptroller of the Currency 
+OTC Over-the-Counter 
+PPM Private Placement Memorandum 
+Reg BI Best-Interest Regulation 
+RMBS Residential Mortgage-Backed Security 
+ S&L Savings and Loan Association 
+SA90 Sherman Act of 1890 
+SA33 Securities Act of 1933 
+SEA34 Securities Exchange Act of 1934 
+SEC Securities and Exchange Commission 
+
+MISCELLANEOUS CONSIDERATIONS 
+Author Contributions: The author has read and agreed to the published version of the manuscript. 
+Funding: This research received no external funding. 
+Institutional Review Board Statement: Not applicable. 
+Informed Consent Statement: Not applicable. 
+Conflicts of Interest: The author declares no conflict of interest. 
+Acknowledgments: Many thanks to Leizza Buresh for all her efforts in editing this paper. Any remaining issues are mine. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1933 
+INTRODUCTION 
+ This article discusses the features of banking, investment banking, insurance, mutual funds, exchange-traded funds, hedge 
+funds, private equity funds, securitization, futures/ forward contracts, and options contracts. The first essay outlines the qualities of 
+the banking industry. The second essay talks about investment banking, defining it, and a broker -dealer, and then discussing the 
+risks to th e investment banking and broker -dealer businesses. The third essay outlines insurance, defining it, listing its types, 
+reviewing the regulatory structure, and the challenges faced by insurance regulators. The fourth essay is concerned with mutu al 
+funds and exchange-traded funds. Both concepts are defined and their characteristics are listed and compared. The fifth essay 
+addresses hedge funds and private equity funds. Again, both are defined and their characteristics are enumerated. This essay also 
+defines and discusses general and limited partners and the regulatory structure faced by hedge and private equity funds. The sixth 
+essay deals with securitization, demonstrating how it works, listing the securitization steps, and comparing the advantages a nd 
+disadvantages of securitization to the issuer and the investor. The final essay examines futures/forward and options contracts. 
+Examples are provided and the benefits of futures/forwards and options contracts are considered. The conclusion summarizes th e 
+information contained therein, noting that the financial institutions discussed have arisen due to the existence of compound interes t 
+and the omnipresent desire for profit. 
+
+ESSAY ON BANKING 
+In this essay, the types of banking institutions are described. Second, the banking oversight agencies are examined. The various 
+banking regulations are discussed. Finally, the essay observes that the regulatory requirements depend on what governmental b ody 
+charters the financial institution, what is the content of the charter , and what activities do the banking entity offer. All these factors 
+determine the regulatory and supervisory approaches. The purpose of this plethora of institutions, regulatory bodies, and federal and 
+state regulations is to ensure the safety and stability of the United States financial system. 
+Types of Bank Institutions 
+The banking institutions discussed herein are national banks, state banks, thrift institutions, or Savings and Loan 
+Associations (S&Ls), and credit unions. Each one will be discussed in turn. 
+ National Banks. 
+In the United States, a national bank is also known as a commercial bank. 1 The Comptroller of the Currency, part of the 
+United States Treasury, charters a national bank. 2 A national bank is a member of the Federal Reserve System and a member of a 
+district Federal Reserve bank. 3 National banks are members of the Federal Deposit Insurance Corporation (FDIC) and participate 
+in auctioning U.S. Treasury bonds.4 In contrast, internationally, a national bank is another name for a country’s central bank, which 
+establishes monetary policies for that nation. 5 
+State Banks 
+States charter a state bank to offer primarily commercial banking services. 6 A state bank is neither a national nor a central 
+bank and does not influence the federal government’s monetary policy.7 State banks may be large financial institutions, but may not 
+expand beyond a state ’s borders because they are not federally chartered. 8 State banks are limited to providing personal banking 
+services, and in some instances, wealth management and insurance services.9 State banks can offer Certificates of Deposit (CDs) as 
+well as checking and savings accounts to individuals and small businesses. 10 
+Thrift Institutions 
+A thrift institution, sometimes denoted as a thrift, is a financial entity that concentrates in providing savings accounts and 
+home mortgages for consumers. 11Thrifts are also known as S&Ls.12 In contrast to national banks and savings banks, thrifts give 
+
+1 Julia Kagan, National Bank: Meaning, History, Examples, Investopedia (Oct. 31, 2020), available at 
+https://www.investopedia.com/terms/n/national-bank.asp. 
+2 Id. 
+3 Id. 
+4 Id. 
+5 Id. 
+6 Julia Kagan, State Bank: What It Is, How It Works, Services, Investopedia (Jan. 29, 2021), available at 
+https://www.investopedia.com/terms/s/state-bank.asp. 
+7 Id. 
+8 Id. 
+9 Id. 
+10 Id. 
+11 Julia Kagan, Thrift Bank: Definition, History, How It Works, and Impact, Investopedia (Jul. 31, 2020), available at 
+https://www.investopedia.com/terms/t/thriftbank.asp. 
+12 Id. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1934 
+higher interest payments on savings accounts while extending limited lending se rvices to businesses. 13 S&Ls offer checking 
+accounts, personal and automobile loans, and credit cards for consumers while primarily being involved in mortgages for singl e-
+family residences.14 Thrifts can either be corporate entities owned by its shareholders or be owned by its depositors and borrowers.15 
+Credit Unions 
+Credit unions are financial non-profit cooperatives that offer traditional banking services to their members.16 Credit unions 
+are non-profit institutions whose members pool their money, thereby purchasing shares in the cooperative, to supply loans, checking 
+and saving accounts, and other financial services to its members. 17 The income earned by the credit union is employed to fund 
+beneficial community projects and the interest of members. 18 Credit unions have fewer products than traditional banking entities, 
+but typically offer better interest rates and more A TM locations. 19 Credit unions range from small volunteer operations to large 
+organizations that operate nationwide.20 Large corporations sometimes form credit unions to benefit their employees.21 Credit unions 
+are non-profit entities and are exempt from paying corporate taxes. 22 
+Banking Oversight Agencies 
+The United States possesses a dual banking system of federally chartered and state -chartered banks.23 Most banks in the 
+United States are supervised by more than one bank regulatory agency, either on the federal or state levels. 24 If the bank purchases 
+deposit insurance, it is subject to the rules of the Federal Deposit Insurance Company (FDIC).25 If a state bank decides to become a 
+Federal Reserve System member, the Federal Reserve becomes the leading federal regulator. 26 Bank holding companies are 
+responsible for banking regulation at the parent company level.27 The regulatory agencies supervise the internal activities of national 
+and state banks and administer the applicable federal and state banking laws. The regulatory bodies that are responsible for regulating 
+national and state banks include: 
+The Federal Reserve System 
+The Federal Reserve is primarily responsible for regulating national and state banks. The Federal Reserve has the power 
+to issue cease -and-desist orders, remove bank and holding company officers as well as other relevant parties, levy fines, revoke 
+membership, and order the divestiture or termination of banking activities.28 
+The Office of the Comptroller of the Currency 
+The Office of the Comptroller of the Currency ( OCC) is the oldest federal bank regulatory agency. It supervises national 
+banks, savings and loan associations, and federal branches of foreign banks. The OCC is part of the U.S. Treasury. It charters national 
+banks; reviews national bank branch merger applications; issues cease-and-desist orders; levies fines against national bank officers, 
+directors, employees, and other associated parties that violate laws or engage in unsafe and unsound banking practices; removes or 
+suspends national bank officials; and places national banks into conservatorship or revokes their charters. 29 
+The Federal Deposit Insurance Corporation 
+Organized i n 1934, the FDIC provides insurance on deposits at commercial banks. All Federal Reserve members are 
+required to obtain FDIC insurance. FDIC insurance can be offered to non-member banks with the approval of the FDIC. Almost all 
+non-member banks are insured by the FDIC. To avoid regulatory duplication, the FDIC only directly supervises state -chartered 
+banks that are not members of the Federal Reserve System. The FDIC acts as a receiver for failed banks and manages deposit 
+insurance funds. The insurance organ ization can make special examinations of its insured banks to determine their financial 
+condition. The FDIC has the power to terminate deposit insurance; issue cease -and-desist orders; remove bank officials, directors, 
+
+13 Id. 
+14 Id. 
+15 Id. 
+16 Mitchell Grant, Credit Unions: Definition, Membership Requirements, and vs. Banks, Investopedia (Jun. 22, 2023), available at 
+https://www.investopedia.com/terms/c/creditunion.asp. 
+17 Id. 
+18 Id. 
+19 Id. 
+20 Id. 
+21 Id. 
+22 Id. 
+23 KAREN MAN, GLOBAL FINANCIAL SERVICES REGULATORY GUIDE, BAKER & MCKENZIE 152 (n.d.), available at 
+https://resourcehub.bakermckenzie.com/en/resources/global-financial-services-regulatory-guide. 
+24 Id. 
+25 Id. 
+26 Id. 
+27 Id. 
+28 Id. 
+29 Id. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1935 
+and associated parties; levy fines at state-non-member banks; recommend and pursue enforcement actions; or appoint itself a 
+conservator or receiver of the banking institution. 30 
+State Banking Agencies 
+Each of the 50 states has a separate regulatory agency responsible for supervising state bank s and foreign banks located 
+within the state. State banks must adhere to all applicable state laws and regulations. State banking agencies issue bank cha rters; 
+conduct bank examinations; create and enforce bank regulations; and approve branch and merger ap plications. State banking 
+agencies can also revoke a state bank’s charter; issue cease-and-desist orders; remove bank officials; and levy fines. 31 
+Other Regulators 
+Various other state and federal regulatory agencies are responsible for supervising U.S. bank s. Some of the more critical 
+agencies include the Consumer Financial Protection Bureau (CFPB), the Financial Crimes Enforcement Network (FCEN), the 
+Federal Financial Institutions Examination Council (FFIEC), the Department of Justice (DoJ), and the Federal Trade Commission 
+(FTC). Financial institutions that engage in securities and investment-related activities are regulated by the Securities and Exchange 
+Commission (SEC), the Financial Industry Regulatory Authority, Inc. (FINRA), and the state securities a gencies. If a bank deals 
+with derivatives, it is regulated by the Commodity Futures Trading Commission (CFTC), which involves the supervision of futures 
+contracts, options on futures contracts, swaps, leveraged retail foreign exchange and commodity contrac ts, and other leveraged 
+products. If a bank is involved with insurance, state commissioners have general regulatory authority, and the entity must behave in 
+conformance with state licensing laws and other state insurance laws and regulations. Finally, the states are responsible for licensing 
+money transmission services. Banks that transfer money for their customers must register with the federal government via the 
+Financial Crimes Enforcement Network (FinCEN), and are subject to various anti-money laundering requirements contained in the 
+Bank Secrecy Act.32 
+Banking Regulations 
+ There are many banking regulations in the United States. The purpose of these regulations is to protect the money of 
+individuals and businesses and to ensure that banking customers are treated fairly and equitably. The regulations include:33 
+• Regulation B: Equal Credit Opportunity – Prohibits lenders from discriminating against credit applicants. 
+• Regulation C: The Home Mortgage Disclosure Act – Requires financial institutions to maintain and annually disclose 
+information about home purchases, home purchase pre -approvals, home improvement, and refinance applications 
+involving one- to four-unit and multifamily dwellings. 
+• Regulation D: Reserve Requirements of Depository Institutions – Establishes uniform reserve balance requirements with 
+the district Federal Reserve Bank or as cash. The regulation also defines withdrawal limitations from savings, money 
+markets, and CDs. 
+• Regulation E: Electronic Fund Transfers – States the rights, liabilities, and responsibilities of the parties involved in 
+electronic funds transfers. 
+• Regulation G: SAFE Mortgage Licensing Act – Created the licensing and registration requirements for all mortgage loan 
+originators. 
+• Regulation J: Collection of Checks and Other Items by Federal Reserve Banks and Funds Transfers Through Fedwire 
+– Oversees the guidelines for processing checks and other cash instruments for individuals and financial organizations. 
+• Regulation M: Consumer Leasing —This regulation applies to the Truth in Lending Act consumer leasing provisions by 
+mandating that the leasing terms be fully disclosed. 
+• Regulation V: Fair Credit Reporting – Establishes collecting, sharing, and using consumer credit information. It permits 
+customers to get a copy of their credit report from various credit bureaus such as Equifax, Experian, and Trans Union. The 
+regulation allows consumers to challenge negative information. Regulation V also sets the time limit for removing negative 
+information from a credit report. Finally, the regulation requires entities to inform consumers when an unfavorable action 
+occurs based on the information in the credit report. 
+• Regulation Z: Truth In Lending – Stipulates uniform methods for computing the cost of credit, disclosing credit terms, 
+and correcting errors on specific types of credit accounts. These methods must be revealed to a borrower before giving 
+credit for loans, including how a financial entity advertises. 
+
+30 Id. at 152-53. 
+31 Id. 
+32 Id. 
+33 BTC Staff, Banking Regulations, Bank Training Center (n.d.), available at https://www.banktrainingcenter.com/banking-
+regulations. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1936 
+• Regulation CC: Availability of Funds and Collection of Checks – Regulates how and when checking account funds are 
+available and the conditions when holds can be placed on checking account funds, the maximum amount of time a hold 
+can exist, and the return of checks. 
+• Regulation DD: Truth In Savings – Specifies the disclosure of the terms and conditions for interest and fees and the 
+opening of new savings accounts. 
+Advantages to the Stability and Safety of the Financial System 
+Based on the information above, different types of financial institutions engage in various banking activities. The entities 
+can be chartered by the federal government or by the states. Depending on the governmental body that charters a financial institution, 
+certain legal requirements are expected to be fulfilled. If the federal government charters a national bank, th en that bank must 
+become a member of the Federal Reserve System. If a state charters a banking company, then that entity is required to obey st ate 
+laws as well as federal laws. 
+The regulatory bodies that a banking institution must report to depend on feder al and state laws and the activities in the 
+charter. For example, thrifts are regulated by the OCC and various state agencies. If the thrift purchases deposit insurance, it is also 
+regulated by the FDIC. The regulations that banking institutions must follo w depend on what services an entity offers. If an 
+institution offers home mortgages, it is subject to Regulations B, C, G, M, V , and Z. If a banking organization offers checking and 
+savings accounts, it must follow at least Regulations CC and DD. If a banking institution is a member of the Federal Reserve System, 
+it must adhere to the Fed ’s reserve requirements, and if it is a state financial institution, it must also follow the state ’s reserve 
+requirements. 
+The key criteria are what governing body charters the banking institution, what is contained in the charter, and what services 
+the organization offers. These factors determine the regulating bodies and regulations the organization must follow. It is a complex 
+situation with a byzantine answer. The Americ an financial system is multifaceted and thus demands a regulatory approach that 
+considers the intricate details of the system. In other words, there is no royal road to maintaining the safety and stability of the 
+United States financial system. 
+Conclusion – Essay on Banking 
+ In conclusion, this essay introduces the banking industry and the government agencies that regulate it. The purpose of the 
+text is to outline the various parts of banking so that the succeeding essays become more relevant. This essay and the essays to 
+follow will provide the reader with a reasonably detailed understanding and appreciation of the financial sector so that one can make 
+sense of the financial world around us. 
+
+ ESSAY ON INVESTMENT BANKING 
+This essay describes the risks and abuses in the investment banking and broker-dealer business. First, investment banking 
+and broker-dealers are defined. Second, the risks and abuses in the investment banking business are discussed. Third, the risks and 
+abuses in the broker-dealer business are explained. Finally, the piece concludes by observing that there are a myriad number of risks 
+and abuses that exist in both businesses. The idea is to mitigate the risks and avoid the abuses so that these companies can operate 
+effectively and satisfy the desires of their customers. 
+Definition of Investment Banking 
+According to Kagan, investment banking is “a type of banking that organizes large, complex financial transactions such as 
+mergers or initial public offering (IPO) underwriting.”34 Vipond defined investment banking as “the division of a bank or financial 
+institution that serves governments, corporations, and institutions by providing underwriting (capital raising) and mergers a nd 
+acquisitions (M&A) advisory services. ”35 Investment banks are interme diaries between investors and corporations that require 
+capital to grow and operate a business. 36 Investment banks raise money by underwriting new securities for firms, municipalities, 
+and other entities. 37 These organizations also may manage a corporation ’s IPOs and advise on mergers, acquisitions, and 
+reorganizations.38 In essence, investment bankers help their clients through the maze of high finance. 39 
+
+34 Julia Kagan, Investment Banking: What It Is and What Investment Bankers Do, Investopedia (Aug. 6, 2024), available at 
+https://www.investopedia.com/terms/i/investment-banking.asp. 
+35 Tim Vipond, Investment Banking Overview, Corporate Finance Institute (n.d.), available at 
+https://corporatefinanceinstitute.com/resources/career/investment-banking-overview/. 
+36 Id. 
+37 Julia Kagan, supra, note 34. 
+38 Id. 
+39 Id. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1937 
+Definition of a Broker-Dealer 
+According to the SEC, a broker/dealer is “any person engaged in the business of buying or selling securities for the account 
+of others.”40 In other words, a broker/dealer is any individual or organization whose business is the buying and selling of securities, 
+but not necessarily for their own account. 41 According to Hayes, a broker /dealer is a “person or firm in the business of buying and 
+selling securities for its own account or on behalf of its customers. ”42 The term broker/dealer describes a stock brokerage house 
+because these companies can act as both agents and principals. A broker/dealer acts as a broker when it buys and sells securities on 
+behalf of its clients, whereas it acts as a dealer when it buys and sells securities for its account. 43 According to Black ’s Law 
+Dictionary, a broker/dealer is a “brokerage firm that engages i n the business of trading securities for its own account (i.e., as a 
+principal) before selling them to customers. ”44 A broker/dealer is usually registered with the SEC and in the states where it does 
+business.45 
+Risks and Abuses in the Investment Banking Business 
+This section is divided into two subsections. The first subsection addresses risks and the second deals with abuses in the 
+investment banking business. Each topic will be discussed in turn. 
+Risks in the Investment Banking Business 
+The risks involved in investment banking include country, credit, currency, horizon, interest rate, liquidity, market, model, 
+and operational risks. Country risk concerns the risk that a country will not honor its financial commitments.46 It applies to a country's 
+stocks, bon ds, mutual funds, options, and futures . This risk exists in emerging markets or countries experiencing a significant 
+deficit.47 Credit risk occurs when “borrowers or counterparties fail to meet contractual obligations. ”48 For example, credit risk 
+happens whe n a borrower defaults on the principal and interest loan payment or fails to meet its obligation under a derivative 
+contract.49 Currency risk is also known as exchange rate risk. 50 It is associated with the likelihood of a declining return due to the 
+depreciation of a currency, particularly in international investments.51 
+Horizon risk is the risk that an “investment time horizon may be unexpectedly shortened. ”52 For example, if an individual 
+loses their job, they have to sell their house unexpectedly, thereby l osing money.53 Interest rate risk arises from “unanticipated 
+fluctuations in the interest rates due to monetary policy measures undertaken by the central bank.”54 The yields are equalized across 
+all markets due to adjustments in supply and demand. This risk is affiliated with fixed-income securities which can affect investment 
+banking.55 Liquidity risk is concerned with the ability of an investment bank to meet its financial obligations.56 This risk is associated 
+with bank runs, where investors may lose confide nce in an investment bank. Liquidity risks stem from an overreliance on short-
+term sources of funds, concentrated illiquid assets, mismanagement of asset -liability durations, or loss of confidence. 57 
+Market risk happens due to an investment bank ’s actions i n capital markets. 58 The causes of market risk are the 
+unpredictability of equity markets, commodity prices, interest rates, and credit spreads. Investment banks may experience substantial 
+
+40 SEC Staff, What Is a Broker/Dealer?, U.S. Securities and Exchange Commission: Office of the Advocate for Small Business 
+Capital Formation (n.d.), available at https://www.sec.gov/files/oasb-broker-dealer-building-block.pdf. 
+41 Id. 
+42 Adam Hayes, What Is a Broker-Dealer (B-D), and How Does It Work?, Investopedia (Mar. 3, 2024), available at 
+https://www.investopedia.com/terms/b/broker-dealer.asp. 
+43 Id. 
+44 BRYAN A. GARDNER (ED. IN CHIEF), BLACK’S LAW DICTIONARY 205 (Thompson West 8th ed. 1999). 
+45 Id. 
+46 James Chen, Risk: What It Means in Investing, How to Measure and Manage It, Investopedia (May 16, 2024), available at 
+https://www.investopedia.com/terms/r/risk.asp. 
+47 Id. 
+48 CFI Team, Major Risks for Banks, Corporate Finance Institute (n.d.), available at 
+https://corporatefinanceinstitute.com/resources/career-map/sell-side/risk-management/major-risks-for-banks/. 
+49 Id. 
+50 CFI Team, Market Risk, Corporate Finance Institute (n.d.), available at https://corporatefinanceinstitute.com/resources/career-
+map/sell-side/capital-markets/market-risk/. 
+51 Id. 
+52 OSC Staff, What Is an Investment Time Horizon?, Ontario Securities Commission (Jul. 30, 2024), available at 
+https://www.getsmarteraboutmoney.ca/learning-path/understanding-risk/what-is-an-investment-time-horizon/. 
+53 Id. 
+54 CFI Team, supra, note 50. 
+55 Id. 
+56 CFI Team, supra, note 48. 
+57 Id. 
+58 Id. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1938 
+exposure if they are heavily invested in capital markets or sales an d trading.59 Model risk is associated with employing “financial 
+models to make investment decisions, evaluate risks, or price financial instruments. ”60 This risk follows when a financial model is 
+predicated on incorrect assumptions, data, or methodologies that result in potential adverse financial consequences. Model risk can 
+be mitigated by periodically validating and reviewing financial models and cross-checking predictions.61 Finally, operational risk is 
+a type of business risk that deals with the uncertainties and hazards that may exist due to day-to-day business activities.62 Operational 
+risk can be caused by breakdowns in internal procedures, people, and systems in contrast to external forces such as political or 
+economic events. Operational risk can be mitigated by focusing on an entity’s staff, systems, and internal controls to reduce financial 
+losses.63 
+Abuses in the Investment Banking Business 
+The investment banking industry is notorious for its grueling work culture, where junior bankers often work over 100 hours 
+per week to be noticed by managers to advance their careers. 64 Junior bankers are frequently given mundane and time -consuming 
+tasks to ensure they remain at the office until late at night. There is intense competition, constant deadlines, an aggr essive 
+atmosphere, a high -stress environment, and little work -life balance. Young investment bankers frequently burn out and are 
+hospitalized with heart conditions, where there has been a 10 percent increase in cardiac arrest among investment bankers und er 
+30.65 To mitigate the stress and sleep deprivation, investment bankers may use performance-enhancing drugs, which exacerbate their 
+health issues.66 Thus, the investment banking culture makes it difficult for investment banks to retain talented employees. 
+Risks and Abuses in the Broker-Dealer Business 
+This section is divided into two subsections. The first subsection addresses risks and the second deals with abuses in the 
+broker-dealer business. Each topic will be discussed in turn. 
+Risks in the Broker-Dealer Business 
+Broker-dealers confront several risks, including regulatory , cybersecurity, and compliance risks. Regulatory risks include 
+insider trading, market manipulation, material weaknesses, and best -interest regulation risks. Cybersecurity risks include cyber-
+attacks and data breaches. Finally, compliance risks concern compliance programs that protect investors from fraudulent activities. 
+Insider trading occurs when a firm’s securities are traded by individuals who have access to confidential or material, non-
+public information. 67 When such trading happens, an individual breaches their fiduciary duty. The SEC demands that corporate 
+officers, directors, or other company members with access to privileged information report their trading activities. Under fe deral 
+law, an insider is defined as owning at least 10 percent of a firm’s securities.68 
+Market manipulation intentionally influences the supply, demand, or both of a security to mislead investors. The idea is to 
+deceive investors into believing that a security behaves in a specific way and then profit from their ignorance.69 A material weakness 
+is a deficiency, or sequence of deficiencies, in a company ’s internal controls such that there is a reasonable likelihood that a non -
+compliance exists.70 The best-interest regulation (Reg BI) is an SEC rule that requires that broker -dealers act in the best interest of 
+
+59 Id. 
+60 James Chen, supra, note 46. 
+61 Id. 
+62 Troy Segal, Operational Risk: Overview, Importance, and Examples, Investopedia (Sep. 24, 2024), available at 
+https://www.investopedia.com/terms/o/operational_risk.asp. 
+63 Id. 
+64 Jack Kelly, The Dark Side Of Investment Banking: Stress, Pressure And 100-Hour Workweeks, Forbes (May 30, 2024), 
+available at https://www.forbes.com/sites/jackkelly/2024/05/30/the-dark-side-of-investment-banking-stress-pressure-and-100-
+hour-workweeks/. 
+65 Id. 
+66 Id. 
+67 LII Staff, Insider Trading, Legal Information Institute (Feb. 2022), available at 
+https://www.law.cornell.edu/wex/insider_trading#:~:text=Insider%20trading%20is%20the%20trading,of%20the%20individual's%
+20fiduciary%20duty%20. 
+68 Id. 
+69 Dori Zinn, What Is Market Manipulation and How Does it Happen?, Smart Asset (Jan. 2, 2025), available at 
+https://smartasset.com/investing/market-manipulation. 
+70 LII Staff, 17 CFR § 240.17a-5 - Reports to Be Made by Certain Brokers and Dealers, Legal Information Institute (n.d.), 
+available at https://www.law.cornell.edu/cfr/text/17/240.17a-5#:~:text=A%20material%20weakness%20is%20a,non-
+compliance%20to%20a%20material. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1939 
+their clients when providing investment advice. 71 The SEC implemented Reg BI in 2020, where before 2020, broker -dealers were 
+only required to satisfy the less stringent suitability standard created by the FINRA before recommending a security to a client.72 
+A cyber-attack is “[a]ny kind of malicious activity that attempts to collect, disrupt, deny, degrade, or destroy information 
+system resources or the informa tion itself.”73 A cyber-attack originates from cyberspace and targets a firm ’s use of cyberspace to 
+disrupt, disable, destroy, or maliciously control the entity’s computing environment or infrastructure and either destroy or steal the 
+company’s confidential information.74 This is known as a data breach. A compliance risk is associated with a compliance program 
+and happens when a broker -dealer engages in fraudulent activities that result in customer financial losses. A broker-dealer may be 
+liable for criminal or civil penalties when a violation exists.75 
+Abuses in the Broker-Dealer Business 
+ The various broker-dealer abuses include:76 77 
+• Recommending to a retail customer a securities transaction, investment strategy, or type of account that is not in the best 
+interest of that customer, given the customer's age, financial situation, investment objective, risk tolerance, liquidity needs, 
+and investment experience; 
+• Purchasing or selling securities in a customer's account without first receiving customer authorization; 
+• Switching a customer from one mutual fund to another without a legitimate investment purpose; 
+• Misrepresenting or failing to disclose material facts concerning an investment; 
+• Removing funds or securities from a customer's account without customer authoriza tion; 
+• Charging a customer excessive markups, markdowns, or commissions; 
+• Guaranteeing customers that they will not lose money on a securities transaction; 
+• Trading ahead is a practice that involves placing an order for the firm ’s account before entering a cu stomer's limit order, 
+and without having a valid exception; 
+• Failure by a market maker to display a customer limit order in its published quotes, without a valid exception; 
+• Failing to use reasonable diligence to see that a customer's order is executed at the best possible price, given existing market 
+conditions; 
+• Purchasing or selling a security while possessing material, non-public information about an issuer; or 
+• Using manipulative, deceptive, or other fraudulent methods to induce or transact a security. 
+Conclusion – Investment Banking Essay 
+In conclusion, both investment bankers can experience a plethora of risks and can commit a variety of abuses. The moral 
+of the story is that investment bankers and broker-dealers must be vigilant to ensure that they minimize their risks and avoid abusive 
+behavior that may have serious legal consequences for themselves and their clients. 
+
+ESSAY ON INSURANCE 
+This essay discusses the regulatory nuances of the insurance industry. It defines insurance, and it describes the four types 
+of insurance: life, health, property, and casualty. The piece gives examples of insurance companies that are currently in business. 
+The essay then reviews the regulatory structure of the insurance industry, evaluating licensing, solvency, and premium rate regulation 
+issues. The National Association of Insurance Commissioners (NAIC) activities are also briefly outlined, noting that the organization 
+is responsible for providing model rules and regulations for state insurance departments. Finally, the e ssay observes that with the 
+repeal of the Glass -Steagall Act (GSA) of 1933 and the passage of the Gramm -Leach-Bliley Act (GLBA) of 1999, the distinction 
+between the traditional insurance business and the commercial and investment banking business has been blurred. When banks are 
+
+71 Peter Gratton, Regulation Best Interest (BI): Definition, Broker Obligations, Investopedia (Aug. 24, 2024), available at 
+https://www.investopedia.com/what-is-the-sec-s-regulation-bi-best-interest-rule-4689542. 
+72 Id. 
+73 NIST Staff, Cyber Attack, National Institute of Standards and Technology (n.d.), available at 
+https://csrc.nist.gov/glossary/term/cyber_attack. 
+74 Id. 
+75 Leila Shaver, The Role of Broker-Dealer Compliance Programs, My RIA Lawyer (n.d.), available at 
+https://www.myrialawyer.com/broker-dealer-compliance-programs/#:~:text=Broker-
+dealer%20compliance%20programs%20have,criminal%20penalties%20and%20financial%20losses. 
+76 Jon Eisenberg, & K. L. Gates, SEC Enforcement Actions Against Broker-Dealers, Harvard Law School Forum on Corporate 
+Governance (Dec. 26, 2015), available at https://corpgov.law.harvard.edu/2015/12/26/sec-enforcement-actions-against-broker-
+dealers/. 
+77 FINRA Staff, Prohibited Conduct, Financial Industry Regulatory Authority (n.d.), available at 
+https://www.finra.org/investors/investing/working-with-investment-professional/prohibited-
+conduct#:~:text=Removing%20funds%20or%20securities%20from,or%20sale%20of%2C%20a%20security. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1940 
+only involved in traditional banking business, they are subject to federal law, whereas insurance companies are now exposed to both 
+federal and state laws, depending on their business activities. This is the current nature of the in surance industry. 
+Definition of Insurance 
+According to Nissim, insurance is a financial instrument that provides “economic protection from identified risks occurring 
+or discovered within a specified period.”78 Kagan defined insurance as a “contract, represented by a policy, in which a policyholder 
+receives financial protection or reimbursement against losses from an insurance company.”79 An insurance company pools the risks 
+of its clients or customers to make the payments, known as premiums, to be affordable. 80 Many individuals purchase insurance for 
+their automobiles, houses, healthcare, and lives. Insurance is a unique product because the ultimate cost of insurance can on ly be 
+known statistically, while the revenue is received before or during the coverage period.81 
+Types of Insurance Companies 
+The four types of insurance are life, health, property, and casualty insurance. 82 Life insurance is a contract or policy that 
+guarantees that the insurance company or insurer pays the beneficiary (typically a spouse or ch ildren) of an individual a specific 
+sum of money if the individual dies within the coverage period. 83 In exchange, an individual pays premiums to the insurer during 
+the coverage period while the individual is alive. 84 The two types of life insurance are term insurance, which covers an individual 
+for a specific period, such as 5, 10, or 20 years, and permanent life insurance, which covers an individual throughout their life as 
+long as they pay the premiums.85 
+Health insurance covers routine and emergency costs of medical care, sometimes including vision and dental care. 86 An 
+annual deductible is typically paid by the insured, known as a copay. The copay can be a fixed amount or a percentage of the medical 
+benefit that was covered. Health insurance sometimes provi des preventative services that may be covered independent of the 
+deductible.87 Health insurance may be purchased from an insurance company via an insurance agent, the federal Health Insurance 
+Marketplace, provided by an employer, or directly from Medicare or Medicaid.88 
+Property insurance covers property (real or personal) owners or renters. Examples of property insurance include 
+homeowners, renters, flood, hurricane, or tornado insurance. These policies cover damages caused by fire, flooding, theft, vandalism, 
+weather, etc.89 A typical homeowner insurance policy will likely not cover floods or earthquakes. A separate contract, known as an 
+insurance rider, may increase coverage for specific events at an increased premium amount. 90 
+Casualty insurance is a diverse collection of insurance coverage for individuals and businesses against property loss, 
+damage, and additional liabilities.91 Casualty insurance encompasses automobile liability and theft insurance, where losses are losses 
+due to an insured ’s interaction wi th other individuals or their property. 92 Homeowners and auto owners should have casualty 
+insurance because damages can be expensive. Casualty insurance also includes aviation insurance, workman ’s compensation, and 
+surety bonds.93 
+Examples of Insurance Companies 
+Examples of insurance companies include Berkshire Hathaway Inc., Allstate Corp., The Travelers Companies Inc., 
+Prudential Life Insurance Co., Ace Limited, Liberty Mutual Insurance Co., The Chubb Corporation, Progressive Corp., United 
+
+78 Doron Nissim, Analysis and Valuation of Insurance Companies, Columbia Business School: Center for Excellence in 
+Accounting and Security Analysis 3 (Nov. 2010), available at 
+www.columbia.edu/~dn75/Analysis%20and%20Valuation%20of%20Insurance%20Companies%20-%20Final.pdf. 
+79 Julia Kagan, Insurance: Definition, How It Works, and Main Types of Policies, Investopedia (Nov. 26, 2024), available at 
+https://www.investopedia.com/terms/i/insurance.asp. 
+80 Id. 
+81 Doron Nissim, supra, note 78 at 3. 
+82 Id. 
+83 Julia Kagan, supra, note 79. 
+84 Id. 
+85 Id. 
+86 Id. 
+87 Id. 
+88 Id. 
+89 Id. 
+90 Id. 
+91 Julia Kagan, Casualty Insurance: Definition, Types, and Examples, Investopedia (Aug. 7, 2023), available at 
+https://www.investopedia.com/terms/c/casualtyinsurance.asp. 
+92 Id. 
+93 Id. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1941 
+Health Group, and CNA Financial Corp. Some insurance companies sell life, health, property, and casualty insurance, such as 
+American International Group Inc., Hartford Financial Services Group Inc., and Assurant Inc. 94 
+Regulatory Structure of Insurance Companies 
+The states regulate insurance companies as opposed to the federal government.95 The system of regulation originates from 
+the McCarran-Ferguson Act (MFA) of 1945, which states that state regulation of insurance companies is in the public interest and 
+gives state regulators preeminence over federal law. 96 The Act exempts insurance company practices from federal antitrust laws, 
+such as the Sherman Act (SA90) of 1890, the Clayton Act (CA14) of 1914, and the Federal Trade Commission Act (FTCA) of 
+1914.97 The MFA was passed in response to the Supreme Court’s ruling in South-Eastern Underwriters Association, where the Court 
+opined that insurance was subject to federal regulation. 98 99 
+An insurance company must be licensed in a state before it can sell insurance in that state. 100 When an insurance company 
+is licensed in a state, it is said to be admitted to that state. An insurance company is domiciled in the state that issued i ts primary 
+license. If an insurance company does business in another state, it is a foreign insurer. Insurance companies that are licensed in other 
+countries are known as alien insurers. 101 All insurance companies are subject to capital and surplus requirements which vary from 
+state to state. For example, New York State possesses a $500,000 capital requirement and a $250,000 surplus requirement. In 
+Wyoming, there are different requirements, depending on whether the firm is a mutual or stock company.102 
+The states also regulate the solvency of an insurance company.103 State regulators oversee an insurance company's financial 
+health by requiring the organization to provide detailed annual financial statements, which are due on March 1. The statutory audited 
+financial statements are generally due June 1. 104 If an insurance company becomes insolvent, state regulators can take various 
+actions, including requiring other insurance companies to assume specific lines of business.105 All states have created organizations 
+known as guaranty funds, through which property and casualty insurance companies can cover claims against insolvent insurers.106 
+When insolvency occurs, claims are assessed based on the amount of business done in a state. The only exception is that surplus 
+line insurers are typically not part of the guaranty fund system. 107 Guaranty funds cover homeowners, cars, and worker s’ 
+compensation claims, while other kinds of insurance may not be included. 108 
+States differ significantly when regulating premium rates. 109 Some states permit insurers to be independent of rate 
+regulation when dealing with corporations of specific size and so phistication, where the size range varies by state. The three 
+principles that underlie state rate regulations are:110 
+• The rates must be adequate to ensure solvency; 
+• Not too high to lead to excessive profits; and 
+• Not unfairly discriminatory where price differences reflect expected claims and expenses. 
+
+94 Doron Nissim, supra, note 78 at 3. 
+95 III Staff, Regulation, Insurance Information Institute (n.d.), available at https://www.iii.org/publications/commercial-
+insurance/how-it-functions/regulation#:~:text=Regulation-,Introduction,set%20of%20statutes%20and%20rules. 
+96 Id. 
+97 Michael G. Cowie, Health Insurance and Federal Antitrust Law: An Analysis of Recent Congressional Action, The Antitrust 
+Source (Dec. 2009), available at https://www.kff.org/wp-content/uploads/sites/3/2011/09/dec09_cowie12_17f.authcheckdam.pdf. 
+98 Id. 
+99 United States v. South-Eastern Underwriters Association, 322 U.S. 533 (1944), available at 
+https://supreme.justia.com/cases/federal/us/322/533/. 
+100 III Staff, supra, note 95. 
+101 Id. 
+102 Id. 
+103 Id. 
+104 PWC Staff, 13.1 Statutory Accounting and Reporting Overview, Price Waterhouse Cooper (Jan. 31, 2021), available at 
+https://viewpoint.pwc.com/dt/us/en/pwc/accounting_guides/insurance-contracts/Insurance-
+Contracts/Ch13_statutory_accounting/13_1statutoryaccounting.html. 
+105 III Staff, supra, note 95. 
+106 Id. 
+107 Id. 
+108 Id. 
+109 Id. 
+110 Id. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1942 
+To ensure that these principles are followed, insurance premium rates must either be approved before they can be used or be 
+competitive. This does not mean that insurance companies do not compete with each other . In contrast, most insurance companies 
+have premium rates that are below a state’s prior approval ceiling.111 
+Finally, the NAIC is responsible for generating model rules and regulations for the insurance industry . Many of these are 
+approved by state legisla tures before being implemented. 112 In the 1980s, the NAIC developed an accreditation program for state 
+insurance departments and originated minimum capital requirements for insurance companies based on the risks they incurred. 113 
+These rules and regulations promote an orderly regulatory atmosphere at the state level. 
+Challenges in the Regulatory Structure 
+With the repeal of the GSA and the passage of the GLBA, insurance companies can now engage in commercial and 
+investment banking transactions.114 115 This means that when an insurance company acts as a commercial or an investment bank, it 
+is subject to federal law, including the Securities Act (SA33) of 1933, the Securities Exchange Act (SEA34) of 1934, and the 
+Investment Company Act (ICA40) of 1940. The challenge c urrently facing federal and state regulators is to determine when an 
+insurance company is acting traditionally as an insurance company and not subject to federal regulation, and when a company i s 
+acting as a commercial or investment banker, where the firm is subject to federal law. This distinction can be challenging to resolve, 
+mainly when an insurance company is providing products to its customers that may look like insurance policies from one 
+perspective, but also appear to be commercial and investment b anking products from another point of view. This comingling of 
+perspectives can be daunting for federal and state regulators, mainly when jurisdiction is a n issue. Although federal and state 
+agencies regulate banking institutions, insurance companies are regulated by the states when they engage in pure insurance business, 
+but may also be regulated by the same federal agencies as banks and other financial institutions when they act as commercial or 
+investment bankers. 
+Conclusion – Insurance Essay 
+In conclusion, this essay discussed the regulatory nuances of the insurance industry. It defined insurance and described the 
+four types: life, health, property, and casualty. The piece gave examples of insurance companies currently in business. The essay 
+then reviewed the regulatory structure of the insurance industry, evaluating licensing, solvency, and premium rate regulation issues. 
+The activities of the NAIC were also briefly highlighted, noting that the organization is responsible for providing model rul es and 
+regulations for state insurance departments. 
+Finally, the essay observed that as long as insurance companies remain pure insurance companies and do not cross into the 
+realm of commercial and investment banking, it is immune from federal regulation via the McCarran-Ferguson Act of 1945. 
+However, as soon as an insurance company dips its toe into commercial and investing banking waters, it becomes subject to a h ost 
+of federal banking regulations. The issue facing federal and state regulators is figuring out when an insurance company is acting as 
+a traditional insurance company, and acting as a commercial or investment banker. This can be no mean feat, mainly when the firm 
+combines the two business processes. No crystal ball can be used to distinguish the two acti vities. Care must be taken. Insurance 
+companies as well as federal and state regulators can make mistakes. GLBA muddied the waters, and there is no going back to t he 
+GSA. This is an unfortunate situation, that is for sure. 
+
+ESSAY ON MUTUAL FUNDS AND EXCHANGE TRADED FUNDS 
+This essay discusses the differences between mutual funds and exchange -traded funds (ETFs). First, mutual funds and 
+ETFs are defined. Second, the characteristics and differences between mutual funds and ETS are listed and then highlighted. Third, 
+the advantages and disadvantages of ETFs are enumerated. Finally, the piece concludes by observing that before an investor ca n 
+make the appropriate decision of whether to invest in a mutual fund or an ETF, they should consider both their short-term objectives 
+and long-term goals. Only then can a proper decision be made. 
+
+111 Id. 
+112 Id. 
+113 Id. 
+114 FTC Staff, Gramm-Leach-Bliley Act, U.S. Federal Trade Commission (n.d.), available at https://www.ftc.gov/business-
+guidance/privacy-security/gramm-leach-bliley-act#:~:text=The%20Gramm-Leach-
+Bliley%20Act,and%20to%20safeguard%20sensitive%20data. 
+115 TDI Staff, Gramm-Leach-Bliley Resource Page, Texas Department of Insurance (Feb. 8, 2024), available at 
+https://www.tdi.texas.gov/webinfo/privacy2.html. 
+Essays on Banking, Investment Banking, Insurance, Mutual Funds, Exchange -Traded Funds, Hedge Funds, Private 
+Equity Funds, Securitization, Futures/Forward Contracts, and Options Contracts 
+IJSSHR, Volume 08 Issue 03 March 2025 www.ijsshr.in Page 1943 
+Definition of a Mutual Fund 
+According to Hayes, mutual funds are “pooled investments managed by professional money managers ” that “trade on 
+exchanges and provide an accessible way for investors to access a wide mix of assets selected for the fund. ”116 A mutual fund 
+combines the money from many investors to buy a diversified portfolio of stocks, bonds, and other securities so that individu als 
+may save for their retirement in a manner that would be difficult to achieve alone.117 FINRA observed that mutual funds are “open-
+end funds, meaning that investors can purchase and redeem shares in the funds daily based on the net asset value (NA V) of their 
+shares.”118 Although mutual funds are a common method of investing in securities because they offer specific advantages, investors 
+may still lose money.119 
+Definition of an Exchange Traded Fund 
+According to Chen, an ETF is an “investment vehicle that pools a group of securities into a fund,” and “can be traded like 
+an individual stock on an exchange.”120 An ETF can track a commodity’s price, an extensive portfolio of diversified stocks, or even 
+specific investment strategies. 121 Investors may employ ETFs for income generation, speculation, or risk hedging. 122 According to 
+the Fidelity Staff, an ETF is a “type of investment fund that is also an exchange -traded product, i.e., it is traded on stock 
+exchanges.”123 ETFs consist of stocks, bonds, currencies, debts, futures contracts, or commodities such as gold bullion. 124 
+Characteristics and Differences Between a Mutual Fund and an Exchange Traded Fund 
+The characteristics of a mutual fund are:125 
+• Annual expense fees range from 0.2 percent to 1.0 percent of the value of the investment; 
+• Diversified stock and bond portfolios managed by finance professionals; 
+• Fund share prices are established at market close based on the net asset value (NA V) of all holdings minus expenses divided 
+by total shares; 
+• Mutual funds are not subject to section 31 of SEA 34, which as of February 2023, is $8 per $1 million in transaction 
+proceeds; 
+• Investment companies do not charge commission fees for the purchase and sale of no -load mutual funds, but may charge 
+commissions for loaded funds; 
+• Mutual funds are bought and sold only through the investment company managing a fund; 
+• Shareholders who hold the fund in taxable accounts often pay capital gains taxes on their share of the gain ; and 
+• Many individuals invest in mutual funds through employee retirement plans such as 401K or IRA accounts. 
+
+The characteristics of an ETF include:126 
+• Annual expense fees range from 0.2 percent to 1.0 percent of the value of the investment; 
+• ETFs may be managed by finance professionals; 
+• ETF share prices fluctuate throughout the trading day; 
+• ETFs in the United States are subject to transaction fees under section 31 of the SEA34; 
+• Stockbrokers may charge commission fees for the purchase and sale of ETFs; 
+• ETFs trade on a stock exchange where they can be (1) sold short, (2) purchased on margin, and (3) purchased and sold 
+using limit orders; 
+• ETF investors only realize and pay taxes on capital gains when they sell their shares for a gain; and 
+
+116 Adam Hayes, Investing in Mutual Funds: What They Are and How They Work, Investopedia, (Jan. 30, 2025), available at 
+https://www.investopedia.com/terms/m/mutualfund.asp. 
+117 Id. 
+118 FINRA Staff, Mutual Funds, Financial Industry Regulatory Authority (2025), available at 
+https://www.finra.org/investors/investing/investment-products/mutual-funds. 
+119 Id. 
+120 James Chen, Exchange-Traded Fund (ETF): How to Invest and What It Is, Investopedia (Aug. 1, 2024), available at 
+https://www.investopedia.com/terms/e/etf.asp. 
+121 Id. 
+122 Id. 
+123 Fidelity Staff, What Is an ETF?, Fidelity Investments (n.d.), available at https://www.fidelity.com/learning-center/smart-
+money/what-are-etfs. 
+124 Id. 
+125 Wikipedia Staff, Exchange Traded Fund, Wikipedia.org (Jan. 27, 2025), available at https://en.wikipedia.org/wiki/Exchange-
+traded_fund. 
+126 Id.

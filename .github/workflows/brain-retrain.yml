@@ -1,0 +1,33 @@
+name: brain-retrain
+on:
+  schedule:
+    - cron: "0 7 * * 6"      # every Saturday (promotes a new brain only if it beats the old one on unseen days)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - run: python brain_retrain.py 2>&1 | tee last_retrain.log
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+      - run: python pool_review.py 2>&1 | tee last_pool_review.log
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
+      - if: always()
+        run: bash .github/actions_common.sh "brain-retrain"

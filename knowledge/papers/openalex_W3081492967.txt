@@ -1,0 +1,783 @@
+Todorov, Karamfil (2020)Essays in financial economics. [PhD thesis]. London
+School of Economics and Political Science.
+https://researchonline.lse.ac.uk/id/eprint/135062/
+The copyright of this thesis rests with the author. Quotation from it is permitted,
+provided that full acknowledgement is made. This thesis may not be reproduced
+without the author’s written consent.
+LSE Research Online is the repository for research produced by the London School
+of Economics and Political Science. For more information, please refer to our Policies
+page or contact lseresearchonline@lse.ac.uk
+LONDON SCHOOL OF ECONOMICS AND POLITICAL SCIENCE
+Essays in Financial Economics
+by
+Karamﬁl Todorov
+A thesis submitted to the Department of Finance of the London School
+of Economics and Political Science for the degree of Doctor of Philosophy
+May 13, 2020
+Acknowledgements
+I would like to thank my advisors, Igor Makarov and Christian Julliard for their gener-
+ous support, guidance, patience and trust. My numerous interactions with them have
+signiﬁcantly improved my academic work. Their personal example helped me develop
+as a scholar.
+In addition, I am deeply grateful to Dimitri Vayanos for his invaluable support and
+feedback on research, especially during my job market. Special thanks to Jean-Pierre
+Zigrand and Ron Anderson for their continuous guidance, help and, most importantly,
+friendship.
+Moreover, I have also beneﬁted from countless discussions with faculty members at the
+Department of Finance at the LSE. I would like to thank Ashwini Agrawal, Georgy
+Chabakauri, Thummim Cho, Vicente Cuñat, Simeon Djankov, Dirk Jenter, Peter Kon-
+dor, DongLou, IanMartin, MartinOehmke, DanielParavisini, CameronPeng, Christo-
+pher Polk, Andrea Tamoni, Michela Verardo, Kathy Yuan and Hongda Zhong.
+The ﬁve years at the LSE would not have been the same without the great friends I met
+during my PhD. In particular, I would like to thank the members of my cohort who have
+made my time at the LSE especially enjoyable: Andreea Englezu, Zongchen Hu, Bruce
+Iwadate, Francesco Nicolai, Marco Pelosi, Simona Risteska and Yue Yuan. I am also
+grateful to other fellow PhD students: Lorenzo Bretscher, Fabrizio Core, Brandon Han,
+Jesus Gorrin, James Guo, Lukas Kremens, Dimitris Papadimitriou, Alberto Pellicioli,
+Michael Punz, Petar Sabtchevsky, Seyed E. Seyedan and Ran Shi for their friendship
+and support during all these years.
+I would also like to acknowledge the ﬁnancial support from the ESRC as well as the
+Finance Department.
+Most importantly, I would like to specially thank my parents Neli and Todor, and my
+sister Julia for their everlasting support. You have been always there for me, giving me
+all the motivation to grow both personally and professionally. Without you, I would
+have never become the person I am today.
+I could not thank enough my wife Ksenia for being with me through all the ups and
+downs. Thank you for your love, kindness and patience.
+1
+Declaration of Authorship
+I certify that the thesis I have presented for examination for the PhD degree of the
+London School of Economics and Political Science is solely my own work other than
+where I have clearly indicated that it is the work of others (in which case the extent of
+any work carried out jointly by me and any other person is clearly identiﬁed in it).
+The copyright of this thesis rests with the author. Quotation from it is permitted, pro-
+vided that full acknowledgement is made. This thesis may not be reproduced without
+my prior written consent.
+I warrant that this authorisation does not, to the best of my belief, infringe the rights
+of any third party.
+I declare that my thesis consists of 75,438 words.
+Statement of conjoint work
+I conﬁrm that Chapter 3 was jointly co-authored with Christian Julliard, Zijun Liu,
+Seyed E. Seyedan and Kathy Yuan. I contributed 20% of the work for Chapter 3.
+2
+Abstract
+In the ﬁrst paper of my dissertation I study the size and source of exchange-traded
+funds’ (ETFs) price impact in the most ETF-dominated asset classes: volatility (VIX)
+and commodities. I show that the introduction of ETFs increased futures prices.
+To identify ETF-induced price distortions, I propose a model-independent approach
+to replicate the value of a VIX futures contract. This allows me to isolate a non-
+fundamental component in VIX futures prices, of 18.5% per year, that is strongly
+related to the rebalancing of ETFs. To understand the source of that component, I
+decompose trading demand from ETFs into three main parts: leverage rebalancing, cal-
+endar rebalancing, and ﬂow rebalancing. Leverage rebalancing has the largest eﬀects.
+It ampliﬁes price changes and introduces unhedgeable risks for ETF counterparties.
+Surprisingly, providing liquidity to leveraged ETFs turns out to be a bet on variance,
+even in a market with a zero net share of ETFs. Trading against leverage rebalancing
+delivers large abnormal returns and Sharpe ratios above two across markets.
+The second paper analyses the impact of the ECB’s Corporate Sector Purchase Pro-
+gramme (CSPP) announcement on prices, liquidity and debt issuance in the European
+corporate bond market. I ﬁnd that the quantitative easing (QE) programme increased
+prices and liquidity of bonds eligible to be purchased substantially. Bond yields dropped
+on average by 30 bps (8%) after the CSPP announcement. Tri-party repo turnover rose
+by 8.15 million USD (29%), and bilateral turnover went up by 7.05 million USD (72%).
+Bid-ask spreads also showed signiﬁcant liquidity improvement in eligible bonds. QE was
+successful in boosting corporate debt issuance. Firms issued 2.19 billion EUR (25%)
+more in QE-eligible debt after the CSPP announcement, compared to other types of
+debt. Surprisingly, corporates used the attracted funds mostly to increase dividends.
+These eﬀects were more pronounced for longer-maturity, lower-rated bonds, and for
+more credit-constrained, lower-rated ﬁrms.
+The third paper (co-authored with Christian Julliard, Zijun Liu, Seyed E. Seyedan and
+Kathy Yuan) studies the determinants of repo haircuts in the UK market. We ﬁnd
+that transaction maturity and collateral quality have ﬁrst order importance. We also
+document that counterparties matter in determining haircuts. Hedge funds, as borrow-
+ers, receive signiﬁcantly higher haircuts. Larger borrowers with higher ratings receive
+lower haircuts, but we ﬁnd that these eﬀects can be overshadowed by collateral qual-
+ity. Repeated bilateral relationships also matter and generate lower haircuts. We ﬁnd
+evidence supporting an adverse selection explanation of haircuts, but limited evidence
+in favor of lenders’ liquidity position or default probabilities aﬀecting haircuts.
+3
+Contents
+Acknowledgements 1
+Declaration of Authorship 2
+Abstract 3
+List of Figures 7
+List of Tables 9
+1 Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF
+Markets 11
+1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+1.2 Literature review . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+1.3 Data and institutional details . . . . . . . . . . . . . . . . . . . . . . . . 18
+1.3.1 The presence of ETFs in diﬀerent markets . . . . . . . . . . . . . 19
+1.3.2 Institutional details . . . . . . . . . . . . . . . . . . . . . . . . . 19
+1.3.3 Summary statistics . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+1.3.4 Types of traders in the futures market . . . . . . . . . . . . . . . 20
+1.4 The impact of ETFs on futures prices in the VIX market . . . . . . . . . 21
+1.4.1 Details on VIX . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+1.4.2 Futures price – fundamental or not? . . . . . . . . . . . . . . . . 22
+1.4.3 ETF demand impact on futures prices . . . . . . . . . . . . . . . 23
+1.4.4 The ETF futures gap . . . . . . . . . . . . . . . . . . . . . . . . 26
+1.4.4.1 Calculating the EFG . . . . . . . . . . . . . . . . . . . 27
+1.4.4.2 Possible explanations for the EFG . . . . . . . . . . . . 28
+1.4.4.3 Regressions of the EFG . . . . . . . . . . . . . . . . . . 29
+1.4.4.4 EFG – fundamental or not? . . . . . . . . . . . . . . . . 30
+1.5 Source of the EFG. Decomposition of ETF demand . . . . . . . . . . . . 32
+1.5.1 Calendar rebalancing . . . . . . . . . . . . . . . . . . . . . . . . . 32
+1.5.2 Leverage rebalancing . . . . . . . . . . . . . . . . . . . . . . . . . 33
+1.5.3 Total ETF demand decomposition . . . . . . . . . . . . . . . . . 35
+1.5.4 ETFs can aﬀect prices even in a market with a zero net share of
+ETFs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+1.5.5 Risks posed by ETF demand . . . . . . . . . . . . . . . . . . . . 38
+4
+Contents 5
+1.5.6 Empirical evidence on the impact of demand components . . . . 41
+1.6 The risk premium of leverage rebalancing . . . . . . . . . . . . . . . . . 41
+1.6.1 The dynamics of leveraged ETFs’ AUM . . . . . . . . . . . . . . 42
+1.6.2 Trading against leveraged ETFs . . . . . . . . . . . . . . . . . . . 43
+1.6.2.1 Intuition . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+1.6.2.2 Theoretical exposure . . . . . . . . . . . . . . . . . . . 44
+1.6.2.3 Empirical evidence . . . . . . . . . . . . . . . . . . . . . 45
+1.6.2.4 Explanation . . . . . . . . . . . . . . . . . . . . . . . . 46
+1.6.2.5 Regressions of the short-both strategy . . . . . . . . . . 47
+1.7 The impact of ETFs on futures prices in commodity markets . . . . . . 48
+1.7.1 Basis and spread regressions in commodity markets . . . . . . . 49
+1.7.2 Decomposition of ETF demand in commodity markets . . . . . . 50
+1.7.3 Diﬀerence-in-diﬀerences (DD) regressions . . . . . . . . . . . . . 51
+1.7.4 Synthetic commodity futures contract . . . . . . . . . . . . . . . 52
+1.8 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+1.9 Figures . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+1.10 Tables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+1.11 Appendix A – Model of ETFs and arbitrageurs . . . . . . . . . . . . . . 73
+1.11.1 Assets . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73
+1.11.2 ETFs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73
+1.11.3 Arbitrageurs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+1.11.3.1 Financial constraints . . . . . . . . . . . . . . . . . . . 75
+1.11.3.2 Transaction costs . . . . . . . . . . . . . . . . . . . . . 77
+1.12 Appendix B – derivations and additional robustness checks . . . . . . . 79
+1.12.1 Forward VIX derivations . . . . . . . . . . . . . . . . . . . . . . 79
+1.12.2 Calculating VarQt (VIX T1→T2) . . . . . . . . . . . . . . . . . . . 79
+1.12.3 Details on the synthetic VIX futures calculation . . . . . . . . . 80
+1.12.4 Variance and volatility . . . . . . . . . . . . . . . . . . . . . . . . 81
+1.12.5 Derivations of ETF demand decomposition . . . . . . . . . . . . 81
+1.12.6 Alternative calculations of leverage rebalancing . . . . . . . . . . 83
+1.12.7 Leverage rebalancing. Derivations of the futures-based bench-
+mark dynamics in a GBM setting . . . . . . . . . . . . . . . . . . 83
+1.12.8 Derivations of the moments of the short-both strategy . . . . . . 84
+1.12.9 Potential oﬀsetting eﬀect of ﬂows . . . . . . . . . . . . . . . . . . 84
+1.12.10Mid-term VIX ETFs . . . . . . . . . . . . . . . . . . . . . . . . . 85
+1.13 Appendix C – Additional regressions, ﬁgures and tables . . . . . . . . . 87
+2 Quantify the Quantitative Easing: Impact on Bonds and Corporate
+Debt Issuance 107
+2.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 107
+2.1.1 Empirical evidence . . . . . . . . . . . . . . . . . . . . . . . . . . 108
+2.1.2 Related literature . . . . . . . . . . . . . . . . . . . . . . . . . . . 111
+2.2 Data and research framework . . . . . . . . . . . . . . . . . . . . . . . . 113
+2.2.1 Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 113
+2.2.2 The CSPP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 113
+2.2.3 Summary statistics . . . . . . . . . . . . . . . . . . . . . . . . . . 114
+Contents 6
+2.2.4 Research framework . . . . . . . . . . . . . . . . . . . . . . . . . 115
+2.3 Impact of QE on bond prices and liquidity . . . . . . . . . . . . . . . . . 116
+2.3.1 Robustness checks and alternative liquidity measures . . . . . . . 118
+2.3.2 Does liquidity revert back after the initial shock? . . . . . . . . . 119
+2.3.3 Does QE reduce risks? . . . . . . . . . . . . . . . . . . . . . . . . 120
+2.3.4 Discussion of the results . . . . . . . . . . . . . . . . . . . . . . . 123
+2.4 Impact of QE on corporate debt issuance . . . . . . . . . . . . . . . . . 124
+2.4.1 Issuance of new bonds . . . . . . . . . . . . . . . . . . . . . . . . 124
+2.4.2 What do corporates do with the funds? . . . . . . . . . . . . . . 128
+2.5 Placebo tests . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 129
+2.6 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 130
+2.7 Figures . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 132
+2.8 Tables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 140
+2.9 Appendix . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 147
+3 What Drives Repo Haircuts? Evidence from the UK Market 159
+3.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 159
+3.2 Background information on repurchase agreements and related literature 162
+3.2.1 Background information on repurchase agreements . . . . . . . . 162
+3.2.2 Related literature . . . . . . . . . . . . . . . . . . . . . . . . . . . 163
+3.3 Testable hypotheses on haircuts . . . . . . . . . . . . . . . . . . . . . . . 164
+3.4 Overview of the data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 167
+3.4.1 General sample . . . . . . . . . . . . . . . . . . . . . . . . . . . . 167
+3.4.2 Zero-haircut sample . . . . . . . . . . . . . . . . . . . . . . . . . 169
+3.5 The Determinants of haircuts . . . . . . . . . . . . . . . . . . . . . . . . 170
+3.5.1 Tests of hypotheses . . . . . . . . . . . . . . . . . . . . . . . . . . 173
+3.5.2 Network eﬀects . . . . . . . . . . . . . . . . . . . . . . . . . . . . 179
+3.6 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 180
+3.7 Figures . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 181
+3.8 Tables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 190
+3.9 Appendix . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 202
+Bibliography 207
+List of Figures
+1.1 ETF fractions of total market capitalization . . . . . . . . . . . . . . . . 55
+1.2 Realized VIX futures premium before and after ETFs . . . . . . . . . . 56
+1.3 Positions of traders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+1.4 Basis decomposition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+1.5 ETF futures gap . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59
+1.6 EFG and rebalancing demand from ETFs . . . . . . . . . . . . . . . . . 60
+1.7 MSE . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+1.8 Open interest dynamics before and after ETF introduction . . . . . . . 61
+1.9 Decomposition of ETF demand . . . . . . . . . . . . . . . . . . . . . . . 62
+1.10 Trading against opposite ETFs . . . . . . . . . . . . . . . . . . . . . . . 63
+1.11 Intra-day returns on the short-both strategy for several markets . . . . . 64
+1.12 Futures term structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . 87
+1.13 Realized VIX futures premium before and after ETFs including the crisis 88
+1.14 Open interest dynamics . . . . . . . . . . . . . . . . . . . . . . . . . . . 88
+1.15 Predictive power of basis in commodity markets . . . . . . . . . . . . . . 89
+1.16 Monthly ETF futures gap imputed from variance swaps . . . . . . . . . 90
+1.17 Hedge fund positions and the EFG . . . . . . . . . . . . . . . . . . . . . 90
+1.18 Example of trading against the leverage rebalancing of ETFs . . . . . . 91
+1.19 VIX ETFs: log-values . . . . . . . . . . . . . . . . . . . . . . . . . . . . 92
+1.20 Theoretical distribution of the short-both strategy return . . . . . . . . 93
+1.21 Empirical distribution . . . . . . . . . . . . . . . . . . . . . . . . . . . . 94
+1.22 Empirical distribution – equity indices . . . . . . . . . . . . . . . . . . . 95
+1.23 Empirical distribution – equity, foreign exchange and bond indices . . . 96
+1.24 DD estimates, testing the parallel trends assumption . . . . . . . . . . . 97
+1.25 Bid-ask spreads . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 97
+2.1 Fraction of bonds by rating category . . . . . . . . . . . . . . . . . . . . 132
+2.2 Age-rating distribution of all European corporate bonds . . . . . . . . . 133
+2.3 Monthly bilateral turnover . . . . . . . . . . . . . . . . . . . . . . . . . . 134
+2.4 QE-eligible and QE-ineligible bonds . . . . . . . . . . . . . . . . . . . . 135
+2.5 Weekly dynamics of the number and the par of newly issued bonds . . . 136
+2.6 Number of new bonds issued by ﬁrms issuing in several currencies . . . 137
+2.7 Par of new bonds issued by ﬁrms issuing in several currencies . . . . . . 138
+2.8 New bonds issued by ﬁrms issuing in several currencies: splitting the
+sample of euro-denominated bonds . . . . . . . . . . . . . . . . . . . . . 139
+2.9 Extended post-announcement period . . . . . . . . . . . . . . . . . . . . 147
+7
+List of Figures 8
+2.10 New bonds issued by ﬁrms issuing in several currencies: splitting the
+euro sample, quarterly aggregation . . . . . . . . . . . . . . . . . . . . . 148
+3.1 Currency-maturity distribution of the contracts for the sample of reverse
+repos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 181
+3.2 Currency-maturity distribution of the contracts for the sample of repos 182
+3.3 Histogram of haircuts . . . . . . . . . . . . . . . . . . . . . . . . . . . . 183
+3.4 Zero-haircut sample . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 184
+3.5 Zero-haircut network for reverse repos . . . . . . . . . . . . . . . . . . . 185
+3.6 Zero-haircut network for repos . . . . . . . . . . . . . . . . . . . . . . . 186
+3.7 Signiﬁcant relationships in the reverse repo market . . . . . . . . . . . . 187
+3.8 Signiﬁcant relationships in the repo market . . . . . . . . . . . . . . . . 188
+3.9 Network ﬂows plot . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 189
+List of Tables
+1.1 Share of ETFs in market capitalization and in trading volume . . . . . . 65
+1.2 Summary statistics for the VIX market . . . . . . . . . . . . . . . . . . 66
+1.3 Predictive power of basis . . . . . . . . . . . . . . . . . . . . . . . . . . . 67
+1.4 Impact of ETF demand in the VIX market . . . . . . . . . . . . . . . . 68
+1.5 Impact of ETF demand components on futures . . . . . . . . . . . . . . 69
+1.6 Regressions of leveraged ETFs’ returns on benchmarks . . . . . . . . . . 69
+1.7 Pooled regressions of the short-both strategy returns . . . . . . . . . . . 70
+1.8 Impact of ETF demand in commodity markets. . . . . . . . . . . . . . . 71
+1.9 DD estimates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+1.10 Flows on leverage rebalancing . . . . . . . . . . . . . . . . . . . . . . . . 85
+1.11 Mid-term VIX ETFs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 86
+1.12 Predictive power of basis – longer sample . . . . . . . . . . . . . . . . . 98
+1.13 Second basis regressed on ETF demand . . . . . . . . . . . . . . . . . . 98
+1.14 Impact of ETFs on basis and EFG . . . . . . . . . . . . . . . . . . . . . 99
+1.15 Impact of ETF fractions on prices and EFG in the VIX market . . . . . 100
+1.16 Robustness: periods of high and low variance, Fama–French ﬁve factors 101
+1.17 Robustness: adding lagged demand and hedging pressure from the VIX
+options market . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 102
+1.18 Predictive regressions of futures returns on EFG in the VIX market . . 103
+1.19 Regression results of synthetic futures and spot on synthetic basis . . . 104
+1.20 Impact of ETF demand on synthetic basis and spread . . . . . . . . . . 104
+1.21 Regressions of positions of leveraged money in VIX futures. . . . . . . . 105
+1.22 Short-both strategy returns across markets . . . . . . . . . . . . . . . . 106
+1.23 ETF impact on realized futures returns . . . . . . . . . . . . . . . . . . 106
+2.1 Summary statistics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 140
+2.2 Impact of QE on bond prices and liquidity . . . . . . . . . . . . . . . . . 141
+2.3 Liquidity dissipation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 142
+2.4 Isolating QE channels . . . . . . . . . . . . . . . . . . . . . . . . . . . . 143
+2.5 Impact of QE on the issue of new bonds . . . . . . . . . . . . . . . . . . 144
+2.6 Firms’ ﬁnancial indicators. . . . . . . . . . . . . . . . . . . . . . . . . . . 145
+2.7 Placebo tests . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 146
+2.8 Trading volume . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 149
+2.9 Alternative measures of liquidity, impact on price . . . . . . . . . . . . . 150
+2.10 Impact of QE on turnover . . . . . . . . . . . . . . . . . . . . . . . . . . 151
+2.11 Data collapsed by time period . . . . . . . . . . . . . . . . . . . . . . . . 152
+2.12 Isolating QE channels: data collapsed by time period . . . . . . . . . . . 153
+9
+List of Tables 10
+2.13 Isolating QE channels: relative changes . . . . . . . . . . . . . . . . . . 154
+2.14 Isolating QE channels: number of observations and F-statistics . . . . . 155
+2.15 Isolating QE channels: splitting bonds on liquid and illiquid before QE . 156
+2.16 Isolating QE channels: t-tests . . . . . . . . . . . . . . . . . . . . . . . . 157
+2.17 Percentage of QE-eligilbe bonds issued by ﬁrms with diﬀerent ratings . 157
+2.18 Impact of QE on the issue of new bonds: whole sample of ﬁrms . . . . . 158
+3.1 The breakdown of value of contracts by maturity, currency, counterparty
+type, and collateral type . . . . . . . . . . . . . . . . . . . . . . . . . . . 190
+3.2 The breakdown of average haircuts by maturity, currency, counterparty
+type, and collateral type . . . . . . . . . . . . . . . . . . . . . . . . . . . 191
+3.3 Summary of the zero-haircut sample excluding deals with CCPs . . . . . 192
+3.4 Description of the explanatory variables . . . . . . . . . . . . . . . . . . 193
+3.5 Summary statistics for the sample excluding deals with CCPs . . . . . . 194
+3.6 Reverse repo Tobit regressions excluding CCPs . . . . . . . . . . . . . . 195
+3.7 Reverse repo OLS regressions excluding CCPs . . . . . . . . . . . . . . . 196
+3.8 Reverse repo Logistic regressions excluding CCPs . . . . . . . . . . . . . 197
+3.9 Repo Tobit regressions excluding CCPs . . . . . . . . . . . . . . . . . . 198
+3.10 Repo OLS regressions excluding CCPs . . . . . . . . . . . . . . . . . . . 199
+3.11 Repo Logistic regressions excluding CCPs . . . . . . . . . . . . . . . . . 200
+3.12 Percentage of signiﬁcant interactions in the REVR and REPO OLS re-
+gressions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 201
+3.13 Centrality measures summary . . . . . . . . . . . . . . . . . . . . . . . . 201
+3.14 The breakdown of value of contracts by maturity, currency, counterparty
+type, and collateral type. Sample of six banks excluding CCPs . . . . . 202
+3.15 The breakdown of reverse repos . . . . . . . . . . . . . . . . . . . . . . . 203
+3.16 The breakdown of repos . . . . . . . . . . . . . . . . . . . . . . . . . . . 204
+3.17 Reverse repo OLS regressions excluding CCPs with nonbank dummy . . 205
+3.18 Repo OLS regressions excluding CCPs with nonbank dummy . . . . . . 206
+Chapter 1
+Passive Funds Actively Aﬀect
+Prices: Evidence from the
+Largest ETF Markets
+Karamﬁl Todorov1
+1.1 Introduction
+Recent years have seen a surge in passive investing.2 Investors are increasingly putting
+money into funds that track a given benchmark index instead of actively managing a
+portfolio. The market for one particular type of these funds, ETFs, has grown con-
+siderably. As of 2018, ETFs were managing $5 trillion globally compared with only
+$0.2 trillion in 2004.3 ETFs are progressively being used by retail and institutional
+investors to obtain a cost-eﬃcient exposure to portfolios of assets or asset strategies.
+1I am grateful to Igor Makarov, Christian Julliard, Dimitri Vayanos, Jean-Pierre Zigrand, Ron
+Anderson, Thummim Cho, Dirk Jenter, Dong Lou, Ian Martin, Martin Oehmke, Daniel Paravisini,
+Cameron Peng, Andrea Tamoni, Andreas Uthemann and Kathy Yuan for their useful advice and
+comments. I am also thankful to the scientiﬁc committees of the BlackRock Applied Research Award
+and the 7th SUERF/UniCredit Foundation Research Prize for selecting this paper as the winner in
+these competitions. I am also grateful to seminar participants at the London School of Economics, the
+Bank of England, BIS, BlackRock, Boston College, CEMFI, HEC Paris, Indiana University, PIMCO,
+UniCredit, University of Florida, University of Houston, University of Maryland, University of Notre
+Dame, and Washington University in St. Louis for their helpful feedback. I thank the Systemic Risk
+Centre at the LSE for providing the data on variance swaps sourced from Markit under license.
+2Passive funds do not pick the assets to invest in, but simply follow their benchmarks (as opposed
+to active funds). Since some benchmarks involve more frequent rebalancing, passive funds are not the
+same as pure buy-and-hold investors.
+3Source: Morningstar and own calculations.
+11
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 12
+On the one hand, commoditization of assets through ETFs makes investing simple and
+cost-eﬃcient, thereby attracting new capital and possibly increasing liquidity. On the
+other hand, commoditization could reduce price informativeness and create systemic
+risks if the presence of large investors with similar objectives leads to synchronized
+trading, especially during extreme market times. The increasing presence of ETFs in
+various asset classes has led to a growing number of market participants and academics
+expressing concerns about the potential distorting impact on underlying assets. The
+fear is that “too much money is in too few hands”.
+Assessing the impact of ETFs on prices is diﬃcult because it is hard to distinguish
+between noise and fundamentals of the underlying asset. The existing literature has al-
+most exclusively focused on equity markets, where fundamental values are complicated
+to measure. Most papers have tried to quantify non-fundamental price distortions due
+to ETFs by looking at price reversals or variance ratios. In the research presented
+here, I use the beneﬁcial setting of the futures market, where non-fundamental price
+distortions are easier to measure. I construct a unique data set to identify the size and
+source of the ETF impact on prices in the most ETF-dominated asset classes: volatility
+(VIX) and commodities.4
+These ETFs have two beneﬁcial features that make them a useful laboratory to quantify
+the eﬀects of ETFs on prices. First, ETFs in VIX and commodities hold a much larger
+share of the market compared to equities. The fraction of ETFs in the market for
+VIX futures often exceeds 30%, whereas it is less than 2%5 in the Standard and Poor’s
+(S&P) 500 Index. Several episodes from the VIX market in 2018 (and from the oil
+market in 2020) suggest that large ETF-induced trading can actively move prices and
+exacerbate price changes in turbulent times.6 Second, using the speciﬁcs of futures
+contracts, I directly test whether the ETF-inﬂuenced futures price is informative about
+the fundamental spot value, or is more inﬂuenced by less fundamental premiums. The
+setting of the futures market also allows me to test speciﬁc predictions about the price
+impact of ETFs on the slope of the futures curve.
+This paper documents and studies several new ETF-related phenomena. First, I show
+that ETFs put pressure on prices of underlying assets in VIX and commodity markets.
+4Some of the exchange-traded products (ETPs) analyzed in this research are structured in the form
+of an exchange-traded note (ETN) rather than an exchange-traded fund. The institutional diﬀerences
+between the two structures are immaterial since ETPs’ exposure is transmitted to the underlying
+futures market irrespective of the legal structure of the product as I show in section 1.5.3. I use the
+term ETF (instead of ETP) to refer to a general exchange-traded product throughout the paper as the
+term is more familiar to the general public.
+5On average, for the period 2009–2018. The average proportion of the US stock market held by all
+equity ETFs is close to 6% for the same period.
+6See, e.g., Pagano et al. (2019), FT (2018), Reuters (2018), FT (2020) and Bloomberg (2020).
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 13
+Trading demand from ETFs (called ETF demand hereafter) is strongly related to fu-
+tures prices at a daily frequency. The eﬀects are robust to a large set of controls and
+to diﬀerent sub-periods.
+Second, I show that ETF price impact is not related to price discovery but manifests
+itself through an increase in the non-fundamental part of prices. To identify ETF-
+induced price distortions, I propose a model-independent approach for replicating the
+fundamental value7 of a VIX futures contract. I simply use the deﬁnition of variance
+and construct a synthetic futures contract from option prices on the S&P 500 Index and
+VIX. One advantage of my framework is that I make no parametric or distributional
+assumptions: the results are also valid in the presence of jumps. This is an important
+strength of my approach, given that VIX futures often experience large spikes. The
+synthetic futures contract is not directly inﬂuenced by ETF demand since there are no
+ETFs in the market for options. The price of the replicated contract was close to that
+of the traded one before the introduction of ETFs but diverged consistently thereafter.
+I show that the diﬀerence between the prices of the two contracts is strongly related
+to ETF demand and call this diﬀerence theETF futures gap (EFG). The EFG is
+also related to measures of funding and market liquidity: bid-ask spreads and the TED
+spread (spread between 3-month LIBOR in USD and the interest rate of Treasury bills).
+The size of the gap is 18.5% per year, on average.
+Third, to study the source of the gap in VIX futures prices, I analyze trading by ETFs
+and propose a novel decomposition of their demand into three major components:
+calendar rebalancing, ﬂow rebalancing, and leverage rebalancing. Calendar rebalanc-
+ing arises because futures are ﬁnite-maturity instruments as opposed to stocks, and
+ETFs have to gradually roll expiring contracts into longer-dated ones to maintain their
+exposure. ETFs sell portions of the ﬁrst-month futures and buy portions of the second-
+month futures on a daily basis, thereby rolling their exposure from the ﬁrst to the
+second contract. Flow rebalancing is driven by fund ﬂows: ETFs have to scale up their
+exposure in case of inﬂows, and scale it down in case of outﬂows. Leverage rebalanc-
+ing arises due to the maintenance of a constant daily leverage by leveraged ETFs and
+is a new type of mechanic institutional demand. The three types of rebalancing are
+not speciﬁc to futures-based ETFs but can be generalized to ETFs in all asset classes,
+including equity and ﬁxed income. Calendar rebalancing is analogous to the roll due
+to benchmark exclusion/inclusion for equity ETFs, or due to maturing bonds for ﬁxed
+income ETFs. Flow and leverage rebalancing for equity and bond ETFs have similar
+interpretation to that for VIX and commodity ETFs.
+7Throughout the paper, fundamental value denotes a value that is a more precise measure of the
+fundamental spot price at maturity compared to the observed, ETF-inﬂuenced futures price.
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 14
+I show that leverage rebalancing introduces a source of convexity that is not easy
+to hedge and exposes ETF counterparties (called arbitrageurs hereafter) to variance.
+This type of rebalancing has the largest impact on the EFG. Calendar rebalancing
+inherits part of the non-linearity of leverage rebalancing and also mechanically exposes
+arbitrageurs to the risk of widening price discrepancies since arbitrageurs have to close
+futures positions before expiration. Calendar rebalancing puts upward pressure on the
+second-month futures price and downward pressure on the ﬁrst-month price. Flow
+rebalancing has a direct eﬀect on prices and also an indirect eﬀect by changing the
+size of ETFs, and the amount of their calendar rebalancing in future periods. Flow
+rebalancing moves prices in the direction of ﬂows: inﬂows increase prices, whereas
+outﬂows decrease them. The short-term price impact of the three types of rebalancing
+translates into longer-term price deviations.
+Given that the EFG is most sensitive to leverage rebalancing, I next analyze the risks
+faced by an arbitrageur who trades against this type of ETF demand. The impact
+of large leverage-induced trading by institutional investors on systemic risk and prices
+is an important, yet under-researched question. ETFs provide a useful laboratory to
+study this question on a daily basis. I show that leverage rebalancing ampliﬁes price
+changes and introduces unhedgeable risks for ETF counterparties. Leveraged ETFs
+mechanically have to buy the underlying asset after price increases and sell it after price
+decreases. This creates a potential feedback channel for prices: ETF demand and price
+changes reinforce each other, pushing prices away from fundamentals. Trading against
+leveraged ETFs is, in essence, providing liquidity to investors with short horizons, who
+follow momentum-like strategy. Due to leverage rebalancing, the potential distorting
+eﬀect of ETFs on prices can be large even in a market with a zero net share of ETFs.
+A prominent real-world example of this eﬀect was the VIX market in February 2018.
+The net market share of ETFs then was close to zero, but the potential price impact
+due to leverage rebalancing was 60% of the total market size for the ﬁrst two futures
+contracts. The amount of leverage rebalancing has been growing in the last decade not
+only for VIX and commodities but also for some equity and bond indices.
+I propose a simple strategy to understand the risks of trading against leverage rebal-
+ancing, and document a novel ETF-related anomaly. I form a portfolio that sells short
+a pair of ETFs with opposite leveragesL (e.g., L = 2 and L =−2), to approximate
+liquidity provision to leveraged ETFs. A natural guess could be that such a strategy
+should have a zero return since the proﬁt (loss) from selling the long fund is canceled by
+the loss (proﬁt) from selling the inverse fund. Surprisingly, I show that the returns on
+such a strategy are not zero, but are consistently positive across markets. The portfolio
+delivers annualized returns of 21% in the VIX market, and 43% in the gas market, with
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 15
+Sharpe ratios of 0.89 and 2.59, respectively. Theoretically, trading against opposite-
+leveraged ETFs should be negatively exposed to large jumps in the underlying asset.
+However, empirically, the downside risk is almost never realized. A more puzzling ob-
+servation is that the strategy is exposed to a “right-way risk” since it beneﬁts from ETF
+tracking errors in crisis times when liquidity dries up and the market breaks down. To
+the best of my knowledge, my paper is the ﬁrst to quantify the risks of trading against
+leveraged ETFs and the ﬁrst to show that their tracking errors co-move with extreme
+market times, thereby beneﬁting liquidity providers.
+The main conclusions of this paper are validated in a large set of robustness tests. I
+verify the major results using several measures of futures basis and spread to address
+concerns about time to maturity, the absolute level of prices, or other factors driving
+the relationship between ETF demand and futures prices. I conduct several tests to
+verify that the ETF futures gap and its relationship to the trading demand from ETFs
+are robust features of the data. The empirical evidence shows that the gap is unlikely to
+be driven by the absence of a continuum of option strikes, truncation errors, diﬀerences
+in margin requirements, or hedging pressure in the options market. A potential concern
+is that price discovery takes place in the ETF-inﬂuenced market, and therefore the gap
+exists because of fundamental information about the realized spot rather than non-
+fundamental price pressure due to ETF demand. To address this concern, I test which
+futures contract is a better predictor of the fundamental spot price at maturity. The
+empirical evidence shows that the ETF-inﬂuenced futures contract is a poor predictor,
+whereas the synthetic futures constructed from options is a better one.
+My main results have several implications. First, they illustrate that price is strongly
+related to ETF trading demand, when ETFs constitute a large share of the market. In
+turbulent times, signiﬁcant leverage-induced rebalancing contributes to extreme market
+movements and creates a feedback eﬀect on prices. Thus, synchronized trading by
+ETFs actively moves prices away from fundamentals. This result contributes to the
+policy debate on the desirability of commoditization. Going forward, the evidence of
+ETF impact on prices in VIX and commodity markets can be useful for predicting
+the potential eﬀects of ETFs on stock and bond markets, should these funds develop a
+larger share of these traditionally studied asset classes.
+Second, my results lead to a more nuanced view of the information content of VIX
+and the VIX futures premium (the average relative diﬀerence between the current
+futures price and the realized spot price at expiration). VIX and its derivatives are
+often perceived as a barometer of ﬁnancial stress by large ﬁnancial institutions and are
+used as an input in stress-tests and various risk models. The VIX futures premium
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 16
+is frequently interpreted as a measure of investors’ risk aversion and future economic
+uncertainty. However, my results suggest that the prices of VIX futures contracts are
+signiﬁcantly disrupted by non-fundamental mechanical ETF demand. I show that the
+VIX futures premium has increased since the introduction of ETFs, particularly, for the
+most ETF-inﬂuenced futures contracts: one and two months. Prices for these contracts
+are less informative about the realized spot price and are inﬂuenced more by premiums.
+Third, my ﬁndings show how to decompose trading demand from ETFs and study
+diﬀerent aspects of their price impact. I also demonstrate how to quantify the potential
+distorting impact of leverage rebalancing and how to capture the risk premium of
+trading against this rebalancing.
+The rest of this paper is organized as follows. In section 1.2, I summarize the relevant
+literature. Section 1.3 describes the data set. Section 1.4 presents the results on ETF
+impact in the VIX market. Section 1.5 describes the decomposition of ETF demand.
+Section 1.6 analyzes in detail ETFs’ leverage rebalancing. Section 1.7 presents the
+results for commodity markets, and section 1.8 concludes.
+1.2 Literature review
+The research presented here contributes to the literature in four main areas: stud-
+ies on ETFs, VIX and the variance risk premium (VRP), futures markets, and limits
+to arbitrage. First, it is related to studies on ETFs. A major drawback of the ex-
+isting ETF literature is that it is almost exclusively focused on equities, where these
+funds are a relatively small proportion of the market (less than 6%, on average) and
+where non-fundamental price deviations are hard to measure. Ben-David et al. (2018)
+study the volatility eﬀects of ETFs in stocks and argue that ETF arbitrage transmits
+noise trader risk to underlying securities. Malamud (2015) demonstrates that ETFs
+may create a transmission mechanism for non-fundamental shocks to the underlying
+securities. Cheng and Madhavan (2009) show that the returns on leveraged ETFs
+are path-dependent. Tuzun (2012) ﬁnds that the rebalancing of leveraged ETFs can
+increase the volatility of constituent stocks, whereas Ivanov and Lenkey (2018) ﬁnd
+evidence that these eﬀects are oﬀset by ETF ﬂows. Bessembinder (2015) studies the
+impact of ETF ﬂows. Recently, Sushko and Turner (2019) document the increase in the
+share held by ETFs in several markets and study the impact for liquidity and volatility.
+The greater presence of ETFs in VIX and commodity markets makes them a natural
+candidate for studying the impact of ETF demand on prices and risk premiums. And
+yet, ETFs in VIX and commodity markets have received little to no attention in the
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 17
+literature to date. A related paper by Dong (2016) studies the price impact of VIX
+ETFs and ﬁnds that dealers pass hedging pressure to underlying futures. Similar to
+the research presented here, Dong (2016) uses a result from Carr and Wu (2006) to
+estimate the fair value of a VIX futures. However, he does not establish that the fair
+value relates more closely to fundamentals than the VIX futures price, and does not
+rule out alternative explanations to ETF demand. The paper also does not study the
+source of the premium in VIX futures prices. In particular, it ignores the impact of
+leverage rebalancing. Another gap in the existing ETF literature is that, to the best of
+my knowledge, none of the studies has decomposed the demand from ETFs to analyze
+diﬀerent aspects of their price impact. The research presented here aims to ﬁll this gap
+by examining diﬀerent types of trading demand by ETFs in the largest ETF-dominated
+markets.
+Second, my paper contributes to the literature on VIX and the variance risk premium.
+Cheng (2019) analyzes the VIX premium and ﬁnds that, in turbulent times, dealers and
+asset managers reduce their long volatility positions, whereas hedge funds reduce their
+short volatility positions. Barras and Malkhozov (2016) ﬁnd that the VRP inferred
+from equity prices is diﬀerent from the one inferred from option prices. They claim
+that the diﬀerence is driven by the ﬁnancial standing of intermediaries. Dew-Becker
+et al. (2017) study variance swaps data and ﬁnd that news about future volatility is
+unpriced, but investors are willing to pay a large premium to hedge realized volatility.
+Mixon and Onur (2015) study volatility markets and claim that the long volatility bias
+of asset managers acts to put upward pressure on VIX futures prices. Alexander and
+Korovilas (2012) ﬁnd that ETFs increase the volatility of VIX futures. Eraker and Wu
+(2017) develop a model with diﬀusive and jump shocks to explain the large negative
+returns on VIX ETFs. However, most papers ignore the impact of ETFs on prices of
+underlying futures or rely on some parametric assumptions to calculate risk premiums.
+In the research presented here, I show that the mechanics of ETF rebalancing distorts
+futures prices, and I measure the resulting gap in a model-independent way.
+Third, my research adds to the extensive literature on futures markets. In the normal
+backwardation theory of Keynes (1930) hedgers push down futures price. Fama and
+French (1987) ﬁnd evidence of time-varying expected premiums in several commodities.
+Koijen et al. (2018) explore the predictive power of carry across several asset classes.
+Mou (2011) studies commodity roll. Tang and Xiong (2012), and Basak and Pavlova
+(2016) study the ﬁnancialization of commodities due to institutional ﬂows. Singleton
+(2013) argues that ﬂows from institutional investors have contributed signiﬁcantly to
+the increase in oil prices prior to 2008. In contrast, Gorton et al. (2013) ﬁnd no
+evidence that the positions of participants in futures markets predict risk premiums
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 18
+on commodity futures. Most studies on hedging pressure in futures markets use lower-
+frequency data (quarterly or weekly) on investors’ positions to analyze price impact.
+However, hedging pressure is more likely to be pronounced over short time horizons in
+the current era of high-frequency trading. Using ETFs to analyze the impact on prices
+allows the capture of these transitory price eﬀects, since trading demand is observed on
+a daily basis. The research presented here shows that in markets with a high proportion
+of ETFs, the demand from these funds is strongly related to the futures premium.
+Fourth, my paper also adds to the extensive literature on limits to arbitrage and slow
+moving capital. Shleifer and Vishny (1997) develop a simple model with noise trader
+risk and show that arbitrage could persist. Garleanu et al. (2009) show that dealers
+provide liquidity in option products and charge for the unhedgeable risks they take
+due to the impossibility of trading continuously, and due to transaction costs. Gromb
+and Vayanos (2018) develop a theoretical framework in which ﬁnancially constrained
+arbitrageurs exploit price-discrepancies across segmented markets. In the research pre-
+sented here, I document segmentation in the VIX futures market and develop a simple
+model to illustrate how price discrepancies can exist and persist.
+1.3 Data and institutional details
+I construct a unique data set on ETFs and their underlying securities in VIX and com-
+modities: US natural gas, silver, gold and oil.8 The data comes from several sources.
+Daily prices, ﬂows, holdings, assets under management, volume of trading, and other
+characteristics of ETFs come from the websites of the sponsors, from the Center for Re-
+search in Security Prices (CRSP), and from Bloomberg. Daily data on futures prices,
+open interest, and volume of trading is from the Chicago Board Options Exchange
+(CBOE). Daily data on S&P 500 Index options comes from OptionMetrics and ETF
+borrowing fees are from Interactive Brokers. Weekly data on positions in futures con-
+tracts is from the Commodity Futures Trading Commission (CFTC), monthly data on
+variance swaps quotes comes from Markit Totem. The analyzed period is generally
+January 2000 to December 2018; however, some of the data is only available for a
+shorter time period.
+8In the Appendix, I provide some results for leverage rebalancing of equity, ﬁxed income and foreign
+exchange ETFs.
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 19
+1.3.1 The presence of ETFs in diﬀerent markets
+Figure 1.1 shows the proportion of ETFs in the total market capitalization for several
+markets. The black lines on the graphs show that the proportion of ETFs periodically
+exceeds 30% of the total market capitalization for VIX and natural gas.9 The share
+of ETFs in equities is much smaller and constitutes less than 2%, on average, for
+most equity indices. Table 1.1 summarizes the proportion of ETFs in the total market
+capitalization and in daily trading volume across several markets.
+[Figure 1.1 and Table 1.1 about here]
+The numbers illustrate that, even though ETFs constitute a smaller share of the equity
+market, the average daily trading volume of ETF shares is large in relative terms: for
+the S&P 500 Index, it exceeds 18% of the trading volume in constituent shares. In
+the VIX market, the average daily trading volume exceeds twice that of the underlying
+futures contracts. In the following analysis, I focus mainly on VIX ETFs and ETFs in
+the markets for natural gas, silver, gold, and oil.
+1.3.2 Institutional details
+Unlike most equity ETFs that physically invest in the underlying assets, VIX and com-
+modity ETFs obtain price exposure by entering into positions in futures contracts.10
+Most ETFs follow a benchmark based on the ﬁrst two futures contracts.11 They grad-
+ually roll their exposure from the ﬁrst-month contract to the second-month contract
+(daily for VIX and over a period of 5 days each month for commodity markets). Some
+ETFs also aim to maintain a constantdaily leverage ratio,L, which can also be negative
+(for inverse ETFs). For example, if the benchmark return is 5%, a double-leveraged
+(L = 2) ETF should return 10%, whereas an inverse ETF (L =−1) should return -5%.
+I explain in detail the exact trading motives of ETFs when I analyze the decomposition
+of ETF demand in section 1.5. I also show that leverage rebalancing can exacerbate
+market movements and analyze the risks of trading against leveraged ETFs in sections
+1.5.2 and 1.6. ETFs are limited to trade in the futures contracts in a mechanical way
+to minimize their tracking errors. This can lead to a reduction in price informativeness
+and an increase in the futures premium.
+9Also for oil in April 2020.
+10This is how VIX, gas, oil, and many silver and gold ETFs invest. Some silver and gold ETFs hold
+physical silver or gold: I exclude these from the analysis since they do not rebalance on a daily basis,
+but physically hold the assets.
+11There are also VIX ETFs that invest in fourth to seventh-month futures contracts but their share
+is much lower. I analyze these in section 1.12.10 in the Appendix.
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 20
+1.3.3 Summary statistics
+Figure 1.12 in the Appendix shows the term structure of futures prices for several
+markets. The term structure of VIX futures is in contango (futures larger than spot)
+78% of the time. The picture for the gas market is similar. Generally, after the
+introduction of ETFs, the futures curve shifts upwards and becomes more concave for
+VIX and gas.
+[Table 1.2 about here]
+Table 1.2 presents summary statistics for the VIX market. The distribution of VIX
+futures is positively-skewed, particularly for short maturities. The return on the largest
+long VIX ETF (VXX) is -17 basis points (bps) per day: short-selling the ETF generates
+an annualized return of nearly 54%, consistent with the idea that investors are willing
+to pay a premium to hedge against volatility shocks. The average slope of the short end
+of the futures term structure steepened after the introduction of ETFs. The ﬁrst-month
+futures basis12 went up from 0.06 to 0.79, and the spread between the second and the
+ﬁrst-month futures contracts increased from 0.46 to 1.10. The increase is also large if I
+exclude the 2008–2009 ﬁnancial crisis from the sample. The slopes of other parts of the
+curve that are not inﬂuenced by ETFs, are little changed. The plot in Figure 1.2 shows
+that the realized VIX futures premium (the return for an investor who sells short a fully
+collateralized VIX futures contract and holds it until maturityFt,T−FT,TFt,T ) has increased
+since the introduction of ETFs for the most ETF-inﬂuenced maturities. The rise is
+particularly pronounced for one and two month futures contracts. The increase is even
+more striking if I include the 2008–2009 ﬁnancial crisis (Figure 1.13 in the Appendix).
+These results provide initial evidence that the introduction of ETFs is related to the
+increase in premiums embedded in VIX futures prices.
+[Figure 1.2 about here]
+1.3.4 Types of traders in the futures market
+Empirically, ETFs are usually net buyers of futures contracts, whereas managed money
+(usually hedge funds) takes the opposite side of the trade. Figure 1.3 shows the weekly
+positions of diﬀerent types of investors in VIX and gas markets. The graphs show that
+12For convenience, I callFt,T −St basis throughout the paper. Since the VIX futures term structure
+is in contango most of the time, it is more convenient to work withFt,T −St rather thanSt −Ft,T. T
+is maturity,Ft,T is timet’s price of a futures contract expiring atT, St is timet’s spot price.
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 21
+leveraged money (mostly hedge funds) is consistently short VIX futures after 2009,
+whereas asset managers and dealers are mostly net long.13 In the gas market, dealers
+(swap positions) are, on average, net long futures, whereas managed money takes the
+opposite side and provides liquidity. The bottom left panel of Figure 1.3 shows that
+dealers’ positions for VIX match pretty closely the net positions of ETFs over time:
+the correlation is around 84%. For gas, ETF positions can be identiﬁed with net swap
+positions as shown in the bottom right panel. Since ETFs constitute a smaller share
+of the market for silver, gold, and oil, their net positions cannot be identiﬁed very
+precisely with net swap positions. In the next section, I study the impact of ETFs on
+prices in the largest ETF-dominated market.
+[Figure 1.3 about here]
+1.4 The impact of ETFs on futures prices in the VIX mar-
+ket
+In this section, I analyze the impact of ETFs on futures prices in the VIX market, as
+this market has the largest proportion of ETFs, and sees ETF trading volume dwarf
+that of the underlying asset.
+1.4.1 Details on VIX
+VIX is an important asset for investors because it provides a natural hedge against
+market downturns. VIX 2t is a portfolio of options that measures risk-neutral expec-
+tation of realized variance of the S&P 500 Index return (assuming no jumps) over
+the next month: VIX 2t = EQt (Rvart,t+30).14 In a world with jumps, VIX 2t mea-
+sures risk-neutral entropy of the S&P 500 Index return as Martin (2015) demonstrates:
+VIX 2t = log EQt Rt→t+30− EQt logRt→t+30, where Rt→t+30 is the gross return on the
+S&P 500 Index over the next 30 days. Thus, by construction, VIX increases in tur-
+bulent times when volatility spikes and aggregate economic uncertainty increases. An
+important feature of the market for VIX futures, which distinguishes it from traditional
+futures markets, is that there is no cost-of-carry relationship because the spot asset is,
+in essence, not physically tradable. Since the portfolio of options underlying the VIX
+13The names of the diﬀerent groups of traders are the same as in the classiﬁcation in the Traders
+in Financial Futures (TFF) report by the CFTC. Leveraged funds typically consist of hedge funds and
+other proprietary traders.
+14As realized variance is a consistent estimator of quadratic variation (see, e.g., Cheng, 2019).
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 22
+calculation is changing almost continuously, in practical terms it is impossible to trade
+VIX due to large transaction costs. The simplest way to get exposure is by trading
+VIX futures.
+The market for VIX derivatives has grown considerably over the past decade and has
+become the largest market for volatility for short maturities (see, e.g., Mixon and Onur,
+2015). As of 2018, the total notional value of VIX futures exceeded that of variance
+swaps for maturities of less than one year. The total dollar volatility exposure (in terms
+of vega) of VIX futures was close to $8 billion (bn) per month. Part of the massive
+increase in volatility investing was due to the rise of ETFs, which provided a simple
+and cost-eﬃcient way to invest in VIX.
+The inception of ETFs was a market innovation that allowed many retail investors
+who could not easily trade volatility before (due to margin requirements or the need to
+managefuturesexpirationdates), toentertheVIXfuturesmarket. DatafromThomson
+Reuters Institutional Holdings shows that the fraction of institutional holdings in VIX
+ETFs was less than 24%, on average, for the period 2009–2018. Figure 1.14 in the
+Appendix shows the large increase in open interest of VIX futures after the introduction
+ofETFs, particularlyfortheﬁrstandsecond-monthcontracts. ThecaseofVIXprovides
+a useful laboratory to study the eﬀects of commoditization of trading strategies and
+the consequences of letting retail investors enter more sophisticated markets. The
+lessons learned from the VIX market can be useful to predict the eﬀects of larger ETF
+presence in other markets that were less accessible to retail investors before, e.g., less-
+liquid corporate bond markets. The excessive inﬂow of new capital through ETFs could
+have pushed VIX futures prices away from their fundamental values. This problem is
+particularly pronounced for VIX given the inability of investors to replicate the futures
+contract by trading the spot.
+1.4.2 Futures price – fundamental or not?
+The beneﬁt of studying futures-based ETFs is that I can directly test whether the
+underlyingfuturespricecontainsmoreinformationaboutfundamentals, orisbiaseddue
+to non-fundamental noise. I do this by testing whether the futures price is informative
+about the fundamental spot price at maturity, or is inﬂuenced by premiums.
+Historically, the market for VIX futures has been in contango most of the time as
+shown in Figure 1.12 in the Appendix. First, I analyze whether the contango predicts
+fundamental spot price changes to maturity, or is more informative about the non-
+fundamental futures premium. Using the identityFt,T−St = Ft,T−FT,T +ST−St
+Passive Funds Actively Aﬀect Prices: Evidence from the Largest ETF Markets 23
+and without making any assumptions, I check whether timet’s basisFt,T−St predicts
+subsequent changes of the spot VIXSt until maturityT (fundamental information),
+or the futuresFt,T (non-fundamental premium), or both. The left panel of Figure 1.4
+illustrates the idea. I run two simple predictive regressions:15
+ST−St =α1 +β1· (Ft,T−St) +ϵ1,t, (1.1)
+FT,T−Ft,T =α2 +β2· (Ft,T−St) +ϵ2,t. (1.2)
+By subtracting equation (1.2) from equation (1.1), we see thatβ1−β2 should be equal
+to one. Table 1.3 shows the results from the two regressions. The estimates show that
+a larger basis (higher futures compared with spot) predicts negative change for short-
+maturity futures, i.e. the futures will drop at expiration. The estimates are the largest
+in absolute value for one month and are monotonically decreasing for longer maturities.
+In contrast, the basis for short-maturities does not predict spot changes.
+[Figure 1.4 and Table 1.3 about here]
+The picture is the opposite for the basis for longer maturities: it positively predicts
+subsequent spot changes. The front end of the VIX futures’ curve could be inﬂuenced
+by ETFs, whereas the long end of the curve would not be, since ETFs trade mostly
+in the ﬁrst and the second-month futures. The fact that the basis for one and two
+months predicts futures but not spot, and in contrast a longer-term basis predicts spot
+but not futures, shows that short-term basis could be inﬂuenced by non-fundamental
+risk premiums that are unrelated to fundamental realized spot changes. These results
+are consistent with the ﬁndings of Aït-Sahalia et al. (2018) who show that only risk on
+the short-end of the term structure of variance swaps is priced. Next, I use the high
+frequency of ETF positions and futures price changes to study whether ETF demand
+is related to the fact that ETF-inﬂuenced futures maturities are less informative about
+fundamentals.
+1.4.3 ETF demand impact on futures prices
+To see if the premium in VIX futures prices is related to ETFs, I study the eﬀect of
+ETF rebalancing demand on diﬀerent parts of the futures curve. I run the following
+15Running regressions (1.1) and (1.2) withST −St,FT,T −Ft,T and Ft,T −St scaled by the time
+to maturity of the futures yields similar results. The results are also unchanged if I control for lags of
+VIX, time to maturity of the futures, liquidity, open interest, and other factors. To address the concern
+that the mean-reversion of volatility is driving the results, I run the regressions for the period before
+ETFs and ﬁnd statistically signiﬁcant predictive power of one and two-months basis for spot prices. In
+the Appendix (Figure 1.15), I present the results of similar regressions for other futures markets.
+Passive Funds Activel
