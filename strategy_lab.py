@@ -318,7 +318,7 @@ def evaluate(spec, X, source="engine", name=None):
     def done(verdict):
         out["verdict"] = verdict + head_prop
         with open(LOG, "a") as f: f.write(json.dumps(out) + "\n")
-        return verdict, f"strategy lab: {json.dumps(spec)[:300]}"
+        return out["verdict"], f"strategy lab: {json.dumps(spec)[:300]}"
     if m.get("n", 0) < 150:
         return done(f"NOT CONFIRMED on my data: too few trades ({m.get('n', 0)} in 2014-2023, need 150). {head}")
     yp, yt = map(int, m["years_pos"].split("/"))
