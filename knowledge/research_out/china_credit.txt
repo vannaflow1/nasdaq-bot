@@ -1,4 +1,16 @@
-FRED CRDQCNAPABIS: failed TimeoutError
-FRED QCNPAM770A: failed TimeoutError
-FRED QCNN628BIS: failed TimeoutError
+DBnomics BIS/WS_TC/Q.CN.P.A.M.XDC.A (credit to private non-fin. sector, CNY): 157 obs 1985-12-31 -> 2024-12-31, last 267,125
+DBnomics BIS/WS_TC/Q.CN.P.B.M.XDC.A (bank credit): 157 obs 1985-12-31 -> 2024-12-31, last 261,946
+FRED CRDQCNAPABIS: failed TimeoutError The read operation timed out
 NDX monthly: 442 obs 1990-01-31 -> 2026-10-31
+impulse (as published) vs next  3 months of NDX: corr +0.11 over 300 months (~100 independent) | by period {'2000-2009': np.float64(0.2), '2010-2017': np.float64(-0.05), '2018-2026': np.float64(0.45)}
+   (if known instantly, impossible in reality: corr +0.02)
+impulse (as published) vs next  6 months of NDX: corr +0.15 over 300 months (~50 independent) | by period {'2000-2009': np.float64(0.23), '2010-2017': np.float64(0.15), '2018-2026': np.float64(0.63)}
+   (if known instantly, impossible in reality: corr +0.10)
+impulse (as published) vs next  9 months of NDX: corr +0.18 over 300 months (~33 independent) | by period {'2000-2009': np.float64(0.26), '2010-2017': np.float64(0.35), '2018-2026': np.float64(0.6)}
+   (if known instantly, impossible in reality: corr +0.14)
+impulse (as published) vs next 12 months of NDX: corr +0.20 over 300 months (~25 independent) | by period {'2000-2009': np.float64(0.31), '2010-2017': np.float64(0.39), '2018-2026': np.float64(0.48)}
+   (if known instantly, impossible in reality: corr +0.17)
+Rule 'long NDX only while the published impulse rose over the last 3 months' 2000-2026: avg monthly +0.45% in 153 months vs +1.28% in the other 168 months (buy&hold +0.88%)
+   2000-2009: rising -0.14%/month vs not -0.31%/month
+   2010-2017: rising +1.08%/month vs not +1.99%/month
+   2018-2026: rising +0.58%/month vs not +2.26%/month
