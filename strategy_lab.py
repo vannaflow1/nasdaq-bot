@@ -305,7 +305,18 @@ def _sizer(spec, stop):
     import prop_sim
     pr = spec.get("prop") or {}; r = float(pr.get("risk", 0.25)); re_ = float(pr.get("eval_risk", r))
     r, re_ = min(max(r, 0.02), 0.9), min(max(re_, 0.02), 0.9)
-    return lambda phase, profit, buf: int(((re_ if phase == "eval" else r) * buf) // (stop * prop_sim.MNQ))
+    def size(phase, profit, buf):                             # never freeze: keep 1 micro while one stop still fits the buffer
+        n = int(((re_ if phase == "eval" else r) * buf) // (stop * prop_sim.MNQ))
+        return max(n, 1 if stop * prop_sim.MNQ < buf else 0)
+    return size
+
+
+def farm_score(T, M, spec, plan, slots=5):
+    """Monthly cash flow of running `slots` copy-traded accounts on `plan` (re-buying an eval whenever one ends)."""
+    import prop_sim
+    pts, worst, stop = _prop_inputs(T, M)
+    ses = M.session.values; ses = ses[(ses >= T.session.min()) & (ses <= T.session.max())]
+    return prop_sim.farm(pts, worst, ses, plan, _sizer(spec or {}, stop), slots=slots)
 
 
 def prop_score(T, M, spec=None, plan=None, starts=None):

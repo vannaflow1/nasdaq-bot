@@ -145,10 +145,16 @@ def main():
         if best: row.update({k: best[k] for k in ("n", "win", "avg_R", "years_pos", "plan", "risk", "eval_risk", "pass", "paid", "ev", "fee")})
         if best and best["n"] >= 150 and best["ev"] > 0:          # stage B: validation on 2022-2023, never used to choose
             sz = {"risk": best["risk"], "eval_risk": best["eval_risk"]}
-            vr, _ = score(spec, X, D, S, None, "B", plan=best["plan"], sizings=[sz])
+            vr, TB = score(spec, X, D, S, None, "B", plan=best["plan"], sizings=[sz])
             if vr:
                 row.update({"n_val": vr[0]["n"], "pass_val": vr[0]["pass"], "paid_val": vr[0]["paid"], "ev_val": vr[0]["ev"]})
                 validated += 1
+                if vr[0]["ev"] > 0:                               # portfolio view: 5 copy-traded accounts, re-buy on blow-up
+                    try:
+                        f = S.farm_score(TB, S.data(spec.get("market"))["M"], dict(spec, prop=sz), best["plan"], slots=5)
+                        row.update({"farm_month_val": f["avg_month"], "farm_pos_months_val": f["positive_months"], "farm_worst_val": f["worst_month"]})
+                    except Exception as e:
+                        print("farm skipped:", e)
         new_rows.append(row)
         if len(new_rows) % 25 == 0:
             print(f"{tried} tried, {validated} validated, {(time.time() - t0) / 60:.0f} min"); sys.stdout.flush()
@@ -185,8 +191,9 @@ def write_status(R, gsize, st, tried, validated, exams):
     if len(v):
         lines += ["", "LEADERBOARD (ranked by EV per eval on unseen 2022-23):"]
         for _, r in v.sort_values("ev_val", ascending=False).head(6).iterrows():
+            fm = f" | 5 accounts: {r.farm_month_val:+.0f}$/month ({r.farm_pos_months_val:.0%} months positive)" if "farm_month_val" in r and pd.notna(r.get("farm_month_val")) else ""
             lines.append(f"- {r['name'][:70]} | {r.plan} risk {r.risk:.0%}/{r.eval_risk:.0%} | 2014-21 EV {r.ev:+.0f} (pass {r['pass']:.0%}) "
-                         f"| 2022-23 EV {r.ev_val:+.0f} (pass {r.pass_val:.0%}) | {int(r.n)} trades, {r.avg_R:+.2f}R")
+                         f"| 2022-23 EV {r.ev_val:+.0f} (pass {r.pass_val:.0%}){fm} | {int(r.n)} trades, {r.avg_R:+.2f}R")
     else:
         lines += ["", "No strategy has stayed positive on the unseen 2022-23 years yet."]
     for name, vd in exams:

@@ -75,3 +75,66 @@ def best_plan(day_pts, day_worst, size_for, starts=None, step=4):
     """Score a strategy on every firm/plan; size_for(plan) -> size_fn. Returns all results, best first (by EV)."""
     out = [evaluate(day_pts, day_worst, P, size_for(P), starts, step) for P in plans().values()]
     return sorted(out, key=lambda r: -r["ev_per_eval"])
+
+
+class Account:
+    """One prop account, stepped day by day (same rules as run_account)."""
+    def __init__(self, P):
+        self.P = P; S0 = float(P["size"]); self.S0 = S0; self.bal = self.peak = S0; self.floor = S0 - P["mll"]
+        self.lock = S0 + P.get("lock_over_start", 100); self.phase = "eval"; self.eval_days = []; self.payouts = []
+        self.cycle_days = []; self.cycle_start = S0; self.end = None
+
+    def step(self, pts, worst, size_fn):
+        """Trade one day. Returns the payout paid to the trader today (0 if none). Sets self.end when finished."""
+        P = self.P; profit = self.bal - self.S0
+        cap = P["eval_max_mnq"] if self.phase == "eval" else _tier(P["fund_max_tiers"], profit)
+        n = int(min(cap, max(0, size_fn(self.phase, profit, self.bal - self.floor))))
+        pnl = n * pts * MNQ; w = n * worst * MNQ
+        if self.bal + w <= self.floor:
+            self.end = "blown"; return 0.0
+        if P.get("mll_type") == "intraday" and pnl > 0:
+            self.floor = max(self.floor, min(self.bal + pnl - P["mll"], self.lock))
+        self.bal += pnl; paid = 0.0
+        if self.phase == "eval":
+            self.eval_days.append(pnl); tot = self.bal - self.S0
+            if tot >= P["target"] and (P["eval_consistency"] is None or max(self.eval_days) <= P["eval_consistency"] * tot):
+                self.phase = "funded"; self.bal = self.peak = self.S0; self.floor = self.S0 - P["mll"]
+                self.cycle_days = []; self.cycle_start = self.S0; self.passed_now = True
+                return 0.0
+        else:
+            self.cycle_days.append(pnl); prof_cycle = self.bal - self.cycle_start; profit = self.bal - self.S0
+            ok_days = sum(d >= max(P["day_min"], 0.01) for d in self.cycle_days)
+            cons_ok = not P["fund_consistency"] or prof_cycle <= 0 or max(self.cycle_days) <= P["fund_consistency"] * prof_cycle
+            if ok_days >= P["payout_days"] and prof_cycle > P["cycle_min"] and cons_ok and profit > 0:
+                req = min(P["payout_frac"] * profit, P["caps"][min(len(self.payouts), len(P["caps"]) - 1)], self.bal - self.floor - P["buffer"])
+                if req >= P["min_req"]:
+                    self.bal -= req; paid = P["split"] * req; self.payouts.append(paid); self.cycle_days = []; self.cycle_start = self.bal
+                    if len(self.payouts) >= P["payouts_to_live"]: self.end = "live"
+        self.peak = max(self.peak, self.bal); self.floor = max(self.floor, min(self.peak - P["mll"], self.lock))
+        return paid
+
+
+def farm(day_pts, day_worst, dates, plan, size_fn, slots=5, budget_per_month=None):
+    """Run a 'farm' of `slots` accounts on the same plan, all copy-trading the same strategy (same direction - no hedging).
+    When an account blows up (or reaches live), a new evaluation is bought the next day. Accounts start staggered (one
+    new per day at the beginning). Returns monthly cash flow: payouts received minus fees paid."""
+    P = plans()[plan] if isinstance(plan, str) else plan
+    import pandas as pd
+    accts = []; cash = {}; fees = 0.0; paid_tot = 0.0; bought = 0; blown = 0; live = 0
+    for i, d in enumerate(dates):
+        m = str(d)[:7]; cash.setdefault(m, 0.0)
+        if len([a for a in accts if a.end is None]) < slots:                # buy one new evaluation per day while a slot is free
+            accts.append(Account(P)); cash[m] -= P["fee"]; fees += P["fee"]; bought += 1
+        for a in accts:
+            if a.end is not None: continue
+            got = a.step(day_pts[i], day_worst[i], size_fn)
+            if getattr(a, "passed_now", False):
+                a.passed_now = False; cash[m] -= P.get("activation", 0); fees += P.get("activation", 0)
+            cash[m] += got; paid_tot += got
+            if a.end == "blown": blown += 1
+            if a.end == "live": live += 1
+    s = pd.Series(cash)
+    return {"plan": P["id"], "months": len(s), "avg_month": round(float(s.mean()), 1), "median_month": round(float(s.median()), 1),
+            "worst_month": round(float(s.min()), 1), "best_month": round(float(s.max()), 1), "positive_months": round(float((s > 0).mean()), 2),
+            "total": round(float(s.sum()), 0), "fees": round(fees, 0), "payouts": round(paid_tot, 0), "evals_bought": bought,
+            "blown": blown, "reached_live": live}
