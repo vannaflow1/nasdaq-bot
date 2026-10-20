@@ -1,0 +1,7 @@
++ GARCH      2019:+0.1% 2020:-1.4% 2021:+0.2% 2022:-0.0% 2023:+0.8% 2024:-0.5% 2025:-0.3% avg -0.16%
++ GJR-GARCH  2019:-0.1% 2020:-3.9% 2021:+0.0% 2022:+0.0% 2023:-0.0% 2024:-0.3% 2025:+0.1% avg -0.60%
++ EGARCH     2019:+0.3% 2020:-6.1% 2021:-0.1% 2022:+0.1% 2023:+0.2% 2024:+0.3% 2025:+0.2% avg -0.73%
++ all three  2019:+0.2% 2020:-3.6% 2021:+0.6% 2022:-2.8% 2023:+1.6% 2024:-0.3% 2025:-0.1% avg -0.61%
+garch alone: avg out-of-sample MSE 0.1864 vs brain features 0.1461
+gjr alone: avg out-of-sample MSE 0.1768 vs brain features 0.1461
+egarch alone: avg out-of-sample MSE 0.1816 vs brain features 0.1461
