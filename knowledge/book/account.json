@@ -1,0 +1,11 @@
+{
+ "account": 1,
+ "opened": "2026-10-20",
+ "balance": 25000.0,
+ "peak_eod": 25000.0,
+ "floor": 24000.0,
+ "blown": 0,
+ "trades": 0,
+ "booked": [],
+ "last_day": "2026-10-20"
+}
