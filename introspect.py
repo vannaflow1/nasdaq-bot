@@ -64,6 +64,11 @@ def digest():
         if sc: out.append("BEST PROP SCORES SO FAR (EV per eval after fee): " + "; ".join(f"{e['name'][:50]}: {e['prop'][0]['ev_per_eval']:+.0f} on {e['prop'][0]['plan']}" for e in sc))
     except Exception:
         pass
+    try:
+        ps = json.load(open(os.path.join(HERE, "status.json"))).get("prop_search")
+        if ps: out.append("MY NIGHTLY PROP SEARCH: " + " | ".join(l for l in ps if l.strip())[:900])
+    except Exception:
+        pass
     me = [x for x in lib if x.get("track") == "self" and x.get("lesson")][-6:]
     if me: out.append("WHAT I READ ABOUT IMPROVING MYSELF (paper -> lesson): " + " || ".join(f"{x['title'][:70]} -> {x['lesson'][:200]}" for x in me))
     try:
