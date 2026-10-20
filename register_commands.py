@@ -19,6 +19,7 @@ COMMANDS = [
     ("wishes", "Volta's self-check: its diary and what it needs to get better"),
     ("book", "Volta as a trader: its virtual prop account, trades and journal"),
     ("search", "Volta's nightly prop-strategy search: leaderboard and exams"),
+    ("level", "Volta's level: XP for verified progress"),
     ("strategies", "Strategy lab: what Volta built and tested, what passed, live results"),
     ("powers", "Open read: odds for yesterday's high/low, gap fill, tail day, Asia/London"),
     ("shortvol", "Today's short-vol check: paper iron fly on high-gamma days + live score"),

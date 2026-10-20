@@ -16,7 +16,8 @@ from datetime import datetime, timezone
 import numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
 HERE = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(HERE, "knowledge"); sys.path.insert(0, HERE)
-OUT = os.path.join(K, "prop_search"); RES = os.path.join(OUT, "results.csv"); STATE = os.path.join(OUT, "state.json")
+SHARD, SHARDS = int(os.environ.get("SHARD", "0")), int(os.environ.get("SHARDS", "1"))   # parallel GitHub jobs split the grid
+OUT = os.path.join(K, "prop_search"); RES = os.path.join(OUT, f"results_{SHARD}.csv"); STATE = os.path.join(OUT, f"state_{SHARD}.json")
 STATUS = os.path.join(HERE, "status.json")
 BUDGET_MIN = float(os.environ.get("SEARCH_MINUTES", "120"))
 SEARCH_END, VAL_END = "2021-12-31", "2023-12-31"
@@ -95,11 +96,12 @@ def main():
     idxA = np.where(ses <= SEARCH_END)[0]; idxB = np.where((ses > SEARCH_END) & (ses <= VAL_END))[0]
     st = json.load(open(STATE)) if os.path.exists(STATE) else {"pos": 0, "nights": 0}
     R = pd.read_csv(RES) if os.path.exists(RES) else pd.DataFrame()
-    done = set(R.spec_id) if len(R) else set()
-    G = grid(); tried = validated = 0; new_rows = []
+    ALL = all_results()
+    done = set(ALL.spec_id) if len(ALL) else set()
+    G = [g for j, g in enumerate(grid()) if j % SHARDS == SHARD]; tried = validated = 0; new_rows = []
     while time.time() - t0 < BUDGET_MIN * 60:
-        if rng.random() < 0.3 and len(R) and (R.get("ev_val", pd.Series(dtype=float)) > 0).any():
-            top = R[R.ev_val > 0].sort_values("ev_val", ascending=False).head(20)
+        if rng.random() < 0.3 and len(ALL) and (ALL.get("ev_val", pd.Series(dtype=float)) > 0).any():
+            top = ALL[ALL.ev_val > 0].sort_values("ev_val", ascending=False).head(20)
             spec = mutate(json.loads(top.sample(1, random_state=rng.randint(0, 10**6)).spec.iloc[0]), rng)
         else:
             if st["pos"] >= len(G): st["pos"] = 0
@@ -129,7 +131,7 @@ def main():
     R = pd.concat([R, pd.DataFrame(new_rows)], ignore_index=True)
     # stage C: the best validated candidates take the full protocol + locked exam (max 2 per night)
     exams = []
-    if "ev_val" in R:
+    if "ev_val" in R and SHARD == 0:                          # job 1 only: max 2 exams per run (weekly exam cap still applies)
         cand = R[(R.ev_val > 0) & (R.get("exam", pd.Series(index=R.index, dtype=object)).isna())].sort_values("ev_val", ascending=False).head(2)
         for i, c in cand.iterrows():
             spec = json.loads(c.spec); spec["prop"] = {"risk": c.risk, "eval_risk": c.eval_risk}
@@ -140,14 +142,20 @@ def main():
             R.loc[i, "exam"] = verdict[:300]; exams.append((c["name"], verdict))
     R.to_csv(RES, index=False)
     st["nights"] += 1; json.dump(st, open(STATE, "w"))
-    write_status(R, len(G), st, tried, validated, exams)
+    write_status(all_results(), len(grid()), st, tried, validated, exams)
+
+
+def all_results():
+    import glob
+    fs = sorted(glob.glob(os.path.join(OUT, "results_*.csv"))) + ([os.path.join(OUT, "results.csv")] if os.path.exists(os.path.join(OUT, "results.csv")) else [])
+    return pd.concat([pd.read_csv(f) for f in fs], ignore_index=True) if fs else pd.DataFrame()
 
 
 def write_status(R, gsize, st, tried, validated, exams):
     tot = len(R); a = R[(R.get("ev", 0) > 0) & (R.get("n", 0) >= 150)] if tot else R
     v = R[R.get("ev_val", pd.Series(dtype=float)) > 0] if "ev_val" in R else R.iloc[0:0]
-    lines = [f"PROP STRATEGY SEARCH - night {st['nights']}: {tried} new strategies tonight, {tot:,} tested in total "
-             f"(grid {gsize:,} + mutations)",
+    lines = [f"PROP STRATEGY SEARCH - run {st['nights']} (job {SHARD + 1}/{SHARDS}): {tried} new strategies this run, {tot:,} tested in total "
+             f"(grid {gsize:,} + mutations, {tot / gsize:.1%} covered)",
              f"Stage A (2014-21, EV after fee > 0): {len(a)} | Stage B (still positive on unseen 2022-23): {len(v)} | "
              f"exams taken: {int(R['exam'].notna().sum()) if 'exam' in R else 0}"]
     if len(v):
@@ -166,7 +174,8 @@ def write_status(R, gsize, st, tried, validated, exams):
         import test_engine as TE
         ann = json.load(open(TE.ANN)) if os.path.exists(TE.ANN) else []
         passed = [n for n, vd in exams if str(vd).startswith("PROMISING STRATEGY")]
-        title = "🏁 Volta found a prop strategy that passed the locked exam" if passed else "🔎 Volta's nightly prop search"
+        title = "🏁 Volta found a prop strategy that passed the locked exam" if passed else "🔎 Volta's prop search"
+        if not passed and SHARD != 0: return                  # one routine note per run (job 1), always announce a pass
         ann.append({"title": title, "body": "\n".join(lines)[:1800]}); json.dump(ann, open(TE.ANN, "w"), indent=1)
     except Exception as e:
         print("announce skipped:", e)

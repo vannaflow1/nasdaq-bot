@@ -30,7 +30,13 @@
  "earnings": [
   "  NFLX reports after close: options price a \u00b19.9% move (option covers 4 sessions, so a bit wider than the report alone)"
  ],
- "level": "ELEVATED",
+ "level": [
+  "VOLTA LEVEL 4  (463 XP, next level at 640)",
+  "Papers read 217 | ideas & strategies tested 48 | prop strategies searched 0",
+  "Survived unseen 2022-23: 0 (best EV per eval -) | passed the locked exam: 0 | live winners: 0",
+  "Brain upgrades: 0 | self-discovered powers: 3",
+  "XP only for verified progress: tests passed on unseen data count far more than activity."
+ ],
  "updated": "Tue 20 Oct 15:42 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",

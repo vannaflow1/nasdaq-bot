@@ -36,5 +36,6 @@ jobs:
       - run: python volta_book.py || true                # Volta's own virtual prop account: books today's tested-edge trades
         env:
           DISCORD_WEBHOOK_LEARN: ${{ secrets.DISCORD_WEBHOOK_LEARN }}
+      - run: python volta_level.py || true               # Volta's level (XP only for verified progress)
       - if: always()
         run: bash .github/actions_common.sh "evening"

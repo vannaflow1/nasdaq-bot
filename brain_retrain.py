@@ -42,7 +42,9 @@ def main():
         body = (f"Tried retraining on {len(mem):,} days ({n_live} live). On the last {HOLD} days the new version "
                 f"missed {m_new:.3f}% vs {m_old:.3f}% for the current one -> kept the current brain.")
     print(title); print(body)
-    q.push(title, body, tags="brain", hook=os.environ.get("DISCORD_WEBHOOK_BRAIN") or None)
+    from datetime import datetime
+    if m_new <= m_old or datetime.now().weekday() == 4:      # daily now: post upgrades always, "kept" only on Fridays
+        q.push(title, body, tags="brain", hook=os.environ.get("DISCORD_WEBHOOK_BRAIN") or None)
 
 
 if __name__ == "__main__":

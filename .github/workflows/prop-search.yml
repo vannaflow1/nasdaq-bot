@@ -1,7 +1,8 @@
 name: prop-search
 on:
   schedule:
-    - cron: "17 1 * * *"      # every night, ~2.5 hours of systematic prop-strategy search
+    - cron: "17 1 * * *"      # night run
+    - cron: "17 13 * * *"     # midday run (independent of the live session jobs)
   workflow_dispatch:
     inputs:
       minutes: { description: "search minutes", required: false, default: "150" }
@@ -11,9 +12,13 @@ concurrency:
   group: prop-search
   cancel-in-progress: false
 jobs:
-  run:
+  search:
     runs-on: ubuntu-latest
     timeout-minutes: 210
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]     # 4 parallel jobs, each walks its own quarter of the grid
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,6 +27,9 @@ jobs:
       - run: python prop_search.py
         env:
           SEARCH_MINUTES: ${{ github.event.inputs.minutes || '150' }}
+          SHARD: ${{ matrix.shard }}
+          SHARDS: "4"
           PYTHONUNBUFFERED: "1"
       - if: always()
-        run: bash .github/actions_common.sh "prop search"
+        run: |
+          for i in 1 2 3 4 5; do bash .github/actions_common.sh "prop search ${{ matrix.shard }}" && break; sleep $((RANDOM % 20 + 5)); done

@@ -1,7 +1,7 @@
 name: brain-retrain
 on:
   schedule:
-    - cron: "0 7 * * 6"      # every Saturday (promotes a new brain only if it beats the old one on unseen days)
+    - cron: "50 21 * * 1-5"  # every weekday evening after the close (promotes a new brain only if it beats the old one on unseen days)
   workflow_dispatch:
 permissions:
   contents: write
