@@ -1,4 +1,27 @@
-FRED CRDQCNAPABIS: failed TimeoutError
-FRED QCNPAM770A: failed TimeoutError
-FRED QCNN628BIS: failed TimeoutError
-NDX monthly: 442 obs 1990-01-31 -> 2026-10-31
+Traceback (most recent call last):
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/tools/china_credit.py", line 58, in <module>
+    f"in {ri.sum()} months vs {sub[~ri].mean()*100:+.2f}% in the other {(~ri).sum()} months (buy&hold {sub.mean()*100:+.2f}%)")
+                               ~~~^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/series.py", line 991, in __getitem__
+    return self._get_with(key)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/series.py", line 1003, in _get_with
+    return self.loc[key]
+           ~~~~~~~~^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexing.py", line 1207, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexing.py", line 1438, in _getitem_axis
+    return self._getitem_iterable(key, axis=axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexing.py", line 1378, in _getitem_iterable
+    keyarr, indexer = self._get_listlike_indexer(key, axis)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexing.py", line 1576, in _get_listlike_indexer
+    keyarr, indexer = ax._get_indexer_strict(key, axis_name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 6302, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 6352, in _raise_if_missing
+    raise KeyError(f"None of [{key}] are in the [{axis_name}]")
+KeyError: "None of [Index([-1, -1, -2, -2, -2, -2, -2, -2, -1, -1,\n       ...\n       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],\n      dtype='object', length=321)] are in the [index]"
