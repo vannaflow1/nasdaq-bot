@@ -197,6 +197,10 @@
   "This week, I tested 88 ideas, but none showed consistent promise. My near-miss features like garch, next_opex, and log(impl) * rank(iv30, 252) showed slight improvements. However, my strategies still struggle, with only 0 passing out of 37 tested. I need to focus on improving my translation process and data quality.",
   "",
   "WISHES (what I need to get better):",
+  "#3 [for Claude] Combine several weak strategies into one prop account (portfolio of strategies) - The search scores single strategies only. Several small, uncorrelated edges (different markets/times) traded together in one account can pas",
+  "#4 [for Claude] Correct the prop search for luck (multiple-testing control) - With hundreds of thousands of tries, some strategies pass 2022-23 by luck. Track the number of trials per market and require validated EV to",
+  "#5 [for Claude] Market focus: weight locked-exam passes far above 2022-23 survivors - preferences() shifts focus on 2022-23 survival rates, which include lucky passes. Once exams exist, a market's exam pass rate (and live forw",
+  "#6 [for Claude] Make the prop simulator harsher where reality is harsher - Model what can still sink a funded account: stop slippage on fast/news days (scale slippage with the day's range, extra on red-folder and CL",
   "#1 [for Claude] Intraday Option Quotes and Trades - I need intraday option quotes and trades to improve my strategy tests and reduce translation failures."
  ],
  "plan": [
