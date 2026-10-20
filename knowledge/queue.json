@@ -225,5 +225,29 @@
   "score": 3,
   "queued": "2026-10-20",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W2046913100",
+  "title": "OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS",
+  "abstract": "We analyze the optimal risky investment policy for an investor who, at each point in time, wants to lose no more than a fixed percentage of the maximum value his wealth has achieved up to that time. In particular, if M t is the maximum level of wealth W attained on or before time t , then the constraint imposed on his portfolio choice is that W t \u03b1 M t , where \u03b1 is an exogenous number between\u03b1 O and 1. We show that, for constant relative risk aversion utility functions, the optimal policy involves an investment in risky assets at time t in proportion to the \u201csurplus\u201d W t \u2010 \u03b1 M t . the optimal policy may appear similar to the constant\u2010proportion portfolio insurance policy analyzed in Black and Perold (1987) and Grossman and Vila (1989). However, in those papers, the investor keeps his wealth above a nonstochastic floor F instead of a stochastic floor \u03b1 M t . the stochastic character of the floor studied here has interesting effects on the investment policy in states of nature when wealth is at an all\u2010time high; i.e., when Wt = M t . It can be shown that at W t = M t , \u03b1 M t is expected to grow at a faster rate than W t , and therefore the investment in the risky asset can be expected to fall. We also show that the investment in the risky asset can be expected to rise when W t is close to \u03b1 M t . We conjecture that in an equilibrium model the stochastic character of the floor creates \u201cresistance\u201d levels as the market approaches an all\u2010time high (because of the reluctance of investors to take more risk when W t = M t ).",
+  "url": "https://doi.org/10.1111/j.1467-9965.1993.tb00044.x",
+  "source": "Must-read (curated)",
+  "date": "1993-07-01",
+  "curated": true,
+  "score": 99,
+  "queued": "2026-10-20",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W3123675609",
+  "title": "DRAWDOWN MEASURE IN PORTFOLIO OPTIMIZATION",
+  "abstract": "A new one-parameter family of risk measures called Conditional Drawdown (CDD) has been proposed. These measures of risk are functionals of the portfolio drawdown (underwater) curve considered in active portfolio management. For some value of the tolerance parameter Alpha, in the case of a single sample path, drawdown functional is defined as the mean of the worst (1 - Alpha) 100% drawdowns. The CDD measure generalizes the notion of the drawdown functional to a multi-scenario case and can be considered as a generalization of deviation measure to a dynamic case. The CDD measure includes the Maximal Drawdown and Average Drawdown as its limiting cases. Mathematical properties of the CDD measure have been studied and efficient optimization techniques for CDD computation and solving asset-allocation problems with a CDD measure have been developed. The CDD family of risk functionals is similar to Conditional Value-at-Risk (CVaR), which is also called Mean Shortfall, Mean Excess Loss, or Tail Value-at-Risk. Some recommendations on how to select the optimal risk functionals for getting practically stable portfolios have been provided. A real-life asset-allocation problem has been solved using the proposed measures. For this particular example, the optimal portfolios for cases of Maximal Drawdown, Average Drawdown, and several intermediate cases between these two have been found.",
+  "url": "https://doi.org/10.2139/ssrn.544742",
+  "source": "Must-read (curated)",
+  "date": "2005-01-01",
+  "curated": true,
+  "score": 99,
+  "queued": "2026-10-20",
+  "text_failed": true
  }
 ]
