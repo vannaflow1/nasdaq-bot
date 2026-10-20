@@ -1,0 +1,20 @@
+416702
+event,impact,release_date,release_time_utc,release_ts_utc,actual,forecast,previous,surprise,date_is_estimated,is_scheduled
+consumer_confidence,red,1990-01-01,09:00,1990-01-01 09:00:00,113.0,,115.1,,true,false
+consumer_sentiment,red,1990-01-01,09:00,1990-01-01 09:00:00,90.5,,90.9,,true,false
+cpi,red,1990-01-01,09:00,1990-01-01 09:00:00,4.6,,4.7,,true,false
+ism,red,1990-01-01,09:00,1990-01-01 09:00:00,47.4,,46.8,,true,false
+jobless_claims,red,1990-01-01,09:00,1990-01-01 09:00:00,357.33,,338.41,,true,false
+nonfarm_payrolls,red,1990-01-05,12:30,1990-01-05 12:30:00,96.0,,277.0,,false,false
+consumer_confidence,red,1990-02-01,09:00,1990-02-01 09:00:00,106.5,,113.0,,true,false
+consumer_sentiment,red,1990-02-01,09:00,1990-02-01 09:00:00,93.0,,90.5,,true,false
+cpi,red,1990-02-01,09:00,1990-02-01 09:00:00,5.2,,4.6,,true,false
+ism,red,1990-02-01,09:00,1990-02-01 09:00:00,47.2,,47.4,,true,false
+jobless_claims,red,1990-02-01,09:00,1990-02-01 09:00:00,361.91,,357.33,,true,false
+nonfarm_payrolls,red,1990-02-02,12:30,1990-02-02 12:30:00,335.0,,96.0,,false,false
+consumer_confidence,red,1990-03-01,09:00,1990-03-01 09:00:00,106.7,,106.5,,true,false
+consumer_sentiment,red,1990-03-01,09:00,1990-03-01 09:00:00,89.5,,93.0,,true,false
+cpi,red,1990-03-01,09:00,1990-03-01 09:00:00,5.3,,5.2,,true,false
+ism,red,1990-03-01,09:00,1990-03-01 09:00:00,49.1,,47.2,,true,false
+jobless_claims,red,1990-03-01,09:00,1990-03-01 09:00:00,355.7,,361.91,,true,false
+nonfarm_payrolls,red,1990-03-02,12:30,1990-03-02 12:30
