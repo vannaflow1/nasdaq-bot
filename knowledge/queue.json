@@ -285,5 +285,17 @@
   "score": 5,
   "queued": "2026-10-20",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W1977360274",
+  "title": "The restaurant at the end of the random walk: recent developments in the description of anomalous transport by fractional dynamics",
+  "abstract": "Fractional dynamics has experienced a firm upswing during the past few years, having been forged into a mature framework in the theory of stochastic processes. A large number of research papers developing fractional dynamics further, or applying it to various systems have appeared since our first review article on the fractional Fokker\u2013Planck equation (Metzler R and Klafter J 2000a, Phys. Rep. 339 1\u201377). It therefore appears timely to put these new works in a cohesive perspective. In this review we cover both the theoretical modelling of sub- and superdiffusive processes, placing emphasis on superdiffusion, and the discussion of applications such as the correct formulation of boundary value problems to obtain the first passage time density function. We also discuss extensively the occurrence of anomalous dynamics in various fields ranging from nanoscale over biological to geophysical and environmental systems.",
+  "track": "prop",
+  "url": "https://iopscience.iop.org/article/10.1088/0305-4470/37/31/R01/pdf",
+  "source": "OpenAlex (prop mission)",
+  "topic": "prop: first passage time random walk barrier",
+  "score": 8,
+  "queued": "2026-10-20",
+  "text_failed": true
  }
 ]
