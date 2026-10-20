@@ -1,11 +1,3 @@
-  curated 'Market Intraday Momentum' -> 'Market intraday momentum' sim=1.00 abstract=0
-  curated 'Optimal Drawdown Control' -> 'OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS' sim=0.41 abstract=1542
-  curated 'Optimal Drawdown Control' -> 'On Control of Drawdown: Robust Invariance and Optimality' sim=0.41 abstract=1274
-  curated 'Optimal Drawdown Control' -> 'Towards optimal portfolio strategy to control maximum drawdo' sim=0.37 abstract=2053
-  curated 'Optimal Drawdown Control' -> 'Towards optimal portfolio strategy to control maximum drawdo' sim=0.37 abstract=2065
-  curated 'Optimal Drawdown Control' -> 'Towards optimal portfolio strategy to control maximum drawdo' sim=0.37 abstract=2065
-  curated 'Optimal Drawdown Control' -> 'Optimal Design for Foundation Pit Dewatering Based on Object' sim=0.34 abstract=1106
-  curated 'Optimal Drawdown Control' -> 'Optimal Portfolio Strategy to Control Maximum Drawdown - The' sim=0.31 abstract=0
-  curated 'Optimal Drawdown Control' -> 'Drawdown Controlled Optimal Portfolio Selection with Linear ' sim=0.28 abstract=1152
+  curated 'Time Series Momentum' -> 'Time Series Momentum' sim=1.00 abstract=701
 scanned 80 papers, queued 0, queue size 24 []
 read 0, AI units today 7131/7000
