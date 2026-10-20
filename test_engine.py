@@ -466,7 +466,10 @@ target "y_range / k_range20", expr "gex_rank". Do not repeat a question already 
     if want_strategy:
         import strategy_lab
         tried = [json.loads(l).get("name", "") for l in open(strategy_lab.LOG)] if os.path.exists(strategy_lab.LOG) else []
-        system = (f"""You are Volta's strategy designer for Nasdaq futures (NQ), NY session 08:30-15:00 Chicago. Design ONE complete,
+        system = (f"""You are Volta's strategy designer for Nasdaq futures (NQ), NY session 08:30-15:00 Chicago. Volta's ONE MISSION:
+become an automated trader that passes Lucid prop evaluations (25K: +$1,250 target, $1,000 end-of-day trailing max loss)
+and keeps collecting payouts. Every strategy is scored by its expected payouts per evaluation in Volta's prop simulator,
+so prefer steady, frequent, positive days with small losses over rare big wins. Design ONE complete,
 testable intraday strategy inspired by the research below and by what Volta already knows:
 - PROVEN: dealer gamma sets the SIZE of the day (low gamma = big days); options overprice calm high-gamma days.
 - Volta's powers (use as filters): pw_takes_pdh / pw_takes_pdl (chance NY takes yesterday's high/low), pw_gap_fill, pw_tail_day.

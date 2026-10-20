@@ -227,6 +227,18 @@ def _week():
     d = datetime.now(timezone.utc).isocalendar(); return f"{d[0]}-W{d[1]:02d}"
 
 
+def prop_score(T, M, plan="flex25"):
+    """Run the strategy's day-by-day results through Lucid's rules (prop_sim.py). Sizing: largest MNQ count whose stop
+    risks <= 25% of the buffer to the max-loss floor (at most 10% of the buffer per trade on average days)."""
+    import prop_sim
+    ses = M.session.values; ses = ses[(ses >= T.session.min()) & (ses <= T.session.max())] if len(T) else ses
+    pts = pd.Series(0.0, index=ses); pts[T.session.values] = T.pnl.values
+    stop = float(np.median(np.abs(T.pnl[T.pnl < 0]))) if (T.pnl < 0).any() else 20.0
+    worst = np.where(pts.values != 0, -stop, 0.0)
+    size = lambda phase, profit, buf: int((0.25 * buf) // (stop * prop_sim.MNQ))
+    return prop_sim.evaluate(pts.values, worst, plan, size, step=5)
+
+
 def evaluate(spec, X, source="engine", name=None):
     """Full protocol. Returns (verdict, how)."""
     validate(spec)
@@ -237,9 +249,15 @@ def evaluate(spec, X, source="engine", name=None):
     head = (f"in-sample 2014-2023: {m.get('n', 0)} trades, win {m.get('win', 0):.0%}, avg {m.get('avg_R', 0):+.2f}R "
             f"({m.get('avg_pts', 0):+.1f} pts/trade after costs), PF {m.get('pf')}, positive in {m.get('years_pos', '0/0')} years, "
             f"max drawdown {m.get('max_dd_R', 0)}R") if m.get("n") else "in-sample: no trades"
+    PROP_NOTE = ""
     out = {"date": datetime.now(timezone.utc).date().isoformat(), "name": label, "spec": spec, "source": source, "insample": m}
+    try:                                                      # the mission metric: payouts per Lucid evaluation
+        out["prop"] = prop_score(T, M)
+        head_prop = f" | prop sim (LucidFlex 25K, 2014-2023 starts): pass {out['prop']['pass_rate']:.0%}, ${out['prop']['avg_payout_per_eval']:.0f} paid out per eval"
+    except Exception as e:
+        head_prop = ""
     def done(verdict):
-        out["verdict"] = verdict
+        out["verdict"] = verdict + head_prop
         with open(LOG, "a") as f: f.write(json.dumps(out) + "\n")
         return verdict, f"strategy lab: {json.dumps(spec)[:300]}"
     if m.get("n", 0) < 150:
