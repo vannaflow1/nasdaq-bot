@@ -16,4 +16,4 @@ for nm, c in (("GARCH", ["garch"]), ("GJR-GARCH", ["gjr"]), ("EGARCH", ["egarch"
     out.append(f"+ {nm:10s} " + " ".join(f"{y}:{v:+.1f}%" for y, v in zip(e, imp)) + f" avg {np.mean(imp):+.2f}%")
 for nm in ("garch", "gjr", "egarch"):
     e = wf([nm]); out.append(f"{nm} alone: avg out-of-sample MSE {np.mean(list(e.values())):.4f} vs brain features {np.mean(list(e0.values())):.4f}")
-open("knowledge/research_out/garch_vs_brain.txt", "w").write("\n".join(out)); print("\n".join(out))
+os.makedirs("knowledge/research_out", exist_ok=True); open("knowledge/research_out/garch_vs_brain.txt", "w").write("\n".join(out)); print("\n".join(out))
