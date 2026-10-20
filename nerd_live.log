@@ -1,10 +1,10 @@
 downloading CBOE QQQ chain (can take a minute on a slow connection)...
   got 4.8 MB
-LIVE options read - Tue 20 Oct 20:03 Lux (14:03 NY), quotes ~15 min delayed, QQQ 719.41
+LIVE options read - Tue 20 Oct 20:26 Lux (14:26 NY), quotes ~15 min delayed, QQQ 719.58
 
-VOLATILITY: 30-day IV 21.2% -> higher than 72% of days since 2011
-  options are EXPENSIVE vs history
-  realized vol (20d) 15.5% -> premium +5.7 pts: options price MORE movement than the market is delivering (sellers' edge, usual state)
+VOLATILITY: 30-day IV 20.9% -> higher than 69% of days since 2011
+  options are about average-priced vs history
+  realized vol (20d) 15.5% -> premium +5.5 pts: options price MORE movement than the market is delivering (sellers' edge, usual state)
 
 TERM STRUCTURE - what each expiry prices (QQQ move to expiry):
-  Wed 21 Oct (1d): ±1.01% (~301 NQ pts), ATM IV 22.9%
+  Wed 21 Oct (1d): ±0.98% (~291 NQ pts), ATM IV 22.3%
