@@ -52,12 +52,12 @@ if credit is not None:
         res.append(f"   (if known instantly, impossible in reality: corr {D2.x.corr(D2.y):+.2f})")
     out += res
     m = (ndx.pct_change().shift(-1)).dropna()
-    rising = (avail.diff(3) > 0).reindex(m.index).fillna(False)
-    sub = m[m.index >= "2000-01-01"]; ri = rising.reindex(sub.index).fillna(False)
+    rising = (avail.diff(3) > 0).reindex(m.index).fillna(False).astype(bool)
+    sub = m[m.index >= "2000-01-01"]; ri = rising.reindex(sub.index).fillna(False).astype(bool)
     out.append(f"Rule 'long NDX only while the published impulse rose over the last 3 months' 2000-2026: avg monthly {sub[ri].mean()*100:+.2f}% "
                f"in {ri.sum()} months vs {sub[~ri].mean()*100:+.2f}% in the other {(~ri).sum()} months (buy&hold {sub.mean()*100:+.2f}%)")
     for a, b in ((2000, 2009), (2010, 2017), (2018, 2026)):
-        s2 = sub[(sub.index.year >= a) & (sub.index.year <= b)]; r2 = ri.reindex(s2.index)
+        s2 = sub[(sub.index.year >= a) & (sub.index.year <= b)]; r2 = ri.reindex(s2.index).astype(bool)
         out.append(f"   {a}-{b}: rising {s2[r2].mean()*100:+.2f}%/month vs not {s2[~r2].mean()*100:+.2f}%/month")
     pd.DataFrame({"impulse": imp}).to_csv("knowledge/research_out/china_credit_impulse.csv")
 open("knowledge/research_out/china_credit.txt", "w").write("\n".join(out)); print("\n".join(out))
