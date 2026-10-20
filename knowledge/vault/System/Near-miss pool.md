@@ -12,3 +12,5 @@ Ideas that helped the range forecast a little and fairly consistently. Re-tested
 - log(impl) * rank(iv30, 252) (+0.2%, 3/8 years) - Volatility regime: options-implied move weighted by the IV regime
 - where(gex_rank < 0.2, 1, 0) (+0.2%, 4/9 years) - Negative gamma hurts most under stress
 - clip(r20, -1, 0) (+0.2%, 3/9 years) - Countercyclical volatility (recent drawdown)
+
+Last combined test (2026-10-20): NOT CONFIRMED - the combination does not hold on unseen years (picked +1.76%, unseen years -0.46%)
