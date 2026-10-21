@@ -269,37 +269,17 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 1 (job 1/4): 1591 new strategies this run, 1,411 tested in total (grid 235,410 + mutations, 0.6% covered)",
-  "Stage A (2014-21, EV after fee > 0): 256 | Stage B (still positive on unseen 2022-23): 56 | exams taken: 2",
-  "Market focus: NQ 68% / GC 14% / CL 18%  (evidence: NQ 47/725 held up on 2022-23 (top EV +678), GC 2/325 held up on 2022-23 (top EV +243), CL 7/361 held up on 2022-23 (top EV +541))",
-  "FOCUS SHIFT: Volta moved its attention (NQ, GC) based on its own test results.",
+  "PROP STRATEGY SEARCH - run 2 (job 4/4): 2656 new strategies this run, 8,530 tested in total (grid 235,410 + mutations, 3.6% covered)",
+  "Stage A (2014-21, EV after fee > 0): 1538 | Stage B (still positive on unseen 2022-23): 364 | exams taken: 2",
+  "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): NQ +2688 at 1160 validated tries (742 placebos, avg +6) -> 0 beat it | GC not yet (18 placebos, need 30) | CL not yet (26 placebos, need 30)",
+  "Market focus: NQ 77% / GC 10% / CL 14%  (evidence: NQ 310/5100 held up on 2022-23 (top EV +1146); locked exams 1/1 passed, GC 22/1605 held up on 2022-23 (top EV +508); locked exams 0/0 passed, CL 32/1825 held up on 2022-23 (top EV +791); loc)",
   "",
-  "LEADERBOARD (ranked by EV per eval on unseen 2022-23):",
-  "- [CL] break london_low 08:30-10:00, every day | lucid_pro_50k risk 12%/20% | 2014-21 EV +26 (pass 22%) | 2022-23 EV +1504 (pass 68%) | 5 accounts: +642$/month (12% months positive) | 1197 trades, -0.06R",
-  "- with the open's side of the overnight range at 08:31, no red-folder ne | lucid_pro_25k risk 20%/35% | 2014-21 EV +8 (pass 24%) | 2022-23 EV +1050 (pass 66%) | 5 accounts: -13$/month (0% months positive) | 814 trades, -0.02R",
-  "- with gap at 10:00, no red-folder news | lucid_pro_50k risk 20%/35% | 2014-21 EV +315 (pass 31%) | 2022-23 EV +707 (pass 52%) | 5 accounts: -22$/month (0% months positive) | 770 trades, +0.01R",
-  "- [CL] break on_low 08:45-11:30, every day | lucid_pro_50k risk 12%/20% | 2014-21 EV +46 (pass 16%) | 2022-23 EV +658 (pass 44%) | 5 accounts: +160$/month (8% months positive) | 1232 trades, -0.18R",
-  "- against overnight at 13:00, mean-reverting (Hurst<0.5) | lucid_pro_50k risk 30%/50% | 2014-21 EV +154 (pass 25%) | 2022-23 EV +629 (pass 74%) | 5 accounts: -26$/month (0% months positive) | 542 trades, +0.01R",
-  "- fade exp70_dn 08:45-11:30, every day | lucid_flex_50k risk 20%/35% | 2014-21 EV +26 (pass 9%) | 2022-23 EV +579 (pass 44%) | 5 accounts: +516$/month (8% months positive) | 677 trades, -0.19R",
-  "",
-  "EXAM: [CL] break london_low 08:30-10:00, every day -> NOT CONFIRMED (prop path): random entries on the same days pay about as much (random EV +1959, p=1.00). in-sample 2014-2023: 1372 trades, win 39%, avg -0.02R (+0.0 pts/trade after costs), PF 1.06, positive in 8/15 years, max drawdown -132.9R | PROP SIM best pl",
-  "",
-  "EXAM: with the open's side of the overnight range at 08:31, no red-folder ne -> PROMISING STRATEGY (prop path, passed the locked exam): LOCKED EXAM 2024-2026 on lucid_pro_50k: pass 50%, $736 paid out per eval, EV +632. in-sample 2014-2023: 1024 trades, win 51%, avg +0.02R (+1.4 pts/trade after costs), PF 1.08, positive in 5/10 years, max "
- ],
- "eta": [
-  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
-  "If there is one to find: most likely in 3 months (80% range 2 weeks to 19 months). Overall chance within 1 month 12%, 3 months 23%, 6 months 31%, 1 year 37%.",
-  "Chance there is NO such algo in what I search (or I never catch it): 55%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
-  "Based on: 1 locked exams in 1 days (1 passed, 1 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.",
-  "Nothing waiting for review.",
-  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.",
-  "Rejected by review: with the open's side of the overnight range at 08:31, n (FRAGILE (auto v2, 2026-10-21): accounts started in the latest 6 months never made money (pass 18%, 0% got a pa)"
- ],
- "eta_levers": [
-  "MY TIMER LEVERS (what-if): now 23% within 3 months / 37% within 1 year.",
-  "- more candidates reach the exam (2x exam rate: more search, more markets, portfolios): 32% / 42%",
-  "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 32% / 40%",
-  "- both: 37% / 41%",
-  "Biggest single lever right now: more candidates reach the exam. Exam rate today 2.3/week of max 10 (room to grow)."
+  "LEADERBOARD (ranked by EV per eval on unseen 2022-23 above the market's luck bar; 'luck-level' = not above it, likely a lucky survivor):",
+  "- with yesterday at 08:31, mean-reverting (Hurst<0.5) | lucid_pro_50k risk 30%/50% | 2014-21 EV +244 (pass 38%) | 2022-23 EV +1400 (pass 56%) | luck-level | 5 accounts: -26$/month (0% months positive) | 541 trades, -0.03R",
+  "- mutant: with gap at 09:30, tail-day risk low | tradeday_fastpass_50k risk 12%/20% | 2014-21 EV +216 (pass 35%) | 2022-23 EV +1171 (pass 55%) | luck-level | 5 accounts: +777$/month (29% months positive) | 813 trades, +0.05R",
+  "- with gap at 13:30, trending regime (Hurst>0.55) | lucid_pro_50k risk 30%/50% | 2014-21 EV +99 (pass 32%) | 2022-23 EV +1058 (pass 57%) | luck-level | 5 accounts: -22$/month (0% months positive) | 874 trades, -0.03R",
+  "- with the open's side of the overnight range at 08:31, no red-folder ne | lucid_pro_25k risk 20%/35% | 2014-21 EV +8 (pass 24%) | 2022-23 EV +1050 (pass 66%) | luck-level | 5 accounts: -13$/month (0% months positive) | 814 trades, -0.02R",
+  "- mutant: with gap at 09:30, every day | tradeday_fastpass_50k risk 12%/20% | 2014-21 EV +51 (pass 21%) | 2022-23 EV +1049 (pass 47%) | luck-level | 5 accounts: +830$/month (38% months positive) | 1862 trades, +0.03R",
+  "- long at 10:00, red-folder news day | lucid_pro_50k risk 30%/50% | 2014-21 EV +126 (pass 29%) | 2022-23 EV +1038 (pass 43%) | luck-level | 5 accounts: -22$/month (0% months positive) | 1115 trades, +0.01R"
  ]
 }
