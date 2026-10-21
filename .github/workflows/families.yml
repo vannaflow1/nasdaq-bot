@@ -24,7 +24,7 @@ jobs:
       - run: pip install -q -r requirements.txt scipy
       - run: python families.py --reps 100
         env: { PYTHONUNBUFFERED: "1" }
-      - if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 4 * * 0'
+      - if: github.event.schedule == '30 4 * * 0'
         run: python power.py --family F2 --worlds 40
         env: { PYTHONUNBUFFERED: "1" }
       - if: always()
