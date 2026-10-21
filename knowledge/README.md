@@ -166,3 +166,23 @@ not edge; K grew with every run; the 2024-26 exam was reused; power was never me
 
 ## Edge optimizer (optimize_edge.py, 21 Oct 2026)
 Once an edge is CONFIRMED, Volta tries to make it better without fooling itself. It scores a fixed set of refinements: stop and target ±, trade management, entry ±15/30 min, one extra regime filter, and schedule spacing or band width. It also scores an account playbook. All of this runs on the strategy's SEARCH years only. A refinement must beat the original's lower bound there and must not be worse on the validation years. The winner becomes a CHALLENGER that is forward-traded next to the champion every evening. It's promoted only when the forward trades show P(better) > 0.9 after ≥ 60 trades; it's dropped at P < 0.1 or after 180 trades. The champion keeps trading until then. State: knowledge/optimizations.json.
+
+## Expert review 2 (21 Oct 2026, evening): evidence per week is the bottleneck
+Diagnosis: Volta's edges are small (~0.05R per trade) against ~1.5-2R of noise per trade. F2's exam (+0.061R, 474 trades) could not have confirmed a real +0.06R edge (power ~20-27%). Confirming one needs thousands of trades.
+- **The 2024-now exam is spent.** F1, F2, prop-search and the recent track all used it. For families registered from now on, it counts as validation. Only families take exams (`strategy_lab.EXAM_SOURCES`).
+- **Sealed window (`sealed.py`).** The never-seen dates are NQ/ES/YM/RTY 2026-02-02..10-09, GC from 06-29 and CL from 06-22. They come from Dukascopy's free CFD feed (`tools/dukascopy.py`), fetched only inside the families workflow and held in memory. The window is never stored, so no search, self-check, Gemini or Claude session can see it. Proxy quality on months Volta has already seen is in `research_out/proxy_calibration.json`.
+- **v2 families** (`"rules": "v2"`):
+  - Pooled markets (`"markets"`), with the market list frozen in the hash.
+  - Validation 2022-now.
+  - Day-level bootstrap: each day's trades are summed before any test.
+  - Alpha sequence 0.05·6/(π²j²), which sums to 0.05. The old alpha/k rule summed to ~0.13 after 7 families; those verdicts stand.
+  - A passing family spends its ONE sealed window as the first block of a group-sequential test: O'Brien-Fleming, 10 looks up to 3000 trades, non-binding futility. Every day after its freeze date adds evidence (families workflow, daily).
+- **Integrity.**
+  - Every spent exam is its own file in `knowledge/ledgers/exams/`, so concurrent rebases can't drop one.
+  - `tools/ledger_check.py` (hash-chained checkpoints) fails the run loudly if strategies.jsonl, the exam records or a scored family's frozen/p/alpha were rewritten.
+- **Review.** The latest-6-months hard veto is replaced by non-inferiority of the per-trade edge (z < −1.645 fails). Account results stay as information, and the bold-play tell is now a flag, not a verdict.
+- **Frozen:** the optimizer (until something is CONFIRMED, plus paired days and challengers in the ledger), the recent track, and 6 of 8 search shards.
+- **Timer v2 (`eta.py`)** simulates the real pipeline: edge prior, measured power curve, noise per trade, pooled trade rate, sealed block and sequential looks.
+- **Measured, not assumed.**
+  - Paired placebo (strategy R minus coin-flip twin R) cuts F2's noise per trade by only 3-21%, not "a lot". Low-variance exits (F2-LV) and more markets are the real levers.
+  - Placebos already match trades per day and entry minute (same trades, random side).
