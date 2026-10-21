@@ -124,7 +124,7 @@
   "  TODAY: META earnings after close; TSLA earnings after close"
  ],
  "nerd": [
-  "Read from the US close (Wed 21 Oct), made 23:07 Lux. Live refresh every 30 min once the US market opens (15:30 Lux).",
+  "LIVE options read - Wed 21 Oct 23:26 Lux (17:26 NY), quotes ~15 min delayed, QQQ 724.46",
   "",
   "VOLATILITY: 30-day IV 21.2% -> higher than 72% of days since 2011",
   "  options are EXPENSIVE vs history",
