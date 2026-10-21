@@ -284,7 +284,7 @@ def spec_query(spec):
         m = re.search(pat, t)
         if m and w not in [h[1] for h in hits]: hits.append((m.start(), w))
     words = [w for _, w in sorted(hits)]
-    return " ".join(words[:2] + [MARKET_WORDS.get(str(spec.get("market", "NQ")).upper(), "index futures")])
+    return " ".join(words[:1] + ["intraday", MARKET_WORDS.get(str(spec.get("market", "NQ")).upper(), "index futures")])
 
 
 def auto_hunts():
@@ -345,19 +345,22 @@ def hunt_papers(seen, per_hunt=3, max_hunts=3):
     H = json.load(open(HUNTS)) if os.path.exists(HUNTS) else []
     out = []
     for h in [h for h in H if h["status"] == "open"][:max_hunts]:
-        words = [w for w in re.findall(r"[a-z0-9]+", h["query"].lower()) if len(w) > 2 and w not in ("the", "and", "for", "with")]
-        found = []
-        try: found += _openalex_search(h["query"])
-        except Exception as e: print("hunt openalex:", type(e).__name__)
-        try: found += _arxiv_search("all:" + " AND all:".join(words[:5]))
-        except Exception as e: print("hunt arxiv:", type(e).__name__)
+        words = [w for w in re.findall(r"[a-z0-9]+", h["query"].lower()) if len(w) > 2 and w not in ("the", "and", "for", "with", "does", "when")]
         cand = []
-        for p in found:
-            if p["id"] in seen: continue
-            t = (p["title"] + " " + p["abstract"]).lower()
-            match = sum(1 for w in words if w in t) / max(1, len(words))
-            p["score"] = round(40 + 10 * match + min(score(t, p["title"]), 10) + min(math.log1p(p.get("cites", 0)), 5), 1)
-            if match >= 0.5 and not re.search(NEG, p["title"].lower()): cand.append(p)
+        for q in (h["query"], " ".join(h["query"].split()[:4])):          # retry once with a shorter query if nothing fits
+            found = []
+            try: found += _openalex_search(q)
+            except Exception as e: print("hunt openalex:", type(e).__name__)
+            try: found += _arxiv_search("all:" + " AND all:".join(words[:4]))
+            except Exception as e: print("hunt arxiv:", type(e).__name__)
+            for p in found:
+                if p["id"] in seen or any(c["id"] == p["id"] for c in cand): continue
+                t, tt = (p["title"] + " " + p["abstract"]).lower(), p["title"].lower()
+                m_ab = sum(1 for w in words if w in t) / max(1, len(words)); m_ti = sum(1 for w in words if w in tt) / max(1, len(words))
+                fin = score(t, p["title"])                               # must be about trading/markets at all
+                p["score"] = round(40 + 10 * m_ab + 15 * m_ti + min(fin, 10) + min(math.log1p(p.get("cites", 0)), 5), 1)
+                if m_ab >= 0.6 and fin >= 4 and not re.search(NEG, tt): cand.append(p)
+            if cand: break
         pick = sorted(cand, key=lambda p: -p["score"])[:per_hunt]
         for p in pick:
             seen.add(p["id"]); p.update(track="hunt", hunt=h["id"], topic=f"hunt: {h['query']}", source=f"Hunt: {h['query'][:60]}")
@@ -380,12 +383,15 @@ def frontier_papers(seen):
     out = []
     try:
         q = ("(cat:q-fin.TR OR cat:q-fin.ST OR cat:q-fin.CP OR cat:q-fin.PM OR cat:q-fin.RM OR cat:cs.LG OR cat:stat.ML) AND "
-             "(abs:volatility OR abs:futures OR abs:\"order book\" OR abs:trading OR abs:options OR abs:\"prop\")")
+             "(abs:volatility OR abs:futures OR abs:\"order book\" OR abs:trading OR abs:\"option pricing\")")
         cut = (datetime.now(timezone.utc) - timedelta(days=45)).date().isoformat()
         for p in _arxiv_search(q, n=100, sort="submittedDate"):
             if p["date"] < cut or p["id"] in seen: continue
-            p["score"] = score(p["title"] + " " + p["abstract"], p["title"])
-            if p["score"] >= 7: out.append(dict(p, source="Frontier (arXiv, last 45 days)"))
+            t = (p["title"] + " " + p["abstract"]).lower()
+            fin_words = len(set(re.findall(r"financ\w*|trading|trader|stock|futures|volatility|option pric\w*|portfolio|asset|market maker|order book|returns", t)))
+            p["score"] = score(t, p["title"])
+            if p["score"] >= 7 and fin_words >= 3 and not re.search(NEG, p["title"].lower()):
+                out.append(dict(p, source="Frontier (arXiv, last 45 days)"))
     except Exception as e:
         print("frontier arxiv:", type(e).__name__)
     since = (datetime.now(timezone.utc) - timedelta(days=548)).date().isoformat()

@@ -35,7 +35,7 @@
   "query": "dealer gamma hedging daily range volatility Nasdaq index futures",
   "why": "promising result to understand: On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant m",
   "source": "automatic",
-  "status": "nothing found",
+  "status": "open",
   "papers": [],
   "key": "promising:self:2026-10-21:0",
   "searched": "2026-10-21"
