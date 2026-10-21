@@ -19,6 +19,6 @@ realized semivariance, signed jumps, otm option returns, [[volatility timing]], 
 Build OTM call/put realized semivariances from intraday QQQ option prices and add them to the range forecast.
 
 ## Test
-not testable with my data yet
+[[DOESN'T FIT]] - DOESN'T FIT MY DATA - The idea requires intraday OTM call and put option prices to compute realized semivariances, which are not available in the provided dataset (only end‑of‑day surface metrics are present).
 
 Part of [[Research engine]]

@@ -19,7 +19,8 @@ time series momentum, trend following, futures, under-reaction
 Go long QQQ the next day when its past 12-month return is positive and short when negative (the paper's 12-month lookback).
 
 ## Test
-NO EDGE: 2226 days, hit 56.4% (always-long 56.6%), avg +3.4 bps/day, t=1.10, positive in 6/9 years
-How: Signal = sign of the rolling 252-day sum of past daily QQQ log returns (y_r shifted one day, so only returns known at the close).
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 2227 signal days, hit 56.4% (always-long 56.5%), strategy +3.4 bps/day vs +5.4 for the same average exposure held constantly -> timing adds -2.0 bps/day, t=-0.74, positive in 4/10 years
+How: long/short on `csum(r1, 252)` (positive = signal on)
+Touches: [[Options nerd]]
 
 Part of [[Research engine]]

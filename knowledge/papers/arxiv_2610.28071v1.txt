@@ -1,0 +1,921 @@
+Arithmetic Models for Commodity Futures, Vanilla, and
+Calendar Spread Options∗
+Malthe Rauh Johansen 1, Nina Lange 1, and David Skovmand 1
+1Department of Mathematical Sciences, University of Copenhagen,
+Universitetsparken 5, 2100 København Ø, Denmark
+October 21, 2026
+Abstract
+We develop an arithmetic multi-factor stochastic volatility model for commodity futures and
+options. The arithmetic specification yields a low-dimensional Markovian representation of the
+futures curve and semi-closed-form pricing formulas for vanilla and basket options, including
+calendar spread options. These properties make the model suitable for large-scale empirical
+estimation.
+We estimate the model using an unscented Kalman filter on a panel of WTI crude oil futures,
+vanilla options, and calendar spread options spanning 2013–2024. We find that three stochastic
+volatility factors are needed to capture both the level and slope of the volatility term structure,
+and that hedges based on these factors remove almost all of the daily risk of a portfolio of
+vanilla options. Calendar spread options provide information about the dependence structure
+of futures prices that is not captured by futures and vanilla options alone. A model estimated
+without calendar spread options systematically overprices them by overstating the decorrelation
+between adjacent futures contracts. Including these options in the estimation brings the model’s
+decorrelation close to the observed decorrelation, which removes the overpricing and improves
+their hedges, at only a small loss of accuracy in the pricing and hedging of vanilla options.
+Finally, we show that the arithmetic model fits futures and vanilla options better than its
+geometric counterpart and hedges the vanilla options slightly better.
+1 Introduction
+During the past 20 years, several HJM-type (Heath et al., 1992) models have been proposed to
+model the term structure of commodity futures prices. The HJM framework’s ability to incorporate
+a wide range of volatility structures, such as stochastic volatility, seasonality and jumps, while
+maintaining consistency with no-arbitrage conditions makes the approach suitable for modeling
+commodity futures markets, such as oil, where prices exhibit both short-term volatility and long-
+term trends; see Trolle and Schwartz (2009) and Chiarella et al. (2013) for extensive empirical
+∗We thank conference participants at the EURO 2024 conference in July 2024, the CEMA conference in June
+2025, and the QMF conference in December 2025. Support from the Danish Finance Institute (DFI) is gratefully
+acknowledged.
+1
+arXiv:2610.28071v1 [q-fin.PR] 20 Oct 2026
+studies and Clewlow and Strickland (1999), Gibson and Schwartz (1990) and Yan (2002) for more
+foundational work, and Andersen (2010) for finite-dimensional Markovian HJM models.
+For more recent models, see Sch¨ one and Spinler (2017), Ballestra and Tezza (2026), Hughen
+(2010), Schneider and Tavin (2018) and Schneider and Tavin (2024); the book Benth and Kr¨ uhner
+(2023) presents a general discussion of the literature. Common to most of the approaches in the
+literature is that they assume a level dependence in the volatility that implies futures price dynamics
+of the generalizedgeometricBrownian motion type.
+In this paper we will instead focus on so-calledarithmeticmodels, i.e., models without explicit
+level dependence in the volatility, the Bachelier model being the simplest example. Arithmetic
+models and their advantages are well known, and have been studied in many constructions before,
+but mostly in the context of modeling electricity spot prices and futures. See for example Lucia and
+Schwartz (2002), Benth et al. (2019), Latini et al. (2019), Piccirilli et al. (2021), Piccirilli (2018) and
+Benth et al. (2015). Instead, our paper focuses on building an arithmetic model for the WTI futures
+market. We also take a simpler approach than most of the electricity models listed above which are
+heavily focused on modeling seasonality and jumps in prices. Jumps in WTI futures prices appear
+to be relatively rare and, when present, largely confined to the very short end of the curve, with
+a limited contribution to overall variance, see ˇZikeˇ s and Barun ´ ık (2016). Similarly, seasonality in
+crude oil is generally found to be weak (see, e.g., Borovkova and Geman, 2006). This motivates the
+use of a simpler driving process, and we construct a model driven by a continuous affine process
+with stochastic volatility in the sense of Duffie et al. (2003), on the state spaceR k+ ×R n. Here,kis
+the number of stochastic volatility factors andnis the number of factors driving the futures curve.
+Our model can thus be seen as an arithmetic version of the geometric models studied in Trolle and
+Schwartz (2009) and Chiarella et al. (2013). The arithmetic approach has a series of advantages
+over traditional geometric models. The primary practical advantages over the classical geometric
+approach with relevance to our study are listed below:
+Arithmetic models Geometric models
+Number of state variables k+ 2n k+ 5n
+Vanilla options Semi-closed-form solution Semi-closed-form solution
+Basket options Semi-closed-form solution Approximation solution
+Calendar spread options Semi-closed-form solution Approximation solution
+Cross-commodity spread options Semi-closed-form solution Approximation solution
+Average price options Semi-closed-form solution Approximation solution
+Flow futures options Semi-closed-form solution Approximation solution
+T able 1: Analytical features of arithmetic and geometric models
+The first row refers to the number of state variables in the Markov representation of the futures
+curve with a hump-shaped volatility function in the sense of Chiarella et al. (2013). A semi-
+closed-form solution is one in which the price can be calculated as a one-dimensional numerical
+integral given the Laplace transform of the driving process.
+The first thing to note in Table 1 is that the Markov representation of the futures curve in
+the arithmetic framework has 3nfewer state variables than a similar geometric framework. This
+means that for realistic values ofkandn, the arithmetic models are much more amenable to large-
+scale empirical estimation than the geometric framework with the same driving process. While the
+geometric approach admits semi-closed-form pricing for vanilla options, pricing options involving
+multiple futures contracts generally requires approximations or more computationally demanding
+numerical methods. On the other hand, arithmetic models produce semi-closed-form solutions for a
+2
+wide variety of options.
+Beyond the practical advantages of arithmetic models, there are also some desirable empirical
+advantages. Firstly, it is well documented (Bouchouev, 2023) that the Bachelier volatility smile
+implied from options written on WTI futures is roughly symmetric. This implies a symmetric distri-
+bution of the futures pricelevel. This feature is produced by arithmetic models in a straightforward
+manner, but is significantly more complicated to do in a geometric model where symmetry in the
+distribution of thelog-priceis the natural starting point. Furthermore, arithmetic models naturally
+produce negative prices of futures. This was previously seen as a deficiency, but since the negative
+price event observed in front-month WTI futures on 20 April 2020, this is now a realistic, but also
+necessary, feature to price options with negative strikes. 1
+The existence of semi-closed-form solutions for a wider class of options allows for a tractable
+inclusion of calendar spread options in addition to vanilla options and futures in the data panel. A
+calendar spread option allows the purchaser the option to roll the position of an existing futures
+position at a predetermined price, and thus is often referred to as avirtual storageoption. In
+particular, calendar spread options on WTI futures have seen a substantial increase in liquidity in
+the last 15 years, due to the increasingly storage-driven nature of the WTI futures market. We
+refer to Bouchouev (2023), chapter 13, for an overview of the increasing importance and underlying
+economics of calendar spread options.
+While there exists a considerable literature on pricing and hedging spread options, in particular
+calendar spreads (see for example Schneider and Tavin, 2018, for an overview), the empirical liter-
+ature on calendar spread options is more modestly sized. Schneider and Tavin (2018) focus on the
+fact that calendar spread options provide additional information about the joint dynamics of futures
+contracts at different maturities and, in particular, their dependence structure. They demonstrate
+the importance of this information by jointly calibrating a multi-factor stochastic volatility model
+for crude oil futures to vanilla and calendar spread options, using the latter to investigate the term
+structure of dependence and the so-called Samuelson correlation effect. Their empirical analysis is
+based on calibration to three individual trading days. More recently, Frau et al. (2025) develop a
+general geometric framework for pricing calendar spread options in energy markets under stochastic
+volatility and jumps. Their focus, however, is on calibration, which they do for a single day of data.
+Other articles with an empirical focus include Seok et al. (2018) and Schmitz et al. (2013), both
+considering option pricing of calendar spread options on agricultural grain commodities.
+Our empirical analysis takes a different approach than what has been done in the existing liter-
+ature. Since the arithmetic modeling framework provides a semi-closed-form solution for calendar
+spread options, we incorporate these prices directly into the estimation alongside futures and vanilla
+options.
+We estimate the proposed model jointly under the risk-neutral and real-world measures using the
+unscented Kalman filter in conjunction with the prediction error decomposition on an extensive data
+panel on WTI futures spanning January 2013 to February 2024, with a total of 36,530 futures prices,
+235,277 vanilla option prices and 70,830 calendar spread option prices observed over 2,810 business
+days. The options are selected to ensure a representative sample of the daily observed volatility
+surface. To our knowledge, this is the first large-scale empirical investigation to include time-series
+of calendar spread option prices in the dynamic estimation of an arbitrage-free commodity futures
+term structure model. Furthermore, it is the first large-scale empirical study of the performance of
+arithmetic term structure models for crude oil markets.
+Our results show that three stochastic volatility factors are needed to reproduce both the level
+and slope of the volatility term structure. We also show that calendar spread options carry informa-
+1To accommodate negative prices, the CME switched its pricing and valuation model for options on WTI futures
+to the Bachelier model on 22 April 2020; see CME Group (2020).
+3
+tion on the dependence structure of futures prices that is not provided by futures or vanilla options
+alone. A model estimated on futures and vanilla options alone substantially overprices calendar
+spread options because it overstates the decorrelation between adjacent futures contracts. Including
+calendar spread options in the estimation substantially improves their pricing fit and changes how
+volatility is distributed across the factors, allowing the model to capture the observed curve decor-
+relation. We also find that the model’s constant leverage correlations capture only a small part of
+the observed variation in skew, while forcing the volatility factors to account for the skew worsens
+the fit to the volatility term structure.
+We also investigate the model’s hedging performance. Hedges built on the three factors remove
+almost all of the daily risk of a portfolio of vanilla options, but provide only incremental improvements
+when hedging calendar spread options. Finally, we compare the pricing and hedging performance of
+the arithmetic model with that of its geometric counterpart. The arithmetic model provides both a
+better fit to futures and vanilla option prices and modestly improved hedging performance.
+The paper is structured as follows: In Section 2, the model framework is presented and a general
+option pricing formula is derived. In Section 3, we present the data and the estimation method.
+Section 4 presents the estimates and the pricing and hedging results. Finally, Section 5 concludes.
+2 Arithmetic separable HJM framework
+Consider a probability space (Ω,F,Q) equipped with a filtration{F t}t≥0 ofF. We denote byQthe
+risk-neutral measure defined by the continuously compounded numeraireB(t)≜e
+R t
+0 r(u)du, where
+r(t) is the risk-free short rate. Denote the time-tfutures price of a commodity with delivery at time
+T≥tasF(t, T). The time-tspot price of the commodity, denoted byS(t), will then be equal to
+the price of the instant-delivery futures contract, i.e.,S(t) =F(t, t). Furthermore, the futures price
+with delivery at timeTis given as the risk-neutral expectation of the time-Tspot price (see e.g.,
+Duffie, 2001), such that
+F(t, T) =E Qt {F(T, T)}=E Qt {S(T)}.
+Hence, it follows that commodity futures prices are martingales under the risk-neutral measure. We
+take as given the initial futures curve{F(0, T)} T >0and make our first key assumption.
+Assumption 1(Arithmetic dynamics).We assume that the commodity futures price process is an
+Itˆ o process with dynamics given by
+dF(t, T) =σ(t, T)·dW Q(t),(1)
+whereW Q is ann-dimensional Brownian motion and the futures price volatility processσ(t, T)is
+ann-dimensional progressive process for allT≥t.
+F(t, T) is a trueQ-martingale for allTunder standard integrability assumptions onσ(t, T) (see
+for example Filipovi´ c, 2009). Models of the above type are generally infinite-dimensional, which
+makes them difficult to apply. However, it is possible to make simplifying assumptions on the form
+ofσ(t, T) that allow for a finite-dimensional Markovian representation of the system, from which
+we can reconstitute the futures curve. Drawing inspiration from the literature on finite-dimensional
+Markovian realizations of HJM models, in particular Bj¨ ork et al. (2006) for term structure models
+in general and Andersen (2010) for commodity markets, we make the following assumption on the
+form of the futures price volatility process.
+4
+Assumption 2(Separable volatility).The stochastic volatility process in(1)is of the form
+σ(t, T) =H(t)φ(T−t),(2)
+for a (well-behaved) matrix-valuedn×n-dimensional Itˆ o processH(t)and a deterministic vector-
+valued functionφ.
+Traditionally, the volatility processσ(t, T) has been assumed to be proportional to the price
+level, such thatσ(t, T) =F(t, T)eσ(t, T) witheσ(t, T) satisfying Assumption 2 (see e.g., Trolle and
+Schwartz, 2009; Chiarella et al., 2013). This price-volatility proportionality gives the futures price
+dynamics a geometric structure, and we will throughout the paper refer to models having this
+property asgeometricmodels. We will, however, depart from this assumption and instead consider a
+specification ofH(t) that includes stochastic volatility but does not include the price-proportionality,
+and we will refer to this model class asarithmetic. This class of models has to our knowledge mostly
+been applied in the context of modeling electricity markets (see the books Benth et al., 2008; Benth
+and Kr¨ uhner, 2023, for an overview), but this is to our knowledge the first attempt at using this
+model structure for modeling the term structure in the market for crude oil. We will throughout
+this paper highlight its many advantages over the traditional geometric approach.
+The specific arithmetic volatility structureH(t) is assumed given by the following multivariate
+Heston-type form:
+Assumption 3(Heston-type stochastic volatility).We assume thatH(t)in(2)is of the form
+H(t) =D v(v(t))≜Diag
+p
+v1(t), . . . ,
+p
+vn(t)
+
+where then-dimensional stochastic volatility processv(t)is given by
+dv(t) = Γ
+ 
+v(t)−θ Q dt+ Diag(σ v)Dv(v(t))dZ Q(t),(3)
+whereθ Q andσ v aren-dimensional vectors,Γis ann×nmatrix andZ Q(t)is ann-dimensional
+standard Brownian motion. We writeϑ≜−Γθ Q for the constant part of the drift. Existence of
+the process requires thatϑ i ≥0for alliand that the non-diagonal elements ofΓare non-negative.
+Furthermore, to ensure that a stationary distribution for the volatility process exists, we will assume
+that the eigenvalues ofΓare strictly negative (see Dai and Singleton, 2000, for both existence and
+stationarity). We assume that correlation is only allowed between the Brownian motionsW Q(t)and
+Z Q(t)element-wise, such that
+d⟨W Qi (t), ZQj (t)⟩=
+(
+ρidtfori=j,
+0 dtfori̸=j.
+By modelingφas a function of time to maturityT−trather than calendar timetand maturity
+T, and by assuming time-homogeneous dynamics forv(t), the resulting term structure of volatility
+becomes stationary over time. While this assumption may be restrictive in general commodity
+markets with pronounced seasonality patterns (see Schneider and Tavin, 2024), such seasonality
+can in principle be incorporated in the volatility specification in an arithmetic framework along the
+lines of Andersen (2010). However, for crude oil, seasonality is generally not considered a dominant
+feature of the futures term structure; see Borovkova and Geman (2006), Carmona and Ludkovski
+(2004), Gabillon (1991) and Garc ´ ıa Mirantes et al. (2013).
+Finally, we need to further specify the form ofφ. We follow Bj¨ ork et al. (2006) and Chiarella
+et al. (2013), and assume that the futures price volatility loadings are given by the following.
+5
+Assumption 4(Exponential polynomial volatility loadings).The vector-valued deterministic func-
+tionφin(2)is given element-wise by
+φi(τ) =
+miX
+j=1
+pij(τ)e −κij τ ,(4)
+wherep ij are real polynomials andκ ij >0.
+Generally, this form allows for enough flexibility to capture the observed behavior of the
+term structure of volatility while allowing for a finite-dimensional realization of the futures curve.
+As the time to maturity increases, the volatility of the futures contract converges to zero, i.e.,
+limτ→∞ φi(τ) = 0. This specification also complies with the Samuelson effect, which states that the
+volatility of futures prices increases as time to maturity decreases. Typically, settingm i = 1 and
+using polynomials of degree zero (constant) or one (linear) is enough for empirical applications. 2
+Inserting the above volatility specifications into the dynamics of the futures price processes, we
+obtain
+dF(t, T) =σ(t, T)·dW Q(t) =φ ⊤(T−t)D v(v(t))dW Q(t),(5)
+such that the time-tinstantaneous volatility of a futures contract with maturityT > tis given by
+σF (t, T) =
+q
+σ⊤(t, T)σ(t, T) =
+vuut nX
+i=1
+vi(t)φ2i (T−t).(6)
+The instantaneous correlation between two futures with maturitiesT 1 andT 2, respectively, is given
+by
+ϱF (t, T1, T2) =
+Pn
+i=1 vi(t)φi(T1 −t)φ i(T2 −t)
+σF (t, T1)σF (t, T2) .
+Notice that forn= 1, the correlation is deterministic and equal to one, but forn≥2 the model
+exhibits stochastic correlation as a function of the stochastic volatility processv(t). The ability to
+generate stochastic correlation is especially important when fitting to correlation-dependent deriva-
+tives, such as the calendar spread options we will consider in the empirical application. Another
+reason for using multifactor stochastic volatility is to model multiple time scales with varying de-
+grees of autocorrelation. For equities, these properties are discussed in e.g., Duffie et al. (2000),
+while for crude oil specifically, Trolle and Schwartz (2009) develop a class of (geometric) stochas-
+tic volatility models and investigate model specifications with one or multiple stochastic volatility
+factors, where the multidimensional models achieve a significantly better fit to crude oil option
+prices. Their estimated model consists of both a persistent (slowly mean-reverting) and a transitory
+(quickly mean-reverting) process, corroborating the need for multiple time scales to fit the dynamics
+of the observed volatility surface for crude oil markets. In line with these considerations, the general
+specification of the volatility processv(t) in (3) allows for a rich structure of dependence between
+the individual stochastic volatility state variables, especially through the matrix Γ.
+2.1 Markov representation
+Equation (5) reveals that the driving process of the model isX(t) =
+
+v(t),
+R t
+0 Dv(v(s)) dW Q(s)
+and furthermoreXis easily seen to be an affine process onR n+ ×R n. However, due to the presence
+2Indeed, Trolle and Schwartz (2009) and Schneider and Tavin (2018) use constant (degree zero) polynomials, while
+Chiarella et al. (2013) and Cheng et al. (2018) use the first order polynomial.
+6
+of the volatility scaling termφ(T−t) in (5), reconstituting the entire futures curve{F(t, T)} T≥t
+at timetcannot be done from a realization ofX(t) alone. The state space needs to be extended
+to get a so-called Markov representation for the futures curve. In this section, we will derive this
+Markov representation of the futures curve for arithmetic models. Similar calculations can be found
+for geometric models in Trolle and Schwartz (2009) and Chiarella et al. (2013).
+For our proposed models, we will use the form (4) withm i = 1 for alli. In this case, the
+expression forφcan be simplified to
+φ(τ) =e −Kτ p(τ),
+whereK≜Diag (κ 1, . . . , κn) andp(τ)≜(p 1(τ), . . . , pn(τ)) ⊤. Using polynomials of the first degree,
+such thatp i(τ) =β 0,i +β 1,iτfori= 1, . . . , n, the finite-dimensional realization of the futures curve
+is described below:
+Proposition 1.Assuming that the volatility process of the futures price is given as in(3), the time-t
+futures price with maturityT≥tcan be reconstituted from2nstate variables
+F(t, T) =F(0, T) +φ(T−t)·x(t) +φ z(T−t)·z(t),(7)
+whereφ z(τ)≜e −Kτ β1, and then-dimensional processesx(t)andz(t)are given by
+x(t)≜
+Z t
+0
+e−K(t−u) Dv(v(u))dW Q(u),(8a)
+z(t)≜
+Z t
+0
+(t−u)e −K(t−u) Dv(v(u))dW Q(u),(8b)
+with dynamics
+dx(t) =−Kx(t)dt+D v(v(t))dW Q(t),
+dz(t) = (x(t)−Kz(t)) dt.
+Proof.See Appendix C.2.
+For the model proposed above, futures prices can be reconstituted from the 2n-dimensional
+system (x(t), z(t)), wherez(t) is of finite variation. The full system (x(t), z(t), v(t)) driving the
+dynamics of the whole futures curve is an affine process with a total of 3nstate variables. An anal-
+ogous geometric model has a total of 6nstate variables (see for example Proposition 1 in Chiarella
+et al., 2013), a substantial difference that makes estimation significantly more computationally chal-
+lenging. Furthermore, notice that forβ 1,i = 0, thez(t) variables become redundant, making the
+system only 2n-dimensional instead. This corresponds to the simplest polynomial specification,
+wherep i(τ) =β 0,i, but it has the disadvantage of not being able to produce a humped volatility
+structure.
+The futures curve depends on the state only through the factors (x, z), whose shocks are generated
+byW Q alone, while the volatility factorsventer only the volatility ofx. Futures can therefore hedge
+only risk spanned byW Q. Since eachv i is driven byZ Qi , which is correlated only withW Qi , shocks to
+vi are spanned byW Q, and can thus be hedged with futures, if and only if|ρi|= 1. Whenever|ρ i|<1
+for somei, volatility risk is not fully spanned by futures, so options on futures are not redundant
+and the model exhibits unspanned stochastic volatility in the manner of Trolle and Schwartz (2009).
+7
+2.2 Option pricing
+Due to the arithmetic framework, a large class of option types can be priced using the same semi-
+closed-form pricing method as for vanilla options on futures contracts. This class importantly
+includes exotic options encountered in commodity markets, such as the so-calledcalendar spread
+options. We define the time-tprice of a ∆-lag calendar spread as
+CS(t, T1,∆) =F(t, T 1)−F(t, T 1 + ∆).(9)
+A calendar spread call with maturityT≤T 1 is then defined by the time-Tpayoff [CS(T, T1,∆)−K] +
+(or likewise for a put, [K−CS(T, T1,∆)] +). To develop the general pricing formula, we first consider
+a basket ofLdifferent futures given by
+Y(t)≜
+LX
+j=1
+wjF(t, Tj),
+wherew j are the individual weights. Specific instances ofY(t) includeF(t, T 1), the underlying for
+a vanilla option on aT 1 futures contract, as well asF(t, T 1)−F(t, T 2) forT 1 < T2, the underlying
+for a calendar spread option with lag ∆ =T 2 −T 1. Now, forT≤min j Tj we can defineφ Y (T−t)≜PL
+j=1 wjφ(∆Tj +T−t) with ∆T j ≜T j −T, such that
+dY(t) =
+
+
+LX
+j=1
+wjφ(Tj −t)
+
+
+⊤
+Dv(v(t))dW Q(t) =φ ⊤Y (T−t)D v(v(t))dW Q(t).
+Note that the dynamics ofY(t) have the same structure as the individual futures price dynamics in
+(5), a highly desirable feature specific to the arithmetic framework.
+If we make the simplifying assumption that interest rates are independent of futures prices, we
+can write the formula for a European put option on a generic basketY(T) as
+P(t, T, K) =EQt
+n
+e−
+R T
+t r(s)ds (K−Y(T)) +
+o
+=P(t, T)E Qt
+n
+(K−Y(T)) +
+o
+,
+whereP(t, T) is the time-tprice of a zero-coupon bond maturing at timeT. Indeed, Cheng et al.
+(2018) investigate the empirical option pricing performance of commodity futures models with and
+without stochastic interest rates dependent on the futures price. They find that the explicit modeling
+of the joint distribution of interest rates and futures prices is mainly relevant for pricing longer-dated
+options. Since our main interest is in the short and medium term, we do not consider the assumption
+of independence to be problematic. Note that the setting with stochastic dependent interest rates
+is equally tractable. Further details are given in Appendix C.3.
+Drawing from the work by Duffie et al. (2000) and Collin-Dufresne and Goldstein (2003), we
+describe a general pricing formula for any processY(t) with dynamics of the form above.
+Proposition 2.Consider the time-tprice of a European put option expiring at timeTonY(t)with
+dynamics of the form
+dY(t) =φ ⊤Y (T−t)D v(v(t))dW Q(t),(10a)
+dv(t) = Γ
+ 
+v(t)−θ Q dt+ Diag(σ v)Dv(v(t))dZ Q(t),(10b)
+8
+whereφ Y is ann-dimensional deterministic function. The time-tprice of a put option with maturity
+T > tand strikeKonY(t)is then given by
+P(t, T, K) =P(t, T)EQt
+n
+(K−Y(T)) +
+o
+=P(t, T)
+"
+K−Y(t)
+2 −
+Z ∞
+0
+Im
+
+[K−χ(ω)]e −iωK+ψ(ω) 
+πω dω
+#
+,(11)
+wherei = √−1,e ψ(ω) =E Qt {eiωY(T) }is the conditional characteristic function ofY(T), andχ(ω) =
+−i∂ψ(ω)/∂ω. These functions are given by
+ψ[ω;τ, v(t), Y(t)] =Aψ(τ;ω) +B ψ(τ;ω)·v(t) + iωY(t),
+χ[ω;τ, v(t), Y(t)] =Aχ(τ;ω) +B χ(τ;ω)·v(t) +Y(t),
+whereτ=T−t.(A ψ, Bψ)and(A χ, Bχ)are solutions to the2(n+ 1)-dimensional system of
+complex-valued ODEs given by
+dAψ(τ;ω)
+dτ =−(Γθ Q)·B ψ(τ;ω), A ψ(0;ω) = 0; (12a)
+dBψ(τ;ω)
+dτ = Γ⊤Bψ(τ;ω) +R ψ [τ, Bψ(τ;ω);ω], B ψ(0;ω) = 0; (12b)
+dAχ(τ;ω)
+dτ =−(Γθ Q)·B χ(τ;ω), A χ(0;ω) = 0; (12c)
+dBχ(τ;ω)
+dτ = Γ⊤Bχ(τ;ω) +R χ [τ, Bψ(τ;ω), Bχ(τ;ω);ω], B χ(0;ω) = 0.(12d)
+The functionsR ψ andR χ depend upon the volatility functionφ Y and are given element-wise by
+Rψ,i [τ, Bψ;ω] = σ2v,i2 B2ψ,i + iωρiσv,iφY,i(τ)B ψ,i − ω22 φ2Y,i(τ),
+Rχ,i [τ, Bψ, Bχ;ω] =σ 2v,iBψ,iBχ,i + [iωBχ,i +B ψ,i]ρ iσv,iφY,i(τ) + iωφ2Y,i(τ),
+fori= 1, . . . , n. Note that(Aχ, Bχ)depends on(A ψ, Bψ)throughR χ, but not vice versa.
+Proof.See Appendix C.3.
+Remark1.To price a European call option, we can simply price the equivalent put option and
+use put-call parity, such that the price of a call option is given byP(t, T, K) +P(t, T)(Y(t)−K).
+The above formula can then be used to price aT-maturity European option on a futures contract
+with maturityT 1 ≥Tby settingφ Y (τ) =φ(∆T+τ) with ∆T≜T 1 −T. Equivalently, options
+on the calendar spreadF(t, T 1)−F(t, T 2), whereT 2 > T1 ≥T, can be priced by usingφ Y (τ) =
+(φ(∆T1 +τ)−φ(∆T 2 +τ)) where ∆T 1 ≜T 1 −Tand ∆T 2 ≜T 2 −T.
+Remark2.The delta and vegas of the put are also available in semi-closed form. Sinceχ=−i∂ψ/∂ω,
+an integration by parts inωremovesχfrom the vegas. This gives
+∆P (t) = ∂P(t, T, K)∂Y(t) =P(t, T)
+"
+− 12 + Z ∞0 Im e−iωK+ψ(ω) πω dω# ,
+VP,i (t) = ∂P(t, T, K)∂vi(t) =−P(t, T) Z ∞0 Re Bψ,i(τ;ω)e −iωK+ψ(ω) πω 2 dω,
+fori= 1, . . . , n. For the call, ∆C(t) = ∆P (t) +P(t, T), and the vegas are the same.
+9
+The property that both vanilla options and spread options can be priced using the same formula,
+although with different coefficients in the ODEs (12a)–(12d), is not shared by geometric models.
+When pricing spread options in geometric models one typically has to resort to approximation or to
+methods that are significantly more numerically burdensome than when pricing vanilla options. See
+Schneider and Tavin (2018) for a survey of pricing techniques in a geometric framework.
+2.3 Moment formulas
+The centered moments
+κm(t, T)≜E Qt {(Y(T)−Y(t)) m}
+of the distribution of an underlying asset play a significant part in our empirical analysis. They can
+be calculated from the model as well as directly from option prices. In the model, they follow from
+the characteristic function of Proposition 2 by differentiation atω= 0, and are given by its Riccati
+equations expanded in powers of iω.
+Proposition 3.LetYhave the dynamics(10a)–(10b)and letτ=T−t. Form= 2,3,
+κm(t, T) =Am(τ) +B m(τ)·v(t),(13)
+whereA m andB m, the coefficients of(iω) m/m!inA ψ andB ψ, solve the(n+ 1)-dimensional linear
+system
+dAm(τ)
+dτ =−(Γθ Q)·B m(τ), A m(0) = 0; dBm(τ)dτ = Γ⊤Bm(τ) +R m(τ), B m(0) = 0,(14)
+withR m given element-wise by
+R2,i(τ) =φ 2Y,i(τ), R 3,i(τ) = 3ρ iσv,iφY,i(τ)B 2,i(τ), i= 1, . . . , n.(15)
+Equivalently,B m(τ) =
+R τ
+0 eΓ⊤uRm(τ−u) duandA m(τ) =− R τ0 (ΓθQ)·B m(u) du. Note thatB 3
+depends onB 2 throughR 3, but not vice versa.
+Proof.See Appendix C.4.
+Alternatively, a model-free estimation of the moments of the incrementY(T)−Y(t) can be per-
+formed directly from observed option prices using the spanning formula of Carr and Madan (2001).
+Write ¯P(t, T, K)≜EQt {(K−Y(T)) +}and ¯C(t, T, K)≜EQt {(Y(T)−K) +}for the undiscounted put
+and call values onY(T). Applying the spanning formula tof(y) = (y−Y(t)) m gives
+κm(t, T) =m(m−1)
+"Z Y(t)
+−∞
+(K−Y(t)) m−2 ¯P(t, T, K) dK+
+Z ∞
+Y(t)
+(K−Y(t)) m−2 ¯C(t, T, K) dK
+#
+(16)
+form≥2.
+From the second and third moments we construct the model-free volatility and the skewness of
+Y(T)−Y(t), defined as follows
+M2 ≜
+r κ2
+τ andM 3 ≜ κ3κ3/22 ,
+which can be computed from observed option prices and from the model alike. In the model, the
+two are closely coupled: by Proposition 3,κ 2 andκ 3 are affine in the same volatility factorsv(t),
+10
+and sinceR 3 is built fromB 2, each factor entersκ 3 only through its contribution toκ 2, weighted
+by its leverage correlationρ i and its volatility of volatilityσ v,i.M 2 does not depend on theρ i,
+whileM 3 is linear in them, so the skew can move only as the factors that carry the volatility term
+structure move.
+2.4 Measure change and time-homogeneity
+For the purpose of estimation, we further need to specify the dynamics of the state vector under
+the physical measureP. We use thecompletelyaffine specification of Duffee (2002), detailed in
+Appendix C.1, in which the Brownian motions are related by
+dW P(t) = dW Q(t)−D v(v(t))λxdt(17)
+dZ P(t) = dZ Q(t)−D v(v(t))λvdt,(18)
+whereλ x andλ v aren-dimensional vectors. For the statistical estimation we also need to ensure
+that a stationary distribution for the volatility process exists under the physical measure, and thus
+in parallel to Assumption 3 we assume that Γ P ≜Γ + Diag(σ v) Diag(λv) has strictly negative
+eigenvalues. Since the measure change only adds a term linear inv(t) to the drift, the constantϑis
+the same under both measures, and the dynamics ofv(t) underPare
+dv(t) = ΓP (v(t)−θ) dt+ Diag(σ v)Dv(v(t))dZ P(t),
+whereθis the stationary mean ofv(t) underPand Γθ Q = ΓPθ=−ϑ.
+The model as described above by construction fits the initial curveF(0, T) forT >0, but
+for estimation we prefer a time-homogeneous version. For simplicity we set the initial curve to a
+constantF 0, which we treat as an additional parameter of the model. Thus we assume that the
+infinite-maturity futures contract price is given by some constantF 0, i.e., lim T→∞ F(t, T) =F 0.
+Finally, as per Dai and Singleton (2000), the model above is not identifiable in its current form,
+but we can achieve identification by settingθ Qi = 1 for alli, such that the stationary mean of each
+volatility state variable underQequals one. The mean level underP,θ= (Γ P)−1ΓθQ, then follows
+from the estimates.
+2.5 Pricing other commodity derivatives
+As highlighted in Table 1, the arithmetic framework allows for semi-closed-form pricing of a wide
+variety of options depending on multiple futures prices at the same time. In this section we explain
+how this is done for the most common examples.
+2.5.1 Pricing cross-commodity spread options
+The arithmetic framework can easily be extended to modeling multiple futures curves of different
+commodity prices. This is useful in particular for pricing cross-commodity spread options like options
+on the crack spread (crude oil vs. refined products like gasoline and heating oil), the crush spread
+(soybeans vs. soybean meal and oil), the spark spread (natural gas vs. electricity), or inter-location
+spreads, which involve the same commodity, same delivery month, but different exchanges or delivery
+locations (e.g., WTI in Cushing, Oklahoma vs. Brent in the North Sea).
+To illustrate, letF A(t, T1) andF B(t, T2) be the futures prices of two different commodities, with
+arithmetic dynamics
+dFA(t, T1) =φ ⊤A(T1 −t)D v(v(t))dW Q(t),dF B(t, T2) =φ ⊤B(T2 −t)D v(v(t))dW Q(t),(19)
+11
+where the dynamics ofv(t) are given in (3). By specifyingφ A andφ B and the parameters ofv, the
+model can thus have common and idiosyncratic factors with common and idiosyncratic stochastic
+volatility. A European option on the spread between these two futures prices can be priced using
+Proposition 2, by noting that if we set the spreadY(t)≜F A(t, T1)−F B(t, T2) we get arithmetic
+dynamics for the spread
+dY(t) =φ ⊤Y (T−t)D v(v(t))dW Q(t) (20)
+φY (T−t)≜φ A(T1 −t)−φ B(T2 −t), T= min(T 1, T2).(21)
+2.5.2 Commodity futures with multiple delivery periods
+Some commodity futures do not have a single discrete time of delivery, but instead a delivery period
+over which the commodity is delivered as a flow. For non-storable commodities like electricity this
+is the only form of delivery, but this type of futures also exists for a storable commodity like natural
+gas. The arithmetic framework presented in this section can be easily modified to accommodate this
+style of futures contract.
+If we associate the futures price in (1) with the shortest possible delivery periodδ, say a day or
+an hour3, it is easy to see that the futures price expiring at timeTwith an associatedN×δdelivery
+period,F(t, T, N) forN∈N, is given by
+F(t, T, N) =1N
+NX
+k=1
+F(t, T+ (k−1)δ), N∈N,(22)
+with arithmetic dynamics
+dF(t, T, N) =σ(t, T, N)·dWQ(t), σ(t, T, N) =Dv(v(t)) 1N
+NX
+k=1
+φ(T+ (k−1)δ−t).(23)
+Note that the decomposition in (22) implies that options on multi-period delivery futures are simply
+another form of basket option and are thus priced directly by Proposition 2.
+The fact that multiple-period futures prices retain the same structure, and thus remain tractable
+for anyN∈Nin (23), is again specific to the arithmetic framework and presents another advantage
+over the traditional geometric modeling framework.
+2.5.3 Average price options
+Average price options (APOs) are widely traded in several commodity markets. The payoff is
+determined by the arithmetic average of a sequence of futures settlement prices rather than by a
+single terminal price. Lett 1 < t2 <· · ·< tM =Tdenote the fixing dates, letw 1, . . . , wM be weights
+with PMm=1 wm = 1, and letT m ≥t m be the maturity of the futures contract observed at themth
+fixing. The average is defined as
+A(T)≜
+MX
+m=1
+wmF(t m, Tm),(24)
+and an APO put with strikeKpays [K−A(T)] + at timeT. For the most common contracts, all
+fixings are on the same contract, so thatT m =T F for allm, the fixings are the daily settlement
+3A different approach to achieve consistency between futures prices with different delivery periods can be found in
+Benth et al. (2019), where futures prices with an infinitesimally small delivery period are modeled.
+12
+prices over a calendar month, and the weights arew m = 1/M. Contracts whose fixings roll from
+one prompt contract to the next are covered by lettingT m vary withm. Define the running average
+process
+A(t)≜
+X
+m:t m≤t
+wmF(t m, Tm) +
+X
+m:t m>t
+wmF(t, Tm),(25)
+which collects the fixings already observed at timet. Inserting (5) and (25) in (24) we get
+A(T) =
+X
+m:t m≤t
+wmF(t m, Tm) +
+X
+m:t m>t
+wmF(t m, Tm)
+=
+X
+m:t m≤t
+wmF(t m, Tm) +
+X
+m:t m>t
+wmF(t, Tm)
++
+X
+m:t m>t
+wm
+Z tm
+t
+φ⊤(Tm −u)D v(v(u))dW Q(u)
+=A(t) +
+Z T
+t
+φ⊤APO(T−u)D v(v(u))dW Q(u),
+where we have used thatt m > uis equivalent toT−t m < T−u, andT m −u= ∆T m + (T−u),
+and the definition
+φAPO(τ)≜
+X
+m:T−t m<τ
+wm φ(∆Tm +τ),∆T m ≜T m −T.(26)
+φAPO is then piecewise continuous, with jumps at theM−1 pointsτ=T−t m,m < M. It follows
+that we can price APO puts (and calls) using Proposition 2 withYreplaced byAandφ Y replaced
+byφ APO.
+3 Data description and estimation methodology
+3.1 Data
+The models are estimated on a comprehensive dataset of 342,637 prices of crude oil futures, vanilla
+options and calendar spread options traded at the NYMEX, 4 from 2 January 2013 to 29 February
+2024, a total of 2,810 business days. For all three, we use the daily settlement prices set by the
+exchange. For discounting, we use the Treasury yield curve of G¨ urkaynak et al. (2007).5
+3.1.1 F utures
+West Texas Intermediate (WTI) crude oil futures traded on NYMEX are among the most liquid
+commodity futures contracts. They are physically settled in Cushing, Oklahoma, with delivery in
+the month after expiry.6
+Monthly contracts are listed about ten years ahead, but liquidity is concentrated in particular
+contracts, depending on their maturity and delivery month. The contracts with delivery in the next
+4The futures data was retrieved from Refinitiv, while both the vanilla and calendar spread options data was
+acquired from the CME.
+5The dataset is available at
+https://www.federalreserve.gov/econres/feds/the-us-treasury-yield-curve-1961-to-the-present.htm.
+6Trading terminates three business days before the 25th calendar day of the month preceding the delivery month,
+unless the 25th is not a business day, in which case it is four business days before the 25th.
+13
+seven months have a large open interest whatever the delivery month, and their open interest peaks
+a few weeks before expiry. We therefore select the first seven contracts with expiry more than twelve
+business days ahead, M1 to M7.
+Figure 1: T erm structure of NYMEX WTI futures prices
+Settlement prices, in$/bbl, of the M1–M7, Q1–Q3 and Y1–Y3 contracts, plotted at constant
+maturities equal to their sample averages; the black line traces M1. Daily data from 2 January
+2013 to 29 February 2024.
+Beyond these, liquidity is concentrated first in the quarterly contracts and then in the December
+contracts. We therefore add the next three contracts for delivery in March, June, September or
+December, Q1 to Q3, and the next three December contracts, Y1 to Y3. This gives 13 contracts
+on each date and 36,530 futures prices in all. Figure 1 shows the term structure of futures prices.
+Notable events include the drop in prices in 2014, the 2020 plunge during the Covid-19 pandemic
+and the spike in 2022 after the Russian invasion of Ukraine. Notice that the short-maturity end of
+the term structure is more volatile than the far end, in agreement with the Samuelson effect.
+3.1.2 V anilla options
+Call and put options on futures contracts (orvanilla options) are American-style with expiry three
+business days before the underlying futures contract. The market is highly liquid, with options for a
+wide range of strikes and expiries actively traded each day. We select the options for the estimation
+only among those with an open interest above 100 contracts and a settlement price above$0.10. 7
+We only consider options on contracts M1–M7 and Q1–Q3, for two reasons: First, our model
+assumes that interest rates are independent of futures prices and futures volatilities, and Cheng et al.
+(2018) find that stochastic interest rates matter mainly for pricing longer-dated options. Second, our
+estimation procedure is only tractable for European-style options, requiring us tode-americanize
+the American-style options, an approximation whose error grows with maturity. Following Trolle
+and Schwartz (2009), we compute the implied volatility of each American option and use the cor-
+responding closed-form formula to compute its European counterpart, although in the Bachelier
+(1900) rather than the Black (1976) model, since both futures prices and strikes can be negative.
+Additional details are given in Appendix A.5.
+To select a representative collection of options for each contract and date, we compute the
+implied Bachelier volatility and (undiscounted) delta of each option. Calls and puts with an absolute
+7Additionally, we screen the option prices on each contract each day for static arbitrage.
+14
+Delta buckets −4−3−2−1 0 1 2 3 4
+Type OTM puts Both OTM calls
+|∆| ±0.05 0.1 0.2 0.3 0.4 0.5 0.4 0.3 0.2 0.1
+T able 2: V anilla option delta buckets
+Each out-of-the-money option is assigned by its undiscounted delta to the bucket whose central
+absolute delta lies within 0.05 of its own. Calls and puts with absolute delta between 0.45 and
+0.55 form the at-the-money bucket 0, and in-the-money options are discarded.
+delta between 0.45 and 0.55 are sorted into the middle bucket 0, representing options that are
+approximately at-the-money (ATM). We then discard the remaining in-the-money options and sort
+the out-of-the-money (OTM) puts and calls into four buckets each by the absolute value of their
+delta, as shown in Table 2. For our measurements, we then select the option in each bucket closest
+to the middle of the bucket. This gives up to nine options for each of the ten contracts on each date,
+totaling 235,277 options across the full panel.
+Figure 2 shows the volatility smile averaged over all dates, measured as the implied volatility of
+options with moneynessK−Fless that of the ATM option on the same contract. We plot the smile
+with respect to both the implied Black and implied Bachelier volatility. 8 The Black model assumes
+that the futures price follows a driftless geometric Brownian motion, such that it is log-normal and
+hence positive. Positivity became problematic in April 2020, when both negative futures prices and
+options with negative strike prices were traded. As a consequence, CME switched to the Bachelier
+model for option pricing purposes as this model assumes that the futures price follows a driftless
+Brownian motion, thus implying Gaussian distributions for prices. While the Gaussian distribution
+is symmetric, the log-normal distribution is not, and the latter will assign a lower probability to
+large downward moves in the price. In implied Black and Bachelier volatility alike, the smile is most
+pronounced for M1 and flattens with maturity. In implied Black volatility, it rises steeply toward the
+puts but not toward the calls at each of the three maturities, indicating that the market considers
+large downward movements in the price more probable than log-normal dynamics would imply. In
+implied Bachelier volatility, the smile is much closer to symmetric, with a median 20-delta risk
+reversal relative to the at-the-money volatility of−0.05, against−0.23 in implied Black volatility. 9
+Since a smile measures how far market prices deviate from those of the model behind the implied
+volatility, the near symmetry of the Bachelier smile suggests that the risk-neutral distribution of the
+futures price is close to symmetric in the price level, as Bouchouev (2023) also concludes for WTI
+options.
+3.1.3 Calendar spread options
+Alongside futures and vanilla options, calendar spread options are a third source of information on the
+distribution of futures prices. The price of a vanilla option depends only on the risk-neutral marginal
+distribution of a single futures price, while the price of a calendar spread option depends on the joint
+risk-neutral distribution of two adjacent futures prices, that is, on their marginal distributions and
+on the dependence structure between them. This dependence structure is therefore not determined
+by the prices of vanilla options, and it is only weakly identified by the time series of futures prices.
+NYMEX crude oil calendar spread options are the most liquid exotic oil options, although they
+are much less liquid than the vanilla options. Across all quoted options on the contracts we use, their
+8See Choi et al. (2022) for a survey and comparison of the two frameworks.
+9The risk reversal is the implied volatility of the 20-delta call less that of the 20-delta put, with the strikes chosen
+by Bachelier delta. Choosing them by Black delta does not change the result.
+15
+−15 −10 −5 0 5 10 15
+Moneyness K − F ($/bbl)
+0
+5
+10
+Smile (%)
+(a) Black volatility
+M1
+M3
+Q1
+−15 −10 −5 0 5 10 15
+Moneyness K − F ($/bbl)
+0
+1
+2
+3
+Smile ( $/bbl a year)
+(b) Bachelier volatility
+Figure 2: Average NYMEX WTI implied smile in Black and Bachelier volatilities
+For M1, M3 and Q1, the implied volatility of the liquid out-of-the-money options less that at the
+money, against the moneynessK−F, averaged over the dates on which the moneyness is quoted
+and lightly smoothed. (a) Black volatility, in percent. (b) Bachelier volatility, in$/bbl a year.
+Daily data from 2 January 2013 to 29 February 2024.
+volume is about three percent, and their open interest about eight percent, of that of the vanilla
+options.10 They are European-style, so they need no de-americanization, and expire on the first
+business day before the expiry of the first-to-expire underlying futures contract. They exist in two
+varieties, physically and financially settled, depending on whether exercise entitles the option holder
+to the underlying futures spread or to an equivalent cash payment. Furthermore, calendar spread
+options exist for spreads between contracts one to twelve months apart, but most of the liquidity
+is concentrated in the one-month spread. We only use the financial one-month calendar spread
+options, and denote the contracts by the first-to-expire futures contract of the underlying spread,
+such that an M1 calendar spread option is written on the spread M1–M2. Because the liquidity
+quickly decreases for longer-dated spreads, we select only the options on the first six spreads, M1
+to M6. Since calendar spread options are much cheaper than vanilla options, we screen them with
+a lower price floor, discarding those with no open interest or a settlement price of$0.02 or less. We
+then apply the same selection by delta bucket as for the vanilla options, with five coarser buckets,
+shown in Table 3. This leaves 70,830 calendar spread options, with at most 30 on a date.
+Delta buckets −2−1 0 1 2
+Type OTM puts Both OTM calls
+|∆| ±0.1 0.1 0.3 0.5 0.3 0.1
+T able 3: Calendar spread option delta buckets
+As for the vanilla options in Table 2, with each bucket spanning 0.1 on either side of its central
+absolute delta.
+Calendar spread options are usually quoted in terms of their implied Bachelier volatilities, since
+both the underlying spread and the strike prices are often negative. Figure 3 shows that the average
+10On the median day, their volume is less than one percent of that of the vanilla options, since their trading is
+concentrated on relatively few days.
+16
+smile rises in both wings with a moderate tilt toward the calls, and that the at-the-money implied
+volatility decays rapidly with maturity.
+The implied volatility of a calendar spread option summarizes the risk-neutral distribution of the
+spread, which depends on the marginal distributions of its two legs and on the dependence structure
+between them. Since the vanilla options give the marginal distributions, the implied volatility
+of a calendar spread option can be translated into a measure of the dependence. A simple and
+interpretable such measure is the implied correlation of the bivariate Bachelier model. If both legs
+follow Bachelier dynamics, with volatilitiess 1 ands 2 and correlationρ, the volatility of the spread
+iss CS =
+p
+s21 +s 22 −2ρs 1s2. We takes CS ands 1 as the at-the-money implied Bachelier volatilities
+of the calendar spread option and of the vanilla option on its first leg. The volatilitys 2 of the second
+leg until the calendar spread option expires is not observed. 11 As an approximation that needs no
+model, we therefore sets 2 =s 1, which gives the implied one-month decorrelation, our measure of
+thecurve decorrelationbetween adjacent contracts,
+1−ρ= s2CS
+2s21 .
+Up to a small error, the approximation is an upper bound on the decorrelation. 12 See Bouchouev
+(2023) for a more extensive discussion of calendar spread options and their use in oil markets.
+−2 −1 0 1 2
+Delta bucket
+1.5
+2.0
+2.5
+3.0
+Implied volatility ( $/bbl a year)
+(a) smile
+M1 M2 M3 M6
+M1 M2 M3 M4 M5 M6
+Contract
+1.2
+1.4
+1.6
+1.8
+2.0
+(b) at the money
+Figure 3: Implied volatility of NYMEX WTI one-month calendar spread options
+(a) The average implied Bachelier volatility, in$/bbl a year, in each delta bucket (markers) for
+the calendar spread options on M1–M3 and M6. (b) The average at-the-money implied Bachelier
+volatility for M1–M6. Daily data from 2 January 2013 to 29 February 2024.
+11Let the two legs be the futures contracts expiring atTandT+ ∆. The calendar spread option expires one
+business day beforeT, while the vanilla option on the second leg expires three business days beforeT+ ∆, about a
+month later. Its implied volatility therefore covers a different and longer period than the life of the calendar spread
+option.
+12Like any implied correlation, this measure depends on the distribution assumed for the two legs (Coqueret and
+Tavin, 2020). If the two legs are jointly Gaussian with correlation ˜ρ, then
+s2CS
+2s21 = 1−˜ρ22 + (s2 −˜ρs1)22s21 .
+Since the last term is non-negative, the approximation falls below the true decorrelation 1−˜ρby at most a fraction
+(1−˜ρ)/2 of it, about 0.1 percent on a typical day, whatever the value ofs 2.
+17
+3.1.4 Option-implied volatility , skewness and decorrelation
+We summarize the option prices by three option-implied quantities: the model-free volatilityM2 and
+skewnessM 3 of the vanilla options, and the implied decorrelation of the calendar spread options.
+For each contract and date, we computeM 2 andM 3 from the full cross-section of out-of-the-money
+vanilla options. The spanning formula requires option prices at every strike, but options are listed
+only at discrete strikes and stop short of the wings. We therefore fit a smooth risk-neutral density to
+each day’s quotes and compute the moments from it. Beyond±2 at-the-money standard deviations,
+we replace the density on each side by an exponential tail with the same mass and first moment, so
+thatM 2 andM 3 are moments of the whole distribution. 13
+Figure 4(a) and (b) show the term structures of the model-free volatility and skewness. The
+model-free volatility spikes during the 2020 plunge and the sharp rise in 2022. The volatility of
+soon-to-expire options fluctuates more than that of longer-dated options, indicating mean reversion
+in the volatility. The skewness is positive on most dates and increases with maturity, although its
+sign at the short end varies across regimes, being predominantly negative during the 2020 plunge
+and almost uniformly positive in 2022.
+Figure 4(c) shows the term structure of the implied one-month decorrelation, for first legs matur-
+ing in two to five months. It is small, about 0.002 at two months on a typical day, so that adjacent
+contracts are almost perfectly correlated. It falls with maturity on most days and varies most at the
+front. It is highest when the futures curve is steep, in backwardation from mid-2013 to the autumn
+of 2014 and in contango in April 2020. 14
+3.1.5 Dimension of the option-implied quantities
+Whether a model can fit the volatility term structure, the skew and the curve decorrelation with
+the same factors depends on whether they move together. We therefore study the daily changes of
+M22,M 3 and 1−ρat constant maturities, and how much of the changes in each is explained by the
+others.15
+The volatility term structure is essentially two-dimensional, since a level and a slope explain 96
+percent of the daily changes inM 22. The skewness moves mostly as one curve, with its first principal
+component explaining 80 percent of its daily changes. Regressing these changes on the level and
+slope ofM 22, however, gives anR 2 of only 10 percent, indicating that most movements in the skew
+are unrelated to movements in the volatility term structure. The same regression for the implied
+decorrelation gives anR 2 of 17 percent, and adding the skewness to the regressors barely raises it, 16
+indicating that the decorrelation moves largely independently of both. These shares remain low over
+weekly and monthly changes, over which noise in the quotes weighs less, and without 2020. 17
+These findings are model-free, and they suggest that the volatility term structure, the skew and
+the curve decorrelation are largely separate features of the data. A model whose volatility factors
+13The fitted density reprices the quoted options only up to a small error, part of which is the rounding of the
+settlement prices to the cent. We discard a fit when its error is several times larger than this rounding can explain,
+which happens for 10 of the 27,765 contract-dates. Further details are given in Appendix A.5.
+14Its rank correlation is 0.56 with the absolute slope of the curve and close to zero with the size of daily price moves.
+15We useM 22 =κ 2/τrather thanM 2, since it is affine in the volatility state variables, so that its principal
+components indicate how many factors the volatility term structure needs.M 3 and 1−ρare not affine, and their
+affine counterparts,κ 3/τands 2CS , serve as a robustness check. The maturities are two to twelve months forM 22,
+and two to five months, the range of the calendar spread options, wherever the skewness or the decorrelation enters.
+Further details are given in Appendix A.6.
+16By 0.5 percentage points. The partial rank correlation of the skewness and the decorrelation, 0.07, falls to zero
+on weekly and monthly changes.
+17Over monthly changes, the level and slope explain at most 30 percent of the skewness and the decorrelation, also
+in terms ofκ 3/τands 2CS .
+18
+Figure 4: T erm structures of NYMEX WTI model-free volatility , model-free skew-
+ness and implied decorrelation
+(a) The model-free volatilityM 2, in$/bbl a year, and (b) the skewnessM 3 of the vanilla options,
+at constant maturities from two months to one year. (c) The implied one-month decorrelation
+1−ρfrom the calendar spread options, at constant maturities of the first leg from two to five
+months; the April 2020 peak, 0.066, rises above the axis. The black line traces the shortest ma-
+turity. Daily data from 2 January 2013 to 29 February 2024.
+19
+are fitted to the volatility term structure may therefore capture little of the movements in the skew
+and the curve decorrelation, which the vanilla smiles and the calendar spread options carry.
+3.2 Estimation procedure
+We estimate the model using theunscentedKalman filter (see Julier and Uhlmann, 2004; Wan
+and van der Merwe, 2000) in conjunction with quasi-maximum likelihood. We cast the model
+into a discrete-time system with equidistant timesteps ∆ of one business day, at the time points
+t0, t1, . . . , tL. The transition equation for the 3n-dimensional state vectorX(t)≜(x(t), z(t), v(t)) ⊤
+can be written as
+X(t l+1) =AX(t l) +b+ω l,
+whereω l is assumed Gaussian18 with a covariance matrix that is affine in the volatility state variables
+v(tl),
+Ω(v(tl)) = Ω0 +
+nX
+i=1
+Ωivi(tl).
+Additional details on the state-space form and the filter are given in Appendix A, and a simulation
+study of the estimation in Appendix B.
+We order the factors by decreasingκ i, restrict Γ to be upper triangular and estimate the infinite-
+maturity futures priceF 0 along with the other parameters. We normalizeβ 0,i >0 and require
+β1,i ≥0, so that each loadingφ i keeps its sign along the curve and is either a pure decay or a single
+hump. Forn≥2 we setβ 1,n = 0. Whenκ n is small, the loadingφ n is nearly linear over the observed
+maturities,φ n(τ)≈β 0,n + (β1,n −κ nβ0,n)τ, so the data identify only its slopeβ 1,n −κ nβ0,n, and
+notβ 1,n andκ n separately.
+The level of volatility changes severalfold over the sample. So that the size of the measurement
+errors does not change with it, we divide each observed and model-implied price by a constant
+computed from the observed prices of its date. We divide each option price by its implied vega,
+as Trolle and Schwartz (2009) do, and further by its implied volatility, so that its measurement
+error is, to first order, the relative error in implied volatility. Since the model is arithmetic, we use
+the Bachelier vega and volatility, for the vanilla and calendar spread options alike. We divide each
+futures price by the typical daily price move of its date, the average implied Bachelier volatility of
+the at-the-money vanilla options times
+p
+1/252. Lety l be the vector of the scaled prices observed
+att l. The measurement equation, nonlinear in the state through the option prices, is
+yl =h l(X(t l)) +ϵ l,(27)
+withh l depending on the date through the contracts quoted on it. The option prices are computed
+from the observed futures prices, so that an imperfect fit to the futures curve does not enter them
+and they depend on the state only throughv(t). The measurement noiseϵ l is assumed Gaussian
+and uncorrelated both serially and cross-sectionally. Its standard deviation is a constantσ F for the
+futures andσ CS for the calendar spread options. For the vanilla options, it isσ V at the money and
+grows towards the wings, to (1+|aV |)σ V for the far out-of-the-money options, since the options at the
+money are the most liquid. Additional details on the measurement model are given in Appendix A.2.
+Section 3.1.5 showed that the level and slope of the volatility term structure explain only a
+small part of the movements in the skewness. We therefore remove the variation of the skew over
+18The true distribution of the noise is not Gaussian, which is one of the reasons this is onlyquasi-maximum
+likelihood. Its conditional mean and covariance are exact, but the volatility state variablesv(t) have no closed-form
+transition for a general Γ, and (x(t), z(t)) is Gaussian only conditional on the path ofv(t).
+20
+time, to first order, from the vanilla measurements, a device we call theskew forcing, and leave
+the average skew to the leverage correlationsρ i. We also report estimates without the forcing for
+comparison. Letu l be the average skewnessM 3 of the contracts M1–M7 on datet l, ¯uits sample
+average, ands l the vector of the vanilla options’ delta buckets divided by four, from−1 for the
+far out-of-the-money puts to +1 for the far out-of-the-money calls, with zero entries for the futures
+and calendar spread options. The measurementsy l in (27) are then replaced byy l −χ V (ul −¯u)sl,
+which tilts each day’s vanilla smile in proportion to the day’s skewness less its sample average, with
+an estimated coefficientχ V . The forcing enters only the estimation: every price, pricing error and
+hedge in Section 4 is computed without it.
+The option prices are not defined for negativevand are not smooth invclose to zero. The
+filter therefore evaluates them at max(v(t l), v), element-wise, for a small floorv . Since the Gaussian
+update can place part of the distribution ofv i(tl) below zero, the filtered mean and variance of each
+vi(tl) are replaced after each update by those of the posterior that combines the information in the
+update with a gamma approximation of the predicted distribution, which puts no mass below zero.
+We complement quasi-max

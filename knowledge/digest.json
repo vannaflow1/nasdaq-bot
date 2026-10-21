@@ -1,5 +1,20 @@
 [
 {
+"title": "LOB-Impact Benchmark: Emergent Market Impact in Generative Limit Order Book Models",
+"learned": "Neural limit order book generators, trained just to predict the next event, naturally exhibit market impact when simulated metaorders are injected, but the observed impact exponents (0.63\u20111.21) are higher than the classic square\u2011root law (0.5) and they show little decay after execution.",
+"concepts": [
+"generative LOB models",
+"market impact exponent",
+"metaorder injection",
+"impact decay",
+"benchmark evaluation"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/abs/2610.27100v1",
+"date": "2026-10-21"
+},
+{
 "title": "Savings by and for the Poor: A Research Review and Agenda",
 "learned": "The paper studies why low\u2011income people save less due to high costs, trust issues, information gaps, social pressures, and behavioral biases, and reviews experiments addressing these frictions.",
 "concepts": [
@@ -2968,7 +2983,7 @@
 "under-reaction"
 ],
 "relevance": 2,
-"verdict": "NO EDGE: 2226 days, hit 56.4% (always-long 56.6%), avg +3.4 bps/day, t=1.10, positive in 6/9 years",
+"verdict": "NOT CONFIRMED on my data: 2227 signal days, hit 56.4% (always-long 56.5%), strategy +3.4 bps/day vs +5.4 for the same average exposure held constantly -> timing adds -2.0 bps/day, t=-0.74, positive in 4/10 years",
 "url": "https://www.sciencedirect.com/science/article/pii/S0304405X11002613/pdf",
 "date": "2026-10-18"
 },
@@ -3084,7 +3099,7 @@
 "variance risk premium"
 ],
 "relevance": 2,
-"verdict": "not testable with my data yet",
+"verdict": "DOESN'T FIT MY DATA - The idea requires intraday OTM call and put option prices to compute realized semivariances, which are not available in the provided dataset (only end\u2011of\u2011day surface metrics are present).",
 "url": "https://doi.org/10.1016/j.jbankfin.2026.107720",
 "date": "2026-10-18"
 },

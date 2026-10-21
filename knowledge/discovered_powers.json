@@ -34,5 +34,14 @@
   "expr": "gex_rank",
   "verdict": "PROMISING (stress test: survived) : FACT: average 1.44, median 1.2 over 2907 sessions (2014-19: 1.18, 2020-25: 1.7). Predictor: lowest-fifth days 1.08 vs highest-fifth 1.89, skill +2.4% vs the base rate, better in 7/9 unseen years",
   "active": true
+ },
+ {
+  "id": 5,
+  "date": "2026-10-21",
+  "question": "When the NQ opens near the high of the Asian session (k_open_vs_asia = 1), are we more likely to break yesterday's high during the NY session?",
+  "target": "y_took_yday_high",
+  "expr": "k_open_vs_asia",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 56% of 2808 sessions (2014-19: 57%, 2020-25: 55%). Predictor: lowest-fifth days 29% vs highest-fifth 80%, skill +14.1% vs the base rate, better in 9/9 unseen years",
+  "active": true
  }
 ]

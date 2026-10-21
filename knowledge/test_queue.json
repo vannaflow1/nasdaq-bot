@@ -1,17 +1,5 @@
 [
  {
-  "id": "openalex:W4323528528",
-  "title": "Uncovering the asymmetric information content of high-frequency options",
-  "idea": "Build OTM call/put realized semivariances from intraday QQQ option prices and add them to the range forecast. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
-  "relevance": 3
- },
- {
-  "id": "openalex:W3124639629",
-  "title": "Time Series Momentum",
-  "idea": "Go long QQQ the next day when its past 12-month return is positive and short when negative (the paper's 12-month lookback). (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
-  "relevance": 3
- },
- {
   "id": "openalex:W4250762315",
   "title": "Momentum crashes",
   "idea": "Trade next-day QQQ in the direction of the 20-day return, but go flat in panic states (20-day return negative and 20-day realized vol in its top 30% of the past year). (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
