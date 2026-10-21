@@ -36,4 +36,11 @@ jobs:
         run: |
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}"
           for b in $(git for-each-ref --format='%(refname:short)' refs/heads/gemini/); do git push -q -f origin "$b"; done
+          # clean up remote draft branches that were already reviewed (merged/rejected) or were one-off test tasks from earlier days
+          keep=$(python3 -c "import json; print(' '.join(f\"gemini/wish-{w['id']}\" for w in json.load(open('knowledge/wishlist.json')) if (w.get('gemini') or {}).get('status') == 'drafted'))")
+          for r in $(git ls-remote --heads origin 'gemini/*' | awk '{print $2}' | sed 's#refs/heads/##'); do
+            if ! echo " $keep " | grep -q " $r "; then
+              if [ "$r" != "gemini/wish-task" ] || ! git for-each-ref --format='%(refname:short)' refs/heads/ | grep -qx "$r"; then git push -q origin --delete "$r" || true; fi
+            fi
+          done
           bash .github/actions_common.sh "gemini agent"
