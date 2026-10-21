@@ -19,6 +19,9 @@ The paper focuses on cryptocurrency volatility forecasting, which may not direct
 Can simple linear models like HAR and ridge regression outperform complex machine learning models like LSTM and RF in forecasting volatility of a specific cryptocurrency or index, such as Nasdaq/S&P?
 
 ## Test
-[[TRANSLATION FAILED]] - TRANSLATION FAILED - translator output unusable (Expecting property name enclosed in double quotes: line 1 column 2 (char 1))
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 7/9 unseen years
+How: feature `0.5*mean(rng,5) + 0.3*mean(rng5,5) + 0.2*mean(rng20,5)` added to the brain's range model
+Touches: [[Brain]]
+In the [[Near-miss pool]] - re-tested together with the others monthly.
 
 Part of [[Research engine]]

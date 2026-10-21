@@ -1,5 +1,20 @@
 [
 {
+"title": "The cross-section of speculator skill: Evidence from day trading",
+"learned": "The paper studies a large sample of day\u2011trading accounts and finds a wide cross\u2011section of ability: a small fraction consistently earn positive risk\u2011adjusted returns while the majority underperform after costs. Skill appears persistent over months and is linked to higher turnover and larger position sizes.",
+"concepts": [
+"speculator skill distribution",
+"performance persistence",
+"cost-adjusted returns",
+"turnover",
+"risk\u2011adjusted performance"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://escholarship.org/content/qt7k75v0qx/qt7k75v0qx.pdf",
+"date": "2026-10-21"
+},
+{
 "title": "Risk Taking by Mutual Funds as a Response to Incentives",
 "learned": "The paper studies how mutual\u2011fund managers may adjust portfolio risk to attract inflows, finding that risk changes are linked to year\u2011to\u2011date performance.",
 "concepts": [
@@ -700,7 +715,7 @@
 "Predictive modeling"
 ],
 "relevance": 3,
-"verdict": "DOESN'T FIT MY DATA - needs intraday data and complex fuzzy neural network implementation beyond simple mathematical operations",
+"verdict": "NOT CONFIRMED on my data: 2223 signal days, hit 46.6% (always-long 56.5%), strategy -5.7 bps/day vs -3.6 for the same average exposure held constantly -> timing adds -2.1 bps/day, t=-0.82, positive in 4/10 years",
 "url": "https://journals.vgtu.lt/index.php/TEDE/article/download/6394/5541",
 "date": "2026-10-20"
 },
@@ -823,7 +838,7 @@
 "Cryptocurrency"
 ],
 "relevance": 3,
-"verdict": "TRANSLATION FAILED - translator output unusable (Expecting property name enclosed in double quotes: line 1 column 2 (char 1))",
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 7/9 unseen years",
 "url": "https://doi.org/10.1016/j.asoc.2023.111132",
 "date": "2026-10-19"
 },

@@ -1,17 +1,5 @@
 [
  {
-  "id": "openalex:W3125339824",
-  "title": "The cross-section of speculator skill: Evidence from day trading",
-  "abstract": "(No abstract available from the open index - this is a well-known paper; use reliable knowledge of it and say so.)",
-  "url": "https://escholarship.org/content/qt7k75v0qx/qt7k75v0qx.pdf",
-  "source": "Must-read (curated)",
-  "date": "2013-07-02",
-  "curated": true,
-  "score": 99,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
   "id": "openalex:W1977360274",
   "title": "The restaurant at the end of the random walk: recent developments in the description of anomalous transport by fractional dynamics",
   "abstract": "Fractional dynamics has experienced a firm upswing during the past few years, having been forged into a mature framework in the theory of stochastic processes. A large number of research papers developing fractional dynamics further, or applying it to various systems have appeared since our first review article on the fractional Fokker\u2013Planck equation (Metzler R and Klafter J 2000a, Phys. Rep. 339 1\u201377). It therefore appears timely to put these new works in a cohesive perspective. In this review we cover both the theoretical modelling of sub- and superdiffusive processes, placing emphasis on superdiffusion, and the discussion of applications such as the correct formulation of boundary value problems to obtain the first passage time density function. We also discuss extensively the occurrence of anomalous dynamics in various fields ranging from nanoscale over biological to geophysical and environmental systems.",

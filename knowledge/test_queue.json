@@ -1,17 +1,5 @@
 [
  {
-  "id": "openalex:W4389410587",
-  "title": "Forecasting cryptocurrencies volatility using statistical and machine learning methods: A comparative study",
-  "idea": "Can simple linear models like HAR and ridge regression outperform complex machine learning models like LSTM and RF in forecasting volatility of a specific cryptocurrency or index, such as Nasdaq/S&P?",
-  "relevance": 3
- },
- {
-  "id": "openalex:W2900554501",
-  "title": "HYBRID FUZZY NEURAL NETWORK TO PREDICT PRICE DIRECTION IN THE GERMAN DAX-30 INDEX",
-  "idea": "Can a hybrid fuzzy neural network predict the direction of the Nasdaq/S&P index using technical indicators and oscillators as inputs?",
-  "relevance": 3
- },
- {
   "id": "openalex:W2166672289",
   "title": "Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model",
   "idea": "Can the HAR-CJ-M model's performance be replicated in Nasdaq/S&P index futures and options using daily realized volatility and momentum effect data?",

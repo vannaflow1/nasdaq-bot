@@ -19,6 +19,8 @@ hybrid fuzzy neural network, [[technical indicators]], factor analysis, predicti
 Can a hybrid fuzzy neural network predict the direction of the Nasdaq/S&P index using technical indicators and oscillators as inputs?
 
 ## Test
-[[DOESN'T FIT]] - DOESN'T FIT MY DATA - needs intraday data and complex fuzzy neural network implementation beyond simple mathematical operations
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 2223 signal days, hit 46.6% (always-long 56.5%), strategy -5.7 bps/day vs -3.6 for the same average exposure held constantly -> timing adds -2.1 bps/day, t=-0.82, positive in 4/10 years
+How: long/short on `sign(r20) * (rank(iv30, 126) - 0.5)` (positive = signal on)
+Touches: [[Options nerd]]
 
 Part of [[Research engine]]
