@@ -70,16 +70,24 @@
   "  stayed inside the options-priced move: 100% of days (backtest: ~55-70%)"
  ],
  "brain_pred": {
-  "pred": 0.01961,
+  "pred": 0.02049,
   "nq": 29845.25,
   "day": "Wed 21 Oct",
   "date": "2026-10-21",
   "gex_rank": 0.09,
   "event_prem": 0.755,
-  "high_mid": 30109.0,
-  "high_far": 30466.74,
-  "low_mid": 29605.13,
-  "low_far": 29140.86
+  "high_mid": 30120.82,
+  "high_far": 30494.59,
+  "low_mid": 29594.37,
+  "low_far": 29109.29,
+  "raw": {
+   "pred": 0.01961,
+   "high_mid": 30109.0,
+   "high_far": 30466.74,
+   "low_mid": 29605.13,
+   "low_far": 29140.86
+  },
+  "spx_factor": 1.0448
  },
  "live": [
   "LIVE - Tue 20 Oct 21:53 Lux",
@@ -207,33 +215,41 @@
   "Recently granted: #1 Intraday Option Quotes and Trades"
  ],
  "plan": [
-  "TRADING PLAN - 2026-10-20  |  expected move \u00b1290 pts, full-day range ~524 pts, risk ELEVATED",
-  "Size factor today: 50%  (risk level ELEVATED)",
+  "TRADING PLAN - 2026-10-21  |  expected move \u00b1298 pts, full-day range ~612 pts, risk ['VOLTA LEVEL 4  (463 XP, next level at 640)', 'Papers read 217 | ideas & strategies tested 48 | prop strategies searched 0', 'Survived unseen 2022-23: 0 (best EV per eval -) | passed the locked exam: 0 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 3', 'XP only for verified progress: tests passed on unseen data count far more than activity.']",
+  "Size factor today: 50%  (very low dealer gamma (bigger, faster moves))",
+  "SPX DEALER CHECK (2026-10-21): dealer gamma -8.3 (avg +1.5), SPX walls 7700 / 7725 (0.7x their usual distance) -> today's range bigger (+4.5%)",
   "",
   "STOPS on a day like this (share of level touches where price did NOT run past the stop within 30 min):",
   "    15 pt stop -> survives ~10% of touches",
   "    25 pt stop -> survives ~17% of touches",
-  "    40 pt stop -> survives ~28% of touches",
-  "    58 pt stop -> survives ~40% of touches",
-  "    60 pt stop -> survives ~41% of touches",
-  "    87 pt stop -> survives ~57% of touches",
-  "  Median overshoot through a level today: ~75 pts.",
+  "    40 pt stop -> survives ~27% of touches",
+  "    60 pt stop -> survives ~40% of touches",
+  "    89 pt stop -> survives ~57% of touches",
+  "  Median overshoot through a level today: ~77 pts.",
   "",
   "SIZE PER $1,000 OF BUFFER (distance to your max-loss limit):",
   "  risk per trade $50, daily stop $100",
-  "  -> 15 pt stop: 1 MNQ  |  40 pt stop: 0 MNQ  |  58 pt stop: 0 MNQ",
+  "  -> 15 pt stop: 1 MNQ  |  40 pt stop: 0 MNQ  |  60 pt stop: 0 MNQ",
   "",
   "Lucid rules to respect: EOD trailing max loss; 40% consistency (no single day > 40% of the cycle's profit).",
-  "Use /plan buffer:<$> stop:<pts> for your exact numbers. Sizing guidance, not trade signals or financial advice."
+  "Use /plan buffer:<$> stop:<pts> for your exact numbers. Sizing guidance, not trade signals or financial advice.",
+  "",
+  "VOLTA'S BOOK: $25,000 (buffer $1,000) - armed today: short-vol fly if dealer gamma rank > 0.7 at 15:20 NY; with the open's side of the overnight range at 08:31, no red"
  ],
  "plan_data": {
-  "date": "2026-10-20",
-  "move": 290,
-  "range": 524,
-  "level": "ELEVATED",
+  "date": "2026-10-21",
+  "move": 298,
+  "range": 612,
+  "level": [
+   "VOLTA LEVEL 4  (463 XP, next level at 640)",
+   "Papers read 217 | ideas & strategies tested 48 | prop strategies searched 0",
+   "Survived unseen 2022-23: 0 (best EV per eval -) | passed the locked exam: 0 | live winners: 0",
+   "Brain upgrades: 0 | self-discovered powers: 3",
+   "XP only for verified progress: tests passed on unseen data count far more than activity."
+  ],
   "mult": 0.5,
   "why": [
-   "risk level ELEVATED"
+   "very low dealer gamma (bigger, faster moves)"
   ],
   "event_day": false
  },
@@ -290,5 +306,8 @@
   "EXAM: [CL] break london_low 08:30-10:00, every day -> NOT CONFIRMED on my data: in-sample 2014-2023: 1372 trades, win 41%, avg -0.09R (-0.0 pts/trade after costs), PF 0.92, positive in 6/15 years, max drawdown -196.2R | PROP SIM best plan lucid_flex_50k: pass 21%, $155 paid out per eval, EV after the $104 fee +51",
   "",
   "EXAM: [CL] break on_low 08:45-11:30, every day -> NOT CONFIRMED (prop path): random entries on the same days pay about as much (random EV +592, p=1.00). in-sample 2014-2023: 1418 trades, win 35%, avg -0.22R (-0.1 pts/trade after costs), PF 0.75, positive in 2/15 years, max drawdown -346.6R | PROP SIM best pla"
+ ],
+ "spx_morning": [
+  "SPX DEALER CHECK (2026-10-21): dealer gamma -8.3 (avg +1.5), SPX walls 7700 / 7725 (0.7x their usual distance) -> today's range bigger (+4.5%)"
  ]
 }
