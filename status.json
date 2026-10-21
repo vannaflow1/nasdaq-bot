@@ -92,7 +92,7 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 225 papers read (38 more skipped as not relevant enough), 121 ideas tested on my memory, 1 promising.",
+  "LEARNING: 228 papers read (38 more skipped as not relevant enough), 122 ideas tested on my memory, 1 promising.",
   "",
   "\u2022 Economic Incentives and Social Preferences: Substitutes or Complements? (\u2605\u2605\u2605\u2605\u2606)",
   "  Explicit monetary incentives can weaken or strengthen intrinsic motivations depending on framing, perceived autonomy, and informational signals. When incentives are poorly designed they may crowd out the trader's intrins",
@@ -112,9 +112,9 @@
   "\u2022 Volatility Forecasting using GARCH Processes with Exogenous Variables (thesis) (\u2605\u2605\u2605\u2606\u2606)",
   "  Advanced GARCH variants did not beat simple ones on average; training length mattered; exogenous variables helped for big US/EU indices like S&P 500 and Russell 2000.",
   "  tested: TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding th",
-  "This week's tests: 126 run - 3 promising, 66 not confirmed, 29 don't fit my data, 28 translation failures",
+  "This week's tests: 129 run - 3 promising, 68 not confirmed, 29 don't fit my data, 29 translation failures",
   "",
-  "20 papers waiting in my queue."
+  "17 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

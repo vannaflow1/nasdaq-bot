@@ -13,7 +13,7 @@ Using high-frequency SPX option data with real transaction costs, the authors tr
 0DTE index options are close cousins of QQQ/NDX 0DTE and the finding that plain delta hedging is suboptimal near expiry matters for dealer-flow intuition, but it is about hedging, not forecasting, and needs intraday option data we do not have.
 
 ## Concepts
-[[0DTE options]], deep hedging, [[reinforcement learning]], black-scholes delta, [[transaction costs]]
+[[0DTE options]], [[deep hedging]], [[reinforcement learning]], black-scholes delta, [[transaction costs]]
 
 ## Idea
 Compare an RL hedge with Black-Scholes delta hedging for QQQ 0DTE options using intraday quotes.

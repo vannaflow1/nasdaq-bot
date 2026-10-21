@@ -1,17 +1,5 @@
 [
  {
-  "id": "openalex:W4250762315",
-  "title": "Momentum crashes",
-  "idea": "Trade next-day QQQ in the direction of the 20-day return, but go flat in panic states (20-day return negative and 20-day realized vol in its top 30% of the past year). (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
-  "relevance": 3
- },
- {
-  "id": "openalex:W3122511260",
-  "title": "Intraday Price Formation in U.S. Equity Index Markets",
-  "idea": "Measure intraday lead-lag between NQ futures and QQQ to time QQQ option entries. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
-  "relevance": 3
- },
- {
   "id": "openalex:W4406740838",
   "title": "Profitability of selected 0DTE index options strategies",
   "idea": "Selling a same-day iron condor pays when the realized move stays inside the options-priced move; my memory has only daily close-to-close returns and daily ranges, not intraday option prices or the condor's strikes, so the strategy itself cannot be simulated with idea_lab. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",

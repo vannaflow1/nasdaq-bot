@@ -19,6 +19,7 @@ Confirms that NQ futures, not QQQ, lead Nasdaq-100 price moves intraday, which s
 Measure intraday lead-lag between NQ futures and QQQ to time QQQ option entries.
 
 ## Test
-not testable with my data yet
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - formula gives too little usable data
+Touches: [[Open read (powers)]]
 
 Part of [[Research engine]]

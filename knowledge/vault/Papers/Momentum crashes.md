@@ -19,7 +19,8 @@ momentum crashes, panic states, market rebounds, dynamic risk scaling, time-vary
 Trade next-day QQQ in the direction of the 20-day return, but go flat in panic states (20-day return negative and 20-day realized vol in its top 30% of the past year).
 
 ## Test
-NO EDGE: 1804 days, hit 54.7% (always-long 57.2%), avg +6.4 bps/day, t=2.39, positive in 7/9 years
-How: Built from same-day-close r20 and l_rv20 (vol rank over trailing 252 days). For comparison, plain 20-day momentum gave t=1.48 and going long only in panic states gave t=0.33; three variants were tried, so the improvement should not be over-read.
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 1805 signal days, hit 54.7% (always-long 57.2%), strategy +5.2 bps/day vs +4.2 for the same average exposure held constantly -> timing adds +1.0 bps/day, t=0.44, positive in 7/10 years
+How: long/short on `r20 * where((r20 < 0) and (rank(rv20, 252) > 0.7), 0, 1)` (positive = signal on)
+Touches: [[Options nerd]]
 
 Part of [[Research engine]]

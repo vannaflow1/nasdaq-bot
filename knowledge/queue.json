@@ -1,41 +1,5 @@
 [
  {
-  "id": "arxiv:2610.28071v1",
-  "title": "Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread Options",
-  "abstract": "We develop an arithmetic multi-factor stochastic volatility model for commodity futures and options. The arithmetic specification yields a low-dimensional Markovian representation of the futures curve and semi-closed-form pricing formulas for vanilla and basket options, including calendar spread options. These properties make the model suitable for large-scale empirical estimation. We estimate the model using an unscented Kalman filter on a panel of WTI crude oil futures, vanilla options, and calendar spread options spanning 2013-2024. We find that three stochastic volatility factors are needed to capture both the level and slope of the volatility term structure, and that hedges based on these factors remove almost all of the daily risk of a portfolio of vanilla options. Calendar spread options provide information about the dependence structure of futures prices that is not captured by futures and vanilla options alone. A model estimated without calendar spread options systematically overprices them by overstating the decorrelation between adjacent futures contracts. Including these options in the estimation brings the model's decorrelation close to the observed decorrelation, which removes the overpricing and improves their hedges, at only a small loss of accuracy in the pricing and hedging of vanilla options. Finally, we show that the arithmetic model fits futures and vanilla options better than its geometric counterpart and hedges the vanilla options slightly better.",
-  "url": "https://arxiv.org/abs/2610.28071v1",
-  "pdf": "https://arxiv.org/pdf/2610.28071v1",
-  "source": "arXiv",
-  "date": "2026-10-20",
-  "score": 10,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/arxiv_2610.28071v1.txt"
- },
- {
-  "id": "openalex:W4297093141",
-  "title": "China futures price forecasting based on online search and information transfer",
-  "abstract": "The synchronicity effect between the financial market and online response for time-series forecasting is an important task with wide applications. This paper combines data from the Baidu index (BDI), Google trends (GT), and transfer entropy (TE) to forecast a wide range of futures prices with a focus on China. A forecasting model based on a hybrid gray wolf optimizer (GWO), convolutional neural network (CNN), andlong short-term memory (LSTM) is developed. First, Baidu and Google dual-platform search data were selected and constructed as Internet-based consumer price index (ICPI) using principal component analysis. Second, TE is used to quantify the information between online behavior and futures markets. Finally, the effective Internet-based consumer price index (ICPI) and TE are introduced into the GWO-CNN-LSTM model to forecast the daily prices of corn, soybean, PVC, egg, and rebar futures. The results show that the GWO-CNN-LSTM model has a significant improvement in predicting future prices. Internet-based CPI built on Baidu and Google platforms has a high degree of real-time performance and reduces the platform and language bias of the search data. Our proposed framework can provide predictive decision support for government leaders, market investors, and production activities.",
-  "url": "https://www.sciencedirect.com/science/article/pii/S2666764922000376/pdf",
-  "source": "OpenAlex (classic)",
-  "date": "2022-09-26",
-  "topic": "intraday momentum index futures",
-  "score": 9,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "arxiv:2610.27214v1",
-  "title": "Deep catastrophic-risk-aware reinforcement learning",
-  "abstract": "Estimating extreme risk in reinforcement learning becomes increasingly difficult as the confidence level increases, since only a small number of observations contribute to empirical estimates of Conditional Value-at-Risk (CVaR). In this paper, we extend an Extreme Value Theory (EVT) approach for CVaR optimization to high-dimensional neural-network policies. Using a peaks-over-threshold representation and method-of-moments estimation, we obtain a differentiable tail-risk objective and show that, conditional on the selected threshold, its finite-sample gradient can be computed directly through automatic differentiation. We first validate the approach in a controlled experiment with a known optimal solution and then investigate its performance in a deep-hedging problem with rare extreme market movements. Our results show similar hedging behavior for EVT- and empirical-CVaR-trained policies under normal conditions, while EVT-trained policies exhibit lower hedging losses under the extreme-scenario evaluation across the training sample sizes considered. These results suggest that EVT can provide a practical alternative for training neural policies when the observations relevant to extreme risk are scarce.",
-  "url": "https://arxiv.org/abs/2610.27214v1",
-  "pdf": "https://arxiv.org/pdf/2610.27214v1",
-  "source": "arXiv",
-  "date": "2026-10-19",
-  "score": 8,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/arxiv_2610.27214v1.txt"
- },
- {
   "id": "arxiv:2610.25802v2",
   "title": "Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage",
   "abstract": "Statistical arbitrage trades on an estimate of the state of a residual spread, and conventional practice discards the uncertainty of that estimate. We keep the uncertainty and use it in the trading decision. A Neural Filter Estimator (NFE) is trained on simulated paths of a mean-reverting process whose innovation law is selected by testing candidates against real residuals; once trained, it returns the posterior over the latent state of every spread in a cross-section in one forward pass. Three results follow. On simulated paths with known truth, every practical estimator, ours included, falls in one narrow band of accuracy well below an estimator given full information, so the posterior gains no accuracy over a point estimate; its contribution is a correct account of its own uncertainty. On Korean equities, net of costs, the conventional point estimate forecasts about a thousand basis points per holding period more than it realizes, and the amortized methods cut that gap by a factor of roughly two to eight. Sizing positions from the posterior on the same learned factors as the end-to-end Attention Factor Model matches the Sharpe ratio of those factors under the base rule within the period's noise, at no more risk.",

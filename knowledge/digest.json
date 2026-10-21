@@ -1,5 +1,49 @@
 [
 {
+"title": "Deep catastrophic-risk-aware reinforcement learning",
+"learned": "The paper shows how to combine Extreme Value Theory with deep reinforcement learning to better estimate and minimize tail risk (CVaR) when extreme loss events are rare, using a differentiable loss based on a Generalized Pareto Distribution.",
+"concepts": [
+"CVaR",
+"Extreme Value Theory",
+"Peaks\u2011over\u2011threshold",
+"Policy gradient",
+"Deep hedging"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://arxiv.org/abs/2610.27214v1",
+"date": "2026-10-21"
+},
+{
+"title": "China futures price forecasting based on online search and information transfer",
+"learned": "The paper proposes using combined Baidu and Google search volume data (via PCA) and transfer entropy to feed a GWO\u2011optimized CNN\u2011LSTM model for daily price forecasts of Chinese commodity futures.",
+"concepts": [
+"online search metrics",
+"transfer entropy",
+"CNN\u2011LSTM forecasting",
+"hybrid optimization"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://www.sciencedirect.com/science/article/pii/S2666764922000376/pdf",
+"date": "2026-10-21"
+},
+{
+"title": "Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread Options",
+"learned": "The paper builds an arithmetic (Bachelier) multi\u2011factor stochastic\u2011volatility HJM model for commodity futures, showing it needs three volatility factors to fit the level and slope of the volatility term structure and that including calendar\u2011spread options in calibration greatly improves the model\u2019s decorrelation between adjacent contracts and pricing of those spreads.",
+"concepts": [
+"Arithmetic (Bachelier) futures model",
+"Multi\u2011factor stochastic volatility",
+"Calendar spread options",
+"Kalman filter estimation",
+"Decorrelaton of futures curve"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/abs/2610.28071v1",
+"date": "2026-10-21"
+},
+{
 "title": "LOB-Impact Benchmark: Emergent Market Impact in Generative Limit Order Book Models",
 "learned": "Neural limit order book generators, trained just to predict the next event, naturally exhibit market impact when simulated metaorders are injected, but the observed impact exponents (0.63\u20111.21) are higher than the classic square\u2011root law (0.5) and they show little decay after execution.",
 "concepts": [
@@ -2612,7 +2656,7 @@
 "intraday lead-lag"
 ],
 "relevance": 2,
-"verdict": "not testable with my data yet",
+"verdict": "TRANSLATION FAILED - formula gives too little usable data",
 "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1046/j.1540-6261.2003.00609.x",
 "date": "2026-10-18"
 },
@@ -2642,7 +2686,7 @@
 "time-varying volatility"
 ],
 "relevance": 2,
-"verdict": "NO EDGE: 1804 days, hit 54.7% (always-long 57.2%), avg +6.4 bps/day, t=2.39, positive in 7/9 years",
+"verdict": "NOT CONFIRMED on my data: 1805 signal days, hit 54.7% (always-long 57.2%), strategy +5.2 bps/day vs +4.2 for the same average exposure held constantly -> timing adds +1.0 bps/day, t=0.44, positive in 7/10 years",
 "url": "https://www.sciencedirect.com/science/article/pii/S0304405X16301490/pdf",
 "date": "2026-10-18"
 },
