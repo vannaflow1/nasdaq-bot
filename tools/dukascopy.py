@@ -1,0 +1,139 @@
+"""tools/dukascopy.py - free 1-minute history from Dukascopy's public datafeed (expert review 2, upgrade 1).
+
+Used two ways:
+  * SEALED EXAM DATA (sealed_exam.py): the never-seen window (NQ from Feb 2026, GC/CL from July 2026) is fetched ONLY
+    inside the exam job, into the runner's memory, and thrown away afterwards. It is never written to the repo, so no
+    search job, family scorer, self-check, Gemini agent or Claude session can look at it.
+  * CALIBRATION (`python tools/dukascopy.py calibrate`): on months Volta HAS seen, the CFD proxy is compared with Volta's
+    own futures sessions (minute-return correlation, range ratio, and the frozen F2 variants' per-trade R on both).
+The instruments are CFDs, not futures: a research proxy. The calibration says how good a proxy each one is.
+Format: https://datafeed.dukascopy.com/datafeed/<SYM>/<YYYY>/<MM-1>/<DD>/BID_candles_min_1.bi5 - LZMA, 24-byte records
+(>i seconds-from-midnight UTC, 4 x >i prices (open, close, low, high) / point, >f volume)."""
+import io, json, lzma, os, struct, sys, time, urllib.request
+from datetime import date, timedelta
+import numpy as np, pandas as pd
+
+HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, HERE)
+SYMS = {"NQ": "USATECHIDXUSD", "GC": "XAUUSD", "CL": "LIGHTCMDUSD", "ES": "USA500IDXUSD", "YM": "USA30IDXUSD", "RTY": "USSC2000IDXUSD"}
+POINT = {"NQ": 1000, "GC": 1000, "CL": 1000, "ES": 1000, "YM": 1000, "RTY": 1000}   # checked by calibrate (price scale)
+URL = "https://datafeed.dukascopy.com/datafeed/{s}/{y}/{m:02d}/{d:02d}/BID_candles_min_1.bi5"
+
+
+def _get(url, tries=4):
+    for t in range(tries):
+        try:
+            return urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read()
+        except urllib.error.HTTPError as e:
+            if e.code == 404: return b""
+            time.sleep(2 + 3 * t)
+        except Exception:
+            time.sleep(2 + 3 * t)
+    raise RuntimeError(f"fetch failed: {url}")
+
+
+def day(mk, d):
+    """One UTC day of 1-minute bid candles -> DataFrame(ts_utc, o, h, l, c, v)."""
+    raw = _get(URL.format(s=SYMS[mk], y=d.year, m=d.month - 1, d=d.day))
+    if not raw: return pd.DataFrame()
+    b = lzma.decompress(raw); n = len(b) // 24
+    rec = np.frombuffer(b[:n * 24], dtype=np.dtype([("t", ">i4"), ("o", ">i4"), ("c", ">i4"), ("l", ">i4"), ("h", ">i4"), ("v", ">f4")]))
+    p = POINT[mk]; t0 = pd.Timestamp(d)
+    df = pd.DataFrame({"ts": t0 + pd.to_timedelta(rec["t"].astype(np.int64), unit="s"), "o": rec["o"] / p, "h": rec["h"] / p,
+                       "l": rec["l"] / p, "c": rec["c"] / p, "v": rec["v"].astype(float)})
+    return df[df.v > 0]                                       # Dukascopy pads closed minutes with flat zero-volume candles
+
+
+def fetch(mk, start, end, workers=8):
+    """All 1-minute bars between two dates, timestamps converted to Chicago time (Volta's session clock)."""
+    from concurrent.futures import ThreadPoolExecutor
+    days = [start + timedelta(i) for i in range((end - start).days + 1)]
+    with ThreadPoolExecutor(workers) as ex: parts = list(ex.map(lambda d: day(mk, d), days))
+    n = pd.concat([p for p in parts if len(p)], ignore_index=True) if any(len(p) for p in parts) else pd.DataFrame()
+    if not len(n): return n
+    n["ts"] = n.ts.dt.tz_localize("UTC").dt.tz_convert("America/Chicago").dt.tz_localize(None)
+    n["sym"] = SYMS[mk]
+    return n.sort_values("ts").reset_index(drop=True)
+
+
+def sessions(n):
+    """Same session layout as tools/build_market_bars.py: 390 bars 08:30-15:00 CT + levels known at the open."""
+    n = n.copy(); n["sess"] = n.ts.dt.normalize() + pd.to_timedelta((n.ts.dt.hour >= 17).astype(int), unit="D")
+    n["m"] = n.ts.dt.hour * 60 + n.ts.dt.minute
+    grid = np.arange(510, 900); O, H, L, C, V, meta = [], [], [], [], [], []; prev = None
+    for s, g in n.groupby("sess"):
+        if s.weekday() >= 5: continue
+        rth = g[(g.m >= 510) & (g.m < 900)].set_index("m")
+        if len(rth) < 300: prev = None; continue
+        rth = rth[~rth.index.duplicated()].reindex(grid)
+        rth["c"] = rth.c.ffill().bfill()
+        for c in ("o", "h", "l"): rth[c] = rth[c].fillna(rth.c)
+        rth["v"] = rth.v.fillna(0)
+        on = g[(g.m >= 17 * 60) | (g.m < 510)]; asia = g[(g.m >= 18 * 60) | (g.m < 120)]; lon = g[(g.m >= 120) & (g.m < 420)]
+        mid = g[((g.m >= 23 * 60) & (g.ts.dt.normalize() < s)) | ((g.m < 510) & (g.ts.dt.normalize() == s))]
+        if len(on) < 200 or len(mid) < 100: prev = None; continue
+        tp = (mid.h + mid.l + mid.c) / 3
+        r = {"session": s.strftime("%Y-%m-%d"), "sym": g.sym.iloc[0], "open": float(rth.o.iloc[0]),
+             "on_high": float(on.h.max()), "on_low": float(on.l.min()), "asia_high": float(asia.h.max()) if len(asia) else np.nan,
+             "asia_low": float(asia.l.min()) if len(asia) else np.nan,
+             "london_high": float(lon.h.max()) if len(lon) else np.nan, "london_low": float(lon.l.min()) if len(lon) else np.nan,
+             "midnight_open": float(mid.o.iloc[0]), "vw_pv": float((tp * mid.v).sum()), "vw_v": float(mid.v.sum()),
+             "vw_pv2": float((tp * tp * mid.v).sum()), "rng": float(rth.h.max() - rth.l.min()) / float(rth.o.iloc[0])}
+        if prev: r.update(yday_high=prev[0], yday_low=prev[1], yday_close=prev[2])
+        meta.append(r)
+        O.append(rth.o.values); H.append(rth.h.values); L.append(rth.l.values); C.append(rth.c.values); V.append(rth.v.values)
+        prev = (float(rth.h.max()), float(rth.l.min()), float(rth.c.iloc[-1]))
+    M = pd.DataFrame(meta)
+    if not len(M): return None, M
+    M["fc_frac"] = M.rng.shift(1).rolling(20, min_periods=10).mean()
+    M["date"] = M.session.shift(1)                            # memory date = previous session (evening before)
+    for c in ("pw_takes_pdh", "pw_takes_pdl", "pw_gap_fill", "pw_tail_day"): M[c] = np.nan
+    M = M.drop(columns=["rng"])
+    A = {k: np.array(v, np.float64) for k, v in zip("OHLCV", (O, H, L, C, V))}
+    return A, M
+
+
+def calibrate(markets=("NQ", "GC", "CL"), start=date(2025, 3, 3), end=date(2025, 8, 29)):
+    """On months Volta has already seen: how close is each CFD proxy to Volta's own futures data?"""
+    import strategy_lab as S, families as F, test_engine as TE
+    _, X = TE.frame(); out = {}
+    fam = next(f for f in json.load(open(F.REG)) if f["id"] == "F2")
+    for mk in markets:
+        t0 = time.time(); n = fetch(mk, start - timedelta(45), end)
+        if not len(n): out[mk] = {"error": "no data"}; continue
+        A, Mp = sessions(n); Df = S.data(mk); Mf = Df["M"]
+        common = sorted(set(Mp.session) & set(Mf.session[(Mf.session >= str(start)) & (Mf.session <= str(end))]))
+        ip = {s: i for i, s in enumerate(Mp.session)}; jf = {s: i for i, s in enumerate(Mf.session)}
+        rp = np.concatenate([np.diff(np.log(A["C"][ip[s]])) for s in common]); rf = np.concatenate([np.diff(np.log(Df["C"][jf[s]])) for s in common])
+        ok = np.isfinite(rp) & np.isfinite(rf)
+        scale = float(np.median([A["C"][ip[s]][-1] / Df["C"][jf[s]][-1] for s in common]))
+        rr = float(np.median([(A["H"][ip[s]].max() - A["L"][ip[s]].min()) / (Df["H"][jf[s]].max() - Df["L"][jf[s]].min()) for s in common]))
+        res = {"sessions": len(common), "minute_return_corr": round(float(np.corrcoef(rp[ok], rf[ok])[0, 1]), 3),
+               "price_ratio_proxy_over_futures": round(scale, 4), "range_ratio": round(rr, 3), "fetch_s": round(time.time() - t0)}
+        # the frozen F2 variants on both, same sessions: does the proxy give the same trades?
+        if mk == "NQ" or True:
+            V = F.variants(fam); pairs = []
+            S.install_market(mk + "_PROXY", A, Mp, like=mk)
+            ip_idx = np.array([ip[s] for s in common]); jf_idx = np.array([jf[s] for s in common])
+            for v in V[::5]:
+                for sp in v["sleeve"]:
+                    sf = dict(sp, market=mk); spp = dict(sp, market=mk + "_PROXY")
+                    Tf = S.backtest(sf, X, jf_idx); Tp = S.backtest(spp, X, ip_idx)
+                    if len(Tf) and len(Tp):
+                        a = Tf.groupby("session").R.sum(); b = Tp.groupby("session").R.sum(); j = a.index.intersection(b.index)
+                        if len(j) > 10: pairs.append((float(np.corrcoef(a[j], b[j])[0, 1]), float(a.mean()), float(b.mean()), len(a), len(b)))
+            if pairs:
+                P = np.array(pairs)
+                res["F2_daily_R_corr_median"] = round(float(np.median(P[:, 0])), 3)
+                res["F2_mean_R_futures"] = round(float(P[:, 1].mean()), 3); res["F2_mean_R_proxy"] = round(float(P[:, 2].mean()), 3)
+                res["F2_trade_days_ratio"] = round(float(P[:, 4].sum() / max(P[:, 3].sum(), 1)), 3)
+        out[mk] = res; print(mk, res, flush=True)
+    out["window"] = f"{start}..{end} (already seen by Volta - calibration only)"
+    os.makedirs(os.path.join(HERE, "knowledge", "research_out"), exist_ok=True)
+    json.dump(out, open(os.path.join(HERE, "knowledge", "research_out", "proxy_calibration.json"), "w"), indent=1)
+    return out
+
+
+if __name__ == "__main__":
+    if sys.argv[1:2] == ["calibrate"]: calibrate()
+    elif sys.argv[1:2] == ["probe"]:                          # quick format/scale probe on a seen day
+        for mk in SYMS: d = day(mk, date(2025, 6, 4)); print(mk, len(d), d.iloc[[0, len(d) // 2, -1]].to_dict("records") if len(d) else "")

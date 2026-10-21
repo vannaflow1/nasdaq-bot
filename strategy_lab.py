@@ -90,6 +90,16 @@ def data(market="NQ"):
 _MK = {}
 
 
+def install_market(name, A, M, like):
+    """Register an in-memory market (sealed exam data or a CFD proxy) under `name`, priced like futures market `like`.
+    Never written to disk: used by the sealed exam job and the proxy calibration only."""
+    name = name.upper(); D = {k: np.asarray(A[k], np.float64) for k in ("O", "H", "L", "C", "V")}
+    M = M.reset_index(drop=True).copy(); M["yday_mid"] = (M.yday_high + M.yday_low) / 2
+    MARKETS[name] = dict(MARKETS[like]); _add_vol_cols(D, M); _add_slip_cols(M, like); M.attrs["pv"] = MARKETS[like]["pv"]
+    D["M"] = M; D.update(MARKETS[like]); D["market"] = name; _MK[name] = D
+    return D
+
+
 def _add_vol_cols(D, M):
     """ATR (14 sessions, past only) and EWMA volatility (lambda 0.94, close-to-close, known before each session)."""
     C = D["C"][:, -1]; rng_ = D["H"].max(1) - D["L"].min(1)
