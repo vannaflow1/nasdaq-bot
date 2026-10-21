@@ -1,6 +1,0 @@
-[
- {
-  "title": "\ud83d\udd27 Volta upgraded itself: Friday strategies are searched again",
-  "body": "The prop search's 'Fri' filter used ==, which the formula checker rejects, so every Friday strategy in the grid (NQ, gold, oil) was silently skipped. It now uses k_dow > 3.5 and passes the checker (NQ: only Fridays, 566 days). Undo: git revert d46aa94"
- }
-]
