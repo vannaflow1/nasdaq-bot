@@ -12,7 +12,8 @@ How the estimate works (Monte Carlo over 4000 possible worlds, each weighted by 
   2. If one exists, what share of locked exams is taken by a REAL edge? Prior Beta(1, 19) - about 1 in 20 (most search
      survivors are luck: Harvey, Liu & Zhu 2016; Bailey et al. 2014). A lucky (no-edge) candidate still passes the
      exam LUCK_PASS = 25% of the time - which is why the review step exists.
-  3. The review recognises a real edge REAL_CONFIRM = 85% of the time; it happens every Sunday.
+  3. The review (review_prop.py: placebo on the unseen years, stability in 4 periods, nudges, costs - run IMMEDIATELY
+     after an exam pass, double-checked by Claude's nightly session) recognises a real edge REAL_CONFIRM = 85% of the time.
   4. Exams per week = Volta's actual exam rate (smoothed toward 2/week until it has history, capped at the weekly
      exam budget). Exam-passers waiting for review count with their own chance of being real.
 Every unknown is drawn from its uncertainty, so the result is a RANGE, not a promise. It changes as results come in.
@@ -46,7 +47,7 @@ def inputs():
     first = pd.Timestamp(dates[0]) if dates else pd.Timestamp(datetime.now(timezone.utc).date())
     days = max(1.0, (pd.Timestamp(datetime.now(timezone.utc).date()) - first).days + 1)
     rate = min(S.EXAMS_PER_WEEK, (len(exams) + 4) / (days + 14) * 7)     # smoothed toward 2 exams/week until there is history
-    cands = [{"name": e["name"], "status": _review(e), "ev": (e.get("prop_exam") or {}).get("ev_per_eval"),
+    cands = [{"name": e["name"], "status": _review(e), "ev": (e.get("prop_exam") or {}).get("ev_per_eval"), "why": str(e.get("review") or ""),
               "plan": (e.get("prop_exam") or {}).get("plan")} for e in passed]
     return {"exams": len(exams), "passes": len(passed), "rate": rate, "days_running": int(days), "cands": cands,
             "rejected": sum(c["status"] == "rejected" for c in cands), "confirmed": sum(c["status"] == "confirmed" for c in cands)}
@@ -64,7 +65,7 @@ def simulate(I, seed=7):
     w = (1 - pi) ** fails * (1 - REAL_CONFIRM * p_real) ** I["rejected"]   # likelihood of what Volta has seen
     idx = rng.choice(SIMS, SIMS, p=w / w.sum()); pi, p_real = pi[idx], p_real[idx]
     rate = rng.gamma(4 + I["exams"], I["rate"] / (4 + I["exams"]), SIMS)
-    to_sunday = ((6 - datetime.now(timezone.utc).weekday()) % 7 + 1) / 7    # weeks until the next review (Sunday)
+    to_sunday = 0.0                                                         # the review runs right after the exam (since 21 Oct)
     eta = np.full(SIMS, np.inf)
     for c in I["cands"]:                                                    # exam-passers waiting for their review
         if c["status"] != "waiting": continue
@@ -101,10 +102,12 @@ def lines(I=None):
     out.append(f"Based on: {I['exams']} locked exams in {I['days_running']} days ({I['passes']} passed, {I['rejected']} rejected by review), "
                f"about {I['rate']:.1f} exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.")
     w = [c for c in I["cands"] if c["status"] == "waiting"]
-    out.append("Waiting for Sunday's review: " + "; ".join(f"{c['name'][:55]} (exam EV {c['ev']:+.0f}$/eval on {c['plan']})" for c in w)
+    out.append("Waiting for review: " + "; ".join(f"{c['name'][:55]} (exam EV {c['ev']:+.0f}$/eval on {c['plan']})" for c in w)
                if w else "Nothing waiting for review.")
     out.append("Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; "
-               "a lucky strategy still passes the exam 1 in 4 times; the review spots a real one 85% of the time.")
+               "a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.")
+    rv = [c for c in I["cands"] if c["status"] == "rejected"]
+    if rv: out.append("Rejected by review: " + "; ".join(f"{c['name'][:55]} ({c['why'][:110]})" for c in rv[-2:]))
     return out
 
 

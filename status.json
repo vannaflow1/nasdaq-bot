@@ -286,10 +286,11 @@
  ],
  "eta": [
   "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
-  "If there is one to find: most likely in 9 weeks (80% range under a week to 18 months). Overall chance within 1 month 16%, 3 months 29%, 6 months 37%, 1 year 43%.",
-  "Chance there is NO such algo in what I search (or I never catch it): 50%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
-  "Based on: 1 locked exams in 1 days (1 passed, 0 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.",
-  "Waiting for Sunday's review: with the open's side of the overnight range at 08:31, n (exam EV +632$/eval on lucid_pro_50k)",
-  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review spots a real one 85% of the time."
+  "If there is one to find: most likely in 3 months (80% range 2 weeks to 19 months). Overall chance within 1 month 12%, 3 months 23%, 6 months 31%, 1 year 37%.",
+  "Chance there is NO such algo in what I search (or I never catch it): 55%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
+  "Based on: 1 locked exams in 1 days (1 passed, 1 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.",
+  "Nothing waiting for review.",
+  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.",
+  "Rejected by review: with the open's side of the overnight range at 08:31, n (FRAGILE (auto, 2026-10-21): payouts positive in only 1/4 periods (2014-2016 -43, 2017-2019 -104, 2020-2022 -22)"
  ]
 }

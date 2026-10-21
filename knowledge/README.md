@@ -62,7 +62,11 @@ Never without the owner: money, accounts, secrets/permissions, deleting data, we
   it (~1 in 20)", "lucky strategies pass the exam 1 in 4", "review spots a real one 85%", weighted by Volta's own failed exams
   and review rejections. Written to status.json["eta"] by prop_search (job 1) and strategy_forward; shown at the top of
   /search and /wishes; history in knowledge/eta_history.csv. Keep it honest: never tune the priors to make it look better.
-- **Weekly review of exam-passers:** for every strategy in knowledge/strategies.jsonl whose verdict starts with
-  "PROMISING STRATEGY" and has no "review" field yet, judge it (per-year stability, is the payout EV coming from the
-  strategy or only from the prop structure/sizing, both halves, costs, leaks) and write the field
-  "review": "CONFIRMED: <why>" / "FRAGILE: <why>" / "FLUKE: <why>" into that line. The timer reads it.
+- **Immediate review of exam-passers** (review_prop.py, since 21 Oct - no waiting for Sunday): runs inside
+  strategy_lab right after a PROMISING STRATEGY verdict and writes "review": "CONFIRMED/FRAGILE/FLUKE (auto, date): why"
+  plus "review_detail" into strategies.jsonl. Checks: exam re-scored under the CURRENT simulator rules; placebo on the
+  unseen 2024-26 days (random minute / coin-flip side, same plan+sizing, p < 0.10); payouts in >= 3 of 4 periods
+  (2014-16, 2017-19, 2020-22, 2023-26); >= 75% of nudges (stop/target +-20%, entry +-15 min) still pay; 1.5x costs still pay.
+  `python review_prop.py` reviews any exam-passer without a review (`--all` re-reviews all).
+  Claude's nightly session double-checks every "(auto" review once and adds "review_claude": "<agree/overturn>: why"; if it
+  overturns, it rewrites "review" as "<LABEL> (Claude, date): why". The timer reads "review".

@@ -430,6 +430,13 @@ def evaluate(spec, X, source="engine", name=None):
         head_prop = f" | prop sim failed: {type(e).__name__}"
     def done(verdict):
         out["verdict"] = verdict + head_prop
+        if verdict.startswith("PROMISING STRATEGY"):          # immediate review (no waiting for Sunday): luck, stability, nudges, costs
+            try:
+                import review_prop
+                lab, why, det = review_prop.review(spec, X, (out.get("prop_exam") or (out.get("prop") or [{}])[0]).get("plan"))
+                out["review"] = f"{lab} (auto, {datetime.now(timezone.utc):%Y-%m-%d}): {why}"; out["review_detail"] = det
+            except Exception as e:
+                print("auto review failed:", type(e).__name__, e)
         with open(LOG, "a") as f: f.write(json.dumps(out) + "\n")
         return out["verdict"], f"strategy lab: {json.dumps(spec)[:300]}"
     if m.get("n", 0) < 150:
