@@ -285,10 +285,10 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 3 (job 4/8): 1360 new strategies this run, 14,220 tested in total (grid 985,824 + mutations, 1.4% covered)",
-  "Stage A (2014-21, EV after fee > 0): 2497 | Stage B (still positive on unseen 2022-23): 636 | exams taken: 4",
-  "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): NQ +3307 at 1981 validated tries (2384 placebos, avg +8) -> 0 beat it | GC +2982 at 206 validated tries (170 placebos, avg -23) -> 0 beat it | CL +2776 at 194 validated tries (90 placebos, avg +8) -> 0 beat it",
-  "Market focus: NQ 56% / GC 21% / CL 24%  (evidence: NQ 0/9033 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/2714 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/2473 beat the luck bar on 2022-23; locked exams 0/0 pas)",
+  "PROP STRATEGY SEARCH - run 1 (job 5/8): 2581 new strategies this run, 15,441 tested in total (grid 985,824 + mutations, 1.6% covered)",
+  "Stage A (2014-21, EV after fee > 0): 2621 | Stage B (still positive on unseen 2022-23): 665 | exams taken: 4",
+  "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): NQ +3307 at 2079 validated tries (2580 placebos, avg +8) -> 0 beat it | GC +1210 at 230 validated tries (218 placebos, avg -18) -> 0 beat it | CL +2776 at 195 validated tries (92 placebos, avg +12) -> 0 beat it",
+  "Market focus: NQ 56% / GC 20% / CL 24%  (evidence: NQ 0/9514 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/3333 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/2594 beat the luck bar on 2022-23; locked exams 0/0 pas)",
   "",
   "LEADERBOARD (ranked by EV per eval on unseen 2022-23 above the market's luck bar; 'luck-level' = not above it, likely a lucky survivor):",
   "- mutant: [GC] break or15_low 08:45-11:30, no red-folder news | tradeday_fastpass_50k risk 30%/50% | 2014-21 EV +189 (pass 24%) | 2022-23 EV +792 (pass 55%) | luck-level | 5 accounts: +652$/month (25% months positive) | 504 trades, -0.00R",
