@@ -1,0 +1,262 @@
+[
+ {
+  "id": "F5",
+  "name": "Gap fill sized by the gap-fill power",
+  "mechanism": "Small gaps relative to the expected move tend to fill as overnight positioning unwinds at the open.",
+  "citation": "expert review 21 Oct 2026; Volta's own pw_gap_fill power (walk-forward)",
+  "sleeve": [
+   {
+    "market": "NQ",
+    "name": "F5 gap fill",
+    "entry": {
+     "type": "time",
+     "at": "08:31",
+     "side": "0 - sign(k_gap)"
+    },
+    "filter": "where(pw_gap_fill > {PW}, {CAP}*impl*100 - abs(k_gap), -1)",
+    "stop": {
+     "range": 0.15
+    },
+    "target": {
+     "level": "yday_close"
+    },
+    "exit": "11:00"
+   }
+  ],
+  "grid": {
+   "param.PW": [
+    0.6,
+    0.65,
+    0.7,
+    0.75
+   ],
+   "param.CAP": [
+    0.3,
+    0.5,
+    0.7
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.25
+    }
+   ],
+   "exit": [
+    "10:00",
+    "11:00",
+    "12:30"
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-21",
+  "hash": "bbc42fdb12eb",
+  "frozen": "bf376e18217afeededae631a25887e578fd52764"
+ },
+ {
+  "id": "F6",
+  "name": "Scheduled-event drifts (pooled sleeve)",
+  "mechanism": "Risk premia and positioning around scheduled releases: the pre-FOMC drift (Lucca & Moench 2015) and the opening drive on days with pre-market red-folder news.",
+  "citation": "Lucca & Moench, JF 2015; expert review 21 Oct 2026",
+  "sleeve": [
+   {
+    "market": "NQ",
+    "name": "F6a pre-FOMC drift",
+    "entry": {
+     "type": "time",
+     "at": "09:00",
+     "side": "long"
+    },
+    "filter": "k_fomc_day - 0.5",
+    "stop": {
+     "range": 0.25
+    },
+    "target": {
+     "R": 5
+    },
+    "exit": "12:55"
+   },
+   {
+    "market": "NQ",
+    "name": "F6b news-day opening drive",
+    "entry": {
+     "type": "time",
+     "at": "{AT}",
+     "side": "sign(k_gap)"
+    },
+    "filter": "k_red_premarket - 0.5",
+    "stop": {
+     "range": 0.25
+    },
+    "target": {
+     "R": 5
+    },
+    "exit": "{EX}"
+   }
+  ],
+  "grid": {
+   "stop": [
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.25
+    },
+    {
+     "range": 0.35
+    }
+   ],
+   "target": [
+    {
+     "R": 1
+    },
+    {
+     "R": 2
+    },
+    {
+     "R": 5
+    }
+   ],
+   "param.AT": [
+    "08:31",
+    "08:45"
+   ],
+   "param.EX": [
+    "10:00",
+    "11:30"
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-21",
+  "hash": "a6b528c8f9f7",
+  "frozen": "bf376e18217afeededae631a25887e578fd52764"
+ },
+ {
+  "id": "F3",
+  "name": "Gamma-regime switch on the forecast range",
+  "mechanism": "Positive dealer gamma dampens moves (fade the expected-move band back to VWAP); negative gamma amplifies them (break the opening range).",
+  "citation": "Baltussen, Da, Lammers & Martens, JFE 2021 (gamma and intraday momentum); expert review 21 Oct 2026",
+  "sleeve": [
+   {
+    "market": "NQ",
+    "name": "F3a fade upper band",
+    "entry": {
+     "type": "level",
+     "level": "exp50_up",
+     "action": "fade",
+     "window": [
+      "08:45",
+      "13:00"
+     ]
+    },
+    "filter": "where(gex_rank > {GP}, {RC} - rank(impl, 252), -1)",
+    "stop": {
+     "range": 0.1
+    },
+    "target": {
+     "level": "vwap"
+    },
+    "exit": "14:45"
+   },
+   {
+    "market": "NQ",
+    "name": "F3b fade lower band",
+    "entry": {
+     "type": "level",
+     "level": "exp50_dn",
+     "action": "fade",
+     "window": [
+      "08:45",
+      "13:00"
+     ]
+    },
+    "filter": "where(gex_rank > {GP}, {RC} - rank(impl, 252), -1)",
+    "stop": {
+     "range": 0.1
+    },
+    "target": {
+     "level": "vwap"
+    },
+    "exit": "14:45"
+   },
+   {
+    "market": "NQ",
+    "name": "F3c break OR high",
+    "entry": {
+     "type": "level",
+     "level": "or15_high",
+     "action": "break",
+     "window": [
+      "08:45",
+      "11:30"
+     ]
+    },
+    "filter": "{GN} - gex_rank",
+    "stop": {
+     "range": 0.1
+    },
+    "target": {
+     "R": "{TR}"
+    },
+    "exit": "14:45"
+   },
+   {
+    "market": "NQ",
+    "name": "F3d break OR low",
+    "entry": {
+     "type": "level",
+     "level": "or15_low",
+     "action": "break",
+     "window": [
+      "08:45",
+      "11:30"
+     ]
+    },
+    "filter": "{GN} - gex_rank",
+    "stop": {
+     "range": 0.1
+    },
+    "target": {
+     "R": "{TR}"
+    },
+    "exit": "14:45"
+   }
+  ],
+  "grid": {
+   "param.GP": [
+    0.5,
+    0.6,
+    0.7
+   ],
+   "param.GN": [
+    0.3,
+    0.4,
+    0.5
+   ],
+   "param.RC": [
+    0.5,
+    0.67
+   ],
+   "param.TR": [
+    1.5,
+    2.5
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.2
+    }
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-21",
+  "hash": "4d6be1502176",
+  "frozen": "bf376e18217afeededae631a25887e578fd52764"
+ }
+]
