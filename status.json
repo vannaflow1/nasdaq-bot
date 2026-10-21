@@ -283,5 +283,13 @@
   "EXAM: [CL] break london_low 08:30-10:00, every day -> NOT CONFIRMED (prop path): random entries on the same days pay about as much (random EV +1959, p=1.00). in-sample 2014-2023: 1372 trades, win 39%, avg -0.02R (+0.0 pts/trade after costs), PF 1.06, positive in 8/15 years, max drawdown -132.9R | PROP SIM best pl",
   "",
   "EXAM: with the open's side of the overnight range at 08:31, no red-folder ne -> PROMISING STRATEGY (prop path, passed the locked exam): LOCKED EXAM 2024-2026 on lucid_pro_50k: pass 50%, $736 paid out per eval, EV +632. in-sample 2014-2023: 1024 trades, win 51%, avg +0.02R (+1.4 pts/trade after costs), PF 1.08, positive in 5/10 years, max "
+ ],
+ "eta": [
+  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
+  "If there is one to find: most likely in 9 weeks (80% range under a week to 18 months). Overall chance within 1 month 16%, 3 months 29%, 6 months 37%, 1 year 43%.",
+  "Chance there is NO such algo in what I search (or I never catch it): 50%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
+  "Based on: 1 locked exams in 1 days (1 passed, 0 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.",
+  "Waiting for Sunday's review: with the open's side of the overnight range at 08:31, n (exam EV +632$/eval on lucid_pro_50k)",
+  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review spots a real one 85% of the time."
  ]
 }
