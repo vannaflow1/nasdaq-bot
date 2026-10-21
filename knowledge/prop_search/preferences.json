@@ -1,15 +1,15 @@
 {
  "weights": {
-  "NQ": 0.767,
-  "GC": 0.1,
-  "CL": 0.133
+  "NQ": 0.563,
+  "GC": 0.194,
+  "CL": 0.243
  },
- "why": "evidence: NQ 266/4014 held up on 2022-23 (top EV +1239); locked exams 1/1 passed, GC 22/1492 held up on 2022-23 (top EV +508); locked exams 0/0 passed, CL 32/1644 held up on 2022-23 (top EV +791); locked exams 0/0 passed (exam weight x1, 2022-23 weight ^0.80)",
+ "why": "evidence: NQ 0/9571 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/3404 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/2617 beat the luck bar on 2022-23; locked exams 0/0 passed (exam weight x1, 2022-23 weight ^0.80)",
  "stats": {
   "NQ": {
-   "tested": 4014,
-   "validated": 266,
-   "top5": 1239.42,
+   "tested": 9571,
+   "validated": 0,
+   "top5": 0.0,
    "exams": 1,
    "passed": 1,
    "fwd_trades": 0,
@@ -17,9 +17,9 @@
    "fwd_t": 0.0
   },
   "GC": {
-   "tested": 1492,
-   "validated": 22,
-   "top5": 508.4599999999999,
+   "tested": 3404,
+   "validated": 0,
+   "top5": 0.0,
    "exams": 0,
    "passed": 0,
    "fwd_trades": 0,
@@ -27,9 +27,9 @@
    "fwd_t": 0.0
   },
   "CL": {
-   "tested": 1644,
-   "validated": 32,
-   "top5": 790.68,
+   "tested": 2617,
+   "validated": 0,
+   "top5": 0.0,
    "exams": 0,
    "passed": 0,
    "fwd_trades": 0,
@@ -37,7 +37,7 @@
    "fwd_t": 0.0
   }
  },
- "luck_control": false,
+ "luck_control": true,
  "history": [
   {
    "date": "2026-10-21",
@@ -54,7 +54,18 @@
     "GC": 0.1,
     "CL": 0.133
    }
+  },
+  {
+   "date": "2026-10-21",
+   "weights": {
+    "NQ": 0.563,
+    "GC": 0.194,
+    "CL": 0.243
+   }
   }
  ],
- "shifted": []
+ "shifted": [
+  "NQ",
+  "CL"
+ ]
 }
