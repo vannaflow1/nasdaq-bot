@@ -91,8 +91,11 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 233 papers read (40 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
+  "LEARNING: 234 papers read (40 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Conformer: Convolution-augmented Transformer for Speech Recognition (\u2605\u2605\u2605\u2605\u2606)",
+  "  The Conformer architecture mixes self\u2011attention for global context with convolutional modules for local patterns, using a macaron\u2011style sandwich of feed\u2011forward layers and pre\u2011norm residual connections to stay parameter\u2011",
+  "  tested: about myself - feeds my self-check",
   "\u2022 On Calibration of Modern Neural Networks (\u2605\u2605\u2605\u2606\u2606)",
   "  Modern deep nets tend to be overconfident, and simple post\u2011processing like temperature scaling can substantially improve probability calibration. Factors such as depth, width, weight decay, and batch\u2011norm affect calibrat",
   "  tested: about myself - feeds my self-check",
@@ -108,9 +111,6 @@
   "\u2022 OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper derives an optimal risky\u2011asset allocation when an investor must keep wealth above a stochastic floor equal to a fixed fraction \u03b1 of the historical maximum wealth. The optimal exposure is proportional to the sur",
   "  tested: TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
-  "\u2022 China credit impulse as a 6-12 month lead for the Nasdaq (\u2605\u2605\u2605\u2606\u2606)",
-  "  Credit impulse = change in China's 12-month credit flow vs a year earlier, as % of credit. Claimed to lead risk assets by 6-12 months.",
-  "  tested: TESTED 2000-2024: corr with the next 6m NDX +0.15, next 12m +0.20 (positive in 2000-09, 2010-17, 2018-26), but only ~25-50 independent periods -> not significan",
   "This week's tests: 140 run - 4 promising, 70 not confirmed, 29 don't fit my data, 37 translation failures",
   "",
   "18 papers waiting in my queue."

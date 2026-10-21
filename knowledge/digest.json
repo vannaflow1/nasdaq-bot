@@ -1,5 +1,20 @@
 [
 {
+"title": "Conformer: Convolution-augmented Transformer for Speech Recognition",
+"learned": "The Conformer architecture mixes self\u2011attention for global context with convolutional modules for local patterns, using a macaron\u2011style sandwich of feed\u2011forward layers and pre\u2011norm residual connections to stay parameter\u2011efficient.",
+"concepts": [
+"self\u2011attention + convolution fusion",
+"macaron feed\u2011forward sandwich",
+"pre\u2011norm residuals",
+"relative positional encoding",
+"depth\u2011wise gated convolutions"
+],
+"relevance": 4,
+"verdict": "about myself - feeds my self-check",
+"url": "https://arxiv.org/pdf/2005.08100",
+"date": "2026-10-21"
+},
+{
 "title": "On Calibration of Modern Neural Networks",
 "learned": "Modern deep nets tend to be overconfident, and simple post\u2011processing like temperature scaling can substantially improve probability calibration. Factors such as depth, width, weight decay, and batch\u2011norm affect calibration quality.",
 "concepts": [
