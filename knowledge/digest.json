@@ -1,5 +1,50 @@
 [
 {
+"title": "Design of High-Frequency Trading Algorithm Based on Machine Learning",
+"learned": "The paper combines three components\u2014VPIN (a liquidity\u2011risk indicator), a GARCH volatility model, and an SVM classifier\u2014into a deep\u2011learning\u2011style optimizer for high\u2011frequency market\u2011making on CSI\u2011300 futures.",
+"concepts": [
+"VPIN",
+"GARCH",
+"Support Vector Machine",
+"high\u2011frequency market making",
+"deep\u2011learning optimizer"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://arxiv.org/abs/1912.10343v1",
+"date": "2026-10-21"
+},
+{
+"title": "Comparative Analysis of Limit Order Book Dynamics between the Nairobi Securities Exchange and Major Global Exchanges: Insights into Liquidity, Volatility, and Market Efficiency",
+"learned": "The paper finds that Nairobi\u2019s limit order book is less liquid, has wider spreads, shallower depth, slower post\u2011shock recovery (often >30\u202fs vs <5\u202fs on NYSE/LSE/JSE) and higher VPIN, indicating more order\u2011flow toxicity and price\u2011discovery inefficiency.",
+"concepts": [
+"limit order book",
+"bid\u2011ask spread",
+"order\u2011flow toxicity (VPIN)",
+"liquidity resiliency",
+"market microstructure"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://journals.eanso.org/index.php/ijfa/article/download/3500/4055",
+"date": "2026-10-21"
+},
+{
+"title": "High Frequency Trade Direction Prediction",
+"learned": "The paper proposes using the VPIN metric and a Brownian\u2011motion model of a virtual price to infer trade direction volatility and predict short\u2011term price moves.",
+"concepts": [
+"VPIN",
+"order flow toxicity",
+"virtual price",
+"Brownian motion",
+"trade direction volatility"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://escholarship.org/uc/item/5f1439rs",
+"date": "2026-10-21"
+},
+{
 "title": "DeepAR: Probabilistic forecasting with autoregressive recurrent networks",
 "learned": "DeepAR trains a single autoregressive recurrent network on many related time series and outputs a full predictive distribution, not just point forecasts. It learns shared patterns while still adapting to each series via conditioning on past observations.",
 "concepts": [

@@ -2,11 +2,12 @@
 tags: [concept]
 ---
 # GARCH
-13 papers mention this:
+14 papers mention this:
 
 - [[An International Comparison of Implied, Realized, and GARCH Volatility Forecasts]]
 - [[Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kin]]
 - [[Conditional Heteroskedasticity in Asset Returns A New Approach]]
+- [[Design of High-Frequency Trading Algorithm Based on Machine Learning]]
 - [[Forecasting cryptocurrencies volatility using statistical and machine learning methods A c]]
 - [[Forecasting volatility of Bitcoin]]
 - [[Generalized autoregressive conditional heteroskedasticity]]

@@ -1,0 +1,53 @@
+[
+ {
+  "id": "h1",
+  "date": "2026-10-21",
+  "query": "overnight trading range macroeconomic announcements Nasdaq index futures",
+  "why": "my strategy 'with the open's side of the overnight range at 08:31, no red-folder news' passed the locked exam - why could it work, and when does it stop working?",
+  "source": "automatic",
+  "status": "searched",
+  "papers": [
+   "openalex:W3121286014",
+   "openalex:W2103409209",
+   "openalex:W3135295841"
+  ],
+  "key": "exam:with the open's side of the overnight range at 08:31, no red-folder news",
+  "searched": "2026-10-21"
+ },
+ {
+  "id": "h2",
+  "date": "2026-10-21",
+  "query": "Volume Synchronized Probability of Informed Trading VPIN Market Volatility and",
+  "why": "promising result to understand: Volume-Synchronized Probability of Informed Trading (VPIN), Market Volatility, and High-Frequency Liquidity (Retest as a POWER if it is about the next session's",
+  "source": "automatic",
+  "status": "searched",
+  "papers": [
+   "openalex:W1190133254",
+   "openalex:W4413288270",
+   "arxiv:1912.10343v1"
+  ],
+  "key": "promising:openalex:W608545967",
+  "searched": "2026-10-21"
+ },
+ {
+  "id": "h3",
+  "date": "2026-10-21",
+  "query": "dealer gamma hedging daily range volatility Nasdaq index futures",
+  "why": "promising result to understand: On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant m",
+  "source": "automatic",
+  "status": "nothing found",
+  "papers": [],
+  "key": "promising:self:2026-10-21:0",
+  "searched": "2026-10-21"
+ },
+ {
+  "id": "h4",
+  "date": "2026-10-21",
+  "query": "Asian session daily return reversal Nasdaq index futures",
+  "why": "promising result to understand: When the NQ opens near the high of the Asian session (k_open_vs_asia = 1), are we more likely to break yesterday's high during the NY session?",
+  "source": "automatic",
+  "status": "open",
+  "papers": [],
+  "key": "promising:q:2026-10-21:3"
+ }
+]

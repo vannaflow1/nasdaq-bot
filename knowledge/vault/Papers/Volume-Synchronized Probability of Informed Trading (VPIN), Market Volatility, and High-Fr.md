@@ -13,7 +13,7 @@ The study examines the relationship between Volume-Synchronized Probability of I
 The study provides useful insights into market microstructure and volatility, but its direct application to trading strategies for retail traders is limited.
 
 ## Concepts
-vpin, [[market volatility]], high-frequency liquidity
+[[vpin]], [[market volatility]], high-frequency liquidity
 
 
 Part of [[Research engine]]

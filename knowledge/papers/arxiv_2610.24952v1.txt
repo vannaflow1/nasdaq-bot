@@ -1,0 +1,871 @@
+CasePlay: Self-Play Reinforcement Learning from
+Case Reports for Medical Reasoning
+Hao Wang∗,1 Zihan Wang∗,2 Kai Wu∗,3 Jian Yao†,4
+Yiwen Ye5 Yongcan Luo1 Dapeng Wu1 Jiale Chen5 Haihua Yang†,5
+1City University of Hong Kong 2Northeastern University
+3Tongji University 4The Hong Kong Polytechnic University 5ByteDance
+Abstract
+Reinforcement learning (RL) is a promising way to improve the clinical reason-
+ing abilities of large language models (LLMs), but current pipelines often rely
+on expert-labeled questions or costly synthetic-data generation. Meanwhile, the
+medical literature offers a wealth of high-quality unlabeled documents, including
+clinical case reports that trace the full clinical course from initial presentation to
+final treatment decisions. We study whether document-grounded self-play can
+convert these reports into effective RL training signals. We identify two challenges
+that limit existing self-play methods in this setting:knowledge-point fixation, where
+the proposer repeatedly asks about a narrow set of salient clues in a source re-
+port, anddifficulty-quality mismatch, where appropriately difficult questions may
+still be poorly formed or shallow, limiting their value for reasoner training. To
+address these challenges, we propose CasePlay, a self-play framework with two
+key components: (a) aKnowledge-Conditioned Proposer, which anchors ques-
+tion generation to case-specific knowledge points so that questions draw on a
+broader range of evidence from the source report; and (b) aRubric-Judge Reasoner,
+which augments answer-accuracy feedback with rubric-based quality feedback on
+clue integration, reasoning depth, and option quality, guiding the proposer toward
+reasoning-intensive questions that better support reasoner training. Extensive ex-
+periments across seven medically related benchmarks demonstrate that CasePlay
+outperforms existing self-play baselines and improves the SFT warm-start model by
+3.1 points on average, highlighted by a 6.3-point gain on LiveClin. This approach
+offers an effective path toward continually improving medical reasoning ability
+through self-play RL.
+1 Introduction
+Large language models (LLMs) have shown growing promise in medical reasoning, including
+differential diagnosis [1–5], clinical decision support [6–9], and health question answering [10–12].
+Many recent advances in medical LLMs have followed the common post-training paradigm of
+supervised fine-tuning (SFT) followed by reinforcement learning (RL), which has proven effective
+for improving reasoning ability. However, scaling this recipe remains costly as it depends on expert
+annotations and synthetic data pipelines, a bottleneck that becomes increasingly severe as models
+improve. In contrast, medicine already offers a continually growing collection of unlabeled documents
+(e.g., case reports) that contain rich real-world medical knowledge. This raises a fundamental question:
+can we continually improve medical reasoning by learning directly from unlabeled clinical corpora?
+∗Equal contribution.
+†Corresponding authors.
+40th Conference on Neural Information Processing Systems (NeurIPS 2026).
+arXiv:2610.24952v1 [cs.LG] 18 Oct 2026
+Rubric-Judge Reasoner
+0
+1
+1
+Reward
+Accuracy
+0.5
+1-2*|0.5-Acc|
+Learnability Reward
+Rubric-based Quality Reward
+Reasoning Depth
+4/5
+How much necessary 
+multi-step reasoning 
+is required?
+Clue Integration
+3/5
+How well are 
+multiple clinical 
+clues synthesized?
+Option Quality
+2/5
+How plausible and 
+discriminative are 
+the answer options?
+Knowledge-conditioned Proposer
+Multiple-choice Question?
+A. Secondary loss of response
+B. Dose-limiting toxicity
+C. Steroid dependence 
+D. Primary steroid nonresponse
+Reasoning Chain?
+Budesonide improves symptoms -> the 
+disease is steroid-responsive -> symp-
+toms recur after dose reduction 
+Target Answer
+C. Steroid dependence 
+Proposer
+Answer C
+Answer B
+
+Answer C}
+Avg. 
+Acc
+Selection
+
+Target KP 
+Extraction
+Selection
+3
+1 2
+CasePlay Training Proposer Question BufferQuestions 
+Update
+valid 
+questions
+ only
+Alternating 
+training
+Case report
+Symptoms
+Tests
+Treatment
+Findings
+Intramucosal eosinophils on GI biopsies
+The rest of the biopsies were normal.
+A 35-year-old woman ....
+GI/joint symptoms completely resolved
+Eosinophils 1%; AEC 0.07 × 10^3/uL
+EGD and colonoscopy appeared normal
+Budesonide 6 mg → taper to 3 mg
+Adalimumab 40 mg weekly
+Mild improvement →symptoms relapsed
+?
+?
+?
+Sample
+ documents
+Sample
+ questions1
+2
+Update Generation
+Reasoner
+(frozen)
+Case report
+3
+Knowledge points
+1
+4
+3
+2
+In eosinophilic gastroenteritis 
+and colitis, peripheral 
+Eosinophilic gastroenteritis and 
+colitis can be diagnosed when ...
+Budesonide treatment may 
+lead to initial improvement in ...
+Adalimumab can induce clinical 
+and histologic remission ...
+Question only
+Rubric judge 
+with reasoning 
+chain and 
+target answer
+Reasoner
+A 35-year-old woman... Which explanation 
+best describes this treatment pattern?
+Component-Wise 
+Advantage Normalization
+Learn
+ Clue
+ Depth
+ Option
+Responses
+...
+Answer: A
+Answer: B
+Binary
+reward
+Phase I : Proposer Training Phase II : Reasoner Training 
+......
+Group Normalization
+r1 = 1A1 = 1
+r2 = 0A2 = 0
+Reasoner
+Reasoner
+Figure 1: Overview of CasePlay.
+A promising direction is self-play RL over text corpora [ 13–21]. In this paradigm, aProposer
+generates questions from either its internal knowledge or external documents, and aReasonerlearns
+to solve them. The reasoner’s performance provides feedback for updating the proposer, while the
+generated questions provide training data for improving the reasoner, forming an automated loop
+for deriving learning signals from unlabeled corpora. Although this paradigm has shown promising
+results in domains such as mathematics [22, 23] and code [24], directly applying it to the medical
+domain raises two challenges: (a)knowledge-point fixation: medical case reports are information-
+dense and often contain multiple interdependent clinical clues, yet a naive proposer tends to anchor
+on the most salient evidence and repeatedly generate questions from the same narrow perspective; and
+(b)difficulty-quality mismatch: existing self-play methods often use the reasoner’s answer accuracy as
+the main feedback signal, treating intermediate-difficulty questions as useful training data. However,
+such questions may still be poorly constructed or require only shallow reasoning, making them poor
+candidates for improving medical reasoning through RL.
+To address these challenges, we proposeCasePlay, a self-play learning framework consisting of two
+key components: (a) aKnowledge-Conditioned Proposer, which conditions question generation
+on case-specific knowledge points to broaden coverage of each source report and reduce redundant
+questions around the same salient clue; and (b) aRubric-Judge Reasoner, which supplements answer-
+accuracy feedback with rubric-based quality feedback along three dimensions: clue integration,
+reasoning depth, and option quality. This quality-aware feedback guides the proposer toward higher-
+quality questions that provide more useful training examples for the reasoner. Experiments on seven
+medically related benchmarks show that CasePlay improves the warm-start model by3.1 pointson
+average and outperforms existing self-play baselines, with the largest gain on LiveClin [25] (+6.3
+points). Together, these results position CasePlay as a new way to leverage unlabeled case reports for
+improving medical reasoning through self-play RL. In summary, our contributions are threefold:
+• We study self-play RL over clinical case reports for improving medical reasoning, and
+empirically identify two characteristic failure modes of existing methods:knowledge-point
+fixationanddifficulty-quality mismatch.
+• We propose CasePlay, a medical self-play framework where a Knowledge-Conditioned
+Proposer uses case-specific knowledge points to encourage broader document coverage,
+while a Rubric-Judge Reasoner leverages rubric-based feedback as an additional quality
+2
+signal for proposer optimization, helping generate less redundant and higher-quality training
+questions for improving medical reasoning.
+• We validate CasePlay through extensive experiments on 7 medically related benchmarks,
+where it improves the warm-start model by3.1 pointson average, outperforms medical
+reasoning models and self-play baselines, and remains effective across ablations, hyperpa-
+rameter settings, and model scales.
+2 Pitfalls of Self-Play RL in Medical Reasoning
+Preliminaries.We formulate self-play training as an alternating game between aProposer πPθ and
+aReasonerπ Rϕ over an unlabeled document corpusD:
+G=
+
+MP1 (ϕ0),M R1 (θ1),M P2 (ϕ1),M R2 (θ2), . . . ,MPT (ϕT−1 ),M RT (θT ) ,(1)
+where T is the number of self-play iterations. At iteration t, the proposer is first updated against
+the frozen reasoner πRϕt−1, and the reasoner is then updated using valid questions accumulated
+during the proposer-update phase. In the proposer phase MPt = (O P ,A P , RP ), the observation
+oPt ∈ OP is a batch of clinical documents {dt,i}Bi=1 ⊂ D, the action aPt ∈ AP is to generate
+grounded multiple-choice questions with target answers, and the reward rPt is computed from the
+current reasoner’s performance on these questions. In the reasoner phase MRt = (OR,A R, RR), the
+observation oRt ∈ OR consists only of proposer-generated training questions, without access to the
+source documents; the action aRt ∈ AR is to answer these questions; and the reward rRt is a binary
+correctness reward.
+However, existing self-play RL algorithms often yield limited gains when directly applied to medical
+corpora. To understand the limitations of current self-play methods in this setting, we analyze SPICE,
+a representative document-grounded baseline, and identify two recurring pitfalls in medical self-play:
+knowledge-point fixationanddifficulty-quality mismatch. Details of the visualization are provided in
+Appendix B.
+(a) Source-document coverage.
+ (b) Question distribution.
+ (c) Quality at matched difficulty.
+Figure 2: (a) Cumulative source-document coverage of generated questions over training. (b)
+MDS [26] projection of generated-question embeddings. (c) Rubric-based quality-score distribution
+among intermediate-difficulty questions with reasoner accuracy of 0.5.
+Knowledge-Point Fixation.Clinical case reports are information-dense, often containing multiple
+clinical clues about symptoms, treatments, outcomes, and disease mechanisms. Ideally, document-
+grounded self-play should turn these diverse clues into diverse training questions. However, when the
+proposer is conditioned only on the full document, it tends to anchor on the most salient evidence
+and repeatedly generate questions from the same narrow subset of the report. Figure 2(a) shows
+that SPICE’s source-document coverage quickly saturates at 0.33, compared with 0.42 for CasePlay,
+indicating that later rollouts mostly reuse already-covered content rather than explore new case
+evidence. The resulting questions are also less diverse: in Figure 2(b), SPICE forms a tighter cluster
+and occupies a smaller region than CasePlay in the projection space. We refer to this failure mode
+asknowledge-point fixation, where an information-rich case report is reduced to redundant training
+3
+questions from a narrow subset of clinical evidence. This observation indicates that the proposer
+needs an explicit mechanism to control which part of the case report each rollout should explore.
+Table 1: Impact of question quality.
+Method Avg. Acc. Resp. Len.
+Warm-start Model 63.1 3794.5
++ RL (Random) 63.5 3025.4
++ RL (Filtered)64.3 4932.8
+Difficulty-Quality Mismatch.Existing self-play meth-
+ods often update the proposer using reasoner-estimated
+difficulty, favoring questions that are neither too easy nor
+too hard [ 13, 14, 17]. However, intermediate difficulty
+does not guarantee training value in medical reasoning:
+such questions may still be poorly constructed, or require
+only shallow reasoning, making them poor candidates for
+improving medical reasoning through RL. To examine this issue, we select questions with empirical
+reasoner accuracy of 0.5 and evaluate their quality using the rubrics introduced in Section 3.2. As
+shown in Figure 2(c), even within this intermediate-difficulty set, SPICE produces many low-quality
+questions, with 31.3% receiving rubric scores no higher than 0.6. We then construct two matched
+training sets from these questions: a random subset and a rubric-filtered subset that keeps questions
+with average rubric score above 0.6. As shown in Table 1, RL training on the rubric-filtered set
+improves average benchmark accuracy from 63.1 to 64.3, whereas random selection reaches only
+63.5 and reduces the average response length. This highlights the need for quality-aware feedback
+that goes beyond difficulty and favors well-formed, reasoning-intensive questions.
+3 Proposed Solution: CasePlay
+In this paper, we proposeCasePlay, a self-play framework for improving medical reasoning from case
+reports. The central idea of CasePlay is to turn two implicit choices in document-grounded self-play
+into explicit controls:which clinical focusin a case report the proposer should explore, andhowto
+evaluate the quality of generated questions for training. CasePlay implements these controls with a
+Knowledge-Conditioned Proposer, which guides question generation with case-specific knowledge
+points, and aRubric-Judge Reasoner, which provides quality-aware feedback for proposer learning.
+3.1 Knowledge-Conditioned Proposer
+Prior document-grounded self-play methods typically condition the proposer on the entire doc-
+ument [17, 18], leaving the clinical focus implicit during the generation process. Conceptually,
+generatingofrom a case reportdcan be viewed as marginalizing over a latent focusz:
+πθ(o|d) =
+X
+z
+πθ(z|d)π θ(o|d, z),(2)
+where o denotes the proposer output. When z is left implicit, the proposer must choose the focus
+while writing the question, often biasing generation toward salient clues such as the final diagnosis.
+Chunking offers a crude focus proxy, but can remove the temporal or treatment context needed for
+faithful medical questions. We therefore make z explicit as a document-grounded knowledge point: a
+discrete clinical focus in the report that guides what the proposer should ask about, while the full
+report remains available as context.
+Knowledge-Point Extraction.Before self-play, for each document d∈ D, we use the proposer
+to extract candidate knowledge points from the source report, remove redundant or overlapping
+candidates, and retain at most M of them, denoted as K(d) ={k 1, . . . , kM }. Each knowledge point
+km summarizes a clinically meaningful aspect of the case, such as a symptom progression, diagnostic
+clue, or outcome pattern, and is supported by explicit evidence in the source document, as illustrated
+in Appendix Figure 6. We keep K(d) fixed throughout self-play to provide stable clinical focuses
+and avoid introducing additional non-stationarity into proposer optimization. Details of the extraction
+procedure are provided in Appendix C.3.
+Knowledge-Conditioned Question Generation.CasePlay implements the latent-focus view
+in Eq. (2) by factorizing each proposer rollout into knowledge-point selection and knowledge-
+conditioned generation. Specifically, for thej-th rollout of documentd:
+˜πPθ (k, o|d, K(d), j) =πsel(k|K(d), j)π Pθ (o|d, k),(3)
+4
+where k is the selected knowledge point and o= (q, c, y)consists of the generated multiple-choice
+question q, proposer-provided reasoning chain c, and target answer y. In our implementation, πsel is
+a fixed round-robin selector, which avoids introducing an additional learned selector while remaining
+computationally efficient and empirically effective. Specifically, forK(d) ={k 1, . . . , kM }:
+πsel(k=k m |K(d), j) =I[m= 1 + ((j−1) modM)].(4)
+Thus, repeated rollouts of the same case report are anchored to different knowledge points, encourag-
+ing the proposer to cover multiple clinical focuses rather than repeatedly asking about the same salient
+one. We compare alternative knowledge-point selection strategies in Appendix E. After generation,
+each output o is evaluated by the current reasoner to produce feedback rewards for the proposer
+update, as described next.
+3.2 Rubric-Based Feedback from the Reasoner
+As discussed in Section 2, answer accuracy mainly reflects a question’s difficulty for the current
+reasoner, but does not necessarily capture whether the question is useful for RL training. Therefore,
+CasePlay evaluates the generated question with two reward components:learnability, estimated
+from the reasoner’s answer accuracy without access to the source report, andquality, judged by
+rubric-based criteria using the target answer and proposer-provided reasoning chain.
+Learnability Reward.Given a proposer-generated multiple-choice question q with target answer y,
+the reasoner samples Nacc answers to q without access to the source case report, yielding an estimated
+accuracyacc(q). Following [14], the learnability reward is defined as:
+rlearn = 1−2|acc(q)−0.5|,(5)
+which is maximized when acc(q) = 0.5 , encouraging the proposer to generate questions that are
+neither too easy nor too hard for the current reasoner.
+Rubric-Based Quality Reward.Medical questions with similar difficulty can differ substantially
+in the reasoning they elicit. To assess question quality, we ask the reasoner to judge the generated
+question together with the target answer y and proposer-provided reasoning chain c. With the
+proposer-provided answer and reasoning chain, the reasoner can more directly assess whether the
+intended reasoning path is coherent and whether the options are discriminative, without inferring the
+rationale from the question alone. Formally, the quality reward is calculated as:
+rqual =  rclue, rdepth, roption =π Jϕ (o),(6)
+where the three dimensions capture complementary aspects of question utility for RL training.Clue
+integrationmeasures whether answering the question requires synthesizing multiple clinical clues;
+reasoning depthmeasures whether the question requires multi-hop medical reasoning rather than
+surface-level fact matching; andoption qualitymeasures whether the answer options include plausible
+and discriminative distractors. Detailed rubric prompts are provided in Appendix C.5.
+3.3 Alternating Self-Play Optimization
+CasePlay is trained over multiple self-play iterations. Each iteration contains two phases: aproposer-
+update phaseand areasoner-update phase. In each phase, we update one model for multiple steps
+while keeping the other frozen. Both models are optimized with the GRPO [27] objective:
+LGRPO =−E i
+h
+min
+
+ρi ˆAi,clip(ρ i,1−ε,1 +ε) ˆAi
+i
+,(7)
+where ρi = π(oi|xi)πold(oi|xi) is the importance-sampling ratio for the corresponding phase, withxi denoting
+the model input and oi denoting the sampled output. The advantage ˆAi is normalized within each
+sampled group, with phase-specific reward definitions described below.
+Proposer Update with Component-Wise Advantage Normalization.In the proposer-update
+phase, we sample a batch of documents, and for each document the proposer generates a group of Np
+candidate outputs according to the knowledge-conditioned rollout in Eq. (3). The frozen reasoner
+5
+evaluates each valid candidate with the learnability reward in Eq. (5) and the rubric-based quality
+rewards in Eq. (6). If a candidate violates the required format, we assign the format penalty rformat
+to all reward components and skip reasoner evaluation. Since these reward components capture
+different aspects of question utility, we normalize each component separately within the candidate
+group before aggregation. For a generated question i, the final proposer advantage ˆAPi is computed
+as:
+˜rsi = rsi −mean j(rsj )stdj(rsj ) +ϵ , ˆAPi = ˜rlearni +λ ˜rcluei + ˜rdepthi + ˜roptioni  ,(8)
+where s∈ {learn,clue,depth,option} indexes the reward component and λ controls the overall
+contribution of rubric-based feedback.
+Reasoner Update.During the proposer-update phase, generated valid questions are stored in a
+training buffer B. After the proposer phase finishes, we sample a subset of questions from this buffer
+to update the reasoner. For each sampled question, the reasoner generates Nr responses without
+access to the source report, and each response receives a binary reward: 1 if the final answer matches
+the target answer and 0 otherwise. These rewards are normalized within the response group to obtain
+ˆARi , and the reasoner is updated by Eq. (7). The pseudocode of CasePlay is provided in Appendix C.6.
+4 Experiments
+4.1 Setup
+Models and Baselines.We evaluate CasePlay on two model families and multiple scales, including
+Qwen3-4B-Base [28], Qwen3-8B-Base [28], and OctoThinker-3B-Hybrid-Base [29]. We compare
+against two categories of baselines. The first category consists of recent medical reasoning models,
+including HuatuoGPT-o1-8B [2], AlphaMed-8B [30], and Fleming-R1-7B [31]. The second category
+consists of self-play methods, including R-Zero [14], SPICE [17], and DARC [18]. Details of baseline
+implementations are provided in Appendix D.1.
+Training Data.For training data collection, we collect open-access case reports from PubMed
+Central (PMC [32]) published between 2020 and 2025. We apply a strict filtering pipeline to remove
+incomplete reports, image-dominant articles, and documents with potential benchmark leakage,
+yielding a final corpus of 4,281 case reports. For each filtered document, we extract up to M= 4
+knowledge points to support knowledge-conditioned question generation. To ensure stable instruction
+following and output formatting, we construct a small SFT warm-start dataset from the training case
+reports. Both CasePlay and all self-play baselines use this dataset for warm-start initialization to
+ensure a fair comparison. Additional details of training data collection are provided in Appendix C.2.
+Evaluation.We evaluate CasePlay on seven benchmarks across three categories. First, we test
+whether our method improves performance on expert-level medical reasoning benchmarks, including
+MedXpert-Text [33], MedBullets-OP4/OP5 [34], and MedQA-USMLE [35]. Second, we evaluate
+clinical case reasoning with LiveClin [25], which focuses on patient narratives and requires integrating
+case-specific clues from clinical context. Third, we evaluate transfer to scientific QA using MMLU-
+Pro [36] (Health and Biology subsets) and GPQA [37] (Genetics and Molecular Biology subset). For
+each benchmark question, we sample 8 responses and report the average accuracy as the final metric.
+Detailed benchmark descriptions are provided in Appendix D.2.
+Implementation Details.We train CasePlay for 15 iterations, with each iteration consisting of
+10 proposer-update steps and 10 reasoner-update steps. The rubric weight λ is set to 0.2. For both
+the proposer and the reasoner, we use a training batch size of 128 and a learning rate of 1×10 −6.
+During training rollouts, we use temperature 1.0 and top- p 0.95, with a maximum input length of
+4,096 tokens and a maximum output length of 8,192 tokens. During evaluation, we set the sampling
+temperature to 0.6 and top-p to 0.95, while keeping the other generation settings unchanged. Full
+experimental hyperparameters are listed in Appendix D.3.
+6
+Table 2: Main results on seven medically related benchmarks.
+Method Expert Medical Reasoning Clin. Case Science QA
+MedXpert MB-OP4 MB-OP5 MedQA LiveClin MMLU. GPQA Avg.
+Base Models
+Qwen3-8B-Base [28] 12.3 41.2 35.3 50.8 48.6 56.4 42.2 41.0
++ SFT (Warm-Start) 22.7 72.9 68.1 83.6 66.0 75.3 53.4 63.1
+Medical Reasoning Models
+HuatuoGPT-o1-8B [2] 15.4 52.6 45.2 72.6 55.4 63.1 50.4 50.7
+AlphaMed-8B [30] 21.4 62.4 58.7 76.2 62.5 66.7 52.1 57.1
+Fleming-R1-7B [31] 19.1 57.8 54.1 75.1 60.2 69.3 48.7 54.9
+Self-Play RL Methods
+R-Zero [14] 19.7 72.9 68.6 83.5 66.0 73.3 52.9 62.4
+SPICE [17] 21.8 74.2 70.0 83.2 67.1 75.6 54.2 63.7
+DARC [18] 23.5 75.7 69.8 84.8 70.5 75.3 55.2 65.0
+Proposed Solution
+CasePlay 25.1 76.9 70.1 85.4 72.3 75.9 57.6 66.2
+Impr. vs SFT Model+2.4 +4.0 +2.0 +1.8 +6.3 +0.6 +4.2 +3.1
+Ablation Study
+w/o knowledge-point 23.3 75.8 69.4 84.7 69.8 75.2 56.3 64.9
+w/o rubric judge 22.5 75.0 68.4 83.5 70.8 74.5 55.2 64.3
+w/o proposer update 21.4 74.1 67.9 83.2 68.4 73.8 53.9 63.2
+4.2 Performance Comparison
+As shown in Table 2, CasePlay achieves the best performance on all seven benchmarks. Compared
+with the SFT warm-start model, CasePlay improves the average score from 63.1% to 66.2%, yielding
+a +3.1 point gain. The largest gain appears on LiveClin [25] (+6.3 points), because its patient-case
+narratives require integrating symptoms, diagnostic clues, and treatment context, which matches
+the reasoning ability improved by self-play over clinical case reports. Among self-play baselines,
+R-Zero does not use external documents during question generation and slightly underperforms the
+warm-start model on average. Compared with document-grounded baselines such as SPICE and
+DARC, CasePlay achieves stronger gains, indicating that medical self-play benefits from broader
+coverage of case-specific knowledge points and quality-aware proposer feedback.
+4.3 Ablation Study
+(a) Within-case difficulty variation.
+ (b) Question-type distribution.
+Figure 3: (a) Different knowledge points from the same report yield substantially different difficulty.
+(b) Knowledge-conditioned generation produces a more balanced distribution of question types.
+7
+Knowledge-Conditioned Generation Diversifies Within-Case Questions.As shown in Fig-
+ure 3(a), we randomly sample 10% of the training documents and visualize the reasoner’s accuracy
+on questions generated from different knowledge points within the same case report. Questions
+grounded in different knowledge points often have substantially different difficulty, indicating that
+they probe distinct aspects of the case and provide complementary learning opportunities. We then
+remove knowledge-point conditioning during question generation and compare the resulting question-
+type distribution in Figure 3(b). Without knowledge-point conditioning, generation becomes highly
+skewed toward diagnosis-related questions, which account for 64.5% of all generated questions.
+In contrast, CasePlay produces a more balanced distribution across the five clinical question types.
+Consistent with this improved diversity, CasePlay outperforms the variant without knowledge points
+by 1.3 point on average, improving from 64.9 to 66.2 as shown in Table 2.
+Necessity of Proposer Updates.To verify the benefit of proposer updates over static question
+generation, we conduct an additional ablation in which the proposer is frozen at the SFT warm-start
+checkpoint throughout training, while the reasoner is still updated on the generated questions. As
+shown in the last row of Table 2, this variant reaches only 63.2 average accuracy, 3.0 points lower
+than CasePlay, and also underperforms other document-grounded self-play methods. This result
+highlights the necessity of proposer adaptation, where the proposer adjusts its questions according to
+feedback from the current reasoner to keep producing useful training data.
+Figure 4: Training curve of rubric score.
+Rubric Judge Improves Question Quality.We com-
+pare the average rubric scores of questions generated by
+CasePlay and by the variant without rubric-judge feed-
+back in Figure 4. For the latter, we still score generated
+questions with the reasoner for analysis, but exclude rubric
+rewards from proposer updates. Without rubric-judge feed-
+back, the rubric score remains lower and less stable, indi-
+cating that learnability-based feedback alone is insufficient
+to promote high-quality medical question generation. In
+contrast, CasePlay steadily increases the average rubric
+score, helping the proposer generate questions with better
+clue integration, greater reasoning depth, and more dis-
+criminative options. This improvement in question quality
+translates into better reasoner performance: as shown in Table 2, CasePlay improves the average
+score from 64.3 to 66.2 compared with the variant without rubric judge.
+Table 3: Agreement with DeepSeek-V3.2.
+Rubric Dimension Pearson Corr.↑
+Clue Integration 0.783
+Reasoning Depth 0.752
+Option Quality 0.627
+Average Score 0.705
+Reliability of Reasoner-Based Rubric Judging.Since
+the rubric scores are produced by the current reasoner
+rather than a stronger external judge, an important concern
+is whether these scores provide reliable quality feedback.
+To assess this, we compare the reasoner’s rubric scores
+with scores assigned by DeepSeek-V3.2 [ 38] using the
+same rubric prompt. As shown in Table 3, the reasoner
+achieves strong agreement with DeepSeek-V3.2 onclue
+integrationandreasoning depth, with Pearson correlations of 0.783 and 0.752, respectively. The
+correlation is lower onoption quality, likely because judging distractor discriminativeness requires
+broader medical knowledge. The correlation for the average rubric score reaches 0.705, indicating
+that the reasoner provides a sufficiently reliable quality signal for proposer optimization.
+4.4 Hyperparameter Sensitivity
+Impact of the Number of Knowledge Points.The number of extracted knowledge points controls
+the granularity of clinical focus during question generation. We vary the maximum number of
+knowledge points per document, including the no-knowledge-point setting, and report the results
+in Figure 5(a). With too few knowledge points, the proposer conditions generation on a limited set
+of clinical focuses, leading to lower document coverage and weaker performance. As M increases,
+document coverage ratio improves, rising from 27% at M= 1 to 43% at M= 8 . However, when M
+becomes larger than 4, document coverage improves only marginally while downstream accuracy
+begins to decline, indicating that too many knowledge points can make the clinical focuses overly
+8
+(a) Number of knowledge pointsM
+ (b) Rubric weightλ
+Figure 5: Sensitivity to (a) the number of knowledge pointsMand (b) the rubric weightλ.
+fine-grained or weakly distinguishable, weakening the quality of generated questions. We therefore
+setM= 4as the default number of knowledge points per case report.
+Impact of Rubric Weight.The rubric weight controls the trade-off between learnability and
+question quality during proposer optimization. In Figure 5(b), we report the proportion of learnable
+questions in GRPO (i.e., 0<acc(q)<1 ). When λ is small, the proposer is primarily guided by
+estimated difficulty, so it may generate questions that are non-trivial for the reasoner but still shallow
+or poorly constructed. Increasing λ to 0.2 raises the learnable-question proportion from 27% to 38%
+and yields the best accuracy, indicating that rubric feedback helps align difficulty with clinically
+meaningful question quality. However, larger λ over-emphasizes rubric scores relative to learnability,
+encouraging questions that are more complex but less matched to the current reasoner’s capability.
+We therefore setλ= 0.2to balance quality guidance with learnability for proposer training.
+Table 4: Performance of CasePlay across different base models.
+Method Expert Medical Reasoning Clin. Case Science QA
+MedXpert MB-OP4 MB-OP5 MedQA LiveClin MMLU. GPQA Avg.
+Qwen3-4B-Base
+SFT (Warm-Start) 16.8 65.6 58.4 72.4 57.3 66.5 43.5 54.4
+R-Zero [14] 16.3 65.5 59.4 73.8 59.4 68.4 44.2 55.3
+SPICE [17] 17.6 66.4 60.9 77.6 61.7 70.7 45.5 57.2
+DARC [18] 18.4 67.1 60.8 78.4 62.6 71.447.8 58.1
+CasePlay 19.3 67.6 61.6 79.1 64.4 72.247.4 58.8
+OctoThinker-3B-Hybrid-Base
+SFT (Warm-Start) 12.0 45.8 38.2 57.0 48.9 45.5 28.2 39.4
+R-Zero [14] 10.5 44.5 39.4 55.4 49.6 45.1 28.4 39.0
+SPICE [17] 12.9 47.2 41.7 58.5 50.8 47.1 29.8 41.1
+DARC [18] 12.6 47.9 40.1 58.0 51.3 46.2 28.9 40.7
+CasePlay 13.5 49.1 41.8 60.8 51.8 47.8 30.2 42.1
+4.5 Robustness Across Model Scales and Families
+Table 4 examines whether the benefits of CasePlay extend beyond Qwen3-8B-Base. On Qwen3-
+4B-Base, CasePlay improves the average score from 54.4% to 58.8%, a gain of 4.4 points, and
+outperforms the strongest self-play baseline, DARC, by 0.7 points on average. On OctoThinker-
+3B-Hybrid-Base, CasePlay again achieves the best average performance, improving the warm-start
+9
+model from 39.4% to 42.1%, a gain of 2.7 points. These results indicate that CasePlay is not tied to a
+specific base model and remains effective across different model scales and families.
+5 Conclusion
+In this paper, we show that directly applying document-grounded self-play RL to medical corpora is
+limited by two failure modes:knowledge-point fixationanddifficulty-quality mismatch. To address
+these issues, we introduce CasePlay, which makes the clinical focus of question generation explicit
+through knowledge-point conditioning and augments proposer optimization with rubric-based quality
+feedback from the reasoner. Across seven medically related benchmarks, CasePlay consistently
+improves the warm-start model and outperforms existing self-play baselines, with especially strong
+gains on clinical case reasoning. Further ablations and generalization experiments support the
+robustness of these gains. These results demonstrate that CasePlay provides a scalable way to turn
+clinical case reports into continual training signals for improving medical reasoning.
+Acknowledgments
+This paper is partially supported by the Hong Kong Research Grants Council grant R1018-25F.
+References
+[1] Xiaoke Huang, Juncheng Wu, Hui Liu, Xianfeng Tang, and Yuyin Zhou. m1: Unleash the potential of
+test-time scaling for medical reasoning with large language models.arXiv preprint arXiv:2504.00869,
+2025.
+[2] Junying Chen, Zhenyang Cai, Ke Ji, Xidong Wang, Wanlong Liu, Rongsheng Wang, Jianye Hou,
+and Benyou Wang. Huatuogpt-o1, towards medical complex reasoning with llms.arXiv preprint
+arXiv:2412.18925, 2024.
+[3] Shuyang Jiang, Yusheng Liao, Zhe Chen, Ya Zhang, Yanfeng Wang, and Yu Wang. Meds 3: Towards
+medical slow thinking with self-evolved soft dual-sided process supervision. In Sven Koenig, Chad
+Jenkins, and Matthew E. Taylor, editors,Fortieth AAAI Conference on Artificial Intelligence, Thirty-Eighth
+Conference on Innovative Applications of Artificial Intelligence, Sixteenth Symposium on Educational
+Advances in Artificial Intelligence, AAAI 2026, Singapore, January 20-27, 2026, pages 31319–31327.
+AAAI Press, 2026.
+[4] Keer Lu, Zheng Liang, Youquan Li, Jiejun Tan, Xili Wang, Da Pan, Shusen Zhang, Guosheng Dong, Bin
+Cui, Yunhuai Liu, et al. Med-r3: Enhancing medical retrieval-augmented reasoning of llms via progressive
+reinforcement learning.arXiv preprint arXiv:2507.23541, 2025.
+[5] Qiaoyu Zheng, Yuze Sun, Chaoyi Wu, Weike Zhao, Pengcheng Qiu, Yongguo Yu, Kun Sun, Jian Zhang,
+Yanfeng Wang, Ya Zhang, et al. End-to-end agentic rag system training for traceable diagnostic reasoning.
+arXiv preprint arXiv:2508.15746, 2025.
+[6] Pengcheng Qiu, Chaoyi Wu, Junwei Liu, Qiaoyu Zheng, Yusheng Liao, Haowen Wang, Yun Yue, Qianrui
+Fan, Shuai Zhen, Jian Wang, et al. Evolving interactive diagnostic agents in a virtual clinical environment.
+arXiv preprint arXiv:2510.24654, 2025.
+[7] Josip Vrdoljak, Zvonimir Boban, Marino Vilovi´c, Marko Kumri´c, and Joško Boži ´c. A review of large
+language models in medical education, clinical decision support, and healthcare administration.Healthcare,
+13:603, 2025.
+[8] Jasmine Chiat Ling Ong, Liyuan Jin, Kabilan Elangovan, Gilbert Yong San Lim, Daniel Yan Zheng Lim,
+Gerald Gui Ren Sng, Yu He Ke, Joshua Yi Min Tung, Ryan Jian Zhong, Christopher Ming Yao Koh,
+et al. Large language model as clinical decision support system augments medication safety in 16 clinical
+specialties.Cell Reports Medicine, 6(10), 2025.
+[9] Farieda Gaber, Maqsood Shaik, Fabio Allega, Agnes Julia Bilecz, Felix Busch, Kelsey Goon, Vedran
+Franke, and Altuna Akalin. Evaluating large language model workflows in clinical decision support for
+triage and referral and diagnosis.npj Digital Medicine, 8(1):263, 2025.
+[10] Rahul K Arora, Jason Wei, Rebecca Soskin Hicks, Preston Bowman, Joaquin Quiñonero-Candela, Foivos
+Tsimpourlas, Michael Sharman, Meghan Shah, Andrea Vallone, Alex Beutel, et al. Healthbench: Evaluating
+large language models towards improved human health.arXiv preprint arXiv:2505.08775, 2025.
+10
+[11] Yusheng Liao, Chaoyi Wu, Junwei Liu, Shuyang Jiang, Pengcheng Qiu, Haowen Wang, Yun Yue, Shuai
+Zhen, Jian Wang, Qianrui Fan, et al. Ehr-r1: A reasoning-enhanced foundational language model for
+electronic health record analysis.arXiv preprint arXiv:2510.25628, 2025.
+[12] Han Yang, Mingchen Li, Huixue Zhou, Yongkang Xiao, Qian Fang, and Rui Zhang. One llm is not enough:
+Harnessing the power of ensemble learning for medical question answering.medRxiv, 2023.
+[13] Andrew Zhao, Yiran Wu, Yang Yue, Tong Wu, Quentin Xu, Matthieu Lin, Shenzhi Wang, Qingyun Wu,
+Zilong Zheng, and Gao Huang. Absolute zero: Reinforced self-play reasoning with zero data. InThe
+Thirty-ninth Annual Conference on Neural Information Processing Systems, 2025.
+[14] Chengsong Huang, Wenhao Yu, Xiaoyang Wang, Hongming Zhang, Zongxia Li, Ruosen Li, Jiaxin
+Huang, Haitao Mi, and Dong Yu. R-zero: Self-evolving reasoning llm from zero data.arXiv preprint
+arXiv:2508.05004, 2025.
+[15] Jakub Grudzien Kuba, Mengting Gu, Qi Ma, Yuandong Tian, Vijai Mohan, and Jason Chen. Language
+self-play for data-free training.arXiv preprint arXiv:2509.07414, 2025.
+[16] Ziyi Yang, Weizhou Shen, Chenliang Li, Ruijun Chen, Fanqi Wan, Ming Yan, Xiaojun Quan, and Fei
+Huang. Spell: Self-play reinforcement learning for evolving long-context language models.arXiv preprint
+arXiv:2509.23863, 2025.
+[17] Bo Liu, Chuanyang Jin, Seungone Kim, Weizhe Yuan, Wenting Zhao, Ilia Kulikov, Xian Li, Sainbayar
+Sukhbaatar, Jack Lanchantin, and Jason Weston. Spice: Self-play in corpus environments improves
+reasoning.arXiv preprint arXiv:2510.24684, 2025.
+[18] Shengda Fan, Xuyan Ye, and Yankai Lin. Darc: Decoupled asymmetric reasoning curriculum for llm
+evolution.arXiv preprint arXiv:2601.13761, 2026.
+[19] Shobhita Sundaram, John Quan, Ariel Kwiatkowski, Kartik Ahuja, Yann Ollivier, and Julia Kempe. Teach-
+ing models to teach themselves: Reasoning at the edge of learnability.arXiv preprint arXiv:2601.18778,
+2026.
+[20] Gengsheng Li, Jinghan He, Shijie Wang, Dan Zhang, Ruiqi Liu, Renrui Zhang, Zijun Yao, Junfeng Fang,
+Haiyun Guo, and Jinqiao Wang. R-diverse: Mitigating diversity illusion in self-play llm training.arXiv
+preprint arXiv:2602.13103, 2026.
+[21] Fangyuan Li, Pengfei Li, Shijie Wang, Junqi Gao, Jianxing Liu, Biqing Qi, and Yuqiang Li. Wist:
+Web-grounded iterative self-play tree for domain-targeted reasoning improvement.arXiv preprint
+arXiv:2603.22352, 2026.
+[22] Yongxian Wei, Yilin Zhao, Li Shen, Xinrui Chen, Runxi Cheng, Sinan Du, Hao Yu, Xiaohan Wang, Gang
+Liu, Jiahong Yan, et al. Learning to pose problems: Reasoning-driven and solver-adaptive data synthesis
+for large reasoning models.arXiv preprint arXiv:2511.09907, 2025.
+[23] Zhengxin Zhang, Chengyu Huang, Aochong Oliver Li, and Claire Cardie. Better llm reasoning via
+dual-play.arXiv preprint arXiv:2511.11881, 2025.
+[24] Yuxiang Wei, Zhiqing Sun, Emily McMilin, Jonas Gehring, David Zhang, Gabriel Synnaeve, Daniel Fried,
+Lingming Zhang, and Sida Wang. Toward training superintelligent software agents through self-play
+swe-rl.arXiv preprint arXiv:2512.18552, 2025.
+[25] Xidong Wang, Shuqi Guo, Yue Shen, Junying Chen, Jian Wang, Jinjie Gu, Ping Zhang, Lei Liu, and
+Benyou Wang. Liveclin: A live clinical benchmark without leakage.arXiv preprint arXiv:2602.16747,
+2026.
+[26] A. Mead. Review of the development of multidimensional scaling methods.Journal of the Royal Statistical
+Society Series D: The Statistician, 41(1):27–39, 03 1992. ISSN 2515-7884. doi: 10.2307/2348634.
+[27] Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, Mingchuan
+Zhang, Y . K. Li, Y . Wu, and Daya Guo. Deepseekmath: Pushing the limits of mathematical reasoning in
+open language models.arXiv preprint arXiv:2402.03300, 2024.
+[28] An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao,
+Chengen Huang, Chenxu Lv, Chujie Zheng, Dayiheng Liu, Fan Zhou, Fei Huang, Feng Hu, Hao Ge,
+Haoran Wei, Huan Lin, Jialong Tang, Jian Yang, Jianhong Tu, et al. Qwen3 technical report.arXiv preprint
+arXiv:2505.09388, 2025.
+11
+[29] Zengzhi Wang, Fan Zhou, Xuefeng Li, and Pengfei Liu. Octothinker: Mid-training incentivizes reinforce-
+ment learning scaling.arXiv preprint arXiv:2506.20512, 2025. Preprint.
+[30] Che Liu, Haozhe Wang, Jiazhen Pan, Zhongwei Wan, Yong Dai, Fangzhen Lin, Wenjia Bai, Daniel
+Rueckert, and Rossella Arcucci. Beyond distillation: Pushing the limits of medical llm reasoning with
+minimalist rule-based rl.arXiv preprint arXiv:2505.17952, 2025.
+[31] Chi Liu, Derek Li, Yan Shu, Robin Chen, Derek Duan, Teng Fang, and Bryan Dai. Fleming-r1: Toward
+expert-level medical reasoning via reinforcement learning.arXiv preprint arXiv:2509.15279, 2025.
+[32] National Library of Medicine. Pubmed central (pmc).https://pmc.ncbi.nlm.nih.gov/.
+[33] Yuxin Zuo, Shang Qu, Yifei Li, Zhang-Ren Chen, Xuekai Zhu, Ermo Hua, Kaiyan Zhang, Ning Ding,
+and Bowen Zhou. Medxpertqa: Benchmarking expert-level medical reasoning and understanding. In
+Aarti Singh, Maryam Fazel, Daniel Hsu, Simon Lacoste-Julien, Felix Berkenkamp, Tegan Maharaj, Kiri
+Wagstaff, and Jerry Zhu, editors,Forty-second International Conference on Machine Learning, ICML
+2025, Vancouver, BC, Canada, July 13-19, 2025, Proceedings of Machine Learning Research. PMLR /
+OpenReview.net, 2025.
+[34] Hanjie Chen, Zhouxiang Fang, Yash Singla, and Mark Dredze. Benchmarking large language models on
+answering and explaining challenging medical questions. InProceedings of the 2025 Conference of the
+Nations of the Americas Chapter of the Association for Computational Linguistics: Human Language
+Technologies (Volume 1: Long Papers), pages 3563–3599, 2025.
+[35] Di Jin, Eileen Pan, Nassim Oufattole, Wei-Hung Weng, Hanyi Fang, and Peter Szolovits. What disease
+does this patient have? a large-scale open domain question answering dataset from medical exams.Applied
+Sciences, 11(14):6421, 2021.
+[36] Yubo Wang, Xueguang Ma, Ge Zhang, Yuansheng Ni, Abhranil Chandra, Shiguang Guo, Weiming Ren,
+Aaran Arulraj, Xuan He, Ziyan Jiang, Tianle Li, Max Ku, Kai Wang, Alex Zhuang, Rongqi Fan, Xiang
+Yue, and Wenhu Chen. Mmlu-pro: A more robust and challenging multi-task language understanding
+benchmark.arXiv preprint arXiv:2406.01574, 2024.
+[37] David Rein, Betty Li Hou, Asa Cooper Stickland, Jackson Petty, Richard Yuanzhe Pang, Julien Dirani,
+Julian Michael, and Samuel R Bowman. Gpqa: A graduate-level google-proof q&a benchmark. InFirst
+Conference on Language Modeling, 2024.
+[38] Aixin Liu, Aoxue Mei, Bangcai Lin, Bing Xue, Bingxuan Wang, Bingzheng Xu, Bochao Wu, Bowei
+Zhang, Chaofan Lin, Chen Dong, et al. Deepseek-v3.2: Pushing the frontier of open large language models.
+arXiv preprint arXiv:2512.02556, 2025.
+[39] Zhihong Shao, Yuxiang Luo, Chengda Lu, ZZ Ren, Jiewen Hu, Tian Ye, Zhibin Gou, Shirong Ma, and
+Xiaokang Zhang. Deepseekmath-v2: Towards self-verifiable mathematical reasoning.arXiv preprint
+arXiv:2511.22570, 2025.
+[40] Kimi Team, Yifan Bai, Yiping Bao, Y . Charles, Cheng Chen, Guanduo Chen, Haiting Chen, Huarong Chen,
+Jiahao Chen, Ningxin Chen, Ruijue Chen, Yanru Chen, Yuankun Chen, Yutian Chen, Zhuofu Chen, et al.
+Kimi k2: Open agentic intelligence.arXiv preprint arXiv:2507.20534, 2025.
+[41] Jian Yao, Ran Cheng, Xingyu Wu, and Jibin Wu. Diversity-aware policy optimization for large language
+model reasoning.Advances in Neural Information Processing Systems, 38:94801–94826, 2026.
+[42] Jian Yao, Xiongcai Luo, Ran Cheng, and Kay Chen Tan. Slat: Segment-level adaptive trimming for
+efficient cot reasoning.arXiv preprint arXiv:2605.30832, 2026.
+[43] Hao Wang, Hao Gu, Hongming Piao, Kaixiong Gong, Yuxiao Ye, Xiangyu Yue, Sirui Han, Yike Guo,
+and Dapeng Wu. Learning while staying curious: Entropy-preserving supervised fine-tuning via adaptive
+self-distillation for large reasoning models. InProceedings of the 64th Annual Meeting of the Association
+for Computational Linguistics (Volume 1: Long Papers), pages 13567–13581, 2026.
+[44] Aaron Jaech, Adam Kalai, Adam Lerer, Adam Richardson, Ahmed El-Kishky, Aiden Low, Alec Helyar,
+Aleksander Madry, Alex Beutel, et al. Openai o1 system card.arXiv preprint arXiv:2412.16720, 2024.
+[45] Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Peiyi Wang, Qihao Zhu, Runxin Xu, Ruoyu Zhang,
+Shirong Ma, Xiao Bi, Xiaokang Zhang, et al. Deepseek-r1: Incentivizing reasoning capability in llms via
+reinforcement learning.arXiv preprint arXiv:2501.12948, 2025.
+12
+[46] Yuxin Zuo, Kaiyan Zhang, Li Sheng, Shang Qu, Ganqu Cui, Xuekai Zhu, Haozhan Li, Yuchen Zhang,
+Xinwei Long, Ermo Hua, et al. Ttrl: Test-time reinforcement learning. InThe Thirty-ninth Annual
+Conference on Neural Information Processing Systems, 2025.
+[47] Qingyang Zhang, Haitao Wu, Changqing Zhang, Peilin Zhao, and Yatao Bian. Right question is already
+half the answer: Fully unsupervised llm reasoning incentivization.arXiv preprint arXiv:2504.05812, 2025.
+[48] Ali Hatamizadeh, Syeda Nahida Akter, Shrimai Prabhumoye, Jan Kautz, Mostofa Patwary, Mohammad
+Shoeybi, Bryan Catanzaro, and Yejin Choi. Rlp: Reinforcement as a pretraining objective.arXiv preprint
+arXiv:2510.01265, 2025.
+[49] Ximing Lu, David Acuna, Jaehun Jung, Jian Hu, Di Zhang, Shizhe Diao, Yunheng Zou, Shaokun Zhang,
+Brandon Cui, Mingjie Liu, et al. Golden goose: A simple trick to synthesize unlimited rlvr tasks from
+unverifiable internet text.arXiv preprint arXiv:2601.22975, 2026.
+[50] Eric Zelikman, Georges Harik, Yijia Shao, Varuna Jayasiri, Nick Haber, and Noah D Goodman. Quiet-star:
+Language models can teach themselves to think before speaking.arXiv preprint arXiv:2403.09629, 2024.
+[51] Bingxiang He, Yuxin Zuo, Zeyuan Liu, Shangziqi Zhao, Zixuan Fu, Junlin Yang, Cheng Qian, Kaiyan
+Zhang, Yuchen Fan, Ganqu Cui, et al. How far can unsupervised rlvr scale llm training?arXiv preprint
+arXiv:2603.08660, 2026.
+[52] Siheng Li, Kejiao Li, Zenan Xu, Guanhua Huang, Evander Yang, Kun Li, Haoyuan Wu, Jiajia Wu,
+Zihao Zheng, Chenchen Zhang, et al. Reinforcement learning on pre-training data.arXiv preprint
+arXiv:2509.19249, 2025.
+[53] Juncheng Wu, Wenlong Deng, Xingxuan Li, Sheng Liu, Taomian Mi, Yifan Peng, Ziyang Xu, Yi Liu,
+Hyunjin Cho, Chang-In Choi, et al. Medreason: Eliciting factual medical reasoning steps in llms via
+knowledge graphs.arXiv preprint arXiv:2504.00993, 2025.
+[54] Ankit Pal, Logesh Kumar Umapathi, and Malaikannan Sankarasubbu. Medmcqa: A large-scale multi-
+subject multi-choice dataset for medical domain question answering. In Gerardo Flores, George H. Chen,
+Tom J. Pollard, Joyce C. Ho, and Tristan Naumann, editors,Conference on Health, Inference, and Learning,
+CHIL 2022, 7-8 April 2022, Virtual Event, Proceedings of Machine Learning Research, pages 248–260.
+PMLR, 2022.
+[55] Kevin Wu, Eric Wu, Rahul Thapa, Kevin Wei, Angela Zhang, Arvind Suresh, Jacqueline J Tao, Min Woo
+Sun, Alejandro Lozano, and James Zou. Medcasereasoning: Evaluating and learning diagnostic reasoning
+from clinical case reports.arXiv preprint arXiv:2505.11733, 2025.
+[56] David Silver, Thomas Hubert, Julian Schrittwieser, Ioannis Antonoglou, Matthew Lai, Arthur Guez, Marc
+Lanctot, Laurent Sifre, Dharshan Kumaran, Thore Graepel, et al. Mastering chess and shogi by self-play
+with a general reinforcement learning algorithm.arXiv preprint arXiv:1712.01815, 2017.
+[57] Yanzhao Zhang, Mingxin Li, Dingkun Long, Xin Zhang, Huan Lin, Baosong Yang, Pengjun Xie, An Yang,
+Dayiheng Liu, Junyang Lin, Fei Huang, and Jingren Zhou. Qwen3 embedding: Advancing text embedding
+and reranking through foundation models.arXiv preprint arXiv:2506.05176, 2025.
+[58] Hynek Kydlí ˇcek. Math-Verify: Math verification library, 2025. URL https://github.com/
+huggingface/math-verify. Version 0.6.1. Apache-2.0 license.
+[59] Guangming Sheng, Chi Zhang, Zilingfeng Ye, Xibin Wu, Wang Zhang, Ru Zhang, Yanghua Peng, Haibin
+Lin, and Chuan Wu. Hybridflow: A flexible and efficient rlhf framework.arXiv preprint arXiv:2409.19256,
+2024.
+[60] Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph Gonzalez,
+Hao Zhang, and Ion Stoica. Efficient memory management for large language model serving with
+pagedattention. InProceedings of the 29th symposium on operating systems principles, pages 611–626,
+2023.
+[61] Philipp Moritz, Robert Nishihara, Stephanie Wang, Alexey Tumanov, Richard Liaw, Eric Liang, Melih
+Elibol, Zongheng Yang, William Paul, Michael I Jordan, et al. Ray: A distributed framework for emerging
+{AI} applications. In13th USENIX symposium on operating systems design and implementation (OSDI
+18), pages 561–577, 2018.
+13
+Appendix Contents
+A Related Work 15
+B Details of Visualization 15
+C Implementation Details 16
+C.1 Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+C.2 Data Preparation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+C.3 Knowledge-Point Extraction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+C.4 Knowledge-Conditioned Question Generation . . . . . . . . . . . . . . . . . . . . 18
+C.5 Rubric-Based Judge with the Reasoner . . . . . . . . . . . . . . . . . . . . . . . . 19
+C.6 Self-Play Training . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+D Experimental Setup 24
+D.1 Comparison Baselines . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+D.2 Benchmarks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+D.3 Training Setup and Hyperparameters . . . . . . . . . . . . . . . . . . . . . . . . . 25
+E Additional Experimental Results 25
+F Limitations 27
+G Broader Impacts 28
+14
+A Related Work
+RL for LLM Post-Training.RL has become increasingly important in LLM post-training, es-
+pecially for improving reasoning in domains where rewards can be automatically verified [39–43].
+Recent representative works, such as OpenAI-o1 [44] and DeepSeek-R1 [45], rely on large amounts
+of synthesized or curated training data with verifiable rewards, enabling effective RL training but
+often requiring substantial effort for data construction, verification, and filtering. Another line of work
+explores more weakly supervised or unsupervised alternatives, deriving training signals either from
+the model’s own prior, such as majority voting [46] and semantic similarity [47], or from unlabeled
+text [48–50]. The former can be brittle when model confidence is misaligned with correctness [51],
+while the latter seeks to extract supervision directly from raw text and thereby provides an alternative
+source of training signal. For example, Golden Goose [49] extends the fill-in-the-middle paradigm to
+construct supervision from document context, while Quiet-STaR [50] and RLPT [52] optimize future
+tokens as supervision targets. These developments motivate our setting: medicine contains abundant
+high-quality unlabeled clinical text, making it a natural domain for studying whether self-play RL
+can convert real clinical corpora into useful supervision for medical reasoning.
+RL for Medical Reasoning Models.A growing body of work applies RL post-training to medical
+reasoning and reports promising gains on medical benchmarks [ 2, 11, 53]. HuatuoGPT-o1 [ 2]
+is among the earliest efforts in this direction, using exam-style multiple-choice questions such
+as MedQA-USMLE [ 35] and MedMCQA [ 54] as verifiable training data. Fleming-R1 [ 31] and
+MedReason [53] further synthesize QA-style training instances by extracting medical entities and
+relations to construct medical knowledge graphs. AlphaMed [30] builds a carefully curated medical
+RL dataset and highlights the importance of informative questions and diverse difficulty levels for
+effective training. MedCaseReasoning [55] identifies clinical case reports as a valuable source of
+medical reasoning data, but converts them into a static supervised dataset through extensive offline
+processing. Despite their encouraging progress, these methods predominantly rely on fixed offline
+supervision, including exam-style QA pairs, curated benchmarks, and synthesized reasoning datasets.
+In contrast, CasePlay treats clinical case reports not as a source of static annotations, but as grounding
+documents in an adaptive self-play loop that dynamically generates training questions for the current
+reasoner.
+Self-Play RL.Self-play has long been a central paradigm in RL, with early successes in games
+such as AlphaZero [56], where models improve by repeatedly competing against themselves and
+refining their policies over iterations. Recent work extends this idea to LLM post-training. Absolute
+Zero [13] and R-Zero [14] are among the earliest attempts to cast post-training as a co-evolutionary
+process between a problem proposer drawing on internal knowledge and a solver, enabling continual
+improvement without manually curated datasets. Subsequent methods introduce additional compo-
+nents into this loop. SPICE [ 17] grounds problem generation in unlabeled text, while WIST [ 21]
+explores tree-structured self-play for acquiring domain-relevant knowledge from the open web. De-
+spite this progress, existing self-play methods leave two limitations that are especially important in
+document-grounded medical reasoning. First, they typically do not explicitly control coverage over
+distinct knowledge points within a source document, which can cause the proposer to repeatedly
+anchor on a small subset of salient clues. Second, proposer optimization is still driven primarily by
+solver performance, which reflects difficulty but provides limited supervision over whether a ques-
+tion is clinically well-formed and useful for RL training. Motivated by these limitations, CasePlay
+addresses document-grounded medical self-play through knowledge-conditioned question generation
+and rubric-based quality feedback.
+B Details of Visualization
+Document Coverage Ratio.To measure how broadly generated questions cover the source case re-
+port, we first extract a set of fine-grained clues from each documentd, denoted as Cd ={c 1, . . . , c|Cd|}.
+These clues are more fine-grained than the knowledge points used by CasePlay and correspond to
+self-contained clinical facts, findings, interventions, outcomes, or mechanistic statements. We extract
+these clues once for each document using Qwen3-32B [28], obtaining an average of 48.3 clues per
+document.
+15
+Given a generated question q for document d, we use Qwen3-32B to identify the subset of clues in
+Cd that are explicitly used by the question, denoted as Cusedq,d ⊆ Cd. At proposer-update step u, the
+document coverage ratio is computed by aggregating the unique clues covered by all valid questions
+generated from the same document up to that step, and then averaging the resulting document-level
+coverage ratios:
+DCR(u) = 1|D| Xd∈D
+Sq∈Q≤ud Cusedq,d 
+|Cd| ,(9)
+where Q≤ud denotes the set of valid questions generated from document d up to proposer-updatestep u. Invalid questions are excluded before computing the ratio, and repeated use of the same clue
+within a document is counted only once.
+Question Distribution Visualization.To examine the diversity of questions generated during
+self-play, we visualize the semantic distribution of questions produced by SPICE and CasePlay. Since
+the full set of generated questions is large, we randomly sample 100 source documents and analyze
+all questions generated from these documents. For each question, we concatenate the question lead-in
+and answer options, and encode the resulting text with Qwen3-Embedding-8B [57] to obtain semantic
+embeddings. We then compute pairwise cosine distances over the pooled question set from both
+methods and apply classical multidimensional scaling (MDS) [26] to project the questions into two
+dimensions. Note that questions from SPICE and CasePlay are embedded and projected jointly
+rather than separately, so their relative positions in the MDS plane reflect semantic dispersion and
+overlap under the same embedding model and distance metric. The resulting visualization is shown
+in Figure 2(b).
+Quality Distribution of Intermediate-Difficulty Questions.To compare the quality of questions
+generated by SPICE and CasePlay, we collect all proposer-generated questions throughout self-play
+training. We then select intermediate-difficulty questions, defined as questions for which the reasoner
+achieves an empirical answer accuracy of 0.5. This yields 7,915 questions for SPICE and 9,152
+questions for CasePlay. From each set, we randomly sample 5,000 questions for evaluation. We use
+DeepSeek-V3.2 [38] to score these questions with the same rubric prompt used in our framework.
+The rubric contains three dimensions: clue integration, reasoning depth, and option quality. We
+compute the overall quality score by averaging the three rubric dimensions and linearly normalizing
+the result to[0,1]. The final quality-score distributions are shown in Figure 2(c).
+C Implementation Details
+C.1 Overview
+This section provides implementation details for CasePlay. We begin by describing the construction
+of the unlabeled clinical case-report corpus from the internet, including document-level filtering and
+preprocessing (Section C.2). We then describe how we extract a fixed set of document-grounded
+knowledge points for each retained report (Section C.3). During self-play, the proposer conditions on
+both the full case report and a selected knowledge point to generate a multiple-choice question, a
+supporting rationale, and a target answer (Section C.4). The reasoner evaluates each valid question
+using answer-based learnability feedback and rubric-based quality feedback (Section C.5). Finally,
+we detail the alternating self-play training procedure for updating the proposer and the reasoner
+(Section C.6).
+C.2 Data Preparation
+We collect open-access clinical case reports from the internet published between 2020 and 2025.
+We apply a three-stage filtering pipeline to ensure that each retained document contains sufficient
+text-grounded clinical evidence for question generation.First, we parse the raw XML files and discard
+reports that cannot be parsed, lack full text, have incomplete formatting, or are too short (fewer than
+500 tokens).Second, we perform corpus-level filtering and deduplication. We first remove duplicate
+entries by document ID, then remove near-duplicate reports using n-gram similarity. We also use
+regular expressions to count figures and tables, excluding reports dominated by visual content because
+16
+Clinical Case Report
+A 35-year-old White woman with hypertension and primary hyperaldosteronism presented with intermittent abdominal
+pain and chronic diarrhea for the past 6 years. She had a few episodes of small rectal bleeding. Review of systems was
+notable for heartburn and severe pain in her entire spine. The patient denied vomiting, weight loss, or fevers. Family
+history was notable for ulcerative colitis in her mother.<omitted parts>
+On physical examination, the patient had temperature 37.2°C, pulse rate 75, and blood pressure 140/100 with oxygen
+saturation 100% on room air. There was mild epigastric tenderness on deep palpation. Initial laboratory examination
+showed a leukocyte count of 11.1×10 3/µL (70% neutrophils, 1% eosinophils, absolute eosinophil count 0.07×
+103/µL ), hemoglobin 13.2 × 103/µL, platelet count 350 × 103/µL, C-reactive protein 10 mg/dL, blood urea nitrogen
+14 mg/dL, serum creatinine 0.76 mg/dL, and vitamin D 25 mg/dL.
+An esophagogastroduodenoscopy and colonoscopy at an outside clinic 8 months ago appeared normal. Pathology was
+notable for intramucosal eosinophil at 53 eos/hpf on duodenal biopsy and 68 eos/hpf on gastric antrum biopsy .
+Helicobacter pylori was absent. On terminal ileum biopsy, there were 120 intramucosal eos/hpf. Other random colon
+bio
