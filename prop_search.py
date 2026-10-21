@@ -25,10 +25,20 @@ import numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
 HERE = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(HERE, "knowledge"); sys.path.insert(0, HERE)
 SHARD, SHARDS = int(os.environ.get("SHARD", "0")), int(os.environ.get("SHARDS", "1"))   # parallel GitHub jobs split the grid
-OUT = os.path.join(K, "prop_search"); RES = os.path.join(OUT, f"results_{SHARD}.csv"); STATE = os.path.join(OUT, f"state_{SHARD}.json")
+# TRACK "classic": search 2014-21, validate 2022-23, locked exam 2024-26 (long history guards against luck).
+# TRACK "recent" (owner, 21 Oct 2026: an edge may only exist since 2024): search 2024-01..2025-03, validate 2025-04..today,
+#   a STRICTER luck bar (99%) because the short window gives far fewer independent accounts, then the recent review
+#   (review_prop.review_recent) and finally the coming weeks of new market data (forward test) as the real exam.
+TRACK = os.environ.get("TRACK", "classic")
+OUT = os.path.join(K, "prop_search") if TRACK == "classic" else os.path.join(K, "prop_search", "recent")
+RES = os.path.join(OUT, f"results_{SHARD}.csv"); STATE = os.path.join(OUT, f"state_{SHARD}.json")
 STATUS = os.path.join(HERE, "status.json")
 BUDGET_MIN = float(os.environ.get("SEARCH_MINUTES", "120"))
-SEARCH_END, VAL_END = "2021-12-31", "2023-12-31"
+SEARCH_START, SEARCH_END, VAL_END = ("1900-01-01", "2021-12-31", "2023-12-31") if TRACK == "classic" else ("2024-01-01", "2025-03-31", "2099-12-31")
+MIN_TRADES = 150 if TRACK == "classic" else 60
+LUCK_CONF = 0.95 if TRACK == "classic" else 0.99
+STATUS_KEY = "prop_search" if TRACK == "classic" else "prop_search_recent"
+LBL_A, LBL_B = ("2014-21", "2022-23") if TRACK == "classic" else ("2024-01..2025-03", "2025-04..now")
 SIM_VERSION = "harsh-1"      # rows without it were scored before the harsher fills / own-stop worst point / daily loss limit
 
 TIMES = ["08:31", "08:45", "09:00", "09:30", "10:00", "10:30", "11:30", "13:00", "13:30"]
@@ -126,11 +136,12 @@ def all_null():
     return pd.concat([pd.read_csv(f) for f in fs], ignore_index=True) if fs else pd.DataFrame(columns=["market", "ev"])
 
 
-def luck_bar(null_ev, k, conf=0.95):
+def luck_bar(null_ev, k, conf=None):
     """EV that the best of k no-edge strategies stays below with probability conf: the conf**(1/k) quantile of the
     placebo EVs (P(max of k <= x) = F(x)**k). Beyond the pool's own range, a normal tail fitted to the pool, never
     below the pool's max. None while the pool has fewer than NULL_MIN draws."""
     from statistics import NormalDist
+    conf = LUCK_CONF if conf is None else conf
     x = np.sort(np.asarray(null_ev, dtype=float)); x = x[np.isfinite(x)]
     if len(x) < NULL_MIN or k < 1: return None
     q = conf ** (1.0 / k)
@@ -175,7 +186,7 @@ def content_id(spec):
 
 def stage_idx(S, spec, stage):
     ses = S.data(spec.get("market"))["M"].session.values
-    return np.where(ses <= SEARCH_END)[0] if stage == "A" else np.where((ses > SEARCH_END) & (ses <= VAL_END))[0]
+    return np.where((ses >= SEARCH_START) & (ses <= SEARCH_END))[0] if stage == "A" else np.where((ses > SEARCH_END) & (ses <= VAL_END))[0]
 
 
 def score(spec, X, D, S, P, idx, plan=None, sizings=SIZINGS):
@@ -242,7 +253,7 @@ def main():
         row = {"date": datetime.now(timezone.utc).date().isoformat(), "spec_id": sid, "name": spec["name"], "spec": json.dumps(spec),
                "sim": SIM_VERSION}
         if best: row.update({k: best[k] for k in ("n", "win", "avg_R", "years_pos", "plan", "risk", "eval_risk", "pass", "paid", "ev", "fee")})
-        if best and best["n"] >= 150 and best["ev"] > 0:          # stage B: validation on 2022-2023, never used to choose
+        if best and best["n"] >= MIN_TRADES and best["ev"] > 0:   # stage B: validation on the next years, never used to choose
             sz = {"risk": best["risk"], "eval_risk": best["eval_risk"]}
             vr, TB = score(spec, X, D, S, None, "B", plan=best["plan"], sizings=[sz])
             if vr:
@@ -284,11 +295,16 @@ def main():
             free = (A2.ev_val > 0) & (ex_col.isna() | waiting)
             xs = excess(A2, L); has_bar = market_of(A2).map(lambda m: L[m]["bar"] is not None).astype(bool)
             free &= ~has_bar | (xs > 0)                       # where a luck bar exists, only candidates above it take the exam
+            if TRACK != "classic": free &= has_bar              # new-regime track: no exam at all before its (99%) luck bar exists
             rk = xs.where(has_bar, A2.ev_val)[free].sort_values(ascending=False)
             for i, c in A2.loc[rk.index[:2]].iterrows():
                 spec = json.loads(c.spec); spec["prop"] = {"risk": c.risk, "eval_risk": c.eval_risk}
                 try:
-                    verdict, _ = S.evaluate(spec, X, source="prop-search")
+                    if TRACK == "classic":
+                        verdict, _ = S.evaluate(spec, X, source="prop-search")
+                    else:
+                        import review_prop
+                        verdict = review_prop.recent_exam(spec, X, c["name"], c.plan)
                 except Exception as e:
                     verdict = f"error {type(e).__name__}"
                 exams.append((c["name"], verdict))
@@ -540,32 +556,32 @@ def all_results():
 
 
 def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
-    tot = len(R); a = R[(R.get("ev", 0) > 0) & (R.get("n", 0) >= 150)] if tot else R
+    tot = len(R); a = R[(R.get("ev", 0) > 0) & (R.get("n", 0) >= MIN_TRADES)] if tot else R
     v = R[R.get("ev_val", pd.Series(dtype=float)) > 0] if "ev_val" in R else R.iloc[0:0]
     L = L if L is not None else luck(R)
     xs = excess(R, L); v = v.assign(_x=xs.reindex(v.index)) if len(v) else v.assign(_x=pd.Series(dtype=float))
     nbeat = sum(x["beat_luck"] for x in L.values())
-    lines = [f"PROP STRATEGY SEARCH - run {st['nights']} (job {SHARD + 1}/{SHARDS}): {tried} new strategies this run, {tot:,} tested in total "
+    lines = [("PROP STRATEGY SEARCH" if TRACK == "classic" else "NEW-REGIME PROP SEARCH (since 2024)") + f" - run {st['nights']} (job {SHARD + 1}/{SHARDS}): {tried} new strategies this run, {tot:,} tested in total "
              f"(grid {gsize:,} + mutations, {tot / gsize:.1%} covered)",
-             f"Stage A (2014-21, EV after fee > 0): {len(a)} | Stage B (still positive on unseen 2022-23): {len(v)} | "
+             f"Stage A ({LBL_A}, EV after fee > 0): {len(a)} | Stage B (still positive on unseen {LBL_B}): {len(v)} | "
              f"exams taken: {len(set(R.spec_id[R['exam'].notna()]) | set(exam_ledger())) if 'exam' in R else len(exam_ledger())}",
-             "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): " + " | ".join(
+             f"LUCK BAR (best {LBL_B} EV that many no-edge random-entry strategies reach, {LUCK_CONF:.0%}): " + " | ".join(
                  f"{m} {x['bar']:+.0f} at {x['validated']} validated tries ({x['null_draws']} placebos, avg {x['null_mean']:+.0f}) -> {x['beat_luck']} beat it"
                  if x["bar"] is not None else f"{m} not yet ({x['null_draws']} placebos, need {NULL_MIN})" for m, x in L.items())]
     if pref:
         lines.append("Market focus: " + " / ".join(f"{m} {v:.0%}" for m, v in pref["weights"].items()) + f"  ({pref['why'][:200]})")
         if pref.get("shifted"): lines.append("FOCUS SHIFT: Volta moved its attention (" + ", ".join(pref["shifted"]) + ") based on its own test results.")
     if len(v):
-        lines += ["", "LEADERBOARD (ranked by EV per eval on unseen 2022-23 above the market's luck bar; "
+        lines += ["", f"LEADERBOARD (ranked by EV per eval on unseen {LBL_B} above the market's luck bar; "
                       "'luck-level' = not above it, likely a lucky survivor):"]
         v = v.assign(_r=v._x.fillna(v.ev_val - 1e6)) if v._x.notna().any() else v.assign(_r=v.ev_val)
         for _, r in v.sort_values("_r", ascending=False).head(6).iterrows():
             tag = "" if pd.isna(r._x) else (f" | BEATS LUCK by {r._x:+.0f}" if r._x > 0 else " | luck-level")
             fm = f" | 5 accounts: {r.farm_month_val:+.0f}$/month ({r.farm_pos_months_val:.0%} months positive)" if "farm_month_val" in r and pd.notna(r.get("farm_month_val")) else ""
-            lines.append(f"- {r['name'][:70]} | {r.plan} risk {r.risk:.0%}/{r.eval_risk:.0%} | 2014-21 EV {r.ev:+.0f} (pass {r['pass']:.0%}) "
-                         f"| 2022-23 EV {r.ev_val:+.0f} (pass {r.pass_val:.0%}){tag}{fm} | {int(r.n)} trades, {r.avg_R:+.2f}R")
+            lines.append(f"- {r['name'][:70]} | {r.plan} risk {r.risk:.0%}/{r.eval_risk:.0%} | {LBL_A} EV {r.ev:+.0f} (pass {r['pass']:.0%}) "
+                         f"| {LBL_B} EV {r.ev_val:+.0f} (pass {r.pass_val:.0%}){tag}{fm} | {int(r.n)} trades, {r.avg_R:+.2f}R")
     else:
-        lines += ["", "No strategy has stayed positive on the unseen 2022-23 years yet."]
+        lines += ["", f"No strategy has stayed positive on the unseen {LBL_B} years yet."]
     try:
         lines += portfolio_lines()
     except Exception as e:
@@ -573,7 +589,7 @@ def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
     for name, vd in exams:
         lines += ["", f"EXAM: {name[:70]} -> {vd[:260]}"]
     s = json.load(open(STATUS)) if os.path.exists(STATUS) else {}
-    s["prop_search"] = lines; json.dump(s, open(STATUS, "w"), indent=1)
+    s[STATUS_KEY] = lines; json.dump(s, open(STATUS, "w"), indent=1)
     if SHARD == 0:
         try:
             import eta; lines += [""] + eta.update()             # Volta's own estimate of when it finds a real edge

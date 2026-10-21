@@ -18,6 +18,10 @@ jobs:
       fail-fast: false
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]     # 8 parallel jobs, each walks its own eighth of the grid (already-tested specs are skipped via all results)
+        track: [classic]
+        include:                            # new-regime track (edges that may only exist since 2024): 2 extra jobs
+          - { shard: 0, track: recent }
+          - { shard: 1, track: recent }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -27,8 +31,10 @@ jobs:
         env:
           SEARCH_MINUTES: ${{ github.event.inputs.minutes || '155' }}
           SHARD: ${{ matrix.shard }}
-          SHARDS: "8"
+          SHARDS: ${{ matrix.track == 'recent' && '2' || '8' }}
+          TRACK: ${{ matrix.track }}
+          PORTFOLIO_MINUTES: ${{ matrix.track == 'recent' && '0' || '10' }}
           PYTHONUNBUFFERED: "1"
       - if: always()
         run: |
-          for i in 1 2 3 4 5; do bash .github/actions_common.sh "prop search ${{ matrix.shard }}" && break; sleep $((RANDOM % 20 + 5)); done
+          for i in 1 2 3 4 5; do bash .github/actions_common.sh "prop search ${{ matrix.track }} ${{ matrix.shard }}" && break; sleep $((RANDOM % 20 + 5)); done

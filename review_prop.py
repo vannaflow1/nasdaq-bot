@@ -125,12 +125,99 @@ def regime_watch(e, F):
     f = F[(F.id == S.spec_id(e["spec"])) & (F.traded)] if len(F) else F
     if len(f) < 15: return None
     _, X = TE.frame(); M = S.data(e["spec"].get("market"))["M"]
-    rec = S.backtest(e["spec"], X, np.where(M.session >= "2022-01-01")[0]).R.values
+    base_from = "2025-04-01" if e.get("source") == "prop-search-recent" else "2022-01-01"
+    rec = S.backtest(e["spec"], X, np.where(M.session >= base_from)[0]).R.values
     d = f.R.mean() - rec.mean(); se = np.sqrt(f.R.var(ddof=1) / len(f) + rec.var(ddof=1) / len(rec))
     if se > 0 and d / se < -1.645:
         return (f"FRAGILE (regime watch, {pd.Timestamp.now(tz='UTC'):%Y-%m-%d}): the last {len(f)} forward trades average "
                 f"{f.R.mean():+.2f}R vs {rec.mean():+.2f}R in 2022-26 (t={d / se:.1f}) - the regime it relied on looks broken")
     return None
+
+
+# ------------------------------------------------------------------ NEW-REGIME track (edges that may only exist since 2024)
+RECENT_FROM, RECENT_VAL_FROM, FORWARD_MIN = "2024-01-01", "2025-04-01", 15
+RECENT_EXAMS_PER_WEEK = 10
+
+
+def recent_exam(spec, X, name, plan):
+    """The 'exam' of a recent-track candidate (searched on 2024-01..2025-03, validated on 2025-04..now). No untouched
+    years are left, so this is a strict review on the validation months - and the REAL exam is the coming weeks
+    (forward test, see recent_forward). Writes an entry to strategies.jsonl and returns the verdict.
+    Checks: (1) validation months pay out under current rules AND accounts started in the latest ~6 months pay;
+    (2) beats random entries on the validation days (p < 0.05 - stricter than classic, few independent accounts);
+    (3) lucky-number test on 2024-now (>= 4/6 neighbouring settings pay); (4) 1.5x costs still pay on the validation months;
+    (5) 2014-2023 not clearly worse than random entries (dormant is fine, anti-edge is not)."""
+    import json, strategy_lab as S, prop_sim
+    from datetime import datetime, timezone
+    wk = S._week(); fn = os.path.join(HERE, "knowledge", "prop_search", "recent", "exams_week.json")
+    ex = json.load(open(fn)) if os.path.exists(fn) else {}
+    if ex.get(wk, 0) >= RECENT_EXAMS_PER_WEEK:
+        return "PASSED VALIDATION (recent track), WAITING FOR EXAM (weekly budget used up)"
+    ex[wk] = ex.get(wk, 0) + 1; os.makedirs(os.path.dirname(fn), exist_ok=True); json.dump(ex, open(fn, "w"))
+    D = S.data(spec.get("market")); M = D["M"]
+    T = S.backtest(spec, X, np.arange(len(M)))
+    V = T[T.session >= RECENT_VAL_FROM]; A = T[(T.session >= RECENT_FROM) & (T.session < RECENT_VAL_FROM)]
+    det, fails = {}, []
+    ev_v = _ev(S, V, M, spec, plan); det["validation"] = ev_v
+    if ev_v is None or ev_v <= 0: fails.append(f"validation months pay {ev_v}$/eval")
+    pts, worst, stop = S._prop_inputs(V, M); size = S._sizer(spec, stop)
+    last = prop_sim.evaluate(pts, worst, plan, size, starts=range(max(0, len(pts) - 186), max(1, len(pts) - 60), 1)) if len(pts) > 80 else {"ev_per_eval": -1, "pass_rate": 0, "share_with_payout": 0, "accounts": 0}
+    det["latest_6m"] = {k: last[k] for k in ("accounts", "pass_rate", "share_with_payout", "ev_per_eval")}
+    if last["ev_per_eval"] <= 0: fails.append(f"accounts started in the latest ~6 months pay {last['ev_per_eval']:+.0f}$/eval")
+    if not fails:
+        evs = _placebo(S, D, M, spec, plan, V, 40, 5); p = float((evs >= ev_v).mean())
+        det["placebo"] = {"random_mean_ev": round(float(evs.mean()), 1), "p": round(p, 3)}
+        if p >= 0.05: fails.append(f"random entries on the same days pay about as much (random {evs.mean():+.0f} vs {ev_v:+.0f}, p={p:.2f})")
+    if not fails:
+        recent = np.where(M.session >= RECENT_FROM)[0]; res = {}
+        for nm, kw in {"stop -20%": dict(stop_mult=0.8), "stop +20%": dict(stop_mult=1.2), "target -20%": dict(tgt_mult=0.8), "target +20%": dict(tgt_mult=1.2)}.items():
+            res[nm] = _ev(S, S.backtest(spec, X, recent, **kw), M, spec, plan)
+        for dm in (-15, 15):
+            if spec["entry"]["type"] == "time":
+                sp = dict(spec, entry=dict(spec["entry"])); t = min(max(S.mins(sp["entry"]["at"]) + dm, 1), 380)
+                sp["entry"]["at"] = f"{(510 + t) // 60:02d}:{(510 + t) % 60:02d}"; res[f"entry {dm:+d}"] = _ev(S, S.backtest(sp, X, recent), M, sp, plan)
+            else:
+                res[f"window {dm:+d}"] = _ev(S, S.backtest(spec, X, recent, win_shift=dm), M, spec, plan)
+        det["neighbours"] = res; ok = sum(1 for v in res.values() if v is not None and v > 0)
+        if ok < 4: fails.append(f"only {ok}/6 neighbouring settings pay - a lucky pick of exact numbers")
+        c = _ev(S, S.backtest(spec, X, np.where(M.session >= RECENT_VAL_FROM)[0], cost_mult=1.5), M, spec, plan); det["costs_1.5x"] = c
+        if c is None or c <= 0: fails.append(f"1.5x costs pay {c}$/eval")
+        old = T[T.session < RECENT_FROM]
+        if len(old) >= 30:
+            ev_o = _ev(S, old, M, spec, plan); b = _placebo(S, D, M, spec, plan, old, 20, 6); b_lo = float(np.nanpercentile(b, 10))
+            det["old"] = {"ev": ev_o, "random_p10": round(b_lo, 1)}
+            if ev_o is not None and ev_o < b_lo: fails.append(f"before 2024 it was clearly worse than random ({ev_o:+.0f} vs {b_lo:+.0f}) - an anti-edge")
+    today = datetime.now(timezone.utc).date().isoformat()
+    head = f"search 2024-01..2025-03: {len(A)} trades | validation 2025-04..now on {plan}: EV {ev_v if ev_v is None else round(ev_v)}$/eval"
+    if fails:
+        verdict = f"NOT CONFIRMED - failed the RECENT EXAM (recent track): {'; '.join(fails)}. {head}"
+        review = None
+    else:
+        verdict = (f"PROMISING STRATEGY (recent track, passed the RECENT EXAM; final test = the coming weeks): {head}, "
+                   f"latest 6 months {last['ev_per_eval']:+.0f}, beats random (p={det['placebo']['p']:.2f}), {ok}/6 neighbours, 1.5x costs {c:+.0f}")
+        review = f"PENDING (recent track, forward 0/{FORWARD_MIN} trades, {today}): passed the recent exam - confirmed only if the coming weeks hold up"
+    e = {"date": today, "name": name, "spec": spec, "source": "prop-search-recent", "verdict": verdict, "recent_exam": det}
+    if review: e["review"] = review
+    with open(S.LOG, "a") as f: f.write(json.dumps(e) + "\n")
+    return verdict
+
+
+def recent_forward(e, F):
+    """Every evening for PENDING recent-track strategies: after FORWARD_MIN real forward trades, CONFIRMED if they made
+    money and are not significantly worse than the validation months; FRAGILE otherwise. Returns a new review or None."""
+    import strategy_lab as S, test_engine as TE
+    f = F[(F.id == S.spec_id(e["spec"])) & (F.traded)] if len(F) else F
+    n = len(f); today = pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d")
+    if n < FORWARD_MIN:
+        return f"PENDING (recent track, forward {n}/{FORWARD_MIN} trades, {today}): passed the recent exam - confirmed only if the coming weeks hold up"
+    _, X = TE.frame(); M = S.data(e["spec"].get("market"))["M"]
+    v = S.backtest(e["spec"], X, np.where(M.session >= RECENT_VAL_FROM)[0]).R.values
+    d = f.R.mean() - v.mean(); se = np.sqrt(f.R.var(ddof=1) / n + v.var(ddof=1) / len(v))
+    if f.R.sum() > 0 and not (se > 0 and d / se < -1.645):
+        return (f"CONFIRMED (recent track, forward, {today}): {n} real forward trades made {f.R.sum():+.1f}R "
+                f"(avg {f.R.mean():+.2f}R vs {v.mean():+.2f}R in the validation months)")
+    return (f"FRAGILE (recent track, forward, {today}): {n} forward trades made {f.R.sum():+.1f}R (avg {f.R.mean():+.2f}R vs "
+            f"{v.mean():+.2f}R in the validation months) - the coming weeks did not hold up")
 
 
 if __name__ == "__main__":                                     # review every exam-passer without a review (--all: re-review all)

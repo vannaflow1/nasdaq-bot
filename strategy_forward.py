@@ -183,15 +183,22 @@ def main():
         import review_prop
         L = entries(); changed = []
         for e in L:
-            if str(e.get("review", "")).startswith("CONFIRMED"):
+            rv = str(e.get("review", ""))
+            if rv.startswith("CONFIRMED"):
                 nr = review_prop.regime_watch(e, F)
-                if nr: e["review"] = nr; changed.append(e["name"])
+                if nr: e["review"] = nr; changed.append(e["name"] + " (demoted by the regime watch)")
+            elif rv.startswith("PENDING (recent track"):            # new-regime candidates: the coming weeks are the exam
+                nr = review_prop.recent_forward(e, F)
+                if nr and nr != rv:
+                    e["review"] = nr
+                    if not nr.startswith("PENDING"): changed.append(f"{e['name']}: {nr[:200]}")
         if changed:
             with open(S.LOG, "w") as f:
                 for e in L: f.write(json.dumps(e) + "\n")
             import test_engine as TE
             ann = json.load(open(TE.ANN)) if os.path.exists(TE.ANN) else []
-            ann.append({"title": "⚠️ Regime watch: a confirmed prop algo was demoted", "body": "\n".join(changed)}); json.dump(ann, open(TE.ANN, "w"), indent=1)
+            ttl = "🏁 New-regime prop algo CONFIRMED by the coming weeks" if any("CONFIRMED (recent" in c for c in changed) else "⚠️ Prop algo review update"
+            ann.append({"title": ttl, "body": "\n".join(changed)}); json.dump(ann, open(TE.ANN, "w"), indent=1)
     except Exception as e:
         print("regime watch skipped:", type(e).__name__, e)
     try:

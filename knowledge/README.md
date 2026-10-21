@@ -75,3 +75,11 @@ Never without the owner: money, accounts, secrets/permissions, deleting data, we
 - **Timer levers** (eta.levers, status.json["eta_levers"], shown in /wishes and in the self-check digest): what-if versions of
   the timer (2x exam rate; 2x hit rate). The self-check is told the timer is its scoreboard and aims its self-actions,
   paper hunts and wishes at the biggest lever - never by weakening the exam, the review, the luck checks or the priors.
+- **New-regime track** (owner, 21 Oct: an edge may only exist since 2024): prop_search.py with TRACK=recent (2 extra jobs in
+  the prop-search workflow; files in knowledge/prop_search/recent/, status key "prop_search_recent"). Search 2024-01..2025-03
+  (>= 60 trades), validate 2025-04..now, 99% luck bar (no exam before the bar exists), then review_prop.recent_exam:
+  validation pays + accounts started in the latest ~6 months pay, beats random entries (p < 0.05), >= 4/6 neighbouring
+  settings, 1.5x costs, no anti-edge before 2024. Passing -> strategies.jsonl entry (source "prop-search-recent",
+  review "PENDING (recent track, forward n/15 ...)"). The real exam is the coming weeks: strategy_forward trades it every
+  evening; after 15 forward trades review_prop.recent_forward sets CONFIRMED (made money, not significantly worse than the
+  validation months) or FRAGILE. Announced on Discord. The timer counts both tracks.

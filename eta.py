@@ -38,16 +38,24 @@ def _review(e):
     return "confirmed" if r.startswith("CONFIRMED") else "rejected" if r.startswith(("FRAGILE", "FLUKE", "REJECT")) else "waiting"
 
 
+def _fwd_trades(e, F, S):
+    f = F[(F.id == S.spec_id(e["spec"])) & (F.traded)] if len(F) and "id" in F else F
+    return int(len(f))
+
+
 def inputs():
     import strategy_lab as S
     E = _jl(S.LOG)
-    exams = [e for e in E if "LOCKED EXAM" in str(e.get("verdict", ""))]
+    exams = [e for e in E if "LOCKED EXAM" in str(e.get("verdict", "")) or "RECENT EXAM" in str(e.get("verdict", ""))]
     passed = list({S.spec_id(e["spec"]): e for e in exams if str(e.get("verdict", "")).startswith("PROMISING STRATEGY")}.values())
     dates = sorted({e["date"] for e in E if e.get("source") == "prop-search"} | {e["date"] for e in exams})
     first = pd.Timestamp(dates[0]) if dates else pd.Timestamp(datetime.now(timezone.utc).date())
     days = max(1.0, (pd.Timestamp(datetime.now(timezone.utc).date()) - first).days + 1)
     rate = min(S.EXAMS_PER_WEEK, (len(exams) + 4) / (days + 14) * 7)     # smoothed toward 2 exams/week until there is history
-    cands = [{"name": e["name"], "status": _review(e), "ev": ((e.get("review_detail") or {}).get("recent") or {}).get("2024-26 exam") or (e.get("prop_exam") or {}).get("ev_per_eval"), "why": str(e.get("review") or ""),
+    F = pd.read_csv(os.path.join(K, "strategy_forward.csv")) if os.path.exists(os.path.join(K, "strategy_forward.csv")) else pd.DataFrame()
+    import review_prop
+    cands = [{"name": e["name"], "status": _review(e), "track": "recent" if e.get("source") == "prop-search-recent" else "classic",
+              "wait": (max(0, review_prop.FORWARD_MIN - _fwd_trades(e, F, S)) / 3.0) if str(e.get("review", "")).startswith("PENDING") else 0.0, "ev": ((e.get("review_detail") or {}).get("recent") or {}).get("2024-26 exam") or (e.get("prop_exam") or {}).get("ev_per_eval"), "why": str(e.get("review") or ""),
               "plan": (e.get("prop_exam") or {}).get("plan")} for e in passed]
     return {"exams": len(exams), "passes": len(passed), "rate": rate, "days_running": int(days), "cands": cands,
             "rejected": sum(c["status"] == "rejected" for c in cands), "confirmed": sum(c["status"] == "confirmed" for c in cands)}
@@ -69,7 +77,7 @@ def simulate(I, seed=7):
     for c in I["cands"]:                                                    # exam-passers waiting for their review
         if c["status"] != "waiting": continue
         ok = rng.random(SIMS) < p_real * REAL_CONFIRM
-        eta = np.where(ok, np.minimum(eta, to_sunday), eta)
+        eta = np.where(ok, np.minimum(eta, to_sunday + c.get("wait", 0.0)), eta)   # recent track: after its forward trades
     for wk in range(MAX_WEEKS):
         live = eta > wk + to_sunday
         if not live.any(): break
@@ -102,10 +110,10 @@ def lines(I=None):
     if not I["confirmed"]:
         out.append(f"Chance there is NO such algo in what I search (or I never catch it): {1 - fin.mean():.0%}. Honest: most strategy "
                    f"searches find nothing; each failed exam nudges this up, a confirmed algo ends it.")
-    out.append(f"Based on: {I['exams']} locked exams in {I['days_running']} days ({I['passes']} passed, {I['rejected']} rejected by review), "
-               f"about {I['rate']:.1f} exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.")
+    out.append(f"Based on: {I['exams']} exams (classic + new-regime track) in {I['days_running']} days ({I['passes']} passed, {I['rejected']} rejected by review), "
+               f"about {I['rate']:.1f} exams/week. 'Found' = passes evals and pays out on data it never saw in my simulator AND isn't luck (classic: locked 2024-26 exam + review; new-regime track: recent exam + the coming weeks).")
     w = [c for c in I["cands"] if c["status"] == "waiting"]
-    out.append("Waiting for review: " + "; ".join(f"{c['name'][:55]} (exam EV {c['ev']:+.0f}$/eval on {c['plan']})" for c in w)
+    out.append("Waiting: " + "; ".join(f"{c['name'][:55]} ({'new-regime track, needs ~' + format(c['wait'], '.0f') + ' more weeks of forward trades' if c['track'] == 'recent' else 'review'})" for c in w)
                if w else "Nothing waiting for review.")
     out.append("Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; "
                "a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.")
