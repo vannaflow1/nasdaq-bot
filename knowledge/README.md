@@ -115,3 +115,20 @@ not edge; K grew with every run; the 2024-26 exam was reused; power was never me
 - Next (phase 2): fast first-passage engine with a parity test, null worlds + planted edges (power curve = scoreboard),
   family registry + ledger with F3/F5/F6; phase 3: late window / multi-trade / OCO grammar, RTY/YM pooling, F1/F2/F4/F7,
   simulator fidelity, sequential Bayesian forward test, DP sizing last.
+
+## Expert review, phase 2 (21 Oct 2026)
+- **Mechanism families** (families.py, knowledge/families.json, ledger knowledge/families_ledger.csv, workflow families on
+  push of families.json + Sundays): register() freezes a family (commit + content hash; a changed family is skipped).
+  Family test = median 2022-23 edge across ALL variants vs a placebo family (100 draws), pass needs median > 0, >= 60% of
+  variants positive and p < 0.05 / (families scored). Best variant chosen on 2014-21 (bootstrap LB) -> locked exam (edge LB on
+  2024-now > 0, counts toward the 2/week cap) -> priced -> strategies.jsonl source "family", review "PENDING (auto family
+  exam ...)" for Claude. Grid keys "param.NAME" substitute {NAME} in the sleeve text; other keys set spec paths.
+  Results 21 Oct: F5 gap fill, F6 event drifts, F3 gamma switch all FAILED (median 2022-23 edge -0.14 / -0.06 / -0.15R,
+  at placebo level ~-0.10R = costs). F1 momentum into the close registered (scored by the workflow).
+- **Power curve** (power.py, status.json["power"], knowledge/research_out/power.csv): null worlds (feature table shuffled in
+  20-day blocks) + planted edges (+delta R on 60% of trades). First reading on F5 (6 worlds): +0.10R 0%, +0.20R 33%,
+  false passes 0%. => low-trade families cannot see realistic edges: more trades per test (markets, trades per day) next.
+- **Grammar**: exits up to 14:59 CT; side "own:day" = direction of the session so far at the entry minute (parity-checked).
+- **Forward test (recent track)**: sequential Bayesian - skeptical Normal(0, 0.05R) prior on mean R; CONFIRMED when
+  P(edge > 0) > 0.9 with >= 60 trades; FRAGILE when P < 0.1 after >= 20 trades or no confirmation after 180 trades.
+- Owner-only blockers: Feb-Oct 2026 backfill + RTY/YM (+ re-upload ES raw 1-min) for pooled multi-market families.

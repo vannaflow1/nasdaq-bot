@@ -144,7 +144,7 @@ def regime_watch(e, F):
 
 
 # ------------------------------------------------------------------ NEW-REGIME track (edges that may only exist since 2024)
-RECENT_FROM, RECENT_VAL_FROM, FORWARD_MIN = "2024-01-01", "2025-04-01", 15
+RECENT_FROM, RECENT_VAL_FROM, FORWARD_MIN = "2024-01-01", "2025-04-01", 60     # sequential Bayesian forward test (expert review)
 RECENT_EXAMS_PER_WEEK = 2
 
 
@@ -211,22 +211,36 @@ def recent_exam(spec, X, name, plan):
     return verdict
 
 
+def bayes_edge(R, sd=None, prior_sd=0.05):
+    """Skeptical prior on the true mean R per trade: Normal(0, 0.05R). Updated with each forward trade (normal likelihood,
+    per-trade sd from the trades themselves or the validation months). Returns (posterior mean, P(edge > 0))."""
+    from statistics import NormalDist
+    R = np.asarray(R, float); n = len(R)
+    if n == 0: return 0.0, 0.5
+    s2 = (sd if sd else max(np.std(R, ddof=1) if n > 1 else 1.0, 0.3)) ** 2
+    prec = 1 / prior_sd ** 2 + n / s2; mu = (R.sum() / s2) / prec
+    return float(mu), float(1 - NormalDist(mu, prec ** -0.5).cdf(0.0))
+
+
 def recent_forward(e, F):
-    """Every evening for PENDING recent-track strategies: after FORWARD_MIN real forward trades, CONFIRMED if they made
-    money and are not significantly worse than the validation months; FRAGILE otherwise. Returns a new review or None."""
+    """Every evening for PENDING recent-track strategies - sequential Bayesian test on the real forward trades:
+    CONFIRMED when P(edge > 0) > 0.9 with at least FORWARD_MIN (60) trades; FRAGILE when P(edge > 0) < 0.1 (after >= 20
+    trades) or no confirmation after 3x FORWARD_MIN trades. (The old 15-trade rule could not tell +0.1R from -0.1R.)"""
     import strategy_lab as S, test_engine as TE
     f = F[(F.id == S.spec_id(e["spec"])) & (F.traded)] if len(F) else F
     n = len(f); today = pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d")
-    if n < FORWARD_MIN:
-        return f"PENDING (recent track, forward {n}/{FORWARD_MIN} trades, {today}): passed the recent exam - confirmed only if the coming weeks hold up"
-    _, X = TE.frame(); M = S.data(e["spec"].get("market"))["M"]
-    v = S.backtest(e["spec"], X, np.where(M.session >= RECENT_VAL_FROM)[0]).R.values
-    d = f.R.mean() - v.mean(); se = np.sqrt(f.R.var(ddof=1) / n + v.var(ddof=1) / len(v))
-    if f.R.sum() > 0 and not (se > 0 and d / se < -1.645):
-        return (f"CONFIRMED (recent track, forward, {today}): {n} real forward trades made {f.R.sum():+.1f}R "
-                f"(avg {f.R.mean():+.2f}R vs {v.mean():+.2f}R in the validation months)")
-    return (f"FRAGILE (recent track, forward, {today}): {n} forward trades made {f.R.sum():+.1f}R (avg {f.R.mean():+.2f}R vs "
-            f"{v.mean():+.2f}R in the validation months) - the coming weeks did not hold up")
+    sd = None
+    try:
+        _, X = TE.frame(); M = S.data(e["spec"].get("market"))["M"]
+        v = S.backtest(e["spec"], X, np.where(M.session >= RECENT_VAL_FROM)[0]).R.values; sd = float(np.std(v, ddof=1)) if len(v) > 5 else None
+    except Exception:
+        pass
+    mu, p = bayes_edge(f.R.values if n else [], sd)
+    if n >= FORWARD_MIN and p > 0.9:
+        return f"CONFIRMED (recent track, forward, {today}): {n} real forward trades, posterior edge {mu:+.3f}R, P(edge > 0) = {p:.0%}"
+    if (n >= 20 and p < 0.1) or n >= 3 * FORWARD_MIN:
+        return f"FRAGILE (recent track, forward, {today}): {n} forward trades, posterior edge {mu:+.3f}R, P(edge > 0) = {p:.0%} - the coming weeks did not hold up"
+    return f"PENDING (recent track, forward {n}/{FORWARD_MIN}+ trades, P(edge > 0) {p:.0%}, {today}): confirmed only if the coming weeks hold up"
 
 
 if __name__ == "__main__":                                     # review every exam-passer without a review (--all: re-review all)

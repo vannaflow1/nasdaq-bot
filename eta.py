@@ -55,7 +55,7 @@ def inputs():
     F = pd.read_csv(os.path.join(K, "strategy_forward.csv")) if os.path.exists(os.path.join(K, "strategy_forward.csv")) else pd.DataFrame()
     import review_prop
     cands = [{"name": e["name"], "status": _review(e), "track": "recent" if e.get("source") == "prop-search-recent" else "classic",
-              "wait": (max(0, review_prop.FORWARD_MIN - _fwd_trades(e, F, S)) / 3.0) if str(e.get("review", "")).startswith("PENDING") else 0.0, "ev": ((e.get("review_detail") or {}).get("recent") or {}).get("2024-26 exam") or (e.get("prop_exam") or {}).get("ev_per_eval"), "why": str(e.get("review") or ""),
+              "wait": (max(0, review_prop.FORWARD_MIN - _fwd_trades(e, F, S)) / 4.0) if str(e.get("review", "")).startswith("PENDING") else 0.0, "ev": ((e.get("review_detail") or {}).get("recent") or {}).get("2024-26 exam") or (e.get("prop_exam") or {}).get("ev_per_eval"), "why": str(e.get("review") or ""),
               "plan": (e.get("prop_exam") or {}).get("plan")} for e in passed]
     return {"exams": len(exams), "passes": len(passed), "rate": rate, "days_running": int(days), "cands": cands,
             "rejected": sum(c["status"] == "rejected" for c in cands), "confirmed": sum(c["status"] == "confirmed" for c in cands)}
