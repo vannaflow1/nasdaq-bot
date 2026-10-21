@@ -104,8 +104,12 @@
   "query": "trailing stop versus fixed profit target return variance trend following",
   "why": "F2-LV: lower noise per trade without killing the edge",
   "source": "focus",
-  "status": "open",
-  "key": "focus:trailing stop versus fixed profit target return variance trend following"
+  "status": "searched",
+  "key": "focus:trailing stop versus fixed profit target return variance trend following",
+  "searched": "2026-10-21",
+  "papers": [
+   "openalex:W3167014524"
+  ]
  },
  {
   "id": "h10",
@@ -113,8 +117,10 @@
   "query": "sequential testing trading strategy performance early stopping",
   "why": "statistics: confirm a small edge with fewer trades",
   "source": "focus",
-  "status": "open",
-  "key": "focus:sequential testing trading strategy performance early stopping"
+  "status": "nothing found",
+  "key": "focus:sequential testing trading strategy performance early stopping",
+  "searched": "2026-10-21",
+  "papers": []
  },
  {
   "id": "h11",
@@ -122,8 +128,14 @@
   "query": "variance reduction control variates backtest evaluation",
   "why": "statistics: cut noise per trade in the test statistic",
   "source": "focus",
-  "status": "open",
-  "key": "focus:variance reduction control variates backtest evaluation"
+  "status": "searched",
+  "key": "focus:variance reduction control variates backtest evaluation",
+  "searched": "2026-10-21",
+  "papers": [
+   "arxiv:1806.00159v2",
+   "arxiv:0806.4675v1",
+   "arxiv:2510.13504v3"
+  ]
  },
  {
   "id": "h12",
