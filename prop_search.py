@@ -13,7 +13,7 @@ Anti-self-deception protocol (thousands of tries WILL produce lucky winners):
                        K no-edge strategies reaches with 95% probability, K = that market's number of validated candidates.
                        Only candidates above the bar "beat luck": they rank the leaderboard, steer the market focus, are
                        mutated first and are the only ones sent to the locked exam (once the bar exists).
-  stage C  EXAM        survivors go through the full strategy-lab protocol (both halves of 2014-2023, beats random
+  stage C  EXAM        survivors of all jobs go through the full strategy-lab protocol (both halves of 2014-2023, beats random
                        entries, survives double costs) and the LOCKED 2024-2026 exam (max 2 exams per night, 10 per week).
   PORTFOLIO            job 1 then combines 2-4 low-correlation stage-A strategies into ONE account (chosen on 2014-21
                        only, validated on 2022-23 + the 5-account farm) -> knowledge/prop_search/portfolios.csv.
@@ -267,21 +267,35 @@ def main():
         N0 = pd.read_csv(NULL) if os.path.exists(NULL) else pd.DataFrame()
         pd.concat([N0, pd.DataFrame(null_rows)], ignore_index=True).to_csv(NULL, index=False)
     L = luck(pd.concat([all_results().pipe(lambda a: a[~a.spec_id.isin(R.spec_id)] if len(a) else a), R], ignore_index=True))
-    # stage C: the best validated candidates take the full protocol + locked exam (max 2 per night)
+    # stage C: the best validated candidates of ALL jobs take the full protocol + locked exam (job 1 only, max 2 per run;
+    # the weekly exam cap still applies). Verdicts go to the exam ledger (exams.csv) so other jobs' files are never touched;
+    # a candidate that was only told "WAITING FOR EXAM" (weekly budget used up) stays eligible for a later run.
     exams = []
-    if "ev_val" in R and SHARD == 0:                          # job 1 only: max 2 exams per run (weekly exam cap still applies)
-        free = (R.ev_val > 0) & (R.get("exam", pd.Series(index=R.index, dtype=object)).isna())
-        xs = excess(R, L); has_bar = market_of(R).map(lambda m: L[m]["bar"] is not None).astype(bool)
-        free &= ~has_bar | (xs > 0)                           # where a luck bar exists, only candidates above it take the exam
-        rk = xs.where(has_bar, R.ev_val)[free].sort_values(ascending=False)
-        cand = R.loc[rk.index[:2]]
-        for i, c in cand.iterrows():
-            spec = json.loads(c.spec); spec["prop"] = {"risk": c.risk, "eval_risk": c.eval_risk}
-            try:
-                verdict, _ = S.evaluate(spec, X, source="prop-search")
-            except Exception as e:
-                verdict = f"error {type(e).__name__}"
-            R.loc[i, "exam"] = verdict[:300]; exams.append((c["name"], verdict))
+    exb = json.load(open(S.EXAMS)) if os.path.exists(S.EXAMS) else {}
+    budget_left = exb.get(S._week(), 0) < S.EXAMS_PER_WEEK
+    if SHARD == 0 and not budget_left: print("weekly exam budget used up - candidates wait for next week")
+    if SHARD == 0 and budget_left:
+        A2 = pd.concat([all_results().pipe(lambda a: a[~a.spec_id.isin(R.spec_id)] if len(a) else a), R], ignore_index=True)
+        if "ev_val" in A2:
+            sat = exam_ledger()
+            ex_col = A2.get("exam", pd.Series(index=A2.index, dtype=object)).astype(object)
+            ex_col = ex_col.where(ex_col.notna(), A2.spec_id.map(sat))
+            waiting = ex_col.fillna("").astype(str).str.contains("WAITING FOR EXAM")
+            free = (A2.ev_val > 0) & (ex_col.isna() | waiting)
+            xs = excess(A2, L); has_bar = market_of(A2).map(lambda m: L[m]["bar"] is not None).astype(bool)
+            free &= ~has_bar | (xs > 0)                       # where a luck bar exists, only candidates above it take the exam
+            rk = xs.where(has_bar, A2.ev_val)[free].sort_values(ascending=False)
+            for i, c in A2.loc[rk.index[:2]].iterrows():
+                spec = json.loads(c.spec); spec["prop"] = {"risk": c.risk, "eval_risk": c.eval_risk}
+                try:
+                    verdict, _ = S.evaluate(spec, X, source="prop-search")
+                except Exception as e:
+                    verdict = f"error {type(e).__name__}"
+                exams.append((c["name"], verdict))
+                led = pd.read_csv(EXLOG) if os.path.exists(EXLOG) else pd.DataFrame()
+                pd.concat([led, pd.DataFrame([{"date": datetime.now(timezone.utc).date().isoformat(), "spec_id": c.spec_id,
+                                                "name": c["name"], "verdict": verdict[:300]}])], ignore_index=True).to_csv(EXLOG, index=False)
+                if c.spec_id in set(R.spec_id): R.loc[R.spec_id == c.spec_id, "exam"] = verdict[:300]
     R.to_csv(RES, index=False)
     if SHARD == 0 and os.environ.get("PORTFOLIO_MINUTES", "10") != "0":   # portfolio stage (job 1 only)
         try:
@@ -510,6 +524,15 @@ def preferences(A=None, save=False, EV=None):
     return out
 
 
+EXLOG = os.path.join(OUT, "exams.csv")
+
+
+def exam_ledger():
+    """spec_id -> latest locked-exam verdict of the prop search (all jobs' candidates; written by job 1 only)."""
+    if not os.path.exists(EXLOG): return {}
+    E = pd.read_csv(EXLOG); return dict(zip(E.spec_id, E.verdict))
+
+
 def all_results():
     import glob
     fs = sorted(glob.glob(os.path.join(OUT, "results_*.csv"))) + ([os.path.join(OUT, "results.csv")] if os.path.exists(os.path.join(OUT, "results.csv")) else [])
@@ -525,7 +548,7 @@ def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
     lines = [f"PROP STRATEGY SEARCH - run {st['nights']} (job {SHARD + 1}/{SHARDS}): {tried} new strategies this run, {tot:,} tested in total "
              f"(grid {gsize:,} + mutations, {tot / gsize:.1%} covered)",
              f"Stage A (2014-21, EV after fee > 0): {len(a)} | Stage B (still positive on unseen 2022-23): {len(v)} | "
-             f"exams taken: {int(R['exam'].notna().sum()) if 'exam' in R else 0}",
+             f"exams taken: {len(set(R.spec_id[R['exam'].notna()]) | set(exam_ledger())) if 'exam' in R else len(exam_ledger())}",
              "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): " + " | ".join(
                  f"{m} {x['bar']:+.0f} at {x['validated']} validated tries ({x['null_draws']} placebos, avg {x['null_mean']:+.0f}) -> {x['beat_luck']} beat it"
                  if x["bar"] is not None else f"{m} not yet ({x['null_draws']} placebos, need {NULL_MIN})" for m, x in L.items())]
