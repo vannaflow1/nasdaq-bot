@@ -166,6 +166,12 @@ def excess(A, L):
     return A.ev_val - pd.to_numeric(bars, errors="coerce")
 
 
+def content_id(spec):
+    """Identity of what a spec trades (its name excluded), so a mutation that changed nothing is not tested again."""
+    import strategy_lab as S
+    return S.spec_id({k: v for k, v in spec.items() if k not in ("name", "prop")})
+
+
 def stage_idx(S, spec, stage):
     ses = S.data(spec.get("market"))["M"].session.values
     return np.where(ses <= SEARCH_END)[0] if stage == "A" else np.where((ses > SEARCH_END) & (ses <= VAL_END))[0]
@@ -200,6 +206,7 @@ def main():
     R = pd.read_csv(RES) if os.path.exists(RES) else pd.DataFrame()
     ALL = all_results()
     done = set(ALL.spec_id) if len(ALL) else set()
+    done_c = {content_id(json.loads(x)) for x in ALL.spec if isinstance(x, str)} if len(ALL) and "spec" in ALL else set()
     G_all = [g for j, g in enumerate(grid()) if j % SHARDS == SHARD]; tried = validated = 0; new_rows = []; null_rows = []
     GM = {mk: [g for g in G_all if g.get("market", "NQ") == mk] for mk in MARKETS}
     L0 = luck(ALL)                                             # luck bars per market (from the stored placebo draws)
@@ -223,8 +230,9 @@ def main():
             S.validate(spec); sid = S.spec_id(spec)
         except Exception:
             continue
-        if sid in done: continue
-        done.add(sid); tried += 1
+        cid = content_id(spec)
+        if sid in done or cid in done_c: continue                # a mutant that only renamed its parent is not a new try
+        done.add(sid); done_c.add(cid); tried += 1
         try:
             rows, T = score(spec, X, D, S, None, "A")
         except Exception as e:
