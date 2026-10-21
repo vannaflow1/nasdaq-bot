@@ -19,21 +19,25 @@ POINT = {"NQ": 1000, "GC": 1000, "CL": 1000, "ES": 1000, "YM": 1000, "RTY": 1000
 URL = "https://datafeed.dukascopy.com/datafeed/{s}/{y}/{m:02d}/{d:02d}/BID_candles_min_1.bi5"
 
 
-def _get(url, tries=4):
+MISSING = []                                                   # (market, day) that could not be fetched after all retries
+
+
+def _get(url, tries=7):
     for t in range(tries):
         try:
             return urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read()
         except urllib.error.HTTPError as e:
             if e.code == 404: return b""
-            time.sleep(2 + 3 * t)
+            time.sleep(min(60, 3 * 2 ** t))
         except Exception:
-            time.sleep(2 + 3 * t)
-    raise RuntimeError(f"fetch failed: {url}")
+            time.sleep(min(60, 3 * 2 ** t))
+    return None                                               # caller records it as missing (reported, never guessed)
 
 
 def day(mk, d):
     """One UTC day of 1-minute bid candles -> DataFrame(ts_utc, o, h, l, c, v)."""
     raw = _get(URL.format(s=SYMS[mk], y=d.year, m=d.month - 1, d=d.day))
+    if raw is None: MISSING.append((mk, str(d))); return pd.DataFrame()
     if not raw: return pd.DataFrame()
     b = lzma.decompress(raw); n = len(b) // 24
     rec = np.frombuffer(b[:n * 24], dtype=np.dtype([("t", ">i4"), ("o", ">i4"), ("c", ">i4"), ("l", ">i4"), ("h", ">i4"), ("v", ">f4")]))
@@ -43,7 +47,7 @@ def day(mk, d):
     return df[df.v > 0]                                       # Dukascopy pads closed minutes with flat zero-volume candles
 
 
-def fetch(mk, start, end, workers=8):
+def fetch(mk, start, end, workers=3):
     """All 1-minute bars between two dates, timestamps converted to Chicago time (Volta's session clock)."""
     from concurrent.futures import ThreadPoolExecutor
     days = [start + timedelta(i) for i in range((end - start).days + 1)]
@@ -126,6 +130,7 @@ def calibrate(markets=("NQ", "GC", "CL"), start=date(2025, 3, 3), end=date(2025,
                 res["F2_daily_R_corr_median"] = round(float(np.median(P[:, 0])), 3)
                 res["F2_mean_R_futures"] = round(float(P[:, 1].mean()), 3); res["F2_mean_R_proxy"] = round(float(P[:, 2].mean()), 3)
                 res["F2_trade_days_ratio"] = round(float(P[:, 4].sum() / max(P[:, 3].sum(), 1)), 3)
+        res["missing_days"] = sum(1 for m, _ in MISSING if m == mk)
         out[mk] = res; print(mk, res, flush=True)
     out["window"] = f"{start}..{end} (already seen by Volta - calibration only)"
     os.makedirs(os.path.join(HERE, "knowledge", "research_out"), exist_ok=True)
@@ -136,4 +141,5 @@ def calibrate(markets=("NQ", "GC", "CL"), start=date(2025, 3, 3), end=date(2025,
 if __name__ == "__main__":
     if sys.argv[1:2] == ["calibrate"]: calibrate()
     elif sys.argv[1:2] == ["probe"]:                          # quick format/scale probe on a seen day
-        for mk in SYMS: d = day(mk, date(2025, 6, 4)); print(mk, len(d), d.iloc[[0, len(d) // 2, -1]].to_dict("records") if len(d) else "")
+        for mk in SYMS: d = day(mk, date(2025, 6, 4)); print(mk, len(d), d.iloc[[0, len(d) // 2, -1]].to_dict("records") if len(d) else "", flush=True)
+        print("missing:", MISSING)

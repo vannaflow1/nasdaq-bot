@@ -67,7 +67,8 @@ def load_proxy(mk, lo, hi):
     from tools import dukascopy as DK
     d0 = date.fromisoformat(lo) - timedelta(WARMUP_DAYS); d1 = date.fromisoformat(hi)
     n = DK.fetch(mk, d0, d1)
-    if not len(n): raise RuntimeError(f"no proxy data for {mk}")
+    miss = [d for m, d in DK.MISSING if m == mk and lo <= d <= hi]
+    if not len(n) or len(miss) > 5: raise RuntimeError(f"proxy data for {mk} incomplete ({len(miss)} weekdays missing) - try again later")
     A, M = DK.sessions(n)
     name = f"{mk}_SEALED"; S.install_market(name, A, M, like=mk)
     idx = np.where((M.session >= lo) & (M.session <= hi))[0]
