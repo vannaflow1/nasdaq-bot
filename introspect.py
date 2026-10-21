@@ -65,9 +65,14 @@ def digest():
         if sc: out.append("BEST PROP SCORES SO FAR (EV per eval after fee): " + "; ".join(f"{e['name'][:50]}: {e['prop'][0]['ev_per_eval']:+.0f} on {e['prop'][0]['plan']}" for e in sc))
     except Exception:
         pass
-    try:
-        ps = json.load(open(os.path.join(HERE, "status.json"))).get("prop_search")
-        if ps: out.append("MY NIGHTLY PROP SEARCH: " + " | ".join(l for l in ps if l.strip())[:900])
+    try:                                                       # SEALED (expert review): no exam outcomes, names or reasons
+        import glob, pandas as _pd                             # leak into my ideas - only aggregate counts
+        fs = glob.glob(os.path.join(K, "prop_search", "results_*.csv")) + glob.glob(os.path.join(K, "prop_search", "recent", "results_*.csv"))
+        A = _pd.concat([_pd.read_csv(f, usecols=lambda c: c in ("spec_id", "metric", "edge_lb10", "edge_lb10_val")) for f in fs], ignore_index=True) if fs else _pd.DataFrame()
+        e1 = A[A.get("metric", _pd.Series(index=A.index, dtype=object)) == "edge-v1"] if len(A) else A
+        out.append(f"MY SEARCH (aggregate only - exam details are sealed): {len(A):,} strategies tested, {len(e1):,} with the edge metric, "
+                   f"{int((e1.get('edge_lb10', _pd.Series(dtype=float)) > 0).sum()) if len(e1) else 0} with an edge on the search years, "
+                   f"{int((e1.get('edge_lb10_val', _pd.Series(dtype=float)) > 0).sum()) if len(e1) else 0} still with an edge on the validation years.")
     except Exception:
         pass
     me = [x for x in lib if x.get("track") == "self" and x.get("lesson")][-6:]
@@ -91,9 +96,7 @@ def digest():
         import eta
         I = eta.inputs()
         out.append("MY TIMER (time until I have a prop algo that passes evals and keeps paying out): " + " ".join(eta.lines(I)[1:4]))
-        out.append(" ".join(eta.levers(I)))
-        rv = [c for c in I["cands"] if c["status"] == "rejected"]
-        if rv: out.append("WHY MY EXAM-PASSERS WERE REJECTED BY REVIEW: " + " || ".join(f"{c['name'][:50]}: {c['why'][:160]}" for c in rv[-3:]))
+
     except Exception:
         pass
     D = _jl(DIARY)
@@ -126,12 +129,12 @@ Then you decide how to improve yourself. You can do three things:
    ships them if they are verifiably better (beats the current version on unseen data / passes all dry runs).
    "owner" = ONLY things only he can provide: data he owns (e.g. his ES/SPX history, his trade log), anything that costs
    money, or anything needing his accounts.
-YOUR SCOREBOARD is MY TIMER: lower its time and raise its probability - honestly. Read MY TIMER LEVERS and aim today's
-self_actions, paper_hunts and wishes at the BIGGEST lever (e.g. better candidates: strategies built for the CURRENT market
-regime, ideas from recent papers, regime filters, new data; more candidates: more search, new markets, combining
-strategies). Learn from WHY MY EXAM-PASSERS WERE REJECTED. Say in the diary which lever you worked on and why.
-Never try to move the timer by weakening the exam, the review, the luck checks or the estimate's assumptions - that
-would only fool yourself and the owner.
+WHAT COUNTS (since 21 Oct 2026, after an expert review): a real EDGE in the trade stream (mean net R per trade, proven with
+a bootstrap lower bound) that comes from a clear MECHANISM - not prop EV, which mostly rewards variance. MY TIMER is only a
+dashboard of guesses, never a target. Prefer ideas that (a) have a one-sentence mechanism, (b) give many trades (more
+independent observations = more power), (c) work across index futures (NQ, ES). Exam details are sealed on purpose.
+Wishes: research side only for now - the live briefing side is frozen until a strategy is confirmed.
+Never weaken the exam, the review, the luck checks or the estimate's assumptions.
 Self-actions must be about MARKETS (what NQ does in a session), never about your own software - software problems go
 into a wish for Claude. What you ALREADY HAVE (never wish for these): dealer gamma/vanna/charm ESTIMATES from QQQ, NDX and
 (since Oct 2026) SPX option chains, 12 years of daily QQQ option history with the vol surface and Heston fits, 1-minute NQ

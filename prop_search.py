@@ -38,6 +38,7 @@ SEARCH_START, SEARCH_END, VAL_END = ("1900-01-01", "2021-12-31", "2023-12-31") i
 MIN_TRADES = 150 if TRACK == "classic" else 60
 LUCK_CONF = 0.95 if TRACK == "classic" else 0.99
 STATUS_KEY = "prop_search" if TRACK == "classic" else "prop_search_recent"
+SEARCH_MARKETS = [m.strip() for m in os.environ.get("SEARCH_MARKETS", "NQ").split(",") if m.strip()]
 LBL_A, LBL_B = ("2014-21", "2022-23") if TRACK == "classic" else ("2024-01..2025-03", "2025-04..now")
 SIM_VERSION = "harsh-1"      # rows without it were scored before the harsher fills / own-stop worst point / daily loss limit
 
@@ -131,6 +132,42 @@ def mutate(spec, rng):
     return s
 
 
+def edge_stats(R, B=1000, block=5, seed=0):
+    """THE search metric since 21 Oct 2026 (expert review): the edge in the trade stream, not prop EV (prop EV rewards
+    variance and aggressive sizing). Mean net R per trade, its t-stat, and the 10th percentile of the mean from a
+    stationary block bootstrap (Politis-Romano, mean block 5 trades) = edge_lb10. A candidate needs edge_lb10 > 0."""
+    R = np.asarray(R, float); R = R[np.isfinite(R)]; n = len(R)
+    if n < 20: return {"n": n, "edge": float(R.mean()) if n else np.nan, "edge_t": np.nan, "edge_lb10": np.nan}
+    rng = np.random.default_rng(seed); p = 1.0 / block
+    new = rng.random((B, n)) < p; new[:, 0] = True
+    pos = np.arange(n)[None, :].repeat(B, 0)
+    bs = np.maximum.accumulate(np.where(new, pos, 0), axis=1)            # position where the current block started
+    starts = rng.integers(0, n, (B, n))
+    st = np.take_along_axis(starts, bs, axis=1)
+    idx = (st + (pos - bs)) % n
+    means = R[idx].mean(1)
+    sd = R.std(ddof=1)
+    return {"n": n, "edge": float(R.mean()), "edge_t": float(R.mean() / (sd / np.sqrt(n))) if sd > 0 else np.nan,
+            "edge_lb10": float(np.percentile(means, 10))}
+
+
+def placebo_edges(spec, T, S, rng, reps=4):
+    """No-edge twins of a validated candidate on its own validation days (same stop/target/exit): even draws = same side at
+    a random minute, odd draws = same minute with a coin-flip side. Returns their mean net R (the luck pool for the bar)."""
+    D = S.data(spec.get("market")); e = spec["entry"]
+    lo = S.mins(e["window"][0]) if e["type"] == "level" else 1
+    hi = S.mins(e["window"][1]) if e["type"] == "level" else min(S.mins(spec.get("exit", "14:55")) - 5, 380)
+    lo, hi = max(lo, 1), max(hi, lo + 2); out = []
+    for j in range(reps):
+        Rs = []
+        for i, sd, k in zip(T.i.values, T.side.values, T.k.values):
+            ov = (rng.randint(lo, hi - 1), int(sd)) if j % 2 == 0 else (int(k), rng.choice((-1, 1)))
+            r = S.simulate_session(D, int(i), spec, entry_override=ov)
+            if r: Rs.append(r[1])
+        if len(Rs) >= 30: out.append(float(np.mean(Rs)))
+    return out
+
+
 NULL = os.path.join(OUT, f"null_{SHARD}.csv")
 NULL_PER_CANDIDATE, NULL_MIN = 2, 30                       # placebo draws per validated candidate; draws needed for a bar
 
@@ -185,21 +222,21 @@ def luck(A=None, N=None):
     out = {}; mk = market_of(A)
     for m in MARKETS:
         a = A[mk == m] if len(A) else A
-        k = int(a["ev_val"].notna().sum()) if len(a) and "ev_val" in a else 0
-        nv = N[N.market == m].ev.values if len(N) else np.array([])
+        k = int(a["edge_val"].notna().sum()) if len(a) and "edge_val" in a else 0
+        nv = N[N.market == m]["edge"].dropna().values if len(N) and "edge" in N else np.array([])
         bar = luck_bar(nv, k)
-        beat = int((a["ev_val"] > bar).sum()) if bar is not None and k else 0
+        beat = int((a["edge_val"] > bar).sum()) if bar is not None and k else 0
         out[m] = {"tested": int(len(a)), "validated": k, "null_draws": int(len(nv)),
-                  "null_mean": round(float(np.mean(nv)), 1) if len(nv) else None,
-                  "bar": round(bar, 1) if bar is not None else None, "beat_luck": beat}
+                  "null_mean": round(float(np.mean(nv)), 3) if len(nv) else None,
+                  "bar": round(bar, 3) if bar is not None else None, "beat_luck": beat}
     return out
 
 
 def excess(A, L):
-    """EV on 2022-23 minus the market's luck bar (NaN where no bar exists yet or the row was not validated)."""
-    if not len(A) or "ev_val" not in A: return pd.Series(dtype=float)
+    """Validation edge (mean net R) minus the market's luck bar (NaN where no bar exists yet or the row was not validated)."""
+    if not len(A) or "edge_val" not in A: return pd.Series(dtype=float)
     bars = market_of(A).map(lambda m: L.get(m, {}).get("bar"))
-    return A.ev_val - pd.to_numeric(bars, errors="coerce")
+    return A.edge_val - pd.to_numeric(bars, errors="coerce")
 
 
 def content_id(spec):
@@ -252,16 +289,18 @@ def main():
     print("market focus:", pref["weights"], "|", pref["why"])
     G = G_all
     while time.time() - t0 < BUDGET_MIN * 60:
-        if rng.random() < 0.3 and len(ALL) and (ALL.get("ev_val", pd.Series(dtype=float)) > 0).any():
-            xs = excess(ALL, L0)                                  # parents: beat the luck bar first, else best 2022-23 EV
+        if rng.random() < 0.3 and len(ALL) and "edge_val" in ALL and (ALL.edge_val > 0).any():
+            xs = excess(ALL, L0)                                  # parents: beat the luck bar first, else best validation edge
             top = ALL.loc[xs[xs > 0].sort_values(ascending=False).index[:20]] if (xs > 0).any() else \
-                ALL[ALL.ev_val > 0].sort_values("ev_val", ascending=False).head(20)
+                ALL[ALL.edge_val > 0].sort_values("edge_val", ascending=False).head(20)
             spec = mutate(json.loads(top.sample(1, random_state=rng.randint(0, 10**6)).spec.iloc[0]), rng)
         else:
             mk = rng.choices(list(pref["weights"]), weights=list(pref["weights"].values()))[0]
+            if mk not in SEARCH_MARKETS: mk = SEARCH_MARKETS[0]   # GC/CL only through families with a mechanism (review)
             Gm = GM[mk]
             if st["pos_m"].get(mk, 0) >= len(Gm): st["pos_m"][mk] = 0
             spec = Gm[st["pos_m"].get(mk, 0)]; st["pos_m"][mk] = st["pos_m"].get(mk, 0) + 1
+        if (spec.get("market") or "NQ") not in SEARCH_MARKETS: continue
         try:
             S.validate(spec); sid = S.spec_id(spec)
         except Exception:
@@ -269,39 +308,41 @@ def main():
         cid = content_id(spec)
         if sid in done or cid in done_c: continue                # a mutant that only renamed its parent is not a new try
         done.add(sid); done_c.add(cid); tried += 1
-        try:
-            rows, T = score(spec, X, D, S, None, "A")
+        row = {"date": datetime.now(timezone.utc).date().isoformat(), "spec_id": sid, "name": spec["name"], "spec": json.dumps(spec),
+               "sim": SIM_VERSION, "metric": "edge-v1"}
+        try:                                                     # stage A: the EDGE on the search years (no prop sim yet)
+            TA = S.backtest(spec, X, stage_idx(S, spec, "A"))
         except Exception as e:
             print("skip", spec["name"], type(e).__name__, e); continue
-        best = max(rows, key=lambda r: r["ev"]) if rows else None
-        if best and best["n"] >= MIN_TRADES and best["ev"] > -0.5 * best["fee"]:   # account playbooks, search years only
-            try:
-                pb_rows, _ = score(spec, X, D, S, None, "A", plan=best["plan"], sizings=PLAYBOOKS)
-                if pb_rows:
-                    b2 = max(pb_rows, key=lambda r: r["ev"])
-                    if b2["ev"] > best["ev"]: best = b2
+        ea = edge_stats(TA.R.values) if len(TA) else {"n": 0, "edge": np.nan, "edge_t": np.nan, "edge_lb10": np.nan}
+        row.update({"n": ea["n"], "avg_R": round(ea["edge"], 4) if np.isfinite(ea["edge"]) else None,
+                    "edge_t": round(ea["edge_t"], 2) if np.isfinite(ea["edge_t"]) else None,
+                    "edge_lb10": round(ea["edge_lb10"], 4) if np.isfinite(ea["edge_lb10"]) else None})
+        if ea["n"] >= MIN_TRADES and np.isfinite(ea["edge_lb10"]) and ea["edge_lb10"] > 0:
+            try:                                                 # priced only now: the prop simulator on the base sizings
+                rows, _ = score(spec, X, D, S, None, "A")
+                best = max(rows, key=lambda r: r["ev"]) if rows else None
+                if best: row.update({k: best[k] for k in ("win", "years_pos", "plan", "risk", "eval_risk", "playbook", "pass", "paid", "ev", "fee")})
             except Exception as e:
-                print("playbooks skipped:", type(e).__name__, e)
-        row = {"date": datetime.now(timezone.utc).date().isoformat(), "spec_id": sid, "name": spec["name"], "spec": json.dumps(spec),
-               "sim": SIM_VERSION}
-        if best: row.update({k: best[k] for k in ("n", "win", "avg_R", "years_pos", "plan", "risk", "eval_risk", "playbook", "pass", "paid", "ev", "fee")})
-        if best and best["n"] >= MIN_TRADES and best["ev"] > 0:   # stage B: validation on the next years, never used to choose
-            sz = json.loads(best["playbook"])
-            vr, TB = score(spec, X, D, S, None, "B", plan=best["plan"], sizings=[sz])
-            if vr:
-                row.update({"n_val": vr[0]["n"], "pass_val": vr[0]["pass"], "paid_val": vr[0]["paid"], "ev_val": vr[0]["ev"]})
+                best = None; print("pricing skipped:", type(e).__name__, e)
+            TB = S.backtest(spec, X, stage_idx(S, spec, "B"))   # stage B: the edge on the validation years, never used to choose
+            eb = edge_stats(TB.R.values, seed=1) if len(TB) else {"n": 0, "edge": np.nan, "edge_t": np.nan, "edge_lb10": np.nan}
+            if eb["n"] >= 30:
+                row.update({"n_val": eb["n"], "edge_val": round(eb["edge"], 4), "edge_t_val": round(eb["edge_t"], 2) if np.isfinite(eb["edge_t"]) else None,
+                            "edge_lb10_val": round(eb["edge_lb10"], 4) if np.isfinite(eb["edge_lb10"]) else None})
                 validated += 1
-                try:                                              # luck control: no-edge twins on the same 2022-23 days
-                    for ev0 in placebo_evs(spec, TB, S, best["plan"], sz, rng):
-                        null_rows.append({"date": row["date"], "market": spec.get("market", "NQ"), "spec_id": sid, "plan": best["plan"], "ev": ev0})
+                try:                                              # luck control: no-edge twins on the same validation days
+                    for e0 in placebo_edges(spec, TB, S, rng):
+                        null_rows.append({"date": row["date"], "market": spec.get("market", "NQ"), "spec_id": sid, "edge": e0})
                 except Exception as e:
                     print("placebo skipped:", type(e).__name__, e)
-                if vr[0]["ev"] > 0:                               # portfolio view: 5 copy-traded accounts, re-buy on blow-up
+                if best and eb["edge_lb10"] > 0:                  # price the validated edge (information, not a gate)
                     try:
-                        f = S.farm_score(TB, S.data(spec.get("market"))["M"], dict(spec, prop=sz), best["plan"], slots=5)
-                        row.update({"farm_month_val": f["avg_month"], "farm_pos_months_val": f["positive_months"], "farm_worst_val": f["worst_month"]})
+                        sz = json.loads(best["playbook"])
+                        vr, _ = score(spec, X, D, S, None, "B", plan=best["plan"], sizings=[sz])
+                        if vr: row.update({"pass_val": vr[0]["pass"], "paid_val": vr[0]["paid"], "ev_val": vr[0]["ev"]})
                     except Exception as e:
-                        print("farm skipped:", e)
+                        print("val pricing skipped:", e)
         new_rows.append(row)
         if len(new_rows) % 25 == 0:
             print(f"{tried} tried, {validated} validated, {(time.time() - t0) / 60:.0f} min"); sys.stdout.flush()
@@ -319,18 +360,19 @@ def main():
     if SHARD == 0 and not budget_left: print("weekly exam budget used up - candidates wait for next week")
     if SHARD == 0 and budget_left:
         A2 = pd.concat([all_results().pipe(lambda a: a[~a.spec_id.isin(R.spec_id)] if len(a) else a), R], ignore_index=True)
-        if "ev_val" in A2:
+        if "edge_val" in A2:
             sat = exam_ledger()
             ex_col = A2.get("exam", pd.Series(index=A2.index, dtype=object)).astype(object)
             ex_col = ex_col.where(ex_col.notna(), A2.spec_id.map(sat))
             waiting = ex_col.fillna("").astype(str).str.contains("WAITING FOR EXAM")
-            free = (A2.ev_val > 0) & (ex_col.isna() | waiting)
+            free = (A2.get("edge_lb10_val", pd.Series(index=A2.index, dtype=float)) > 0) & (ex_col.isna() | waiting)
             xs = excess(A2, L); has_bar = market_of(A2).map(lambda m: L[m]["bar"] is not None).astype(bool)
             free &= ~has_bar | (xs > 0)                       # where a luck bar exists, only candidates above it take the exam
             if TRACK != "classic": free &= has_bar              # new-regime track: no exam at all before its (99%) luck bar exists
-            rk = xs.where(has_bar, A2.ev_val)[free].sort_values(ascending=False)
+            rk = xs.where(has_bar, A2.edge_val)[free].sort_values(ascending=False)
             for i, c in A2.loc[rk.index[:2]].iterrows():
                 spec = json.loads(c.spec)
+                if not isinstance(c.get("plan"), str): continue          # never priced (no positive edge on the search years)
                 pbk = c.get("playbook") if hasattr(c, "get") else None
                 spec["prop"] = json.loads(pbk) if isinstance(pbk, str) and pbk.startswith("{") else {"risk": c.risk, "eval_risk": c.eval_risk}
                 try:
@@ -589,33 +631,35 @@ def all_results():
     return pd.concat([pd.read_csv(f) for f in fs], ignore_index=True) if fs else pd.DataFrame()
 
 
+def tot_ok(R):
+    return len(R) > 0
+
+
 def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
-    tot = len(R); a = R[(R.get("ev", 0) > 0) & (R.get("n", 0) >= MIN_TRADES)] if tot else R
-    v = R[R.get("ev_val", pd.Series(dtype=float)) > 0] if "ev_val" in R else R.iloc[0:0]
+    E1 = R[R.get("metric", pd.Series(index=R.index, dtype=object)) == "edge-v1"] if tot_ok(R) else R.iloc[0:0]
+    tot = len(R)
+    a = E1[(E1.get("n", 0) >= MIN_TRADES) & (E1.get("edge_lb10", -1) > 0)] if len(E1) else E1
+    v = E1[E1.get("edge_lb10_val", pd.Series(index=E1.index, dtype=float)) > 0] if len(E1) else E1
     L = L if L is not None else luck(R)
     xs = excess(R, L); v = v.assign(_x=xs.reindex(v.index)) if len(v) else v.assign(_x=pd.Series(dtype=float))
-    nbeat = sum(x["beat_luck"] for x in L.values())
     lines = [("PROP STRATEGY SEARCH" if TRACK == "classic" else "NEW-REGIME PROP SEARCH (since 2024)") + f" - run {st['nights']} (job {SHARD + 1}/{SHARDS}): {tried} new strategies this run, {tot:,} tested in total "
-             f"(grid {gsize:,} + mutations, {tot / gsize:.1%} covered)",
-             f"Stage A ({LBL_A}, EV after fee > 0): {len(a)} | Stage B (still positive on unseen {LBL_B}): {len(v)} | "
-             f"exams taken: {len(set(R.spec_id[R['exam'].notna()]) | set(exam_ledger())) if 'exam' in R else len(exam_ledger())}",
-             f"LUCK BAR (best {LBL_B} EV that many no-edge random-entry strategies reach, {LUCK_CONF:.0%}): " + " | ".join(
-                 f"{m} {x['bar']:+.0f} at {x['validated']} validated tries ({x['null_draws']} placebos, avg {x['null_mean']:+.0f}) -> {x['beat_luck']} beat it"
-                 if x["bar"] is not None else f"{m} not yet ({x['null_draws']} placebos, need {NULL_MIN})" for m, x in L.items())]
-    if pref:
-        lines.append("Market focus: " + " / ".join(f"{m} {v:.0%}" for m, v in pref["weights"].items()) + f"  ({pref['why'][:200]})")
-        if pref.get("shifted"): lines.append("FOCUS SHIFT: Volta moved its attention (" + ", ".join(pref["shifted"]) + ") based on its own test results.")
+             f"({len(E1):,} with the edge metric; grid {gsize:,} + mutations, markets {', '.join(SEARCH_MARKETS)})",
+             f"Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. "
+             f"Stage A ({LBL_A}, edge > 0 with 90% confidence): {len(a)} | Stage B (edge still > 0 on unseen {LBL_B}): {len(v)} | "
+             f"exams taken: {len(exam_ledger())}",
+             f"LUCK BAR (best {LBL_B} edge that many no-edge random-entry twins reach, {LUCK_CONF:.0%}): " + " | ".join(
+                 f"{m} {x['bar']:+.3f}R at {x['validated']} validated tries ({x['null_draws']} placebos, avg {x['null_mean']:+.3f}R) -> {x['beat_luck']} beat it"
+                 if x["bar"] is not None else f"{m} not yet ({x['null_draws']} placebos, need {NULL_MIN})" for m, x in L.items() if m in SEARCH_MARKETS)]
     if len(v):
-        lines += ["", f"LEADERBOARD (ranked by EV per eval on unseen {LBL_B} above the market's luck bar; "
-                      "'luck-level' = not above it, likely a lucky survivor):"]
-        v = v.assign(_r=v._x.fillna(v.ev_val - 1e6)) if v._x.notna().any() else v.assign(_r=v.ev_val)
+        lines += ["", f"LEADERBOARD (edge on unseen {LBL_B} above the luck bar; 'luck-level' = not above it):"]
+        v = v.assign(_r=v._x.fillna(v.edge_val - 1e6)) if v._x.notna().any() else v.assign(_r=v.edge_val)
         for _, r in v.sort_values("_r", ascending=False).head(6).iterrows():
-            tag = "" if pd.isna(r._x) else (f" | BEATS LUCK by {r._x:+.0f}" if r._x > 0 else " | luck-level")
-            fm = f" | 5 accounts: {r.farm_month_val:+.0f}$/month ({r.farm_pos_months_val:.0%} months positive)" if "farm_month_val" in r and pd.notna(r.get("farm_month_val")) else ""
-            lines.append(f"- {r['name'][:70]} | {r.plan} risk {r.risk:.0%}/{r.eval_risk:.0%} | {LBL_A} EV {r.ev:+.0f} (pass {r['pass']:.0%}) "
-                         f"| {LBL_B} EV {r.ev_val:+.0f} (pass {r.pass_val:.0%}){tag}{fm} | {int(r.n)} trades, {r.avg_R:+.2f}R")
+            tag = "" if pd.isna(r._x) else (f" | BEATS LUCK by {r._x:+.3f}R" if r._x > 0 else " | luck-level")
+            px = f" | priced: {r.plan} EV {r.ev_val:+.0f}$/eval" if pd.notna(r.get("ev_val")) and isinstance(r.get("plan"), str) else ""
+            lines.append(f"- {r['name'][:70]} | {LBL_A} {r.avg_R:+.3f}R (t {r.edge_t:.1f}, {int(r.n)} trades) | {LBL_B} {r.edge_val:+.3f}R "
+                         f"(t {r.edge_t_val:.1f}){tag}{px}")
     else:
-        lines += ["", f"No strategy has stayed positive on the unseen {LBL_B} years yet."]
+        lines += ["", f"No strategy has a proven edge on the unseen {LBL_B} years yet."]
     try:
         lines += portfolio_lines()
     except Exception as e:

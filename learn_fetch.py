@@ -300,7 +300,7 @@ def auto_hunts():
     for l in (open(lab) if os.path.exists(lab) else []):
         if not l.strip(): continue
         e = json.loads(l); key = "exam:" + str(e.get("name"))[:80]
-        if str(e.get("verdict", "")).startswith("PROMISING STRATEGY") and key not in keys:
+        if False and str(e.get("verdict", "")).startswith("PROMISING STRATEGY") and key not in keys:   # sealed: exam passes no longer trigger hunts
             items.append({"query": spec_query(e.get("spec") or {}), "key": key,
                           "why": f"my strategy '{str(e.get('name'))[:80]}' passed the locked exam - why could it work, and when does it stop working?"})
     rq = os.path.join(K, "review_queue.json")
@@ -385,7 +385,7 @@ def frontier_papers(seen):
     st = json.load(open(FRONTIER_STATE)) if os.path.exists(FRONTIER_STATE) else {"topic": 0}
     out = []
     try:
-        q = ("(cat:q-fin.TR OR cat:q-fin.ST OR cat:q-fin.CP OR cat:q-fin.PM OR cat:q-fin.RM OR cat:cs.LG OR cat:stat.ML) AND "
+        q = ("(cat:q-fin.TR OR cat:q-fin.ST OR cat:q-fin.CP OR cat:q-fin.PM OR cat:q-fin.RM) AND "
              "(abs:volatility OR abs:futures OR abs:\"order book\" OR abs:trading OR abs:\"option pricing\")")
         cut = (datetime.now(timezone.utc) - timedelta(days=45)).date().isoformat()
         for p in _arxiv_search(q, n=100, sort="submittedDate"):
@@ -474,7 +474,10 @@ def main(max_new=10):
                 p["queued"] = datetime.now(timezone.utc).date().isoformat(); queue.append(p)
     except Exception as e:
         errs.append(f"curated: {type(e).__name__}")
-    for fn in (arxiv, openalex) + ((openalex_backfill,) if queue_len < 15 else ()):
+    day_f = os.path.join(K, "fetch_day.txt"); today_s = datetime.now(timezone.utc).date().isoformat()
+    full = not (os.path.exists(day_f) and open(day_f).read().strip() == today_s)   # broad fetch once a day; hunts every run
+    if full: open(day_f, "w").write(today_s)
+    for fn in ((arxiv, openalex) + ((openalex_backfill,) if queue_len < 15 else ())) if full else ():
         try:
             found += fn()
         except Exception as e:
@@ -488,9 +491,9 @@ def main(max_new=10):
         if p["score"] >= 6:
             new.append(p)
     new = sorted(new, key=lambda p: -p["score"])[:max_new]
-    try:                                                     # self track: keep ~2 papers about Volta's own methods waiting
+    try:                                                     # self track: OFF since 21 Oct 2026 (expert review: no payoff)
         waiting = sum(1 for q in queue if q.get("track") == "self")
-        if waiting < 2:
+        if False and waiting < 2:
             cand = []
             for p in self_papers():
                 if p["id"] in seen or any(q["id"] == p["id"] for q in queue): continue
@@ -501,7 +504,7 @@ def main(max_new=10):
         errs.append(f"self: {type(e).__name__}")
     try:                                                     # prop track (the mission): keep ~3 papers waiting, read first
         waiting = sum(1 for q in queue if q.get("track") == "prop")
-        if waiting < 3:
+        if full and waiting < 3:
             cand = []
             for p in self_papers(track="prop"):
                 if p["id"] in seen or any(q["id"] == p["id"] for q in queue): continue
@@ -518,7 +521,7 @@ def main(max_new=10):
         errs.append(f"hunts: {type(e).__name__}")
     try:                                                     # frontier: keep ~2 of the newest / fastest-rising papers waiting
         waiting = sum(1 for q in queue if q.get("track") == "frontier")
-        if waiting < 2:
+        if full and waiting < 2:
             fr = [p for p in frontier_papers(seen) if not any(q["id"] == p["id"] for q in queue)][:2 - waiting]
             for p in fr: seen.add(p["id"])
             new += fr

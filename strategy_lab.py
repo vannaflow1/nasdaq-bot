@@ -32,7 +32,7 @@ from datetime import datetime, timezone
 import numpy as np, pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(HERE, "knowledge"); sys.path.insert(0, HERE)
-TICK, COMM, EXAM_FROM, EXAMS_PER_WEEK = 0.25, 0.25, "2024-01-01", 10
+TICK, COMM, EXAM_FROM, EXAMS_PER_WEEK = 0.25, 0.25, "2024-01-01", 2   # 2/week since 21 Oct 2026: every look at 2024-26 leaks (reusable-holdout problem)
 HARSH = os.environ.get("STRAT_HARSH", "1") != "0"
 SLIP_RANGE_STEP, SLIP_RANGE_MAX, SLIP_RED, SLIP_FOMC, SLIP_CL_WED = 0.5, 6, 1, 2, 2
 LOG, EXAMS = os.path.join(K, "strategies.jsonl"), os.path.join(K, "strategy_exams.json")
@@ -427,6 +427,8 @@ def prop_path(spec, X, T, M, out, head):
     T2 = backtest(spec, X, ins, cost_mult=2.0); ev2 = prop_score(T2, M, spec, plan)[0]["ev_per_eval"] if len(T2) else -1
     if ev2 <= 0:
         return f"NOT CONFIRMED (prop path): fragile - with double costs the EV per eval is {ev2:+.0f}. {head}"
+    if out.get("source") not in EXAM_SOURCES:
+        return f"PASSED IN-SAMPLE (prop path) - single ideas no longer take the locked exam (propose it as a family). {head}"
     ex = json.load(open(EXAMS)) if os.path.exists(EXAMS) else {}
     w = _week(); ex.setdefault(w, 0)
     if ex[w] >= EXAMS_PER_WEEK:
@@ -493,6 +495,8 @@ def evaluate(spec, X, source="engine", name=None):
     out["stress"] = nr
     if sum(r > 0 for r in nr) < 0.75 * len(nr) or nr[4] <= 0:
         return done(f"NOT CONFIRMED after the stress test (fragile: nudged/double-cost results {', '.join(f'{r:+.2f}R' for r in nr)}). {head}")
+    if source not in EXAM_SOURCES:
+        return done(f"PASSED IN-SAMPLE - single ideas no longer take the locked exam (propose it as a family). {head}; beats random entries (p={p:.2f})")
     ex = json.load(open(EXAMS)) if os.path.exists(EXAMS) else {}
     w = _week(); ex.setdefault(w, 0)
     if ex[w] >= EXAMS_PER_WEEK:
@@ -505,6 +509,9 @@ def evaluate(spec, X, source="engine", name=None):
     if me.get("n", 0) >= 30 and me["avg_R"] > 0 and me["avg_R"] >= m["avg_R"] / 3:
         return done(f"PROMISING STRATEGY (passed the locked exam): {exam_txt}. {head}; beats random entries (p={p:.2f}), survived stress")
     return done(f"NOT CONFIRMED - failed the locked exam: {exam_txt}. {head}")
+
+
+EXAM_SOURCES = ("prop-search", "family")             # only the systematic search / registered families spend exams
 
 
 def spec_id(spec):

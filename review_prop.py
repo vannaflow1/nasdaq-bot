@@ -92,6 +92,15 @@ def review(spec, X, plan, exam_ev=None, reps=40, seed=3):
     det["neighbours_2022_26"] = res; ok = sum(1 for v in res.values() if v is not None and v > 0)
     if ok < 4:
         fails.append(f"only the exact numbers work: {ok}/6 neighbouring settings pay out on 2022-26 - likely a lucky pick from the grid")
+    # 3b. bold-play tell (expert review): an eval is a barrier payoff - without real drift, bigger size raises the pass rate.
+    #     If the payouts vanish at half or a quarter of the risk, they come from variance, not from an edge.
+    pr = dict(spec.get("prop") or {}); half = {}
+    for f in (0.5, 0.25):
+        sp = dict(spec, prop=dict(pr, risk=float(pr.get("risk", 0.25)) * f, eval_risk=float(pr.get("eval_risk", pr.get("risk", 0.25))) * f))
+        half[f"{f}x risk"] = _ev(S, E, M, sp, plan)
+    det["bold_play"] = half
+    if half.get("0.5x risk") is not None and half["0.5x risk"] <= 0:
+        fails.append(f"variance-driven: at half the risk the unseen years pay {half['0.5x risk']:+.0f}$/eval (bold-play tell)")
     # 4. costs
     c = _ev(S, S.backtest(spec, X, exam, cost_mult=1.5), M, spec, plan); det["exam_costs_1.5x"] = c
     if c is None or c <= 0: fails.append(f"with 1.5x costs the unseen years pay {c}$/eval")
@@ -136,7 +145,7 @@ def regime_watch(e, F):
 
 # ------------------------------------------------------------------ NEW-REGIME track (edges that may only exist since 2024)
 RECENT_FROM, RECENT_VAL_FROM, FORWARD_MIN = "2024-01-01", "2025-04-01", 15
-RECENT_EXAMS_PER_WEEK = 10
+RECENT_EXAMS_PER_WEEK = 2
 
 
 def recent_exam(spec, X, name, plan):

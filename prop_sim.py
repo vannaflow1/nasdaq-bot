@@ -19,8 +19,9 @@ MNQ = 2.0
 FIRMS_FILE = os.path.join(HERE, "knowledge", "prop_firms.json")
 
 
-def plans():
-    return {p["id"]: p for p in json.load(open(FIRMS_FILE))}
+def plans(include_excluded=False):
+    """Plans Volta may use. A plan with "exclude": true (e.g. no API for an external bot) is skipped unless asked for."""
+    return {p["id"]: p for p in json.load(open(FIRMS_FILE)) if include_excluded or not p.get("exclude")}
 
 
 def _size(size_fn, phase, profit, buf, P):
@@ -79,7 +80,7 @@ def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
 
 
 def evaluate(day_pts, day_worst, plan="lucid_flex_25k", size_fn=None, starts=None, step=3):
-    P = plans()[plan] if isinstance(plan, str) else plan
+    P = plans(True)[plan] if isinstance(plan, str) else plan
     size_fn = size_fn or (lambda phase, profit, buf: 2)
     starts = range(0, max(1, len(day_pts) - 60), step) if starts is None else starts
     R = [run_account(day_pts, day_worst, s, P, size_fn) for s in starts]
@@ -139,7 +140,7 @@ def farm(day_pts, day_worst, dates, plan, size_fn, slots=5, budget_per_month=Non
     """Run a 'farm' of `slots` accounts on the same plan, all copy-trading the same strategy (same direction - no hedging).
     When an account blows up (or reaches live), a new evaluation is bought the next day. Accounts start staggered (one
     new per day at the beginning). Returns monthly cash flow: payouts received minus fees paid."""
-    P = plans()[plan] if isinstance(plan, str) else plan
+    P = plans(True)[plan] if isinstance(plan, str) else plan
     import pandas as pd
     accts = []; cash = {}; fees = 0.0; paid_tot = 0.0; bought = 0; blown = 0; live = 0; worst_day = 0.0; stuck = 0
     for i, d in enumerate(dates):

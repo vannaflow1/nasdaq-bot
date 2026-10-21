@@ -93,3 +93,25 @@ Never without the owner: money, accounts, secrets/permissions, deleting data, we
   "funded_micros" (fixed small size once funded), plus wider risk levels. prop_search tries 7 PLAYBOOKS on the SEARCH years
   only for candidates whose best base sizing is positive or a near-miss, keeps the best (column "playbook") and validates
   it like everything else. prop_sim passes the plan to sizers that set size.wants_plan.
+
+## Expert review, phase 1 (21 Oct 2026) - what changed and why
+Review: claude/... "Volta review: upgrades to find a real prop algo" (owner's doc). Core finding: prop EV rewards variance,
+not edge; K grew with every run; the 2024-26 exam was reused; power was never measured.
+- **Edge first** (prop_search.py, metric "edge-v1"): stage A gate = n >= MIN_TRADES and edge_lb10 > 0 (10th percentile of
+  mean net R per trade, stationary block bootstrap, mean block 5); stage B = same on the validation years. The prop sim only
+  PRICES survivors (base sizings; no playbooks, no portfolio stage in search). Luck bar + placebo twins are on mean R.
+  Mutation parents and exam candidates are chosen by validation edge above the bar. Search markets: NQ only
+  (SEARCH_MARKETS) - GC/CL come back only as families with a market-specific mechanism.
+- **Bold-play tell** in review_prop.review: if the unseen-years EV is <= 0 at half the risk -> FRAGILE (variance-driven).
+- **Exam hygiene**: 2 exams/week (strategy_lab.EXAMS_PER_WEEK, review_prop.RECENT_EXAMS_PER_WEEK); only sources
+  "prop-search" and "family" spend exams (single ideas stop at PASSED IN-SAMPLE). The self-check sees only aggregate search
+  counts; exam passes no longer trigger paper hunts; rejection reasons are not fed back.
+- **Stop list**: "about itself" paper track off, frontier = q-fin only, broad fetch once a day (hunts every run); timer is a
+  dashboard, not a target; live briefing side frozen (research-side wishes only) until a strategy is confirmed.
+- **Firm rules**: prop_firms.json has "automation" notes; TradeDay "exclude": true (no API for an external bot);
+  Tradeify "exclusive_bot": true (the same bot may not run at other firms). prop_sim.plans() skips excluded plans.
+- **Data**: tools/bar_archive.py + workflow bar-archive (weekdays 23:15 UTC) archive 5 days of 1-min NQ/ES/RTY/YM/GC/CL
+  bars from Yahoo into knowledge/data/archive/ (gap report in gaps.txt). Feb-Oct 2026 still needs a one-off backfill.
+- Next (phase 2): fast first-passage engine with a parity test, null worlds + planted edges (power curve = scoreboard),
+  family registry + ledger with F3/F5/F6; phase 3: late window / multi-trade / OCO grammar, RTY/YM pooling, F1/F2/F4/F7,
+  simulator fidelity, sequential Bayesian forward test, DP sizing last.
