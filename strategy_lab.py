@@ -181,14 +181,14 @@ def validate(spec):
     else:
         if not (0 <= mins(e.get("at", "")) <= 380): raise Bad("entry.at must be 08:30-14:50")
         sd = str(e.get("side", "long"))
-        if sd.startswith("own:") and sd[4:].lstrip("-") not in ("gap", "mid", "pos"): raise Bad("own: side must be gap, mid or pos")
+        if sd.startswith("own:") and sd[4:].lstrip("-") not in ("gap", "mid", "pos", "day"): raise Bad("own: side must be gap, mid, pos or day")
     st, tg = spec.get("stop") or {}, spec.get("target") or {}
     if not (("points" in st and 2 <= float(st["points"]) <= 200) or ("range" in st and 0.03 <= float(st["range"]) <= 1.5)):
         raise Bad("stop must be {points: 2-200} or {range: 0.03-1.5}")
     if not (("R" in tg and 0.3 <= float(tg["R"]) <= 15) or ("points" in tg and 2 <= float(tg["points"]) <= 600) or tg.get("level") in LEVELS):
         raise Bad("target must be {R: 0.3-15}, {points: 2-600} or {level: <LEVEL>}")
     ex = spec.get("exit", "14:55")
-    if not (1 <= mins(ex) <= 385): raise Bad("exit must be 08:31-14:55")
+    if not (1 <= mins(ex) <= 389): raise Bad("exit must be 08:31-14:59")       # up to the cash close (since 21 Oct 2026)
     mg = spec.get("manage")
     if mg is not None:
         if not isinstance(mg, dict) or not set(mg) <= {"be_at_R", "trail_R", "partial"}: raise Bad("manage may only have be_at_R, trail_R, partial")
@@ -210,6 +210,8 @@ def _filters(spec, X):
     if e["type"] == "time":
         sd = e.get("side", "long")
         if sd in ("long", "short"): side[:] = 1 if sd == "long" else -1
+        elif sd.lstrip("own:-") == "day" and sd.startswith("own:"):   # direction of the session so far: decided AT the entry minute
+            side[:] = 2 if not sd[4:].startswith("-") else -2               # (marker; simulate_session resolves it from the bars)
         elif sd.startswith("own:"):                            # direction from THIS market's own pre-open moves
             k = sd[4:]; neg = k.startswith("-"); k = k.lstrip("-")
             v = {"gap": M.open - M.yday_close, "mid": M.open - M.midnight_open,
@@ -235,6 +237,9 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
         ep = O[k] + s * tk
     elif e["type"] == "time":
         k = mins(e["at"]); s = side
+        if abs(s) == 2:                                                # own:day - sign of (last close before entry - session open)
+            mv = C[k - 1] - O[0] if k >= 1 else 0.0
+            s = int(np.sign(mv)) * (1 if s > 0 else -1)
         if s == 0: return None
         ep = O[k] + s * tk
     else:

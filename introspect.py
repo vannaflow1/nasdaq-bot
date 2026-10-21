@@ -99,6 +99,13 @@ def digest():
 
     except Exception:
         pass
+    try:                                                       # the scoreboard: can my test find a planted edge?
+        pw = json.load(open(os.path.join(HERE, "status.json"))).get("power")
+        if pw: out.append("MY POWER CURVE (the scoreboard): " + " ".join(pw[1:3]))
+        import families as _F
+        out.append(f"MECHANISM FAMILIES: {len(_F.ledger())} scored so far (details sealed like exams).")
+    except Exception:
+        pass
     D = _jl(DIARY)
     if D: out.append("MY LAST DIARY ENTRIES: " + " || ".join(d["diary"][:200] for d in D[-3:]))
     return "\n".join(out)
@@ -134,6 +141,9 @@ a bootstrap lower bound) that comes from a clear MECHANISM - not prop EV, which 
 dashboard of guesses, never a target. Prefer ideas that (a) have a one-sentence mechanism, (b) give many trades (more
 independent observations = more power), (c) work across index futures (NQ, ES). Exam details are sealed on purpose.
 Wishes: research side only for now - the live briefing side is frozen until a strategy is confirmed.
+The best wish is a FAMILY PROPOSAL (type "family"): one-sentence mechanism + paper/evidence + how to express it as a strategy
+spec with a small grid of variants (20-50). Claude registers and freezes good proposals; each family is tested ONCE.
+Raise the power curve: ideas with many trades and ones that work across index futures beat clever filters.
 Never weaken the exam, the review, the luck checks or the estimate's assumptions.
 Self-actions must be about MARKETS (what NQ does in a session), never about your own software - software problems go
 into a wish for Claude. What you ALREADY HAVE (never wish for these): dealer gamma/vanna/charm ESTIMATES from QQQ, NDX and

@@ -1,0 +1,30 @@
+name: families
+# Scores newly registered mechanism families (families.py) and refreshes the power curve (power.py).
+on:
+  push:
+    branches: [main]
+    paths: ["knowledge/families.json"]
+  schedule:
+    - cron: "30 4 * * 0"         # Sundays: power curve (20 null worlds)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: families
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt scipy
+      - run: python families.py --reps 100
+        env: { PYTHONUNBUFFERED: "1" }
+      - if: github.event_name != 'push'
+        run: python power.py --family F5 --worlds 20 --reps 40
+        env: { PYTHONUNBUFFERED: "1" }
+      - if: always()
+        run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "families" && break; sleep $((RANDOM % 20 + 5)); done

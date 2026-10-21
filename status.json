@@ -309,5 +309,17 @@
  ],
  "spx_morning": [
   "SPX DEALER CHECK (2026-10-21): dealer gamma -8.3 (avg +1.5), SPX walls 7700 / 7725 (0.7x their usual distance) -> today's range bigger (+4.5%)"
+ ],
+ "families": [
+  "MECHANISM FAMILIES (family = mechanism + 20-50 variants; passes only as a plateau beating a placebo family, with a multiplicity-corrected p-value):",
+  "- F5 Gap fill sized by the gap-fill power: FAILED (p=0.53, median 2022-23 -0.1382R)",
+  "- F6 Scheduled-event drifts (pooled sleeve): FAILED (p=0.82, median 2022-23 -0.0565R)",
+  "- F3 Gamma-regime switch on the forecast range: FAILED (p=0.5, median 2022-23 -0.1531R)"
+ ],
+ "power": [
+  "\u26a1 POWER CURVE (can my family test find a planted edge? F5, 6 null worlds, alpha 0.017) - THE SCOREBOARD",
+  "False passes with no edge: 0% (should stay near 2%; much higher = a leak or bug)",
+  "Found a planted edge: +0.05R 0%, +0.10R 0%, +0.20R 33% (planted on 60% of trades, so the true lift is 0.6x that)",
+  "Below ~20% at +0.10R: more search cannot help - I need more trades per test (more markets, more trades per day)."
  ]
 }
