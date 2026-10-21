@@ -1,0 +1,70 @@
+name: gemini-check
+# Checks that the owner's Gemini API key secret exists and works. Writes ONLY a status line (never the key)
+# to knowledge/research_out/gemini_check.txt. Runs when this file changes, or by hand.
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/gemini-check.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe Gemini key
+        env:
+          K1: ${{ secrets.GEMINI_API_KEY }}
+          K2: ${{ secrets.GEMINI_KEY }}
+          K3: ${{ secrets.GOOGLE_API_KEY }}
+          K4: ${{ secrets.GEMINI }}
+          K5: ${{ secrets.GOOGLE_AI_KEY }}
+          K6: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
+        run: |
+          python3 - <<'EOF'
+          import os, json, urllib.request, urllib.error, datetime
+          names = {"K1": "GEMINI_API_KEY", "K2": "GEMINI_KEY", "K3": "GOOGLE_API_KEY", "K4": "GEMINI",
+                   "K5": "GOOGLE_AI_KEY", "K6": "GOOGLE_GEMINI_API_KEY"}
+          out = [f"checked {datetime.datetime.utcnow():%Y-%m-%d %H:%M} UTC"]
+          found = [(v, os.environ.get(k, "").strip()) for k, v in names.items() if os.environ.get(k, "").strip()]
+          if not found:
+              out.append("NO KEY FOUND under: " + ", ".join(names.values()))
+          for name, key in found:
+              base = "https://generativelanguage.googleapis.com/v1beta"
+              def call(url, body=None):
+                  req = urllib.request.Request(url, data=json.dumps(body).encode() if body else None,
+                                               headers={"x-goog-api-key": key, "Content-Type": "application/json"})
+                  try:
+                      with urllib.request.urlopen(req, timeout=60) as r: return r.status, json.loads(r.read())
+                  except urllib.error.HTTPError as e:
+                      try: msg = json.loads(e.read()).get("error", {}).get("message", "")[:160]
+                      except Exception: msg = ""
+                      return e.code, {"error": msg}
+              st, js = call(base + "/models?pageSize=200")
+              if st != 200:
+                  out.append(f"{name}: present, but listing models failed: HTTP {st} {js.get('error','')}"); continue
+              models = [m["name"].split("/")[-1] for m in js.get("models", [])
+                        if "generateContent" in m.get("supportedGenerationMethods", [])]
+              flash = sorted([m for m in models if "flash" in m and "lite" not in m and "image" not in m
+                              and "tts" not in m and "live" not in m and "exp" not in m], reverse=True)
+              pro = sorted([m for m in models if "pro" in m and "image" not in m and "tts" not in m and "exp" not in m], reverse=True)
+              out.append(f"{name}: VALID, {len(models)} text models. flash: {', '.join(flash[:6])} | pro: {', '.join(pro[:6])}")
+              for m in (flash[:1] + pro[:1]):
+                  st, js = call(f"{base}/models/{m}:generateContent",
+                                {"contents": [{"parts": [{"text": "Reply with exactly: OK"}]}]})
+                  if st == 200:
+                      txt = "".join(p.get("text", "") for c in js.get("candidates", []) for p in c.get("content", {}).get("parts", []))
+                      out.append(f"  {m}: generate OK -> {txt.strip()[:20]!r}")
+                  else:
+                      out.append(f"  {m}: generate FAILED HTTP {st} {js.get('error','')}")
+          os.makedirs("knowledge/research_out", exist_ok=True)
+          open("knowledge/research_out/gemini_check.txt", "w").write("\n".join(out) + "\n")
+          print("\n".join(out))
+          EOF
+      - if: always()
+        run: bash .github/actions_common.sh "gemini check"
