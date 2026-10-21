@@ -1,0 +1,24 @@
+[
+ {
+  "wish": "task",
+  "title": "Add tools/prop_firms_table.py: it loads knowledge/prop_firms.json via prop_sim.p",
+  "outcome": "finish",
+  "summary": "Added tools/prop_firms_table.py which loads knowledge/prop_firms.json via prop_sim.plans(), prints an aligned table row per plan with all specified fields, runs prop_sim.evaluate on the synthetic zero-edge series specified, and prints pass_rate, avg_payout_per_eval, and ev_per_eval for each plan. Verified test_engine.py exits 0 successfully.",
+  "how_to_use": "Run `python tools/prop_firms_table.py` to view the aligned table of all prop plans from knowledge/prop_firms.json and their evaluation results on a synthetic zero-edge series (numpy seed 1, 2500 days, daily points ~ normal(0, 20) minus 1 point cost, day_worst = min(points, 0) - 10, constant size 2).",
+  "date": "2026-10-21",
+  "steps": 22,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-latest",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 58,
+  "guard": "1 files, 72 changed lines, compiles, imports, test_engine self-test passes",
+  "status": "drafted",
+  "branch": "gemini/wish-task",
+  "commit": "a61b565103d020e19854c858e2cb242c5ba21b5d",
+  "files": [
+   "tools/prop_firms_table.py"
+  ]
+ }
+]

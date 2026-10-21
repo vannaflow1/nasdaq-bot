@@ -1,0 +1,46 @@
+{
+ "wish": "task",
+ "title": "Add tools/prop_firms_table.py: it loads knowledge/prop_firms.json via prop_sim.p",
+ "outcome": "finish",
+ "summary": "Added tools/prop_firms_table.py which loads knowledge/prop_firms.json via prop_sim.plans(), prints an aligned table row per plan with all specified fields, runs prop_sim.evaluate on the synthetic zero-edge series specified, and prints pass_rate, avg_payout_per_eval, and ev_per_eval for each plan. Verified test_engine.py exits 0 successfully.",
+ "how_to_use": "Run `python tools/prop_firms_table.py` to view the aligned table of all prop plans from knowledge/prop_firms.json and their evaluation results on a synthetic zero-edge series (numpy seed 1, 2500 days, daily points ~ normal(0, 20) minus 1 point cost, day_worst = min(points, 0) - 10, constant size 2).",
+ "date": "2026-10-21",
+ "steps": 22,
+ "models": [
+  "gemini-3.8-flash",
+  "gemini-flash-latest",
+  "gemini-flash-lite-latest"
+ ],
+ "calls_left_today": 58,
+ "guard": "1 files, 72 changed lines, compiles, imports, test_engine self-test passes",
+ "status": "drafted",
+ "branch": "gemini/wish-task",
+ "commit": "a61b565103d020e19854c858e2cb242c5ba21b5d",
+ "files": [
+  "tools/prop_firms_table.py"
+ ],
+ "log": [
+  "0: search(path_glob='prop_sim.py', pattern='def plans|def evaluate') -> './prop_sim.py:22:def plans():\\n./prop_sim.py:76:def evaluate(day_pts, day_worst, plan=\"lucid_flex_25k'",
+  "1: read_file(max_lines='80', path='prop_sim.py', start_line='1') -> 'prop_sim.py (160 lines; showing 1-80)\\n1: \"\"\"prop_sim.py - prop-firm simulator. Volta\\'s objective sin'",
+  "2: read_file(max_lines='80', path='prop_sim.py', start_line='80') -> 'prop_sim.py (160 lines; showing 80-159)\\n80:     R = [run_account(day_pts, day_worst, s, P, size_fn) '",
+  "3: read_file(max_lines='80', start_line='1', path='knowledge/prop_firms.json') -> 'knowledge/prop_firms.json (397 lines; showing 1-80)\\n1: [\\n2:  {\\n3:   \"id\": \"lucid_flex_25k\",\\n4:   \"fi'",
+  "4: list_dir(path='tools') -> 'build_market_bars.py  (3842 bytes)\\nchina_credit.py  (4790 bytes)\\nes_tick_table.py  (4359 bytes)\\nfetc'",
+  "5: read_file(start_line='1', path='tools/prop_eval.py', max_lines='80') -> 'tools/prop_eval.py (18 lines; showing 1-18)\\n1: import sys, json, numpy as np, pandas as pd; sys.path'",
+  "6: search(path_glob='knowledge/prop_firms.json', pattern='\"id\":') -> 'no match'",
+  "7: search(pattern='\"id\":', path_glob='knowledge/*.json') -> 'no match'",
+  "8: run(command='python -c \"import prop_sim; plans = prop_sim.plans(); print(') -> 'REFUSED: only `python <existing script>.py [args]` and `python -m py_compile <file>` may be run'",
+  "9: read_file(path='knowledge/prop_firms.json', start_line='80', max_lines='100') -> 'knowledge/prop_firms.json (397 lines; showing 80-179)\\n80:   \"name\": \"LucidFlex 50K\",\\n81:   \"fee\": 10'",
+  "10: read_file(start_line='180', path='knowledge/prop_firms.json', max_lines='100') -> 'knowledge/prop_firms.json (397 lines; showing 180-279)\\n180:   ],\\n181:   \"payout_days\": 5,\\n182:   \"da'",
+  "11: read_file(max_lines='130', start_line='280', path='knowledge/prop_firms.json') -> 'knowledge/prop_firms.json (397 lines; showing 280-397)\\n280:   \"activation\": 0,\\n281:   \"size\": 25000,'",
+  "12: search(path_glob='tools/*.py', pattern='table') -> 'no match'",
+  "13: read_file(path='tools/red_news_table.py', max_lines='80', start_line='1') -> 'tools/red_news_table.py (28 lines; showing 1-28)\\n1: \"\"\"Red-folder (high-impact) US events 2014+ -> s'",
+  "14: read_file(path='tools/es_tick_table.py', max_lines='80', start_line='1') -> 'tools/es_tick_table.py (62 lines; showing 1-62)\\n1: \"\"\"Adds ES + NYSE TICK columns to Volta\\'s session'",
+  "15: search(pattern='seed\\\\(', path_glob='*.py') -> 'no match'",
+  "16: search(path_glob='*.py', pattern='seed') -> './test_engine.py:457:    seeds = random.sample(recent, min(4, len(recent)))\\n./test_engine.py:469:   '",
+  "17: (text) ",
+  "18: write_file(path='tools/prop_firms_table.py') -> 'wrote tools/prop_firms_table.py (72 lines)'",
+  "19: run(command='python tools/prop_firms_table.py') -> 'exit code 0\\nLoaded 10 plans from knowledge/prop_firms.json\\n\\n=== PROP FIRMS PLANS TABLE ===\\n         '",
+  "20: run(command='python test_engine.py') -> \"exit code 0\\n# yesterday's outcome = known today\\n/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.\"",
+  "21: finish(summary='Added tools/prop_firms_table.py which loads knowledge/prop_f', how_to_use='Run `python tools/prop_firms_table.py` to view the aligned t') -> 'FINISH'"
+ ]
+}
