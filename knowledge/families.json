@@ -492,9 +492,10 @@
     }
    ]
   },
-  "status": "registered",
+  "status": "scored",
   "registered": "2026-10-21",
   "hash": "092265597088",
-  "frozen": "afb0db1b2108341682e131f778d2dc4bf6a0d919"
+  "frozen": "afb0db1b2108341682e131f778d2dc4bf6a0d919",
+  "scored": "2026-10-21"
  }
 ]

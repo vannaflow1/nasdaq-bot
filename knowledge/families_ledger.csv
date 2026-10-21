@@ -5,3 +5,4 @@ F3,Gamma-regime switch on the forecast range,2026-10-21,bf376e18217afeededae631a
 F1,"Intraday momentum into the close, gamma-conditioned",2026-10-21,c8b840729d157bf224f641fba4778fecde1268b7,"NOT CONFIRMED - failed the locked exam (family): edge on 2024-now -0.074R (90% lower bound -0.170R, 163 trades)",36,36,-0.0396,0.1721,0.917,-0.0255,0.0,4,0.0125,True
 F2,Noise-band breakout with re-entry,2026-10-21,da2f2b154e885df7182ad2da54a9fd9d12cc4aba,"PASSED THE FAMILY TEST, WAITING FOR EXAM (weekly exam budget used up)",50,50,-0.1421,0.0605,0.92,-0.0215,0.0,5,0.01,True
 F4,Direction-free volatility brackets,2026-10-21,da2f2b154e885df7182ad2da54a9fd9d12cc4aba,FAILED,48,48,-0.0559,-0.0708,0.292,-0.0375,0.94,6,0.00833,False
+F7,0DTE gamma pinning: afternoon VWAP reversion,2026-10-21,afb0db1b2108341682e131f778d2dc4bf6a0d919,FAILED,36,36,-0.1792,-0.2174,0.0,-0.2236,0.34,7,0.00714,False
