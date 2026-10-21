@@ -1,4 +1,4 @@
-scanned 80 papers, queued 1, queue size 21 []
+scanned 80 papers, queued 0, queue size 21 []
 prop-read failed: RuntimeError free AI daily limit reached
 read 0, AI units today 4595/7000
 test queue empty
