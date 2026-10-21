@@ -225,5 +225,17 @@
   "score": 4,
   "queued": "2026-10-21",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W2092583264",
+  "title": "Random-matrix theory of quantum transport",
+  "abstract": "This is a review of the statistical properties of the scattering matrix of a mesoscopic system. Two geometries are contrasted: A quantum dot and a disordered wire. The quantum dot is a confined region with a chaotic classical dynamics, which is coupled to two electron reservoirs via point contacts. The disordered wire also connects two reservoirs, either directly or via a point contact or tunnel barrier. One of the two reservoirs may be in the superconducting state, in which case conduction involves Andreev reflection at the interface with the superconductor. In the case of the quantum dot, the distribution of the scattering matrix is given by either Dyson's circular ensemble for ballistic point contacts or the Poisson kernel for point contacts containing a tunnel barrier. In the case of the disordered wire, the distribution of the scattering matrix is obtained from the Dorokhov-Mello-Pereyra-Kumar equation, which is a one-dimensional scaling equation. The equivalence is discussed with the nonlinear $\\ensuremath{\\sigma}$ model, which is a supersymmetric field theory of localization. The distribution of scattering matrices is applied to a variety of physical phenomena, including universal conductance fluctuations, weak localization, Coulomb blockade, sub-Poissonian shot noise, reflectionless tunneling into a superconductor, and giant conductance oscillations in a Josephson junction.",
+  "track": "prop",
+  "url": "https://arxiv.org/pdf/cond-mat/9612179",
+  "source": "OpenAlex (prop mission)",
+  "topic": "prop: barrier probability Brownian motion drift",
+  "score": 4,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W2092583264.txt"
  }
 ]

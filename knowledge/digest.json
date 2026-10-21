@@ -188,7 +188,7 @@
 "risk exposure scaling"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "https://doi.org/10.1111/j.1467-9965.1993.tb00044.x",
 "date": "2026-10-21"
 },
@@ -1952,7 +1952,7 @@
 "institutional execution"
 ],
 "relevance": 1,
-"verdict": "not testable with my data yet",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "https://arxiv.org/pdf/1803.08336",
 "date": "2026-10-19"
 },

@@ -19,6 +19,6 @@ drawdown constraint, surplus‑based allocation, crra utility, stochastic floor,
 Scale daily exposure to Nasdaq futures (or QQQ) in proportion to the surplus (current equity curve minus α times its running maximum). Set α≈0.8 and exposure = k·(W‑αM)/W, with k calibrated to target a given volatility.
 
 ## Test
-queued for testing
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 
 Part of [[Research engine]]

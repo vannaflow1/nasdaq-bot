@@ -1,0 +1,1450 @@
+arXiv:cond-mat/9612179v1 [cond-mat.mes-hall] 19 Dec 1996
+Random-matrix theory of quantum transport
+C. W. J. Beenakker
+Instituut-Lorentz, University of Leiden
+2300 RA Leiden, The Netherlands
+This is a review of the statistical properties of the scatter ing matrix of a mesoscopic system. Two
+geometries are contrasted: A quantum dot and a disordered wi re. The quantum dot is a conﬁned
+region with a chaotic classical dynamics, which is coupled t o two electron reservoirs via point
+contacts. The disordered wire also connects to two reservoi rs, either directly, or via a point contact
+or tunnel barrier. One of the two reservoirs may be in the supe rconducting state, in which case
+conduction involves Andreev reﬂection at the interface wit h the superconductor. In the case of the
+quantum dot, the distribution of the scattering matrix is Dy son’s circular ensemble for ballistic
+point contacts, or the Poisson kernel for point contacts con taining a tunnel barrier. In the case
+of the disordered wire, the distribution of the scattering m atrix is obtained from the Dorokhov-
+Mello-Pereyra-Kumar equation, which is a one-dimensional scaling equation. The equivalence is
+discussed with the non-linear σ model, which is a supersymmetric ﬁeld theory of localizatio n.
+The distribution of scattering matrices is applied to a vari ety of physical phenomena, including
+universal conductance ﬂuctuations, weak localization, Co ulomb blockade, sub-Poissonian shot noise,
+reﬂectionless tunneling into a superconductor, and giant c onductance oscillations in a Josephson
+junction. To be published in Rev. Mod. Phys. (1997).
+Contents
+I Introduction 2
+A Preface . . . . . . . . . . . . . . . . . . 2
+B Statistical theory of energy levels . . . 3
+1 Wigner-Dyson ensemble . . . . . . . 3
+2 Geometrical correlations . . . . . . 4
+3 Transition between ensembles . . . 5
+4 Brownian motion . . . . . . . . . . 6
+C Statistical theory of transmission eigen-
+values . . . . . . . . . . . . . . . . . . . 7
+1 Scattering and transfer matrices . . 7
+2 Linear statistics . . . . . . . . . . . 9
+3 Geometrical correlations . . . . . . 9
+D Correlation functions . . . . . . . . . . 10
+1 Method of functional derivatives . . 10
+2 Universal conductance ﬂuctuations . 11
+E Overview . . . . . . . . . . . . . . . . . 13
+II Quantum dots 15
+A Transport theory of a chaotic cavity . . 15
+1 Circular ensemble of scattering ma-
+trices . . . . . . . . . . . . . . . . . 15
+2 Poisson kernel . . . . . . . . . . . . 17
+3 Gaussian ensemble of Hamiltonians 17
+4 Justiﬁcation from microscopic theory 18
+B Weak localization . . . . . . . . . . . . 19
+1 Conductance . . . . . . . . . . . . . 19
+2 Other transport properties . . . . . 20
+3 Tunnel barriers . . . . . . . . . . . . 21
+4 Magnetoconductance . . . . . . . . 21
+C Universal conductance ﬂuctuations . . 22
+1 Conductance . . . . . . . . . . . . . 22
+2 Other transport properties . . . . . 23
+3 Tunnel barriers . . . . . . . . . . . . 23
+4 Magnetoconductance . . . . . . . . 23
+D Conductance distribution . . . . . . . . 24
+E Phase breaking . . . . . . . . . . . . . . 25
+1 Invasive voltage probe . . . . . . . . 26
+2 Inelastic scattering . . . . . . . . . . 27
+F Coulomb blockade . . . . . . . . . . . . 28
+G Frequency dependence . . . . . . . . . 29
+III Disordered wires 30
+A DMPK equation . . . . . . . . . . . . . 30
+1 Scaling approach to localization . . 30
+2 Brownian motion of transmission
+eigenvalues . . . . . . . . . . . . . . 31
+3 Mapping to a free-fermion model . . 32
+4 Equivalence to a supersymmetric
+ﬁeld theory . . . . . . . . . . . . . . 34
+B Metallic regime . . . . . . . . . . . . . 35
+1 Conductance . . . . . . . . . . . . . 35
+2 Other transport properties . . . . . 36
+3 Transmission eigenvalue density . . 37
+4 Scaling as a hydrodynamic ﬂow . . 38
+5 Non-logarithmic eigenvalue repulsion 38
+C Localized regime . . . . . . . . . . . . . 40
+1 Log-normal distribution of the con-
+ductance . . . . . . . . . . . . . . . 40
+2 Crystallization of transmission
+eigenvalues . . . . . . . . . . . . . . 42
+D Disordered wire with obstacles . . . . . 43
+1 Obstacle as initial condition for scaling 43
+2 Point contact . . . . . . . . . . . . . 43
+3 Single-channel limit . . . . . . . . . 45
+4 Double-barrier junction . . . . . . . 46
+E Shot noise . . . . . . . . . . . . . . . . 48
+1
+IV Normal-metal–superconductor
+junctions 49
+A Scattering theory . . . . . . . . . . . . 49
+1 Andreev reﬂection . . . . . . . . . . 49
+2 Bogoliubov-De Gennes equation . . 50
+3 Scattering formula for the conduc-
+tance . . . . . . . . . . . . . . . . . 51
+B Ideal NS interface . . . . . . . . . . . . 52
+1 Average conductance . . . . . . . . 52
+2 Weak localization . . . . . . . . . . 53
+3 Universal conductance ﬂuctuations . 54
+C NS junction containing a tunnel barrier 57
+1 Reﬂectionless tunneling . . . . . . . 57
+2 Scaling theory . . . . . . . . . . . . 58
+3 Double-barrier junction . . . . . . . 60
+4 Circuit theory . . . . . . . . . . . . 61
+D NS junction containing a point contact 64
+1 Giant backscattering peak . . . . . 64
+2 Conductance doubling . . . . . . . . 66
+E Chaotic Josephson junction . . . . . . . 67
+1 Average conductance . . . . . . . . 67
+2 Conductance ﬂuctuations . . . . . . 68
+F Shot noise . . . . . . . . . . . . . . . . 70
+V Conclusion 71
+A Higher-dimensional geometries . . . . . 71
+B Localization of interacting particles . . 72
+C Localization of light . . . . . . . . . . . 73
+D Quantum Hall eﬀect . . . . . . . . . . . 74
+APPENDIXES 74
+A Integral equation for the eigenvalue den-
+sity 74
+B Integration over the unitary group 75
+C How to derive Eq. (3.50) from Eq. (3.66) 75
+D Calculation of the weak-localization cor-
+rections in T able III 76
+I. INTRODUCTION
+A. Preface
+Random-matrix theory deals with the statistical prop-
+erties of large matrices with randomly distributed ele-
+ments. The probability distribution of the matrices is
+taken as input, from which the correlation functions of
+eigenvalues and eigenvectors are derived as output. From
+the correlation functions one then computes the physical
+properties of the system. Random-matrix theory was
+developed into a powerful tool of mathematical physics
+in the 1960’s, notably by Wigner, Dyson, Mehta, and
+Gaudin. (Their work is described in detail in a mono-
+graph by Mehta, 1991.) The original motivation for this
+research was to understand the statistics (in particular
+the distribution of spacings) of energy levels of heavy
+nuclei, measured in nuclear reactions (Wigner, 1957).
+(Many of the early papers have been collected in a book
+by Porter, 1965.) Later the same techniques were ap-
+plied to the level statistics of small metal particles, in
+order to describe the microwave absorption by granular
+metals (Gor’kov and Eliashberg, 1965). Much of the work
+on level statistics in nuclear and solid-state physics has
+been reviewed by Brody et al. (1981).
+In recent years there has been a revival of interest in
+random-matrix theory, mainly because of two develop-
+ments. The ﬁrst was the discovery that the Wigner-
+Dyson ensemble applies generically to chaotic systems
+(Bohigas, Giannoni, and Schmit, 1984; Berry, 1985).
+(For reviews of the random-matrix theory of quantum
+chaos, see Bohigas, 1990; Gutzwiller, 1990; Haake, 1992.)
+The second was the discovery of a relation between uni-
+versal properties of large random matrices and universal
+conductance ﬂuctuations in disordered conductors (Imry,
+1986a; Altshuler and Shklovski ˘ ı, 1986). This led to
+the development of a random-matrix theory of quantum
+transport. An inﬂuential review of the early work was
+provided by Stone, Mello, Muttalib, and Pichard (1991).
+The ﬁeld has matured rapidly since then, and the need
+was felt for an up-to-date review, in particular for physi-
+cists from outside the ﬁeld. The present article was writ-
+ten with this need in mind.
+The random-matrix theory of quantum transport is
+concerned with mesoscopic systems, at the borderline be-
+tween the microscopic and the macroscopic world. On
+the one hand, they are suﬃciently small that electrons
+maintain their quantum mechanical phase coherence, so
+that a classical description of the transport properties is
+inadequate. On the other hand, they are suﬃciently large
+that a statistical description is meaningful. Quantum in-
+terference leads to a variety of new phenomena. (For
+reviews, see Altshuler, Lee, and Webb, 1991; Beenakker
+and Van Houten, 1991; Datta, 1995; Imry, 1996.) Some
+of the phenomena are “universal”, in the sense that they
+do not depend on the sample size or the degree of dis-
+order — at least within certain limits. Random-matrix
+theory relates the universality of transport properties to
+the universality of correlation functions of transmission
+eigenvalues. A particularly attractive feature of this ap-
+proach is its generality: Since it addresses the entire prob -
+ability distribution of the transmission matrix, it applie s
+to a whole class of transport properties — not just to the
+conductance. By including Andreev reﬂection one can
+treat hybrid structures containing normal metals and su-
+perconductors. Furthermore, since the approach is non-
+perturbative, it provides a uniﬁed description of both the
+metallic and the localized regimes.
+There exists at this moment a complete description of
+the statistics of the transmission matrix for two types
+of geometries: The ﬁrst is a conﬁned geometry, the sec-
+ond a wire geometry. The conﬁned geometry consists
+of a metal grain through which a current is passed via
+2
+two point contacts. Such a system is sometimes called
+a “quantum dot”, to emphasize the quantum mechani-
+cal phase coherence of the electrons. The wire geometry
+should have an aspect ratio length/width ≫ 1. These two
+geometries are considered separately in Secs. II and III,
+as far as normal metals are concerned. The new eﬀects
+which appear due to superconductivity are the subject of
+Sec. IV. [There is some overlap between Sec. IV and an
+earlier review by the author (Beenakker, 1995).] In Sec.
+V we identify directions for future research and discuss
+some outstanding problems, in particular the extension
+of the random-matrix approach to thin-ﬁlm and bulk ge-
+ometries (having length <∼ width). Section I is devoted
+to an introduction, containing background material and
+an overview of things to come.
+B. Statistical theory of energy levels
+The random-matrix theory of quantum transport is a
+statistical theory of the transmission eigenvalues of an
+open system. In contrast, the random-matrix theory es-
+tablished by Wigner and Dyson addresses the statistics
+of energy levels of a closed system. In this subsection
+we brieﬂy consider the Wigner-Dyson ensemble of ran-
+dom Hamiltonians, and discuss its fundamental ingre-
+dient: The hypothesis of geometrical correlations. We
+also introduce two topics which we will need later on:
+Transitions between ensembles of diﬀerent symmetry and
+Brownian motion of energy levels.
+1. Wigner-Dyson ensemble
+Wigner and Dyson studied an ensemble of N ×N Her-
+mitian matrices H, with probability distribution of the
+form
+P (H) = c exp[−β TrV (H)] (1.1)
+(c is a normalization constant). If V (H) ∝ H 2, the en-
+semble is called Gaussian. Wigner (1957, 1967) concen-
+trated on the Gaussian ensemble because it has inde-
+pendently distributed matrix elements (since Tr H2 =
+TrHH† = ∑ij |Hij|2), and this simpliﬁes some of the
+calculations. To make contact with the Hamiltonian of a
+physical system, the limit N → ∞ is taken. It turns out
+that spectral correlations become largely independent of
+V in this limit, provided one stays away from the edge
+of the spectrum. This is the celebrated universality of
+spectral correlations, about which we will say more in
+Sec. I D.
+The symmetry index β counts the number of degrees
+of freedom in the matrix elements. These can be real,
+TABLE I. Summary of Dyson’s threefold way. The Her-
+mitian matrix H (and its matrix of eigenvectors U ) are clas-
+siﬁed by an index β ∈ { 1, 2, 4}, depending on the presence
+or absence of time-reversal (TRS) and spin-rotation (SRS)
+symmetry.
+β TRS SRS Hnm U
+1 Yes Yes real orthogonal
+2 No irrelevant complex unitary
+4 Yes No real quaternion symplectic
+complex, or real quaternion 1 numbers, corresponding to
+β = 1, 2, or 4, respectively. Since the transformation
+H → U HU −1, with U an orthogonal ( β = 1), unitary
+(β = 2), or symplectic 2 (β = 4) matrix leaves P (H)
+invariant, the ensemble is called orthogonal, unitary, or
+symplectic. Physically, β = 2 applies to the case that
+time-reversal symmetry is broken, by a magnetic ﬁeld or
+by magnetic impurities. In the presence of time-reversal
+symmetry, one hasβ = 1 if the electron spin is conserved,
+andβ = 4 if spin-rotation symmetry is broken (by strong
+spin-orbit scattering). This classiﬁcation, due to Dyson
+(1962d), is summarized in Table I.
+We would like to deduce from P (H) what the distri-
+bution is of the eigenvalues and eigenvectors of H. Let
+{En} denote the set of eigenvalues and U the matrix
+of eigenvectors, so that 3 H = U diag (E1,E 2,...E N )U †.
+Since TrV (H) = ∑nV (En) depends only on the eigen-
+values, the distribution (1.1) is independent of the eigen-
+vectors. This means that U is uniformly distributed in
+the unitary group (for β = 2), and in the orthogonal or
+symplectic subgroups (for β = 1 or 4). To ﬁnd the distri-
+bution P ({En}) of the eigenvalues we need to multiply
+P (H) with the Jacobian J which relates an inﬁnitesimal
+volume element dµ(H) in the space of Hermitian matri-
+ces to the corresponding volume elements dµ(U ),dEn of
+eigenvectors and eigenvalues,
+dµ(H) = Jdµ(U )
+∏
+i
+dEi. (1.2)
+The Jacobian depends only on the eigenvalues (Porter,
+1965),
+J({En}) =
+∏
+i<j
+|Ei −Ej|β. (1.3)
+1A quaternion q is a 2 × 2 matrix which is a linear combi-
+nation of the unit matrix and the three Pauli spin matrices:
+q = a11 + ibσx + icσy + idσz. The quaternion is called real if
+the coeﬃcients a, b, c, and d are real numbers.
+2 A symplectic matrix is a unitary matrix with real quater-
+nion elements.
+3If β = 4, the eigenvalue–eigenvector decomposition is H =
+U diag (E111, E211, . . . EN 11)U †, so that each of the N distinct
+eigenvalues is twofold degenerate (Kramers’ degeneracy).
+3
+E
+E
+E
+E
+n
+n+1
+n+2
+FIG. 1. Schematic illustration of the Coulomb gas. The
+eigenvalues are represented by classical particles at posi tions
+E1, E2, . . . EN along a line. The logarithmic eigenvalue re-
+pulsion is represented by the Coulomb interaction between
+identical parallel line charges attached to the particles.
+The resulting eigenvalue distribution takes the form
+P ({En}) = c
+∏
+i<j
+|Ei −Ej|β∏
+k
+exp[−βV (Ek)]. (1.4)
+The distribution (1.4) has the form of a Gibbs distri-
+bution in statistical mechanics,
+P ({En}) = c exp
+[
+−β
+(∑
+i<j
+u(Ei,E j ) +
+∑
+i
+V (Ei)
+)]
+,
+(1.5a)
+u(E,E ′) = − ln |E −E′|. (1.5b)
+The symmetry index β plays the role of inverse tempera-
+ture. One can imagine that the eigenvalues are classical
+particles on a line, at the points E1,E 2,...E N . They
+repel each other with a logarithmic pair potential u and
+are prevented from escaping to inﬁnity by a potential V .
+(For the Gaussian ensemble, V is a parabolic potential
+well.) This system is called a “Coulomb gas”, because
+the logarithmic repulsion is the Coulomb interaction be-
+tween two identical parallel line charges (see Fig. 1). The
+idea of representing the eigenvalue repulsion by a ﬁcti-
+tious force is due to Wigner (1957) and Dyson (1962b).
+It greatly helps our intuition.
+2. Geometrical correlations
+The fundamental hypothesis 4 of the Wigner-Dyson en-
+semble is that spectral correlations are geometrical. Geo-
+4 This viewpoint of what is fundamental in the Wigner-
+Dyson theory diﬀers from the conventional viewpoint (Porte r,
+1965) that the two basic assumptions are: (1) statistical
+independence of the matrix elements; (2) invariance of the
+ensemble with respect to orthogonal, unitary, or symplecti c
+transformations of H. The assumptions of independence and
+invariance imply an unnecessary restriction to the Gaussia n
+ensemble.
+metrical means that they are due to the Jacobian (1.3),
+which relates volume elements in matrix and eigenvalue
+space. Microscopic details of the system enter only via
+the potentialV , which does not by itself create any corre-
+lations between the eigenvalues. If there were some other
+source of correlations, then the interaction u between the
+eigenvalues would deviate from the logarithmic repulsion
+(1.5b). The hypothesis of geometrical correlations is ap-
+pealing because of its simplicity. Is it correct? In this
+review we will address that question for the transmission
+eigenvalues of an open system, where the answer was not
+known until recently. It is instructive to contrast this
+with what is known about the energy levels of a closed
+system.
+Gor’kov and Eliashberg (1965) used the Wigner-Dyson
+ensemble to study the electronic properties of small metal
+grains. Theoretical justiﬁcation came with the super-
+symmetric ﬁeld theory of Efetov (1982, 1983). Assuming
+diﬀusive motion of the electrons inside the grain, he ob-
+tained the same correlation function of the energy level
+density as in the Wigner-Dyson ensemble. Subsequently,
+Altshuler and Shklovski ˘ ı (1986) showed that, for energy
+separations |E −E′| greater than the Thouless energy
+Ec, the correlation function deviates from random-matrix
+theory. The characteristic energy scale Ec = ¯hD/L2 is
+inversely proportional to the time it takes for an electron
+to diﬀuse, with diﬀusion coeﬃcient D, across a particle
+of size L. It represents the ﬁnite width of the energy lev-
+els of an open system. The results of the diagrammatic
+perturbation theory of Altshuler and Shklovski ˘ ı were red-
+erived by Argaman, Imry, and Smilansky (1993), using a
+more intuitive semiclassical method. It follows from these
+microscopic theories that the repulsion between the en-
+ergy levels has the logarithmic form (1.5b) of the Wigner-
+Dyson ensemble for |E−E′| ≪ Ec. For |E−E′| ≫ Ec the
+interaction potential decays as a power law, and actually
+becomes weakly attractive in three dimensions (Jalabert,
+Pichard, and Beenakker, 1993).
+There is surprisingly little direct experimental evidence
+for Wigner-Dyson statistics in a metal grain. Sivan et al.
+(1994) measured the level spacing in a small conﬁned re-
+gion in a semiconductor (a “quantum dot”). Their results
+where consistent with Wigner-Dyson statistics for the
+low-lying excitations. Because of electron-electron inte r-
+actions, the single-particle excitation spectrum is broad -
+ened and merges into a continuum for energies further
+than Ec from the Fermi level (Sivan, Imry, and Aronov,
+1994; Altshuler, Gefen, Kamenev, and Levitov, 1996).
+The Wigner-Dyson ensemble of random Hamiltoni-
+ans applies not just to an ensemble of disordered metal
+grains, but to any quantum mechanical system which is
+suﬃciently complex. A necessary requirement is that
+there are no other constants of the motion than the
+energy, to avoid crossings of energy levels. In classi-
+cal mechanics, such a system is called non-integrable or
+4
+chaotic.5 Impurity scattering is one way of making the
+system chaotic, but not the only one. Scattering by the
+boundaries is often suﬃcient to destroy all constants of
+the motion (unless the boundaries have some spatial sym-
+metry). The notion of statistics and averaging is diﬀerent
+if the chaos is due to impurity scattering or to boundary
+scattering. An ensemble of disordered metal grains can
+be formed by changing the microscopic conﬁguration of
+the impurities. Alternatively, one could consider a single
+grain and replace the ensemble average by a spectral av-
+erage, i.e. by an average over the energy levels. Theory
+is easier for ensemble averages, wheras experimentally a
+spectral average is more accessible. The assumption of
+ergodicity is the assumption that ensemble and spectral
+averages are equivalent.
+Wigner-Dyson statistics of the energy levels has been
+demonstrated numerically for a variety of non-integrable
+systems without disorder, such as a particle moving on
+a billiard table (Bohigas, Giannoni, and Schmit, 1984),
+hydrogen in a magnetic ﬁeld (Freidrich and Wintgen,
+1989), and models of strongly interacting electrons (Poil-
+blanc et al. , 1993). An early analytical calculation, using
+periodic-orbit theory, was provided by Berry (1985). A
+complete theoretical justiﬁcation, such as Efetov’s the-
+ory for a disordered grain, was hampered for a long time
+by the lack of a natural ensemble in the absence of dis-
+order. This obstacle was ﬁnally overcome by Andreev,
+Agam, Simons, and Altshuler (1996). Using a super-
+symmetric ﬁeld theory for ballistic motion (Muzykantski ˘ ı
+and Khmel’nitski ˘ ı, 1995) they could show that spectral
+averages in a chaotic billiard agree with Wigner-Dyson
+statistics.
+3. Transition between ensembles
+We have talked about time-reversal symmetry as be-
+ing broken or not. In reality, a weak magnetic ﬁeld does
+not break time-reversal symmetry completely. There is
+a smooth transition from the orthogonal or symplectic
+ensembles to the unitary ensemble. We discuss the tran-
+sition from the Gaussian orthogonal ensemble (GOE) to
+the Gaussian unitary ensemble (GUE), following Pandey
+5 When speaking of “chaotic” systems, we intend that the
+classical motion is non-integrable in the entire phase spac e
+(no stable periodic orbits). This is known as “hard” chaos
+or “global” chaos. Each trajectory then uniformly explores
+the entire phase space, on a time scale set by the “ergodic”
+time τergodic. Neighboring trajectories diverge exponentially
+in time ∝ exp(−t/τergodic). It is easy to realize hard chaos
+in disordered systems, but not in ballistic systems. Gener-
+ically, the phase space will contain both regions of chaotic
+and integrable motion (“soft” chaos). Hard chaos has been
+demonstrated for special geometries in two-dimensional ba l-
+listic systems known as “billiards”.
+and Mehta (1983; Mehta and Pandey, 1983; Mehta,
+1991).
+The complex Hermitian M ×M matrix
+H = H0 + iαA (1.6)
+is decomposed into a real symmetric matrix H0 and a
+real antisymmetric matrix A with imaginary weight i α.
+(Here we denote the matrix dimension by M instead of
+N to avoid a confusion of notation later on in this re-
+view.) The two matrices H0 and A are independently
+distributed with the same Gaussian distribution, so that
+the distribution of H is
+P (H) ∝ exp
+
+−∑
+i,j
+[ (Re Hij)2
+4v2 + (Im Hij)24v2α2 ]. (1.7)
+The variance v2 determines the mean level spacing δ =
+πv/
+√
+M at the center of the spectrum for M ≫ 1 and
+α ≪ 1. [To have the same mean level spacing for all α,
+one should replace v2 byv2(1 +α2)−1.] The distribution
+of H interpolates between the GOE for α = 0 and the
+GUE for α = 1. The transition is eﬀectively complete for
+α ≪ 1. Indeed, the spectral correlations on the energy
+scaleδ are those of the GUE when the eﬀective strength
+vα of the term in Eq. (1.6) which breaks time-reversal
+symmetry exceeds δ, hence when α>∼ 1/√M .
+To relate the parameter α to the magnetic ﬁeld B, we
+consider the shift δEi of the energy levels for α ≪ 1. On
+the one hand, from the Hamiltonian (1.6) one obtains, to
+leading order in α,
+δEi =α2∑
+j⁄=i
+A2ij
+Ei −Ej
+. (1.8)
+In order of magnitude, |δEi| ≃ α2v2/δ ≃ Mα 2δ. On
+the other hand, the typical curvature of the energy levels
+around B = 0 is given by the Thouless energy: |δEi| ≃
+Ec(eΦ/h)2, where Φ is the magnetic ﬂux through the
+system. Taken together, these two estimates imply
+Mα 2 ≃
+(eΦ
+h
+)2 Ec
+δ . (1.9)
+The GOE–GUE transition is completed on the energy
+scale E if |δEi| >∼ E, hence if Φ >∼ (h/e)√E/Ec. Since
+δ ≪ Ec in a metal, it requires much less than a ﬂux
+quantum to break time-reversal symmetry on the scale
+of the level spacing.
+Microscopic justiﬁcation for the probability distribu-
+tion (1.7) has been provided by Dupuis and Montam-
+baux (1991) (for a disordered ring) and by Bohigas et al.
+(1995) (for a chaotic billiard). The precise relation be-
+tweenα and B depends on the geometry of the system,
+and on whether it is disordered or ballistic. For a disor-
+dered two-dimensional disk or three-dimensional sphere
+5
+(radius R much greater than mean free path l) the rela-
+tion between α and Φ = πR2B is (Frahm and Pichard,
+1995a):
+Mα 2 =
+(eΦ
+h
+)2 ¯hvFl
+R2δ ×
+{
+π/4 disk ,
+2π/15 sphere . (1.10)
+HerevF is the Fermi velocity. For a ballistic disk or sphere
+(R ≪ l), which is chaotic because of diﬀuse boundary
+scattering, the relation is instead
+Mα 2 =
+(eΦ
+h
+)2 ¯hvF
+Rδ ×
+{
+4/3 disk ,
+8π/45 sphere . (1.11)
+For a ballistic two-dimensional billiard (area A) with
+a chaotic shape, Bohigas et al. (1995) ﬁnd Mα 2 =
+c(eΦ/h)2¯hvF/δ√A, with c a numerical coeﬃcient de-
+pending only on the shape of the billiard. In each case,
+Mα 2 ∝ Ec in accordance with Eq. (1.9), the Thouless
+energy being given by Ec ≃ ¯hvFR−2 min(l,R ).
+4. Brownian motion
+In the previous subsection we considered the magnetic-
+ﬁeld dependence of the energy levels around B = 0, to
+investigate the transition from the orthogonal to the uni-
+tary ensemble. Once the transition is completed, the
+level distribution becomesB-independent. Individual en-
+ergy levels still ﬂuctuate as a function of B in some ran-
+dom way (see Fig. 2). These spectral ﬂuctuations are
+a realization of the Brownian-motion process introduced
+by Dyson (1962c, 1972), as a dynamical model for the
+Coulomb gas. A review of this topic has been written
+by Altshuler and Simons (1995). Since it is not directly
+related to transport, we restrict ourselves here to the ba-
+sics.
+Following Lenz and Haake (1990; Haake, 1992), we
+consider the Hamiltonian
+H = e −τ H0 +(1 − e−2τ)1/2 HGUE, (1.12)
+which interpolates between the M ×M complex Hermi-
+tian matrices H0 and HGUE as the parameter τ increases
+from 0 to ∞. The matrix H0 is a ﬁxed matrix, while
+HGUE varies randomly over the GUE. The resulting dis-
+tribution of H is
+P (H,τ ) = 1(1 − e−2τ )M 2/2 PGUE
+( H − e−τ H0
+(1 − e−2τ )1/2
+)
+,
+(1.13a)
+PGUE(H) ∝ exp(−c TrH2). (1.13b)
+The coeﬃcients of H0 and HGUE in Eq. (1.12) are chosen
+such that the mean level spacing δ = π(2Mc )−1/2 of H
+is τ -independent.
+The distribution (1.13) satisﬁes the Fokker-Planck
+equation
+B
+E
+FIG. 2. Illustration of the magnetic-ﬁeld dependence of
+energy levels in a chaotic system (magnetic ﬁeld B and energy
+E in arbitrary units). This plot is based on a calculation of
+the spectrum of the hydrogen atom in a strong magnetic ﬁeld
+by Goldberg et al. (1991).
+c ∂∂τP =∑µ ∂∂Hµ(cHµ +Dµ ∂∂Hµ)P (1.14)
+in the M 2 independent variables {Hµ} = {Hii, Re Hij,
+Im Hij, 1 ≤ i < j≤ M }. The diﬀusion coeﬃcient Dµ
+equals 1/2 for the diagonal elements Hii and 1/4 for the
+oﬀ-diagonal elements Re Hij, Im Hij. Integrating out the
+eigenvectors of H, one obtains from Eq. (1.14) a Fokker-
+Planck equation for the distribution P ({En},τ ) of the
+eigenvaluesEn,
+c ∂∂τP =∑i ∂∂Ei
+
+cEi +∑
+j⁄=i
+1
+Ej −Ei
++ 12 ∂∂Ei
+
+P.
+(1.15)
+The implication of Eq. (1.15) is that the energy levels
+Ei(τ ) execute a Brownian motion in ﬁctitious time τ .
+To relate τ to B, we ﬁrst relate τ to the parameter α
+of the previous subsection, since we already know how to
+relateα toB. For inﬁnitesimal τ the Hamiltonian (1.12)
+can be written as
+H = H0 +
+√
+2τ
+(
+HGOE + iA
+)
+. (1.16)
+Here HGOE and A are, respectively, real symmetric and
+real antisymmetric matrices, having independent Gaus-
+sian distributions with the same variance. Equivalently,
+one can use a purely antisymmetric perturbation of H0
+and double its variance:
+H = H0 + 2i√τ A. (1.17)
+Comparison with Eq. (1.6) leads to the relation (Frahm,
+1995b)
+6
+∆α = 2√τ (1.18)
+between the ﬁctitious time τ of the Brownian motion
+and an increment ∆ α of the Pandey-Mehta Hamilto-
+nian in the absence of time-reversal symmetry ( i.e. for
+Mα 2 ≫ 1). Since α ∝ Φ according to Eq. (1.9), one
+ﬁnds that τ is related to the ﬂux increment ∆Φ by
+Mτ ≃ (e∆Φ/h)2Ec/δ.
+Microscopic justiﬁcation for the Brownian-motion
+model has been provided by Beenakker (1993b,
+Beenakker and Rejaei, 1994b), through a comparison of
+the correlation functions obtained from Eq. (1.15) with
+those obtained for a disordered metal grain by Szafer and
+Altshuler (1993) and Simons and Altshuler (1993, Alt-
+shuler and Simons, 1995). The model has one fundamen-
+tal limitation: Brownian motion correctly describes level
+correlations at any two values of B, but does not describe
+how levels at three or more values of B are correlated.
+The reason is that Brownian motion is a Markov process,
+meaning that it has no memory: The distribution P at
+time τ + ∆τ is fully determined by the distribution at
+time τ . Knowledge of P at earlier times is irrelevant for
+the evolution at later times. The true level dynamics,
+in contrast, is no Markov process; It does have a mem-
+ory. To see this, it suﬃces to take a look at Fig. 2: The
+energy levels evolve smoothly as a function of magnetic
+ﬁeld, hence their location at B + ∆B is not independent
+from that at B − ∆B if ∆B is small enough. As a con-
+sequence, the correlator of two densities ⟨n(B1)n(B2)⟩
+[with n(B) = ∑nδ( ((E −En(B)) ))] can be obtained from
+the Fokker-Planck equation (1.15), but the correlator of
+three densities ⟨n(B1)n(B2)n(B3)⟩ can not.
+C. Statistical theory of transmission eigenvalues
+1. Scattering and transfer matrices
+The scattering theory of electronic conduction is due
+to Landauer (1957, 1987), Imry (1986b), and B¨ uttiker
+(1986b, 1988b). It provides a complete description of
+transport at low frequencies, temperatures, and voltages,
+under circumstances that electron-electron interactions
+can be neglected. (For an overview of the great vari-
+ety of experiments in which the theory has been tested,
+see Beenakker and Van Houten, 1991.) A mesoscopic
+conductor is modeled by a phase-coherent disordered re-
+gion connected by ideal leads (without disorder) to two
+electron reservoirs (see Fig. 3). Scattering in the phase-
+coherent region is elastic. All inelastic scattering is as-
+sumed to take place in the reservoirs, which are in equi-
+librium at temperature zero and electrochemical poten-
+tial (or Fermi energy) EF. The ideal leads are “electron
+waveguides”, introduced to deﬁne a basis for the scatter-
+ing matrix of the disordered region.
+The wavefunction ψ of an electron in a lead at energy
+EF separates into a longitudinal and a transverse part,
+x
+a+
+a-
+b+
+b-
+FIG. 3. Disordered region (dotted) connected by ideal
+leads to two electron reservoirs (to the left and right of the
+dashed lines). The scattering matrix S relates the amplitudes
+a+, b− of incoming waves to the amplitudes a−, b+ of outgoing
+waves, while the transfer matrix M relates the amplitudes
+a+, a− at the left to the amplitudes b+, b− at the right.
+ψ±n (⃗ r) = Φ n(y,z ) exp(±iknx). (1.19)
+The integer n = 1, 2,...N labels the propagating modes,
+also referred to as scattering channels. Mode n has a
+real wavenumberkn> 0 and transverse wavefunction Φn.
+(We assume, for simplicity of notation, that the two leads
+are identical.) The normalization of the wavefunction
+(1.19) is chosen such that it carries unit current. A wave
+incident on the disordered region is described in this basis
+by a vector of coeﬃcients
+cin ≡ (a+1,a +2,...a +N,b −1,b −2,...b −N ). (1.20)
+The ﬁrst set of N coeﬃcients refers to the left lead, and
+the second set of N coeﬃcients to the right lead in Fig. 3.
+Similarly, the reﬂected and transmitted wave has vector
+of coeﬃcients
+cout ≡ (a−1,a −2,...a −N,b +1,b +2,...b +N ). (1.21)
+The scattering matrix S is a 2N × 2N matrix which re-
+lates these two vectors,
+cout =Scin. (1.22)
+It has the block structure
+S =
+(
+r t′
+t r′
+)
+, (1.23)
+with N ×N reﬂection matrices r and r′ (reﬂection from
+left to left and from right to right) and transmission ma-
+trices t and t′ (transmission from left to right and from
+right to left).
+Current conservation implies that S is a unitary ma-
+trix: S−1 =S†. It is a consequence of unitarity that the
+four Hermitian matrices tt†, t′t′†, 1 −rr†, and 1 −r′r′†
+have the same set of eigenvalues T1,T 2,...T N . Each of
+these N transmission eigenvalues is a real number be-
+tween 0 and 1. The scattering matrix can be written
+in terms of the Tn’s by means of the polar decompo-
+sition (Mello, Pereyra, and Kumar, 1988; Martin and
+Landauer, 1992)
+7
+S =
+(
+U 0
+0 V
+)(
+−
+√
+1 − T
+√
+T√
+T √1 − T
+)(
+U ′ 0
+0 V ′
+)
+.
+(1.24)
+Here U,V,U ′,V ′ are four N ×N unitary matrices and
+T = diag (T1,T 2,...T N ) is an N ×N diagonal matrix
+with the transmission eigenvalues on the diagonal. 6
+If time-reversal symmetry is broken ( β = 2), unitarity
+is the only constraint on S. The presence of time-reversal
+symmetry imposes additional constraints. If both time-
+reversal and spin-rotation symmetry are present ( β =
+1), then S is unitary and symmetric: S = ST, hence
+U ′ = U T, V ′ = V T. (The superscript T indicates the
+transpose of the matrix.) If time-reversal symmetry is
+present but spin-rotation symmetry is broken ( β = 4),
+thenS is unitary and self-dual: S =SR, hence U ′ =U R,
+V ′ = V R. (The superscript R indicates the dual 7 of a
+quaternion matrix.)
+The scattering matrix relates incoming to outgoing
+states. The transfer matrix relates states in the left lead
+to states in the right lead. A wave in the left lead is given
+by the vector of coeﬃcients
+cleft ≡ (a+1,a +2,...a +N,a −1,a −2,...a −N ). (1.25)
+The ﬁrst set of N coeﬃcients refers to incoming waves,
+the second set of N coeﬃcients to outgoing waves. Sim-
+ilarly, a wave in the right lead has vector of coeﬃcients
+cright ≡ (b+1,b +2,...b +N,b −1,b −2,...b −N ). (1.26)
+The transfer matrix M is a 2N ×2N matrix which relates
+these two vectors,
+cright =Mc left. (1.27)
+The scattering and transfer matrices are equivalent de-
+scriptions of the disordered region. A convenient prop-
+erty of the transfer matrix is the multiplicative composi-
+tion rule: The transfer matrix of a number of disordered
+regions in series (separated by ideal leads) is the prod-
+uct of the individual transfer matrices. The scattering
+matrix, in contrast, has a more complicated composition
+rule (containing a matrix inversion). By expressing the
+elements of M in terms of the elements of S one obtains
+the polar decomposition of the transfer matrix (Mello,
+Pereyra, and Kumar, 1988; Mello and Pichard, 1991),
+M =
+(V 0
+0 V ′†
+)( √
+T −1 √T −1 − 1√
+T −1 − 1 √T −1
+)( U ′ 0
+0 U †
+)
+,
+(1.28)
+6 The transmission eigenvalues for β = 4 are twofold degen-
+erate: T = diag ( T111, T211, . . . TN 11). Compare the footnote
+on Kramers’ degeneracy of the energy levels in Sec. I B 1.
+7 The dual QR of a matrix Q with quaternion elements
+Qnm = anm11 + i bnmσx + i cnmσy + i dnmσz has elements
+QRnm = amn11 − ibmnσx − icmnσy − idmnσz.
+TABLE II. Symmetry of the scattering matrix S and its
+matrix of eigenvectors Ω, for the three values of β.
+β S Ω
+1 unitary symmetric orthogonal
+2 unitary unitary
+4 unitary self-dual symplectic
+in terms of the same N ×N matrices used in Eq. (1.24).
+Current conservation imposes a “pseudo-unitarity”
+constraint on the transfer matrix:
+S−1 =S† ⇐ ⇒ΣM −1Σ = M †, (1.29)
+where Σ is a diagonal matrix with Σ nn = 1 for 1 ≤n ≤N
+and Σ nn = −1 for N + 1 ≤n ≤ 2N . As a consequence,
+the matrix product MM † and its inverse ( MM †)−1 =
+ΣMM †Σ have the same set of eigenvalues, or in other
+words, the eigenvalues of MM † come in inverse pairs.
+We denote the 2 N eigenvalues of MM † by exp( ±2xn),
+with xn ≥ 0 (n = 1, 2,...N ). By comparing Eqs. (1.24)
+and (1.28) one obtains an algebraic relation between the
+transfer and transmission matrices (Pichard, 1984),
+[
+2 +MM † +(MM †)−1]−1 = 14(tt† 00 t′†t′), (1.30)
+which implies that the exponent xn is related to the
+transmission eigenvalue Tn by
+Tn = 1cosh2xn. (1.31)
+An altogether diﬀerent representation of the scattering
+matrix is the eigenvalue–eigenvector decomposition
+S = Ω diag
+(
+eiφ1, eiφ2,... eiφ2N)Ω†. (1.32)
+The real numbers φn are the scattering phase shifts.
+(There is a twofold Kramers’ degeneracy of the φn’s for
+β = 4.) The 2 N × 2N unitary matrix Ω has real elements
+for β = 1, complex elements for β = 2, and real quater-
+nion elements for β = 4. (Hence Ω is orthogonal for
+β = 1 and symplectic for β = 4.) The symmetry proper-
+ties of the scattering matrix are summarized in Table II.
+The decomposition (1.32) mixes states at the left of the
+disordered region with those at the right, and therefore
+does not distinguish between transmission and reﬂection.
+This is why the polar decomposition (1.24) is more suit-
+able for a transport problem. A statistical theory of scat-
+tering phase shifts was developed by Dyson (1962a), in
+the early days of random-matrix theory. Dyson’s ensem-
+ble of random scattering matrices, known as the circular
+ensemble, turns out to be the appropriate ensemble for
+conduction through a quantum dot, as we will discuss in
+Sec. II.
+8
+2. Linear statistics
+The transmission eigenvalues determine a variety of
+transport properties. First of all the conductance G =
+limV →0 ¯I/V , deﬁned as the ratio of the time-averaged
+electrical current ¯I through the conductor and the volt-
+age diﬀerence V between the two electron reservoirs —
+in the limit of vanishingly small voltage. This is the limit
+of linear response, to which we restrict ourselves in this
+review. At zero temperature, the conductance is given
+by
+G =G0
+N∑
+n=1
+Tn, G0 ≡ 2e2h . (1.33)
+Equation (1.33) is known as the Landauer formula, be-
+cause of Landauer’s pioneering 1957 paper. It was ﬁrst
+written down in this form by Fisher and Lee (1981). For
+an account of the controversy surrounding this formula,
+which has now been settled, we refer to Stone and Szafer
+(1988). The factor of two in the deﬁnition of the conduc-
+tance quantum G0 is due the two-fold spin degeneracy
+in the absence of spin-orbit scattering. In the presence
+of spin-orbit scattering, there is a two-fold Kramers’ de-
+generacy in zero magnetic ﬁeld. In the presence of both
+spin-orbit scattering and a magnetic ﬁeld, one has a re-
+duced conductance quantum G0 = e2/h with twice the
+number of transmission eigenvalues.
+The discreteness of the electron charge causes time-
+dependent ﬂuctuations of the current I(t) = ¯I +δI (t),
+which persist down to zero temperature. These ﬂuctua-
+tions are known as shot noise. The power spectrum of
+the noise has the zero-frequency limit
+P = 4
+∫ ∞
+0
+dtδI (t +t0)δI (t0), (1.34)
+where the overline indicates an average over the initial
+timet0 in the correlator. The shot-noise power is related
+to the transmission eigenvalues by (B¨ uttiker, 1990)
+P =P0
+N∑
+n=1
+Tn(1 −Tn), P 0 ≡ 2eVG 0. (1.35)
+Equation (1.35) is the multi-channel generalization of for -
+mulas by Khlus (1987) and Lesovik (1989).
+More generally, we will study transport properties of
+the form
+A =
+N∑
+n=1
+a(Tn). (1.36)
+The quantity A is called a linear statistic on the trans-
+mission eigenvalues. The word “linear” indicates that A
+does not contain products of diﬀerent eigenvalues, but
+the function a(T ) may well depend non-linearly on T
+— as it does in the case of the shot-noise power (1.35),
+where a(T ) depends quadratically on T . The conduc-
+tance (1.33) is special because it is a linear statistic with
+a linear dependence on T . Other linear statistics (with
+a(T ) a rational or algebraic function) appear if one of the
+two electron reservoirs is in the superconducting state
+(see Sec. IV).
+3. Geometrical correlations
+The analogue for random scattering matrices of the
+Wigner-Dyson ensemble of random Hamiltonians is an
+ensemble of unitary matrices where all correlations be-
+tween the transmission eigenvalues are geometrical. Here
+“geometrical” means due to the Jacobian J which relates
+the volume elements in the polar decomposition (1.24),
+dµ(S) = J
+∏
+α
+dµ(Uα)
+∏
+i
+dTi. (1.37)
+The set {Uα} is the set of independent unitary matrices
+in Eq. (1.24): {Uα} = {U,V } if β = 1 or 4; {Uα} =
+{U,U ′,V,V ′} if β = 2. The Jacobian depends only on
+the transmission eigenvalues, 8
+J({Tn}) =
+∏
+i<j
+|Ti −Tj|β∏
+k
+T −1+β/2k . (1.38)
+The analogue of the Wigner-Dyson distribution (1.1),
+P (S) = c exp[−β Trf (tt†)], (1.39)
+yields upon multiplication by J a distribution of the Tn’s
+analogous to Eq. (1.4),
+P ({Tn}) = c
+∏
+i<j
+|Ti −Tj|β∏
+k
+T −1+β/2k exp[−βf (Tk)].
+(1.40)
+Muttalib, Pichard, and Stone (1987), and Pichard,
+Zanon, Imry, and Stone (1990) have based a statisti-
+cal theory of transmission eigenvalues on the distribution
+(1.40). (Their theory is reviewed by Stone, Mello, Mut-
+talib, and Pichard, 1991.) To make contact with their
+work, we perform the change of variables
+Tn = 11 +λn. (1.41)
+8 For a calculation of the Jacobian (1.38) from scattering
+matrix to transmission eigenvalues, see Baranger and Mello
+(1994), Jalabert, Pichard, and Beenakker (1994), and Jal-
+abert and Pichard (1995). For an earlier, closely related, c al-
+culation of the Jacobian from transfer matrix to transmissi on
+eigenvalues, see Muttalib, Pichard, and Stone (1987), Mell o,
+Pereyra, and Kumar (1988), and Zanon and Pichard (1988).
+9
+Since Tn lies between 0 and 1, the variable λn ranges
+from 0 to ∞. The distribution (1.40) transforms to
+P ({λn}) = c exp
+[
+−β
+(∑
+i<j
+u(λi,λ j ) +
+∑
+i
+V (λi)
+)]
+,
+(1.42a)
+u(λ,λ ′) = − ln |λ −λ′|, (1.42b)
+V (λ) = [N − 12 (1 − 2/β)] ln(1 +λ)
++f
+( ((
+(1 +λ)−1) )). (1.42c)
+Equation (1.42) has the same form as the Gibbs distri-
+bution (1.5) in the Wigner-Dyson ensemble, with the dif-
+ference that the λn’s can only take on positive values —
+while the En’s are free to range over the whole real axis.
+All microscopic information about the conductor (its size
+and degree of disorder) is contained in the conﬁning po-
+tentialV (λ). The hypothesis of geometrical correlations
+does not specify this function. Muttalib, Pichard, and
+Stone (1987) have shown that the probability distribu-
+tion (1.42) maximizes the entropy of the ensemble sub-
+ject to the constraint of a given mean density ρ(λ) of the
+λn’s. The function V (λ) is the Lagrange multiplier for
+this constraint. The Wigner-Dyson ensemble can simi-
+larly be interpreted as the ensemble of maximum entropy
+for a given mean density of states (Balian, 1968).
+The correlation functions implied by the probability
+distribution (1.42) have been studied for a variety of po-
+tentials V (λ) by Stone, Mello, Muttalib, and Pichard
+(1991), Slevin, Pichard, and Mello (1991), Chen, Is-
+mail, and Muttalib (1992), Muttalib, Chen, Ismail, and
+Nicopoulos (1993), and Slevin, Pichard, and Muttalib
+(1993). It was originally believed that precise agreement
+with the microscopic theory of a disordered wire could
+be obtained if only V (λ) were properly chosen (Mello
+and Pichard, 1989). We now know that this is not cor-
+rect (Beenakker, 1993a): The true eigenvalue repulsion
+is not logarithmic . In other words, there exist corre-
+lations between the transmission eigenvalues over and
+above those induced by the Jacobian. As we will dis-
+cuss in Sec. III B 5, the hypothesis of geometrical corre-
+lations is valid for Tn’s close to unity. However, it over-
+estimates the repulsion of smaller Tn’s (Beenakker and
+Rejaei, 1993, 1994a). The appearance of random-matrix
+ensembles with a non-logarithmic eigenvalue repulsion
+is a distinctive feature of the random-matrix theory of
+quantum transport.
+An implication of the non-logarithmic repulsion is that
+the true ensemble is not of maximum entropy, at least
+not in the sense of Muttalib, Pichard, and Stone (1987).
+We make this qualiﬁcation because, unlike in statistical
+mechanics, there is not a single deﬁnition of the entropy
+of a random-matrix ensemble. Slevin and Nagao (1993,
+1994) have constructed an alternative maximum entropy
+ensemble, in which the repulsion is logarithmic in the
+variablesxn (recall that Tn = 1/ cosh2xn). The true re-
+pulsion, however, is not logarithmic in any variable. It is
+not known whether there exists some maximum entropy
+principle which would produce the correct ensemble for
+a disordered wire.
+D. Correlation functions
+The established method to compute correlation func-
+tions of eigenvalues in the Wigner-Dyson ensemble is the
+method of orthogonal polynomials (Mehta, 1991). This
+method works for any dimensionality N of the random
+matrix, but requires a logarithmic repulsion u(λ,λ ′) =
+− ln |λ −λ′| of the eigenvalues. Moreover, although in
+principle one can assume an arbitrary conﬁning potential,
+in practice one is restricted in the choice of V (λ). (One
+needs to be able to construct a basis of polynomials which
+are orthogonal with weight function e −βV .) For applica-
+tions to quantum transport one requires a method that is
+not restricted to particularu andV , but the large-N limit
+is often suﬃcient. The method of functional derivatives
+was developed for such applications (Beenakker, 1993a,
+1993c, 1994a). A similar method (for the case of loga-
+rithmic repulsion) has been developed in connection with
+matrix models of quantum gravity (Makeenko, 1991).
+1. Method of functional derivatives
+We consider the two-point correlation function
+K(λ,λ ′) =
+⟨∑
+i,j
+δ(λ −λi)δ(λ′ −λj)
+⟩
+−ρ(λ)ρ(λ′).
+(1.43)
+Hereρ(λ) = ⟨∑iδ(λ−λi)⟩ is the mean eigenvalue density
+and ⟨· · ·⟩ denotes the average with probability distribu-
+tion (1.42). Explicitly,
+ρ(λ) =
+∫
+dλ1 · · ·
+∫
+dλN e−βW∑iδ(λ −λi)∫
+dλ1 · · ·
+∫
+dλN e−βW , (1.44)
+W ({λn}) =
+∑
+i<j
+u(λi,λ j ) +
+∑
+i
+V (λi). (1.45)
+The interaction potential u(λ,λ ′) may or may not be log-
+arithmic. By diﬀerentiating Eq. (1.44) we obtain an exact
+relationship between the two-point correlation function
+and the functional derivative of the mean density with
+respect to the conﬁning potential,
+K(λ,λ ′) = − 1β δρ(λ)δV (λ′). (1.46)
+To evaluate this functional derivative we must know
+how the density depends on the potential. This is a
+classic problem in random-matrix theory. In the large-
+N limit the solution is given by the integral equation
+(Wigner, 1957)
+10
+V (λ) +
+∫ λ+
+λ−
+dλ′u(λ,λ ′)ρ(λ′) = constant, (1.47)
+where “constant” means independent of λ inside the in-
+terval (λ−,λ +) where ρ >0. The boundaries λ± of the
+spectrum can be either ﬁxed or free. A ﬁxed boundary is
+independent of V . (An example is the constraint λ> 0.)
+A free boundary is to be determined selfconsistently from
+Eq. (1.47), by requiring that ρ vanishes at the boundary.
+A free boundary thus depends on V . Equation (1.47)
+has the “mechanical equilibrium” interpretation that the
+densityρ adjusts itself to the potential V in such a way
+that the total force at any point vanishes. The support
+of ρ is therefore an equipotential. Finite- N corrections
+to Eq. (1.47) are smaller by an order N −1 for β = 1 or
+4, and by an order N −2 for β = 2 (Dyson, 1972; see
+Appendix A). A rigorous proof, containing precise con-
+ditions on u andV , has been given by Boutet de Monvel,
+Pastur, and Shcherbina (1995).
+Variation of Eq. (1.47) gives 9
+δV (λ) +
+∫ λ+
+λ−
+dλ′u(λ,λ ′)δρ(λ′) = constant, (1.48a)
+with the constraint
+∫ λ+
+λ−
+dλδρ (λ) = 0 (1.48b)
+(since the variation of ρ is to be carried out at constant
+N ). The inverse of Eq. (1.48) is
+δρ(λ) = −
+∫ λ+
+λ−
+dλ′uinv(λ,λ ′)δV (λ′), (1.49a)
+∫ λ+
+λ−
+dλ′′u(λ,λ ′′)uinv(λ′′,λ ′) = δ(λ −λ′) − 1λ+ −λ−.
+(1.49b)
+Equation (1.49b) means that the integral kernel uinv is
+the inverse of u for functions f (λ) restricted by
+∫
+dλf =
+0.
+Combination of Eqs. (1.46) and (1.49) yields a rela-
+tion between the two-point correlation function and the
+inverse of the interaction potential (Beenakker, 1993a),
+K(λ,λ ′) = 1β uinv(λ,λ ′). (1.50)
+9 Variation of the boundary λ± of the spectrum gives an ad-
+ditional contribution ±δλ±ρ(λ±)u(λ, λ±). This contribution
+vanishes, either because δλ± = 0 (ﬁxed boundary) or because
+ρ(λ±) = 0 (free boundary). Variation of the λ-independent
+right-hand-side of Eq. (1.47) gives some other λ-independent
+constant, not necessarily equal to zero.
+This relation is universal in that it does not contain
+the conﬁning potential explicitly. There is an implicit
+dependence on V through λ± in Eq. (1.49), but this
+can be neglected far from a free boundary. There ex-
+ists a variety of other demonstrations of such insensi-
+tivity of correlation functions to the choice of conﬁning
+potential (Kamien, Politzer, and Wise, 1988; Ambjørn
+and Makeenko, 1990; Ambjørn, Jurkiewicz, and Ma-
+keenko, 1990; Pastur, 1992; Br´ ezin and Zee, 1993, 1994;
+Eynard, 1994; Forrester, 1995; Hackenbroich and Wei-
+denm¨ uller, 1995; Morita, Hatsugai, and Kohmoto, 1995;
+Kobayakawa, Hatsugai, Kohmoto, and Zee, 1995; Frei-
+likher, Kanzieper, and Yurkevich, 1996; Ambjørn and
+Akemann, 1996).
+A universal two-point correlation function implies uni-
+versal ﬂuctuations of linear statistics, as we discuss in th e
+next subsection.
+2. Universal conductance ﬂuctuations
+Quantum interference leads to signiﬁcant sample-to-
+sample ﬂuctuations in the conductance at low tempera-
+tures. These ﬂuctuations can also be observed in a sin-
+gle sample as a function of magnetic ﬁeld, since a small
+change in ﬁeld has a similar eﬀect on the interference
+pattern as a change in impurity conﬁguration. Experi-
+mental data by Washburn and Webb (1986) for a Au wire
+at 10 mK is shown in Fig. 4. The ﬂuctuations are not
+time-dependent noise, but completely reproducible. Such
+a magnetoconductance trace is called a “magnetoﬁnger-
+print”, because the pattern is speciﬁc for the particular
+sample being studied. Notice that the magnitude of the
+ﬂuctuations is of order e2/h. This is not accidental.
+The universality of the conductance ﬂuctuations was
+discovered theoretically by Altshuler (1985) and Lee and
+Stone (1985). There are two aspects to the universality:
+(1) The variance Var G of the conductance is of order
+(e2/h)2, independent of sample size or disorder strength;
+(2) VarG decreases by precisely a factor of two if time-
+reversal symmetry is broken by a magnetic ﬁeld. The
+Altshuler–Lee–Stone theory is a diagrammatic perturba-
+tion theory for a disordered metal. Two classes of di-
+agrams, cooperons and diﬀusons, contribute equally to
+the variance in the presence of time-reversal symmetry.
+A magnetic ﬁeld suppresses the cooperons but leaves
+the diﬀusons unaﬀected, hence the factor-of-two reduc-
+tion. (We are assuming here, for simplicity, that there
+is no spin-orbit scattering.) The variance Var G/G0 of
+the conductance (in units of the conductance quantum
+G0 = 2e2/h) is a number of order unity which is weakly
+dependent on the shape of the conductor. For a wire
+geometry (length much greater than width) at zero tem-
+perature, the variance is
+VarG/G0 = 215β−1. (1.51)
+11
+0 2 4 6 8
+–1
+0
+1
+B ( T )
+∆ G ( e 2/h )
+FIG. 4. Fluctuations as a function of perpendicular mag-
+netic ﬁeld of the conductance of a 310 nm long and 25 nm
+wide Au wire at 10 mK. The trace appears random, but is
+completely reproducible from one measurement to the next.
+The root-mean-square of the ﬂuctuations is 0 .3 e2/h, which
+is not far from the theoretical result
+√
+1/15 e2/h [Eq. (1.51)
+with β = 2 due to the magnetic ﬁeld and a reduced conduc-
+tance quantum of e2/h due to the strong spin-orbit scattering
+in Au]. After Washburn and Webb (1986).
+There is no dependence on the mean free path l, the
+wire length L, or the number of transverse modes N ,
+providedl ≪L ≪Nl . That is to say, the wire should be
+much longer than the mean free path but much shorter
+than the localization length. The Altshuler–Lee–Stone
+theory has been tested in many experiments (for reviews,
+see Altshuler, Lee, and Webb, 1991; Beenakker and Van
+Houten, 1991).
+Shortly after the discovery of the universality of
+conductance ﬂuctuations, an explanation was given in
+terms of the repulsion of energy levels (Altshuler and
+Shklovski ˘ ı, 1986) or of transmission eigenvalues (Imry,
+1986a). Imry’s argument contrasts “closed” and “open”
+scattering channels. Most transmission eigenvalues in a
+disordered conductor are exponentially small. These are
+the closed channels. A fraction l/L of the total numberN
+of transmission eigenvalues is of order unity. These are
+the open channels. Only the open channels contribute
+eﬀectively to the conductance: G/G0 ≡ Neﬀ ≈ Nl/L .
+Fluctuations in the conductance can be interpreted as
+ﬂuctuations in the number Neﬀ of open channels. The
+alternative argument of Altshuler and Shklovski ˘ ı is based
+on Thouless’ (1977) relationship Neﬀ ≈ Ec/δ. (The
+Thouless energy Ec was deﬁned in Sec. I B 2; δ is the
+mean level spacing.) Conductance ﬂuctuations can be
+interpreted as ﬂuctuations in the number of energy levels
+in an energy range Ec. If the transmission eigenvalues or
+energy levels were uncorrelated, one would estimate that
+ﬂuctuations in Neﬀ would be of order √Neﬀ. This would
+imply that Var G/G0 would be of order Neﬀ — which is
+≫ 1. The fact that the variance is of order unity is a
+consequence of the strong suppression of the ﬂuctuations
+in Neﬀ by eigenvalue repulsion.
+This argument can be made quantitative. Take a linear
+statistic
+A =
+N∑
+n=1
+a(λn). (1.52)
+For the conductance, we would have a(λ) = (1 + λ)−1
+[cf. Eqs. (1.33) and (1.41)]. The average of A,
+⟨A⟩ =
+∫ λ+
+λ−
+dλa (λ)ρ(λ), (1.53)
+diverges for N → ∞ . We can identify ⟨A⟩ ≡ Neﬀ. The
+variance VarA = ⟨A2⟩ − ⟨A⟩2 is obtained from a double
+integration of the two-point correlation function (1.43),
+VarA =
+∫ λ+
+λ−
+dλ
+∫ λ+
+λ−
+dλ′a(λ)a(λ′)K(λ,λ ′). (1.54)
+For independent λn’s, we would expect Var A to be of
+orderNeﬀ, so that it too would diverge with N . Instead,
+Eq. (1.50) implies that
+VarA = 1β∫ λ+λ− dλ∫ λ+λ− dλ′a(λ)a(λ′)uinv(λ,λ ′), (1.55)
+with corrections of order 1 /Neﬀ. This tells us that Var A
+for large N is independent of N , provided the inter-
+action potential u(λ,λ ′) is N -independent. Moreover,
+VarA ∝ 1/β ifu isβ-independent. These are the two as-
+pects of universality mentioned above. Let us illustrate
+this general result by two examples (Beenakker, 1993a,
+1993c).
+The ﬁrst example is the Wigner-Dyson ensemble (1.5),
+with a logarithmic repulsion. The eigenvalues are free to
+vary over the whole real axis, hence the end points λ±
+of the spectrum are free boundaries. Let us assume that
+the function a(λ) is non-zero only for λ in the bulk of the
+spectrum, so that the integrals from λ− to λ+ may be
+replaced by integrals from −∞ to +∞. To determine the
+functional inverse of u(λ,λ ′) = − ln |λ −λ′| in the bulk
+of the spectrum, we need to solve the integral equation
+−
+∫ ∞
+−∞
+dλ′′ ln |λ −λ′′|uinv(λ′′,λ ′) = δ(λ −λ′). (1.56)
+This is readily solved by Fourier transformation, with the
+result
+uinv(λ,λ ′) = − 1π2 ∂∂λ ∂∂λ′ ln |λ −λ′|. (1.57)
+Substitution into Eq. (1.55) yields a formula for the vari-
+ance of a linear statistic,
+VarA = − 1βπ 2
+∫ ∞
+−∞
+dλ
+∫ ∞
+−∞
+dλ′
+(da(λ)
+dλ
+)(da(λ′)
+dλ′
+)
+× ln |λ −λ′|, (1.58a)
+12
+or in an equivalent Fourier representation,
+VarA = 1βπ 2
+∫ ∞
+0
+dk |a(k)|2k, (1.58b)
+a(k) =
+∫ ∞
+−∞
+dλ eikλa(λ). (1.58c)
+Equation (1.58) was ﬁrst derived for the Gaussian en-
+semble, V (λ) ∝ λ2, by Dyson and Mehta (1963; Mehta,
+1991). Note that Var A diverges logarithmically for a
+step function a(λ) = θ(λ −λc). More generally, if a(λ)
+changes abruptly on the scale of the eigenvalue spacing,
+its variance does not have a universal N → ∞ limit. All
+physical quantities which we will consider, however, are
+smooth functions of λ.
+The second example is the ensemble (1.42) of Mut-
+talib, Pichard, and Stone (1987), relevant for transport
+properties. The repulsion is still logarithmic, but the
+eigenvalues are constrained by λn > 0. Thus λ− = 0
+is a ﬁxed lower bound of the spectrum. There is also a
+free upper bound at some λ+ ≫ 1, which does not aﬀect
+transport properties and can be ignored. (Recall that
+largeλ corresponds to small T .) Instead of Eq. (1.56) we
+now have the integral equation
+−
+∫ ∞
+0
+dλ′′ ln |λ −λ′′|uinv(λ′′,λ ′) = δ(λ −λ′), (1.59)
+which can be solved by Mellin transformation. (The
+Mellin transform is a Fourier transform with respect to
+the variable ln λ.) The result is
+uinv(λ,λ ′) = − 1π2 ∂∂λ ∂∂λ′ ln⏐⏐⏐⏐ √λ − √λ′√λ + √λ′⏐⏐⏐⏐. (1.60)
+Instead of Eq. (1.58) we obtain the formula (Beenakker,
+1993a, 1993c; see also Basor and Tracy, 1993; Jancovici
+and Forrester, 1994)
+VarA = − 1βπ 2
+∫ ∞
+0
+dλ
+∫ ∞
+0
+dλ′
+(da(λ)
+dλ
+)(da(λ′)
+dλ′
+)
+× ln
+⏐⏐⏐⏐ √λ − √λ′√λ + √λ′⏐⏐⏐⏐, (1.61a)
+or equivalently,
+VarA = 1βπ 2
+∫ ∞
+0
+dk |˜a(k)|2k tanh(πk), (1.61b)
+˜a(k) =
+∫ ∞
+0
+dλλ ik−1a(λ). (1.61c)
+The diﬀerence between Eqs. (1.58) and (1.61) originates
+entirely from the positivity constraint on λ in the trans-
+port problem.
+Substitution of a(λ) = (1 +λ)−1 into Eq. (1.61) yields
+the variance of the conductance
+VarG/G0 = 18β−1, (1.62)
+which diﬀers slightly, but signiﬁcantly, from Eq. (1.51).
+This was the ﬁrst demonstration that the eigenvalue re-
+pulsion in a disordered wire could not be precisely loga-
+rithmic (Beenakker, 1993a).
+The variance VarA is the second cumulant of the dis-
+tribution function P (A). What about higher-order cu-
+mulants? Politzer (1989) has shown that the cumulants
+of order three and higher of a linear statistic A vanish
+in the large- N limit. This means that P (A) tends to a
+Gaussian distribution in that limit. Politzer’s argument
+is that the linearity of the relation (1.47) between ρ and
+V implies that for each p ≥ 3 the functional derivative
+δp−1ρ/δV p−1 vanishes, and hence that the p-point cor-
+relation function as well as the p-th cumulant vanish.
+Only the two-point correlation function (proportional to
+δρ/δV ) and the second cumulant survive the large- N
+limit.
+E. Overview
+The two questions which the random-matrix theory of
+quantum transport addresses are: First: What is the
+ensemble of scattering matrices? Second: How to obtain
+from it the statistics of transport properties? In this
+article we review the answer to both questions for the
+two geometries where the answer is known: a quantum
+dot and a disordered wire.
+The quantum dot is the easiest of the two geometries.
+For the ﬁrst question we rely on Efetov’s demonstration
+that the Hamiltonian of a disordered metal grain is dis-
+tributed according to the Wigner-Dyson ensemble (1.1).
+The corresponding distribution of scattering matrices fol -
+lows upon coupling the bound states inside the grain to
+propagating modes outside. If the coupling is via quan-
+tum point contacts, the scattering matrix is distributed
+according to the circular ensemble. (A quantum point
+contact is a narrow opening, much smaller than the mean
+free path, with a quantized conductance of NG 0.) The
+circular ensemble is deﬁned by
+P (S) = constant, (1.63)
+that is to say, the scattering matrix S is uniformly dis-
+tributed in the unitary group — subject only to the con-
+straints imposed by time-reversal and/or spin-rotation
+symmetry. The corresponding distribution of the trans-
+mission eigenvalues is of the form (1.40), with f (Tn) ≡ 0.
+Hence the eigenvalue repulsion in a quantum dot is loga-
+rithmic. Correlation functions of the transmission eigen-
+values can be computed either by exact integration over
+the unitary group (which is practical for small N ), or
+using the large- N method of Sec. I D 1. In particular,
+the limit N → ∞ of the variance of a linear statistic is
+given by Eq. (1.61). The circular ensemble does not say
+how the scattering matrices at diﬀerent energies or mag-
+netic ﬁeld values are correlated. For that information one
+needs to return to the underlying Hamiltonian ensemble.
+13
+Historically, the latter approach came ﬁrst: Ver-
+baarschot, Weidenm¨ uller, and Zirnbauer (1985), and
+Iida, Weidenm¨ uller, and Zuk (1990a, 1990b) computed
+correlators of scattering matrix elements, and moments
+of the conductance, directly from the Hamiltonian ensem-
+ble. More recently, the entire distribution function of the
+transmission eigenvalues was determined starting from
+the ensemble of scattering matrices (Baranger and Mello,
+1994; Jalabert, Pichard, and Beenakker, 1994). The
+equivalence of the two approaches has been established
+by Brouwer (1995). Both random-matrix approaches
+agree with Efetov’s (1982, 1983) supersymmetric ﬁeld
+theory of a disordered metal grain. There is consider-
+able numerical and analytical evidence that they apply
+generically to any chaotic cavity, regardless of whether
+the chaos is due to impurity or to boundary scattering
+(Bohigas, Giannoni, and Schmit, 1984; Andreev, Agam,
+Simons, and Altshuler, 1996).
+Once transport through a single quantum dot is un-
+derstood, a logical next step is to connect many quantum
+dots in series, so that they form a wire (Fig. 5a). I

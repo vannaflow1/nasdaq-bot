@@ -91,7 +91,7 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 230 papers read (39 more skipped as not relevant enough), 129 ideas tested on my memory, 2 promising.",
+  "LEARNING: 230 papers read (39 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Gradient-based learning applied to document recognition (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper shows that gradient\u2011based training, especially via back\u2011propagation in convolutional and graph\u2011transformer networks, can jointly optimize multiple modules (e.g., segmentation, recognition, language models) for ",
@@ -104,16 +104,16 @@
   "  tested: prop mission - feeds my strategy designer and self-check",
   "\u2022 OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper derives an optimal risky\u2011asset allocation when an investor must keep wealth above a stochastic floor equal to a fixed fraction \u03b1 of the historical maximum wealth. The optimal exposure is proportional to the sur",
-  "  tested: queued for testing",
+  "  tested: TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
   "\u2022 China credit impulse as a 6-12 month lead for the Nasdaq (\u2605\u2605\u2605\u2606\u2606)",
   "  Credit impulse = change in China's 12-month credit flow vs a year earlier, as % of credit. Claimed to lead risk assets by 6-12 months.",
   "  tested: TESTED 2000-2024: corr with the next 6m NDX +0.15, next 12m +0.20 (positive in 2000-09, 2010-17, 2018-26), but only ~25-50 independent periods -> not significan",
   "\u2022 MS GJR-GARCH + neural network for S&P 500 volatility (VIX as target) (\u2605\u2605\u2605\u2606\u2606)",
   "  Markov-switching GJR-GARCH volatility fed to a backprop neural net improved S&P 500 volatility forecasts, especially in crises.",
   "  tested: TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding th",
-  "This week's tests: 138 run - 4 promising, 70 not confirmed, 29 don't fit my data, 35 translation failures",
+  "This week's tests: 140 run - 4 promising, 70 not confirmed, 29 don't fit my data, 37 translation failures",
   "",
-  "19 papers waiting in my queue."
+  "20 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

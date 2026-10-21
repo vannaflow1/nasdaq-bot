@@ -19,6 +19,6 @@ twap/vwap order splitting, intraday price pressure, [[market liquidity]], equili
 Would need intraday data (opening move vs. rest-of-day drift) and institutional order-flow imbalance; my memory has one row per day with next-day range and return only, so the intraday fade cannot be checked.
 
 ## Test
-not testable with my data yet
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 
 Part of [[Research engine]]
