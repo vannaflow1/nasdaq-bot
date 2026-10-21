@@ -6,5 +6,9 @@
  {
   "title": "\u2b06\ufe0f Volta reached level 14",
   "body": "VOLTA LEVEL 14  (7,187 XP, next level at 7,840)\nPapers read 252 | ideas & strategies tested 60 | prop strategies searched 313,254\nSurvived unseen 2022-23: 1273 (best EV per eval 2449.3) | passed the locked exam: 1 | live winners: 0\nBrain upgrades: 0 | self-discovered powers: 5\nXP only for verified progress: tests passed on unseen data count far more than activity.\nSince yesterday: +35 papers, +12 tests, +1273 validated, +2 powers, +1 exam passed"
+ },
+ {
+  "title": "\ud83e\udde9 Monthly combined test of near-miss ideas",
+  "body": "7 small-but-consistent ideas re-tested TOGETHER. Best mix picked on 2020-2022: log(impl) * rank(iv30, 252), next_opex (+1.76%). On 2023-2025 (never seen): -0.46% -> **NOT CONFIRMED - the combination does not hold on unseen years**"
  }
 ]
