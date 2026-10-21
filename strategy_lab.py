@@ -16,6 +16,10 @@ break = stop order through the level (level above -> buy the break, below -> sel
 Fills (deliberately pessimistic): limit entries/targets need price to trade 1 tick THROUGH the level; stop entries and
 stop exits pay 1 tick slippage; if stop and target are both inside one bar, the stop counts; no target on the fill bar;
 commission 0.25 pt per round trip. Results in NQ points and in R (multiples of the stop).
+Harsh fills (since 2026-10-21, HARSH=True; env STRAT_HARSH=0 only for before/after comparisons): stop exits and stop
+(break) entries slip MORE where reality is harsher - +1 tick per 50% the session's range exceeds its expected range
+(max +6), +1 on red-folder news days, +2 on FOMC days, +2 for crude oil on Wednesdays (EIA inventory report). These
+extra ticks are model assumptions (no fill data), deliberately on the pessimistic side.
 
 Guardrails before anything is called a strategy:
  1. In-sample 2014-2023 only: >= 150 trades, positive after costs, positive in >= 70% of years.
@@ -29,6 +33,8 @@ import numpy as np, pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(HERE, "knowledge"); sys.path.insert(0, HERE)
 TICK, COMM, EXAM_FROM, EXAMS_PER_WEEK = 0.25, 0.25, "2024-01-01", 10
+HARSH = os.environ.get("STRAT_HARSH", "1") != "0"
+SLIP_RANGE_STEP, SLIP_RANGE_MAX, SLIP_RED, SLIP_FOMC, SLIP_CL_WED = 0.5, 6, 1, 2, 2
 LOG, EXAMS = os.path.join(K, "strategies.jsonl"), os.path.join(K, "strategy_exams.json")
 STATIC = ["open", "yday_high", "yday_low", "yday_close", "yday_mid", "asia_high", "asia_low", "london_high", "london_low",
           "on_high", "on_low", "midnight_open", "or15_high", "or15_low"]
@@ -67,7 +73,7 @@ def data(market="NQ"):
             D = {k: z[k].astype(np.float64) for k in ("O", "H", "L", "C", "V")}
             M = pd.read_csv(os.path.join(K, f"strat_sessions_{market.lower()}.csv"))
             M["yday_mid"] = (M.yday_high + M.yday_low) / 2
-            _add_vol_cols(D, M); M.attrs["pv"] = MARKETS[market]["pv"]; D["M"] = M; D.update(MARKETS[market]); D["market"] = market
+            _add_vol_cols(D, M); _add_slip_cols(M, market); M.attrs["pv"] = MARKETS[market]["pv"]; D["M"] = M; D.update(MARKETS[market]); D["market"] = market
             _MK[market] = D
         return _MK[market]
     if not _DATA:
@@ -76,7 +82,7 @@ def data(market="NQ"):
         _DATA.update(MARKETS["NQ"]); _DATA["market"] = "NQ"
         M = pd.read_csv(os.path.join(K, "strat_sessions.csv"))
         M["yday_mid"] = (M.yday_high + M.yday_low) / 2
-        _add_vol_cols(_DATA, M); M.attrs["pv"] = 2.0
+        _add_vol_cols(_DATA, M); _add_slip_cols(M, "NQ"); M.attrs["pv"] = 2.0
         _DATA["M"] = M
     return _DATA
 
@@ -94,6 +100,30 @@ def _add_vol_cols(D, M):
         var[j] = v
         if np.isfinite(r.iloc[j]): v = 0.94 * v + 0.06 * r.iloc[j] ** 2
     M["ewma_sd"] = np.sqrt(var)
+
+
+def _add_slip_cols(M, market):
+    """Extra stop slippage (ticks) known per session from the calendar: red-folder news, FOMC, crude-oil Wednesdays."""
+    x = np.zeros(len(M))
+    st = os.path.join(K, "session_table.csv")
+    if os.path.exists(st):
+        Q = pd.read_csv(st, usecols=lambda c: c in ("session", "k_red_any", "k_fomc_day")).drop_duplicates("session").set_index("session")
+        q = Q.reindex(M.session.values)
+        x += SLIP_RED * (q.get("k_red_any", pd.Series(0, index=q.index)).fillna(0).values > 0.5)
+        x += SLIP_FOMC * (q.get("k_fomc_day", pd.Series(0, index=q.index)).fillna(0).values > 0.5)
+    if market == "CL":
+        x += SLIP_CL_WED * (pd.to_datetime(M.session).dt.weekday.values == 2)
+    M["slip_news"] = x
+
+
+def slip_ticks(D, i, M=None):
+    """Ticks a stop order pays in session i: 1 normally; more on fast (range above expected) and news days if HARSH."""
+    if not HARSH: return 1.0
+    M = D["M"].iloc[i] if M is None else M
+    O = D["O"][i]; rng_ = float(np.nanmax(D["H"][i]) - np.nanmin(D["L"][i])); exp_ = float(M.get("fc_frac", np.nan)) * float(O[0])
+    x = min(max(np.floor((rng_ / exp_ - 1) / SLIP_RANGE_STEP), 0), SLIP_RANGE_MAX) if np.isfinite(exp_) and exp_ > 0 else 0.0
+    news = M.get("slip_news", 0.0)
+    return 1.0 + x + (float(news) if np.isfinite(news) else 0.0)
 
 
 def mins(hhmm):
@@ -187,6 +217,7 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
     """One session -> (pnl points, R, side) or None if no trade."""
     O, H, L, C = D["O"][i], D["H"][i], D["L"][i], D["C"][i]; M = D["M"].iloc[i]
     tk, cm = D.get("tick", TICK), D.get("comm", COMM)
+    sl = slip_ticks(D, i, M) * tk                                      # stop-order slippage (points) this session
     e = spec["entry"]; xe = min(mins(spec.get("exit", "14:55")), 389)
     st = spec["stop"]
     stop_pts = float(st["points"]) if "points" in st else float(st["range"]) * float(M.fc_frac) * O[0]
@@ -219,7 +250,7 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
         if conf:
             near = [abs(level_path(D, i, c)[k] - lvl) for c in conf.get("levels", []) if c != e["level"] and c in LEVELS]
             if not any(np.isfinite(x) and x <= float(conf.get("within", 10)) for x in near): return None
-        ep = lvl if e["action"] == "fade" else lvl + s * 2 * tk
+        ep = lvl if e["action"] == "fade" else lvl + s * (tk + sl)       # break = stop order: 1 tick through + slippage
     if k >= xe: return None
     stop = ep - s * stop_pts
     tg = spec["target"]
@@ -231,7 +262,7 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
         tgt = tl
     # fill bar: only the stop can hit (pessimistic)
     if (s == 1 and L[k] <= stop) or (s == -1 and H[k] >= stop):
-        xp = stop - s * tk
+        xp = stop - s * sl
     else:
         j0, j1 = k + 1, xe
         if j0 >= j1:
@@ -241,7 +272,7 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
             ht = (H[j0:j1] >= tgt + tk) if s == 1 else (L[j0:j1] <= tgt - tk)
             a = int(np.argmax(hs)) if hs.any() else 10 ** 6; b = int(np.argmax(ht)) if ht.any() else 10 ** 6
             if a == b == 10 ** 6: xp = O[xe] - s * tk                   # time exit at the exit bar's open
-            elif a <= b: xp = stop - s * tk                             # stop first (or same bar)
+            elif a <= b: xp = stop - s * sl                             # stop first (or same bar)
             else: xp = tgt
     pnl = (xp - ep) * s - cm * cost_mult
     return pnl, pnl / stop_pts, s, k
@@ -290,13 +321,19 @@ def _week():
 
 
 def _prop_inputs(T, M):
+    """Day-by-day inputs for prop_sim: result per micro (MNQ points), the day's worst point and the median stop (sizing).
+    The worst point is THAT trade's own stop (range stops are wider on volatile days) or its actual loss if larger
+    (slippage) - not the median stop, so a wide-stop day can blow the account when the real trade would have."""
     ses = M.session.values; ses = ses[(ses >= T.session.min()) & (ses <= T.session.max())] if len(T) else ses
     pv = float(M.attrs.get("pv", 2.0)) if hasattr(M, "attrs") else 2.0
     eq = T.pnl.values * pv / 2.0                                       # dollars per micro, expressed in MNQ points ($2/pt)
     pts = pd.Series(0.0, index=ses); pts[T.session.values] = eq
     neg = np.abs(eq[eq < 0])
     stop = float(np.median(neg)) if len(neg) else 20.0
-    return pts.values, np.where(pts.values != 0, -stop, 0.0), stop
+    R = T.R.values if "R" in T else np.zeros(len(T))
+    own = np.where(np.abs(R) > 1e-9, np.abs(eq / np.where(np.abs(R) > 1e-9, R, 1.0)), stop)   # this trade's stop (pnl / R)
+    wst = pd.Series(0.0, index=ses); wst[T.session.values] = -np.maximum(own, np.maximum(-eq, 0.0))
+    return pts.values, np.where(pts.values != 0, np.minimum(wst.values, -1e-9), 0.0), stop
 
 
 def _sizer(spec, stop):

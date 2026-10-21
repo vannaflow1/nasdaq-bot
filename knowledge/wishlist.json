@@ -76,9 +76,10 @@
   "why": "Model what can still sink a funded account: stop slippage on fast/news days (scale slippage with the day's range, extra on red-folder and CL inventory Wednesdays), LucidPro's daily loss limit, and that copy-traded accounts all lose on the same day. A strategy that only works with perfect fills should not pass.",
   "evidence": "simulator uses fixed 1-tick slippage, no daily loss limit",
   "impact": "medium",
-  "status": "open",
+  "status": "done",
   "votes": 3,
-  "source": "Claude review"
+  "source": "Claude review",
+  "note": "Granted 2026-10-21. (1) strategy_lab fills (HARSH, default on): stop exits and break (stop) entries pay +1 tick per 50% the session's range exceeds its expected range (max +6), +1 on red-folder days, +2 on FOMC days, +2 for CL on Wednesdays (assumed values, no fill data; STRAT_HARSH=0 reproduces the old fills exactly). (2) The prop sim's worst point per day is now that trade's own stop (or its actual loss if larger), not the median stop: range-stop days reached up to 8x the median, so accounts that really blew used to survive. (3) Daily loss limits: plan fields eval_dll / fund_dll cap a day's contracts so one worst case fits; set for LucidPro 50K eval ($1,200) and Tradeify Select Daily 50K funded ($1,000) from the existing firm research; LucidPro 25K has no documented value yet. (4) An account that cannot trade 1 contract is 'stuck' (dead): the farm frees its slot and buys a new eval instead of keeping zombie accounts; the farm reports the worst single day across all copy-traded accounts (they lose on the same days). Check on 24 sample strategies, 2014-21, LucidPro 50K: avg -0.80 -> -1.03 pts/trade, EV per eval -90.6 -> -95.5, pass rate lower or equal in all 24. New prop-search rows carry sim='harsh-1'."
  },
  {
   "id": 7,

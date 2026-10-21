@@ -29,6 +29,7 @@ OUT = os.path.join(K, "prop_search"); RES = os.path.join(OUT, f"results_{SHARD}.
 STATUS = os.path.join(HERE, "status.json")
 BUDGET_MIN = float(os.environ.get("SEARCH_MINUTES", "120"))
 SEARCH_END, VAL_END = "2021-12-31", "2023-12-31"
+SIM_VERSION = "harsh-1"      # rows without it were scored before the harsher fills / own-stop worst point / daily loss limit
 
 TIMES = ["08:31", "08:45", "09:00", "09:30", "10:00", "10:30", "11:30", "13:00", "13:30"]
 SIDES = {"long": "long", "short": "short", "with overnight": "sign(k_on_return)", "against overnight": "0 - sign(k_on_return)",
@@ -238,7 +239,8 @@ def main():
         except Exception as e:
             print("skip", spec["name"], type(e).__name__, e); continue
         best = max(rows, key=lambda r: r["ev"]) if rows else None
-        row = {"date": datetime.now(timezone.utc).date().isoformat(), "spec_id": sid, "name": spec["name"], "spec": json.dumps(spec)}
+        row = {"date": datetime.now(timezone.utc).date().isoformat(), "spec_id": sid, "name": spec["name"], "spec": json.dumps(spec),
+               "sim": SIM_VERSION}
         if best: row.update({k: best[k] for k in ("n", "win", "avg_R", "years_pos", "plan", "risk", "eval_risk", "pass", "paid", "ev", "fee")})
         if best and best["n"] >= 150 and best["ev"] > 0:          # stage B: validation on 2022-2023, never used to choose
             sz = {"risk": best["risk"], "eval_risk": best["eval_risk"]}
@@ -296,22 +298,26 @@ PORT = os.path.join(OUT, "portfolios.csv")
 PORT_POOL, PORT_MAX_CORR, PORT_SCREEN, PORT_VALIDATE = 16, 0.3, 30, 5
 
 
-def _daily(spec, X, S, cal):
-    """A strategy's day-by-day result on the NQ calendar `cal` (sessions), in MNQ-equivalent points per 1 micro."""
+def _daily(spec, X, S, cal, worst=False):
+    """A strategy's day-by-day result on the NQ calendar `cal` (sessions), in MNQ-equivalent points per 1 micro
+    (with worst=True also the day's worst point: that trade's own stop or its actual loss, as strategy_lab._prop_inputs)."""
     D = S.data(spec.get("market")); M = D["M"]
     idx = np.where((M.session.values >= cal[0]) & (M.session.values <= cal[-1]))[0]
     T = S.backtest(spec, X, idx); pv = float(M.attrs.get("pv", 2.0))
-    out = pd.Series(0.0, index=cal)
+    out = pd.Series(0.0, index=cal); wst = pd.Series(0.0, index=cal)
     if len(T):
-        t = T[T.session.isin(cal)]; out[t.session.values] = t.pnl.values * pv / 2.0
-    return out
+        t = T[T.session.isin(cal)]; eq = t.pnl.values * pv / 2.0; out[t.session.values] = eq
+        R = t.R.values; own = np.abs(eq / np.where(np.abs(R) > 1e-9, R, np.nan))
+        own = np.where(np.isfinite(own), own, np.median(np.abs(eq[eq < 0])) if (eq < 0).any() else 20.0)
+        wst[t.session.values] = -np.maximum(own, np.maximum(-eq, 0.0))
+    return (out, wst) if worst else out
 
 
-def _combo_inputs(members, w, stops):
+def _combo_inputs(members, w, stops, worsts):
     """Combined account inputs: one 'unit' = w_i micros of each member (w_i ~ equal risk per member). Worst point of a day =
-    every member trading that day hits its stop. Returns (pts, worst, unit_risk, micros_per_unit)."""
+    every member trading that day hits its own stop that day. Returns (pts, worst, unit_risk, micros_per_unit)."""
     pts = sum(wi * m for wi, m in zip(w, members))
-    worst = -sum(wi * st * (m != 0) for wi, st, m in zip(w, stops, members))
+    worst = sum(wi * x for wi, x in zip(w, worsts))
     return pts.values, np.asarray(worst.values, dtype=float), float(sum(wi * st for wi, st in zip(w, stops))), int(sum(w))
 
 
@@ -338,12 +344,12 @@ def portfolio_stage(A, X, S, minutes=10.0):
     for _, r in pool.iterrows():
         if len(mem) >= PORT_POOL or time.time() - t0 > minutes * 30: break
         try:
-            spec = json.loads(r.spec); a = _daily(spec, X, S, calA)
+            spec = json.loads(r.spec); a, aw = _daily(spec, X, S, calA, worst=True)
         except Exception as e:
             print("portfolio member skipped:", type(e).__name__, e); continue
         if (a != 0).sum() < 150: continue
         if any(abs(np.corrcoef(a, m["a"])[0, 1]) > 0.95 for m in mem): continue      # near-duplicate (mutants)
-        neg = np.abs(a[a < 0]); mem.append({"row": r, "spec": spec, "a": a, "stop": float(np.median(neg)) if len(neg) else 20.0})
+        neg = np.abs(a[a < 0]); mem.append({"row": r, "spec": spec, "a": a, "aw": aw, "stop": float(np.median(neg)) if len(neg) else 20.0})
     if len(mem) < 2: return []
     C = np.corrcoef(np.vstack([m["a"].values for m in mem]))
     combos = []
@@ -358,7 +364,7 @@ def portfolio_stage(A, X, S, minutes=10.0):
     scored = []
     for sh, c, w in combos:
         if time.time() - t0 > minutes * 60: break
-        pts, worst, U, per = _combo_inputs([mem[i]["a"] for i in c], w, [mem[i]["stop"] for i in c])
+        pts, worst, U, per = _combo_inputs([mem[i]["a"] for i in c], w, [mem[i]["stop"] for i in c], [mem[i]["aw"] for i in c])
         for P in prop_sim.plans().values():
             Q = _plan_for_units(P, per)
             if not Q: continue
@@ -373,10 +379,10 @@ def portfolio_stage(A, X, S, minutes=10.0):
     for x in top:
         c, w = x["c"], x["w"]; P = prop_sim.plans()[x["plan"]]; Q = _plan_for_units(P, x["per"])
         try:
-            bs = [_daily(mem[i]["spec"], X, S, calB) for i in c]
+            bs = [_daily(mem[i]["spec"], X, S, calB, worst=True) for i in c]
         except Exception as e:
             print("portfolio validation skipped:", e); continue
-        pts, worst, _, _ = _combo_inputs(bs, w, [mem[i]["stop"] for i in c])
+        pts, worst, _, _ = _combo_inputs([b[0] for b in bs], w, [mem[i]["stop"] for i in c], [b[1] for b in bs])
         size = S._sizer({"prop": x["sz"]}, x["U"])
         vb = prop_sim.evaluate(pts, worst, Q, size, step=4)
         f = prop_sim.farm(pts, worst, calB, Q, size, slots=5)

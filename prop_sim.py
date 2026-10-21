@@ -6,7 +6,12 @@ are run through complete accounts in historical order, starting on every possibl
 Modelled: profit target, max loss (end-of-day or intraday trailing, lock at start + X), evaluation consistency,
 funded consistency, contract limits and funded scaling tiers, payout qualification (days, min daily profit, cycle
 profit), payout fraction / caps / minimum / buffer, profit split, N payouts -> live (success), fee + activation.
-The max loss is checked against each trade's worst point (stop-based trades: the stop)."""
+The max loss is checked against each trade's worst point (stop-based trades: the stop).
+Daily loss limit (optional "eval_dll" / "fund_dll" in a plan, $): the bot never risks more than the limit in one day, so
+the contracts of a day are capped at floor(limit / that day's worst loss per contract) - a trade that does not fit is
+skipped. An account that cannot trade even 1 contract on a trade day is dead ("stuck": in the farm its slot is freed
+and a new evaluation bought, instead of a zombie account that never pays and never costs). Copy-trading (farm): every account trades the same day's result, so losses land on the same days; the farm
+reports the worst single day across all accounts."""
 import json, os
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -25,6 +30,13 @@ def _tier(tiers, profit):
     return n
 
 
+def _dll_cap(P, phase, n, worst):
+    """Contracts allowed today under the plan's daily loss limit (if any): one day's worst case must fit inside it."""
+    lim = P.get("eval_dll" if phase == "eval" else "fund_dll")
+    if not lim or worst >= 0: return n
+    return int(min(n, lim // (-worst * MNQ)))
+
+
 def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
     S0 = float(P["size"]); bal = peak = S0; floor = S0 - P["mll"]; lock = S0 + P.get("lock_over_start", 100)
     phase = "eval"; days = 0; eval_days = []; payouts = []; cycle_days = []; cycle_start = bal
@@ -32,7 +44,9 @@ def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
         days += 1
         profit = bal - S0
         cap = P["eval_max_mnq"] if phase == "eval" else _tier(P["fund_max_tiers"], profit)
-        n = int(min(cap, max(0, size_fn(phase, profit, bal - floor))))
+        n = _dll_cap(P, phase, int(min(cap, max(0, size_fn(phase, profit, bal - floor)))), day_worst[i])
+        if n == 0 and day_worst[i] < 0:                          # not even 1 contract fits (buffer or daily limit): dead
+            return dict(passed=phase == "funded", payouts=payouts, days=days, end="stuck")
         pnl = n * day_pts[i] * MNQ; worst = n * day_worst[i] * MNQ
         if bal + worst <= floor:
             return dict(passed=phase == "funded", payouts=payouts, days=days, end="blown")
@@ -88,10 +102,12 @@ class Account:
         """Trade one day. Returns the payout paid to the trader today (0 if none). Sets self.end when finished."""
         P = self.P; profit = self.bal - self.S0
         cap = P["eval_max_mnq"] if self.phase == "eval" else _tier(P["fund_max_tiers"], profit)
-        n = int(min(cap, max(0, size_fn(self.phase, profit, self.bal - self.floor))))
-        pnl = n * pts * MNQ; w = n * worst * MNQ
+        n = _dll_cap(P, self.phase, int(min(cap, max(0, size_fn(self.phase, profit, self.bal - self.floor)))), worst)
+        if n == 0 and worst < 0:                                   # can no longer trade a single contract: abandoned,
+            self.end = "stuck"; self.last_pnl = 0.0; return 0.0    # the farm frees the slot and buys a new evaluation
+        pnl = n * pts * MNQ; w = n * worst * MNQ; self.last_pnl = pnl
         if self.bal + w <= self.floor:
-            self.end = "blown"; return 0.0
+            self.end = "blown"; self.last_pnl = w; return 0.0
         if P.get("mll_type") == "intraday" and pnl > 0:
             self.floor = max(self.floor, min(self.bal + pnl - P["mll"], self.lock))
         self.bal += pnl; paid = 0.0
@@ -120,21 +136,25 @@ def farm(day_pts, day_worst, dates, plan, size_fn, slots=5, budget_per_month=Non
     new per day at the beginning). Returns monthly cash flow: payouts received minus fees paid."""
     P = plans()[plan] if isinstance(plan, str) else plan
     import pandas as pd
-    accts = []; cash = {}; fees = 0.0; paid_tot = 0.0; bought = 0; blown = 0; live = 0
+    accts = []; cash = {}; fees = 0.0; paid_tot = 0.0; bought = 0; blown = 0; live = 0; worst_day = 0.0; stuck = 0
     for i, d in enumerate(dates):
         m = str(d)[:7]; cash.setdefault(m, 0.0)
         if len([a for a in accts if a.end is None]) < slots:                # buy one new evaluation per day while a slot is free
             accts.append(Account(P)); cash[m] -= P["fee"]; fees += P["fee"]; bought += 1
+        day_tot = 0.0
         for a in accts:
             if a.end is not None: continue
             got = a.step(day_pts[i], day_worst[i], size_fn)
+            day_tot += a.last_pnl
             if getattr(a, "passed_now", False):
                 a.passed_now = False; cash[m] -= P.get("activation", 0); fees += P.get("activation", 0)
             cash[m] += got; paid_tot += got
             if a.end == "blown": blown += 1
             if a.end == "live": live += 1
+            if a.end == "stuck": stuck += 1
+        worst_day = min(worst_day, day_tot)
     s = pd.Series(cash)
     return {"plan": P["id"], "months": len(s), "avg_month": round(float(s.mean()), 1), "median_month": round(float(s.median()), 1),
             "worst_month": round(float(s.min()), 1), "best_month": round(float(s.max()), 1), "positive_months": round(float((s > 0).mean()), 2),
             "total": round(float(s.sum()), 0), "fees": round(fees, 0), "payouts": round(paid_tot, 0), "evals_bought": bought,
-            "blown": blown, "reached_live": live}
+            "blown": blown, "reached_live": live, "worst_day_all_accounts": round(float(worst_day), 0), "stuck": stuck}

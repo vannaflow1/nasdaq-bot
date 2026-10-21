@@ -145,9 +145,10 @@
   "buffer": 2000,
   "split": 0.9,
   "payouts_to_live": 5,
-  "source": "third-party rule guides Sep-Oct 2026 (eval daily loss limit $1,200 not modelled); fee assumed $104; buffer fixed 2026-10-21: protected balance = start + MLL + $100 = locked floor + $2,000 (assumed by analogy with 25K, verify)",
+  "source": "third-party rule guides Sep-Oct 2026 (eval daily loss limit $1,200 modelled since 2026-10-21); fee assumed $104; buffer fixed 2026-10-21: protected balance = start + MLL + $100 = locked floor + $2,000 (assumed by analogy with 25K, verify)",
   "billing": "one-time",
-  "bots": "allowed (help center: automated systems and copiers permitted; no HFT, no <=5s microscalping, no cross-account hedging); no stated VPS/cloud rule"
+  "bots": "allowed (help center: automated systems and copiers permitted; no HFT, no <=5s microscalping, no cross-account hedging); no stated VPS/cloud rule",
+  "eval_dll": 1200
  },
  {
   "id": "tradeify_select_flex_50k",
@@ -233,7 +234,8 @@
   "payouts_to_live": 3,
   "billing": "monthly ($159 list; ~$116 promo)",
   "bots": "same as Tradeify Select Flex",
-  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Funded daily loss limit $1,000 NOT modelled; buffer $2,100 over start = locked floor + $2,000; withdrawals up to 2x profit since last payout (approximated as 100% of profit)."
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Funded daily loss limit $1,000 modelled since 2026-10-21; buffer $2,100 over start = locked floor + $2,000; withdrawals up to 2x profit since last payout (approximated as 100% of profit).",
+  "fund_dll": 1000
  },
  {
   "id": "fundednext_legacy_25k",
