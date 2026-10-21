@@ -1,5 +1,49 @@
 [
 {
+"title": "The Economic Limits of Bitcoin and the Blockchain",
+"learned": "The paper shows that security in proof\u2011of\u2011work systems relies on a balance between ongoing reward flows and one\u2011time attack benefits, with attack costs rising sharply with required hashpower. This creates a natural asymmetry: small, frequent losses are cheap, while large, rare gains (or attacks) are prohibitively expensive.",
+"concepts": [
+"flow vs stock incentives",
+"majority attack as gambler's ruin",
+"convex payoff structure",
+"threshold\u2011based risk",
+"resource\u2011limited attacks"
+],
+"relevance": 2,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://doi.org/10.3386/w24717",
+"date": "2026-10-21"
+},
+{
+"title": "Does innovativeness reduce startup survival rates?",
+"learned": "Innovativeness measured before outcomes can predict lower survival odds for startups, especially when founders are more risk\u2011seeking. Early innovation may increase downside risk before any market advantage materialises.",
+"concepts": [
+"ex\u2011ante risk",
+"drawdown exposure",
+"risk appetite",
+"early\u2011stage volatility",
+"survival probability"
+],
+"relevance": 2,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://www.sciencedirect.com/science/article/pii/S0883902614000913/pdf",
+"date": "2026-10-21"
+},
+{
+"title": "Global Uncertainty and BRICS+ Equity Markets: Spillovers from VIX, Geopolitical Risk, and U.S. Macro-Financial Shocks",
+"learned": "The study uses a VAR model (2016\u20112025) to show that U.S. VIX, geopolitical risk, inflation expectations, and the term spread cause short\u2011run spillovers to emerging\u2011market equities (BRICS+), with VIX acting both as a source and a sink of volatility. Effects fade within a few days, suggesting rapid market adjustment.",
+"concepts": [
+"VAR spillover analysis",
+"VIX as volatility transmitter",
+"short\u2011run macro shock impact",
+"BRICS+ contagion network"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://www.mdpi.com/2227-9091/13/11/217/pdf?version=1762235577",
+"date": "2026-10-21"
+},
+{
 "title": "Overcoming catastrophic forgetting in neural networks",
 "learned": "The paper introduces Elastic Weight Consolidation (EWC), which protects important network parameters by adding a quadratic penalty weighted by the Fisher information, allowing sequential learning without catastrophic forgetting.",
 "concepts": [

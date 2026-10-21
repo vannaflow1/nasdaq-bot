@@ -93,7 +93,7 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 249 papers read (41 more skipped as not relevant enough), 134 ideas tested on my memory, 2 promising.",
+  "LEARNING: 252 papers read (41 more skipped as not relevant enough), 134 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Overcoming catastrophic forgetting in neural networks (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces Elastic Weight Consolidation (EWC), which protects important network parameters by adding a quadratic penalty weighted by the Fisher information, allowing sequential learning without catastrophic for",
@@ -115,7 +115,7 @@
   "  tested: about myself - feeds my self-check",
   "This week's tests: 143 run - 4 promising, 72 not confirmed, 30 don't fit my data, 37 translation failures",
   "",
-  "27 papers waiting in my queue."
+  "30 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

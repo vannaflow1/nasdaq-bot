@@ -1,5 +1,30 @@
 [
  {
+  "id": "openalex:W1978079922",
+  "title": "Anomalous transport in the crowded world of biological cells",
+  "abstract": "A ubiquitous observation in cell biology is that the diffusive motion of macromolecules and organelles is anomalous, and a description simply based on the conventional diffusion equation with diffusion constants measured in dilute solution fails. This is commonly attributed to macromolecular crowding in the interior of cells and in cellular membranes, summarizing their densely packed and heterogeneous structures. The most familiar phenomenon is a sublinear, power-law increase of the mean-square displacement (MSD) as a function of the lag time, but there are other manifestations like strongly reduced and time-dependent diffusion coefficients, persistent correlations in time, non-Gaussian distributions of spatial displacements, heterogeneous diffusion and a fraction of immobile particles. After a general introduction to the statistical description of slow, anomalous transport, we summarize some widely used theoretical models: Gaussian models like fractional Brownian motion and Langevin equations for visco-elastic media, the continuous-time random walk model, and the Lorentz model describing obstructed transport in a heterogeneous environment. Particular emphasis is put on the spatio-temporal properties of the transport in terms of two-point correlation functions, dynamic scaling behaviour, and how the models are distinguished by their propagators even if the MSDs are identical. Then, we review the theory underlying commonly applied experimental techniques in the presence of anomalous transport like single-particle tracking, fluorescence correlation spectroscopy (FCS) and fluorescence recovery after photobleaching (FRAP). We report on the large body of recent experimental evidence for anomalous transport in crowded biological media: in cyto- and nucleoplasm as well as in cellular membranes, complemented by in vitro experiments where a variety of model systems mimic physiological crowding conditions. Finally, computer simulations are discussed which play an important role in testing the theoretical models and corroborating the experimental findings. The review is completed by a synthesis of the theoretical and experimental progress identifying open questions for future investigation.",
+  "track": "prop",
+  "url": "https://iopscience.iop.org/article/10.1088/0034-4885/76/4/046602/pdf",
+  "source": "OpenAlex (prop mission)",
+  "topic": "prop: first passage time random walk barrier",
+  "score": 4,
+  "queued": "2026-10-21",
+  "text_failed": true
+ },
+ {
+  "id": "arxiv:2610.24562v1",
+  "title": "No-Regret Revenue Maximization in Sequential Market Making Under Inventory Constraints",
+  "abstract": "Market makers keep trading efficient by setting bid and ask prices for buyers and sellers. In sequential market making, trades happen independently based on price thresholds, requiring the market maker to maintain balanced, low-risk inventory over T rounds. This paper studies how to maximize revenue with unknown buyer and seller valuations using regret minimization. When the market maker only sees trade success or failure, an algorithm achieves regret and inventory bounds proportional to T to the power of 2/3. When full order book data is available for failed trades, regret and inventory limits improve significantly to the square root of T. We also establish a fundamental trade-off via a lower bound, by proving that tighter round-by-round inventory limits strictly force higher minimum regret.",
+  "url": "https://arxiv.org/abs/2610.24562v1",
+  "pdf": "https://arxiv.org/pdf/2610.24562v1",
+  "date": "2026-10-17",
+  "score": 9,
+  "source": "Frontier (arXiv, last 45 days)",
+  "track": "frontier",
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/arxiv_2610.24562v1.txt"
+ },
+ {
   "id": "openalex:W7222953604",
   "title": "Valuation Engines Under Market Incompleteness: An Empirical Benchmark of High-Order Option Pricing in Digital Asset Markets",
   "abstract": "Financial derivatives occupy a core position in modern asset allocation, but the traditional option pricing framework, particularly the Black-Scholes (B-S) model, faces unprecedented challenges when applied to the highly volatile cryptocurrency market. The B-S assumption of constant volatility and continuous price paths fundamentally fails to capture the volatility smile, heavy-tailed distributions, and intermittent crashes inherent in digital assets. Furthermore, structural frictions such as liquidity fragmentation render the crypto ecosystem an incomplete market. This paper systematically reviews the mathematical transition from the B-S framework to high-order stochastic processes, specifically the Heston and Jump-Diffusion models. Most importantly, we contribute to the existing literature by providing a rigorous empirical evaluation using out-of-sample high-frequency options data from Deribit. Our empirical results quantitatively confirm the theoretical limitations of traditional pricing: while the Heston model reduces the Root Mean Square Error (RMSE) by approximately 45%, the Stochastic Volatility with Jumps (SVJ) model demonstrates absolute superiority in pricing tail risks. Specifically, the SVJ framework decreases the valuation error for deep out-of-the-money (OTM) options by over 72% compared to the baseline B-S model. Ultimately, this study emphasizes that structurally integrating both continuous volatility clustering and discrete market shocks is mathematically indispensable for robust risk management in decentralized financial markets.",
@@ -9,6 +34,18 @@
   "score": 18,
   "queued": "2026-10-21",
   "text_file": "knowledge/papers/openalex_W7222953604.txt"
+ },
+ {
+  "id": "openalex:W2112891119",
+  "title": "Where Is the Semantic System? A Critical Review and Meta-Analysis of 120 Functional Neuroimaging Studies",
+  "abstract": "Semantic memory refers to knowledge about people, objects, actions, relations, self, and culture acquired through experience. The neural systems that store and retrieve this information have been studied for many years, but a consensus regarding their identity has not been reached. Using strict inclusion criteria, we analyzed 120 functional neuroimaging studies focusing on semantic processing. Reliable areas of activation in these studies were identified using the activation likelihood estimate (ALE) technique. These activations formed a distinct, left-lateralized network comprised of 7 regions: posterior inferior parietal lobe, middle temporal gyrus, fusiform and parahippocampal gyri, dorsomedial prefrontal cortex, inferior frontal gyrus, ventromedial prefrontal cortex, and posterior cingulate gyrus. Secondary analyses showed specific subregions of this network associated with knowledge of actions, manipulable artifacts, abstract concepts, and concrete concepts. The cortical regions involved in semantic processing can be grouped into 3 broad categories: posterior multimodal and heteromodal association cortex, heteromodal prefrontal cortex, and medial limbic regions. The expansion of these regions in the human relative to the nonhuman primate brain may explain uniquely human capacities to use language productively, plan, solve problems, and create cultural and technological artifacts, all of which depend on the fluid and efficient retrieval and manipulation of semantic knowledge.",
+  "track": "self",
+  "url": "https://academic.oup.com/cercor/article-pdf/19/12/2767/17300551/bhp055.pdf",
+  "source": "OpenAlex (about itself)",
+  "topic": "self: complementary learning systems hippocampus neocortex",
+  "score": 5,
+  "queued": "2026-10-21",
+  "text_failed": true
  },
  {
   "id": "openalex:W639708223",

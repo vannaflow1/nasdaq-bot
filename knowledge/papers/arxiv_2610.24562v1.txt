@@ -1,0 +1,865 @@
+No-Regret Revenue Maximization in Sequential Market Making
+Under Inventory Constraints
+Davide Maran∗
+davide.maran@polimi.it
+Politecnico di Milano
+Marcello Restelli∗
+marcello.restelli@polimi.it
+Politecnico di Milano
+Francesco Emanuele Stradi∗
+francescoemanuele.stradi@polimi.it
+Politecnico di Milano
+Abstract
+Market makers are fundamental actors in today’s economy, as they provideliquidityby
+accelerating the matching between demand and supply. Accordingly,sequential market making
+models the problem of an agent who repeatedly interacts with a population of buyers and
+sellers. In each round, the market maker simultaneously posts a bid price and an ask price
+to a buyer-seller pair. A trade occurs whenever the posted prices meet the agents’ valuations:
+the buyer buys if their valuation is at least the ask price, and the seller sells if their valuation
+is at most the bid price. The two trades occur independently, so the market maker may sell
+without buying (short selling), buy without selling, or observe no trade at all. Crucially, the
+market maker must satisfyinventory constraints: over the entire horizon, the total number of
+bought and sold items should balance out, while during the process the inventory must remain
+sufficiently small, thus avoiding excessive accumulation of items and risky short-selling exposure.
+We study this problem through the lens ofregret minimization, when buyers’ and sellers’
+valuations are sampled from unknown distributions. In this setting, the market maker (that is, the
+learner) sequentially posts bids and asks so as to maximize its cumulative revenue over T∈N >0
+interactions while satisfying the inventory constraints. Specifically, the goal is to minimize the
+difference between the learner’s performance and that of the optimal inventory-aware bid-ask pair
+that knows the valuation distributions (i.e., thecumulative regret). We first study the hardest
+scenario, where the learner only observes whether each trade (buy and/or sell) occurs. In this
+case, we provide a computationally efficient algorithm attaining eO(T 2/3) regret, thus matching
+the well-known lower bound for the easier dynamic pricing setting of order Ω( T
+2/3) [ KL03],
+while satisfying the global inventory constraints and keeping the inventory at every round below
+eO(T 2/3) items. We then study the more interesting, and arguably more realistic, setting where
+the market maker has access to aLimit Order Book(LOB). Accordingly, the learner observes
+the realized valuation whenever the associated trade does not occur; otherwise, it only observes
+that the trade has occurred. In this case, we provide a computationally efficient algorithm that
+attains eO(√T ) regret, satisfies the global inventory constraints, and keeps the inventory below
+eO(√T ) items at every round. We complement these results by providing instance-dependent
+bounds that improve according to the c.d.f. value associated with the discretized optimum. We
+conclude by establishing alower boundshowing that any algorithm that guarantees per-round
+inventory of at most O(T β) must incur regret of at least Ω( T 1−β) for every β <1/2, even in the
+significantly easier setting where the agent knows the valuation distributions.
+∗The authors are listed in alphabetical order.
+1
+arXiv:2610.24562v1 [cs.LG] 17 Oct 2026
+Contents
+1 Introduction 3
+1.1 The Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+1.2 Related Work . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+1.3 Technical Challenges . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+1.4 Overview of the Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2 T echniques and Proofs at a Glance 11
+3 Preliminaries 14
+3.1 Feedback Type . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+3.2 The Inventory Constraints . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+3.3 The Offline Baseline and The Performance Metrics . . . . . . . . . . . . . . . . . . . 16
+4 Preliminary Results: Program(3)and The Surrogate Objective 17
+5 Two-Bit F eedback 20
+5.1 Our Algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+5.1.1 Subroutines Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+5.1.2 Computational Complexity . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+5.2 Theoretical Guarantees of Algorithm 1 . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+5.2.1 The Good Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+5.2.2 Final Regret and Per-Round Inventory Bounds . . . . . . . . . . . . . . . . . 29
+6 LOB Access 32
+6.1 Estimating the CDFs and The Good Event . . . . . . . . . . . . . . . . . . . . . . . 33
+6.1.1 Estimating the CDFs under Full Feedback . . . . . . . . . . . . . . . . . . . . 33
+6.1.2 The Good Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+6.1.3 Estimating the CDFs under Truncated Feedback . . . . . . . . . . . . . . . . 36
+6.2 Our Algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+6.2.1 Algorithm Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+6.2.2 Computational Complexity . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+6.3 Theoretical Guarantees of Algorithm 4 . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+6.3.1 Preliminaries Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+6.3.2 Bounding The (Virtual) Regret . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+6.3.3 Choosingψand The Final Bounds . . . . . . . . . . . . . . . . . . . . . . . . 46
+6.4 Lower bound . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+7 Attaining Global Inventory Balance 54
+7.1 Algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+7.2 Theoretical Guarantees . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+8 Final Discussion 56
+8.1 Open Problems . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+A Notation Summary 58
+B T echnical Lemmas 58
+2
+1 Introduction
+Market making is a foundational part of modern financial markets [ GM85, AS08]. At a basic
+level, market makers sustain trading by continuously offering to buy and sell, thereby providing
+theimmediacyandliquiditythat make markets usable in the first place. In the absence of such
+intermediation, even modest imbalances between buyers and sellers could translate into large delays,
+wide spreads, and severe price dislocations. This role is not minor and in today’s electronic markets,
+liquidity provision is carried out at a massive scale by highly sophisticated firms, whose business is
+precisely to keep markets tradable under a broad range of conditions. Market making is therefore
+not merely a financial activity, but a central problem inmarket design,algorithms, andonline
+decision-making[ MMR24, CBCC+25]: a market maker must repeatedly quote prices in an uncertain
+environment, balancing the short-term opportunity to earn spread revenue with the longer-term
+need to remain resilient as order flow evolves. What makes this problem especially subtle is that
+liquidity provision is inseparable from risk-taking [ GLFT13]. A market maker does not simply post
+prices; it absorbs temporary supply–demand imbalances by taking them on directly. For this reason,
+inventoryis not a secondary accounting quantity, but one of the key forces governing the entire
+process: without controlling inventory, apparent revenue gains may reflect unsustainable exposure
+rather than economic performance.
+More broadly, market making is closely connected to other well-studied problems inrevenue
+maximization, such asdynamic pricing[ KL03] andbilateral trade[ CLM26]. As in dynamic pricing,
+the seller repeatedly sets prices in the presence of uncertain and evolving demand, with the goal of
+learning how prices affect trade and revenue over time. At the same time, market making also has a
+two-sided nature that brings it closer to bilateral trade settings, since the intermediary interacts
+with both buyers and sellers and must jointly manage the terms at which it is willing to trade
+on each side of the market. There is, however, an important difference. In standard bilateral
+trade models, trade is often viewed as a more localized interaction between the two sides. In
+market making, by contrast, trades may occur in only one direction for extended periods, as long as
+the intermediary is able to absorb the resulting imbalance. This makesinventorycentral to the
+problem: the market maker can keep trading on one side only as long as its inventory remains within
+acceptable bounds. For this reason, market making is not simply a two-sided pricing problem, but a
+sequential revenue maximization problem in which pricing, trade, and inventory are tightly linked
+across time. Thus, market making shares important features with classical revenue maximization
+problems, but differs in that current pricing decisions directly shape future feasible actions through
+their effect on inventory.
+These connections also point naturally to the framework ofregret minimizationandonline learn-
+ing[ CBL06, Ora19, Sli19]. In market making, as in other sequential revenue maximization problems,
+the distributions governing buyers and sellers are typically unknown to the maker. The market
+maker must therefore learn how prices affect trade while continuing to make sequential decisions,
+without knowing in advance which pricing policy maximizes revenue. Regret minimization cap-
+tures this objective by comparing the cumulative revenue of the algorithm to that of the best
+benchmark policy computed knowing the valuation distributions of both buyers and sellers (we
+refer to this difference as thecumulative regret). This viewpoint is standard in related problems
+such asdynamic pricingandbilateral trade, where the central challenge is to balance exploration
+and revenue over time (or in welfare-maximization settings, to balance exploration and social
+welfare) [BZ09, BDKS15, BCBCC24, GDFS25]. It is thus a natural framework for studying market
+making in uncertain environments.
+3
+1.1 The Model
+We model market making as a discrete-time online learning problem between an agent (the “market
+maker”, or simply the “maker”) and a sequence of “takers”. Specifically, at each round t∈ [T ],1
+anewbuyer–seller pair arrives, each interested in trading one unit of the underlying asset. Their
+private valuations are denoted by V buyt , Vsellt ∈ [0, 1], where V sellt is the minimum amount the seller
+is willing to accept to sell one unit, and V buyt is the maximum amount the buyer is willing to pay to
+buy one unit. We assume that the valuations are sampled i.i.d. across rounds from an unknown
+distribution; however, within any given round, the buyer’s and seller’s valuations may bearbitrarily
+correlated. Consequently, the maker selects a bid–ask pair ( Bt, At) such that Bt < At without
+any knowledge of V buyt , Vsellt . On the buy side, if V sellt ≤B t, the seller accepts the bid and the
+maker buys at price Bt, obtaining a reward −Bt; otherwise, no trade occurs, and the reward is
+0. Symmetrically, on the sell side, if V buyt ≥A t, the buyer accepts the ask and the maker sells at
+price At, obtaining reward At; otherwise, no trade occurs, and the reward is 0. Hence, the maker’s
+per-round reward is:
+At ·I(V buyt ≥A t)−B t ·I(V sellt ≤B t).
+A specific feature of market making is that the maker can sell an asset before buying it, thereby
+taking ashortposition. Nevertheless, market makers typically aim to keep theirinventorysmall, so
+as to avoid a large imbalance between the number of units bought and sold over time. Indeed, a
+large positive inventory exposes the maker to downward price movements, while a large negative
+inventory exposes it to upward ones. In both cases, profits become increasingly dependent on
+the market value of the asset, rather than solely on the bid–ask spread. To capture this aspect,
+we impose two inventory constraints. First, we requireglobal inventory balanceover the entire
+horizon, namely, PTt=1 I (V buyt ≥A t) = PTt=1 I (V sellt ≤B t). This ensures that the maker ends with
+zero inventory, while still allowing temporary short or long positions during learning. Second, we
+require theinventorylevel to remainuniformly boundedat every round by a parameter α∈N >0,
+that is, |It| ≤α, for all t∈ [T ], where It := Ptτ=1 I (V sellτ ≤B τ ) − Ptτ=1 I (V buyτ ≥A τ ). This
+second constraint limits the maker’s exposure to the market throughout the learning process. To
+summarize, the goal of the agent is not only to maximize the rewards attained during learning, but
+also to simultaneously satisfy the aforementioned constraints. This makes the problem particularly
+challenging, since the actions taken in the early rounds directly affect both the feasibility and the
+profitability of the decisions taken later on.
+We consider two feedback models, depending on the information revealed to the market maker at
+the end of each round.
+1. Undertwo-bit feedback, the maker only observes whether a trade occurred on the buy side and
+on the sell side, namelyI(V buyt ≥A t) andI(V sellt ≤B t).
+2. Differently, when access to thelimit order book(LOB) is available, the maker receives additional
+information whenever no trade occurs. More precisely, if Bt < Vsellt , then the maker observes
+V sellt , and if At > Vbuyt , then it observes V buyt . Thus, information is revealed exactly on those
+sides where no reward (loss) is obtained. This captures a natural feature of market making:
+when a trade occurs, takers have no incentive to reveal their true valuation, whereas when
+no trade occurs, they may expose it by posting an order in the book. In this sense, LOB
+feedback can be viewed as a realistic and intermediate regime between the two-bit model and
+full-feedback, where the entire valuations are observed at the end of each round.
+1In this work, for anyn∈N >0, we write [n] to denote the set{1, . . . , n}.
+4
+As is standard in online learning, we compare the performance of the learner against an offline
+benchmark. In our setting, this benchmark is the best fixed bid–ask pair ( b, a) that knows the
+underlying valuation distribution in advance and satisfies the global inventory-balance constraint
+in expectation. We denote by OPT the expected revenue achieved by such a benchmark over the
+whole horizon. Given this benchmark, we define the regret of a learning algorithm as:
+RT := OPT−
+TX
+t=1
+h
+At ·I(V buyt ≥A t)−B t ·I(V sellt ≤B t)i .
+Informally, the goal of the paper is the following.
+Research Question:Is it possible to design efficient learning algorithms for the sequential
+market-making problem that achieve optimal regret bounds while satisfying the inventory
+constraints throughout the learning process?
+We answer this question affirmatively, showing that the problem faced by market makers is learnable.
+1.2 Related Work
+In this section, we discuss the work most closely related to ours.
+Market makingMarket making has also been studied from a mechanism-design perspective (e.g.,
+see [MMR24]), where the mechanism must provide an optimal allocation and an incentive-compatible
+payment rule, assuming access to both buyers’ and sellers’ valuation distributions. Our work is
+mainly related to sequential market making [ AK13, XDX25], which studies the performance of a
+regret-minimization algorithm against afiniteclass of constant-spread dynamic strategies. Our
+results are not directly comparable to theirs, since we operate in a continuous bid–ask decision space
+and do not assume full feedback. The work most closely related to ours is [ CBCC+25]. In this work,
+the authors study an online market-making setting with asingleper-round taker in which the reward
+attained by the market maker (the agent) is given by the difference between the bid (or ask) and the
+unknown market value of the item. They provide optimal regret bounds under various assumptions
+on the nature of the environment, assuming that the market maker observes the market value
+and a one-bit feedback signal on the trade at the end of each round. While [ CBCC+25] provides
+a foundational and technically very strong regret-minimization treatment of market making, our
+setting captures two features that are central in practice and that substantially change the nature
+of the problem. First, unlike [ CBCC+25], which assumes the existence of a market value relating
+the rewards associated with sold items to those associated with purchased items, we explicitly
+model inventory constraints. As a result, in our setting, actions taken in early rounds affect the
+feasibility and profitability of the decisions in later rounds, posing additional and unique technical
+challenges. Second, we study different feedback models. We consider two-bit feedback—which is
+the natural minimal model in our setting, since buyers and sellers are treated separately, as in
+real-world market making—and we also study a more realistic partial-information model motivated
+by thelimit order book. In this sense, we believe that our framework is arguably closer to the
+informational and operational constraints faced by actual market makers. Thelimit order book
+feedback was originally introduced in [ MR26] and then further studied by [ VSM26], who consider
+the market-value-based setting of [ CBCC+25] while allowing full feedback when no trade occurs.
+Despite the shared motivation for the feedback model, the underlying setting differs substantially
+from ours since our explicit inventory constraints make the feasibility and profitability of future
+5
+decisions depend on past trades.
+Online learning in economic settings and bilateral tradeRegret minimization and online
+learning methods have become a standard toolkit for studying digital markets and economic de-
+sign under uncertainty, replacing strong prior assumptions with robust online guarantees. These
+techniques have been applied to one-sided and dynamic pricing [ KL03, BDKS15, FKL+16], re-
+peated auctions [ CGM15, CCC+24, MR15, WPR16, LST16, DS22, NCKP22, BG19], contract
+design [ HSV16, DGSW23, ZBY+23], brokerage [ BCC24b], and Bayesian persuasion [ CCMG20,
+CCMG23, ZIX21]. A particularly relevant related line of work is repeated bilateral trade, where a
+learner acts as a broker and posts prices to agents with unknown private valuations, with the objective
+of maximizing the social welfare. Foundational results established optimal regret guarantees under
+i.i.d. assumptions, smoothness conditions, and budget-balance constraints [ CCC+21, CBCC+24].
+Subsequent work extended these guarantees to adversarial environments, that is, beyond i.i.d.
+assumptions, weaker budget-balance notions, and more general dependence structures between
+buyer and seller valuations [ AFF22, CCC+23, BCCF24]. Recently, [ GDFS25] studied the problem
+of revenue maximization in bilateral trade. Our work naturally fits within the online learning in
+the economic category; nonetheless, we remark the following key distinctive features between our
+setting and the aforementioned ones. On the one hand, our setting involves a two-sided interaction
+with both a buyer and a seller, which distinguishes it from standard dynamic pricing or auction
+settings. On the other hand, in market making, trades may occur in only one direction for extended
+periods, until some inventory constraints are satisfied, while in bilateral trade, a trade may happen
+in both directions only.
+Online learning with general and budget constraintsA strongly related research direction
+is online learning under unknown constraints, where the objective is to design online learning
+algorithms that attain sublinear regret together with sublinear cumulative violation of some un-
+known constraints [ MTY09, MYJ13, JHA16, YNW17]. A particularly influential framework in
+this area is that of bandits with knapsacks (BwK), introduced by [ BKS18]. In BwK, the learner
+observes bandit feedback and faces stochastic rewards and resource consumptions, with the goal of
+maximizing cumulative utility while keeping the total consumption of each of the m resources within
+a budget B. For the stochastic setting, improved and optimal algorithms were later developed
+by [AD19]. The adversarial BwK version, that is, allowing the rewards and consumption to change
+arbitrarily during the learning dynamic, was first investigated by [ ISSS22], who adopt as benchmark
+the best fixed distribution over arms in hindsight. Under this benchmark, standard no-regret
+guarantees are in general unattainable, and one must instead resort to weaker notions such as
+α-regret. If ρ denotes the learner’s per-round budget, the best currently known competitive-ratio
+guarantees are 1/ρ when B = Ω(T ) [CCK22], and O(logmlogT ) in the general case [ KS20]. More
+recently, [KK22, BCC+24a] generalized the BwK model to allow non-monotone resource dynamics,
+so that resources may also be replenished over time. Related in spirit, but closer to reinforcement
+learning [SB18] formulations, is the literature on online learning in constrained Markov decision
+processes (CMDPs). In CMDPs [ Alt99], the learner must optimize cumulative reward while enforc-
+ing trajectory-level constraints in an environment with unknown state dynamics. A foundational
+contribution in this direction is due to [ EMP20], who studied the exploration–exploitation trade-off
+in unknown CMDPs and provided sublinear guarantees for both regret and constraint violation.
+More recent works extended the model to settings with adversarial losses [ QWY+20] and adversarial
+constraints [ SGG+24], while others investigated stronger safety notions that do not allow past
+constraint satisfaction to compensate for future violations [MAC+24, SCMG25b]. Our setting shares
+6
+similarities with the online learning with general constraints (or even online CMDPs) framework and
+the replenishable budget ones. Nonetheless, the aforementioned techniques cannot be transferred
+directly to our problem, due to the presence of a continuous and structurally richer action space, as
+well as a much weaker feedback model than the one usually assumed in bandit settings. Additionally,
+we remark that our setting does not present any Slater-like condition for the offline optimum.
+1.3 Technical Challenges
+In this section, we discuss the main technical challenges of our setting. In particular, online market
+making under inventory constraints presents several unique difficulties that make the learning
+problem substantially challenging.
+On the action space and the reward functionThe action space of bid-ask pairs available to
+the agent during learning is continuous and two-dimensional, namely {(b, a) ∈ [0, 1]2 : b < a}.This
+already rules out standard multi-armed bandit techniques [ LS20], which are inherently tailored to
+discrete action spaces. At the same time, existing methods for continuum-armed bandits, such as
+the Zooming algorithm [ KSU08, KSU19], do not apply directly to our setting for several reasons.
+First, in two-dimensional problems, these methods typically yield regret bounds of order T 3/4,
+which we show to be suboptimal in our setting. Second, our reward function is neither Lipschitz
+nor smooth, since we impose no regularity assumptions on the c.d.f.’s of buyers and sellers. As
+a result, standard discretization arguments or smoothing-based reductions cannot be applied in
+any straightforward way to obtain sublinear regret. We acknowledge that related, but substantially
+different, challenges also arise in no-regret algorithms for bilateral trade [ CBCC+21]. In such
+settings, however, these challenges are typically overcome either by assuming regularity of the buyers’
+and sellers’ c.d.f.’s [CBCC+21, CCC+23], or by leveraging the special structure of the bilateral trade
+objective [BCCF24]. Intuitively, that structure makes discretization considerably less challenging
+since trades can occur only when both sides simultaneously accept the proposed prices.
+On the inventory constraintsThe inventory constraints play a crucial role in our setting.
+Indeed, they clearly relate the bid and ask sides of the problem, preventing us from optimizing
+them independently. More precisely, the bid-ask pair selected in earlier rounds directly affects the
+inventory level carried into later ones, and therefore affects both the feasibility and the profitability
+of future bid-ask pairs. More generally, while the literature on online learning under unknown
+budget and general long-term constraints is huge [ BKS18, CCM+22], our inventory constraints
+have a structure that does not allow for any direct application of existing techniques. First of all,
+the overall structure of the problem (e.g.,action and rewards space) is already substantially more
+involved than in standard constrained online learning models, thus preventing simple adaptation of
+existing techniques from the literature. Second, our constraints do not fit the canonical templates
+studied in the literature. On the one hand, theoverallinventory requirement is closely related to
+replenishable-budget models [ KK22, BCC+24a], but with some additional challenges: indeed, i)
+boththe initial budget and thefinalone must be 0 and ii) more importantly,no Slater’s condition is
+available—that is, there is not a bid-ask pair whichstrictlysatisfies the offline expected constraint,
+since it is an equality constraint, leaving no slack around the optimum. On the other hand, the
+per-roundinventory constraints can be seen asany-timegeneral constraint [ CCM+22], where α is
+the violation rate and Slater’s condition isnot available. Overall, these features make our setting
+significantly different from the ones considered in the existing literature, and show that handling
+the inventory constraints in our problem requires substantially different ideas.
+7
+On the benchmarkIt is standard in the literature on online learning under unknown constraints
+to compare the performance of the algorithm against the expected reward attained by the optimal
+action, or strategy of actions, satisfying the constraints in expectation—which we denote by OPT.
+This is the benchmark typically considered in the existing literature, and the one for which most of
+the available techniques are designed [ EMP20, LZK+21, CCK22, BCC+24a, CCM+22, SCMG25a].
+In our setting, in addition to the regret against this standard benchmark, we also study the regret
+RJT with respect to a stronger one, namely the benchmark maximizing the objective:
+J ∗ := sup
+b,a∈[0,1]2
+J(b, a):= sup
+b,a∈[0,1]2
+(a−b) min
+n
+E
+h
+I
+
+V sellt ≤b i ,E hI V buyt ≥a io .
+Proving an upper bound for the following notion ofsurrogate regret, namely, RJT := T·J ∗ − PTt=1[At ·
+I (V buyt ≥A t) −B t ·I (V sellt ≤B t)], leads to a substantially stronger guarantee for two reasons. First,
+it is easy to show that T·J ∗ ≥OPT , and thus our benchmark is indeed stronger than the standard
+one. Second, J ∗ may be greater than 0 even when the program defining OPT does not admit
+solutions with strictly positive utility, that is, when the optimal safe solution 2 is simply to never
+buy or sell. Accordingly, the guarantees of our algorithm remain non-trivial even when no safe
+solution with strictly positive utility exists. To the best of our knowledge, this is a novel feature in
+the constrained online learning literature and, more importantly, it requires substantially different
+ideas, since one cannot simply aim to approach OPT directly, thus guaranteeing both safety and
+optimality. Instead, it is necessary to satisfy the constraints while learning through a surrogate
+objective based onJ, which may induce optimal bid-ask pairs that are not safe.
+On the feedbackThe feedback structure is another major source of difficulty in our problem.
+Under two-bit feedback, after posting a bid-ask pair, the learner only observes whether the seller
+accepts the bid and whether the buyer accepts the ask, while the agents’ valuations remain unobserved.
+Equivalently, on each side of the market, the learner only learns whether the corresponding valuation
+lies above or below a posted threshold, rather than observing its actual value. This provides
+extremely coarse information relative to the complexity of the decision space. The LOB model is
+also non-trivial: whenever trade occurs on one side of the market, the learner only receives a one-bit
+signal for that specific direction of trade. Thus, although this hybrid observation model is more
+informative than purely two-bit feedback, it still reveals only partial information. Notably, despite
+this limitation, we show that in the LOB setting, one can still attain the same optimal bounds as in
+the full-feedback case. We also note that even the full-feedback setting, which is not the focus of
+this work, is far from trivial and has been studied in several related settings [ CBCC+21, CBCC+24].
+We believe that this makes our results for the LOB setting particularly interesting, as it shows that
+the same optimal bounds can be achieved under weaker feedback.
+1.4 Overview of the Results
+In this section, we highlight the main contributions of our work. Specifically, we discuss the key
+results presented in each section of the paper.
+Main Results of Section 4
+In Section 4, we provide some preliminary results on the relationship between OPT and J ∗.
+Specifically, the optimization problem underlying the definition of OPT cannot be directly exploited
+2We refer as a safe solution to a bid-ask pair which satisfies the expected inventory constraint.
+8
+to derive meaningful discretizations, since we do not impose any assumption on the shape of the
+buyers’ and sellers’ valuation distributions. We therefore shift our focus to the surrogate objective
+function J(b, a), establishing its two fundamental properties:i) it is well defined for every bid–ask
+pair and satisfies T J∗ ≥OPT ;ii) it allows for meaningful discretizations of the decision space, as
+shown by the following result.
+Proposition(Proposition 4.3).LetN∈N >0 andG N be the uniform1/N-grid on[0,1], namely:
+GN :={n/N:n= 0, . . . N}.
+Then, it holds:
+max
+b,a∈G2N
+J(b, a)≥sup
+b,a∈[0,1]2
+J(b, a)−2/N,
+whereG 2N :=G N × GN .
+The result provides a precise approximation guarantee for the discretization of the bid–ask space.
+Indeed, optimizing J over the uniform grid G2N yields a value that differs from the continuous
+optimum by at most 2 /N, showing that the discretized problem is not too far from the original one.
+From this section onward, we will focus on bounding RJT , since this directly yields a bound on RT .
+Main Results of Section 5
+In Section 5, we focus on the 2-bit feedback scenario. In such a setting, we establish worst-case
+bounds on both the regret and the per-round inventory.
+Theorem(Informal version of Theorem 5.13).Let δ∈ (0, 1/T). There exists a polynomial time
+algorithm such that, when two-bit feedback is available, it attains, with probability at least1 −δ
+simultaneously for all thettime-steps:
+|It|≲T 2/3plog(T /δ), R JT ≲T 2/3plog(T /δ).
+We remark that the upper bound on the regret provided by the previous result cannot be improved
+even in the easier unconstrained setting. This follows immediately from the Ω( T 2/3) lower bound
+proved in [KL03] for arbitrary stochastic demand curves. Indeed, our setting can be viewed as a
+generalization of dynamic pricing when the sellers’ valuation distribution puts all its mass on 0 and
+is known to the agent. In such a case, the optimum of the surrogate function J collapses to the one
+of dynamic pricing, while our agent is still forced to satisfy additional constraints on the inventory,
+which makes our learning problem at least as hard as the dynamic pricing one.
+Main Results of Section 6
+In Section 6, we switch to the arguably more interesting and realistic setting in which the agent has
+access to thelimit order book. Under this feedback model, we establish three main results.
+We begin by establishing worst-case bounds on both the regret and the per-round inventory. These
+guarantees are informally stated in the following theorem.
+Theorem(Informal version of Theorem 6.18).Let δ∈ (0, 1). There exists a polynomial time
+algorithm such that, when LOB feedback is available, it attains, with probability at least1 −δ
+9
+0 b◦a◦ 1
+Vbuy Vsell
+valuation
+0 b◦a◦ 10
+1
+S F
+η
+price
+Figure 1: A favorable and arguably realistic regime. Left: the valuation distributions have little
+overlap, yielding a narrow optimal spread. Right: the corresponding quantities F (b◦)
+andS(a ◦) are both small, namely of orderη≪1.
+simultaneously for all thettime-steps:
+|It|≲
+p
+Tlog(T /δ), R JT ≲ pTlog(T /δ).
+We complement the worst-case analysis by establishing an instance-dependent guarantee, showing
+that the performance of the algorithm can be significantly better on favorable instances. In particular,
+both the regret and the per-round inventory imbalance scale as the maximum between the c.d.f. F
+and the survival function S at the discretized optimal bid–ask pair ( b◦, a◦), rather than only on T .
+Theorem(Informal version of Theorem 6.19).Let δ∈ (0, 1). There exists a polynomial time
+algorithm such that, when LOB feedback is available, it attains, with probability at least1 −δ
+simultaneously for all thettime-steps:
+|It|≲
+p
+max{F(b ◦), S(a◦)}Tlog(T /δ) + log(T) log(T /δ),
+and
+RJT ≲ pmax{F(b ◦), S(a◦)}Tlog(T /δ) + log(T) log(T /δ).
+In Figure 1, we provide a graphical representation of a favorable regime in which max{F (b◦), S(a◦)}
+is small. This happens when buyer and seller valuations have little overlap: few sellers have
+valuations below b◦, and few buyers have valuations above a◦. Equivalently, few sellers are willing
+to sell at a low price, and few buyers are willing to buy at a high price. This is a natural regime in
+financial applications, where the two sides of the market are often well separated.
+The careful reader will notice that the instance-dependent bound immediately implies the worst-case
+bound, since max{F (b◦), S(a◦)} ≤1. Nevertheless, we state both results separately for the following
+reason. The instance-dependent guarantee requires a finer grid construction, which leads to a
+worse—though still polynomial—computational complexity than the one needed to obtain the
+worst-case bound, as we will discuss in the related section.
+We conclude the section by establishing a lower bound showing that the eO(√T )3 regret and per-
+round imbalance guarantees are tight up to logarithmic factors. More precisely, we prove that the
+trade-off achieved by our upper bounds cannot be substantially improved: any algorithm enforcing
+a per-round inventory constraint of order T β for β <1/2 must necessarily incur a regret of order at
+3In this work, we use the eOto hide logarithmic terms.
+10
+leastT 1−β.
+Theorem(Informal version of Theorem 6.20).Let0 ≤β < 1/2. Then, every algorithm that satisfies
+the per-round inventory constraint forα≤T β suffers expected regret of orderE[R T ] = Ω(T 1−β).
+We remark that this lower bound holds even in a significantly more informative setting than the one
+considered in our LOB model. In particular, it applies when the agent hascomplete prior knowledge
+of the valuation distributions of both buyers and sellers. As a consequence, the impossibility result
+is not an artifact of the limited feedback available in the LOB setting; rather, it reflects an intrinsic
+difficulty of the problem under per-round inventory constraints.
+Main Results of Section 7
+In Section 7, we provide a metaprocedure which, given as input any algorithm with similar guarantees
+to the ones of Sections 5–6, obtains a global inventory constraint satisfaction, that is, at the end of
+the process, the number of sold items is equal to the number of purchased ones.
+Theorem(Informal version of Theorem 7.1).Let δ∈ (0, 1)and let A be an algorithm for the
+online market making problem whose surrogate regret and per-round imbalance are upper bounded by
+RJA and IA , respectively, with probability at least1 −δ . Then, A can be modified so as to achieve,
+with probability at least1−δ,
+RJT ≤R JA + 2IA ,|I T |= 0,|I t| ≤IA ∀t∈[T].
+Instantiating the above result with the guarantees attained by our algorithms immediately yields
+the main results of this work.
+2 Techniques and Proofs at a Glance
+In this section, we describe the main ideas employed by our algorithms to address the several
+technical challenges posed by our setting. The common difficulty is to learn profitable bid–ask pairs
+while keeping purchases and sales balanced. Indeed, exploration itself generates trades, and a pair
+with a large spread may lead to many more purchases than sales, or vice versa.
+Our approach relies on thesurrogateobjective introduced above, which separates the value of a
+pair from the imbalance it may generate. Writing F (b) := P(V sellt ≤b ) and S(a) := P(V buyt ≥a ) for
+the two trade probabilities, recall that:
+J(b, a) = (a−b) min{F(b), S(a)}, T J ∗ ≥OPT.
+The minimum captures the trading rate that both sides can sustain after reducing activity on the
+more frequent side. Thus, our algorithms aim to learn a nearly optimal pair for J and to control
+inventory without losing the revenue associated with this common trading rate.
+A first obstacle is the continuous action space. Since we impose no regularity assumptions on the
+valuation distributions, rounding prices can substantially change the trade probabilities. Nevertheless,
+the structure of J allows us to control the loss through a one-sided discretization. Specifically,
+round a bid b upward to b′ and an ask a downward to a′ on a uniform grid of mesh 1 /N. Whenever
+a−b >2/N, the rounded pair is feasible and monotonicity gives:
+F(b ′)≥F(b), S(a ′)≥S(a), J(b ′, a′)≥J(b, a)− 2N .
+11
+Both trade probabilities can only improve, while the spread loses at most 2 /N. Therefore, letting
+(b◦, a◦) maximize J over feasible grid pairs, and denoting by R◦T the virtual regret obtained by
+replacingJ ∗ withJ(b ◦, a◦) in the surrogate regret, we have:
+RJT =R ◦T +T  J ∗ −J(b ◦, a◦) ≤R ◦T + 2TN .
+This reduces the continuous problem to learning over a finite grid. The remaining challenge is to
+use the available feedback to identify good pairs while controlling the inventory generated.
+Two-Bit Feedback
+Under two-bit feedback, each posted pair only reveals whether a purchase and a sale occurred.
+Estimating F and S therefore requires repeatedly posting prices, which may itself create a large
+imbalance. Our algorithm (Algorithm 1) addresses this through aphased eliminationprocedure
+over bid and ask grids of size Θ( T 1/3). At phase ℓ, it maintains upper and lower confidence bounds
+forFandS. These induce corresponding bounds forJ; for instance, the optimistic value is:
+J upℓ (b, a) = (a−b) min{Fupℓ (b), Supℓ (a)}.
+The pessimistic value J lowℓ is defined using the lower bounds. A feasible pair is calledcompatible
+if its optimistic value reaches the largest pessimistic value among the active pairs. Prices with no
+compatible partner are eliminated.
+The key difficulty is to refine these bounds without continuing to trade on a side that is already too
+active. To estimate a bid b, the algorithm pairs it with the compatible ask a′ having the largest
+upper bound on S. It then runs the pair in a block, using a common target for the number of
+purchases and sales, where the target is the optimistic estimate of the number of trades sustainable
+on both sides, plus a confidence term. Once one side reaches this target, it is deactivated by bidding
+0 or asking 1.
+At first sight, halting seems to prevent accurate estimation. However, in a completed block, reaching
+the common target guarantees that the halted side is not the one determining the minimum in J.
+In particular, if the bid is halted, its true trade probability exceeds even the upper bound at a′.
+Since a′ has the largest such bound among compatible asks, on the concentration event we obtain,
+for every askastill compatible withb:
+F(b)> S(a), J(b, a) = (a−b)S(a).
+Further accuracy on F (b) is therefore unnecessary for evaluating any relevant pair. If the bid is not
+halted, it is sampled throughout the block and its estimate is refined in the usual way. The ask side
+is symmetric. This is what allows the confidence bounds on J to tighten even when one of the two
+trade probabilities is not estimated accurately.
+The same halting rule controls inventory and revenue. In a completed block of n rounds, both trade
+counts are close to nmin{F (b), S(a′)}, up to eO(√n). Their difference controls the inventory change,
+while the revenue is close to nJ(b, a′). Since compatible pairs are nearly optimal at the current
+confidence, each completed block contributes at most eO(√n) to both virtual regret and imbalance.
+It remains to control inventorywithina block, since purchases and sales may occur at different times
+even if their final counts are close. For this reason, block lengths double across phases only up to
+order T 2/3; estimation and elimination then continue with blocks of that length. The growing blocks
+12
+cost at most eO(T 1/3) per grid price, while the later blocks cost eO(T −1/3) per round. Summing
+these two contributions gives order eO(T 2/3). The unfinished-block excursion and the discretization
+error have the same order. Hence, with high probability, the algorithm guarantees:
+RJT ≤ eO(T 2/3),maxt∈[T] |It| ≤eO(T 2/3).
+LOB Access
+With access to thelimit order book, the learner receives richer feedback, but only in truncated form.
+Specifically, a failed trade reveals the valuation, whereas a successful trade only reveals that the
+posted threshold was crossed. The first challenge is therefore to identify which prices can reuse these
+observations. If b≥B τ , a purchase at Bτ already certifies that V sellτ ≤b ; if no purchase occurs, the
+revealed valuation determines whether this inequality holds. Formally, we have:
+I(V sellτ ≤b) =I(max{V sellτ , Bτ } ≤b) for everyb≥B τ .
+The right-hand side is observable, and the symmetric identity holds for asks a≤A τ . Thus, if all past
+bids are below an active bid and all past asks are above an active ask, averaging these indicators
+recovers exactly the empirical estimates bFt and bSt available under full feedback. Our algorithm
+(Algorithm 4) preserves this property by maintaining nested active sets, with an increasing lower
+boundary for bids and a decreasing upper boundary for asks. Elimination is therefore also what
+makes it possible to reuse all past observations.
+The difficulty is to move these boundaries without discarding the optimum. TheDouble Double
+Pointersubroutine (Algorithm 5) does this using two scans of the active grid. Starting from
+the smallest bid and largest ask, each scan advances the pointer on the side with the smaller
+trade-probability bound. Indeed, moving the other pointer would only reduce the spread without
+increasing the minimum. The first scan computes the largest pessimistic value of J; the second
+returns the first pair ( Bt,0, At,0) whose optimistic value reaches that benchmark. Whenever the
+confidence bounds hold, the second scan must stop before passing an optimal price since at the
+first such crossing, the current pair would already have an optimistic value at least as large as the
+optimal value. Consequently, the optimum remains active, and the returned candidate is nearly
+optimal up to the confidence error.
+The returned bid-ask pair may still generate unequal purchase and sale rates. To see how to correct
+this, suppose these rates were known and F (b) > S(a). Keeping the bid with probability S(a)/F (b)
+and otherwise bidding 0 would make both trade rates equal to S(a), while preserving expected
+revenue (a−b )S(a) = J(b, a). Our algorithm implements this idea with confidence bounds. When
+F lowt−1(Bt,0)> Supt−1(At,0), it keeps the candidate bid with probability:
+Supt−1(At,0)
+F lowt−1(Bt,0) ,
+and otherwise resets it to 0. The ask correction is again symmetric. If the intervals overlap, no
+correction is needed, since their widths already bound the mismatch. Thus, conditional on the past,
+both the inventory drift and the expected revenue loss relative to J(Bt,0, At,0) are controlled by the
+confidence radii at the selected prices. Moreover, these corrections only move the posted prices
+outward, so they preserve the observation identities on the active sets.
+Summing these confidence errors controls the cumulative inventory drift and conditional reward
+13
+gaps; a martingale concentration then controls the fluctuations of realized trades around their
+conditional expectations. With DKW confidence radii, the cumulative error and these fluctuations
+are both of order eO(√T ). A grid of mesh 1 /⌈√T⌉ gives the same discretization cost, yielding, with
+high probability:
+RJT ≤ eO(√T),maxt∈[T] |It| ≤eO(√T).
+Finally, the optimum’s survival also explains the instance-dependent improvement. Since Bt,0 ≤b ◦
+and At,0 ≥a ◦, the selected trade probabilities are at most F (b◦) and S(a◦). These quantities control
+both the empirical-Bernstein confidence radii and the conditional variances of trades and revenues.
+When trades at the optimum are rare, both sources of error are therefore smaller. Using these radii
+and a finer grid of mesh 1/Tgives, with high probability:
+RJT ≤ eO pTmax{F(b ◦), S(a◦)} ,maxt∈[T] |It| ≤eO pTmax{F(b ◦), S(a◦)} .
+3 Preliminaries
+In the following, we better describe the maker-takers interaction. At each round t∈ [T ], anewpair
+of takers enters the market: a buyer and a seller, each interested in trading a single unit of the
+underlying asset. These takers are drawn from an underlying population, and are characterized
+by private valuations V buyt , Vsellt . Here, V sellt denotes theminimumamount the seller is willing to
+accept to sell one unit, while V buyt denotes themaximumamount the buyer is willing to pay to buy
+one unit. More formally, the valuation pair observed at each round is drawn i.i.d. from an unknown
+distribution. Specifically, there exists a probability distributionVsupported on [0,1] 2 such that:
+
+V sellt , Vbuyt
+ ⊥ ⊥∼ Vsupp(V)⊂[0,1] 2.
+Therefore, each round involves a freshly sampled buyer–seller pair from the same population.
+Denoting by V buy and V sell the two marginals of V, we have V buyt ∼ Vbuy and V sellt ∼ Vsell; however,
+within any given round, the two valuations may bearbitrarily correlated. At each round, the market
+maker selects a pair of bid and ask prices ( Bt, At) such that 0 ≤B t < At ≤ 1, without observing
+either V sellt or V buyt in advance. The following interactions then take place simultaneously. On the
+buy side, two scenarios may occur:
+• Maker buys.If V sellt ≤B t, the seller accepts the bid and sells the asset to the maker at price
+Bt, resulting in a reward of−B t for the agent.
+•No trade.IfV sellt > Bt, no purchase occurs, and the agent receives reward 0.
+Symmetrically, on the sell side:
+• Maker sells.If V buyt ≥A t, the buyer accepts the ask and buys the asset from the maker at
+priceA t, resulting in a reward ofA t for the agent.
+•No trade.IfV buyt < At, no sale occurs, and the agent receives reward 0.
+Throughout the paper, we assume that V buyt < 1 and V sellt > 0, for all t∈ [T ]. Equivalently, V is
+such that P(V buyt = 1) = P(V sellt = 0) = 0. This assumption is natural, since the boundary prices
+correspond to the case in which no buyer is willing to buy and no seller is willing to sell. Therefore,
+bidding 0 and asking 1 correspond, from the agent’s perspective, to doing nothing. In this sense,
+the assumption is always satisfied in practice.
+14
+3.1 Feedback Type
+Throughout the paper, we will focus on different feedback types denoting the information the market
+maker receives at the end of each round. Specifically, we can have one of the following feedback:
+• Two-bit feedback (2-Bit).When only two-bit feedback is available, the agent observes
+solely whether a trade has occurred. Specifically, at the end of round t∈ [T ], the agent
+observes I (V buyt ≥A t) and I (V sellt ≤B t). This two-bit feedback model (and, similarly, its
+one-bit counterpart) is predominant in revenue maximization settings [ KL03, CLM26] and
+is generally regarded as the hardest form of feedback, in contrast to the easier full-feedback
+setting, where the valuations are fully observed at the end of each round.
+• Limit order book access (LOB).When access to the limit order book is available, at
+the end of each round the agent observes additional information whenever no trade occurs.
+Specifically, if Bt < Vsellt , the agent observes V sellt . Similarly, if At > Vbuyt , it observes V buyt .
+In other words,information arrives exactly when reward does not. This assumption captures
+a key feature of the market-making problem. Indeed, whenever a transaction occurs (either
+on the buy side or on the sell side), the agent never observes the actual valuation, since
+takers have no incentive to reveal it. By contrast, when no transaction takes place, takers are
+incentivized to post their valuation in the order book, hoping that their order will be executed
+in the near future. Notice that LOB feedback can be viewed as a meaningful hybrid feedback
+model, interpolating between the two-bit and the full-feedback settings.
+In Protocol 1, we provide the online interaction between the agent and sequence of takers.
+Protocol 1Maker-Takers Interaction
+1:fort∈[T]do
+2: A new pair of buyer and seller arrives with private valuations V buyt ∼ Vbuy and V sellt ∼ Vsell
+3:The agent selects bid and ask prices (B t, At)
+4:The agent gets rewardA t ·I(V buyt ≥A t)−B t ·I(V sellt ≤B t)
+5:The agent observesI(V buyt ≥A t) andI(V sellt ≤B t)▷2-Bit
+6:The agent observesV buyt wheneverV buyt < At andV sellt wheneverV sellt > Bt.▷LOB
+7:end for
+3.2 The Inventory Constraints
+Market making differs from standard buy–sell interactions between agents. In particular, market
+makers can sell an asset even if they have not bought it yet (this is the so-calledshort selling).
+However, market makers usually try to keep theirinventorysmall, meaning they try to avoid
+building a large imbalance between how many units they have sold and how many they have bought.
+The reason is simple:
+• if the maker ends up holding too much of the asset (positive inventory), they are exposed to
+the risk that the market price goes down;
+• if the maker ends up too short (negative inventory), they are exposed to the risk that the
+market price goes up.
+In both cases, the market maker becomes more sensitive to price movements, because part of their
+profit (or loss) starts depending on the market valuation of the asset, not only on the trading activity
+15
+itself. This is typically against the idea of market making, which (in the simplest view) aims to
+earn mainly from thebid–ask spread, while keeping directional price risk as low as possible.
+We encode this aspect by imposing the following two constraints on the learning dynamics. On the
+one hand, we require aglobal inventory balanceover the whole horizon, namely:
+TX
+t=1
+I(V buyt ≥A t) =
+TX
+t=1
+I(V sellt ≤B t).(1)
+Equation (1) simply states that, at the end of the learning dynamics, the inventory must be zero,
+while still allowing the agent to take short positions (i.e., to sell before buying) during learning.
+On the other hand, we enforce that theinventory level at each roundstays below a prescribed
+thresholdα∈N >0:
+ tXτ=1 I(V buyτ ≥A τ )− tXτ=1 I(V sellτ ≤B τ ) ≤α∀t∈[T].(2)
+For the sake of simplicity we will introduce the following definition.
+Definition 3.1(Imbalance).We define the current imbalance at timet∈[T] as:
+It :=
+tX
+τ=1
+I(V sellτ ≤B τ )−
+tX
+τ=1
+I(V buyτ ≥A τ ).
+Thus, Equation (2) reduces to|I t| ≤α, for allt∈[T].
+3.3 The Offline Baseline and The Performance Metrics
+As is standard in online learning, we compare the performance of our learning algorithms against
+an offline benchmark that has full knowledge of the underlying valuation distributions and commits
+to a fixed bid-ask pair throughout the entire horizon. This benchmark serves as the baseline for our
+notion of regret. Specifically, we define the optimal offline value as:
+OPT :=
+
+
+
+maxb,a∈[0,1]2
+PT
+t=1
+h
+aE
+h
+I(V buyt ≥a) i −bE I(V sellt ≤b) i
+s.t. PTt=1 E hI(V buyt ≥a) i = PTt=1 E I(V sellt ≤b) 
+b < a,
+(3)
+where all expectations are taken with respect to the unknown valuation distribution. Observe
+that the benchmark corresponds to the best fixed bid-ask ( b, a) computed knowing the valuations
+distribution, subject to the overall inventory constraint.
+For ease of notation, we let Fbuy : [0, 1] → [0, 1] and Fsell : [0, 1] → [0, 1] denote the cumulative
+density functions of V buy and V sell, respectively. Then, Program (3) can be equivalently rewritten
+by replacing:
+E
+h
+I(V buyt ≥a) i = 1−F buy(a) =: S(a) andE hI(V sellt ≤b) i =F sell(b) =: F(b).
+16
+Given this benchmark, we define thecumulative regretof a learning algorithm as:
+RT := OPT−
+TX
+t=1
+h
+At ·I(V buyt ≥A t)−B t ·I(V sellt ≤B t)i .
+In the rest of the work, we will refer toA tI(V buyt ≥A t)−B tI(V sellt ≤B t) asr t.
+Additionally, we introduce the following notion of surrogate objective function. As we show next, it
+is closely related to Program (3) and will serve as a key tool in our analysis.
+Definition 3.2(Surrogate objective function).The surrogate objective is defined as:
+J(b, a) := (a−b) min{F(b), S(a)}.(4)
+Furthermore, its optimal value is defined as:
+J ∗ := sup
+b,a∈[0,1]2
+(a−b) min{F(b), S(a)}.
+As we will show in Section 4, it holds that T·J ∗ ≥OPT . Accordingly, we can define the following
+notion ofsurrogate cumulative regret:
+RJT :=J ∗ ·T−
+TX
+t=1
+h
+At ·I(V buyt ≥A t)−B t ·I(V sellt ≤B t)i .(5)
+The goal of the maker is to ensure that RT = o(T ), while at the same time guaranteeing that
+Equation (1) and Equation (2), for suitable values of α, are satisfied by the sequence of bid-ask
+pairs selected during learning. In this work, we go even further: we show that the same results can
+be attained against the stronger benchmark J ∗, namely, ensuring that RJT = o(T ), while at the
+same time guaranteeing that the constraints are satisfied.
+4 Preliminary Results: Program (3) and The Surrogate Objective
+In this section, we provide some preliminary results that will be employed for both the setting
+characterized by the different feedback. Specifically, we focus on the fundamental relation between
+Program (3) and the surrogate objective function introduced in Definition 3.2.
+We start by the following simple characterization of Program (3).
+Proposition 4.1.Let R be the feasible region associated to Program (3). Then, the following holds:
+1.Ris non-empty.
+2. The solution to Program(3)corresponds to the one of the following problem:
+OPT =
+(
+maxb,a∈[0,1]2 T[aS(a)−bF(b)]
+s.t.F(b) =S(a). (6)
+Proof.For anyt∈[T], by definition ofF, Sit follows that:
+aE
+h
+I(V buyt ≥a) i =aS(a) andbE hI(V sellt ≤b) i =bF(b).
+17
+Therefore, Program (3) writes as follows:
+OPT =
+
+
+
+maxb,a∈[0,1]2 T[aS(a)−bF(b)]
+s.t.F(b) =S(a)
+b < a.
+Under the assumption that V buyt < 1 and V sellt > 0 for all t∈ [T ], the point b = 0, a= 1 is always
+feasible and attains an objective value equal to 0. Therefore, (0 , 1) ∈ Rand, for any ( a, b) such that
+a≤bthe objective function is equivalent to:
+T[aS(a)−bF(b)]≤0 =T[1·S(1)−0·F(0)].
+This allows to remove the constraint b < a, since any point that falls outside of this set is
+automatically dominated by (0,1), concluding the proof.
+The constrained maximization of the former objective function is strictly linked to the one of the
+nonlinear andunconstrainedobjective provided in Definition 3.2. The relation between this objective
+and the one of Problem (3) is provided in the following proposition.
+Proposition 4.2.LetRbe the feasible region of Program(3). Given(b, a)∈ R, it holds:
+J(b, a) =aS(a)−bF(b).
+Proof.Given (b, a)∈ R, one has, by Proposition 4.1,F(b) =S(a). Therefore, it holds:
+J(b, a) = (a−b) min{F(b), S(a)}
+=amin{F(b), S(a)} −bmin{F(b), S(a)}
+=aS(a)−bF(b).
+This concludes the proof.
+We remark that the opposite isnottrue, in general. Indeed, not only is J(b, a) defined on points
+that are infeasible in Program (3), but the optimum of J (specifically, J ∗ ·T ) may bestrictlylarger
+than OPT. Specifically, consider the following instance, defined for some smallε >0:
+F(b) :=
+
+
+
+0b < ε
+1/3ε≤b <1−ε
+1 1−ε≤b
+S(a) :=
+
+
+
+1a≤ε
+2/3ε < a≤1−ε
+0 1−ε < a
+.
+In such a case, every feasible solution to Program (3) attains an objective value of zero. On the
+contrary, it holds:
+J ∗ := sup
+b,a∈[0,1]2
+J(b, a)≥J(2ε,1−ε) = (1−3ε)3 ≈1/3.
+This shows that the optimal value J ∗ can outperform the one of Program (3) (divided by T ) of a
+positive constant. Therefore, if an algorithm enjoys low regret compared to J ∗, the same regret
+guarantees holda fortioriwith respect to OPT.
+18
+The surrogate objective J offers several advantages. First, it is well defined for every pair ( b, a).
+More importantly, it satisfies a useful smoothness-like property close to the maximum, independently
+of any smoothness ofFandS. This is shown in the following proposition.
+Proposition 4.3.LetN∈N >0 andG N be the uniform1/N-grid on[0,1], namely:
+GN :={n/N:n= 0, . . . N}.
+Then, it holds:
+max
+b,a∈G2N
+J(b, a)≥sup
+b,a∈[0,1]2
+J(b, a)−2/N,
+whereG 2N :=G N × GN .
+Proof.Fixε >0. By definition of supremum, there is (b 0, a0)∈[0,1] 2 such that:
+J(b 0, a0)≥sup
+b,a∈[0,1]2
+J(b, a)−ε.
+By definition of the grid, there is (b′0, a′0) ∈ G2N such that a0 −N −1 ≤a ′0 ≤a 0 and b0 ≤b ′0 ≤b 0 +N −1.
+Therefore, it holds:
+J(b ′0, a′0) = (a′0 −b ′0) min{F(b′0), S(a′0)}
+≥(a 0 −b 0 −2N −1) min{F(b′0), S(a′0)}
+≥(a 0 −b 0 −2N −1) min{F(b0), S(a0)}
+≥(a 0 −b 0) min{F(b0), S(a0)} −2N−1.
+The second inequality is thecrucialstep of the former derivation. This follows from the fact that F
+is non-decreasing, whileSis non-increasing. By definition ofb 0, a0, we have shown that:
+max
+b,a∈G2N
+J(b, a)≥sup
+b,a∈[0,1]2
+J(b, a)−ε−2/N.
+The proof is concluded lettingε→0.
+In Figure 2, we provide a graphical representation of the proposition.
+For notational convenience, we define the (virtual) surrogate optimal solution over an arbitrary grid
+as follows. Notice that, at this stage, we keep the definition as general as possible. The actual grid
+employed by our algorithms will instead depend on the particular setting under consideration and
+will be specified once needed.
+Definition 4.4(Virtual optimal bid-ask pair).Let B◦ ⊂ [0, 1],A ◦ ⊂ [0, 1] be finite subsets of the
+bid space and the ask space, respectively. We define the virtual optimal solution on the grid as:
+(b◦, a◦)∈argmax
+b∈B◦, a∈A◦
+J(b, a).(7)
+If J admits multiple optimal solutions, the pair ( b◦, a◦) need not be unique. All of our results will
+hold regardless of how ties are broken. Similarly, we define the following notion of virtual regret.
+19
+b
+a
+a > b
+(b0, a0)
+(b′0, a′0)
+0 1
+1
+Figure 2: Illustration of the discretization argument in Proposition 4.3. The point ( b0, a0) is an
+optimizer (or an ε-optimizer) of J over [0, 1]2, while ( b′0, a′0) ∈ G2N is the grid point
+selected in the proof, withb 0 ≤b ′0 ≤1/N+b 0 anda 0 −1/N≤a ′0 ≤a 0.
+Definition 4.5(Virtual regret).The virtual regret is defined as:
+R◦T :=T·J(b ◦, a◦)−
+TX
+t=1
+h
+At ·I(V buyt ≥A t)−B t ·I(V sellt ≤B t)i .
+The virtual regret is defined analogously to the surrogate regret in Equation (5), with only one
+difference: it is evaluated with respect to b◦ and a◦, which belong to B◦ and A◦, rather than with
+respect toJ ∗.
+To conclude, we summarize the main insights obtained so far. As already discussed, the structure of
+Program (3) cannot be directly exploited to derive meaningful discretizations, since we do not impose
+any assumption on the shape of the valuation distributions of buyers and sellers. For this reason,
+we shift our focus to the surrogate objective function introduced in Definition 3.2. In this section,
+we have established two fundamental properties of this surrogate objective:i) it is well-defined
+for every bid-ask pair and satisfies T J∗ ≥OPT ;ii) it allows for mea
