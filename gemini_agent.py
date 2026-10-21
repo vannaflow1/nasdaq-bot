@@ -11,7 +11,7 @@ Guardrails (checked by this script, not by the model):
   - the Gemini key is never written anywhere; the git checkout has no push credentials while the model works.
 Run by hand: GEMINI_WISH=<id> python gemini_agent.py   or   GEMINI_TASK="<free text>" python gemini_agent.py (test task)
 """
-import fnmatch, json, os, re, shlex, subprocess, sys
+import fnmatch, json, os, re, shlex, subprocess, sys, time
 from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -20,7 +20,7 @@ import gemini
 K = os.path.join(HERE, "knowledge")
 WISH = os.path.join(K, "wishlist.json"); DRAFTS = os.path.join(K, "gemini_drafts.json")
 RESULT = os.environ.get("GEMINI_RESULT", "/tmp/gemini_result.json")
-MAX_STEPS = int(os.environ.get("GEMINI_MAX_STEPS", "40")); MAX_LINES = int(os.environ.get("GEMINI_MAX_LINES", "600"))
+MAX_STEPS = int(os.environ.get("GEMINI_MAX_STEPS", "40")); MAX_MIN = float(os.environ.get("GEMINI_MAX_MINUTES", "45")); MAX_LINES = int(os.environ.get("GEMINI_MAX_LINES", "600"))
 RESEARCH_FILES = ["test_engine.py", "idea_lab.py", "strategy_lab.py", "strategy_forward.py", "prop_sim.py", "prop_search.py",
                   "discovered_read.py", "introspect.py", "learn_fetch.py", "learn_read.py", "learn_post.py", "fetch_macro.py",
                   "spx_collect.py", "vault.py", "volta_book.py", "volta_level.py", "pool_review.py"]
@@ -28,7 +28,7 @@ ALLOWED = RESEARCH_FILES + ["tools/*.py", "atlas/*.py", "knowledge/research_out/
 LIVE = ["nasdaq_bot.py", "brain.py", "brain_model.json", "live_tracker.py", "volflag.py", "levels.py", "options_nerd.py", "plan.py",
         "spx_morning.py", "register_commands.py", "models/*", "worker/*", ".github/*", "requirements.txt", "gemini.py", "gemini_agent.py"]
 OWN_STATE = ["knowledge/gemini_budget.json", "knowledge/gemini_drafts.json", "knowledge/wishlist.json",
-             "knowledge/research_out/gemini_agent_last.log"]
+             "knowledge/research_out/gemini_agent_last.log", "knowledge/research_out/gemini_agent_progress.log"]
 NOW = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
@@ -236,11 +236,17 @@ def main():
     readme = open(os.path.join(K, "README.md")).read()[:6000] if os.path.exists(os.path.join(K, "README.md")) else ""
     files = "\n".join(sorted(f for f in os.listdir(HERE) if f.endswith(".py")))
     task = (f"WISH #{w['id']} (impact {w.get('impact', '?')}): {w['title']}\nWHY: {w.get('why', '')}\nEVIDENCE: {w.get('evidence', '')}\n\n"
-            f"Root scripts:\n{files}\n\nStart of knowledge/README.md:\n{readme}\n\nBuild this wish now.")
+            + (f"YOUR PREVIOUS ATTEMPT was rejected by the reviewer: {w['gemini']['review']}\nAvoid that this time.\n\n"
+               if (w.get("gemini") or {}).get("review") else "")
+            + f"Root scripts:\n{files}\n\nStart of knowledge/README.md:\n{readme}\n\nBuild this wish now.")
     system = SYSTEM.format(allowed=", ".join(ALLOWED), live=", ".join(LIVE), steps=MAX_STEPS)
     contents = [{"role": "user", "parts": [{"text": task}]}]
     outcome, summary, how, log, models = None, "", "", [], set()
+    t0 = time.time(); progress = os.path.join(K, "research_out", "gemini_agent_progress.log")
+    os.makedirs(os.path.dirname(progress), exist_ok=True); open(progress, "w").write(f"wish #{w['id']}: {w['title']}\n")
     for step in range(MAX_STEPS):
+        if time.time() - t0 > MAX_MIN * 60:
+            outcome, summary = "out_of_time", f"stopped after {MAX_MIN:.0f} minutes ({step} model turns)"; break
         try:
             model, c = gemini.generate(contents, system=system, tools=DECL, temperature=0.2)
             models.add(model)
@@ -261,6 +267,7 @@ def main():
                 out = f"ERROR {type(e).__name__}: {e}"
             log.append(f"{step}: {name}({', '.join(f'{k}={str(v)[:60]!r}' for k, v in args.items() if k not in ('content', 'new', 'old'))}) -> {str(out)[:100]!r}")
             print(log[-1], flush=True)
+            with open(progress, "a") as f: f.write(f"[{(time.time() - t0) / 60:.1f} min, {model}] {log[-1]}\n")
             if name == "finish": outcome, summary, how = "finish", args.get("summary", ""), args.get("how_to_use", "")
             if name == "give_up": outcome, summary = "give_up", args.get("reason", "")
             resp.append({"functionResponse": {"name": name, "response": {"result": str(out)[:12000]}}})
