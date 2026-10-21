@@ -1,0 +1,15 @@
+{
+ "NQ": {
+  "sessions": 122,
+  "minute_return_corr": 0.982,
+  "price_ratio_proxy_over_futures": 0.9949,
+  "range_ratio": 0.991,
+  "fetch_s": 2777,
+  "F2_daily_R_corr_median": 0.615,
+  "F2_mean_R_futures": 0.015,
+  "F2_mean_R_proxy": -0.034,
+  "F2_trade_days_ratio": 0.992,
+  "missing_days": 7,
+  "window": "2025-03-03..2025-08-29 (already seen)"
+ }
+}

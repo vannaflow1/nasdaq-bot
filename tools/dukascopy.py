@@ -34,9 +34,20 @@ def _get(url, tries=7):
     return None                                               # caller records it as missing (reported, never guessed)
 
 
+CACHE = os.path.expanduser(os.environ.get("PROXY_CACHE", "~/.proxy_cache"))   # OUTSIDE the repo (never committed);
+                                                               # GitHub's actions/cache keeps it between runs of the
+                                                               # families / calibration workflows only
+
+
 def day(mk, d):
     """One UTC day of 1-minute bid candles -> DataFrame(ts_utc, o, h, l, c, v)."""
-    raw = _get(URL.format(s=SYMS[mk], y=d.year, m=d.month - 1, d=d.day))
+    fn = os.path.join(CACHE, mk, f"{d}.bi5")
+    if os.path.exists(fn) and (date.today() - d).days > 3:
+        raw = open(fn, "rb").read()
+    else:
+        raw = _get(URL.format(s=SYMS[mk], y=d.year, m=d.month - 1, d=d.day))
+        if raw is not None and (date.today() - d).days > 3:
+            os.makedirs(os.path.dirname(fn), exist_ok=True); open(fn, "wb").write(raw)
     if raw is None: MISSING.append((mk, str(d))); return pd.DataFrame()
     if not raw: return pd.DataFrame()
     b = lzma.decompress(raw); n = len(b) // 24
@@ -96,7 +107,7 @@ def sessions(n):
     return A, M
 
 
-def calibrate(markets=("NQ", "GC", "CL"), start=date(2025, 3, 3), end=date(2025, 8, 29)):
+def calibrate(markets=("GC", "CL", "NQ"), start=date(2025, 4, 1), end=date(2025, 6, 13)):
     """On months Volta has already seen: how close is each CFD proxy to Volta's own futures data?"""
     import strategy_lab as S, families as F, test_engine as TE
     _, X = TE.frame(); out = {}
@@ -132,9 +143,14 @@ def calibrate(markets=("NQ", "GC", "CL"), start=date(2025, 3, 3), end=date(2025,
                 res["F2_trade_days_ratio"] = round(float(P[:, 4].sum() / max(P[:, 3].sum(), 1)), 3)
         res["missing_days"] = sum(1 for m, _ in MISSING if m == mk)
         out[mk] = res; print(mk, res, flush=True)
+        fn = os.path.join(HERE, "knowledge", "research_out", "proxy_calibration.json")    # save after every market
+        old = json.load(open(fn)) if os.path.exists(fn) else {}; old[mk] = res; os.makedirs(os.path.dirname(fn), exist_ok=True)
+        json.dump(old, open(fn, "w"), indent=1)
     out["window"] = f"{start}..{end} (already seen by Volta - calibration only)"
     os.makedirs(os.path.join(HERE, "knowledge", "research_out"), exist_ok=True)
-    json.dump(out, open(os.path.join(HERE, "knowledge", "research_out", "proxy_calibration.json"), "w"), indent=1)
+    fn = os.path.join(HERE, "knowledge", "research_out", "proxy_calibration.json")
+    old = json.load(open(fn)) if os.path.exists(fn) else {}
+    old.update(out); json.dump(old, open(fn, "w"), indent=1)
     return out
 
 

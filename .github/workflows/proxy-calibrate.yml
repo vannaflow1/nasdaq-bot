@@ -10,12 +10,17 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12", cache: pip }
       - run: pip install -q -r requirements.txt scipy
+      - uses: actions/cache@v4               # proxy days (outside the repo, never committed) - fetched once, reused
+        with:
+          path: ~/.proxy_cache
+          key: proxy-v1-${{ github.run_id }}
+          restore-keys: proxy-v1-
       - run: |                                   # logs go into the repo (Actions logs are not readable from Claude's sandbox)
           mkdir -p knowledge/research_out
           python tools/dukascopy.py probe > knowledge/research_out/proxy_probe.txt 2>&1 || true
