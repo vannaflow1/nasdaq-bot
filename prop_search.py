@@ -218,7 +218,7 @@ def main():
     while time.time() - t0 < BUDGET_MIN * 60:
         if rng.random() < 0.3 and len(ALL) and (ALL.get("ev_val", pd.Series(dtype=float)) > 0).any():
             xs = excess(ALL, L0)                                  # parents: beat the luck bar first, else best 2022-23 EV
-            top = ALL[xs > 0].assign(_x=xs).sort_values("_x", ascending=False).head(20) if (xs > 0).any() else \
+            top = ALL.loc[xs[xs > 0].sort_values(ascending=False).index[:20]] if (xs > 0).any() else \
                 ALL[ALL.ev_val > 0].sort_values("ev_val", ascending=False).head(20)
             spec = mutate(json.loads(top.sample(1, random_state=rng.randint(0, 10**6)).spec.iloc[0]), rng)
         else:
@@ -271,7 +271,8 @@ def main():
         free = (R.ev_val > 0) & (R.get("exam", pd.Series(index=R.index, dtype=object)).isna())
         xs = excess(R, L); has_bar = market_of(R).map(lambda m: L[m]["bar"] is not None).astype(bool)
         free &= ~has_bar | (xs > 0)                           # where a luck bar exists, only candidates above it take the exam
-        cand = R[free].assign(_x=xs.where(has_bar, R.ev_val)).sort_values("_x", ascending=False).head(2).drop(columns="_x")
+        rk = xs.where(has_bar, R.ev_val)[free].sort_values(ascending=False)
+        cand = R.loc[rk.index[:2]]
         for i, c in cand.iterrows():
             spec = json.loads(c.spec); spec["prop"] = {"risk": c.risk, "eval_risk": c.eval_risk}
             try:
