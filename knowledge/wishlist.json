@@ -34,9 +34,10 @@
   "why": "The search scores single strategies only. Several small, uncorrelated edges (different markets/times) traded together in one account can pass where each alone fails. Build a stage that combines the best validated strategies (e.g. 2-4, low correlation of daily P&L) and scores the combination in the prop simulator and the 5-account farm.",
   "evidence": "prop search: individual strategies mostly negative EV; NQ/GC/CL daily P&L are largely independent",
   "impact": "high",
-  "status": "open",
+  "status": "done",
   "votes": 3,
-  "source": "Claude review"
+  "source": "Claude review",
+  "note": "Granted 2026-10-21 (prop_search.py, portfolio stage): after each search run job 1 combines 2-4 strategies into ONE account. Members = the 16 best stage-A strategies (near-duplicates dropped), combinations need pairwise daily-P&L correlation <= 0.3 on 2014-21, one unit = w_i micros of each member (equal risk per member, contracts per unit counted against the plan limits, worst day = every member hits its stop). Members, weights, plan and sizing are chosen on 2014-21 only; the top 5 are validated once on 2022-23 (EV per eval + 5-account farm) and stored in knowledge/prop_search/portfolios.csv; the best 3 appear under PORTFOLIOS in /search. Run alone: python prop_search.py --portfolio (PORTFOLIO_MINUTES, default 10; 0 disables). Combinations do not take the locked exam yet."
  },
  {
   "id": 4,

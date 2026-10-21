@@ -15,6 +15,8 @@ Anti-self-deception protocol (thousands of tries WILL produce lucky winners):
                        mutated first and are the only ones sent to the locked exam (once the bar exists).
   stage C  EXAM        survivors go through the full strategy-lab protocol (both halves of 2014-2023, beats random
                        entries, survives double costs) and the LOCKED 2024-2026 exam (max 2 exams per night, 10 per week).
+  PORTFOLIO            job 1 then combines 2-4 low-correlation stage-A strategies into ONE account (chosen on 2014-21
+                       only, validated on 2022-23 + the 5-account farm) -> knowledge/prop_search/portfolios.csv.
 Every night ~70% of the budget explores new grid points, ~30% mutates the best validated candidates (local search).
 Outputs: knowledge/prop_search/results.csv (everything), leaderboard in status.json ("prop_search"), a Discord note."""
 import itertools, json, os, random, sys, time, warnings
@@ -270,9 +272,132 @@ def main():
                 verdict = f"error {type(e).__name__}"
             R.loc[i, "exam"] = verdict[:300]; exams.append((c["name"], verdict))
     R.to_csv(RES, index=False)
+    if SHARD == 0 and os.environ.get("PORTFOLIO_MINUTES", "10") != "0":   # portfolio stage (job 1 only)
+        try:
+            portfolio_stage(all_results(), X, S, minutes=float(os.environ.get("PORTFOLIO_MINUTES", "10")))
+        except Exception as e:
+            print("portfolio stage failed:", type(e).__name__, e)
     st["nights"] += 1; json.dump(st, open(STATE, "w"))
     pref = preferences(all_results(), save=(SHARD == 0))
     write_status(all_results(), len(grid()), st, tried, validated, exams, pref, luck())
+
+
+# ------------------------------------------------------------------ portfolio stage: several weak edges in one account
+PORT = os.path.join(OUT, "portfolios.csv")
+PORT_POOL, PORT_MAX_CORR, PORT_SCREEN, PORT_VALIDATE = 16, 0.3, 30, 5
+
+
+def _daily(spec, X, S, cal):
+    """A strategy's day-by-day result on the NQ calendar `cal` (sessions), in MNQ-equivalent points per 1 micro."""
+    D = S.data(spec.get("market")); M = D["M"]
+    idx = np.where((M.session.values >= cal[0]) & (M.session.values <= cal[-1]))[0]
+    T = S.backtest(spec, X, idx); pv = float(M.attrs.get("pv", 2.0))
+    out = pd.Series(0.0, index=cal)
+    if len(T):
+        t = T[T.session.isin(cal)]; out[t.session.values] = t.pnl.values * pv / 2.0
+    return out
+
+
+def _combo_inputs(members, w, stops):
+    """Combined account inputs: one 'unit' = w_i micros of each member (w_i ~ equal risk per member). Worst point of a day =
+    every member trading that day hits its stop. Returns (pts, worst, unit_risk, micros_per_unit)."""
+    pts = sum(wi * m for wi, m in zip(w, members))
+    worst = -sum(wi * st * (m != 0) for wi, st, m in zip(w, stops, members))
+    return pts.values, np.asarray(worst.values, dtype=float), float(sum(wi * st for wi, st in zip(w, stops))), int(sum(w))
+
+
+def _plan_for_units(P, per_unit):
+    """The plan's contract limits expressed in units of the combination (a unit trades `per_unit` micros)."""
+    Q = dict(P); Q["eval_max_mnq"] = P["eval_max_mnq"] // per_unit
+    Q["fund_max_tiers"] = [[lo, m // per_unit] for lo, m in P["fund_max_tiers"]]
+    return Q if Q["eval_max_mnq"] >= 1 and Q["fund_max_tiers"][0][1] >= 1 else None
+
+
+def portfolio_stage(A, X, S, minutes=10.0):
+    """Combine 2-4 strategies into one prop account and score the combination.
+    Anti-self-deception: members, weights, the combination, plan and sizing are all CHOSEN on the search years 2014-21
+    only (members = the best stage-A strategies; pairwise correlation of daily P&L <= 0.3 on 2014-21). The 2022-23
+    years are used once, to validate the top combinations (account EV per eval + the 5-account farm), and are reported
+    next to each member's own 2022-23 EV. Contracts per unit count against the plan's limits."""
+    import itertools as it, prop_sim
+    t0 = time.time()
+    if not len(A) or "ev" not in A: return []
+    pool = A[(A.get("n", 0) >= 150) & (A.ev > 0)].drop_duplicates("spec_id").sort_values("ev", ascending=False)
+    D = S.data(); ses = D["M"].session.values
+    calA = ses[(ses >= "2014-01-01") & (ses <= SEARCH_END)]; calB = ses[(ses > SEARCH_END) & (ses <= VAL_END)]
+    mem = []
+    for _, r in pool.iterrows():
+        if len(mem) >= PORT_POOL or time.time() - t0 > minutes * 30: break
+        try:
+            spec = json.loads(r.spec); a = _daily(spec, X, S, calA)
+        except Exception as e:
+            print("portfolio member skipped:", type(e).__name__, e); continue
+        if (a != 0).sum() < 150: continue
+        if any(abs(np.corrcoef(a, m["a"])[0, 1]) > 0.95 for m in mem): continue      # near-duplicate (mutants)
+        neg = np.abs(a[a < 0]); mem.append({"row": r, "spec": spec, "a": a, "stop": float(np.median(neg)) if len(neg) else 20.0})
+    if len(mem) < 2: return []
+    C = np.corrcoef(np.vstack([m["a"].values for m in mem]))
+    combos = []
+    for k in (2, 3, 4):
+        for c in it.combinations(range(len(mem)), k):
+            if any(abs(C[i, j]) > PORT_MAX_CORR for i, j in it.combinations(c, 2)): continue
+            smax = max(mem[i]["stop"] for i in c); w = [max(1, int(round(smax / mem[i]["stop"]))) for i in c]
+            u = sum(wi * mem[i]["a"] for wi, i in zip(w, c)); sd = float(u.std())
+            combos.append((float(u.mean()) / sd * np.sqrt(252) if sd > 0 else -9, c, w))
+    combos = sorted(combos, key=lambda x: -x[0])[:PORT_SCREEN]
+    print(f"portfolio stage: {len(mem)} members, {len(combos)} combinations screened"); sys.stdout.flush()
+    scored = []
+    for sh, c, w in combos:
+        if time.time() - t0 > minutes * 60: break
+        pts, worst, U, per = _combo_inputs([mem[i]["a"] for i in c], w, [mem[i]["stop"] for i in c])
+        for P in prop_sim.plans().values():
+            Q = _plan_for_units(P, per)
+            if not Q: continue
+            for sz in SIZINGS:
+                r = prop_sim.evaluate(pts, worst, Q, S._sizer({"prop": sz}, U), step=8)
+                scored.append({"sharpe_A": sh, "c": c, "w": w, "plan": P["id"], "sz": sz, "U": U, "per": per, "A": r})
+    best = {}
+    for x in sorted(scored, key=lambda x: -x["A"]["ev_per_eval"]):           # best plan/sizing per combination (chosen on A)
+        best.setdefault(x["c"], x)
+    top = [x for x in sorted(best.values(), key=lambda x: -x["A"]["ev_per_eval"]) if x["A"]["ev_per_eval"] > 0][:PORT_VALIDATE]
+    out = []
+    for x in top:
+        c, w = x["c"], x["w"]; P = prop_sim.plans()[x["plan"]]; Q = _plan_for_units(P, x["per"])
+        try:
+            bs = [_daily(mem[i]["spec"], X, S, calB) for i in c]
+        except Exception as e:
+            print("portfolio validation skipped:", e); continue
+        pts, worst, _, _ = _combo_inputs(bs, w, [mem[i]["stop"] for i in c])
+        size = S._sizer({"prop": x["sz"]}, x["U"])
+        vb = prop_sim.evaluate(pts, worst, Q, size, step=4)
+        f = prop_sim.farm(pts, worst, calB, Q, size, slots=5)
+        out.append({"date": datetime.now(timezone.utc).date().isoformat(), "members": " + ".join(mem[i]["row"]["name"][:60] for i in c),
+                    "spec_ids": ",".join(mem[i]["row"]["spec_id"] for i in c), "weights": ",".join(map(str, w)),
+                    "markets": ",".join(mem[i]["spec"].get("market", "NQ") for i in c), "micros_per_unit": x["per"],
+                    "max_corr_A": round(float(max(abs(C[i, j]) for i, j in it.combinations(c, 2))), 2), "sharpe_A": round(x["sharpe_A"], 2),
+                    "plan": x["plan"], "risk": x["sz"]["risk"], "eval_risk": x["sz"]["eval_risk"],
+                    "pass_A": x["A"]["pass_rate"], "ev_A": x["A"]["ev_per_eval"], "pass_B": vb["pass_rate"], "paid_B": vb["avg_payout_per_eval"],
+                    "ev_B": vb["ev_per_eval"], "farm_month_B": f["avg_month"], "farm_pos_months_B": f["positive_months"], "farm_worst_B": f["worst_month"],
+                    "best_member_ev_A": max(float(mem[i]["row"]["ev"]) for i in c),
+                    "members_ev_B": ",".join("" if pd.isna(mem[i]["row"].get("ev_val")) else f"{float(mem[i]['row']['ev_val']):.0f}" for i in c)})
+    if out:
+        old = pd.read_csv(PORT) if os.path.exists(PORT) else pd.DataFrame()
+        pd.concat([old, pd.DataFrame(out)], ignore_index=True).to_csv(PORT, index=False)
+    print(f"portfolio stage: {len(out)} combinations validated in {(time.time() - t0) / 60:.1f} min")
+    return out
+
+
+def portfolio_lines(new=None):
+    """Status lines: the best combinations so far, ranked by 2022-23 EV (validation only, never used to choose)."""
+    P = pd.read_csv(PORT) if os.path.exists(PORT) else pd.DataFrame()
+    if not len(P): return []
+    P = P.sort_values("date").drop_duplicates(["spec_ids", "plan", "risk"], keep="last").sort_values("ev_B", ascending=False)
+    lines = ["", f"PORTFOLIOS (2-4 low-correlation strategies in ONE account; chosen on 2014-21, validated on 2022-23; {len(P)} combinations validated so far):"]
+    for _, r in P.head(3).iterrows():
+        lines.append(f"- {r.members[:150]} | {r.plan} risk {r.risk:.0%}/{r.eval_risk:.0%}, {int(r.micros_per_unit)} micros/unit, max corr {r.max_corr_A:.2f} "
+                     f"| 2014-21 EV {r.ev_A:+.0f} (pass {r.pass_A:.0%}, best single {r.best_member_ev_A:+.0f}) | 2022-23 EV {r.ev_B:+.0f} (pass {r.pass_B:.0%}) "
+                     f"| 5 accounts: {r.farm_month_B:+.0f}$/month ({r.farm_pos_months_B:.0%} months positive)")
+    return lines
 
 
 BASE_FOCUS = {"NQ": 0.50, "GC": 0.25, "CL": 0.25}           # the owner's starting split
@@ -350,6 +475,10 @@ def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
                          f"| 2022-23 EV {r.ev_val:+.0f} (pass {r.pass_val:.0%}){tag}{fm} | {int(r.n)} trades, {r.avg_R:+.2f}R")
     else:
         lines += ["", "No strategy has stayed positive on the unseen 2022-23 years yet."]
+    try:
+        lines += portfolio_lines()
+    except Exception as e:
+        print("portfolio lines skipped:", e)
     for name, vd in exams:
         lines += ["", f"EXAM: {name[:70]} -> {vd[:260]}"]
     s = json.load(open(STATUS)) if os.path.exists(STATUS) else {}
@@ -367,4 +496,9 @@ def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
 
 
 if __name__ == "__main__":
-    main()
+    if "--portfolio" in sys.argv:                              # run only the portfolio stage on the stored results
+        import test_engine as TE, strategy_lab as S
+        _, X = TE.frame(); portfolio_stage(all_results(), X, S, minutes=float(os.environ.get("PORTFOLIO_MINUTES", "10")))
+        print("\n".join(portfolio_lines()))
+    else:
+        main()
