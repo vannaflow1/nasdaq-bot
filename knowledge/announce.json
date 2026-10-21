@@ -1,6 +1,0 @@
-[
- {
-  "title": "\ud83c\udf81 Wish granted: Make the prop simulator harsher where reality is harsher",
-  "body": "Stops now slip more on fast days (+1 tick per 50% above the expected range, max +6) and on red-folder (+1), FOMC (+2) and crude-oil Wednesday (+2) sessions (assumed values). The prop sim checks each day against that trade's own stop instead of the median stop (range stops reached up to 8x the median, so some accounts that really blew used to survive), models the daily loss limit where it is documented (LucidPro 50K eval $1,200, Tradeify Select Daily 50K funded $1,000), ends accounts that cannot trade 1 contract (the farm re-buys) and reports the worst single day across all copy-traded accounts. On 24 sample strategies (2014-21, LucidPro 50K): -0.80 -> -1.03 pts/trade, EV -90.6 -> -95.5 per eval, pass rate never higher. Undo: git revert 9535235"
- }
-]
