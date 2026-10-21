@@ -29,12 +29,12 @@
   "  no megacap earnings tomorrow"
  ],
  "level": [
-  "VOLTA LEVEL 14  (7,187 XP, next level at 7,840)",
-  "Papers read 252 | ideas & strategies tested 60 | prop strategies searched 313,254",
-  "Survived unseen 2022-23: 1273 (best EV per eval 2449.3) | passed the locked exam: 1 | live winners: 0",
+  "VOLTA LEVEL 14  (7,507 XP, next level at 7,840)",
+  "Papers read 252 | ideas & strategies tested 60 | prop strategies searched 314,053",
+  "Survived unseen 2022-23: 1337 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
   "Brain upgrades: 0 | self-discovered powers: 5",
   "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +35 papers, +12 tests, +1273 validated, +2 powers, +1 exam passed"
+  "Since yesterday: +64 validated"
  ],
  "updated": "Wed 21 Oct 23:07 Lux",
  "events": [
@@ -277,9 +277,6 @@
   "Balance $25,000.00 (+0.00) | max-loss floor $24,000 | buffer $1,000",
   "Trades: 0 - waiting for a tested edge to trigger",
   "Next trade risks up to $100.",
-  "",
-  "LATEST:",
-  "- strategy: with the open's side of the overnight range at 08:31, no red-folder news: skipped: stop too wide for my risk budget (even 1 MNQ risks more than 10% of my buffer)",
   "",
   "Volta only trades edges that passed its full protocol (walk-forward, placebo, stress test, locked exam).",
   "Virtual money - this is Volta's live track record, not advice."
