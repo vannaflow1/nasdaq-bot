@@ -17,6 +17,9 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 MNQ = 2.0
 FIRMS_FILE = os.path.join(HERE, "knowledge", "prop_firms.json")
+# Counterparty risk (expert review): a payout can be delayed, denied (rule interpretation) or the firm can change rules or
+# close. Every payout is multiplied by the plan's "payout_reliability" (default below - an ASSUMPTION, not a measured rate).
+PAYOUT_RELIABILITY = 0.95
 
 
 def plans(include_excluded=False):
@@ -71,7 +74,7 @@ def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
             if ok_days >= P["payout_days"] and prof_cycle > P["cycle_min"] and cons_ok and profit > 0:
                 req = min(P["payout_frac"] * profit, P["caps"][min(len(payouts), len(P["caps"]) - 1)], bal - floor - P["buffer"])
                 if req >= P["min_req"]:
-                    bal -= req; payouts.append(P["split"] * req); cycle_days = []; cycle_start = bal
+                    bal -= req; payouts.append(P["split"] * req * P.get("payout_reliability", PAYOUT_RELIABILITY)); cycle_days = []; cycle_start = bal
                     if len(payouts) >= P["payouts_to_live"]:
                         return dict(passed=True, payouts=payouts, days=days, end="live")
         peak = max(peak, bal)
@@ -130,7 +133,7 @@ class Account:
             if ok_days >= P["payout_days"] and prof_cycle > P["cycle_min"] and cons_ok and profit > 0:
                 req = min(P["payout_frac"] * profit, P["caps"][min(len(self.payouts), len(P["caps"]) - 1)], self.bal - self.floor - P["buffer"])
                 if req >= P["min_req"]:
-                    self.bal -= req; paid = P["split"] * req; self.payouts.append(paid); self.cycle_days = []; self.cycle_start = self.bal
+                    self.bal -= req; paid = P["split"] * req * P.get("payout_reliability", PAYOUT_RELIABILITY); self.payouts.append(paid); self.cycle_days = []; self.cycle_start = self.bal
                     if len(self.payouts) >= P["payouts_to_live"]: self.end = "live"
         self.peak = max(self.peak, self.bal); self.floor = max(self.floor, min(self.peak - P["mll"], self.lock))
         return paid

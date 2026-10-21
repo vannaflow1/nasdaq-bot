@@ -197,10 +197,10 @@ def validate(spec):
     e = spec.get("entry") or {}
     if e.get("type") not in ("level", "time", "schedule", "oco"): raise Bad("entry.type must be level, time, schedule or oco")
     if e["type"] == "schedule":
-        if e.get("signal", "band") not in ("band", "day", "vwap"): raise Bad("schedule.signal must be band, day or vwap")
+        if e.get("signal", "band") not in ("band", "day", "vwap", "vwap_fade"): raise Bad("schedule.signal must be band, day, vwap or vwap_fade")
         if not (5 <= int(e.get("every_min", 30)) <= 120): raise Bad("schedule.every_min must be 5-120")
         if not (1 <= mins(e.get("from", "09:00")) < mins(e.get("to", "14:30")) <= 385): raise Bad("schedule from/to must be within 08:31-14:55")
-        if not (0.3 <= float(e.get("mult", 1.0)) <= 3): raise Bad("schedule.mult must be 0.3-3")
+        if not (0.1 <= float(e.get("mult", 1.0)) <= 3): raise Bad("schedule.mult must be 0.1-3")
     if e["type"] == "oco":
         if not (0 <= mins(e.get("at", "")) <= 380): raise Bad("oco.at must be 08:30-14:50")
         if not (0.05 <= float(e.get("k", 0.2)) <= 1.0): raise Bad("oco.k must be 0.05-1.0 (share of the expected range)")
@@ -405,7 +405,7 @@ def simulate_day(D, i, spec, side=0, cost_mult=1.0, stop_mult=1.0, tgt_mult=1.0,
         if i < lb: return []
         Cp, Op = D["C"][i - lb:i], D["O"][i - lb:i, :1]
         sigma = np.nanmean(np.abs(Cp / Op - 1.0), axis=0)               # per minute, past sessions only
-    if sig == "vwap":
+    if sig in ("vwap", "vwap_fade"):
         vw = level_path(D, i, "vwap")
     t = max(f0, 1); free_from = 0
     while t <= t1 and len(out) < maxn:
@@ -418,6 +418,9 @@ def simulate_day(D, i, spec, side=0, cost_mult=1.0, stop_mult=1.0, tgt_mult=1.0,
                 elif c < O[0] * (1 - mult * sg): s = -1
         elif sig == "day": s = int(np.sign(c - O[0]))
         elif sig == "vwap": s = int(np.sign(c - vw[t - 1])) if np.isfinite(vw[t - 1]) else 0
+        elif sig == "vwap_fade":                                        # far from VWAP (mult x expected range): fade back toward it
+            dv = c - vw[t - 1] if np.isfinite(vw[t - 1]) else 0.0
+            s = -int(np.sign(dv)) if abs(dv) > mult * float(M.fc_frac) * O[0] else 0
         if side in (1, -1) and s != side: s = 0                           # optional daily direction filter from the spec's side
         if s != 0:
             r = _run_trade(D, i, spec, t, s, O[t] + s * tk, stop_pts, xe, sl, cost_mult, tgt_mult)

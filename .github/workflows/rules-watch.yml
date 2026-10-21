@@ -1,0 +1,23 @@
+name: rules-watch
+# Weekly check of the prop firms' official rule pages; a change files a wish for Claude to re-check the simulator rules.
+on:
+  schedule:
+    - cron: "10 6 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt
+      - run: python tools/rules_watch.py
+      - if: always()
+        run: bash .github/actions_common.sh "rules watch"

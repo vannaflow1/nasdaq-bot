@@ -149,3 +149,11 @@ not edge; K grew with every run; the 2024-26 exam was reused; power was never me
 - **Bootstrap accounts** (prop_sim.bootstrap: 10-day blocks, 600 paths): review requires the 20th percentile of the unseen-years
   EV per eval > 0; families report it when pricing.
 - F2 noise-band breakout and F4 volatility brackets registered (multi-trade / OCO grammar).
+- **Payout reliability** (prop_sim.PAYOUT_RELIABILITY = 0.95, per-plan "payout_reliability" overrides): every payout is
+  haircut for delays/denials/firm risk - an assumption, stated, not measured.
+- **Rules watcher** (tools/rules_watch.py, workflow rules-watch Mondays): official Tradeify + FundedNext pages hashed weekly;
+  a change -> Discord note + a high-impact wish for Claude; snapshots in knowledge/research_out/rules/. Lucid's official
+  help-center URLs still need to be added by the owner (not public in search).
+- **F7 0DTE pinning** registered: schedule signal "vwap_fade" (fade moves > mult x expected range from VWAP back to VWAP)
+  after 12:30 on days with positive SPX 0DTE dealer gamma (k_spx_gex_0dte, 2019-2025). Proxy for the review's strike-pin
+  idea - the per-day biggest-gamma strike was not kept from the owner's SPX files.

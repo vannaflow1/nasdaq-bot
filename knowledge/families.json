@@ -439,5 +439,62 @@
   "hash": "d00bda1fb318",
   "frozen": "da2f2b154e885df7182ad2da54a9fd9d12cc4aba",
   "scored": "2026-10-21"
+ },
+ {
+  "id": "F7",
+  "name": "0DTE gamma pinning: afternoon VWAP reversion",
+  "mechanism": "Large positive same-day (0DTE) dealer gamma, common since 2022-23, makes dealers sell rallies and buy dips, pinning price; on those days afternoon moves far from VWAP tend to revert.",
+  "citation": "expert review 21 Oct 2026 (F7); Volta's SPX 0DTE gamma from options tick data (k_spx_gex_0dte, 2019-2025)",
+  "sleeve": [
+   {
+    "market": "NQ",
+    "name": "F7 0DTE pin reversion",
+    "entry": {
+     "type": "schedule",
+     "signal": "vwap_fade",
+     "every_min": "{EV}",
+     "from": "12:30",
+     "to": "14:15",
+     "mult": "{MU}"
+    },
+    "filter": "k_spx_gex_0dte - {G}",
+    "stop": {
+     "range": 0.2
+    },
+    "target": {
+     "level": "vwap"
+    },
+    "exit": "14:55",
+    "max_trades": 2
+   }
+  ],
+  "grid": {
+   "param.EV": [
+    15,
+    30
+   ],
+   "param.MU": [
+    0.2,
+    0.3,
+    0.4
+   ],
+   "param.G": [
+    0,
+    1,
+    2
+   ],
+   "stop": [
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.25
+    }
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-21",
+  "hash": "092265597088",
+  "frozen": "afb0db1b2108341682e131f778d2dc4bf6a0d919"
  }
 ]
