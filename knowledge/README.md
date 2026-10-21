@@ -157,3 +157,9 @@ not edge; K grew with every run; the 2024-26 exam was reused; power was never me
 - **F7 0DTE pinning** registered: schedule signal "vwap_fade" (fade moves > mult x expected range from VWAP back to VWAP)
   after 12:30 on days with positive SPX 0DTE dealer gamma (k_spx_gex_0dte, 2019-2025). Proxy for the review's strike-pin
   idea - the per-day biggest-gamma strike was not kept from the owner's SPX files.
+- **Power v2** (power.py, 21 Oct): null worlds = one placebo twin draw poses as the strategy vs the other draws (v1 shuffled
+  the feature table, which left price-only families like F2 untouched - its "null" still had the edge). First reading on F2
+  (multi-trade, 40 worlds): planted +0.05R found 35%, +0.10R 100%, +0.20R 100%, false passes 0% (alpha 0.008). Frequent-trade
+  families can see realistic edges; rare-trade ones (F5) cannot. Weekly in the families workflow (Sundays).
+- F7 (0DTE pinning proxy) FAILED: median -0.22R = placebo level (VWAP targets too close for costs).
+- Power features (pw_*) are walk-forward (logistic refit on past years, 2017-2025) and fc_frac is past-only - no model leak.

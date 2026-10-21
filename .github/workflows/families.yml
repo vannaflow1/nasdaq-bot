@@ -25,7 +25,7 @@ jobs:
       - run: python families.py --reps 100
         env: { PYTHONUNBUFFERED: "1" }
       - if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 4 * * 0'
-        run: python power.py --family F2 --worlds 20 --reps 40
+        run: python power.py --family F2 --worlds 40
         env: { PYTHONUNBUFFERED: "1" }
       - if: always()
         run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "families" && break; sleep $((RANDOM % 20 + 5)); done

@@ -302,5 +302,11 @@
   "- with overnight at 09:00, low dealer gamma + with gap at 09:00, tail-day risk high + with the open's side of the overnight range at 10:00, tail-d + [CL | tradeday_fastpass_50k risk 30%/50%, 6 micros/unit, max corr 0.14 | 2014-21 EV +660 (pass 37%, best single +988) | 2022-23 EV -28 (pass 16%) | 5 accounts: +56$/month (12% months positive)",
   "- break ewma1_up 08:45-11:30, every day + with overnight at 09:00, low dealer gamma | tradeday_fastpass_50k risk 30%/50%, 3 micros/unit, max corr 0.05 | 2014-21 EV +706 (pass 66%, best single +1109) | 2022-23 EV -85 (pass 0%) | 5 accounts: -106$/month (0% months positive)",
   "- with overnight at 09:00, low dealer gamma + with the open's side of the overnight range at 10:00, tail-d + against overnight at 13:30, gap fill likely | lucid_pro_50k risk 30%/50%, 5 micros/unit, max corr 0.09 | 2014-21 EV +757 (pass 41%, best single +988) | 2022-23 EV -104 (pass 10%) | 5 accounts: -169$/month (0% months positive)"
+ ],
+ "power": [
+  "\u26a1 POWER CURVE - THE SCOREBOARD (family F2, 40 no-edge worlds, alpha 0.008): can my family test find a planted edge?",
+  "False passes with no edge: 0% (should stay near 0.8%; much higher = a bug)",
+  "Found a planted edge: +0.05R 35% (median p 0.00), +0.10R 100% (median p 0.00), +0.20R 100% (median p 0.00) (planted on 60% of trades: true lift 0.6x)",
+  "Below ~20% at +0.10R: more search cannot help - I need more trades per test (more markets, more trades per day)."
  ]
 }
