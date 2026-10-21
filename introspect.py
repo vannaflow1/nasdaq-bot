@@ -7,6 +7,7 @@ from collections import Counter
 from datetime import datetime, timezone
 HERE = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(HERE, "knowledge"); sys.path.insert(0, HERE)
 STATE, WISH, DIARY = (os.path.join(K, f) for f in ("introspect_state.json", "wishlist.json", "diary.jsonl"))
+HUNTS = os.path.join(K, "hunts.json")
 
 
 def _jl(path):
@@ -78,6 +79,19 @@ def digest():
                    f"{a['trades']} trades. Last journal: " + " | ".join(str(j.get('result') or j.get('decision'))[:80] for j in J))
     except Exception:
         pass
+    H = json.load(open(HUNTS)) if os.path.exists(HUNTS) else []
+    if H:
+        lib_by = {}
+        for x in lib:
+            if x.get("hunt"): lib_by.setdefault(x["hunt"], []).append(x)
+        out.append("MY PAPER HUNTS (topic -> what I found): " + " || ".join(
+            f"'{h['query'][:60]}' ({h['status']}): " + ("; ".join(f"{x['title'][:50]} ({x.get('relevance', '?')}*) -> {str((x.get('idea') or {}).get('verdict') or '')[:50]}"
+                                                       for x in lib_by.get(h["id"], [])[:3]) or "nothing read yet") for h in H[-6:]))
+    try:
+        import eta
+        out.append("MY OWN ESTIMATE OF WHEN I FIND A REAL EDGE: " + " ".join(eta.lines()[1:4]))
+    except Exception:
+        pass
     D = _jl(DIARY)
     if D: out.append("MY LAST DIARY ENTRIES: " + " || ".join(d["diary"][:200] for d in D[-3:]))
     return "\n".join(out)
@@ -95,7 +109,11 @@ Then you decide how to improve yourself. You can do three things:
    Strategy spec: {"kind":"strategy","name":"...","entry":{...},"filter":"...","stop":{...},"target":{...},"exit":"14:55"}
    Use only columns/levels that exist (k_*, p_*, y_* for targets only, pw_*, gex_rank, iv30, vix, vix_curve, nq_vs_es,
    levels yday_high/low, asia_high/low, london_high/low, on_high/low, or15_high/low, vwap bands, open, midnight_open).
-3. wishes (max 2, only if genuinely useful and NOT already filed): something you cannot do alone.
+3. paper_hunts (max 2): when you notice a specific pattern, near-miss, failure reason or an exam result you want to
+   understand better, order research on exactly that topic - it is searched within the hour and read first.
+   {"query": "<4-8 word academic search query, e.g. 'overnight return predicts intraday index futures'>", "why": "<the pattern in your numbers>"}
+   Never repeat a hunt listed under MY PAPER HUNTS.
+4. wishes (max 2, only if genuinely useful and NOT already filed): something you cannot do alone.
    {"title": "<short>", "for": "claude|owner", "type": "data|code|fix|decision", "why": "...", "evidence": "<numbers from
    your state>", "impact": "high|medium|low"}
    "claude" = any code or free-data work, including improvements to your live briefings/alerts/forecasts - Claude only
@@ -109,7 +127,7 @@ into a wish for Claude. What you ALREADY HAVE (never wish for these): dealer gam
 True dealer POSITIONS (who is long/short) are not sold to retail; do not wish for them.
 When a lesson from the research about yourself fits a weakness in your numbers, turn it into a wish for Claude (say which
 paper it comes from). Be specific and grounded in the numbers. Never wish for something you already have. Reply ONLY with one JSON object:
-{"diary": "...", "self_actions": [...], "wishes": [...]}"""
+{"diary": "...", "self_actions": [...], "paper_hunts": [...], "wishes": [...]}"""
 
 
 def run(ask):
@@ -136,7 +154,9 @@ def run(ask):
                    "relevance": 7, "spec": spec, "source": "curiosity"})
         queued.append(txt[:120])
     json.dump(tq, open(T.TESTQ, "w"), indent=1)
-    # 2. wishes -> wishlist (merged with similar open wishes instead of duplicated)
+    # 2. paper hunts -> knowledge/hunts.json (learn_fetch searches them on its next run, the reader reads them first)
+    hunts = add_hunts([h for h in (r.get("paper_hunts") or [])[:2] if isinstance(h, dict)], "self-check")
+    # 3. wishes -> wishlist (merged with similar open wishes instead of duplicated)
     W = json.load(open(WISH)) if os.path.exists(WISH) else []
     new = []
     for w in (r.get("wishes") or [])[:2]:
@@ -154,6 +174,7 @@ def run(ask):
     with open(DIARY, "a") as f: f.write(json.dumps({"date": today, "diary": diary, "queued": queued, "new_wishes": [w["id"] for w in new]}) + "\n")
     body = [diary]
     if queued: body += ["", "I queued for myself:"] + [f"- {q}" for q in queued]
+    if hunts: body += ["", "I'm hunting for research on:"] + [f"- {h['query']} ({h['why'][:120]})" for h in hunts]
     if new:
         body += ["", "I need help with:"] + [f"- #{w['id']} {w['title']} ({'needs the owner OK' if w['for'] == 'owner' else 'for Claude on Sunday'}): {w['why'][:200]}" for w in new]
     ann = json.load(open(T.ANN)) if os.path.exists(T.ANN) else []
@@ -161,6 +182,22 @@ def run(ask):
     write_status(W, diary)
     print("self-check:", diary[:200], "| queued", len(queued), "| new wishes", len(new))
     return units
+
+
+def add_hunts(items, source):
+    """Order targeted research. items: [{"query", "why"}]. Near-duplicate queries (vs. the last 60 hunts) are dropped."""
+    H = json.load(open(HUNTS)) if os.path.exists(HUNTS) else []
+    today = datetime.now(timezone.utc).date().isoformat(); new = []
+    for it in items:
+        q = re.sub(r"\s+", " ", str(it.get("query", ""))).strip()[:120]
+        if len(q.split()) < 2: continue
+        if any(difflib.SequenceMatcher(None, q.lower(), h["query"].lower()).ratio() > 0.8 for h in H[-60:] + new): continue
+        h = {"id": f"h{len(H) + len(new) + 1}", "date": today, "query": q, "why": str(it.get("why", ""))[:300],
+             "source": source, "status": "open", "papers": []}
+        if it.get("key"): h["key"] = it["key"]
+        new.append(h)
+    if new: json.dump((H + new)[-200:], open(HUNTS, "w"), indent=1, ensure_ascii=False)
+    return new
 
 
 def write_status(W=None, diary=None):

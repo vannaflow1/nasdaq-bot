@@ -179,6 +179,10 @@ def main():
     lines.append("Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam.")
     st = json.load(open(STATUS)) if os.path.exists(STATUS) else {}
     st["strategies"] = lines; json.dump(st, open(STATUS, "w"), indent=1)
+    try:
+        import eta; eta.update()                                  # forward-test days changed: refresh the edge estimate
+    except Exception as e:
+        print("eta skipped:", type(e).__name__, e)
     print("\n".join(lines))
     if today and HOOK:
         import qqq_gex_daily as q

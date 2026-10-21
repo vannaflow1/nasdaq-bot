@@ -5,7 +5,7 @@ Ranks by relevance to what the bot does (options, volatility, dealer hedging, in
 futures, forecasting). Adds the best few to knowledge/queue.json and announces them.
 The reading + testing happens in the daily learning session (see knowledge/README.md).
 """
-import json, os, re, sys, urllib.request, urllib.parse
+import json, math, os, re, sys, urllib.request, urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 
@@ -264,6 +264,146 @@ def openalex_backfill(n=10):
     return out
 
 
+# ------------------------------------------------------------------ targeted hunts: research ordered by Volta itself
+HUNTS = os.path.join(K, "hunts.json")
+# what a strategy's parts are about, in academic search words (used to turn an exam pass / promising result into a hunt)
+SPEC_WORDS = [(r"k_on_pos|on_high|on_low|k_on_vs_normal|overnight range", "overnight trading range"), (r"k_on_return|against overnight|with overnight", "overnight returns intraday"),
+              (r"k_gap|gap", "opening gap"), (r"p_return|yesterday", "daily return reversal"), (r"\br20\b|trend", "time series momentum"),
+              (r"k_red|red.folder|news", "macroeconomic announcements"), (r"gex_rank|gamma", "dealer gamma hedging"),
+              (r"pw_tail|tail", "tail risk days"), (r"k_hurst|hurst", "Hurst exponent regime"), (r"london", "London session"),
+              (r"asia", "Asian session"), (r"yday_high|yday_low", "previous day high low"), (r"vwap", "VWAP"),
+              (r"exp\d+|iv30|vix", "implied volatility expected move"), (r"asian session|k_open_vs_asia", "Asian session"),
+              (r"y_high|y_low|\brng|daily range|absolute nq range", "daily range volatility"), (r"or15", "opening range breakout"),
+              (r"\"break\"|breakout", "breakout"), (r"\"fade\"|mean.revert", "mean reversion")]
+MARKET_WORDS = {"NQ": "Nasdaq index futures", "ES": "S&P 500 futures", "GC": "gold futures", "CL": "crude oil futures"}
+
+
+def spec_query(spec):
+    t = json.dumps(spec).lower(); hits = []
+    for pat, w in SPEC_WORDS:                                  # ordered by where they first appear (the main idea comes first)
+        m = re.search(pat, t)
+        if m and w not in [h[1] for h in hits]: hits.append((m.start(), w))
+    words = [w for _, w in sorted(hits)]
+    return " ".join(words[:2] + [MARKET_WORDS.get(str(spec.get("market", "NQ")).upper(), "index futures")])
+
+
+def auto_hunts():
+    """Order research automatically when something gets interesting: a strategy passes the locked exam, or an idea /
+    self-question is flagged PROMISING. One hunt per finding (key = what it was), so nothing is searched twice."""
+    import introspect
+    H = json.load(open(HUNTS)) if os.path.exists(HUNTS) else []; keys = {h.get("key") for h in H}
+    items = []
+    lab = os.path.join(K, "strategies.jsonl")
+    for l in (open(lab) if os.path.exists(lab) else []):
+        if not l.strip(): continue
+        e = json.loads(l); key = "exam:" + str(e.get("name"))[:80]
+        if str(e.get("verdict", "")).startswith("PROMISING STRATEGY") and key not in keys:
+            items.append({"query": spec_query(e.get("spec") or {}), "key": key,
+                          "why": f"my strategy '{str(e.get('name'))[:80]}' passed the locked exam - why could it work, and when does it stop working?"})
+    rq = os.path.join(K, "review_queue.json")
+    for x in (json.load(open(rq)) if os.path.exists(rq) else []):
+        key = "promising:" + str(x.get("id"))
+        if key in keys: continue
+        if str(x.get("id", "")).startswith(("openalex:", "arxiv:")):        # an idea from a paper: search for that paper's topic
+            q = " ".join(re.sub(r"[^A-Za-z0-9 ]", " ", str(x.get("title", ""))).split()[:10])
+        else:                                                              # Volta's own question/strategy: translate its columns
+            q = spec_query(dict(x.get("spec") or {}, _idea=str(x.get("idea", ""))))
+        items.append({"query": q, "key": key, "why": f"promising result to understand: {str(x.get('idea') or x.get('title'))[:160]}"})
+    return introspect.add_hunts(items[:4], "automatic")
+
+
+def _openalex_search(q, per=15, extra_filter=""):
+    u = ("https://api.openalex.org/works?" + urllib.parse.urlencode({
+        "search": q, "filter": "is_oa:true,has_abstract:true" + extra_filter, "per-page": per,
+        "select": "id,title,abstract_inverted_index,publication_date,open_access,doi,cited_by_count"}))
+    res = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=60).read())["results"]
+    out = []
+    for w in res:
+        inv = w.get("abstract_inverted_index") or {}
+        ab = " ".join(k for _, k in sorted((p, k) for k, ps in inv.items() for p in ps))
+        if w.get("title") and len(ab) >= 200:
+            out.append({"id": "openalex:" + w["id"].rsplit("/", 1)[-1], "title": w["title"], "abstract": ab,
+                        "url": (w.get("open_access") or {}).get("oa_url") or w.get("doi") or w["id"],
+                        "date": w.get("publication_date"), "cites": w.get("cited_by_count") or 0})
+    return out
+
+
+def _arxiv_search(query, n=15, sort="relevance"):
+    u = "http://export.arxiv.org/api/query?" + urllib.parse.urlencode({"search_query": query, "sortBy": sort, "sortOrder": "descending", "max_results": n})
+    root = ET.fromstring(urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=60).read())
+    ns = {"a": "http://www.w3.org/2005/Atom"}; out = []
+    for e in root.findall("a:entry", ns):
+        link = e.find("a:id", ns).text.replace("http://", "https://")
+        out.append({"id": "arxiv:" + link.rsplit("/", 1)[-1], "title": " ".join(e.find("a:title", ns).text.split()),
+                    "abstract": " ".join(e.find("a:summary", ns).text.split()), "url": link, "pdf": link.replace("/abs/", "/pdf/"),
+                    "date": e.find("a:published", ns).text[:10]})
+    return out
+
+
+def hunt_papers(seen, per_hunt=3, max_hunts=3):
+    """Search every open hunt once (arXiv + OpenAlex, by relevance) and queue the best few matches, read first."""
+    H = json.load(open(HUNTS)) if os.path.exists(HUNTS) else []
+    out = []
+    for h in [h for h in H if h["status"] == "open"][:max_hunts]:
+        words = [w for w in re.findall(r"[a-z0-9]+", h["query"].lower()) if len(w) > 2 and w not in ("the", "and", "for", "with")]
+        found = []
+        try: found += _openalex_search(h["query"])
+        except Exception as e: print("hunt openalex:", type(e).__name__)
+        try: found += _arxiv_search("all:" + " AND all:".join(words[:5]))
+        except Exception as e: print("hunt arxiv:", type(e).__name__)
+        cand = []
+        for p in found:
+            if p["id"] in seen: continue
+            t = (p["title"] + " " + p["abstract"]).lower()
+            match = sum(1 for w in words if w in t) / max(1, len(words))
+            p["score"] = round(40 + 10 * match + min(score(t, p["title"]), 10) + min(math.log1p(p.get("cites", 0)), 5), 1)
+            if match >= 0.5 and not re.search(NEG, p["title"].lower()): cand.append(p)
+        pick = sorted(cand, key=lambda p: -p["score"])[:per_hunt]
+        for p in pick:
+            seen.add(p["id"]); p.update(track="hunt", hunt=h["id"], topic=f"hunt: {h['query']}", source=f"Hunt: {h['query'][:60]}")
+        h.update(status="searched" if pick else "nothing found", searched=datetime.now(timezone.utc).date().isoformat(),
+                 papers=[p["id"] for p in pick])
+        print(f"hunt '{h['query']}': {len(found)} found, queued {len(pick)}")
+        out += pick
+    json.dump(H, open(HUNTS, "w"), indent=1, ensure_ascii=False)
+    return out
+
+
+# ------------------------------------------------------------------ frontier: the newest and fastest-rising research
+FRONTIER_STATE = os.path.join(K, "frontier_track.json")
+
+
+def frontier_papers(seen):
+    """(1) arXiv of the last 45 days in quantitative finance AND machine learning applied to trading/volatility;
+    (2) papers from the last 18 months that are already being cited fast (rising work on Volta's topics)."""
+    st = json.load(open(FRONTIER_STATE)) if os.path.exists(FRONTIER_STATE) else {"topic": 0}
+    out = []
+    try:
+        q = ("(cat:q-fin.TR OR cat:q-fin.ST OR cat:q-fin.CP OR cat:q-fin.PM OR cat:q-fin.RM OR cat:cs.LG OR cat:stat.ML) AND "
+             "(abs:volatility OR abs:futures OR abs:\"order book\" OR abs:trading OR abs:options OR abs:\"prop\")")
+        cut = (datetime.now(timezone.utc) - timedelta(days=45)).date().isoformat()
+        for p in _arxiv_search(q, n=100, sort="submittedDate"):
+            if p["date"] < cut or p["id"] in seen: continue
+            p["score"] = score(p["title"] + " " + p["abstract"], p["title"])
+            if p["score"] >= 7: out.append(dict(p, source="Frontier (arXiv, last 45 days)"))
+    except Exception as e:
+        print("frontier arxiv:", type(e).__name__)
+    since = (datetime.now(timezone.utc) - timedelta(days=548)).date().isoformat()
+    topics = TOPICS + PROP_TOPICS
+    for _ in range(2):
+        t = topics[st["topic"] % len(topics)]; st["topic"] += 1
+        try:
+            for p in _openalex_search(t, per=10, extra_filter=f",from_publication_date:{since}"):
+                if p["id"] in seen or p.get("cites", 0) < 3: continue
+                p["score"] = score(p["title"] + " " + p["abstract"], p["title"]) + min(math.log1p(p["cites"]) * 2, 8)
+                if p["score"] >= 8: out.append(dict(p, source="Frontier (rising, < 18 months old)", topic=t))
+        except Exception as e:
+            print("frontier openalex:", type(e).__name__)
+    json.dump(st, open(FRONTIER_STATE, "w"))
+    for p in out: p["track"] = "frontier"
+    return sorted(out, key=lambda p: -p["score"])
+
+
 PAPERS = os.path.join(K, "papers")
 
 
@@ -362,6 +502,19 @@ def main(max_new=10):
             new += sorted(cand, key=lambda p: -p["score"])[:3 - waiting]
     except Exception as e:
         errs.append(f"prop: {type(e).__name__}")
+    try:                                                     # hunts: research Volta ordered itself (or a finding triggered) - read first
+        auto_hunts()
+        new += [p for p in hunt_papers(seen) if not any(q["id"] == p["id"] for q in queue)]
+    except Exception as e:
+        errs.append(f"hunts: {type(e).__name__}")
+    try:                                                     # frontier: keep ~2 of the newest / fastest-rising papers waiting
+        waiting = sum(1 for q in queue if q.get("track") == "frontier")
+        if waiting < 2:
+            fr = [p for p in frontier_papers(seen) if not any(q["id"] == p["id"] for q in queue)][:2 - waiting]
+            for p in fr: seen.add(p["id"])
+            new += fr
+    except Exception as e:
+        errs.append(f"frontier: {type(e).__name__}")
     for p in new:
         p["abstract"] = p["abstract"][:2500]; p["queued"] = datetime.now(timezone.utc).date().isoformat()
     queue += new

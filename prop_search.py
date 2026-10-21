@@ -574,6 +574,11 @@ def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
         lines += ["", f"EXAM: {name[:70]} -> {vd[:260]}"]
     s = json.load(open(STATUS)) if os.path.exists(STATUS) else {}
     s["prop_search"] = lines; json.dump(s, open(STATUS, "w"), indent=1)
+    if SHARD == 0:
+        try:
+            import eta; lines += [""] + eta.update()             # Volta's own estimate of when it finds a real edge
+        except Exception as e:
+            print("eta skipped:", type(e).__name__, e)
     print("\n".join(lines))
     try:
         import test_engine as TE

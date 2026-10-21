@@ -22,7 +22,7 @@ const HELP = [
   "/plan buffer:<$> [stop:<pts>] [contract:MNQ|NQ] - today's size and loss limits for your account",
   "/wishes - Volta's self-check: its diary and what it needs to get better",
   "/book - Volta as a trader: its virtual prop account, trades, balance and journal",
-  "/search - Volta's nightly prop-strategy search: leaderboard and exams",
+  "/search - Volta's prop-strategy search: leaderboard, exams and its estimate of when it finds a real edge",
   "/level - Volta's level: XP for verified progress, what improved",
   "/strategies - the strategy lab: what Volta built and tested, what passed, live forward results",
   "/powers - today's open read: odds for yesterday's high/low, gap fill, tail day, Asia/London levels",
@@ -336,11 +336,11 @@ export default {
       case "level":
         return reply((s.level || ["Volta's level is computed with the next evening run."]).join("\n"));
       case "search":
-        return reply((s.prop_search || ["The first nightly prop search report arrives tomorrow morning."]).join("\n"));
+        return reply([...(s.eta ? [...s.eta.slice(0, 3), ""] : []), ...(s.prop_search || ["The first nightly prop search report arrives tomorrow morning."])].join("\n"));
       case "book":
         return reply((s.book || ["Volta's book opens with the next evening run."]).join("\n"));
       case "wishes":
-        return reply((s.wishes || ["Volta's first self-check runs with today's learning runs."]).join("\n"));
+        return reply([...(s.eta ? [...s.eta, ""] : []), ...(s.wishes || ["Volta's first self-check runs with today's learning runs."])].join("\n"));
       case "strategies":
         return reply((s.strategies || ["The strategy lab scoreboard appears after the next evening run."]).join("\n"));
       case "powers":

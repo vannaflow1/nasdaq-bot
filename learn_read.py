@@ -91,7 +91,8 @@ def main():
     queue = json.load(open(QUEUE)) if os.path.exists(QUEUE) else []
     url = worker_url(); t0 = time.time(); done = 0
     known = {json.loads(l)["id"] for l in open(LIB) if l.strip()} if os.path.exists(LIB) else set()
-    queue.sort(key=lambda p: -(p.get("score", 0) + (20 if p.get("track") == "prop" else 12 if p.get("track") == "self" else 0)))   # mission papers first, then one about itself
+    BOOST = {"hunt": 30, "prop": 20, "frontier": 14, "self": 12}     # research Volta ordered itself first, then the mission, the newest, itself
+    queue.sort(key=lambda p: -(min(p.get("score", 0), 60) + BOOST.get(p.get("track"), 0)))
     while queue and done < MAX_PAPERS and time.time() - t0 < RUN_SECONDS and budget() < DAILY_CAP:
         p = queue.pop(0)
         if p["id"] in known:
@@ -174,7 +175,7 @@ def main():
             budget(u); tri = js(out); rel = int(tri.get("relevance", 0))
         except Exception as e:
             print("triage failed:", type(e).__name__, e); queue.insert(0, p); break
-        if rel < 3 and not p.get("curated"):
+        if rel < (2 if p.get("track") == "hunt" else 3) and not p.get("curated"):     # a hunted paper was asked for: lower bar
             with open(SKIP, "a") as f:
                 f.write(json.dumps({"id": p["id"], "title": p["title"], "relevance": rel, "topic": p.get("topic"),
                                     "reason": tri.get("reason", ""), "date": today}) + "\n")
@@ -204,6 +205,7 @@ def main():
             entry = {"id": p["id"], "title": p["title"], "url": p.get("url"), "source": p.get("source"), "date": today,
                      "learned": r["learned"], "concepts": r.get("concepts", [])[:5], "relevance": rel,
                      "relevance_note": r.get("relevance_note", ""), "topic": p.get("topic"), "curated": p.get("curated", False),
+                     "track": p.get("track"), "hunt": p.get("hunt"),
                      "reader": "free AI", "idea": {"text": idea.get("text", ""), "tested": False,
                      "verdict": ("queued for testing" if testable and rel >= 3 else
                                  "not testable with my data yet" if idea.get("text") else "")}}
@@ -211,7 +213,8 @@ def main():
                 f.write(json.dumps(entry) + "\n")
             if testable and rel >= 3:
                 tq = json.load(open(TESTQ)) if os.path.exists(TESTQ) else []
-                tq.append({"id": p["id"], "title": p["title"], "idea": idea["text"], "relevance": rel, "added": today})
+                tq.append({"id": p["id"], "title": p["title"], "idea": idea["text"], "relevance": rel + (1 if p.get("track") == "hunt" else 0),
+                           "added": today, "hunt": p.get("hunt")})
                 json.dump(tq, open(TESTQ, "w"), indent=1)
             known.add(p["id"]); done += 1
             print(f"read ({rel}*): {p['title'][:70]}")

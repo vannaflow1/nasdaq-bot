@@ -47,3 +47,16 @@ Volta's wishes "for claude" may be granted by the Sunday session WITHOUT asking 
 - live scripts must pass their dry runs (nasdaq_bot.py --test is NOT used - it posts; use --brain / --nerd / live_tracker.py --dry --at, volflag.py --dry);
 - every self-upgrade is announced "🔧 Volta upgraded itself" with what changed and the undo command (git revert <hash>).
 Never without the owner: money, accounts, secrets/permissions, deleting data, weakening any test/guardrail.
+
+## Paper hunts, frontier papers, edge estimate (added 21 Oct 2026)
+- **Hunts** (knowledge/hunts.json): targeted research on one topic. Ordered by the self-check (`paper_hunts`, max 2 a day) and
+  automatically by learn_fetch.auto_hunts() whenever a strategy passes the locked exam or an idea lands in review_queue.json.
+  learn_fetch searches each hunt once (arXiv + OpenAlex by relevance, >= half the query words must match) and queues the
+  best 3 with track "hunt"; learn_read reads them first (lower triage bar: 2 stars) and tags library entries with the hunt id;
+  ideas from hunted papers get +1 priority in the test queue. The self-check digest shows each hunt and what it found.
+- **Frontier** track: ~2 papers always waiting from arXiv (last 45 days, q-fin + cs.LG/stat.ML on trading/volatility) and
+  OpenAlex papers < 18 months old that are already being cited (rising work on Volta's topics).
+- **Edge estimate** (eta.py): Monte Carlo over "does a real edge exist here (50/50 prior)", "share of exams that catch it
+  (~1 in 20)", "lucky strategies pass the exam 1 in 4", "60 trading days forward test". Weighted by Volta's own failed exams
+  and forward tests. Written to status.json["eta"] by prop_search (job 1) and strategy_forward; shown at the top of /search
+  and /wishes; history in knowledge/eta_history.csv. Keep it honest: never tune the priors to make the number look better.
