@@ -1,0 +1,39 @@
+{
+ "weights": {
+  "NQ": 0.679,
+  "GC": 0.139,
+  "CL": 0.182
+ },
+ "why": "evidence: NQ 47/725 held up on 2022-23 (top EV +678), GC 2/325 held up on 2022-23 (top EV +243), CL 7/361 held up on 2022-23 (top EV +541)",
+ "stats": {
+  "NQ": {
+   "tested": 725,
+   "validated": 47,
+   "top5": 678.1
+  },
+  "GC": {
+   "tested": 325,
+   "validated": 2,
+   "top5": 243.05
+  },
+  "CL": {
+   "tested": 361,
+   "validated": 7,
+   "top5": 540.76
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-21",
+   "weights": {
+    "NQ": 0.679,
+    "GC": 0.139,
+    "CL": 0.182
+   }
+  }
+ ],
+ "shifted": [
+  "NQ",
+  "GC"
+ ]
+}
