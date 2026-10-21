@@ -50,7 +50,9 @@ FILTERS = {"every day": "", "tail-day risk high": "pw_tail_day - 0.15", "tail-da
            "big overnight": "k_on_vs_normal - 1.3", "trending regime (Hurst>0.55)": "k_hurst - 0.55", "mean-reverting (Hurst<0.5)": "0.5 - k_hurst",
            "calm VIX (below 60d avg)": "mean(vix, 60) - vix", "gap fill likely": "pw_gap_fill - 0.65", "VIX curve inverted": "vix_curve - 1",
            "not Monday": "k_dow - 0.5", "Fri": "where(k_dow > 3.5, 1, 0)",
-           "no red-folder news": "0.5 - k_red_any", "red-folder news day": "k_red_any - 0.5", "no FOMC": "0.5 - k_fomc_day"}
+           "no red-folder news": "0.5 - k_red_any", "red-folder news day": "k_red_any - 0.5", "no FOMC": "0.5 - k_fomc_day",
+           "volatile VIX (above 60d avg)": "vix - mean(vix, 60)", "big expected range (top third)": "rank(iv30, 252) - 0.67",
+           "small expected range (bottom third)": "0.33 - rank(iv30, 252)"}
 LEVEL_SETS = [("yday_high", "yday_low"), ("on_high", "on_low"), ("asia_high", "asia_low"), ("london_high", "london_low"),
               ("or15_high", "or15_low"), ("vwap_up1", "vwap_dn1"), ("vwap_up2", "vwap_dn2"), ("r1", "s1"), ("exp50_up", "exp50_dn"),
               ("exp70_up", "exp70_dn"), ("atr10_up", "atr10_dn"), ("ewma1_up", "ewma1_dn")]
@@ -59,13 +61,28 @@ STOPS = [{"points": 10}, {"points": 20}, {"points": 35}, {"points": 60}, {"range
 TARGETS = [{"R": 0.5}, {"R": 1}, {"R": 1.5}, {"R": 2}, {"R": 3}]
 EXITS = ["14:55", "11:30"]
 SIZINGS = [{"risk": 0.12, "eval_risk": 0.2}, {"risk": 0.2, "eval_risk": 0.35}, {"risk": 0.3, "eval_risk": 0.5}]
+# account playbooks (how to run the account, not the strategy): tried on the SEARCH years only, for candidates whose
+# best base sizing is positive or a near-miss (EV > -half the fee); the best one is then validated like everything else.
+PLAYBOOKS = [{"risk": 0.2, "eval_risk": 0.5, "eval_finish": True}, {"risk": 0.12, "eval_risk": 0.35, "eval_finish": True},
+             {"risk": 0.3, "eval_risk": 0.7, "eval_finish": True}, {"risk": 0.2, "eval_risk": 0.2, "eval_finish": True},
+             {"risk": 0.08, "eval_risk": 0.35}, {"risk": 0.2, "eval_risk": 0.5, "eval_finish": True, "funded_micros": 2},
+             {"risk": 0.2, "eval_risk": 0.7, "eval_finish": True, "funded_micros": 3}]
+# trade management (how each trade is run): every grid strategy also exists with these
+MANAGES = [None, {"be_at_R": 0.5}, {"be_at_R": 1.0}, {"trail_R": 1.0}, {"partial": {"at_R": 1.0, "frac": 0.5}}]
+MANAGE_NAMES = {None: "", "be_at_R": "breakeven at {}R", "trail_R": "trail {}R", "partial": "half off at {}R"}
+
+
+def _mg_name(mg):
+    if not mg: return ""
+    k = next(iter(mg)); v = mg[k]["at_R"] if k == "partial" else mg[k]
+    return ", " + MANAGE_NAMES[k].format(v)
 
 
 MARKETS = ["NQ", "GC", "CL"]          # Nasdaq, gold, crude oil (micros: MNQ / MGC / MCL)
 OWN_SIDES = {"long": "long", "short": "short", "with its gap": "own:gap", "fade its gap": "own:-gap",
              "with its move since midnight": "own:mid", "against its move since midnight": "own:-mid",
              "with its overnight-range side": "own:pos", "against its overnight-range side": "own:-pos"}
-OTHER_FILTERS = ["every day", "calm VIX (below 60d avg)", "VIX curve inverted", "not Monday", "Fri",
+OTHER_FILTERS = ["every day", "calm VIX (below 60d avg)", "volatile VIX (above 60d avg)", "VIX curve inverted", "not Monday", "Fri",
                  "no red-folder news", "red-folder news day", "no FOMC"]
 
 
@@ -80,20 +97,27 @@ def grid():
         tag = "" if mk == "NQ" else f"[{mk}] "
         for t, (sn, sd), (fn, fl), st, tg, ex in itertools.product(TIMES, sides.items(), filters.items(), stops, TARGETS, EXITS):
             if ex == "11:30" and t >= "10:30": continue
-            G.append({"kind": "strategy", "market": mk, "name": f"{tag}{sn} at {t}, {fn}", "entry": {"type": "time", "at": t, "side": sd},
-                      **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": ex})
+            for mg in MANAGES:
+                if mg and "R" in tg and ((mg.get("be_at_R") or mg.get("trail_R") or (mg.get("partial") or {}).get("at_R") or 0) >= tg["R"]): continue
+                G.append({"kind": "strategy", "market": mk, "name": f"{tag}{sn} at {t}, {fn}{_mg_name(mg)}", "entry": {"type": "time", "at": t, "side": sd},
+                          **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": ex, **({"manage": mg} if mg else {})})
         for (up, dn), act, w, (fn, fl), st, tg in itertools.product(LEVEL_SETS, ("fade", "break"), WINDOWS, filters.items(), stops, TARGETS):
             if up.startswith("or15") and w[0] < "08:45": continue
             for lv in (up, dn):
-                G.append({"kind": "strategy", "market": mk, "name": f"{tag}{act} {lv} {w[0]}-{w[1]}, {fn}",
-                          "entry": {"type": "level", "level": lv, "action": act, "window": w},
-                          **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": "14:55"})
+                for mg in MANAGES:
+                    if mg and "R" in tg and ((mg.get("be_at_R") or mg.get("trail_R") or (mg.get("partial") or {}).get("at_R") or 0) >= tg["R"]): continue
+                    G.append({"kind": "strategy", "market": mk, "name": f"{tag}{act} {lv} {w[0]}-{w[1]}, {fn}{_mg_name(mg)}",
+                              "entry": {"type": "level", "level": lv, "action": act, "window": w},
+                              **({"filter": fl} if fl else {}), "stop": st, "target": tg, "exit": "14:55", **({"manage": mg} if mg else {})})
     random.Random(2026).shuffle(G)
     return G
 
 
 def mutate(spec, rng):
-    s = json.loads(json.dumps(spec)); k = rng.choice(["stop", "target", "filter", "time", "exit", "window"])
+    s = json.loads(json.dumps(spec)); k = rng.choice(["stop", "target", "filter", "time", "exit", "window", "manage"])
+    if k == "manage":
+        mg = rng.choice(MANAGES); s.pop("manage", None)
+        if mg: s["manage"] = mg
     if k == "stop": s["stop"] = rng.choice(STOPS if (s.get("market") or "NQ") == "NQ" else [x for x in STOPS if "range" in x])
     elif k == "target": s["target"] = rng.choice(TARGETS)
     elif k == "filter":
@@ -202,7 +226,7 @@ def score(spec, X, D, S, P, idx, plan=None, sizings=SIZINGS):
         res = S.prop_score(T, D["M"], sp, plan) if plan else S.prop_score(T, D["M"], sp)
         for r in res[:1]:
             rows.append({"n": m["n"], "win": m["win"], "avg_R": m["avg_R"], "years_pos": m["years_pos"], "plan": r["plan"],
-                         "risk": sz["risk"], "eval_risk": sz["eval_risk"], "pass": r["pass_rate"], "paid": r["avg_payout_per_eval"],
+                         "risk": sz["risk"], "eval_risk": sz["eval_risk"], "playbook": json.dumps(sz), "pass": r["pass_rate"], "paid": r["avg_payout_per_eval"],
                          "ev": r["ev_per_eval"], "fee": r["fee"]})
     return rows, T
 
@@ -250,11 +274,19 @@ def main():
         except Exception as e:
             print("skip", spec["name"], type(e).__name__, e); continue
         best = max(rows, key=lambda r: r["ev"]) if rows else None
+        if best and best["n"] >= MIN_TRADES and best["ev"] > -0.5 * best["fee"]:   # account playbooks, search years only
+            try:
+                pb_rows, _ = score(spec, X, D, S, None, "A", plan=best["plan"], sizings=PLAYBOOKS)
+                if pb_rows:
+                    b2 = max(pb_rows, key=lambda r: r["ev"])
+                    if b2["ev"] > best["ev"]: best = b2
+            except Exception as e:
+                print("playbooks skipped:", type(e).__name__, e)
         row = {"date": datetime.now(timezone.utc).date().isoformat(), "spec_id": sid, "name": spec["name"], "spec": json.dumps(spec),
                "sim": SIM_VERSION}
-        if best: row.update({k: best[k] for k in ("n", "win", "avg_R", "years_pos", "plan", "risk", "eval_risk", "pass", "paid", "ev", "fee")})
+        if best: row.update({k: best[k] for k in ("n", "win", "avg_R", "years_pos", "plan", "risk", "eval_risk", "playbook", "pass", "paid", "ev", "fee")})
         if best and best["n"] >= MIN_TRADES and best["ev"] > 0:   # stage B: validation on the next years, never used to choose
-            sz = {"risk": best["risk"], "eval_risk": best["eval_risk"]}
+            sz = json.loads(best["playbook"])
             vr, TB = score(spec, X, D, S, None, "B", plan=best["plan"], sizings=[sz])
             if vr:
                 row.update({"n_val": vr[0]["n"], "pass_val": vr[0]["pass"], "paid_val": vr[0]["paid"], "ev_val": vr[0]["ev"]})
@@ -298,7 +330,9 @@ def main():
             if TRACK != "classic": free &= has_bar              # new-regime track: no exam at all before its (99%) luck bar exists
             rk = xs.where(has_bar, A2.ev_val)[free].sort_values(ascending=False)
             for i, c in A2.loc[rk.index[:2]].iterrows():
-                spec = json.loads(c.spec); spec["prop"] = {"risk": c.risk, "eval_risk": c.eval_risk}
+                spec = json.loads(c.spec)
+                pbk = c.get("playbook") if hasattr(c, "get") else None
+                spec["prop"] = json.loads(pbk) if isinstance(pbk, str) and pbk.startswith("{") else {"risk": c.risk, "eval_risk": c.eval_risk}
                 try:
                     if TRACK == "classic":
                         verdict, _ = S.evaluate(spec, X, source="prop-search")

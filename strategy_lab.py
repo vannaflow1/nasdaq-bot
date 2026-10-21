@@ -189,6 +189,13 @@ def validate(spec):
         raise Bad("target must be {R: 0.3-15}, {points: 2-600} or {level: <LEVEL>}")
     ex = spec.get("exit", "14:55")
     if not (1 <= mins(ex) <= 385): raise Bad("exit must be 08:31-14:55")
+    mg = spec.get("manage")
+    if mg is not None:
+        if not isinstance(mg, dict) or not set(mg) <= {"be_at_R", "trail_R", "partial"}: raise Bad("manage may only have be_at_R, trail_R, partial")
+        for k_ in ("be_at_R", "trail_R"):
+            if k_ in mg and not (0.25 <= float(mg[k_]) <= 5): raise Bad(f"manage.{k_} must be 0.25-5")
+        if "partial" in mg and not (0.25 <= float(mg["partial"].get("at_R", 0)) <= 5 and 0.1 <= float(mg["partial"].get("frac", 0.5)) <= 0.9):
+            raise Bad("manage.partial must be {at_R: 0.25-5, frac: 0.1-0.9}")
     return True
 
 
@@ -261,8 +268,29 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
         if not np.isfinite(tl) or (tl - ep) * s <= 2 * tk: return None
         tgt = tl
     # fill bar: only the stop can hit (pessimistic)
+    mg = spec.get("manage")
     if (s == 1 and L[k] <= stop) or (s == -1 and H[k] >= stop):
         xp = stop - s * sl
+    elif mg:                                                           # trade management: bar by bar, pessimistic, no lookahead
+        cur, best, rem, got = stop, ep, 1.0, 0.0
+        be, tr, part = mg.get("be_at_R"), mg.get("trail_R"), mg.get("partial")
+        for j in range(k + 1, xe):
+            if (s == 1 and L[j] <= cur) or (s == -1 and H[j] >= cur):  # stop (or moved stop) first within a bar
+                got += rem * ((cur - s * sl) - ep) * s; rem = 0.0; break
+            if part and rem == 1.0:
+                pl = ep + s * float(part["at_R"]) * stop_pts
+                if (s == 1 and H[j] >= pl + tk) or (s == -1 and L[j] <= pl - tk):
+                    f = float(part.get("frac", 0.5)); got += f * (pl - ep) * s; rem -= f
+            if (s == 1 and H[j] >= tgt + tk) or (s == -1 and L[j] <= tgt - tk):
+                got += rem * (tgt - ep) * s; rem = 0.0; break
+            best = max(best, H[j]) if s == 1 else min(best, L[j]); fav = (best - ep) * s
+            if be is not None and fav >= float(be) * stop_pts:         # move the stop to breakeven (applies from the next bar)
+                cur = max(cur, ep) if s == 1 else min(cur, ep)
+            if tr is not None and fav >= float(tr) * stop_pts:         # trail the stop tr*R behind the best price so far
+                ts = best - s * float(tr) * stop_pts; cur = max(cur, ts) if s == 1 else min(cur, ts)
+        if rem > 0: got += rem * ((O[xe] - s * tk) - ep) * s           # time exit for whatever is left
+        pnl = got - cm * cost_mult
+        return pnl, pnl / stop_pts, s, k
     else:
         j0, j1 = k + 1, xe
         if j0 >= j1:
@@ -342,9 +370,18 @@ def _sizer(spec, stop):
     import prop_sim
     pr = spec.get("prop") or {}; r = float(pr.get("risk", 0.25)); re_ = float(pr.get("eval_risk", r))
     r, re_ = min(max(r, 0.02), 0.9), min(max(re_, 0.02), 0.9)
-    def size(phase, profit, buf):                             # never freeze: keep 1 micro while one stop still fits the buffer
-        n = int(((re_ if phase == "eval" else r) * buf) // (stop * prop_sim.MNQ))
+    # account playbook (optional): "eval_finish": near the eval target, trade only as many micros as needed to reach it
+    # (less risk exactly when one bad day would undo the progress); "funded_micros": a fixed small size once funded
+    # (survive to the payouts instead of growing fast). Target R taken from the spec (1R if the target is a level/points).
+    fin, fm = bool(pr.get("eval_finish")), pr.get("funded_micros")
+    tg = spec.get("target") or {}; win_per = stop * prop_sim.MNQ * float(tg.get("R", 1.0))
+    def size(phase, profit, buf, P=None):                     # never freeze: keep 1 micro while one stop still fits the buffer
+        if phase != "eval" and fm: n = int(fm)
+        else: n = int(((re_ if phase == "eval" else r) * buf) // (stop * prop_sim.MNQ))
+        if phase == "eval" and fin and P is not None and win_per > 0:
+            need = max(P["target"] - profit, 0.0); n = min(n, int(np.ceil(need / win_per)))
         return max(n, 1 if stop * prop_sim.MNQ < buf else 0)
+    size.wants_plan = True
     return size
 
 

@@ -23,6 +23,11 @@ def plans():
     return {p["id"]: p for p in json.load(open(FIRMS_FILE))}
 
 
+def _size(size_fn, phase, profit, buf, P):
+    """Account playbooks may want the plan (e.g. to size toward the eval target); plain sizers get (phase, profit, buf)."""
+    return size_fn(phase, profit, buf, P) if getattr(size_fn, "wants_plan", False) else size_fn(phase, profit, buf)
+
+
 def _tier(tiers, profit):
     n = tiers[0][1]
     for lo, m in tiers:
@@ -44,7 +49,7 @@ def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
         days += 1
         profit = bal - S0
         cap = P["eval_max_mnq"] if phase == "eval" else _tier(P["fund_max_tiers"], profit)
-        n = _dll_cap(P, phase, int(min(cap, max(0, size_fn(phase, profit, bal - floor)))), day_worst[i])
+        n = _dll_cap(P, phase, int(min(cap, max(0, _size(size_fn, phase, profit, bal - floor, P)))), day_worst[i])
         if n == 0 and day_worst[i] < 0:                          # not even 1 contract fits (buffer or daily limit): dead
             return dict(passed=phase == "funded", payouts=payouts, days=days, end="stuck")
         pnl = n * day_pts[i] * MNQ; worst = n * day_worst[i] * MNQ
@@ -102,7 +107,7 @@ class Account:
         """Trade one day. Returns the payout paid to the trader today (0 if none). Sets self.end when finished."""
         P = self.P; profit = self.bal - self.S0
         cap = P["eval_max_mnq"] if self.phase == "eval" else _tier(P["fund_max_tiers"], profit)
-        n = _dll_cap(P, self.phase, int(min(cap, max(0, size_fn(self.phase, profit, self.bal - self.floor)))), worst)
+        n = _dll_cap(P, self.phase, int(min(cap, max(0, _size(size_fn, self.phase, profit, self.bal - self.floor, P)))), worst)
         if n == 0 and worst < 0:                                   # can no longer trade a single contract: abandoned,
             self.end = "stuck"; self.last_pnl = 0.0; return 0.0    # the farm frees the slot and buys a new evaluation
         pnl = n * pts * MNQ; w = n * worst * MNQ; self.last_pnl = pnl

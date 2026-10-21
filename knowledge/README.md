@@ -83,3 +83,13 @@ Never without the owner: money, accounts, secrets/permissions, deleting data, we
   review "PENDING (recent track, forward n/15 ...)"). The real exam is the coming weeks: strategy_forward trades it every
   evening; after 15 forward trades review_prop.recent_forward sets CONFIRMED (made money, not significantly worse than the
   validation months) or FRAGILE. Announced on Discord. The timer counts both tracks.
+- **Trade management + account playbooks** (21 Oct, to raise the hit rate - the timer's biggest lever):
+  strategy specs may carry "manage": {"be_at_R": x} (stop to breakeven after +xR), {"trail_R": x} (trail x R behind the best
+  price), {"partial": {"at_R": x, "frac": f}} (take f off at +xR) - simulated bar by bar in strategy_lab.simulate_session,
+  stop checked first within a bar, adjustments apply from the next bar (no lookahead). Specs without "manage" are unchanged
+  (regression-checked). The grid now has every strategy also with breakeven 0.5R / 1R, trail 1R, half off at 1R (~986k
+  points) plus 3 new filters (VIX above its 60d avg, top/bottom third of expected range); mutations can change "manage".
+  Account playbooks ("prop" block): "eval_finish" (near the eval target, trade only the micros needed to reach it) and
+  "funded_micros" (fixed small size once funded), plus wider risk levels. prop_search tries 7 PLAYBOOKS on the SEARCH years
+  only for candidates whose best base sizing is positive or a near-miss, keeps the best (column "playbook") and validates
+  it like everything else. prop_sim passes the plan to sizers that set size.wants_plan.
