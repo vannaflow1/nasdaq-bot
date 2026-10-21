@@ -1,22 +1,395 @@
 [
- {"id": "lucid_flex_25k", "firm": "Lucid", "name": "LucidFlex 25K", "fee": 64, "activation": 0, "size": 25000, "target": 1250,
-  "mll": 1000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": 0.5, "eval_max_mnq": 20,
-  "fund_consistency": null, "fund_max_tiers": [[0, 10], [1000, 20]], "payout_days": 5, "day_min": 100, "cycle_min": 0,
-  "payout_frac": 0.5, "caps": [1000], "min_req": 500, "buffer": 0, "split": 0.9, "payouts_to_live": 5,
-  "source": "third-party rule guides Sep-Oct 2026; fee $64 paid by the owner (Oct 2026)"},
- {"id": "lucid_pro_25k", "firm": "Lucid", "name": "LucidPro 25K", "fee": 64, "activation": 0, "size": 25000, "target": 1250,
-  "mll": 1000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": null, "eval_max_mnq": 20,
-  "fund_consistency": 0.4, "fund_max_tiers": [[0, 20]], "payout_days": 3, "day_min": 0, "cycle_min": 250,
-  "payout_frac": 1.0, "caps": [1000, 1500], "min_req": 500, "buffer": 100, "split": 0.9, "payouts_to_live": 5,
-  "source": "third-party rule guides Sep-Oct 2026; fee assumed equal to Flex ($64) - verify"},
- {"id": "lucid_flex_50k", "firm": "Lucid", "name": "LucidFlex 50K", "fee": 104, "activation": 0, "size": 50000, "target": 3000,
-  "mll": 2000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": 0.5, "eval_max_mnq": 40,
-  "fund_consistency": null, "fund_max_tiers": [[0, 20], [2000, 40]], "payout_days": 5, "day_min": 150, "cycle_min": 0,
-  "payout_frac": 0.5, "caps": [2000], "min_req": 500, "buffer": 0, "split": 0.9, "payouts_to_live": 5,
-  "source": "third-party rule guides Sep-Oct 2026 (funded scaling tiers approximate); fee $104 paid by the owner"},
- {"id": "lucid_pro_50k", "firm": "Lucid", "name": "LucidPro 50K", "fee": 104, "activation": 0, "size": 50000, "target": 3000,
-  "mll": 2000, "mll_type": "eod", "lock_over_start": 100, "eval_consistency": null, "eval_max_mnq": 40,
-  "fund_consistency": 0.4, "fund_max_tiers": [[0, 40]], "payout_days": 3, "day_min": 0, "cycle_min": 500,
-  "payout_frac": 1.0, "caps": [2000, 2500], "min_req": 500, "buffer": 100, "split": 0.9, "payouts_to_live": 5,
-  "source": "third-party rule guides Sep-Oct 2026 (eval daily loss limit $1,200 not modelled); fee assumed $104"}
+ {
+  "id": "lucid_flex_25k",
+  "firm": "Lucid",
+  "name": "LucidFlex 25K",
+  "fee": 64,
+  "activation": 0,
+  "size": 25000,
+  "target": 1250,
+  "mll": 1000,
+  "mll_type": "eod",
+  "lock_over_start": 100,
+  "eval_consistency": 0.5,
+  "eval_max_mnq": 20,
+  "fund_consistency": null,
+  "fund_max_tiers": [
+   [
+    0,
+    10
+   ],
+   [
+    1000,
+    20
+   ]
+  ],
+  "payout_days": 5,
+  "day_min": 100,
+  "cycle_min": 0,
+  "payout_frac": 0.5,
+  "caps": [
+   1000
+  ],
+  "min_req": 500,
+  "buffer": 0,
+  "split": 0.9,
+  "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026; fee $64 paid by the owner (Oct 2026)",
+  "billing": "one-time",
+  "bots": "allowed (help center: automated systems and copiers permitted; no HFT, no <=5s microscalping, no cross-account hedging); no stated VPS/cloud rule"
+ },
+ {
+  "id": "lucid_pro_25k",
+  "firm": "Lucid",
+  "name": "LucidPro 25K",
+  "fee": 64,
+  "activation": 0,
+  "size": 25000,
+  "target": 1250,
+  "mll": 1000,
+  "mll_type": "eod",
+  "lock_over_start": 100,
+  "eval_consistency": null,
+  "eval_max_mnq": 20,
+  "fund_consistency": 0.4,
+  "fund_max_tiers": [
+   [
+    0,
+    20
+   ]
+  ],
+  "payout_days": 3,
+  "day_min": 0,
+  "cycle_min": 250,
+  "payout_frac": 1.0,
+  "caps": [
+   1000,
+   1500
+  ],
+  "min_req": 500,
+  "buffer": 1000,
+  "split": 0.9,
+  "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026; fee assumed equal to Flex ($64) - verify; buffer fixed 2026-10-21: protected balance $26,100 = locked floor $25,100 + $1,000 (was 100, which let payouts drain to the floor)",
+  "billing": "one-time",
+  "bots": "allowed (help center: automated systems and copiers permitted; no HFT, no <=5s microscalping, no cross-account hedging); no stated VPS/cloud rule"
+ },
+ {
+  "id": "lucid_flex_50k",
+  "firm": "Lucid",
+  "name": "LucidFlex 50K",
+  "fee": 104,
+  "activation": 0,
+  "size": 50000,
+  "target": 3000,
+  "mll": 2000,
+  "mll_type": "eod",
+  "lock_over_start": 100,
+  "eval_consistency": 0.5,
+  "eval_max_mnq": 40,
+  "fund_consistency": null,
+  "fund_max_tiers": [
+   [
+    0,
+    20
+   ],
+   [
+    2000,
+    40
+   ]
+  ],
+  "payout_days": 5,
+  "day_min": 150,
+  "cycle_min": 0,
+  "payout_frac": 0.5,
+  "caps": [
+   2000
+  ],
+  "min_req": 500,
+  "buffer": 0,
+  "split": 0.9,
+  "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026 (funded scaling tiers approximate); fee $104 paid by the owner",
+  "billing": "one-time",
+  "bots": "allowed (help center: automated systems and copiers permitted; no HFT, no <=5s microscalping, no cross-account hedging); no stated VPS/cloud rule"
+ },
+ {
+  "id": "lucid_pro_50k",
+  "firm": "Lucid",
+  "name": "LucidPro 50K",
+  "fee": 104,
+  "activation": 0,
+  "size": 50000,
+  "target": 3000,
+  "mll": 2000,
+  "mll_type": "eod",
+  "lock_over_start": 100,
+  "eval_consistency": null,
+  "eval_max_mnq": 40,
+  "fund_consistency": 0.4,
+  "fund_max_tiers": [
+   [
+    0,
+    40
+   ]
+  ],
+  "payout_days": 3,
+  "day_min": 0,
+  "cycle_min": 500,
+  "payout_frac": 1.0,
+  "caps": [
+   2000,
+   2500
+  ],
+  "min_req": 500,
+  "buffer": 2000,
+  "split": 0.9,
+  "payouts_to_live": 5,
+  "source": "third-party rule guides Sep-Oct 2026 (eval daily loss limit $1,200 not modelled); fee assumed $104; buffer fixed 2026-10-21: protected balance = start + MLL + $100 = locked floor + $2,000 (assumed by analogy with 25K, verify)",
+  "billing": "one-time",
+  "bots": "allowed (help center: automated systems and copiers permitted; no HFT, no <=5s microscalping, no cross-account hedging); no stated VPS/cloud rule"
+ },
+ {
+  "id": "tradeify_select_flex_50k",
+  "firm": "Tradeify",
+  "name": "Tradeify Select 50K (Flex funded)",
+  "fee": 159,
+  "activation": 0,
+  "size": 50000,
+  "target": 3000,
+  "mll": 2000,
+  "mll_type": "eod",
+  "lock_over_start": 100,
+  "eval_consistency": 0.4,
+  "eval_max_mnq": 40,
+  "fund_consistency": null,
+  "fund_max_tiers": [
+   [
+    0,
+    20
+   ],
+   [
+    1500,
+    30
+   ],
+   [
+    3000,
+    40
+   ]
+  ],
+  "payout_days": 5,
+  "day_min": 150,
+  "cycle_min": 0,
+  "payout_frac": 0.5,
+  "caps": [
+   2500
+  ],
+  "min_req": 250,
+  "buffer": 0,
+  "split": 0.9,
+  "payouts_to_live": 3,
+  "billing": "monthly ($159 list Feb 2026; ~$116 with promo Oct 2026)",
+  "bots": "allowed if you are sole owner/developer and the bot is not shared across firms; no HFT; funded: >50% of trades and profit from holds >10s; flat by 16:45 ET; may require live video verification of activating the code",
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Eval min 3 days; funded scaling tier thresholds approximate (2 minis start, 4 max)."
+ },
+ {
+  "id": "tradeify_select_daily_50k",
+  "firm": "Tradeify",
+  "name": "Tradeify Select 50K (Daily funded)",
+  "fee": 159,
+  "activation": 0,
+  "size": 50000,
+  "target": 3000,
+  "mll": 2000,
+  "mll_type": "eod",
+  "lock_over_start": 100,
+  "eval_consistency": 0.4,
+  "eval_max_mnq": 40,
+  "fund_consistency": null,
+  "fund_max_tiers": [
+   [
+    0,
+    20
+   ],
+   [
+    1500,
+    30
+   ],
+   [
+    3000,
+    40
+   ]
+  ],
+  "payout_days": 1,
+  "day_min": 0,
+  "cycle_min": 0,
+  "payout_frac": 1.0,
+  "caps": [
+   1250
+  ],
+  "min_req": 250,
+  "buffer": 2000,
+  "split": 0.9,
+  "payouts_to_live": 3,
+  "billing": "monthly ($159 list; ~$116 promo)",
+  "bots": "same as Tradeify Select Flex",
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Funded daily loss limit $1,000 NOT modelled; buffer $2,100 over start = locked floor + $2,000; withdrawals up to 2x profit since last payout (approximated as 100% of profit)."
+ },
+ {
+  "id": "fundednext_legacy_25k",
+  "firm": "FundedNext",
+  "name": "FundedNext Legacy 25K",
+  "fee": 79.99,
+  "activation": 0,
+  "size": 25000,
+  "target": 1250,
+  "mll": 1000,
+  "mll_type": "eod",
+  "lock_over_start": 0,
+  "eval_consistency": 0.4,
+  "eval_max_mnq": 20,
+  "fund_consistency": null,
+  "fund_max_tiers": [
+   [
+    0,
+    30
+   ]
+  ],
+  "payout_days": 5,
+  "day_min": 200,
+  "cycle_min": 0,
+  "payout_frac": 0.5,
+  "caps": [
+   3000
+  ],
+  "min_req": 250,
+  "buffer": 0,
+  "split": 0.8,
+  "payouts_to_live": 5,
+  "billing": "one-time (as listed)",
+  "bots": "EAs/bots permitted on challenge and funded; latency abuse, order flooding, grid, latency arbitrage banned; no stated VPS rule",
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Benchmark-day threshold assumed $200 (stated for Flex); 50% limit lifts after 30 benchmark days (not modelled); payouts_to_live is a placeholder (live = discretionary at $100k total profit)."
+ },
+ {
+  "id": "fundednext_rapid_25k",
+  "firm": "FundedNext",
+  "name": "FundedNext Rapid 25K",
+  "fee": 99.99,
+  "activation": 0,
+  "size": 25000,
+  "target": 1500,
+  "mll": 1000,
+  "mll_type": "eod",
+  "lock_over_start": 0,
+  "eval_consistency": null,
+  "eval_max_mnq": 10,
+  "fund_consistency": 0.4,
+  "fund_max_tiers": [
+   [
+    0,
+    15
+   ]
+  ],
+  "payout_days": 3,
+  "day_min": 0,
+  "cycle_min": 0,
+  "payout_frac": 1.0,
+  "caps": [
+   800,
+   800,
+   800,
+   800,
+   800,
+   100000
+  ],
+  "min_req": 250,
+  "buffer": 0,
+  "split": 0.8,
+  "payouts_to_live": 5,
+  "billing": "one-time (as listed)",
+  "bots": "same as FundedNext Legacy",
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Caps removed after 5 rewards; payouts_to_live placeholder."
+ },
+ {
+  "id": "fundednext_flex_50k",
+  "firm": "FundedNext",
+  "name": "FundedNext Flex 50K",
+  "fee": 133.99,
+  "activation": 0,
+  "size": 50000,
+  "target": 2500,
+  "mll": 1500,
+  "mll_type": "eod",
+  "lock_over_start": 0,
+  "eval_consistency": 0.4,
+  "eval_max_mnq": 30,
+  "fund_consistency": null,
+  "fund_max_tiers": [
+   [
+    0,
+    30
+   ]
+  ],
+  "payout_days": 5,
+  "day_min": 200,
+  "cycle_min": 500,
+  "payout_frac": 0.5,
+  "caps": [
+   1500
+  ],
+  "min_req": 250,
+  "buffer": 0,
+  "split": 0.8,
+  "payouts_to_live": 5,
+  "billing": "one-time (as listed); 90% split add-on $14.99",
+  "bots": "same as FundedNext Legacy",
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Account concludes after 5 withdrawals (modelled as live)."
+ },
+ {
+  "id": "tradeday_fastpass_50k",
+  "firm": "TradeDay",
+  "name": "TradeDay Fast Pass 50K",
+  "fee": 85,
+  "activation": 0,
+  "size": 50000,
+  "target": 3000,
+  "mll": 2000,
+  "mll_type": "eod",
+  "lock_over_start": 0,
+  "eval_consistency": 0.45,
+  "eval_max_mnq": 50,
+  "fund_consistency": 0.45,
+  "fund_max_tiers": [
+   [
+    0,
+    20
+   ],
+   [
+    2000,
+    30
+   ],
+   [
+    4000,
+    40
+   ],
+   [
+    6000,
+    50
+   ]
+  ],
+  "payout_days": 5,
+  "day_min": 150,
+  "cycle_min": 0,
+  "payout_frac": 1.0,
+  "caps": [
+   1500
+  ],
+  "min_req": 250,
+  "buffer": 0,
+  "split": 0.8,
+  "payouts_to_live": 5,
+  "billing": "monthly ($85 with 55% TDNEW promo, $189 list)",
+  "bots": "UNCLEAR: guides conflict; automation reportedly only on supported platforms (NinjaTrader, Tradovate, TradingView, Jigsaw, Quantower), no external API, purchased bots banned. Confirm with TradeDay before using",
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Eval min 3 days not modelled; payout also capped at 50% of balance (non-binding); funded sim split 80/20, live 90/10."
+ }
 ]
