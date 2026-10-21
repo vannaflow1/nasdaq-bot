@@ -1,101 +1,132 @@
-"""review_prop.py - the IMMEDIATE review of a strategy that just passed the locked prop exam (no more waiting for Sunday).
+"""review_prop.py - the IMMEDIATE review of a strategy that just passed the locked prop exam (no waiting for Sunday).
 
-The goal is a prop algo that passes evaluations and keeps paying out (in the simulator, on unseen years). An exam pass
-can still be luck, or come from the prop rules + sizing rather than from the strategy. Four mechanical checks decide:
-  1. PLACEBO ON THE UNSEEN YEARS: the same plan, sizing, stop and target, but entries at a random minute (same side) or a
-     coin-flip side - on the 2024-26 exam days. If random entries pay about as much (p >= 0.10), the payouts are not
-     coming from the strategy -> FLUKE.
-  2. STABILITY: payouts minus fee per eval in four separate periods (2014-16, 2017-19, 2020-22, 2023-26) on the same
-     plan and sizing. Positive in at least 3 of 4 -> stable; else FRAGILE.
-  3. NUDGES: stop and target +-20%, entry window/time shifted +-15 min (all 2014-2026). EV per eval must stay > 0 in at
-     least 75% of the nudges; else FRAGILE (a real effect does not depend on the exact numbers).
-  4. COSTS: 1.5x commissions and slippage on the exam years must still pay out more than the fee; else FRAGILE.
-All four -> CONFIRMED. Volta's nightly Claude session double-checks every automatic review and may overturn it."""
+The owner's goal: a prop algo that passes evaluations and keeps paying out NOW and in the coming weeks. So the RECENT
+regime decides; old years only guard against a strategy that is a lucky fit. Checks (v2, 21 Oct 2026):
+  1. RECENT REGIME DECIDES: re-scored under the CURRENT simulator rules, payouts minus fee per eval must be > 0 on the
+     locked 2024-26 exam years AND on 2022-23 (the two most recent independent stretches).
+  2. LUCK ON THE UNSEEN YEARS: the same plan, sizing, stop and target with entries at a random minute (same side) or a
+     coin-flip side on the 2024-26 days. If random entries pay about as much (p >= 0.10), the payouts come from the prop
+     rules and the period, not from the strategy -> FLUKE.
+  3. LUCKY-NUMBER TEST: the strategy stays FIXED - this only asks whether its exact numbers were a lucky pick out of the
+     thousands of grid points Volta tried. Neighbouring settings (stop/target +-20%, entry +-15 min) on the RECENT years
+     (2022-26) must mostly pay too (>= 4 of 6). If only the exact chosen numbers work, the result is almost surely
+     selection luck and will not repeat.
+  4. COSTS: 1.5x commissions and slippage on the exam years must still pay out more than the fee.
+  5. NO ANTI-EDGE IN THE PAST (guard, not a requirement to have worked): over 2014-21 the strategy may have been dormant,
+     but must not have lost clearly MORE than random entries with the same plan/sizing (the no-edge baseline). A
+     strategy that was consistently worse than random for 8 years and good for 2 is far more likely luck than a new regime.
+All pass -> CONFIRMED. A confirmed strategy is then watched on every new day (regime_watch below) and demoted
+automatically if the coming weeks clearly break from what the review expected. Claude's nightly session double-checks
+every automatic review once."""
 import os, sys
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-
-PERIODS = [(2014, 2016), (2017, 2019), (2020, 2022), (2023, 2026)]
 
 
 def _ev(S, T, M, spec, plan):
     return S.prop_score(T, M, spec, plan)[0]["ev_per_eval"] if len(T) >= 30 else None
 
 
-def review(spec, X, plan, exam_ev=None, reps=40, seed=3):
-    import strategy_lab as S
-    D = S.data(spec.get("market")); M = D["M"]; yr = M.session.str[:4].astype(int).values
-    exam = np.where(M.session >= S.EXAM_FROM)[0]; allidx = np.arange(len(M))
-    det, fails = {}, []
-    # 1. placebo on the unseen exam years (the exam is re-scored under TODAY's simulator rules - rules get corrected over time)
-    E = S.backtest(spec, X, exam); rng = np.random.default_rng(seed); e = spec["entry"]
-    exam_ev = _ev(S, E, M, spec, plan) if len(E) >= 30 else -999
-    det["exam_ev_now"] = round(float(exam_ev), 1)
-    if exam_ev <= 0:
-        return "FLUKE", f"under the current simulator rules the unseen 2024-26 years no longer pay out ({exam_ev:+.0f}$/eval)", det
+def _placebo(S, D, M, spec, plan, T, reps, seed):
+    """EVs of random-entry versions of trades T (even reps: random minute, same side; odd: same minute, coin-flip side)."""
+    rng = np.random.default_rng(seed); e = spec["entry"]
     lo = S.mins(e["window"][0]) if e["type"] == "level" else 1
     hi = S.mins(e["window"][1]) if e["type"] == "level" else min(S.mins(spec.get("exit", "14:55")) - 5, 380)
     lo, hi = max(lo, 1), max(hi, lo + 2); evs = []
     for r in range(reps):
         rows = []
-        for s_, i, sd in zip(E.session.values, E.i.values, E.side.values):
-            side = int(sd) if r % 2 == 0 else int(rng.choice([-1, 1]))           # even: random minute; odd: coin-flip side
-            k = int(rng.integers(lo, hi)) if r % 2 == 0 else int(E.k[E.i == i].iloc[0])
+        for s_, i, sd, k0 in zip(T.session.values, T.i.values, T.side.values, T.k.values):
+            side = int(sd) if r % 2 == 0 else int(rng.choice([-1, 1]))
+            k = int(rng.integers(lo, hi)) if r % 2 == 0 else int(k0)
             x = S.simulate_session(D, int(i), spec, entry_override=(k, side))
             if x: rows.append((s_, i, x[0], x[1], x[2], x[3]))
         P = pd.DataFrame(rows, columns=["session", "i", "pnl", "R", "side", "k"])
         evs.append(_ev(S, P, M, spec, plan) if len(P) >= 30 else -999)
-    p = float((np.array(evs) >= exam_ev).mean())
-    det["placebo_unseen"] = {"strategy_ev": round(float(exam_ev), 1), "random_mean_ev": round(float(np.mean(evs)), 1),
+    return np.array(evs, float)
+
+
+def review(spec, X, plan, exam_ev=None, reps=40, seed=3):
+    import strategy_lab as S
+    D = S.data(spec.get("market")); M = D["M"]
+    allidx = np.arange(len(M)); T = S.backtest(spec, X, allidx); Ty = T.session.str[:4].astype(int)
+    exam = np.where(M.session >= S.EXAM_FROM)[0]; recent = np.where(M.session >= "2022-01-01")[0]
+    det, fails = {}, []
+    # 1. recent regime decides (current simulator rules)
+    E = T[Ty >= 2024]; V = T[(Ty >= 2022) & (Ty <= 2023)]
+    ev_exam, ev_val = _ev(S, E, M, spec, plan), _ev(S, V, M, spec, plan)
+    det["recent"] = {"2024-26 exam": ev_exam, "2022-23": ev_val}
+    if ev_exam is None or ev_exam <= 0:
+        return "FLUKE", f"under the current simulator rules the unseen 2024-26 years do not pay out ({ev_exam}$/eval)", det
+    if ev_val is None or ev_val <= 0:
+        fails.append(f"2022-23 does not pay out ({ev_val}$/eval) - only one recent stretch works")
+    # 2. luck on the unseen years
+    evs = _placebo(S, D, M, spec, plan, E, reps, seed); p = float((evs >= ev_exam).mean())
+    det["placebo_unseen"] = {"strategy_ev": round(ev_exam, 1), "random_mean_ev": round(float(evs.mean()), 1),
                              "random_p90_ev": round(float(np.percentile(evs, 90)), 1), "p": round(p, 3)}
     if p >= 0.10:
-        reason = (f"random entries with the same plan/sizing/stop/target on the unseen 2024-26 days pay about as much "
-                  f"(random EV {np.mean(evs):+.0f}, 90th pct {np.percentile(evs, 90):+.0f} vs {exam_ev:+.0f}; p={p:.2f}) - "
-                  f"the payouts come from the prop rules and that period, not from the strategy")
-        return "FLUKE", reason, det
-    # 2. stability across four periods (same plan and sizing)
-    T = S.backtest(spec, X, allidx); Ty = T.session.str[:4].astype(int)
-    per = {f"{a}-{b}": _ev(S, T[(Ty >= a) & (Ty <= b)], M, spec, plan) for a, b in PERIODS}
-    det["periods"] = per; pos = sum(1 for v in per.values() if v is not None and v > 0)
-    if pos < 3: fails.append(f"payouts positive in only {pos}/4 periods ({', '.join(f'{k} {v:+.0f}' for k, v in per.items() if v is not None)})")
-    # 3. nudges
-    nudges = {"stop -20%": dict(stop_mult=0.8), "stop +20%": dict(stop_mult=1.2), "target -20%": dict(tgt_mult=0.8), "target +20%": dict(tgt_mult=1.2)}
+        return "FLUKE", (f"random entries with the same plan/sizing/stop/target on the unseen 2024-26 days pay about as much "
+                         f"(random EV {evs.mean():+.0f} vs {ev_exam:+.0f}; p={p:.2f}) - the payouts come from the prop rules, not the strategy"), det
+    # 3. lucky-number test on the recent years (the strategy itself stays fixed)
     res = {}
-    for name, kw in nudges.items():
-        res[name] = _ev(S, S.backtest(spec, X, allidx, **kw), M, spec, plan)
+    for name, kw in {"stop -20%": dict(stop_mult=0.8), "stop +20%": dict(stop_mult=1.2),
+                     "target -20%": dict(tgt_mult=0.8), "target +20%": dict(tgt_mult=1.2)}.items():
+        res[name] = _ev(S, S.backtest(spec, X, recent, **kw), M, spec, plan)
     for dm in (-15, 15):
-        sp = dict(spec, entry=dict(spec["entry"]))
-        if sp["entry"]["type"] == "time":
-            t = min(max(S.mins(sp["entry"]["at"]) + dm, 1), 380); sp["entry"]["at"] = f"{(510 + t) // 60:02d}:{(510 + t) % 60:02d}"
-            res[f"entry {dm:+d} min"] = _ev(S, S.backtest(sp, X, allidx), M, sp, plan)
+        if spec["entry"]["type"] == "time":
+            sp = dict(spec, entry=dict(spec["entry"])); t = min(max(S.mins(sp["entry"]["at"]) + dm, 1), 380)
+            sp["entry"]["at"] = f"{(510 + t) // 60:02d}:{(510 + t) % 60:02d}"
+            res[f"entry {dm:+d} min"] = _ev(S, S.backtest(sp, X, recent), M, sp, plan)
         else:
-            res[f"window {dm:+d} min"] = _ev(S, S.backtest(spec, X, allidx, win_shift=dm), M, spec, plan)
-    det["nudges"] = res; ok = sum(1 for v in res.values() if v is not None and v > 0)
-    if ok < 0.75 * len(res): fails.append(f"only {ok}/{len(res)} nudges still pay out ({', '.join(f'{k} {v:+.0f}' for k, v in res.items() if v is not None)})")
-    # 4. costs x1.5 on the exam years
+            res[f"window {dm:+d} min"] = _ev(S, S.backtest(spec, X, recent, win_shift=dm), M, spec, plan)
+    det["neighbours_2022_26"] = res; ok = sum(1 for v in res.values() if v is not None and v > 0)
+    if ok < 4:
+        fails.append(f"only the exact numbers work: {ok}/6 neighbouring settings pay out on 2022-26 - likely a lucky pick from the grid")
+    # 4. costs
     c = _ev(S, S.backtest(spec, X, exam, cost_mult=1.5), M, spec, plan); det["exam_costs_1.5x"] = c
-    if c is None or c <= 0: fails.append(f"with 1.5x costs the unseen years pay {c if c is None else round(c)}$/eval")
+    if c is None or c <= 0: fails.append(f"with 1.5x costs the unseen years pay {c}$/eval")
+    # 5. no anti-edge in 2014-21 (dormant is fine, clearly worse than random is not)
+    old = T[Ty <= 2021]; ev_old = _ev(S, old, M, spec, plan)
+    base = _placebo(S, D, M, spec, plan, old, 20, seed + 1) if len(old) >= 30 else np.array([np.nan])
+    b_lo = float(np.nanpercentile(base, 10)) if np.isfinite(base).any() else None
+    det["old_2014_21"] = {"ev": ev_old, "random_mean": round(float(np.nanmean(base)), 1) if b_lo is not None else None, "random_p10": b_lo}
+    if ev_old is not None and b_lo is not None and ev_old < b_lo:
+        fails.append(f"2014-21 was clearly worse than random entries ({ev_old:+.0f} vs random 10th pct {b_lo:+.0f}$/eval) - an anti-edge, not a dormant one")
     if fails:
         return "FRAGILE", "; ".join(fails), det
-    return "CONFIRMED", (f"beats random entries on the unseen years (p={p:.2f}), pays out in {pos}/4 periods, {ok}/{len(res)} nudges, "
-                         f"survives 1.5x costs ({c:+.0f}$/eval)"), det
+    return "CONFIRMED", (f"pays out on 2024-26 ({ev_exam:+.0f}) and 2022-23 ({ev_val:+.0f}) under current rules, beats random entries "
+                         f"on the unseen years (p={p:.2f}), {ok}/6 neighbouring settings pay, survives 1.5x costs ({c:+.0f}), "
+                         f"2014-21 no worse than random ({ev_old if ev_old is None else round(ev_old)} vs {b_lo if b_lo is None else round(b_lo)})"), det
 
 
 def review_entry(e):
-    """Review one strategies.jsonl entry (dict). Returns the fields to add."""
-    import strategy_lab as S, test_engine as TE
+    import test_engine as TE
     _, X = TE.frame()
     plan = (e.get("prop_exam") or {}).get("plan") or (e.get("prop") or [{}])[0].get("plan")
-    ev = (e.get("prop_exam") or {}).get("ev_per_eval", 0)
-    label, why, det = review(e["spec"], X, plan, ev)
-    return {"review": f"{label} (auto, {pd.Timestamp.now(tz='UTC'):%Y-%m-%d}): {why}", "review_detail": det}
+    label, why, det = review(e["spec"], X, plan)
+    return {"review": f"{label} (auto v2, {pd.Timestamp.now(tz='UTC'):%Y-%m-%d}): {why}", "review_detail": det}
 
 
-if __name__ == "__main__":                                     # review every exam-passer that has no review yet (or all with --all)
+def regime_watch(e, F):
+    """Called every evening for CONFIRMED strategies: compares the forward days (the 'coming weeks') with the recent
+    regime. Demotes when the forward trades are clearly worse than the 2022-26 trades (one-sided t-test at 5%, after
+    at least 15 forward trades). Returns a new review string or None."""
+    import strategy_lab as S, test_engine as TE
+    f = F[(F.id == S.spec_id(e["spec"])) & (F.traded)] if len(F) else F
+    if len(f) < 15: return None
+    _, X = TE.frame(); M = S.data(e["spec"].get("market"))["M"]
+    rec = S.backtest(e["spec"], X, np.where(M.session >= "2022-01-01")[0]).R.values
+    d = f.R.mean() - rec.mean(); se = np.sqrt(f.R.var(ddof=1) / len(f) + rec.var(ddof=1) / len(rec))
+    if se > 0 and d / se < -1.645:
+        return (f"FRAGILE (regime watch, {pd.Timestamp.now(tz='UTC'):%Y-%m-%d}): the last {len(f)} forward trades average "
+                f"{f.R.mean():+.2f}R vs {rec.mean():+.2f}R in 2022-26 (t={d / se:.1f}) - the regime it relied on looks broken")
+    return None
+
+
+if __name__ == "__main__":                                     # review every exam-passer without a review (--all: re-review all)
     import json, strategy_lab as S
     L = [json.loads(l) for l in open(S.LOG) if l.strip()]
     for e in L:
         if str(e.get("verdict", "")).startswith("PROMISING STRATEGY") and ("--all" in sys.argv or not e.get("review")):
-            e.update(review_entry(e)); print(e["name"][:70], "->", e["review"][:400])
+            e.update(review_entry(e)); print(e["name"][:70], "->", e["review"][:500]); print(json.dumps(e["review_detail"]))
     with open(S.LOG, "w") as f:
         for e in L: f.write(json.dumps(e) + "\n")

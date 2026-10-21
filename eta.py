@@ -47,7 +47,7 @@ def inputs():
     first = pd.Timestamp(dates[0]) if dates else pd.Timestamp(datetime.now(timezone.utc).date())
     days = max(1.0, (pd.Timestamp(datetime.now(timezone.utc).date()) - first).days + 1)
     rate = min(S.EXAMS_PER_WEEK, (len(exams) + 4) / (days + 14) * 7)     # smoothed toward 2 exams/week until there is history
-    cands = [{"name": e["name"], "status": _review(e), "ev": (e.get("prop_exam") or {}).get("ev_per_eval"), "why": str(e.get("review") or ""),
+    cands = [{"name": e["name"], "status": _review(e), "ev": ((e.get("review_detail") or {}).get("recent") or {}).get("2024-26 exam") or (e.get("prop_exam") or {}).get("ev_per_eval"), "why": str(e.get("review") or ""),
               "plan": (e.get("prop_exam") or {}).get("plan")} for e in passed]
     return {"exams": len(exams), "passes": len(passed), "rate": rate, "days_running": int(days), "cands": cands,
             "rejected": sum(c["status"] == "rejected" for c in cands), "confirmed": sum(c["status"] == "confirmed" for c in cands)}
@@ -56,15 +56,14 @@ def inputs():
 def simulate(I, seed=7):
     """Weeks until the first CONFIRMED prop algo, per simulated world (inf = not within 10 years / none exists)."""
     rng = np.random.default_rng(seed)
-    if I["confirmed"]:
-        return np.zeros(SIMS)
-    exists = rng.random(SIMS) < P_EXISTS
-    pi = np.where(exists, rng.beta(*PRIOR_REAL, SIMS), 0.0)                 # share of exams that catch a real edge
+    prior_real = I.get("prior_real", PRIOR_REAL)
+    exists = rng.random(SIMS) < (1.0 if I["confirmed"] else P_EXISTS)       # one confirmed -> such algos exist here
+    pi = np.where(exists, rng.beta(*prior_real, SIMS), 0.0)
     p_real = pi / (pi + (1 - pi) * LUCK_PASS)                                 # P(real | passed the exam)
     fails = I["exams"] - I["passes"]
     w = (1 - pi) ** fails * (1 - REAL_CONFIRM * p_real) ** I["rejected"]   # likelihood of what Volta has seen
     idx = rng.choice(SIMS, SIMS, p=w / w.sum()); pi, p_real = pi[idx], p_real[idx]
-    rate = rng.gamma(4 + I["exams"], I["rate"] / (4 + I["exams"]), SIMS)
+    rate = np.minimum(rng.gamma(4 + I["exams"], I["rate"] / (4 + I["exams"]), SIMS), I.get("rate_cap", 10))
     to_sunday = 0.0                                                         # the review runs right after the exam (since 21 Oct)
     eta = np.full(SIMS, np.inf)
     for c in I["cands"]:                                                    # exam-passers waiting for their review
@@ -92,13 +91,17 @@ def lines(I=None):
     fin = np.isfinite(eta); p = lambda wk: float((eta <= wk).mean()); cond = eta[fin]
     out = ["⏳ WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)"]
     if I["confirmed"]:
-        out.append("FOUND: " + "; ".join(c["name"][:70] for c in I["cands"] if c["status"] == "confirmed") + " - passed the locked exam and the review.")
-        return out
-    if len(cond):
+        out.append("FOUND: " + "; ".join(f"{c['name'][:60]} (exam {c['ev']:+.0f}$/eval on {c['plan']}, under regime watch)" for c in I["cands"] if c["status"] == "confirmed")
+                   + ". NEXT GOAL: a second, independent algo - two uncorrelated algos pay out far more steadily than one.")
+    if len(cond) and I["confirmed"]:
+        out.append(f"Next one: most likely in {_fmt(np.median(cond))} (80% range {_fmt(np.percentile(cond, 10))} to {_fmt(np.percentile(cond, 90))}); "
+                   f"chance within 1 month {p(4.35):.0%}, 3 months {p(13):.0%}, 1 year {p(52):.0%}.")
+    elif len(cond):
         out.append(f"If there is one to find: most likely in {_fmt(np.median(cond))} (80% range {_fmt(np.percentile(cond, 10))} to "
                    f"{_fmt(np.percentile(cond, 90))}). Overall chance within 1 month {p(4.35):.0%}, 3 months {p(13):.0%}, 6 months {p(26):.0%}, 1 year {p(52):.0%}.")
-    out.append(f"Chance there is NO such algo in what I search (or I never catch it): {1 - fin.mean():.0%}. Honest: most strategy "
-               f"searches find nothing; each failed exam nudges this up, a confirmed algo ends it.")
+    if not I["confirmed"]:
+        out.append(f"Chance there is NO such algo in what I search (or I never catch it): {1 - fin.mean():.0%}. Honest: most strategy "
+                   f"searches find nothing; each failed exam nudges this up, a confirmed algo ends it.")
     out.append(f"Based on: {I['exams']} locked exams in {I['days_running']} days ({I['passes']} passed, {I['rejected']} rejected by review), "
                f"about {I['rate']:.1f} exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.")
     w = [c for c in I["cands"] if c["status"] == "waiting"]
@@ -111,10 +114,34 @@ def lines(I=None):
     return out
 
 
+def levers(I=None):
+    """What would move my timer most? What-if versions of the estimate (the real estimate never uses them).
+    Honest levers only: more good candidates reaching the exam, and better candidates. Never: more exams on the same
+    locked years (the weekly cap protects the exam from being overfit), weaker reviews, or tuned priors."""
+    import strategy_lab as S
+    I = I or inputs()
+    def score(J):
+        eta = simulate(J); return float((eta <= 13).mean()), float((eta <= 52).mean())
+    base = score(I)
+    sc = {"more candidates reach the exam (2x exam rate: more search, more markets, portfolios)": dict(I, rate=min(S.EXAMS_PER_WEEK, I["rate"] * 2)),
+          "better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data)": dict(I, prior_real=(2.0, 19.0)),
+          "both": dict(I, rate=min(S.EXAMS_PER_WEEK, I["rate"] * 2), prior_real=(2.0, 19.0))}
+    res = {k: score(J) for k, J in sc.items()}
+    best = max([k for k in res if k != "both"], key=lambda k: res[k][1])
+    out = [f"MY TIMER LEVERS (what-if): now {base[0]:.0%} within 3 months / {base[1]:.0%} within 1 year."]
+    out += [f"- {k}: {v[0]:.0%} / {v[1]:.0%}" for k, v in res.items()]
+    out.append(f"Biggest single lever right now: {best.split(' (')[0]}. Exam rate today {I['rate']:.1f}/week of max {S.EXAMS_PER_WEEK} "
+               f"({'room to grow' if I['rate'] < S.EXAMS_PER_WEEK * 0.8 else 'near the cap - only better candidates help'}).")
+    return out
+
+
 def update():
     I = inputs(); L = lines(I)
     s = json.load(open(STATUS)) if os.path.exists(STATUS) else {}
-    s["eta"] = L; json.dump(s, open(STATUS, "w"), indent=1)
+    s["eta"] = L
+    try: s["eta_levers"] = levers(I)
+    except Exception as e: print("levers skipped:", e)
+    json.dump(s, open(STATUS, "w"), indent=1)
     eta = simulate(I); fin = np.isfinite(eta)
     row = pd.DataFrame([{"date": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M"), "exams": I["exams"], "passes": I["passes"],
                          "rejected": I["rejected"], "median_weeks_if_exists": round(float(np.median(eta[fin])), 1) if fin.any() else None,
@@ -125,4 +152,4 @@ def update():
 
 
 if __name__ == "__main__":
-    print("\n".join(lines()))
+    print("\n".join(lines())); print(); print("\n".join(levers()))

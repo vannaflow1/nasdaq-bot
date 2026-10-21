@@ -340,7 +340,7 @@ export default {
       case "book":
         return reply((s.book || ["Volta's book opens with the next evening run."]).join("\n"));
       case "wishes":
-        return reply([...(s.eta ? [...s.eta, ""] : []), ...(s.wishes || ["Volta's first self-check runs with today's learning runs."])].join("\n"));
+        return reply([...(s.eta ? [...s.eta, ""] : []), ...(s.eta_levers ? [...s.eta_levers, ""] : []), ...(s.wishes || ["Volta's first self-check runs with today's learning runs."])].join("\n"));
       case "strategies":
         return reply((s.strategies || ["The strategy lab scoreboard appears after the next evening run."]).join("\n"));
       case "powers":

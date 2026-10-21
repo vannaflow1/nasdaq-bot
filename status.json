@@ -286,11 +286,17 @@
  ],
  "eta": [
   "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
-  "If there is one to find: most likely in 3 months (80% range 2 weeks to 19 months). Overall chance within 1 month 12%, 3 months 23%, 6 months 31%, 1 year 37%.",
-  "Chance there is NO such algo in what I search (or I never catch it): 55%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
-  "Based on: 1 locked exams in 1 days (1 passed, 1 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.",
+  "FOUND: with the open's side of the overnight range at 08:31, no red (exam +144$/eval on lucid_pro_50k, under regime watch). NEXT GOAL: a second, independent algo - two uncorrelated algos pay out far more steadily than one.",
+  "Next one: most likely in 3 months (80% range 2 weeks to 18 months); chance within 1 month 27%, 3 months 54%, 1 year 83%.",
+  "Based on: 1 locked exams in 1 days (1 passed, 0 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on unseen 2024-26 in my simulator AND the review says it isn't luck.",
   "Nothing waiting for review.",
-  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.",
-  "Rejected by review: with the open's side of the overnight range at 08:31, n (FRAGILE (auto, 2026-10-21): payouts positive in only 1/4 periods (2014-2016 -43, 2017-2019 -104, 2020-2022 -22)"
+  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time."
+ ],
+ "eta_levers": [
+  "MY TIMER LEVERS (what-if): now 54% within 3 months / 83% within 1 year.",
+  "- more candidates reach the exam (2x exam rate: more search, more markets, portfolios): 70% / 89%",
+  "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 77% / 96%",
+  "- both: 89% / 98%",
+  "Biggest single lever right now: better candidates. Exam rate today 2.3/week of max 10 (room to grow)."
  ]
 }

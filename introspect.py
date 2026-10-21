@@ -89,7 +89,11 @@ def digest():
                                                        for x in lib_by.get(h["id"], [])[:3]) or "nothing read yet") for h in H[-6:]))
     try:
         import eta
-        out.append("MY OWN ESTIMATE OF WHEN I FIND A REAL EDGE: " + " ".join(eta.lines()[1:4]))
+        I = eta.inputs()
+        out.append("MY TIMER (time until I have a prop algo that passes evals and keeps paying out): " + " ".join(eta.lines(I)[1:4]))
+        out.append(" ".join(eta.levers(I)))
+        rv = [c for c in I["cands"] if c["status"] == "rejected"]
+        if rv: out.append("WHY MY EXAM-PASSERS WERE REJECTED BY REVIEW: " + " || ".join(f"{c['name'][:50]}: {c['why'][:160]}" for c in rv[-3:]))
     except Exception:
         pass
     D = _jl(DIARY)
@@ -120,6 +124,12 @@ Then you decide how to improve yourself. You can do three things:
    ships them if they are verifiably better (beats the current version on unseen data / passes all dry runs).
    "owner" = ONLY things only he can provide: data he owns (e.g. his ES/SPX history, his trade log), anything that costs
    money, or anything needing his accounts.
+YOUR SCOREBOARD is MY TIMER: lower its time and raise its probability - honestly. Read MY TIMER LEVERS and aim today's
+self_actions, paper_hunts and wishes at the BIGGEST lever (e.g. better candidates: strategies built for the CURRENT market
+regime, ideas from recent papers, regime filters, new data; more candidates: more search, new markets, combining
+strategies). Learn from WHY MY EXAM-PASSERS WERE REJECTED. Say in the diary which lever you worked on and why.
+Never try to move the timer by weakening the exam, the review, the luck checks or the estimate's assumptions - that
+would only fool yourself and the owner.
 Self-actions must be about MARKETS (what NQ does in a session), never about your own software - software problems go
 into a wish for Claude. What you ALREADY HAVE (never wish for these): dealer gamma/vanna/charm ESTIMATES from QQQ, NDX and
 (since Oct 2026) SPX option chains, 12 years of daily QQQ option history with the vol surface and Heston fits, 1-minute NQ

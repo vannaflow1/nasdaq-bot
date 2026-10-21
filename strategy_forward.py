@@ -179,6 +179,21 @@ def main():
     lines.append("Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam.")
     st = json.load(open(STATUS)) if os.path.exists(STATUS) else {}
     st["strategies"] = lines; json.dump(st, open(STATUS, "w"), indent=1)
+    try:                                                      # regime watch: demote a CONFIRMED algo when the coming weeks break from 2022-26
+        import review_prop
+        L = entries(); changed = []
+        for e in L:
+            if str(e.get("review", "")).startswith("CONFIRMED"):
+                nr = review_prop.regime_watch(e, F)
+                if nr: e["review"] = nr; changed.append(e["name"])
+        if changed:
+            with open(S.LOG, "w") as f:
+                for e in L: f.write(json.dumps(e) + "\n")
+            import test_engine as TE
+            ann = json.load(open(TE.ANN)) if os.path.exists(TE.ANN) else []
+            ann.append({"title": "⚠️ Regime watch: a confirmed prop algo was demoted", "body": "\n".join(changed)}); json.dump(ann, open(TE.ANN, "w"), indent=1)
+    except Exception as e:
+        print("regime watch skipped:", type(e).__name__, e)
     try:
         import eta; eta.update()                                  # forward-test days changed: refresh the edge estimate
     except Exception as e:
