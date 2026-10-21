@@ -1,0 +1,39 @@
+name: gemini-agent
+# Volta's free coding agent (Gemini free tier): drafts ONE open research-side wish per run on a branch gemini/wish-<id>.
+# Claude's nightly upgrade session (03:47 Lux) reviews the draft branches and merges or rejects them.
+on:
+  schedule:
+    - cron: "50 23 * * *"      # 01:50 Luxembourg (summer time), before Claude's upgrade session
+  workflow_dispatch:
+    inputs:
+      wish: { description: "wish id (empty = pick the best open wish)", required: false }
+      task: { description: "free-text test task instead of a wish (draft branch only)", required: false }
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }        # no push rights while model-written code runs
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt scipy scikit-learn
+      - name: Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_WISH: ${{ github.event.inputs.wish }}
+          GEMINI_TASK: ${{ github.event.inputs.task }}
+        run: python gemini_agent.py
+      - name: Push draft branch + state
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}"
+          for b in $(git for-each-ref --format='%(refname:short)' refs/heads/gemini/); do git push -q -f origin "$b"; done
+          bash .github/actions_common.sh "gemini agent"
