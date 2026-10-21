@@ -39,7 +39,7 @@ FILTERS = {"every day": "", "tail-day risk high": "pw_tail_day - 0.15", "tail-da
            "low dealer gamma": "0.3 - gex_rank", "high dealer gamma": "gex_rank - 0.7", "small overnight": "1 - k_on_vs_normal",
            "big overnight": "k_on_vs_normal - 1.3", "trending regime (Hurst>0.55)": "k_hurst - 0.55", "mean-reverting (Hurst<0.5)": "0.5 - k_hurst",
            "calm VIX (below 60d avg)": "mean(vix, 60) - vix", "gap fill likely": "pw_gap_fill - 0.65", "VIX curve inverted": "vix_curve - 1",
-           "not Monday": "k_dow - 0.5", "Fri": "where(k_dow == 4, 1, 0)",
+           "not Monday": "k_dow - 0.5", "Fri": "where(k_dow > 3.5, 1, 0)",
            "no red-folder news": "0.5 - k_red_any", "red-folder news day": "k_red_any - 0.5", "no FOMC": "0.5 - k_fomc_day"}
 LEVEL_SETS = [("yday_high", "yday_low"), ("on_high", "on_low"), ("asia_high", "asia_low"), ("london_high", "london_low"),
               ("or15_high", "or15_low"), ("vwap_up1", "vwap_dn1"), ("vwap_up2", "vwap_dn2"), ("r1", "s1"), ("exp50_up", "exp50_dn"),
