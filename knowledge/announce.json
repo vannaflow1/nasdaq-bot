@@ -1,0 +1,6 @@
+[
+ {
+  "title": "\ud83d\udd27 Volta upgraded itself: prop search every 4 hours, all candidates can take the exam",
+  "body": "The prop search now runs every 4 hours (6 runs a day instead of 2, ~3x the search time; free on a public repo). And a bug is fixed: only job 1's own candidates could ever take the locked exam - 207 of 263 validated candidates (jobs 2-4) were never eligible. Job 1 now picks the best candidates of all jobs (exam ledger: knowledge/prop_search/exams.csv) and pauses exams while the weekly budget of 10 is used up. Undo: git revert ca5b82d (schedule), git revert 633b19a (exams)"
+ }
+]
