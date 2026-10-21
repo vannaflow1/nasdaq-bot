@@ -1,5 +1,5 @@
 name: gemini-check
-# v4: also tests the key with whitespace removed. v3: never crashes on odd keys. v2: tries header, ?key= and Bearer auth.
+# v5: tests the stable models. v4: also tests the key with whitespace removed. v3: never crashes on odd keys. v2: tries header, ?key= and Bearer auth.
 # Checks that the owner's Gemini API key secret exists and works. Writes ONLY a status line (never the key)
 # to knowledge/research_out/gemini_check.txt. Runs when this file changes, or by hand.
 on:
@@ -75,7 +75,7 @@ jobs:
                               and "tts" not in m and "live" not in m and "exp" not in m], reverse=True)
               pro = sorted([m for m in models if "pro" in m and "image" not in m and "tts" not in m and "exp" not in m], reverse=True)
               out.append(f"{name}: VALID, {len(models)} text models. flash: {', '.join(flash[:6])} | pro: {', '.join(pro[:6])}")
-              for m in (flash[:1] + pro[:1]):
+              for m in [x for x in ("gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-lite-latest", "gemini-pro-latest", "gemini-2.5-pro", "gemini-2.5-flash") if x in models]:
                   st, js = call(f"{base}/models/{m}:generateContent",
                                 {"contents": [{"parts": [{"text": "Reply with exactly: OK"}]}]})
                   if st == 200:
