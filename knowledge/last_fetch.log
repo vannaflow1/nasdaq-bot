@@ -1,47 +1,10 @@
-scanned 62 papers, queued 0, queue size 17 ['arxiv: HTTPError']
-triage failed: RuntimeError free AI daily limit reached
-read 0, AI units today 3828/7000
-Traceback (most recent call last):
-  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 60, in ai
-    out, units = _call(url, model, system, user, max_tokens)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 47, in _call
-    r = json.loads(urllib.request.urlopen(req, timeout=150).read())
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 215, in urlopen
-    return opener.open(url, data, timeout)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 521, in open
-    response = meth(req, response)
-               ^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 630, in http_response
-    response = self.parent.error(
-               ^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 559, in error
-    return self._call_chain(*args)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 492, in _call_chain
-    result = func(*args)
-             ^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 639, in http_error_default
-    raise HTTPError(req.full_url, code, msg, hdrs, fp)
-urllib.error.HTTPError: HTTP Error 500: Internal Server Error
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 239, in <module>
-    main()
-  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 232, in main
-    used += test_engine.curiosity(ask)                   # Volta asks itself a question first
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py", line 499, in curiosity
-    out, units = ask(system, user)
-                 ^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 225, in <lambda>
-    ask = lambda system, user: ai(url, BIG, system, user, 300)
-                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 64, in ai
-    if "4006" in msg or "daily free allocation" in msg: raise RuntimeError("free AI daily limit reached")
-                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: free AI daily limit reached
+scanned 80 papers, queued 3, queue size 20 []
+read for the mission (3*): Compensation and Incentives: Practice vs. Theory
+read about myself (4*): Gradient-based learning applied to document recognition
+skip self (1*): AI-Assisted Pipeline for Dynamic Generation of Trustworthy Health Supp
+read 3, AI units today 3900/7000
+curiosity asked: Strategy: LowGamma_Momentum_Break_Exp70
+tested: Strategy: LowGamma_Momentum_Break_Exp70 - Low‑gamma days imp -> NOT CONFIRMED on my data: too few trades (18 in 2014-2023, need 150). in-sample 2014-2023:
+tested: Selling a same-day iron condor pays when the realized move s -> PROMISING (stress test: survived) : power 'inside_day' (base 11%): lowest-fifth days 2% vs
+tested: Check the paper's daily-data claim on QQQ: follow the 20-day -> NOT CONFIRMED on my data: 2227 signal days, hit 53.1% (always-long 56.5%), strategy +4.5 b
+testing used 696 AI units

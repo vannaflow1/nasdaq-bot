@@ -19,7 +19,8 @@ Relevant as a caution for index day-traders (simple daily chart rules on US inde
 Check the paper's daily-data claim on QQQ: follow the 20-day trend (long if the last 20 days were up, short if down) for the next day.
 
 ## Test
-NO EDGE: 2226 days, hit 53.1% (always-long 56.6%), avg +4.5 bps/day, t=1.48, positive in 7/9 years
-How: signal = sign(r20), the 20-day QQQ return known at the close; the contrarian version is the mirror image (t=-1.48, 2/9 years). The 30-minute rules that the paper finds profitable cannot be tested with daily rows.
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 2227 signal days, hit 53.1% (always-long 56.5%), strategy +4.5 bps/day vs +2.8 for the same average exposure held constantly -> timing adds +1.7 bps/day, t=0.49, positive in 5/10 years
+How: long/short on `r20` (positive = signal on)
+Touches: [[Options nerd]]
 
 Part of [[Research engine]]

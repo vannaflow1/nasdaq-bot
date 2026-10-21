@@ -19,6 +19,8 @@ The topic (selling 0DTE index premium) is directly relevant to QQQ/NQ options, b
 Selling a same-day iron condor pays when the realized move stays inside the options-priced move; my memory has only daily close-to-close returns and daily ranges, not intraday option prices or the condor's strikes, so the strategy itself cannot be simulated with idea_lab.
 
 ## Test
-not testable with my data yet
+[[PROMISING]] - PROMISING (stress test: survived) : power 'inside_day' (base 11%): lowest-fifth days 2% vs highest-fifth 19%, Brier skill +3.4%, better than the base rate in 8/9 unseen years
+How: `rank(impl / rng, 252)` as a predictor of 'inside_day' (inside day) | stress: skill +3.40; nudged formulas kept >= half the skill in 2/2; stale copies (lag 1-12 months) clearly worse in 4/4
+Touches: [[Open read (powers)]]
 
 Part of [[Research engine]]

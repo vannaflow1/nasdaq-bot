@@ -1,5 +1,35 @@
 [
 {
+"title": "Gradient-based learning applied to document recognition",
+"learned": "The paper shows that gradient\u2011based training, especially via back\u2011propagation in convolutional and graph\u2011transformer networks, can jointly optimize multiple modules (e.g., segmentation, recognition, language models) for a single global objective, yielding higher accuracy and robustness. Global training enables end\u2011to\u2011end learning across heterogeneous components.",
+"concepts": [
+"gradient\u2011based end\u2011to\u2011end training",
+"graph transformer networks",
+"modular joint optimization",
+"convolutional feature extraction",
+"global performance loss"
+],
+"relevance": 4,
+"verdict": "about myself - feeds my self-check",
+"url": "https://hal.science/hal-03926082/document",
+"date": "2026-10-21"
+},
+{
+"title": "Compensation and Incentives: Practice vs. Theory",
+"learned": "The paper highlights that real-world incentive structures often deviate from pure profit\u2011maximizing models, emphasizing fairness, promotion pathways, and low penalties rather than strict performance\u2011based pay.",
+"concepts": [
+"non\u2011linear compensation",
+"promotion incentives",
+"low firing costs",
+"behavioral fairness",
+"risk\u2011averse employer"
+],
+"relevance": 3,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.1988.tb04593.x",
+"date": "2026-10-21"
+},
+{
 "title": "Deep catastrophic-risk-aware reinforcement learning",
 "learned": "The paper shows how to combine Extreme Value Theory with deep reinforcement learning to better estimate and minimize tail risk (CVaR) when extreme loss events are rare, using a differentiable loss based on a Generalized Pareto Distribution.",
 "concepts": [
@@ -2102,7 +2132,7 @@
 "declining profitability"
 ],
 "relevance": 2,
-"verdict": "NO EDGE: 2226 days, hit 53.1% (always-long 56.6%), avg +4.5 bps/day, t=1.48, positive in 7/9 years",
+"verdict": "NOT CONFIRMED on my data: 2227 signal days, hit 53.1% (always-long 56.5%), strategy +4.5 bps/day vs +2.8 for the same average exposure held constantly -> timing adds +1.7 bps/day, t=0.49, positive in 5/10 years",
 "url": "https://www.econstor.eu/bitstream/10419/128874/1/wp_323.pdf",
 "date": "2026-10-19"
 },
@@ -2236,7 +2266,7 @@
 "SPX"
 ],
 "relevance": 2,
-"verdict": "not testable with my data yet",
+"verdict": "PROMISING (stress test: survived) : power 'inside_day' (base 11%): lowest-fifth days 2% vs highest-fifth 19%, Brier skill +3.4%, better than the base rate in 8/9 unseen years",
 "url": "https://doi.org/10.2139/ssrn.7162898",
 "date": "2026-10-19"
 },

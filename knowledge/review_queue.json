@@ -47,5 +47,20 @@
   "verdict": "PROMISING (stress test: survived) : FACT: happens on 56% of 2808 sessions (2014-19: 57%, 2020-25: 55%). Predictor: lowest-fifth days 29% vs highest-fifth 80%, skill +14.1% vs the base rate, better in 9/9 unseen years",
   "how": "Q: When the NQ opens near the high of the Asian session (k_open_vs_asia = 1), are we more likely to break yesterday's high during the NY session? | answer = `y_took_yday_high` | predicted by `k_open_vs_asia` | stress: skill +14.10; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
   "date": "2026-10-21"
+ },
+ {
+  "id": "openalex:W4406740838",
+  "title": "Profitability of selected 0DTE index options strategies",
+  "idea": "Selling a same-day iron condor pays when the realized move stays inside the options-priced move; my memory has only daily close-to-close returns and daily ranges, not intraday option prices or the condor's strikes, so the strategy itself cannot be simulated with idea_lab. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
+  "relevance": 3,
+  "verdict": "PROMISING (stress test: survived) : power 'inside_day' (base 11%): lowest-fifth days 2% vs highest-fifth 19%, Brier skill +3.4%, better than the base rate in 8/9 unseen years",
+  "how": "`rank(impl / rng, 252)` as a predictor of 'inside_day' (inside day) | stress: skill +3.40; nudged formulas kept >= half the skill in 2/2; stale copies (lag 1-12 months) clearly worse in 4/4",
+  "spec": {
+   "kind": "power",
+   "expr": "rank(impl / rng, 252)",
+   "power": "inside_day",
+   "explain": "higher implied move relative to today\u2019s range predicts the day staying inside the iron\u2011condor width"
+  },
+  "date": "2026-10-21"
  }
 ]
