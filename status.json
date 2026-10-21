@@ -1,7 +1,7 @@
 {
  "for": "Wed 21 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Wed 21 Oct) - risk \ud83d\udfe0 ELEVATED",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
   "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size.",
   "- META, TSLA report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway)."
  ],
@@ -30,31 +30,26 @@
   "  META reports after close: options price a \u00b17.2% move (option covers 3 sessions, so a bit wider than the report alone)",
   "  TSLA reports after close: options price a \u00b16.5% move (option covers 3 sessions, so a bit wider than the report alone)"
  ],
- "level": [
-  "VOLTA LEVEL 4  (463 XP, next level at 640)",
-  "Papers read 217 | ideas & strategies tested 48 | prop strategies searched 0",
-  "Survived unseen 2022-23: 0 (best EV per eval -) | passed the locked exam: 0 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 3",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Wed 21 Oct 15:07 Lux",
+ "level": "ELEVATED",
+ "updated": "Wed 21 Oct 15:24 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  TODAY: META earnings after close; TSLA earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Microsoft (MSFT) Withdraws From UK AI Data Center Project  [Yahoo (megacaps)]\n    MSFT, AI chips/capex",
-  "- Housing is flashing warning signs just as the Fed weighs more interest rate hikes  [CNBC economy]\n    Fed/macro",
-  "- Tesla Q3 earnings preview: 3 key things to watch  [Yahoo (megacaps)]\n    TSLA, earnings",
-  "- Here\u2019s what matters most to Tesla investors heading into earnings  [MarketWatch]\n    TSLA, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Opposition to data centers will drive up inflation, says BlackRock\u2019s Larry Fink  [MarketWatch]\n    AI chips/capex, Fed/macro",
+  "- Stock Market Today: Tech Futures Rise With SpaceX Earnings; Meta, Tesla Set To Report Later (Live Coverage)  [Yahoo (megacaps)]\n    META, TSLA, earnings",
+  "- Nvidia announces plug and play Vera Rubin racks that can be shipped on a truck  [CNBC tech]\n    NVDA, AI chips/capex",
+  "- Nvidia's grand plan for speeding up datacenter deployments: AI trailer parks  [The Register]\n    NVDA, AI chips/capex",
+  "- Micron's Taiwan union will launch a one-day strike this week, threatening memory production  [Tom's Hardware]\n    MU, export/geo",
+  "- Three workers killed, one in intensive care after fall at TSMC\u2019s 2nm fab construction site  [Tom's Hardware]\n    TSM, AI chips/capex"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Wed 14:14 [oil/geopolitics] Great news for the wealth and prosperity of the United Kingdom, and the wonderful region of Aberdeen. The U.K. has started drilling in the North Sea, one of the greatest and most prosperous areas of OIL in the World. They should go FULL BLAST!!! This will make the U.K. very\u2026",
   "- Wed 12:49 [oil/geopolitics] Numerous people, who requested that sanctions be immediately imposed on Russia, have called to apologize to President Trump in that they didn\u2019t know that he was negotiating the release of Stephen Hubbard, a truly big and important deal for the U.S. If sanctions would have been\u2026",
-  "- Wed 12:37 [oil/geopolitics] Stephen Hubbard, taken four years ago by Russia during the Biden Administration, was just released from prison, at the request of President Donald J. Trump, made directly to President Vladimir Putin in a telephone conversation last week. Stephen is on his way back home and will\u2026",
-  "- Tue 22:49 [fiscal/policy] Donald Trump signs executive order creating NIH task force as Melania unveils \u2018new standard for women\u2019s health in America\u2019: https:// nypost.com/2026/10/19/us-news/ donald-trump-signs-executive-order-creating-new-womens-health-task-force-with-melania/"
+  "- Wed 12:37 [oil/geopolitics] Stephen Hubbard, taken four years ago by Russia during the Biden Administration, was just released from prison, at the request of President Donald J. Trump, made directly to President Vladimir Putin in a telephone conversation last week. Stephen is on his way back home and will\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -128,7 +123,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: NFLX earnings after close"
+  "  TODAY: META earnings after close; TSLA earnings after close"
  ],
  "nerd": [
   "LIVE options read - Wed 21 Oct 15:05 Lux (09:05 NY), quotes ~15 min delayed, QQQ 721.54",
