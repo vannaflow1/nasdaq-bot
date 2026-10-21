@@ -568,10 +568,11 @@
     }
    ]
   },
-  "status": "registered",
+  "status": "scored",
   "registered": "2026-10-21",
   "hash": "6e217109c97a",
-  "frozen": "61960eabd54dfac8ce52e083b6072b87d004fed1"
+  "frozen": "61960eabd54dfac8ce52e083b6072b87d004fed1",
+  "scored": "2026-10-21"
  },
  {
   "id": "F9",
@@ -644,9 +645,10 @@
     }
    ]
   },
-  "status": "registered",
+  "status": "scored",
   "registered": "2026-10-21",
   "hash": "5a6a348567ea",
-  "frozen": "61960eabd54dfac8ce52e083b6072b87d004fed1"
+  "frozen": "61960eabd54dfac8ce52e083b6072b87d004fed1",
+  "scored": "2026-10-21"
  }
 ]

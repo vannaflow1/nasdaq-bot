@@ -1,0 +1,6 @@
+[
+ {
+  "title": "\ud83e\uddec Family test results",
+  "body": "F8 F2-pool: noise-band breakout with re-entry on NQ + gold + oil: median edge 2014-21 -0.1568, 2022-23 -0.0657R, 0.02 of variants positive, placebo p=0.0 (need < 0.0304) -> FAILED\nF9 F2-LV: noise-band breakout with low-variance exits (NQ + gold + oil): median edge 2014-21 -0.1581, 2022-23 -0.0876R, 0.0 of variants positive, placebo p=0.0 (need < 0.0076) -> FAILED"
+ }
+]

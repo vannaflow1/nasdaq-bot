@@ -317,5 +317,17 @@
   "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 29% / 39%",
   "- both: 29% / 39%",
   "Biggest single lever right now: better candidates. Exam rate today 2.0/week of max 2 (near the cap - only better candidates help)."
+ ],
+ "families": [
+  "MECHANISM FAMILIES (family = mechanism + 20-50 variants; passes only as a plateau beating a placebo family, with a multiplicity-corrected p-value):",
+  "- F5 Gap fill sized by the gap-fill power: FAILED (p=0.53, median 2022-23 -0.1382R)",
+  "- F6 Scheduled-event drifts (pooled sleeve): FAILED (p=0.82, median 2022-23 -0.0565R)",
+  "- F3 Gamma-regime switch on the forecast range: FAILED (p=0.5, median 2022-23 -0.1531R)",
+  "- F1 Intraday momentum into the close, gamma-conditioned: NOT CONFIRMED - failed the locked exam (family): edge on 2024-now -0.074R (90% lower bound -0.170R, 163 trades) (p=0.0, median 2022-23 0.1721R)",
+  "- F2 Noise-band breakout with re-entry: NOT CONFIRMED - failed the locked exam (family): edge on 2024-now +0.061R (90% lower bound -0.054R, 474 trades) (p=0.0, median 2022-23 0.0605R)",
+  "- F4 Direction-free volatility brackets: FAILED (p=0.94, median 2022-23 -0.0708R)",
+  "- F7 0DTE gamma pinning: afternoon VWAP reversion: FAILED (p=0.34, median 2022-23 -0.2174R)",
+  "- F8 F2-pool: noise-band breakout with re-entry on NQ + gold + oil: FAILED (p=0.0, median 2022-23 -0.0657R)",
+  "- F9 F2-LV: noise-band breakout with low-variance exits (NQ + gold + oil): FAILED (p=0.0, median 2022-23 -0.0876R)"
  ]
 }
