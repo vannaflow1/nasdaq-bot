@@ -10,7 +10,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: state
+  group: gemini-check
   cancel-in-progress: false
 jobs:
   check:
