@@ -13,5 +13,22 @@
    "explain": "higher VPIN (proxied by volatility risk premium rank) predicts a tail day (range \u22651.8\u00d7 normal) in the next session"
   },
   "date": "2026-10-20"
+ },
+ {
+  "id": "self:2026-10-21:0",
+  "title": "Volta's self-check: Validate the core regime hypothesis that low dealer gamma (gex_rank) predicts larger next\u2011day NQ range, using only existing columns.",
+  "idea": "On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant margin?",
+  "relevance": 7,
+  "spec": {
+   "kind": "question",
+   "question": "On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant margin?",
+   "target": "y_range",
+   "expr": "gex_rank",
+   "_source": "self-check"
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: average 1.44, median 1.2 over 2907 sessions (2014-19: 1.18, 2020-25: 1.7). Predictor: lowest-fifth days 1.08 vs highest-fifth 1.89, skill +2.4% vs the base rate, better in 7/9 unseen years",
+  "how": "Q: On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant margin? | answer = `y_range` | predicted by `gex_rank` | stress: skill +2.40; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-10-21"
  }
 ]

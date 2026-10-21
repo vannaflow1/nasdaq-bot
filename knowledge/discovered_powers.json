@@ -25,5 +25,14 @@
   "expr": "k_smt_high",
   "verdict": "PROMISING (tested by Claude on the owner's ES data): 66% vs 51% when both took the Asia high (n=333 vs 1661), better in 12/12 years, 2024-26 68% vs 50%, placebo p<0.001",
   "active": true
+ },
+ {
+  "id": 4,
+  "date": "2026-10-21",
+  "question": "On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant margin?",
+  "target": "y_range",
+  "expr": "gex_rank",
+  "verdict": "PROMISING (stress test: survived) : FACT: average 1.44, median 1.2 over 2907 sessions (2014-19: 1.18, 2020-25: 1.7). Predictor: lowest-fifth days 1.08 vs highest-fifth 1.89, skill +2.4% vs the base rate, better in 7/9 unseen years",
+  "active": true
  }
 ]

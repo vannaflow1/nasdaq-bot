@@ -75,5 +75,29 @@
   "status": "open",
   "votes": 3,
   "source": "Claude review"
+ },
+ {
+  "id": 7,
+  "date": "2026-10-21",
+  "title": "Implement robust multiple\u2011testing correction in the prop\u2011simulator",
+  "for": "claude",
+  "type": "code",
+  "why": "Currently 114 ideas are tested weekly; without FDR control many marginal edges look promising by chance, inflating false confidence.",
+  "evidence": "Only 1 promising idea out of 114 (0.9%) \u2013 likely a statistical fluke.",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
+ },
+ {
+  "id": 8,
+  "date": "2026-10-21",
+  "title": "Add a GARCH\u2011RNN hybrid volatility model as an optional feature for the brain",
+  "for": "claude",
+  "type": "code",
+  "why": "Near\u2011miss garch feature gave +0.4% in backtests, but I lack a clean, out\u2011of\u2011sample\u2011validated implementation to compare against the plain ridge model.",
+  "evidence": "Near\u2011miss feature garch (+0.4%, 7/9) suggests potential edge.",
+  "impact": "medium",
+  "status": "open",
+  "votes": 1
  }
 ]

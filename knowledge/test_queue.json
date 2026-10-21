@@ -102,6 +102,13 @@
   "added": "2026-10-20"
  },
  {
+  "id": "openalex:W2046913100",
+  "title": "OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS",
+  "idea": "Scale daily exposure to Nasdaq futures (or QQQ) in proportion to the surplus (current equity curve minus \u03b1 times its running maximum). Set \u03b1\u22480.8 and exposure\u202f=\u202fk\u00b7(W\u2011\u03b1M)/W, with k calibrated to target a given volatility.",
+  "relevance": 3,
+  "added": "2026-10-21"
+ },
+ {
   "id": "openalex:W3083609828",
   "title": "Equilibrium Effects of Intraday Order-Splitting Benchmarks",
   "idea": "Would need intraday data (opening move vs. rest-of-day drift) and institutional order-flow imbalance; my memory has one row per day with next-day range and return only, so the intraday fade cannot be checked. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",

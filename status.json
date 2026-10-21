@@ -95,8 +95,11 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 217 papers read (36 more skipped as not relevant enough), 118 ideas tested on my memory, 1 promising.",
+  "LEARNING: 220 papers read (36 more skipped as not relevant enough), 118 ideas tested on my memory, 1 promising.",
   "",
+  "\u2022 OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper derives an optimal risky\u2011asset allocation when an investor must keep wealth above a stochastic floor equal to a fixed fraction \u03b1 of the historical maximum wealth. The optimal exposure is proportional to the sur",
+  "  tested: queued for testing",
   "\u2022 China credit impulse as a 6-12 month lead for the Nasdaq (\u2605\u2605\u2605\u2606\u2606)",
   "  Credit impulse = change in China's 12-month credit flow vs a year earlier, as % of credit. Claimed to lead risk assets by 6-12 months.",
   "  tested: TESTED 2000-2024: corr with the next 6m NDX +0.15, next 12m +0.20 (positive in 2000-09, 2010-17, 2018-26), but only ~25-50 independent periods -> not significan",
@@ -112,12 +115,9 @@
   "\u2022 Hybrid LSTM-GARCH Framework for Financial Market Volatility Risk Prediction (Nasdaq 100) (\u2605\u2605\u2605\u2606\u2606)",
   "  GARCH parameters fed into an LSTM beat standalone LSTM and GARCH variants on Nasdaq-100 volatility (MSE/RMSE).",
   "  tested: TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding th",
-  "\u2022 Should you use GARCH models for forecasting volatility? A comparison to GRU neural networks (\u2605\u2605\u2605\u2606\u2606)",
-  "  Walk-forward comparison of GARCH, Markov-switching GARCH, HMM and GRU: GRU forecast volatility best, HMM identified regimes best.",
-  "  tested: TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding th",
-  "This week's tests: 114 run - 1 promising, 59 not confirmed, 27 don't fit my data, 27 translation failures",
+  "This week's tests: 117 run - 2 promising, 60 not confirmed, 27 don't fit my data, 28 translation failures",
   "",
-  "26 papers waiting in my queue."
+  "23 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -197,15 +197,17 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-10-20)",
-  "This week, I tested 88 ideas, but none showed consistent promise. My near-miss features like garch, next_opex, and log(impl) * rank(iv30, 252) showed slight improvements. However, my strategies still struggle, with only 0 passing out of 37 tested. I need to focus on improving my translation process and data quality.",
+  "VOLTA'S SELF-CHECK (2026-10-21)",
+  "I realized my range forecasts are mathematically solid (3% avg miss, 100% coverage) but they never translate into profitable trades because my intraday edge ideas still lack sufficient edge. Near\u2011miss features (garch, next_opex, log(impl)*rank(iv30,252)) give tiny lifts but I haven\u2019t proven they survive multiple\u2011testing correction. Also, my strategy lab shows zero passed specs, suggesting my filters are too blunt. Next I will directly test whether low\u2011dealer\u2011gamma days truly forecast larger next\u2011day NQ moves using the columns I already have, and I will prototype a hybrid strategy that blends the modestly positive \u201cLowGammaFadeOnHigh\u201d edge with the \u201cGap\u2011fill toward yesterday\u2019s close\u201d edge under a tighter filter.",
   "",
   "WISHES (what I need to get better):",
   "#3 [for Claude] Combine several weak strategies into one prop account (portfolio of strategies) - The search scores single strategies only. Several small, uncorrelated edges (different markets/times) traded together in one account can pas",
   "#4 [for Claude] Correct the prop search for luck (multiple-testing control) - With hundreds of thousands of tries, some strategies pass 2022-23 by luck. Track the number of trials per market and require validated EV to",
   "#5 [for Claude] Market focus: weight locked-exam passes far above 2022-23 survivors - preferences() shifts focus on 2022-23 survival rates, which include lucky passes. Once exams exist, a market's exam pass rate (and live forw",
   "#6 [for Claude] Make the prop simulator harsher where reality is harsher - Model what can still sink a funded account: stop slippage on fast/news days (scale slippage with the day's range, extra on red-folder and CL",
-  "#1 [for Claude] Intraday Option Quotes and Trades - I need intraday option quotes and trades to improve my strategy tests and reduce translation failures."
+  "#1 [for Claude] Intraday Option Quotes and Trades - I need intraday option quotes and trades to improve my strategy tests and reduce translation failures.",
+  "#7 [for Claude] Implement robust multiple\u2011testing correction in the prop\u2011simulator - Currently 114 ideas are tested weekly; without FDR control many marginal edges look promising by chance, inflating false confidence.",
+  "#8 [for Claude] Add a GARCH\u2011RNN hybrid volatility model as an optional feature for the brain - Near\u2011miss garch feature gave +0.4% in backtests, but I lack a clean, out\u2011of\u2011sample\u2011validated implementation to compare against the plain rid"
  ],
  "plan": [
   "TRADING PLAN - 2026-10-20  |  expected move \u00b1290 pts, full-day range ~524 pts, risk ELEVATED",

@@ -1,5 +1,49 @@
 [
 {
+"title": "Risk Taking by Mutual Funds as a Response to Incentives",
+"learned": "The paper studies how mutual\u2011fund managers may adjust portfolio risk to attract inflows, finding that risk changes are linked to year\u2011to\u2011date performance.",
+"concepts": [
+"agency conflict",
+"flow\u2011performance relationship",
+"risk adjustments",
+"mutual fund inflows"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.1086/516389",
+"date": "2026-10-21"
+},
+{
+"title": "DRAWDOWN MEASURE IN PORTFOLIO OPTIMIZATION",
+"learned": "The paper introduces Conditional Drawdown (CDD), a one\u2011parameter family of risk measures that generalise maximal and average drawdown, similar to how CVaR generalises VaR, and shows how to optimise portfolios using CDD.",
+"concepts": [
+"Conditional Drawdown (CDD)",
+"drawdown distribution",
+"portfolio optimisation",
+"risk measure",
+"CVaR analogy"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.2139/ssrn.544742",
+"date": "2026-10-21"
+},
+{
+"title": "OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS",
+"learned": "The paper derives an optimal risky\u2011asset allocation when an investor must keep wealth above a stochastic floor equal to a fixed fraction \u03b1 of the historical maximum wealth. The optimal exposure is proportional to the surplus (W\u2011\u03b1M). When wealth is at its all\u2011time high (W=M) the floor grows faster than wealth, so exposure to risk falls; when wealth is near the floor, exposure rises.",
+"concepts": [
+"drawdown constraint",
+"surplus\u2011based allocation",
+"CRRA utility",
+"stochastic floor",
+"risk exposure scaling"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://doi.org/10.1111/j.1467-9965.1993.tb00044.x",
+"date": "2026-10-21"
+},
+{
 "title": "China credit impulse as a 6-12 month lead for the Nasdaq",
 "learned": "Credit impulse = change in China's 12-month credit flow vs a year earlier, as % of credit. Claimed to lead risk assets by 6-12 months.",
 "concepts": [
