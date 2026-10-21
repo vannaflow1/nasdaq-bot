@@ -62,9 +62,10 @@
   "why": "preferences() shifts focus on 2022-23 survival rates, which include lucky passes. Once exams exist, a market's exam pass rate (and live forward results) should dominate the focus.",
   "evidence": "focus currently based only on validation survivors",
   "impact": "medium",
-  "status": "open",
+  "status": "done",
   "votes": 3,
-  "source": "Claude review"
+  "source": "Claude review",
+  "note": "Granted 2026-10-21 (prop_search.preferences + exam_evidence): the market focus now reads every market's locked exams (strategies.jsonl entries that sat the exam, any source) and the live forward test of exam-passed strategies (strategy_forward.csv). From 3 exams in total on (even before the 300-strategy mark), a market's exam pass rate (shrunk to the pooled rate with 3 pseudo-exams) enters at full weight while the 2022-23 survivor evidence fades to the power 1/(1 + exams/4); a market with 20+ live forward trades is scaled by 2**clip(t/2,-1,1) (t-stat of its live mean R, up to x2 or /2). 10% floor per market and the halfway-per-run smoothing stay. The focus line in /search shows exams passed/taken and live trades per market."
  },
  {
   "id": 6,

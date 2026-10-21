@@ -413,35 +413,88 @@ BASE_FOCUS = {"NQ": 0.50, "GC": 0.25, "CL": 0.25}           # the owner's starti
 PREF = os.path.join(OUT, "preferences.json")
 
 
-def preferences(A=None, save=False):
+EXAM_MIN = 3          # locked exams (all markets together) before exam results start steering the focus
+FWD_MIN = 20          # forward-test trades in a market before live results count
+
+
+def exam_evidence():
+    """Per market: locked exams taken and passed (knowledge/strategies.jsonl, every source), and the live forward test of
+    exam-passed strategies (knowledge/strategy_forward.csv: trades, total R, t-stat of the mean R)."""
+    ev = {m: {"exams": 0, "passed": 0, "fwd_trades": 0, "fwd_R": 0.0, "fwd_t": 0.0} for m in MARKETS}
+    f = os.path.join(K, "strategies.jsonl")
+    for l in (open(f) if os.path.exists(f) else []):
+        try:
+            e = json.loads(l)
+        except Exception:
+            continue
+        if not (e.get("exam") or e.get("prop_exam")): continue          # only entries that actually sat the locked exam
+        m = ((e.get("spec") or {}).get("market") or "NQ").upper()
+        if m not in ev: continue
+        ev[m]["exams"] += 1; ev[m]["passed"] += int(str(e.get("verdict", "")).startswith("PROMISING STRATEGY"))
+    fw = os.path.join(K, "strategy_forward.csv")
+    try:
+        F = pd.read_csv(fw); F = F[F.traded.astype(bool)]
+        for m, g in F.groupby(F.get("market", pd.Series("NQ", index=F.index)).fillna("NQ")):
+            if m in ev and len(g):
+                sd = float(g.R.std(ddof=1)) if len(g) > 1 else 0.0
+                ev[m].update(fwd_trades=int(len(g)), fwd_R=round(float(g.R.sum()), 2),
+                             fwd_t=round(float(g.R.mean() / (sd / np.sqrt(len(g)))), 2) if sd > 0 else 0.0)
+    except Exception:
+        pass
+    return ev
+
+
+def preferences(A=None, save=False, EV=None):
     """Volta's market focus. Starts at the owner's split (NQ 50 / GC 25 / CL 25). Once every market has 300+ tested
     strategies, the split follows the evidence: each market's smoothed rate of strategies that stayed positive on the
     unseen 2022-23 years, boosted by how good its best validated payouts are. Every market keeps at least 10% so Volta
     never stops exploring; the focus moves gradually (at most halfway to the new target per run).
     Luck control: once every market has a luck bar, "held up" means beat that market's luck bar (not just EV > 0), and
-    the payout boost uses the EV above the bar - so a market cannot win focus with lucky 2022-23 survivors."""
+    the payout boost uses the EV above the bar - so a market cannot win focus with lucky 2022-23 survivors.
+    Exams and live results dominate (from EXAM_MIN exams on, even before the 300-strategy mark): a market's locked-exam
+    pass rate (shrunk towards the pooled rate, 3 pseudo-exams) enters at full weight, while the 2022-23 evidence fades to
+    the power 1/(1 + exams/4); a market with FWD_MIN+ live forward trades of exam-passed strategies is scaled by
+    2**clip(t/2, -1, 1) (t = t-stat of the live mean R), i.e. up to x2 or /2."""
     A = all_results() if A is None else A
     old = json.load(open(PREF)) if os.path.exists(PREF) else {"weights": dict(BASE_FOCUS), "history": []}
-    if not len(A) or "spec" not in A:
+    EV = exam_evidence() if EV is None else EV
+    E_tot = sum(v["exams"] for v in EV.values())
+    if (not len(A) or "spec" not in A) and E_tot < EXAM_MIN:
         return old if "why" in old else {**old, "why": "owner's starting split - not enough results yet"}
-    mk = market_of(A); L = luck(A); use_bar = all(L[m]["bar"] is not None for m in MARKETS)
-    xs = excess(A, L) if use_bar else A.get("ev_val", pd.Series(dtype=float))
+    if len(A) and "spec" in A:
+        mk = market_of(A); L = luck(A); use_bar = all(L[m]["bar"] is not None for m in MARKETS)
+        xs = excess(A, L) if use_bar else A.get("ev_val", pd.Series(dtype=float))
+    else:
+        mk = pd.Series(dtype=object); use_bar = False; xs = pd.Series(dtype=float)
     stats = {}
     for m in MARKETS:
-        a = A[mk == m]; ev = xs[mk == m] if len(xs) else pd.Series(dtype=float); evp = ev[ev > 0] if len(a) else ev
+        a = A[mk == m] if len(mk) else A.iloc[0:0]; ev = xs[mk == m] if len(xs) else pd.Series(dtype=float); evp = ev[ev > 0] if len(a) else ev
         stats[m] = {"tested": int(len(a)), "validated": int((ev > 0).sum()) if len(a) else 0,
-                    "top5": float(evp.sort_values(ascending=False).head(5).mean()) if len(evp) else 0.0}
-    if min(v["tested"] for v in stats.values()) < 300:
+                    "top5": float(evp.sort_values(ascending=False).head(5).mean()) if len(evp) else 0.0, **EV[m]}
+    val_ready = min(v["tested"] for v in stats.values()) >= 300
+    if not val_ready and E_tot < EXAM_MIN:
         w = dict(old["weights"]); why = "owner's starting split until every market has 300+ tested strategies (" + \
-            ", ".join(f"{m} {v['tested']}" for m, v in stats.items()) + ")"
+            ", ".join(f"{m} {v['tested']}" for m, v in stats.items()) + f") or {EXAM_MIN}+ locked exams are taken ({E_tot} so far)"
     else:
-        rate = {m: (v["validated"] + 1) / (v["tested"] + 50) for m, v in stats.items()}; mr = np.mean(list(rate.values()))
-        perf = {m: (rate[m] / mr) * (1 + max(stats[m]["top5"], 0) / 200) for m in MARKETS}
+        if val_ready:
+            rate = {m: (v["validated"] + 1) / (v["tested"] + 50) for m, v in stats.items()}; mr = np.mean(list(rate.values()))
+            val = {m: (rate[m] / mr) * (1 + max(stats[m]["top5"], 0) / 200) for m in MARKETS}
+        else:
+            val = {m: 1.0 for m in MARKETS}
+        a_val = 1.0 / (1.0 + E_tot / 4.0)                    # 2022-23 survivors fade as locked-exam results accumulate
+        pool = (sum(v["passed"] for v in EV.values()) + 0.5) / (E_tot + 3)
+        er = {m: (EV[m]["passed"] + 3 * pool) / (EV[m]["exams"] + 3) for m in MARKETS}; emr = np.mean(list(er.values()))
+        fwd = {m: 2 ** float(np.clip(EV[m]["fwd_t"] / 2, -1, 1)) if EV[m]["fwd_trades"] >= FWD_MIN else 1.0 for m in MARKETS}
+        perf = {m: val[m] ** a_val * (er[m] / emr) * fwd[m] for m in MARKETS}
         tgt = {m: BASE_FOCUS[m] * perf[m] for m in MARKETS}; t = sum(tgt.values()); tgt = {m: v / t for m, v in tgt.items()}
         w = {m: 0.5 * old["weights"].get(m, BASE_FOCUS[m]) + 0.5 * tgt[m] for m in MARKETS}
-        w = {m: max(v, 0.10) for m, v in w.items()}; t = sum(w.values()); w = {m: round(v / t, 3) for m, v in w.items()}
-        why = "evidence: " + ", ".join(f"{m} {stats[m]['validated']}/{stats[m]['tested']} " + ("beat the luck bar on 2022-23" if use_bar else "held up on 2022-23")
-                                       + (f" (top EV {'above the bar ' if use_bar else ''}{stats[m]['top5']:+.0f})" if stats[m]["top5"] else "") for m in MARKETS)
+        w = {m: max(v, 0.10) for m, v in w.items()}; t = sum(w.values()); w = {m: round(float(v / t), 3) for m, v in w.items()}
+        why = "evidence: " + ", ".join(
+            f"{m} " + (f"{stats[m]['validated']}/{stats[m]['tested']} " + ("beat the luck bar on 2022-23" if use_bar else "held up on 2022-23")
+                       + (f" (top EV {'above the bar ' if use_bar else ''}{stats[m]['top5']:+.0f})" if stats[m]["top5"] else "") + "; "
+                       if val_ready else "") + f"locked exams {EV[m]['passed']}/{EV[m]['exams']} passed"
+            + (f"; live {EV[m]['fwd_trades']} trades {EV[m]['fwd_R']:+.1f}R" if EV[m]["fwd_trades"] else "") for m in MARKETS) \
+            + f" (exam weight x1, 2022-23 weight ^{a_val:.2f})"
     out = {"weights": w, "why": why, "stats": stats, "luck_control": use_bar, "history": (old.get("history") or [])[-60:]}
     if save:
         moved = [m for m in MARKETS if abs(w[m] - old["weights"].get(m, BASE_FOCUS[m])) >= 0.10]
