@@ -1,0 +1,13 @@
+NQ 1329 [{'ts': Timestamp('2025-06-04 00:00:00'), 'o': 21665.519, 'h': 21667.208, 'l': 21659.476, 'c': 21659.999, 'v': 0.019169999286532402}, {'ts': Timestamp('2025-06-04 11:04:00'), 'o': 21701.719, 'h': 21702.632, 'l': 21700.732, 'c': 21700.754, 'v': 0.012419999577105045}, {'ts': Timestamp('2025-06-04 23:59:00'), 'o': 21701.776, 'h': 21705.389, 'l': 21701.776, 'c': 21704.186, 'v': 0.009180000051856041}]
+GC 1380 [{'ts': Timestamp('2025-06-04 00:00:00'), 'o': 3359.698, 'h': 3359.898, 'l': 3358.295, 'c': 3358.448, 'v': 0.033730000257492065}, {'ts': Timestamp('2025-06-04 11:30:00'), 'o': 3346.325, 'h': 3346.448, 'l': 3344.498, 'c': 3344.935, 'v': 0.04247000068426132}, {'ts': Timestamp('2025-06-04 23:59:00'), 'o': 3378.345, 'h': 3378.345, 'l': 3377.398, 'c': 3377.935, 'v': 0.020519999787211418}]
+CL 1343 [{'ts': Timestamp('2025-06-04 00:00:00'), 'o': 63.273, 'h': 63.325, 'l': 63.215, 'c': 63.245, 'v': 0.006390000227838755}, {'ts': Timestamp('2025-06-04 11:29:00'), 'o': 63.38, 'h': 63.38, 'l': 63.355, 'c': 63.355, 'v': 0.0015750000020489097}, {'ts': Timestamp('2025-06-04 23:59:00'), 'o': 62.605, 'h': 62.625, 'l': 62.605, 'c': 62.615, 'v': 0.0007650000043213367}]
+Traceback (most recent call last):
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/tools/dukascopy.py", line 139, in <module>
+    for mk in SYMS: d = day(mk, date(2025, 6, 4)); print(mk, len(d), d.iloc[[0, len(d) // 2, -1]].to_dict("records") if len(d) else "")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/tools/dukascopy.py", line 36, in day
+    raw = _get(URL.format(s=SYMS[mk], y=d.year, m=d.month - 1, d=d.day))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/tools/dukascopy.py", line 31, in _get
+    raise RuntimeError(f"fetch failed: {url}")
+RuntimeError: fetch failed: https://datafeed.dukascopy.com/datafeed/USA500IDXUSD/2025/05/04/BID_candles_min_1.bi5
