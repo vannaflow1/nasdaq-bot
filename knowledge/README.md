@@ -163,3 +163,6 @@ not edge; K grew with every run; the 2024-26 exam was reused; power was never me
   families can see realistic edges; rare-trade ones (F5) cannot. Weekly in the families workflow (Sundays).
 - F7 (0DTE pinning proxy) FAILED: median -0.22R = placebo level (VWAP targets too close for costs).
 - Power features (pw_*) are walk-forward (logistic refit on past years, 2017-2025) and fc_frac is past-only - no model leak.
+
+## Edge optimizer (optimize_edge.py, 21 Oct 2026)
+Once an edge is CONFIRMED, Volta tries to make it better without fooling itself. It scores a fixed set of refinements: stop and target ±, trade management, entry ±15/30 min, one extra regime filter, and schedule spacing or band width. It also scores an account playbook. All of this runs on the strategy's SEARCH years only. A refinement must beat the original's lower bound there and must not be worse on the validation years. The winner becomes a CHALLENGER that is forward-traded next to the champion every evening. It's promoted only when the forward trades show P(better) > 0.9 after ≥ 60 trades; it's dropped at P < 0.1 or after 180 trades. The champion keeps trading until then. State: knowledge/optimizations.json.

@@ -17,9 +17,15 @@ def entries():
 
 
 def candidates(E):
+    """Everything forward-tested each evening: exam-passers (incl. family sleeves) and refinement challengers."""
     out = {}
     for e in E:
-        if str(e.get("verdict", "")).startswith("PROMISING STRATEGY"):
+        v = str(e.get("verdict", ""))
+        rv = str(e.get("review", ""))
+        try:
+            import review_prop; rv = str(review_prop.effective(e).get("review", rv))
+        except Exception: pass
+        if v.startswith("PROMISING STRATEGY") or v.startswith("CHALLENGER") or rv.startswith("CONFIRMED"):
             out[S.spec_id(e["spec"])] = e
     return list(out.values())
 
@@ -136,15 +142,19 @@ def forward(cands, st):
         X = pd.concat([X0[X0.index != pd.Timestamp(memdate)], pd.DataFrame([row], index=[pd.Timestamp(memdate)])]).sort_index()
         S._MK[mk] = D if mk != "NQ" else S._MK.get(mk)                  # filters read the extended table
         if mk == "NQ": S._DATA.update(D)
-        for c in [c for c in cands if (c["spec"].get("market") or "NQ").upper() == mk]:
-            spec = c["spec"]
-            try:
+        pairs = [(c, sub) for c in cands for sub in (c["spec"]["sleeve"] if "sleeve" in c["spec"] else [c["spec"]])]
+        for c, spec in [(c, sp) for c, sp in pairs if (sp.get("market") or "NQ").upper() == mk]:
+            try:                                                   # sleeves: every member spec; multi-trade specs: every trade
                 allow, side = S._filters(spec, X)
-                r = S.simulate_session(D, i, spec, side=side[i]) if allow[i] else None
+                if not allow[i]: rs = []
+                elif S.is_multi(spec): rs = S.simulate_day(D, i, spec, side=int(side[i]) if abs(side[i]) == 1 else 0)
+                else:
+                    r = S.simulate_session(D, i, spec, side=side[i]); rs = [r] if r else []
             except Exception as e:
                 print("forward failed for", c["name"], e); continue
-            out.append({"date": meta["session"], "market": mk, "id": S.spec_id(spec), "name": c["name"], "traded": bool(r),
-                        "pnl_pts": round(r[0], 4) if r else 0.0, "R": round(r[1], 2) if r else 0.0, "side": int(r[2]) if r else 0})
+            for r in (rs or [None]):
+                out.append({"date": meta["session"], "market": mk, "id": S.spec_id(c["spec"]), "name": c["name"], "traded": bool(r),
+                            "pnl_pts": round(r[0], 4) if r else 0.0, "R": round(r[1], 2) if r else 0.0, "side": int(r[2]) if r else 0})
     if out:
         F = pd.read_csv(FWD) if os.path.exists(FWD) else pd.DataFrame()
         F = pd.concat([F[~((F.get("date") == out[0]["date"]))] if len(F) else F, pd.DataFrame(out)], ignore_index=True)
@@ -199,6 +209,16 @@ def main():
             ann.append({"title": ttl, "body": "\n".join(changed)}); json.dump(ann, open(TE.ANN, "w"), indent=1)
     except Exception as e:
         print("regime watch skipped:", type(e).__name__, e)
+    try:                                                      # edge optimizer: refine CONFIRMED edges, judge challengers on forward trades
+        import optimize_edge as OE, test_engine as TE
+        made = OE.run_new(); news = OE.judge(pd.read_csv(FWD) if os.path.exists(FWD) else pd.DataFrame())
+        news += [f"🔧 New challenger for '{m['champion'][:60]}': {m['change']} (chosen on its search years only; "
+                 f"forward-tested next to the original from today)" for m in made if m.get("status") == "forward"]
+        if news:
+            ann = json.load(open(TE.ANN)) if os.path.exists(TE.ANN) else []
+            ann.append({"title": "🔧 Edge optimizer", "body": "\n".join(news)}); json.dump(ann, open(TE.ANN, "w"), indent=1)
+    except Exception as e:
+        print("optimizer skipped:", type(e).__name__, e)
     try:
         import eta; eta.update()                                  # forward-test days changed: refresh the edge estimate
     except Exception as e:
