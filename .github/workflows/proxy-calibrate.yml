@@ -16,8 +16,11 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12", cache: pip }
       - run: pip install -q -r requirements.txt scipy
-      - run: python tools/dukascopy.py probe
-      - run: python tools/dukascopy.py calibrate
+      - run: |                                   # logs go into the repo (Actions logs are not readable from Claude's sandbox)
+          mkdir -p knowledge/research_out
+          python tools/dukascopy.py probe > knowledge/research_out/proxy_probe.txt 2>&1 || true
+          python tools/dukascopy.py calibrate > knowledge/research_out/proxy_calibrate_log.txt 2>&1 || true
+          tail -c 3000 knowledge/research_out/proxy_calibrate_log.txt
         env: { PYTHONUNBUFFERED: "1" }
       - if: always()
         run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "proxy-calibrate" && break; sleep $((RANDOM % 20 + 5)); done
