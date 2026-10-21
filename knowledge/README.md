@@ -56,7 +56,13 @@ Never without the owner: money, accounts, secrets/permissions, deleting data, we
   ideas from hunted papers get +1 priority in the test queue. The self-check digest shows each hunt and what it found.
 - **Frontier** track: ~2 papers always waiting from arXiv (last 45 days, q-fin + cs.LG/stat.ML on trading/volatility) and
   OpenAlex papers < 18 months old that are already being cited (rising work on Volta's topics).
-- **Edge estimate** (eta.py): Monte Carlo over "does a real edge exist here (50/50 prior)", "share of exams that catch it
-  (~1 in 20)", "lucky strategies pass the exam 1 in 4", "60 trading days forward test". Weighted by Volta's own failed exams
-  and forward tests. Written to status.json["eta"] by prop_search (job 1) and strategy_forward; shown at the top of /search
-  and /wishes; history in knowledge/eta_history.csv. Keep it honest: never tune the priors to make the number look better.
+- **Prop-algo timer** (eta.py): "when will I have an algo that passes prop evals and keeps paying out" - in the simulator on the
+  unseen 2024-26 years (live/forward trading is deliberately NOT part of this goal). Found = passes the locked exam AND the
+  weekly review marks it CONFIRMED. Monte Carlo over "does such an algo exist here (50/50 prior)", "share of exams that catch
+  it (~1 in 20)", "lucky strategies pass the exam 1 in 4", "review spots a real one 85%", weighted by Volta's own failed exams
+  and review rejections. Written to status.json["eta"] by prop_search (job 1) and strategy_forward; shown at the top of
+  /search and /wishes; history in knowledge/eta_history.csv. Keep it honest: never tune the priors to make it look better.
+- **Weekly review of exam-passers:** for every strategy in knowledge/strategies.jsonl whose verdict starts with
+  "PROMISING STRATEGY" and has no "review" field yet, judge it (per-year stability, is the payout EV coming from the
+  strategy or only from the prop structure/sizing, both halves, costs, leaks) and write the field
+  "review": "CONFIRMED: <why>" / "FRAGILE: <why>" / "FLUKE: <why>" into that line. The timer reads it.
