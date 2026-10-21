@@ -1,0 +1,52 @@
+{
+ "weights": {
+  "NQ": 0.477,
+  "GC": 0.261,
+  "CL": 0.262
+ },
+ "why": "evidence: NQ 0/10511 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/5398 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/5328 beat the luck bar on 2022-23; locked exams 0/0 passed (exam weight x1, 2022-23 weight ^0.80)",
+ "stats": {
+  "NQ": {
+   "tested": 10511,
+   "validated": 0,
+   "top5": 0.0,
+   "exams": 1,
+   "passed": 1,
+   "fwd_trades": 0,
+   "fwd_R": 0.0,
+   "fwd_t": 0.0
+  },
+  "GC": {
+   "tested": 5398,
+   "validated": 0,
+   "top5": 0.0,
+   "exams": 0,
+   "passed": 0,
+   "fwd_trades": 0,
+   "fwd_R": 0.0,
+   "fwd_t": 0.0
+  },
+  "CL": {
+   "tested": 5328,
+   "validated": 0,
+   "top5": 0.0,
+   "exams": 0,
+   "passed": 0,
+   "fwd_trades": 0,
+   "fwd_R": 0.0,
+   "fwd_t": 0.0
+  }
+ },
+ "luck_control": true,
+ "history": [
+  {
+   "date": "2026-10-21",
+   "weights": {
+    "NQ": 0.477,
+    "GC": 0.261,
+    "CL": 0.262
+   }
+  }
+ ],
+ "shifted": []
+}
