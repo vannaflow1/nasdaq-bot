@@ -1,10 +1,10 @@
 name: prop-search
 on:
   schedule:
-    - cron: "17 */4 * * *"    # every 4 hours (00:17, 04:17, ... UTC); a run takes ~2h50, the concurrency group queues overlaps
+    - cron: "17 */3 * * *"    # every 3 hours = back to back (a run takes ~2h50); the concurrency group queues overlaps
   workflow_dispatch:
     inputs:
-      minutes: { description: "search minutes", required: false, default: "150" }
+      minutes: { description: "search minutes", required: false, default: "155" }
 permissions:
   contents: write
 concurrency:
@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3]     # 4 parallel jobs, each walks its own quarter of the grid
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]     # 8 parallel jobs, each walks its own eighth of the grid (already-tested specs are skipped via all results)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -25,9 +25,9 @@ jobs:
       - run: pip install -q -r requirements.txt scipy
       - run: python prop_search.py
         env:
-          SEARCH_MINUTES: ${{ github.event.inputs.minutes || '150' }}
+          SEARCH_MINUTES: ${{ github.event.inputs.minutes || '155' }}
           SHARD: ${{ matrix.shard }}
-          SHARDS: "4"
+          SHARDS: "8"
           PYTHONUNBUFFERED: "1"
       - if: always()
         run: |

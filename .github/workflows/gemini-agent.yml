@@ -3,7 +3,7 @@ name: gemini-agent
 # Claude's nightly upgrade session (03:47 Lux) reviews the draft branches and merges or rejects them.
 on:
   schedule:
-    - cron: "50 23 * * *"      # 01:50 Luxembourg (summer time), before Claude's upgrade session
+    - cron: "50 */4 * * *"     # every 4 hours (01:50, 05:50, ... Lux summer time); exits in seconds when no wish is open; capped by the daily Gemini call budget
   workflow_dispatch:
     inputs:
       wish: { description: "wish id (empty = pick the best open wish)", required: false }

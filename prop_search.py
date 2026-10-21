@@ -581,6 +581,9 @@ def write_status(R, gsize, st, tried, validated, exams, pref=None, L=None):
         passed = [n for n, vd in exams if str(vd).startswith("PROMISING STRATEGY")]
         title = "🏁 Volta found a prop strategy that passed the locked exam" if passed else "🔎 Volta's prop search"
         if not passed and SHARD != 0: return                  # one routine note per run (job 1), always announce a pass
+        note_f = os.path.join(OUT, "last_note.txt"); today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        if not passed and os.path.exists(note_f) and open(note_f).read().strip() == today: return   # routine note once a day
+        open(note_f, "w").write(today)
         ann.append({"title": title, "body": "\n".join(lines)[:1800]}); json.dump(ann, open(TE.ANN, "w"), indent=1)
     except Exception as e:
         print("announce skipped:", e)
