@@ -285,10 +285,10 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 1 (job 6/8): 1263 new strategies this run, 14,123 tested in total (grid 985,824 + mutations, 1.4% covered)",
-  "Stage A (2014-21, EV after fee > 0): 2496 | Stage B (still positive on unseen 2022-23): 645 | exams taken: 4",
-  "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): NQ +3307 at 1990 validated tries (2402 placebos, avg +10) -> 0 beat it | GC +1673 at 201 validated tries (160 placebos, avg -9) -> 0 beat it | CL +2776 at 193 validated tries (88 placebos, avg +18) -> 0 beat it",
-  "Market focus: NQ 56% / GC 21% / CL 24%  (evidence: NQ 0/8995 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/2660 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/2468 beat the luck bar on 2022-23; locked exams 0/0 pas)",
+  "PROP STRATEGY SEARCH - run 1 (job 7/8): 1554 new strategies this run, 14,414 tested in total (grid 985,824 + mutations, 1.5% covered)",
+  "Stage A (2014-21, EV after fee > 0): 2503 | Stage B (still positive on unseen 2022-23): 640 | exams taken: 4",
+  "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): NQ +3307 at 1998 validated tries (2418 placebos, avg +7) -> 0 beat it | GC +1339 at 203 validated tries (164 placebos, avg -22) -> 0 beat it | CL +2776 at 191 validated tries (84 placebos, avg +10) -> 0 beat it",
+  "Market focus: NQ 56% / GC 21% / CL 24%  (evidence: NQ 0/9101 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/2795 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/2518 beat the luck bar on 2022-23; locked exams 0/0 pas)",
   "",
   "LEADERBOARD (ranked by EV per eval on unseen 2022-23 above the market's luck bar; 'luck-level' = not above it, likely a lucky survivor):",
   "- mutant: [GC] break or15_low 08:45-11:30, no red-folder news | tradeday_fastpass_50k risk 30%/50% | 2014-21 EV +189 (pass 24%) | 2022-23 EV +792 (pass 55%) | luck-level | 5 accounts: +652$/month (25% months positive) | 504 trades, -0.00R",
