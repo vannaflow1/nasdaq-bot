@@ -64,5 +64,68 @@
   "papers": [],
   "key": "promising:openalex:W4406740838",
   "searched": "2026-10-21"
+ },
+ {
+  "id": "h6",
+  "date": "2026-10-21",
+  "query": "intraday momentum noise area breakout futures",
+  "why": "F2 mechanism: does noise-band momentum hold across futures markets and sessions?",
+  "source": "focus",
+  "status": "open",
+  "key": "focus:intraday momentum noise area breakout futures"
+ },
+ {
+  "id": "h7",
+  "date": "2026-10-21",
+  "query": "intraday time series momentum commodity futures gold crude oil",
+  "why": "F2-pool: evidence that the mechanism exists in gold and oil",
+  "source": "focus",
+  "status": "open",
+  "key": "focus:intraday time series momentum commodity futures gold crude oil"
+ },
+ {
+  "id": "h8",
+  "date": "2026-10-21",
+  "query": "intraday momentum European session London open futures",
+  "why": "F2-session: same mechanism in a second session",
+  "source": "focus",
+  "status": "open",
+  "key": "focus:intraday momentum European session London open futures"
+ },
+ {
+  "id": "h9",
+  "date": "2026-10-21",
+  "query": "trailing stop versus fixed profit target return variance trend following",
+  "why": "F2-LV: lower noise per trade without killing the edge",
+  "source": "focus",
+  "status": "open",
+  "key": "focus:trailing stop versus fixed profit target return variance trend following"
+ },
+ {
+  "id": "h10",
+  "date": "2026-10-21",
+  "query": "sequential testing trading strategy performance early stopping",
+  "why": "statistics: confirm a small edge with fewer trades",
+  "source": "focus",
+  "status": "open",
+  "key": "focus:sequential testing trading strategy performance early stopping"
+ },
+ {
+  "id": "h11",
+  "date": "2026-10-21",
+  "query": "variance reduction control variates backtest evaluation",
+  "why": "statistics: cut noise per trade in the test statistic",
+  "source": "focus",
+  "status": "open",
+  "key": "focus:variance reduction control variates backtest evaluation"
+ },
+ {
+  "id": "h12",
+  "date": "2026-10-21",
+  "query": "free intraday historical data index futures CFD research proxy",
+  "why": "data: more markets and longer free 1-minute history",
+  "source": "focus",
+  "status": "open",
+  "key": "focus:free intraday historical data index futures CFD research proxy"
  }
 ]

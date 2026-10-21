@@ -475,7 +475,9 @@ def main(max_new=10):
     except Exception as e:
         errs.append(f"curated: {type(e).__name__}")
     day_f = os.path.join(K, "fetch_day.txt"); today_s = datetime.now(timezone.utc).date().isoformat()
-    full = not (os.path.exists(day_f) and open(day_f).read().strip() == today_s)   # broad fetch once a day; hunts every run
+    # 21 Oct 2026 (owner OK): research narrowed to what adds EVIDENCE - broad reading (arXiv/OpenAlex/prop/frontier) once a
+    # WEEK (Sundays); focused hunts on the F2 mechanism, free data and low-sample statistics run every time
+    full = datetime.now(timezone.utc).weekday() == 6 and not (os.path.exists(day_f) and open(day_f).read().strip() == today_s)
     if full: open(day_f, "w").write(today_s)
     for fn in ((arxiv, openalex) + ((openalex_backfill,) if queue_len < 15 else ())) if full else ():
         try:
@@ -515,7 +517,7 @@ def main(max_new=10):
     except Exception as e:
         errs.append(f"prop: {type(e).__name__}")
     try:                                                     # hunts: research Volta ordered itself (or a finding triggered) - read first
-        auto_hunts()
+        # auto_hunts() off since 21 Oct 2026: it chased briefing-side curiosities (Asian session, 0DTE) - off-mission
         new += [p for p in hunt_papers(seen) if not any(q["id"] == p["id"] for q in queue)]
     except Exception as e:
         errs.append(f"hunts: {type(e).__name__}")

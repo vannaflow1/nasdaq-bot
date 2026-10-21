@@ -1,7 +1,7 @@
 name: learn-fetch
 on:
   schedule:
-    - cron: "*/20 * * * *"      # every 20 min: keep the reading queue full
+    - cron: "13 */2 * * *"      # every 2 hours (21 Oct 2026: research narrowed - focused hunts; broad reading weekly)
   workflow_dispatch:
 permissions:
   contents: write
