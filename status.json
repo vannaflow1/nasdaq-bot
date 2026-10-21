@@ -285,17 +285,17 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 2 (job 5/8): 29760 new strategies this run, 57,315 tested in total (29,760 with the edge metric; grid 985,824 + mutations, markets NQ)",
-  "Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. Stage A (2014-21, edge > 0 with 90% confidence): 540 | Stage B (edge still > 0 on unseen 2022-23): 47 | exams taken: 2",
-  "LUCK BAR (best 2022-23 edge that many no-edge random-entry twins reach, 95%): NQ +0.679R at 506 validated tries (2024 placebos, avg -0.004R) -> 0 beat it",
+  "PROP STRATEGY SEARCH - run 4 (job 1/8): 33854 new strategies this run, 61,409 tested in total (33,854 with the edge metric; grid 985,824 + mutations, markets NQ)",
+  "Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. Stage A (2014-21, edge > 0 with 90% confidence): 622 | Stage B (edge still > 0 on unseen 2022-23): 62 | exams taken: 2",
+  "LUCK BAR (best 2022-23 edge that many no-edge random-entry twins reach, 95%): NQ +0.730R at 588 validated tries (2352 placebos, avg -0.005R) -> 0 beat it",
   "",
   "LEADERBOARD (edge on unseen 2022-23 above the luck bar; 'luck-level' = not above it):",
-  "- with 20d trend at 08:31, tail-day risk high, breakeven at 1.0R | 2014-21 +0.210R (t 1.8, 164 trades) | 2022-23 +0.460R (t 1.9) | luck-level | priced: lucid_flex_50k EV +596$/eval",
-  "- fade exp50_dn 08:45-11:30, small expected range (bottom third) | 2014-21 +0.094R (t 1.6, 283 trades) | 2022-23 +0.436R (t 3.1) | luck-level | priced: lucid_pro_50k EV +811$/eval",
+  "- fade london_high 08:30-10:00, mean-reverting (Hurst<0.5), trail 1.0R | 2014-21 +0.106R (t 1.4, 309 trades) | 2022-23 +0.506R (t 2.9) | luck-level | priced: lucid_flex_50k EV +1468$/eval",
+  "- break ewma1_up 08:30-10:00, small overnight | 2014-21 +0.119R (t 2.1, 192 trades) | 2022-23 +0.441R (t 2.1) | luck-level | priced: tradeify_select_daily_50k EV +551$/eval",
   "- with overnight at 09:00, tail-day risk high, trail 1.0R | 2014-21 +0.301R (t 2.5, 164 trades) | 2022-23 +0.387R (t 1.6) | luck-level | priced: lucid_pro_50k EV +292$/eval",
-  "- fade on_high 08:45-11:30, Fri, trail 1.0R | 2014-21 +0.124R (t 1.2, 154 trades) | 2022-23 +0.379R (t 1.6) | luck-level | priced: lucid_pro_25k EV -40$/eval",
-  "- with gap at 09:00, tail-day risk high | 2014-21 +0.234R (t 2.1, 163 trades) | 2022-23 +0.363R (t 1.7) | luck-level | priced: tradeday_fastpass_50k EV +145$/eval",
-  "- with the open's side of the overnight range at 09:00, tail-day risk hi | 2014-21 +0.221R (t 1.8, 164 trades) | 2022-23 +0.360R (t 1.5) | luck-level | priced: tradeify_select_daily_50k EV +432$/eval",
+  "- fade on_high 08:45-11:30, Fri, trail 1.0R | 2014-21 +0.086R (t 1.3, 154 trades) | 2022-23 +0.361R (t 1.8) | luck-level | priced: lucid_flex_25k EV -47$/eval",
+  "- break r1 08:30-10:00, volatile VIX (above 60d avg), trail 1.0R | 2014-21 +0.139R (t 1.7, 193 trades) | 2022-23 +0.358R (t 1.9) | luck-level | priced: lucid_flex_50k EV +970$/eval",
+  "- break london_high 08:30-10:00, small expected range (bottom third) | 2014-21 +0.102R (t 2.3, 353 trades) | 2022-23 +0.251R (t 1.8) | luck-level | priced: lucid_pro_50k EV +25$/eval",
   "",
   "PORTFOLIOS (2-4 low-correlation strategies in ONE account; chosen on 2014-21, validated on 2022-23; 10 combinations validated so far):",
   "- with overnight at 09:00, low dealer gamma + with gap at 09:00, tail-day risk high + with the open's side of the overnight range at 10:00, tail-d + [CL | tradeday_fastpass_50k risk 30%/50%, 6 micros/unit, max corr 0.14 | 2014-21 EV +660 (pass 37%, best single +988) | 2022-23 EV -28 (pass 16%) | 5 accounts: +56$/month (12% months positive)",
@@ -303,17 +303,19 @@
   "- fade gap at 08:31, big expected range (top third), trail 1.0 + with the open's side of the overnight range at 10:00, mean-r + break ewma1_up 08:45-11: | lucid_pro_50k risk 30%/50%, 10 micros/unit, max corr 0.08 | 2014-21 EV +1123 (pass 52%, best single +1453) | 2022-23 EV -58 (pass 6%) | 5 accounts: -59$/month (4% months positive)"
  ],
  "eta": [
-  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (v2: built on measured power - a range, not a promise)",
-  "Chance within 1 month 0%, 3 months 0%, 6 months 0%, 1 year 2%, 2 years 42%.",
-  "In the worlds where I find one within 2 years: most likely after 20 months (80% range 14 months to 23 months).",
-  "Why it is slow: my edges are small (~0.03-0.08R per trade) against ~1.75R of noise per trade. Confirming +0.06R needs roughly 4,000-7,000 trades; I make about 2.7 trades a day across 3 markets.",
-  "Fastest ways to raise it: more independent trades per day (more markets), less noise per trade (low-variance exits), and the sealed Feb-Oct 2026 window (one clean shot per family)."
+  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
+  "If there is one to find: most likely in 3 months (80% range 2 weeks to 2.1 years). Overall chance within 1 month 10%, 3 months 22%, 6 months 30%, 1 year 36%.",
+  "Chance there is NO such algo in what I search (or I never catch it): 55%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
+  "Based on: 1 exams (classic + new-regime track) in 1 days (1 passed, 1 rejected by review), about 2.0 exams/week. 'Found' = passes evals and pays out on data it never saw in my simulator AND isn't luck (classic: locked 2024-26 exam + review; new-regime track: recent exam + the coming weeks).",
+  "Nothing waiting for review.",
+  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.",
+  "Rejected by review: with the open's side of the overnight range at 08:31, n (FRAGILE (auto v2, 2026-10-21): accounts started in the latest 6 months never made money (pass 18%, 0% got a pa)"
  ],
  "eta_levers": [
-  "MY TIMER LEVERS (what-if): now 0% within 6 months / 2% within 1 year.",
-  "- 2x trades per day (ES/YM/RTY added, more markets): 6% / 42%",
-  "- half the noise per trade (low-variance exits work): 2% / 24%",
-  "- 2x families tested per week (good ideas only): 0% / 3%",
-  "Biggest single lever right now: 2x trades per day (ES/YM/RTY added, more markets)."
+  "MY TIMER LEVERS (what-if): now 22% within 3 months / 36% within 1 year.",
+  "- more candidates reach the exam (2x exam rate: more search, more markets, portfolios): 22% / 36%",
+  "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 29% / 39%",
+  "- both: 29% / 39%",
+  "Biggest single lever right now: better candidates. Exam rate today 2.0/week of max 2 (near the cap - only better candidates help)."
  ]
 }
