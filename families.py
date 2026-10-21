@@ -107,6 +107,7 @@ def ledger():
 
 
 def score_family(fam, X, S, reps=100, seed=7):
+    if fam.get("rules") == "v2": reps = min(reps, int(os.environ.get("V2_REPS", 100)))   # measured: ~0.3h for 50 variants x 3 markets
     import prop_search as PS
     V = variants(fam); rng = np.random.default_rng(seed); rows = []
     v2 = fam.get("rules") == "v2"; b_end = "2099-12-31" if v2 else B_END   # v2: 2024-now is validation (it is spent as an exam)
@@ -128,6 +129,9 @@ def score_family(fam, X, S, reps=100, seed=7):
         m = [x for x in m if np.isfinite(x)]
         if m: pl.append(float(np.median(m)))
     pl = np.array(pl); p = float((pl >= med_B).mean()) if len(pl) else 1.0
+    if v2 and len(pl) >= 10:                                 # v2: alphas get small (0.03, 0.0076, ...) - an empirical p from a few
+        from statistics import NormalDist                    # dozen placebo draws cannot resolve them; pre-declared normal
+        p = float(1 - NormalDist(float(pl.mean()), max(float(pl.std(ddof=1)), 1e-9)).cdf(med_B))   # approximation instead
     L = ledger(); k = (len(L) + 1)
     if v2:
         import sealed as SE
