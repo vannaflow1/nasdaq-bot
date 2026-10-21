@@ -1,8 +1,7 @@
 name: prop-search
 on:
   schedule:
-    - cron: "17 1 * * *"      # night run
-    - cron: "17 13 * * *"     # midday run (independent of the live session jobs)
+    - cron: "17 */4 * * *"    # every 4 hours (00:17, 04:17, ... UTC); a run takes ~2h50, the concurrency group queues overlaps
   workflow_dispatch:
     inputs:
       minutes: { description: "search minutes", required: false, default: "150" }
