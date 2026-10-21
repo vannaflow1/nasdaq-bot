@@ -485,7 +485,7 @@
 "options pricing"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "https://doi.org/10.3386/w9423",
 "date": "2026-10-20"
 },
@@ -1272,7 +1272,7 @@
 "Spillover index"
 ],
 "relevance": 2,
-"verdict": "",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "https://www.sciencedirect.com/science/article/pii/S030142072100115X/pdf",
 "date": "2026-10-19"
 },
@@ -1803,7 +1803,7 @@
 "forecast dispersion"
 ],
 "relevance": 2,
-"verdict": "not testable with my data yet",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "http://www.federalreserve.gov/pubs/ifdp/2003/759/ifdp759.pdf",
 "date": "2026-10-19"
 },

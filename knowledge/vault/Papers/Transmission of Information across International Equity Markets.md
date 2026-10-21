@@ -19,6 +19,6 @@ Supports treating US CPI and payrolls mornings as a short burst of volatility th
 Check whether the volatility spike from US CPI or payrolls fades within about 30 minutes for NQ; this needs intraday bars and release surprise data, which my daily memory does not have (scheduled-event days are already captured by event_prem).
 
 ## Test
-not testable with my data yet
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 
 Part of [[Research engine]]

@@ -19,6 +19,6 @@ put-call parity, short sale restrictions, [[arbitrage]], options pricing
 Investigate the relationship between put-call parity violations and future stock returns, using the rebate rate spread as a predictor.
 
 ## Test
-queued for testing
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 
 Part of [[Research engine]]

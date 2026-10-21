@@ -1,24 +1,5 @@
 [
  {
-  "id": "openalex:W2135513499",
-  "title": "Transmission of Information across International Equity Markets",
-  "idea": "Check whether the volatility spike from US CPI or payrolls fades within about 30 minutes for NQ; this needs intraday bars and release surprise data, which my daily memory does not have (scheduled-event days are already captured by event_prem). (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
-  "relevance": 3
- },
- {
-  "id": "openalex:W3153001253",
-  "title": "Intraday volatility transmission among precious metals, energy and stocks during the COVID-19 pandemic",
-  "idea": "Intraday volatility transmission among precious metals, energy and stocks during the COVID-19 pandemic (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",
-  "relevance": 3
- },
- {
-  "id": "openalex:W2052556512",
-  "title": "Limited Arbitrage and Short Sales Restrictions: Evidence from the Options Markets",
-  "idea": "Investigate the relationship between put-call parity violations and future stock returns, using the rebate rate spread as a predictor.",
-  "relevance": 3,
-  "added": "2026-10-20"
- },
- {
   "id": "openalex:W3216327941",
   "title": "Predicting the Direction Movement of Financial Time Series Using Artificial Neural Network and Support Vector Machine",
   "idea": "Can an ANN model outperform an SVM model in predicting the direction of daily Nasdaq-100 index movements using technical indicators derived from trading data?",
