@@ -1,5 +1,5 @@
 checked 2026-10-21 07:42 UTC
-GEMINI_API_KEY: header auth HTTP 401; query auth HTTP InvalidURL
-GEMINI_API_KEY: header auth HTTP 401; bearer auth HTTP 401
-GEMINI_API_KEY: key length 54, starts with 'AQ.': True, starts with 'AIza': False, only plain ASCII letters/digits/._-: False
-GEMINI_API_KEY: present, but listing models failed: HTTP 401 API key not valid. Please pass a valid API key.
+GEMINI_API_KEY: raw value has 1 extra character(s) (spaces/line breaks/quotes) - testing it with them removed
+GEMINI_API_KEY: VALID, 46 text models. flash: gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-flash-latest, gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash | pro: nano-banana-pro-preview, lyria-3-pro-preview, gemini-pro-latest, gemini-3.1-pro-preview-customtools, gemini-3.1-pro-preview, gemini-2.5-pro
+  gemini-omni-flash-preview: generate FAILED HTTP 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/
+  nano-banana-pro-preview: generate FAILED HTTP 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/
