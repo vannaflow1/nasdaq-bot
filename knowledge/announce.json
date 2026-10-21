@@ -1,0 +1,6 @@
+[
+ {
+  "title": "\ud83c\udf81 Wish granted: Market focus: weight locked-exam passes far above 2022-23 survivors",
+  "body": "The prop search's market focus now counts each market's locked-exam pass rate at full weight (from 3 exams in total on) and lets the 2022-23 survivor counts fade as exams accumulate; once a market has 20+ live forward trades of exam-passed strategies, their t-stat scales its focus up to x2 or down to /2. Today: 0 locked exams on record, so the focus stays at the owner's split until the evidence exists. Undo: git revert 2394e85"
+ }
+]
