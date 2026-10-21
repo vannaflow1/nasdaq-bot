@@ -1,1 +1,20 @@
-no NY open yet
+  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
+/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
+/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
+/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
+/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
+POWERS VOLTA DISCOVERED ITSELF - Wed 21 Oct
+⚡ When London already took the Asia high, does NY close above yesterday's high more often?
+   today: no -> 22% on such days (1012 in history; all days 35%)
+⚡ Does the size of the overnight range change how often NY takes the overnight high?
+   today: middle of history -> 66% on such days (581 in history; all days 65%)
+⚡ SMT at the Asia high: when only ONE of NQ/ES took its Asia high before the open, does NY take the overnight LOW more often? (vs 51% when both took it)
+   today: no -> 57% on such days (2574 in history; all days 58%)
+⚡ On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant margin?
+   today: bottom fifth of history -> 1.84 on such days (585 in history; all days 1.44)
+⚡ When the NQ opens near the high of the Asian session (k_open_vs_asia = 1), are we more likely to break yesterday's high during the NY session?
+   today: low of history -> 45% on such days (561 in history; all days 56%)

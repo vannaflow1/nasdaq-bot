@@ -86,10 +86,10 @@
   "spx_factor": 1.0448
  },
  "live": [
-  "LIVE - Wed 21 Oct 15:38 Lux",
-  "NQ 29,876 | range so far 283 pts (0.94%), high 30,010 / low 29,728 | data as of 09:28 NY (may lag a few minutes)",
+  "LIVE - Wed 21 Oct 15:43 Lux",
+  "NQ 29,852 | range so far 283 pts (0.94%), high 30,010 / low 29,728 | data as of 09:33 NY (may lag a few minutes)",
   "Brain this morning: ~613 pts for the day (2.05%) - 46% of it already used.",
-  "Updated with what happened so far: full day ~542 pts (80%: 375-844) -> typically ~259 more pts to come (80%: 92-561).",
+  "Updated with what happened so far: full day ~547 pts (80%: 379-853) -> typically ~265 more pts to come (80%: 96-570).",
   "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
   "Far levels today: high 30,495 / low 29,109 (~90% of days stay inside each)"
  ],
@@ -250,26 +250,29 @@
   "event_day": false
  },
  "powers": [
-  "OPEN READ - Tue 20 Oct (NY open 29,594) (posted 15:44 Lux)",
-  "Opened BELOW yesterday low (29,984 / 29,654) - already outside yesterday's range",
-  "Gap -0.43% from yesterday's close 29,722: 68% chance it fills today (avg 50%)",
-  "Tail-day risk (range 1.8x+ its normal): 12% (avg 8%)",
-  "Asia 29,576-29,804 | London 29,510-29,719",
+  "OPEN READ - Wed 21 Oct (NY open 29,874) (posted 15:43 Lux)",
+  "Yesterday's high 29,904: 82% chance it gets taken today (avg 48%)",
+  "Yesterday's low  29,392: 14% chance it gets taken today (avg 42%)",
+  "Gap +0.63% from yesterday's close 29,688: 57% chance it fills today (avg 50%)",
+  "Tail-day risk (range 1.8x+ its normal): 8% (avg 8%)",
+  "Asia 29,811-30,010 | London 29,728-29,919",
   "London already took the Asia LOW -> NY takes the Asia HIGH 49% of the time (coin flip, no edge)",
   "NY takes the London high 75% / London low 69% of days",
   "Tested 2017-2025 on unseen years; odds were well calibrated. Base rates, not signals - no direction call.",
   "",
-  "POWERS VOLTA DISCOVERED ITSELF - Tue 20 Oct",
+  "POWERS VOLTA DISCOVERED ITSELF - Wed 21 Oct",
   "\u26a1 When London already took the Asia high, does NY close above yesterday's high more often?\n   today: no -> 22% on such days (1012 in history; all days 35%)",
   "\u26a1 Does the size of the overnight range change how often NY takes the overnight high?\n   today: middle of history -> 66% on such days (581 in history; all days 65%)",
-  "\u26a1 SMT at the Asia high: when only ONE of NQ/ES took its Asia high before the open, does NY take the overnight LOW more often? (vs 51% when both took it)\n   today: no -> 57% on such days (2574 in history; all days 58%)"
+  "\u26a1 SMT at the Asia high: when only ONE of NQ/ES took its Asia high before the open, does NY take the overnight LOW more often? (vs 51% when both took it)\n   today: no -> 57% on such days (2574 in history; all days 58%)",
+  "\u26a1 On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant margin?\n   today: bottom fifth of history -> 1.84 on such days (585 in history; all days 1.44)",
+  "\u26a1 When the NQ opens near the high of the Asian session (k_open_vs_asia = 1), are we more likely to break yesterday's high during the NY session?\n   today: low of history -> 45% on such days (561 in history; all days 56%)"
  ],
  "powers_raw": {
-  "date": "2026-10-20",
-  "pw_takes_pdh": 0.0283,
-  "pw_takes_pdl": 0.8772,
-  "pw_gap_fill": 0.681,
-  "pw_tail_day": 0.1217
+  "date": "2026-10-21",
+  "pw_takes_pdh": 0.8246,
+  "pw_takes_pdl": 0.1409,
+  "pw_gap_fill": 0.5729,
+  "pw_tail_day": 0.0846
  },
  "book": [
   "VOLTA'S BOOK - account #1 (since 2026-10-20)",
