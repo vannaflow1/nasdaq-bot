@@ -1,5 +1,7 @@
-scanned 80 papers, queued 0, queue size 21 []
-prop-read failed: RuntimeError free AI daily limit reached
-read 0, AI units today 4595/7000
+scanned 62 papers, queued 0, queue size 21 ['arxiv: HTTPError']
+read for the mission (1*): Random-matrix theory of quantum transport
+read for the mission (0*): 2015 American Thyroid Association Management Guidelines for Adult Pati
+read about myself (3*): On Calibration of Modern Neural Networks
+read 3, AI units today 4908/7000
 test queue empty
 testing used 0 AI units

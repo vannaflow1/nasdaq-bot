@@ -1,5 +1,50 @@
 [
 {
+"title": "On Calibration of Modern Neural Networks",
+"learned": "Modern deep nets tend to be overconfident, and simple post\u2011processing like temperature scaling can substantially improve probability calibration. Factors such as depth, width, weight decay, and batch\u2011norm affect calibration quality.",
+"concepts": [
+"confidence calibration",
+"temperature scaling",
+"model capacity vs overconfidence",
+"expected calibration error (ECE)",
+"post\u2011processing of predictions"
+],
+"relevance": 3,
+"verdict": "about myself - feeds my self-check",
+"url": "https://arxiv.org/pdf/1706.04599",
+"date": "2026-10-21"
+},
+{
+"title": "2015 American Thyroid Association Management Guidelines for Adult Patients with Thyroid Nodules and Differentiated Thyroid Cancer: The American Thyroid Association Guidelines Task Force on Thyroid Nodules and Differentiated Thyroid Cancer",
+"learned": "The paper outlines evidence\u2011based clinical guidelines for diagnosing and managing thyroid nodules and differentiated thyroid cancer, focusing on risk assessment, biopsy criteria, and treatment pathways.",
+"concepts": [
+"clinical decision guidelines",
+"risk stratification",
+"evidence grading",
+"treatment pathways",
+"surveillance protocols"
+],
+"relevance": 0,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://www.liebertpub.com/doi/pdf/10.1089/thy.2015.0020",
+"date": "2026-10-21"
+},
+{
+"title": "Random-matrix theory of quantum transport",
+"learned": "The paper reviews how random-matrix ensembles (circular, Poisson, DMPK) describe the full statistical distribution of transmission eigenvalues in mesoscopic conductors, linking universal conductance fluctuations, shot noise, and localization to eigenvalue correlations.",
+"concepts": [
+"Transmission eigenvalue distribution",
+"Circular/Poisson ensembles",
+"DMPK scaling equation",
+"Universal conductance fluctuations",
+"Eigenvalue repulsion"
+],
+"relevance": 1,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://arxiv.org/pdf/cond-mat/9612179",
+"date": "2026-10-21"
+},
+{
 "title": "Gradient-based learning applied to document recognition",
 "learned": "The paper shows that gradient\u2011based training, especially via back\u2011propagation in convolutional and graph\u2011transformer networks, can jointly optimize multiple modules (e.g., segmentation, recognition, language models) for a single global objective, yielding higher accuracy and robustness. Global training enables end\u2011to\u2011end learning across heterogeneous components.",
 "concepts": [
