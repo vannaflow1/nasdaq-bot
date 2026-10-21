@@ -310,9 +310,10 @@
     }
    ]
   },
-  "status": "registered",
+  "status": "scored",
   "registered": "2026-10-21",
   "hash": "9d1dc51ddc71",
-  "frozen": "c8b840729d157bf224f641fba4778fecde1268b7"
+  "frozen": "c8b840729d157bf224f641fba4778fecde1268b7",
+  "scored": "2026-10-21"
  }
 ]

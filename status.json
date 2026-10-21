@@ -314,7 +314,8 @@
   "MECHANISM FAMILIES (family = mechanism + 20-50 variants; passes only as a plateau beating a placebo family, with a multiplicity-corrected p-value):",
   "- F5 Gap fill sized by the gap-fill power: FAILED (p=0.53, median 2022-23 -0.1382R)",
   "- F6 Scheduled-event drifts (pooled sleeve): FAILED (p=0.82, median 2022-23 -0.0565R)",
-  "- F3 Gamma-regime switch on the forecast range: FAILED (p=0.5, median 2022-23 -0.1531R)"
+  "- F3 Gamma-regime switch on the forecast range: FAILED (p=0.5, median 2022-23 -0.1531R)",
+  "- F1 Intraday momentum into the close, gamma-conditioned: FAILED (p=0.5, median 2022-23 0.1721R)"
  ],
  "power": [
   "\u26a1 POWER CURVE (can my family test find a planted edge? F5, 6 null worlds, alpha 0.017) - THE SCOREBOARD",

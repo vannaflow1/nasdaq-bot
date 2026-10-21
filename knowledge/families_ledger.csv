@@ -2,3 +2,4 @@ family,name,date,frozen,verdict,variants,usable,median_edge_A,median_edge_B,shar
 F5,Gap fill sized by the gap-fill power,2026-10-21,bf376e18217afeededae631a25887e578fd52764,FAILED,50,50,-0.1206,-0.1382,0.0,-0.1043,0.53,1,0.05,False
 F6,Scheduled-event drifts (pooled sleeve),2026-10-21,bf376e18217afeededae631a25887e578fd52764,FAILED,36,36,-0.1422,-0.0565,0.167,-0.0431,0.82,2,0.025,False
 F3,Gamma-regime switch on the forecast range,2026-10-21,bf376e18217afeededae631a25887e578fd52764,FAILED,50,50,-0.2896,-0.1531,0.0,-0.1074,0.5,3,0.01667,False
+F1,"Intraday momentum into the close, gamma-conditioned",2026-10-21,c8b840729d157bf224f641fba4778fecde1268b7,FAILED,36,36,-0.0396,0.1721,0.917,0.2382,0.5,4,0.0125,False

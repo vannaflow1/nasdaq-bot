@@ -1,0 +1,10 @@
+[
+ {
+  "title": "\ud83e\uddec Family test results",
+  "body": "F5 Gap fill sized by the gap-fill power: median edge 2014-21 -0.1206, 2022-23 -0.1382R, 0.0 of variants positive, placebo p=0.53 (need < 0.05) -> FAILED\nF6 Scheduled-event drifts (pooled sleeve): median edge 2014-21 -0.1422, 2022-23 -0.0565R, 0.167 of variants positive, placebo p=0.82 (need < 0.025) -> FAILED\nF3 Gamma-regime switch on the forecast range: median edge 2014-21 -0.2896, 2022-23 -0.1531R, 0.0 of variants positive, placebo p=0.5 (need < 0.01667) -> FAILED"
+ },
+ {
+  "title": "\ud83e\uddec Family test results",
+  "body": "F1 Intraday momentum into the close, gamma-conditioned: median edge 2014-21 -0.0396, 2022-23 0.1721R, 0.917 of variants positive, placebo p=0.5 (need < 0.0125) -> FAILED"
+ }
+]
