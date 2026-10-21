@@ -1,5 +1,50 @@
 [
 {
+"title": "Historical Perspectives in Volatility Forecasting Methods with Machine Learning",
+"learned": "The paper surveys volatility forecasting techniques, comparing classic models like implied volatility and GARCH with modern machine\u2011learning approaches such as LSTM and Transformer, and provides an open\u2011source benchmark.",
+"concepts": [
+"volatility forecasting",
+"GARCH",
+"LSTM",
+"Transformer",
+"machine learning"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://www.mdpi.com/2227-9091/13/5/98/pdf?version=1747745449",
+"date": "2026-10-21"
+},
+{
+"title": "Predictive Value of Commercial Trading Activity in Eurodollar Futures Market on US Stock Market Indices From 2000 Through 2019",
+"learned": "The paper reproduces a strong (\u22480.8) correlation when shifting monthly commercial Eurodollar futures positioning forward by 52 weeks against the S&P 500, but most statistical tests (cointegration, Granger\u2011causality) find the positioning not a significant predictor for the S&P and other US equity indices from 2000\u20112019.",
+"concepts": [
+"Eurodollar futures",
+"commercial positioning",
+"lagged correlation",
+"cointegration",
+"Granger causality"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://hdl.handle.net/2027.42/155357",
+"date": "2026-10-21"
+},
+{
+"title": "Duration modelling of the after-hours electronic futures market",
+"learned": "The thesis finds that standard ACD models struggle to capture trade duration dynamics in after\u2011hours futures, but using a Generalized Gamma distribution and allowing for structural breaks (detected via LM tests) improves fit, especially around the 2007\u20112008 crisis.",
+"concepts": [
+"Autoregressive Conditional Duration (ACD)",
+"Generalized Gamma errors",
+"Structural break detection",
+"After\u2011hours futures liquidity",
+"Non\u2011linear duration dynamics"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://eprints.utas.edu.au/14772/2/whole-li-thesis.pdf",
+"date": "2026-10-21"
+},
+{
 "title": "Jumps, Cojumps and Macro Announcements,",
 "learned": "The paper shows that specific U.S. macro releases\u2014especially non\u2011farm payroll, Fed funds target, and GDP\u2014significantly raise the probability of intraday jumps and simultaneous jumps (cojumps) across Nasdaq futures, bond futures and FX, with different assets reacting differently.",
 "concepts": [

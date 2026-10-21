@@ -13,7 +13,7 @@ Regan and Xie fed an AI language model end-of-day SPY dealer-gamma numbers for 2
 Mostly about testing an AI's reasoning, with loose success criteria, one year of SPY and no gamma variation in the sample, so it adds little for NQ/QQQ trading; the one concrete claim (gamma predicts volatility 2 days later) did not hold in my memory. (A duplicate queue entry of the same paper, openalex:W7117127131, was removed too.)
 
 ## Concepts
-[[dealer gamma]], dealer hedging, llm pattern detection, obfuscation testing, granger causality
+[[dealer gamma]], dealer hedging, llm pattern detection, obfuscation testing, [[granger causality]]
 
 ## Idea
 Paper claims dealer gamma predicts realized volatility with a 2-day lag: add yesterday's and the day before's dealer gamma rank as features to the next-day NQ range forecast.

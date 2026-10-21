@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # volatility forecasting
-12 papers mention this:
+13 papers mention this:
 
 - [[A Practical Guide to Harnessing the HAR Volatility Model]]
 - [[An International Comparison of Implied, Realized, and GARCH Volatility Forecasts]]
@@ -10,6 +10,7 @@ tags: [concept]
 - [[Does herding affect volatility Implications for the Spanish stock market]]
 - [[Forecasting cryptocurrencies volatility using statistical and machine learning methods A c]]
 - [[Forecasting volatility of Bitcoin]]
+- [[Historical Perspectives in Volatility Forecasting Methods with Machine Learning]]
 - [[Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model]]
 - [[Modeling and Forecasting Realized Volatility]]
 - [[Neural Network–Based Financial Volatility Forecasting A Systematic Review]]

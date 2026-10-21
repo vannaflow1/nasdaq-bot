@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # machine learning
-16 papers mention this:
+17 papers mention this:
 
 - [[A CNN-LSTM-Based Model to Forecast Stock Prices]]
 - [[A Systematic Literature Review of Volatility and Risk Management on Cryptocurrency Investm]]
@@ -15,6 +15,7 @@ tags: [concept]
 - [[Empirical asset pricing via machine learning evidence from the European stock market]]
 - [[Enhancing stock market anomalies with machine learning]]
 - [[Forecasting cryptocurrencies volatility using statistical and machine learning methods A c]]
+- [[Historical Perspectives in Volatility Forecasting Methods with Machine Learning]]
 - [[Implied volatility directional forecasting a machine learning approach]]
 - [[Investigating Explainability Methods in Recurrent Neural Network Architectures for Financi]]
 - [[Machine Learning Portfolio Allocation]]
