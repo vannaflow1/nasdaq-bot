@@ -23,6 +23,9 @@ EXTRA_FILTERS = ["vix - mean(vix, 60)", "mean(vix, 60) - vix", "rank(impl, 252) 
                  "0.5 - k_red_any", "0.5 - gex_rank", "gex_rank - 0.5"]
 MARGIN = 0.01                     # R per trade the refinement must add to the lower bound on the search years
 MIN_FWD, MAX_FWD = 60, 180
+FROZEN = True   # expert review 2: premature (nothing is CONFIRMED); its challengers would reuse the spent validation window and
+                # P>0.9 after 60 unpaired trades promotes a useless challenger ~10% of the time. Unfreeze only together with
+                # a paired-days comparison and challengers counted in the families ledger.
 
 
 def _load():
@@ -135,6 +138,7 @@ def optimize(e, X=None, dry=False):
 def run_new(X=None):
     """Create a challenger for every CONFIRMED champion that has none yet."""
     import strategy_lab as S, review_prop as RP
+    if FROZEN: return []
     O = _load(); RV = RP.load_reviews(); made = []
     for e0 in [json.loads(l) for l in open(S.LOG) if l.strip()]:
         e = RP.effective(e0, RV)

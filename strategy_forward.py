@@ -171,7 +171,7 @@ def main():
             today = forward(C, st)
         except Exception as e:
             print("forward test skipped:", type(e).__name__, e)
-    ex = json.load(open(S.EXAMS)) if os.path.exists(S.EXAMS) else {}
+    ex = S.exam_counts()
     near = sorted([e for e in E if (e.get("insample") or {}).get("n", 0) >= 100], key=lambda e: -e["insample"].get("avg_R", -9))[:3]
     lines = [f"STRATEGY LAB - {len(E)} strategies tested ({sum(e.get('source') == 'curiosity' for e in E)} designed by Volta itself), "
              f"{sum(ex.values())} locked exams taken, {len(C)} passed."]

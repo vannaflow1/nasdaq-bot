@@ -356,7 +356,7 @@ def main():
     # the weekly exam cap still applies). Verdicts go to the exam ledger (exams.csv) so other jobs' files are never touched;
     # a candidate that was only told "WAITING FOR EXAM" (weekly budget used up) stays eligible for a later run.
     exams = []
-    exb = json.load(open(S.EXAMS)) if os.path.exists(S.EXAMS) else {}
+    exb = S.exam_counts()
     budget_left = exb.get(S._week(), 0) < S.EXAMS_PER_WEEK
     if SHARD == 0 and not budget_left: print("weekly exam budget used up - candidates wait for next week")
     if SHARD == 0 and budget_left:

@@ -17,11 +17,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7]     # 8 parallel jobs, each walks its own eighth of the grid (already-tested specs are skipped via all results)
-        track: [classic]
-        include:                            # new-regime track (edges that may only exist since 2024): 2 extra jobs
-          - { shard: 0, track: recent }
-          - { shard: 1, track: recent }
+        shard: [0, 1]                       # expert review 2: cut from 8 to 2 after the first edge-first pass (0/15.6k beat the bar);
+        track: [classic]                    # the new-regime track is paused (near-zero power for edges this size)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -31,7 +28,7 @@ jobs:
         env:
           SEARCH_MINUTES: ${{ github.event.inputs.minutes || '155' }}
           SHARD: ${{ matrix.shard }}
-          SHARDS: ${{ matrix.track == 'recent' && '2' || '8' }}
+          SHARDS: "2"
           TRACK: ${{ matrix.track }}
           PORTFOLIO_MINUTES: "0"              # off since 21 Oct 2026 (expert review: it optimised prop EV on the search years)
           SEARCH_MARKETS: "NQ"                # GC/CL only through families with a market-specific mechanism

@@ -56,13 +56,18 @@ def variants(fam, seed=0):
                     sp.pop("manage", None)
                     if v: sp["manage"] = v
                 else: _set(sp, k, v)
+        if fam.get("markets"):                                  # v2 pooled family: the same frozen sleeve on every listed market
+            sleeve = [dict(copy.deepcopy(sp), market=m) for m in fam["markets"] for sp in sleeve]
         out.append({"params": dict(zip(keys, c)), "sleeve": sleeve})
     return out
 
 
 def fam_hash(fam):
     import hashlib
-    return hashlib.sha1(json.dumps({"sleeve": fam["sleeve"], "grid": fam["grid"]}, sort_keys=True).encode()).hexdigest()[:12]
+    h = {"sleeve": fam["sleeve"], "grid": fam["grid"]}
+    for k in ("markets", "rules"):                             # v2: the market list and rule set are frozen too
+        if fam.get(k): h[k] = fam[k]
+    return hashlib.sha1(json.dumps(h, sort_keys=True).encode()).hexdigest()[:12]
 
 
 def trades(S, X, sleeve, lo, hi):
@@ -104,9 +109,10 @@ def ledger():
 def score_family(fam, X, S, reps=100, seed=7):
     import prop_search as PS
     V = variants(fam); rng = np.random.default_rng(seed); rows = []
+    v2 = fam.get("rules") == "v2"; b_end = "2099-12-31" if v2 else B_END   # v2: 2024-now is validation (it is spent as an exam)
     TB_all = []
     for v in V:
-        TA = trades(S, X, v["sleeve"], "1900-01-01", A_END); TB = trades(S, X, v["sleeve"], "2022-01-01", B_END)
+        TA = trades(S, X, v["sleeve"], "1900-01-01", A_END); TB = trades(S, X, v["sleeve"], "2022-01-01", b_end)
         ea = PS.edge_stats(TA.R.values) if len(TA) else {"n": 0, "edge": np.nan, "edge_lb10": np.nan, "edge_t": np.nan}
         eb = PS.edge_stats(TB.R.values, seed=1) if len(TB) else {"n": 0, "edge": np.nan, "edge_lb10": np.nan, "edge_t": np.nan}
         rows.append({"params": json.dumps(v["params"]), "n_A": ea["n"], "edge_A": ea["edge"], "lb10_A": ea["edge_lb10"],
@@ -123,11 +129,16 @@ def score_family(fam, X, S, reps=100, seed=7):
         if m: pl.append(float(np.median(m)))
     pl = np.array(pl); p = float((pl >= med_B).mean()) if len(pl) else 1.0
     L = ledger(); k = (len(L) + 1)
-    alpha = ALPHA / k
+    if v2:
+        import sealed as SE
+        j = int((L.get("rules", pd.Series(dtype=str)).astype(str) == "v2").sum()) + 1 if len(L) else 1
+        alpha = SE.alpha_v2(j)
+    else:
+        alpha = ALPHA / k
     passed = med_B > 0 and share_pos >= 0.6 and p < alpha
     res = {"variants": len(V), "usable": len(ok), "median_edge_A": round(med_A, 4), "median_edge_B": round(med_B, 4),
            "share_positive_B": round(share_pos, 3), "placebo_median_mean": round(float(pl.mean()), 4) if len(pl) else None,
-           "p": round(p, 4), "families_scored": k, "alpha": round(alpha, 5), "passed": bool(passed)}
+           "p": round(p, 4), "families_scored": k, "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2" if v2 else "v1"}
     return res, R, V
 
 
@@ -135,11 +146,8 @@ def exam_family(fam, R, V, X, S):
     """Best variant chosen on the SEARCH years only (bootstrap lower bound), then the locked exam on 2024-now."""
     import prop_search as PS, prop_sim
     best_i = int(R.lb10_A.fillna(-9).idxmax()); v = V[best_i]
-    ex = json.load(open(S.EXAMS)) if os.path.exists(S.EXAMS) else {}
-    w = S._week()
-    if ex.get(w, 0) >= S.EXAMS_PER_WEEK:
+    if not S.spend_exam(f"family {fam['id']}", "family"):
         return v, "PASSED THE FAMILY TEST, WAITING FOR EXAM (weekly exam budget used up)", {}
-    ex[w] = ex.get(w, 0) + 1; json.dump(ex, open(S.EXAMS, "w"), indent=1)
     TE_ = trades(S, X, v["sleeve"], S.EXAM_FROM, "2099-12-31"); ee = PS.edge_stats(TE_.R.values, seed=2) if len(TE_) else {"n": 0, "edge": np.nan, "edge_lb10": np.nan, "edge_t": np.nan}
     det = {"exam_edge": ee}
     if not (ee["n"] >= 30 and np.isfinite(ee["edge_lb10"]) and ee["edge_lb10"] > 0):
@@ -160,6 +168,42 @@ def exam_family(fam, R, V, X, S):
                f"EV {pr['ev_per_eval']:+.0f}$/eval"), det
 
 
+def exam_family_v2(fam, R, V, X, S, res):
+    """v2: best variant on the search years; its never-seen SEALED window (Feb-Oct 2026) is spent ONCE as the first block of
+    a group-sequential test; every day after the freeze date adds to it (forward_route). Nothing is wasted: an exam
+    that alone would be underpowered still counts as evidence (expert review 2, power-gated route - see sealed.py)."""
+    import sealed as SE
+    best_i = int(R.lb10_A.fillna(-9).idxmax()); v = V[best_i]
+    TB = trades(S, X, v["sleeve"], "2022-01-01", "2099-12-31"); val = SE.edge_days(TB, seed=3)
+    days_pm = {m: int(g.session.nunique()) for m, g in TB.groupby("market")} if len(TB) else {}
+    mkts = sorted({(sp.get("market") or "NQ").upper() for sp in v["sleeve"]})
+    se_x, n_days = SE.expected_exam_se(val, days_pm, mkts); shrunk = 0.5 * float(res.get("median_edge_B") or 0)
+    det = {"validation": val, "exam_se_expected": se_x, "sealed_days": n_days, "shrunk_edge": shrunk,
+           "power_sealed_alone": round(SE.exam_power(shrunk, se_x), 3), "markets": mkts, "route": "forward"}
+    if not S.spend_exam(f"family {fam['id']} (sealed window)", "family"):
+        return v, "PASSED THE FAMILY TEST, WAITING FOR EXAM (weekly exam budget used up)", det
+    dec, st = SE.forward_decision(SE.proxy_trades(S, X, v["sleeve"]))
+    det["sealed"] = {k: st.get(k) for k in ("n", "days", "edge", "z", "look", "boundary")}
+    if dec == "CONFIRMED":
+        det["route"] = "done"
+        return v, (f"PROMISING STRATEGY (family {fam['id']}, CONFIRMED on the sealed never-seen window alone: edge {st['edge']:+.3f}R, "
+                   f"z {st['z']:.2f} >= {st['boundary']}, {st['n']} trades on {st['days']} days)"), det
+    return v, (f"PASSED THE FAMILY TEST -> FORWARD ROUTE: sealed window gave {st['edge']:+.3f}R (z {st['z']:.2f}, {st['n']} trades); "
+               f"every new day adds to its group-sequential test (up to {SE.N_MAX} trades, O'Brien-Fleming)"), det
+
+
+def forward_route(fam, X, S):
+    """Daily: the family's frozen variant on its sealed window PLUS every day after its freeze date (proxy feed, recomputed
+    each run - sealed results are never stored per day), group-sequential decision on all of it."""
+    import sealed as SE
+    V = variants(fam); v = V[int(fam["forward_variant"])]
+    lo = (pd.Timestamp(fam["registered"]) + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+    hi = (datetime.now(timezone.utc).date() - pd.Timedelta(days=1)).isoformat()
+    parts = [SE.proxy_trades(S, X, v["sleeve"])]
+    if hi >= lo: parts.append(SE.proxy_trades(S, X, v["sleeve"], lo=lo, hi=hi))
+    return SE.forward_decision(pd.concat(parts, ignore_index=True))
+
+
 def main():
     import strategy_lab as S, test_engine as TE
     only = sys.argv[sys.argv.index("--id") + 1] if "--id" in sys.argv else None
@@ -169,7 +213,12 @@ def main():
     for fam in F:                                             # families that passed but met a full exam week: exam only
         if fam.get("status") != "awaiting_exam" or (only and fam["id"] != only): continue
         R = pd.read_csv(os.path.join(K, "research_out", f"family_{fam['id']}.csv")); V = variants(fam)
-        v, verdict, det = exam_family(fam, R, V, X, S)
+        if fam.get("rules") == "v2":
+            L0 = ledger(); r0 = L0[L0.family == fam["id"]].iloc[-1].to_dict()
+            v, verdict, det = exam_family_v2(fam, R, V, X, S, r0)
+            if det.get("route") == "forward": fam["forward_variant"] = V.index(v); fam["status"] = "forward"
+        else:
+            v, verdict, det = exam_family(fam, R, V, X, S)
         if "WAITING FOR EXAM" in verdict: print(fam["id"], "still waiting for an exam slot"); continue
         today = datetime.now(timezone.utc).date().isoformat()
         e = {"date": today, "name": f"family {fam['id']}: {fam['name']} {v['params']}", "spec": v["sleeve"][0] if len(v["sleeve"]) == 1 else {"sleeve": v["sleeve"]},
@@ -180,6 +229,26 @@ def main():
         L = ledger(); L.loc[L.family == fam["id"], "verdict"] = str(verdict)[:300]; L.to_csv(LEDGER, index=False)
         fam["status"] = "scored"; fam["exam_date"] = today
         out_lines.append(f"{fam['id']} {fam['name']}: locked exam -> {verdict[:220]}"); print(out_lines[-1])
+    for fam in F:                                             # v2 forward route: group-sequential check on the new days
+        if fam.get("status") != "forward" or (only and fam["id"] != only): continue
+        try:
+            dec, st = forward_route(fam, X, S)
+        except Exception as e_:
+            print(fam["id"], "forward check failed:", type(e_).__name__, e_); continue
+        fam["forward"] = {"date": datetime.now(timezone.utc).date().isoformat(), "decision": dec,
+                          **{k: (round(v_, 4) if isinstance(v_, float) else v_) for k, v_ in st.items() if k != "bounds"}}
+        print(fam["id"], "forward route:", dec, {k: st.get(k) for k in ("n", "days", "edge", "z", "look", "boundary")})
+        if dec in ("CONFIRMED", "NOT CONFIRMED", "STOPPED (futility)"):
+            today = datetime.now(timezone.utc).date().isoformat(); v = variants(fam)[int(fam["forward_variant"])]
+            verdict = (f"PROMISING STRATEGY (family {fam['id']}, CONFIRMED by the group-sequential forward test: edge {st['edge']:+.3f}R, "
+                       f"z {st['z']:.2f} >= {st.get('boundary')}, {st['n']} trades on {st['days']} days)" if dec == "CONFIRMED" else
+                       f"NOT CONFIRMED - forward route {dec.lower()}: edge {st['edge']:+.3f}R, z {st['z']:.2f}, {st['n']} trades")
+            e = {"date": today, "name": f"family {fam['id']}: {fam['name']} {v['params']}", "spec": v["sleeve"][0] if len(v["sleeve"]) == 1 else {"sleeve": v["sleeve"]},
+                 "source": "family", "family": fam["id"], "verdict": verdict, "exam_detail": json.loads(json.dumps(st, default=float))}
+            if dec == "CONFIRMED": e["review"] = f"PENDING (auto family forward route, {today}): waiting for Claude's review"
+            with open(S.LOG, "a") as f: f.write(json.dumps(e, default=float) + "\n")
+            L = ledger(); L.loc[L.family == fam["id"], "verdict"] = verdict[:300]; L.to_csv(LEDGER, index=False)
+            fam["status"] = "scored"; out_lines.append(f"{fam['id']} {fam['name']}: {verdict[:220]}")
     for fam in F:
         if fam.get("status") != "registered" or (only and fam["id"] != only): continue
         if not fam.get("frozen") or fam.get("hash") != fam_hash(fam):
@@ -188,7 +257,10 @@ def main():
         res, R, V = score_family(fam, X, S, reps=reps)
         verdict, det = res.get("verdict", "PASSED" if res.get("passed") else "FAILED"), {}
         if res.get("passed"):
-            v, verdict, det = exam_family(fam, R, V, X, S)
+            if fam.get("rules") == "v2": v, verdict, det = exam_family_v2(fam, R, V, X, S, res)
+            else: v, verdict, det = exam_family(fam, R, V, X, S)
+            if fam.get("rules") == "v2" and det.get("route") == "forward":
+                fam["forward_variant"] = V.index(v)
             today = datetime.now(timezone.utc).date().isoformat()
             e = {"date": today, "name": f"family {fam['id']}: {fam['name']} {v['params']}", "spec": v["sleeve"][0] if len(v["sleeve"]) == 1 else {"sleeve": v["sleeve"]},
                  "source": "family", "family": fam["id"], "verdict": verdict, "family_test": res, "exam_detail": json.loads(json.dumps(det, default=float))}
@@ -200,7 +272,8 @@ def main():
         L = ledger(); pd.concat([L, pd.DataFrame([row])], ignore_index=True).to_csv(LEDGER, index=False)
         os.makedirs(os.path.join(K, "research_out"), exist_ok=True)
         R.to_csv(os.path.join(K, "research_out", f"family_{fam['id']}.csv"), index=False)
-        fam["status"] = "awaiting_exam" if "WAITING FOR EXAM" in str(verdict) else "scored"; fam["scored"] = row["date"]
+        fam["status"] = ("awaiting_exam" if "WAITING FOR EXAM" in str(verdict) else
+                         "forward" if "FORWARD ROUTE" in str(verdict) else "scored"); fam["scored"] = row["date"]
         out_lines.append(f"{fam['id']} {fam['name']}: median edge 2014-21 {res.get('median_edge_A')}, 2022-23 {res.get('median_edge_B')}R, "
                          f"{res.get('share_positive_B')} of variants positive, placebo p={res.get('p')} (need < {res.get('alpha')}) -> {str(verdict)[:200]}")
         print(out_lines[-1], f"({time.time() - t0:.0f}s)")

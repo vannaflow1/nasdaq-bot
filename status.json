@@ -305,19 +305,17 @@
   "- fade gap at 08:31, big expected range (top third), trail 1.0 + with the open's side of the overnight range at 10:00, mean-r + break ewma1_up 08:45-11: | lucid_pro_50k risk 30%/50%, 10 micros/unit, max corr 0.08 | 2014-21 EV +1123 (pass 52%, best single +1453) | 2022-23 EV -58 (pass 6%) | 5 accounts: -59$/month (4% months positive)"
  ],
  "eta": [
-  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
-  "If there is one to find: most likely in 3 months (80% range 2 weeks to 2.1 years). Overall chance within 1 month 10%, 3 months 22%, 6 months 30%, 1 year 36%.",
-  "Chance there is NO such algo in what I search (or I never catch it): 55%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
-  "Based on: 2 exams (classic + new-regime track) in 1 days (1 passed, 1 rejected by review), about 2.0 exams/week. 'Found' = passes evals and pays out on data it never saw in my simulator AND isn't luck (classic: locked 2024-26 exam + review; new-regime track: recent exam + the coming weeks).",
-  "Nothing waiting for review.",
-  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.",
-  "Rejected by review: with the open's side of the overnight range at 08:31, n (FRAGILE (auto v2, 2026-10-21): accounts started in the latest 6 months never made money (pass 18%, 0% got a pa)"
+  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (v2: built on measured power - a range, not a promise)",
+  "Chance within 1 month 0%, 3 months 0%, 6 months 0%, 1 year 2%, 2 years 42%.",
+  "In the worlds where I find one within 2 years: most likely after 20 months (80% range 14 months to 23 months).",
+  "Why it is slow: my edges are small (~0.03-0.08R per trade) against ~1.75R of noise per trade. Confirming +0.06R needs roughly 4,000-7,000 trades; I make about 2.7 trades a day across 3 markets.",
+  "Fastest ways to raise it: more independent trades per day (more markets), less noise per trade (low-variance exits), and the sealed Feb-Oct 2026 window (one clean shot per family)."
  ],
  "eta_levers": [
-  "MY TIMER LEVERS (what-if): now 22% within 3 months / 36% within 1 year.",
-  "- more candidates reach the exam (2x exam rate: more search, more markets, portfolios): 22% / 36%",
-  "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 29% / 39%",
-  "- both: 29% / 39%",
-  "Biggest single lever right now: better candidates. Exam rate today 2.0/week of max 2 (near the cap - only better candidates help)."
+  "MY TIMER LEVERS (what-if): now 0% within 6 months / 2% within 1 year.",
+  "- 2x trades per day (ES/YM/RTY added, more markets): 6% / 42%",
+  "- half the noise per trade (low-variance exits work): 2% / 24%",
+  "- 2x families tested per week (good ideas only): 0% / 3%",
+  "Biggest single lever right now: 2x trades per day (ES/YM/RTY added, more markets)."
  ]
 }

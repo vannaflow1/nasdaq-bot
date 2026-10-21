@@ -100,9 +100,16 @@ def review(spec, X, plan, exam_ev=None, reps=40, seed=3):
     a0, a1 = max(0, len(pts) - 126 - 60), max(1, len(pts) - 60)       # ~6 months of start days
     last = prop_sim.evaluate(pts, worst, plan, size, starts=range(a0, a1, 1))
     det["latest_6m"] = {"accounts": last["accounts"], "pass_rate": last["pass_rate"], "share_with_payout": last["share_with_payout"], "ev": last["ev_per_eval"]}
-    if last["ev_per_eval"] <= 0:
-        fails.append(f"accounts started in the latest 6 months never made money (pass {last['pass_rate']:.0%}, "
-                     f"{last['share_with_payout']:.0%} got a payout, EV {last['ev_per_eval']:+.0f}$/eval) - the profit came from an earlier stretch")
+    # expert review 2: ~126 days are only 3-6 independent accounts - a hard veto there has almost no power and rejects most
+    # real small edges. The account result stays as INFORMATION; the check is non-inferiority of the per-trade edge:
+    # the latest ~6 months must not be SIGNIFICANTLY worse than validation (one-sided z < -1.645 fails).
+    last_days = sorted(E.session.unique())[-126:]; Lt = E[E.session.isin(last_days)]; Vt = T[(Ty >= 2022) & (Ty <= 2023)]
+    if len(Lt) >= 10 and len(Vt) >= 10:
+        se_d = float(np.sqrt(Lt.R.var(ddof=1) / len(Lt) + Vt.R.var(ddof=1) / len(Vt))); z = (Lt.R.mean() - Vt.R.mean()) / max(se_d, 1e-9)
+        det["latest_6m"].update(edge_latest=round(float(Lt.R.mean()), 3), edge_validation=round(float(Vt.R.mean()), 3), z=round(float(z), 2))
+        if z < -1.645:
+            fails.append(f"the latest ~6 months are significantly worse than validation ({Lt.R.mean():+.3f}R vs {Vt.R.mean():+.3f}R per trade, "
+                         f"z {z:.2f}) - the edge may have faded")
     # 2. luck on the unseen years
     evs = _placebo(S, D, M, spec, plan, E, reps, seed); p = float((evs >= ev_exam).mean())
     det["placebo_unseen"] = {"strategy_ev": round(ev_exam, 1), "random_mean_ev": round(float(evs.mean()), 1),
@@ -132,8 +139,9 @@ def review(spec, X, plan, exam_ev=None, reps=40, seed=3):
         sp = dict(spec, prop=dict(pr, risk=float(pr.get("risk", 0.25)) * f, eval_risk=float(pr.get("eval_risk", pr.get("risk", 0.25))) * f))
         half[f"{f}x risk"] = _ev(S, E, M, sp, plan)
     det["bold_play"] = half
-    if half.get("0.5x risk") is not None and half["0.5x risk"] <= 0:
-        fails.append(f"variance-driven: at half the risk the unseen years pay {half['0.5x risk']:+.0f}$/eval (bold-play tell)")
+    if half.get("0.5x risk") is not None and half["0.5x risk"] <= 0:       # expert review 2: a FLAG, not a verdict - for a small
+        det.setdefault("flags", []).append(                                 # edge, half risk can lose EV only because evals take longer
+            f"bold-play tell: at half the risk the unseen years pay {half['0.5x risk']:+.0f}$/eval")
     # 3c. bootstrap account paths on the unseen years: the 20th percentile of the EV estimate must be > 0 (review upgrade 9e)
     try:
         import prop_sim

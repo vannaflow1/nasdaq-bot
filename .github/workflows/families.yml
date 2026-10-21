@@ -7,6 +7,7 @@ on:
   schedule:
     - cron: "30 4 * * 0"         # Sundays: power curve (20 null worlds)
     - cron: "30 5 * * 1"         # Mondays: families waiting for an exam slot (new exam week)
+    - cron: "40 6 * * 2-6"       # daily (after each US session): v2 forward route - sealed window + new days, group-sequential
   workflow_dispatch:
 permissions:
   contents: write
@@ -22,6 +23,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12", cache: pip }
       - run: pip install -q -r requirements.txt scipy
+      - run: python tools/ledger_check.py       # fails loudly if a must-only-grow ledger was rewritten
       - run: python families.py --reps 100
         env: { PYTHONUNBUFFERED: "1" }
       - if: github.event.schedule == '30 4 * * 0'

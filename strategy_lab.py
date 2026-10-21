@@ -490,6 +490,33 @@ def _week():
     d = datetime.now(timezone.utc).isocalendar(); return f"{d[0]}-W{d[1]:02d}"
 
 
+EXAM_DIR = os.path.join(K, "ledgers", "exams")
+
+
+def exam_counts():
+    """Exams spent per ISO week. Expert review 2 (integrity): every spent exam is its OWN uniquely named file, so concurrent
+    jobs can never overwrite each other's spend in a git rebase (the old shared json could silently revert). The legacy
+    strategy_exams.json is a frozen base (never written again)."""
+    ex = json.load(open(EXAMS)) if os.path.exists(EXAMS) else {}
+    ex = {k: int(v) for k, v in ex.items()}
+    if os.path.isdir(EXAM_DIR):
+        for fn in os.listdir(EXAM_DIR):
+            try: w = json.load(open(os.path.join(EXAM_DIR, fn)))["week"]; ex[w] = ex.get(w, 0) + 1
+            except Exception: pass
+    return ex
+
+
+def spend_exam(what, source, week=None):
+    """Spend one locked exam of this week (False if the weekly budget is used up)."""
+    w = week or _week()
+    if exam_counts().get(w, 0) >= EXAMS_PER_WEEK: return False
+    os.makedirs(EXAM_DIR, exist_ok=True)
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    fn = os.path.join(EXAM_DIR, f"{ts}_{os.environ.get('GITHUB_RUN_ID', 'local')}_{os.getpid()}_{np.random.randint(1e9)}.json")
+    json.dump({"week": w, "what": str(what)[:200], "source": source, "ts": ts, "run": os.environ.get("GITHUB_RUN_ID")}, open(fn, "w"))
+    return True
+
+
 def _prop_inputs(T, M):
     """Day-by-day inputs for prop_sim: result per micro (MNQ points), the day's worst point and the median stop (sizing).
     The worst point is THAT trade's own stop (range stops are wider on volatile days) or its actual loss if larger
@@ -579,11 +606,8 @@ def prop_path(spec, X, T, M, out, head):
         return f"NOT CONFIRMED (prop path): fragile - with double costs the EV per eval is {ev2:+.0f}. {head}"
     if out.get("source") not in EXAM_SOURCES:
         return f"PASSED IN-SAMPLE (prop path) - single ideas no longer take the locked exam (propose it as a family). {head}"
-    ex = json.load(open(EXAMS)) if os.path.exists(EXAMS) else {}
-    w = _week(); ex.setdefault(w, 0)
-    if ex[w] >= EXAMS_PER_WEEK:
+    if not spend_exam(out.get("name", head), out.get("source")):
         return f"PASSED IN-SAMPLE (prop path), WAITING FOR EXAM (weekly exam budget used up). {head}"
-    ex[w] += 1; json.dump(ex, open(EXAMS, "w"), indent=1)
     exam = np.where(M.session >= EXAM_FROM)[0]; E = backtest(spec, X, exam)
     pe = prop_score(E, M, spec, plan)[0] if len(E) >= 30 else {"ev_per_eval": -1, "pass_rate": 0, "avg_payout_per_eval": 0}
     out["prop_exam"] = pe
@@ -647,11 +671,9 @@ def evaluate(spec, X, source="engine", name=None):
         return done(f"NOT CONFIRMED after the stress test (fragile: nudged/double-cost results {', '.join(f'{r:+.2f}R' for r in nr)}). {head}")
     if source not in EXAM_SOURCES:
         return done(f"PASSED IN-SAMPLE - single ideas no longer take the locked exam (propose it as a family). {head}; beats random entries (p={p:.2f})")
-    ex = json.load(open(EXAMS)) if os.path.exists(EXAMS) else {}
-    w = _week(); ex.setdefault(w, 0)
-    if ex[w] >= EXAMS_PER_WEEK:
+    if not spend_exam(head, source):
         return done(f"PASSED IN-SAMPLE, WAITING FOR EXAM (weekly exam budget used up). {head}; beats random entries (p={p:.2f})")
-    ex[w] += 1; json.dump(ex, open(EXAMS, "w"), indent=1)
+    ex = exam_counts()
     E = backtest(spec, X, exam); me = metrics(E); out["exam"] = me
     total = sum(ex.values())
     exam_txt = (f"LOCKED EXAM 2024-2026: {me.get('n', 0)} trades, win {me.get('win', 0):.0%}, avg {me.get('avg_R', 0):+.2f}R "
@@ -661,7 +683,7 @@ def evaluate(spec, X, source="engine", name=None):
     return done(f"NOT CONFIRMED - failed the locked exam: {exam_txt}. {head}")
 
 
-EXAM_SOURCES = ("prop-search", "family")             # only the systematic search / registered families spend exams
+EXAM_SOURCES = ("family",)   # expert review 2: the 2024-now exam is spent; only families take (sealed) exams
 
 
 def spec_id(spec):
