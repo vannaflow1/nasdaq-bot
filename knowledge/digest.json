@@ -1,5 +1,49 @@
 [
 {
+"title": "Overcoming catastrophic forgetting in neural networks",
+"learned": "The paper introduces Elastic Weight Consolidation (EWC), which protects important network parameters by adding a quadratic penalty weighted by the Fisher information, allowing sequential learning without catastrophic forgetting.",
+"concepts": [
+"elastic weight consolidation",
+"Fisher importance weighting",
+"quadratic penalty",
+"continual learning",
+"parameter stability"
+],
+"relevance": 4,
+"verdict": "about myself - feeds my self-check",
+"url": "https://arxiv.org/pdf/1612.00796",
+"date": "2026-10-21"
+},
+{
+"title": "Learning volatility-adaptive forgetting via GARCH-modulated LSTM for stock price forecasting",
+"learned": "The paper proposes a new LSTM variant (Gsigmoid\u2011LSTM) that feeds GARCH(1,1) volatility directly into the forget gate via a custom activation (Gsigmoid), letting the network forget faster in turbulent periods and retain memory in calm markets. This architectural change yields lower MSE/MAE than standard LSTM or feature\u2011level GARCH\u2011LSTM hybrids on five daily stock datasets.",
+"concepts": [
+"GARCH\u2011modulated forget gate",
+"Gsigmoid activation",
+"volatility\u2011adaptive memory",
+"forecasting accuracy gains"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - The idea requires training a Gsigmoid\u2011LSTM model on multiple daily columns and a GARCH\u2011modulated volatility series, which cannot be expressed with the available deterministic formulas and rolling statistics in Volta's backtest engine.",
+"url": "https://arxiv.org/abs/2610.24386v1",
+"date": "2026-10-21"
+},
+{
+"title": "A Hybrid HAR-LSTM-GARCH Model for Forecasting Volatility in Energy Markets",
+"learned": "A hybrid model that first fits a HAR to capture multi\u2011scale volatility, then feeds the HAR residuals into an LSTM to learn non\u2011linear patterns, and finally models the LSTM residuals with a GARCH, can improve daily realized\u2011volatility forecasts over pure HAR, GARCH(1,1) or LSTM alone.",
+"concepts": [
+"HAR volatility model",
+"LSTM neural network",
+"GARCH residual modeling",
+"Hybrid forecasting",
+"Realized volatility"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://www.mdpi.com/1911-8074/19/1/77/pdf?version=1768646705",
+"date": "2026-10-21"
+},
+{
 "title": "Assessing energy security: An overview of commonly used methodologies",
 "learned": "The paper highlights that most security\u2011of\u2011supply studies are static, single\u2011carrier and lack forward\u2011looking, adaptive modeling, suggesting a need for dynamic, multi\u2011factor, and sensitivity\u2011rich approaches.",
 "concepts": [

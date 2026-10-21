@@ -93,8 +93,14 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 246 papers read (41 more skipped as not relevant enough), 133 ideas tested on my memory, 2 promising.",
+  "LEARNING: 249 papers read (41 more skipped as not relevant enough), 134 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Overcoming catastrophic forgetting in neural networks (\u2605\u2605\u2605\u2605\u2606)",
+  "  The paper introduces Elastic Weight Consolidation (EWC), which protects important network parameters by adding a quadratic penalty weighted by the Fisher information, allowing sequential learning without catastrophic for",
+  "  tested: about myself - feeds my self-check",
+  "\u2022 Learning volatility-adaptive forgetting via GARCH-modulated LSTM for stock price forecasting (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper proposes a new LSTM variant (Gsigmoid\u2011LSTM) that feeds GARCH(1,1) volatility directly into the forget gate via a custom activation (Gsigmoid), letting the network forget faster in turbulent periods and retain m",
+  "  tested: DOESN'T FIT MY DATA - The idea requires training a Gsigmoid\u2011LSTM model on multiple daily columns and a GARCH\u2011modulated volatility series, which cannot be expres",
   "\u2022 Do Behavioral Biases Affect Prices? (\u2605\u2605\u2605\u2605\u2606)",
   "  CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
   "  tested: prop mission - feeds my strategy designer and self-check",
@@ -107,15 +113,9 @@
   "\u2022 DeepAR: Probabilistic forecasting with autoregressive recurrent networks (\u2605\u2605\u2605\u2605\u2606)",
   "  DeepAR trains a single autoregressive recurrent network on many related time series and outputs a full predictive distribution, not just point forecasts. It learns shared patterns while still adapting to each series via ",
   "  tested: about myself - feeds my self-check",
-  "\u2022 Conformer: Convolution-augmented Transformer for Speech Recognition (\u2605\u2605\u2605\u2605\u2606)",
-  "  The Conformer architecture mixes self\u2011attention for global context with convolutional modules for local patterns, using a macaron\u2011style sandwich of feed\u2011forward layers and pre\u2011norm residual connections to stay parameter\u2011",
-  "  tested: about myself - feeds my self-check",
-  "\u2022 On Calibration of Modern Neural Networks (\u2605\u2605\u2605\u2606\u2606)",
-  "  Modern deep nets tend to be overconfident, and simple post\u2011processing like temperature scaling can substantially improve probability calibration. Factors such as depth, width, weight decay, and batch\u2011norm affect calibrat",
-  "  tested: about myself - feeds my self-check",
-  "This week's tests: 142 run - 4 promising, 72 not confirmed, 29 don't fit my data, 37 translation failures",
+  "This week's tests: 143 run - 4 promising, 72 not confirmed, 30 don't fit my data, 37 translation failures",
   "",
-  "29 papers waiting in my queue."
+  "27 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

@@ -2,8 +2,9 @@
 tags: [concept]
 ---
 # realized volatility
-18 papers mention this:
+19 papers mention this:
 
+- [[A Hybrid HAR-LSTM-GARCH Model for Forecasting Volatility in Energy Markets]]
 - [[A Practical Guide to Harnessing the HAR Volatility Model]]
 - [[A Simple Approximate Long-Memory Model of Realized Volatility]]
 - [[An International Comparison of Implied, Realized, and GARCH Volatility Forecasts]]

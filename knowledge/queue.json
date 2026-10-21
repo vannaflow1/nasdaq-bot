@@ -1,30 +1,5 @@
 [
  {
-  "id": "arxiv:2610.24386v1",
-  "title": "Learning volatility-adaptive forgetting via GARCH-modulated LSTM for stock price forecasting",
-  "abstract": "Stock price forecasting is hindered by the heteroscedastic nature of financial time series, in which turbulent and tranquil regimes alternate. Although the Long Short-Term Memory (LSTM) network is widely used for this task, its gates are oblivious to such volatility variation, so memory retention remains fixed regardless of market conditions. A common remedy is to supply volatility estimates as an additional input feature, yet this leaves the internal memory dynamics untouched. Instead, volatility can serve as a direct regulatory signal over the gate activation itself. This paper presents the Gsigmoid-LSTM model, which embeds Generalized Autoregressive Conditional Heteroscedasticity (GARCH(1,1))-derived volatility estimates into the LSTM forgetting gate through the Gsigmoid activation function, a volatility-adaptive variant of the sigmoid that combines a volatility adjustment factor with slope regulation via a learnable parameter. The model thereby automatically prioritizes recent information during turbulent periods while preserving long-term dependencies in stable markets. In the engineering application of daily stock price forecasting, extensive experiments, including activation function comparisons, baseline evaluations, and ablation studies, demonstrate that this structural gating modification effectively improves forecasting accuracy and robustness. The proposed model significantly outperforms a feature-level fusion baseline carrying the same volatility signal on all five datasets, as confirmed by Diebold-Mariano tests with all p<0.01, attains the best average rank of 1.00 in the Friedman test across nine models, and achieves the lowest MSE and MAE on all five datasets.",
-  "url": "https://arxiv.org/abs/2610.24386v1",
-  "pdf": "https://arxiv.org/pdf/2610.24386v1",
-  "date": "2026-10-17",
-  "score": 10,
-  "source": "Frontier (arXiv, last 45 days)",
-  "track": "frontier",
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/arxiv_2610.24386v1.txt"
- },
- {
-  "id": "openalex:W2560647685",
-  "title": "Overcoming catastrophic forgetting in neural networks",
-  "abstract": "The ability to learn tasks in a sequential fashion is crucial to the development of artificial intelligence. Until now neural networks have not been capable of this and it has been widely thought that catastrophic forgetting is an inevitable feature of connectionist models. We show that it is possible to overcome this limitation and train networks that can maintain expertise on tasks that they have not experienced for a long time. Our approach remembers old tasks by selectively slowing down learning on the weights important for those tasks. We demonstrate our approach is scalable and effective by solving a set of classification tasks based on a hand-written digit dataset and by learning several Atari 2600 games sequentially.",
-  "track": "self",
-  "url": "https://arxiv.org/pdf/1612.00796",
-  "source": "OpenAlex (about itself)",
-  "topic": "self: continual learning catastrophic forgetting",
-  "score": 7,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W2560647685.txt"
- },
- {
   "id": "openalex:W7222953604",
   "title": "Valuation Engines Under Market Incompleteness: An Empirical Benchmark of High-Order Option Pricing in Digital Asset Markets",
   "abstract": "Financial derivatives occupy a core position in modern asset allocation, but the traditional option pricing framework, particularly the Black-Scholes (B-S) model, faces unprecedented challenges when applied to the highly volatile cryptocurrency market. The B-S assumption of constant volatility and continuous price paths fundamentally fails to capture the volatility smile, heavy-tailed distributions, and intermittent crashes inherent in digital assets. Furthermore, structural frictions such as liquidity fragmentation render the crypto ecosystem an incomplete market. This paper systematically reviews the mathematical transition from the B-S framework to high-order stochastic processes, specifically the Heston and Jump-Diffusion models. Most importantly, we contribute to the existing literature by providing a rigorous empirical evaluation using out-of-sample high-frequency options data from Deribit. Our empirical results quantitatively confirm the theoretical limitations of traditional pricing: while the Heston model reduces the Root Mean Square Error (RMSE) by approximately 45%, the Stochastic Volatility with Jumps (SVJ) model demonstrates absolute superiority in pricing tail risks. Specifically, the SVJ framework decreases the valuation error for deep out-of-the-money (OTM) options by over 72% compared to the baseline B-S model. Ultimately, this study emphasizes that structurally integrating both continuous volatility clustering and discrete market shocks is mathematically indispensable for robust risk management in decentralized financial markets.",
