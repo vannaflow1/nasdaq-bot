@@ -268,16 +268,16 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 1 (job 2/4): 2099 new strategies this run, 1,941 tested in total (grid 235,410 + mutations, 0.8% covered)",
-  "Stage A (2014-21, EV after fee > 0): 388 | Stage B (still positive on unseen 2022-23): 96 | exams taken: 0",
-  "Market focus: NQ 69% / GC 18% / CL 14%  (evidence: NQ 78/1021 held up on 2022-23 (top EV +932), GC 13/451 held up on 2022-23 (top EV +480), CL 5/469 held up on 2022-23 (top EV +276))",
+  "PROP STRATEGY SEARCH - run 1 (job 3/4): 1398 new strategies this run, 1,254 tested in total (grid 235,410 + mutations, 0.5% covered)",
+  "Stage A (2014-21, EV after fee > 0): 250 | Stage B (still positive on unseen 2022-23): 63 | exams taken: 0",
+  "Market focus: NQ 50% / GC 25% / CL 25%  (owner's starting split until every market has 300+ tested strategies (NQ 657, GC 286, CL 311))",
   "",
   "LEADERBOARD (ranked by EV per eval on unseen 2022-23):",
-  "- with gap at 13:30, trending regime (Hurst>0.55) | lucid_pro_50k risk 30%/50% | 2014-21 EV +99 (pass 32%) | 2022-23 EV +1058 (pass 57%) | 5 accounts: -22$/month (0% months positive) | 874 trades, -0.03R",
-  "- fade yday_low 10:00-14:00, every day | lucid_pro_50k risk 20%/35% | 2014-21 EV +273 (pass 31%) | 2022-23 EV +991 (pass 69%) | 5 accounts: -22$/month (0% months positive) | 446 trades, +0.02R",
-  "- long at 11:30, calm VIX (below 60d avg) | lucid_pro_50k risk 30%/50% | 2014-21 EV +70 (pass 25%) | 2022-23 EV +942 (pass 49%) | 5 accounts: +271$/month (17% months positive) | 1168 trades, -0.02R",
-  "- against overnight at 08:31, mean-reverting (Hurst<0.5) | lucid_pro_50k risk 30%/50% | 2014-21 EV +232 (pass 30%) | 2022-23 EV +844 (pass 48%) | 5 accounts: -26$/month (0% months positive) | 542 trades, -0.09R",
-  "- long at 10:00, small overnight | lucid_pro_50k risk 20%/35% | 2014-21 EV +42 (pass 28%) | 2022-23 EV +824 (pass 53%) | 5 accounts: -39$/month (0% months positive) | 1643 trades, -0.02R",
-  "- with the open's side of the overnight range at 09:00, no FOMC | lucid_pro_50k risk 30%/50% | 2014-21 EV +18 (pass 25%) | 2022-23 EV +741 (pass 51%) | 5 accounts: -22$/month (0% months positive) | 1863 trades, -0.02R"
+  "- with yesterday at 08:31, mean-reverting (Hurst<0.5) | lucid_pro_50k risk 30%/50% | 2014-21 EV +244 (pass 38%) | 2022-23 EV +1400 (pass 56%) | 5 accounts: -26$/month (0% months positive) | 541 trades, -0.03R",
+  "- long at 10:00, red-folder news day | lucid_pro_50k risk 30%/50% | 2014-21 EV +126 (pass 29%) | 2022-23 EV +1038 (pass 43%) | 5 accounts: -22$/month (0% months positive) | 1115 trades, +0.01R",
+  "- with yesterday at 08:31, no FOMC | lucid_pro_50k risk 30%/50% | 2014-21 EV +10 (pass 18%) | 2022-23 EV +966 (pass 44%) | 5 accounts: -22$/month (0% months positive) | 1865 trades, -0.05R",
+  "- break on_high 08:30-10:00, calm VIX (below 60d avg) | lucid_pro_50k risk 20%/35% | 2014-21 EV +125 (pass 23%) | 2022-23 EV +745 (pass 83%) | 5 accounts: +89$/month (4% months positive) | 593 trades, +0.01R",
+  "- break exp70_up 08:45-11:30, small overnight | lucid_pro_50k risk 30%/50% | 2014-21 EV +36 (pass 37%) | 2022-23 EV +676 (pass 46%) | 5 accounts: -22$/month (0% months positive) | 522 trades, -0.01R",
+  "- fade gap at 11:30, mean-reverting (Hurst<0.5) | lucid_pro_50k risk 12%/20% | 2014-21 EV +153 (pass 19%) | 2022-23 EV +662 (pass 76%) | 5 accounts: -26$/month (0% months positive) | 521 trades, -0.00R"
  ]
 }
