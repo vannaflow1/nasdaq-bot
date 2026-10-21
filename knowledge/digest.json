@@ -1,5 +1,20 @@
 [
 {
+"title": "DeepAR: Probabilistic forecasting with autoregressive recurrent networks",
+"learned": "DeepAR trains a single autoregressive recurrent network on many related time series and outputs a full predictive distribution, not just point forecasts. It learns shared patterns while still adapting to each series via conditioning on past observations.",
+"concepts": [
+"autoregressive recurrent network",
+"probabilistic output (distribution)",
+"global model trained on many series",
+"conditioning on past observations",
+"minimal manual feature engineering"
+],
+"relevance": 4,
+"verdict": "about myself - feeds my self-check",
+"url": "https://www.sciencedirect.com/science/article/pii/S0169207019301888/pdf",
+"date": "2026-10-21"
+},
+{
 "title": "Conformer: Convolution-augmented Transformer for Speech Recognition",
 "learned": "The Conformer architecture mixes self\u2011attention for global context with convolutional modules for local patterns, using a macaron\u2011style sandwich of feed\u2011forward layers and pre\u2011norm residual connections to stay parameter\u2011efficient.",
 "concepts": [

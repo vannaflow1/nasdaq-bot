@@ -1,6 +1,6 @@
-scanned 62 papers, queued 1, queue size 19 ['arxiv: HTTPError']
-read about myself (4*): Conformer: Convolution-augmented Transformer for Speech Recognition
+scanned 80 papers, queued 1, queue size 19 []
+read about myself (4*): DeepAR: Probabilistic forecasting with autoregressive recurrent networ
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 1, AI units today 5043/7000
+read 1, AI units today 5078/7000
 test queue empty
 testing used 0 AI units

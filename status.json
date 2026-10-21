@@ -91,8 +91,11 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 234 papers read (40 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
+  "LEARNING: 235 papers read (40 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 DeepAR: Probabilistic forecasting with autoregressive recurrent networks (\u2605\u2605\u2605\u2605\u2606)",
+  "  DeepAR trains a single autoregressive recurrent network on many related time series and outputs a full predictive distribution, not just point forecasts. It learns shared patterns while still adapting to each series via ",
+  "  tested: about myself - feeds my self-check",
   "\u2022 Conformer: Convolution-augmented Transformer for Speech Recognition (\u2605\u2605\u2605\u2605\u2606)",
   "  The Conformer architecture mixes self\u2011attention for global context with convolutional modules for local patterns, using a macaron\u2011style sandwich of feed\u2011forward layers and pre\u2011norm residual connections to stay parameter\u2011",
   "  tested: about myself - feeds my self-check",
@@ -108,9 +111,6 @@
   "\u2022 Economic Incentives and Social Preferences: Substitutes or Complements? (\u2605\u2605\u2605\u2605\u2606)",
   "  Explicit monetary incentives can weaken or strengthen intrinsic motivations depending on framing, perceived autonomy, and informational signals. When incentives are poorly designed they may crowd out the trader's intrins",
   "  tested: prop mission - feeds my strategy designer and self-check",
-  "\u2022 OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper derives an optimal risky\u2011asset allocation when an investor must keep wealth above a stochastic floor equal to a fixed fraction \u03b1 of the historical maximum wealth. The optimal exposure is proportional to the sur",
-  "  tested: TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
   "This week's tests: 140 run - 4 promising, 70 not confirmed, 29 don't fit my data, 37 translation failures",
   "",
   "18 papers waiting in my queue."
