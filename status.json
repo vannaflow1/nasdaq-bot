@@ -1,56 +1,60 @@
 {
- "for": "Wed 21 Oct",
+ "for": "Thu 22 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
-  "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size.",
-  "- META, TSLA report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway)."
+  "WHAT THIS MEANS FOR YOU TOMORROW (Thu 22 Oct) - risk \u26aa NORMAL",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
   "",
-  "QQQ GEX  2026-10-20   spot 718.81",
-  "  net GEX (normalised) -91.1   rank vs last 252 days: 0.09   quintile 1",
-  "  -> LOW gamma  - next day historically WILDEST (avg realized vol ~19.6%, RV/IV 0.80)",
-  "  !! only 3 live days in history - rank still leans on stale 2025 data",
+  "QQQ GEX  2026-10-21   spot 724.46",
+  "  net GEX (normalised) -19.9   rank vs last 252 days: 0.37   quintile 2",
+  "  -> low-mid    - next day avg realized vol ~18.6%",
+  "  !! only 4 live days in history - rank still leans on stale 2025 data",
   "  no paper trade today (needs rank >= 0.80)"
  ],
  "range": [
-  "  Options price a \u00b1297 pt CLOSE-TO-CLOSE move in NQ futures (0.99%).",
-  "  Gamma-adjusted: \u00b1285 pts -> close likely between 29,621 and 30,192 (NQ futures prices)",
-  "  (options price moves about right on days like this; ~58% of such days closed inside). This is where the day ENDS, not how far it",
+  "  Options price a \u00b1291 pt CLOSE-TO-CLOSE move in NQ futures (0.97%).",
+  "  Gamma-adjusted: \u00b1308 pts -> close likely between 29,674 and 30,290 (NQ futures prices)",
+  "  (options price moves about right on days like this; ~56% of such days closed inside). This is where the day ENDS, not how far it",
   "  swings: the high-to-low range is usually ~1.5-2x wider - see /brain for the full-day range."
  ],
  "walls": [
-  "  NQ futures prices: Call wall 30,030 | Put wall 29,550 | Gamma flip 30,343",
-  "  (from QQQ + NDX options; in QQQ terms ~722 / 710 / 729)",
+  "  NQ futures prices: Call wall 30,210 | Put wall 29,790 | Gamma flip 30,101",
+  "  (from QQQ + NDX options; in QQQ terms ~730 / 720 / 727)",
   "  NQ is BELOW the flip (dealers amplify moves)",
   "  Tested 2014-25: walls are NOT support/resistance (no better than random levels).",
   "  If the put wall breaks, drops tended to run a bit further. Below the flip = bigger days."
  ],
  "earnings": [
-  "  META reports after close: options price a \u00b17.2% move (option covers 3 sessions, so a bit wider than the report alone)",
-  "  TSLA reports after close: options price a \u00b16.5% move (option covers 3 sessions, so a bit wider than the report alone)"
+  "  no megacap earnings tomorrow"
  ],
- "level": "ELEVATED",
- "updated": "Wed 21 Oct 15:46 Lux",
+ "level": [
+  "VOLTA LEVEL 14  (7,187 XP, next level at 7,840)",
+  "Papers read 252 | ideas & strategies tested 60 | prop strategies searched 313,254",
+  "Survived unseen 2022-23: 1273 (best EV per eval 2449.3) | passed the locked exam: 1 | live winners: 0",
+  "Brain upgrades: 0 | self-discovered powers: 5",
+  "XP only for verified progress: tests passed on unseen data count far more than activity.",
+  "Since yesterday: +35 papers, +12 tests, +1273 validated, +2 powers, +1 exam passed"
+ ],
+ "updated": "Wed 21 Oct 23:07 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
-  "  TODAY: META earnings after close; TSLA earnings after close"
+  "  Wed 28 Oct: FOMC rate decision 19:00 Lux, Powell 19:30; GOOGL earnings after close; MSFT earnings after close"
  ],
  "news": [
-  "NEWS (last 16h, ranked by keywords):",
-  "- Opposition to data centers will drive up inflation, says BlackRock\u2019s Larry Fink  [MarketWatch]\n    AI chips/capex, Fed/macro",
-  "- Stock Market Today: Tech Futures Rise With SpaceX Earnings; Meta, Tesla Set To Report Later (Live Coverage)  [Yahoo (megacaps)]\n    META, TSLA, earnings",
-  "- Nvidia announces plug and play Vera Rubin racks that can be shipped on a truck  [CNBC tech]\n    NVDA, AI chips/capex",
-  "- Nvidia's grand plan for speeding up datacenter deployments: AI trailer parks  [The Register]\n    NVDA, AI chips/capex",
-  "- Micron's Taiwan union will launch a one-day strike this week, threatening memory production  [Tom's Hardware]\n    MU, export/geo",
-  "- Three workers killed, one in intensive care after fall at TSMC\u2019s 2nm fab construction site  [Tom's Hardware]\n    TSM, AI chips/capex"
+  "NEWS (last 24h, ranked by keywords):",
+  "- Dow Jones Futures: Meta, Tesla Are Earnings Movers Late After SpaceX, Super Micro Lead Bullish Nasdaq Move  [Yahoo (megacaps)]\n    META, TSLA, earnings",
+  "- Meta posts Q3 revenue beat and strong guidance: Live updates  [CNBC tech]\n    META, shock, earnings",
+  "- Four workers killed after fall at TSMC\u2019s 2nm fab construction site  [Tom's Hardware]\n    TSM, AI chips/capex",
+  "- Gas Prices Are Skyrocketing. Can Bitcoin Actually Hedge Against Inflation?  [Yahoo (megacaps)]\n    Fed/macro",
+  "- UK inflation jumps to 3.5% \u2014 cementing rate hike expectations  [CNBC economy]\n    Fed/macro",
+  "- Tesla Third-Quarter Earnings Top Views as Automotive, Energy Generation Sales Decline  [Yahoo (megacaps)]\n    TSLA, earnings",
+  "- Tesla's Q3 Energy-Segment Revenue Misses Estimates By A Mile  [Yahoo (megacaps)]\n    TSLA, earnings",
+  "- Tesla Earnings Mixed, FSD Revenue Strong; Elon Musk Looms (Live Coverage)  [Yahoo (megacaps)]\n    TSLA, earnings"
  ],
  "trump": [
   "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Wed 14:14 [oil/geopolitics] Great news for the wealth and prosperity of the United Kingdom, and the wonderful region of Aberdeen. The U.K. has started drilling in the North Sea, one of the greatest and most prosperous areas of OIL in the World. They should go FULL BLAST!!! This will make the U.K. very\u2026",
-  "- Wed 12:49 [oil/geopolitics] Numerous people, who requested that sanctions be immediately imposed on Russia, have called to apologize to President Trump in that they didn\u2019t know that he was negotiating the release of Stephen Hubbard, a truly big and important deal for the U.S. If sanctions would have been\u2026",
-  "- Wed 12:37 [oil/geopolitics] Stephen Hubbard, taken four years ago by Russia during the Biden Administration, was just released from prison, at the request of President Donald J. Trump, made directly to President Vladimir Putin in a telephone conversation last week. Stephen is on his way back home and will\u2026",
-  "- Tue 22:49 [fiscal/policy] Donald Trump signs executive order creating NIH task force as Melania unveils \u2018new standard for women\u2019s health in America\u2019: https:// nypost.com/2026/10/19/us-news/ donald-trump-signs-executive-order-creating-new-womens-health-task-force-with-melania/"
+  "  (Truth Social feed: HTTPError)"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -61,30 +65,23 @@
   "THIS WEEK - what the bot said vs what QQQ did next day:",
   "  Fri 16 Oct: ELEVATED, gamma q1, priced \u00b11.39% -> moved +1.31% (inside)",
   "  Mon 19 Oct: ELEVATED, gamma q2, priced \u00b10.92% -> moved -0.00% (inside)",
+  "  Tue 20 Oct: ELEVATED, gamma q1, priced \u00b10.99% -> moved +0.79% (inside)",
   "",
-  "LIVE TALLY since start (2 days):",
+  "LIVE TALLY since start (3 days):",
   "  need both low- and high-gamma days to compare",
   "  stayed inside the options-priced move: 100% of days (backtest: ~55-70%)"
  ],
  "brain_pred": {
-  "pred": 0.02049,
-  "nq": 29845.25,
-  "day": "Wed 21 Oct",
-  "date": "2026-10-21",
-  "gex_rank": 0.09,
-  "event_prem": 0.755,
-  "high_mid": 30120.82,
-  "high_far": 30494.59,
-  "low_mid": 29594.37,
-  "low_far": 29109.29,
-  "raw": {
-   "pred": 0.01961,
-   "high_mid": 30109.0,
-   "high_far": 30466.74,
-   "low_mid": 29605.13,
-   "low_far": 29140.86
-  },
-  "spx_factor": 1.0448
+  "pred": 0.01816,
+  "nq": 30020.25,
+  "day": "Thu 22 Oct",
+  "date": "2026-10-22",
+  "gex_rank": 0.37,
+  "event_prem": 0.739,
+  "high_mid": 30267.69,
+  "high_far": 30603.31,
+  "low_mid": 29794.81,
+  "low_far": 29358.95
  },
  "live": [
   "LIVE - Wed 21 Oct 21:34 Lux",
@@ -95,7 +92,7 @@
   "Far levels today: high 30,495 / low 29,109 (~90% of days stay inside each)"
  ],
  "playbook": [
-  "No FOMC, CPI or jobs report on Wed 21 Oct."
+  "No FOMC, CPI or jobs report on Thu 22 Oct."
  ],
  "learning": [
   "LEARNING: 252 papers read (41 more skipped as not relevant enough), 134 ideas tested on my memory, 2 promising.",
@@ -127,7 +124,7 @@
   "  TODAY: META earnings after close; TSLA earnings after close"
  ],
  "nerd": [
-  "LIVE options read - Wed 21 Oct 22:56 Lux (16:56 NY), quotes ~15 min delayed, QQQ 724.46",
+  "Read from the US close (Wed 21 Oct), made 23:07 Lux. Live refresh every 30 min once the US market opens (15:30 Lux).",
   "",
   "VOLATILITY: 30-day IV 21.2% -> higher than 72% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -164,31 +161,31 @@
   "Live paper score: no closed trades yet (backtest: +8.1 bp/trade, 58% wins)."
  ],
  "brain": [
-  "\ud83e\udde0 BRAIN v1.0 - tomorrow (Wed 21 Oct) looks LIVELY",
-  "  NQ high-to-low range: ~1.96% (~587 pts)",
-  "  80% band: 1.26% to 3.10% (376-927 pts)",
-  "  options alone say ~1.77%",
+  "\ud83e\udde0 BRAIN v1.0 - tomorrow (Thu 22 Oct) looks LIVELY",
+  "  NQ high-to-low range: ~1.82% (~545 pts)",
+  "  80% band: 1.16% to 2.87% (349-860 pts)",
+  "  options alone say ~1.90%",
   "",
-  "HIGH / LOW (from today's NQ close 29,845):",
-  "  likely high ~30,109 | far high 30,467 (90% of days stay below)",
-  "  likely low  ~29,605 | far low  29,141 (90% of days stay above)",
+  "HIGH / LOW (from today's NQ close 30,020):",
+  "  likely high ~30,268 | far high 30,603 (90% of days stay below)",
+  "  likely low  ~29,795 | far low  29,359 (90% of days stay above)",
   "  'likely' = coin flip it gets there. Whole day inside both far levels ~80% of the time.",
   "",
-  "MEMORY - today looks like 20 similar past days (of 2,949 I remember):",
-  "  their next day averaged a 2.11% range; 20% were big (>2.5%)",
-  "  - 08 Oct 2019: next day range 1.67%, closed +0.92%",
+  "MEMORY - today looks like 20 similar past days (of 2,950 I remember):",
+  "  their next day averaged a 1.99% range; 25% were big (>2.5%)",
   "  - 19 Oct 2026: next day range 1.72%, closed -0.10%",
-  "  - 18 May 2021: next day range 2.19%, closed +0.03%",
+  "  - 02 Feb 2015: next day range 1.36%, closed +0.80%",
+  "  - 21 May 2019: next day range 1.12%, closed -0.47%",
   "  (range only - I have no edge on direction, so I don't call it)",
   "",
-  "Memories: 2,949 days",
+  "Memories: 2,950 days",
   "Backtest (2226 unseen days): brain miss 0.53% vs options-only 0.55%, 80% band held 80%",
-  "LIVE (1 days): brain miss 0.04% vs options-only 0.09% | closer on 100% of days | 80% band held 100% - early, needs 60+ days",
-  "LIVE high/low: whole day stayed inside my far levels on 100% of 1 days (backtest ~80%)"
+  "LIVE (2 days): brain miss 0.36% vs options-only 0.29% | closer on 50% of days | 80% band held 100% - early, needs 60+ days",
+  "LIVE high/low: whole day stayed inside my far levels on 100% of 2 days (backtest ~80%)"
  ],
  "brain_journal": [
-  "Tue 20 Oct: I said 1.76% (band 1.13-2.78%), NQ moved 1.72% high-to-low -> inside \u2705, beat options-only",
-  "   high 29,903 (my far level 30,299 \u2705), low 29,392 (my far level 29,099 \u2705)"
+  "Wed 21 Oct: I said 1.96% (band 1.26-3.10%), NQ moved 1.29% high-to-low -> inside \u2705, options-only was closer",
+  "   high 30,113 (my far level 30,467 \u2705), low 29,728 (my far level 29,141 \u2705)"
  ],
  "strategies": [
   "STRATEGY LAB - 44 strategies tested (2 designed by Volta itself), 0 locked exams taken, 0 passed.",
@@ -280,6 +277,9 @@
   "Balance $25,000.00 (+0.00) | max-loss floor $24,000 | buffer $1,000",
   "Trades: 0 - waiting for a tested edge to trigger",
   "Next trade risks up to $100.",
+  "",
+  "LATEST:",
+  "- strategy: with the open's side of the overnight range at 08:31, no red-folder news: skipped: stop too wide for my risk budget (even 1 MNQ risks more than 10% of my buffer)",
   "",
   "Volta only trades edges that passed its full protocol (walk-forward, placebo, stress test, locked exam).",
   "Virtual money - this is Volta's live track record, not advice."

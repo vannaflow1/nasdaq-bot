@@ -1,1 +1,2 @@
 {"date": "2026-10-20", "account": 1, "decision": "no trade - none of my tested edges triggered today"}
+{"date": "2026-10-21", "account": 1, "edge": "strategy: with the open's side of the overnight range at 08:31, no red-folder news", "decision": "skipped: stop too wide for my risk budget (even 1 MNQ risks more than 10% of my buffer)"}

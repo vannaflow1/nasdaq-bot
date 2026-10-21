@@ -6,6 +6,8 @@
  "floor": 24000.0,
  "blown": 0,
  "trades": 0,
- "booked": [],
- "last_day": "2026-10-20"
+ "booked": [
+  "strat:2026-10-21:2974840b5d"
+ ],
+ "last_day": "2026-10-21"
 }
