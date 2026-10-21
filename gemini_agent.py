@@ -84,7 +84,13 @@ def t_read_file(path, start_line=1, max_lines=250):
 
 
 def t_search(pattern, path_glob="*.py"):
-    rc, out = sh(["grep", "-rnE", "--include", path_glob, "--exclude-dir=.git", "--exclude-dir=data", pattern, "."], timeout=60)
+    import glob as _g
+    if "/" in path_glob:                                     # a path pattern like knowledge/*.json: grep those files directly
+        targets = [f for f in _g.glob(os.path.join(HERE, path_glob)) if os.path.isfile(f)][:200]
+        if not targets: return "no file matches " + path_glob
+        rc, out = sh(["grep", "-nE", "-H", pattern] + [os.path.relpath(f, HERE) for f in targets], timeout=60)
+    else:
+        rc, out = sh(["grep", "-rnE", "--include", path_glob, "--exclude-dir=.git", "--exclude-dir=data", pattern, "."], timeout=60)
     lines = out.splitlines()
     return ("\n".join(l[:300] for l in lines[:80]) + (f"\n... {len(lines) - 80} more" if len(lines) > 80 else "")) or "no match"
 
