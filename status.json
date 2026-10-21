@@ -91,8 +91,14 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 243 papers read (41 more skipped as not relevant enough), 132 ideas tested on my memory, 2 promising.",
+  "LEARNING: 246 papers read (41 more skipped as not relevant enough), 133 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Do Behavioral Biases Affect Prices? (\u2605\u2605\u2605\u2605\u2606)",
+  "  CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
+  "  tested: prop mission - feeds my strategy designer and self-check",
+  "\u2022 A decomposition-integration framework coupling singular spectrum analysis with a volatility-adaptive LSTM for  (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper builds a forecasting pipeline that first splits a price series with CEEMDAN, clusters the resulting intrinsic modes by frequency, denoises the high\u2011frequency part with Singular Spectrum Analysis, and then predi",
+  "  tested: NOT CONFIRMED on my data: 2227 signal days, hit 54.1% (always-long 56.5%), strategy +1.0 bps/day vs +4.6 for the same average exposure held constantly -> timing",
   "\u2022 Jumps, Cojumps and Macro Announcements, (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper shows that specific U.S. macro releases\u2014especially non\u2011farm payroll, Fed funds target, and GDP\u2014significantly raise the probability of intraday jumps and simultaneous jumps (cojumps) across Nasdaq futures, bond ",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 2033 buy-vol trades on real QQQ option prices, avg -5.5 bp of QQQ per trade (placebo avg -5.4, p=0.573), halves -11.7/+0.",
@@ -105,15 +111,9 @@
   "\u2022 On Calibration of Modern Neural Networks (\u2605\u2605\u2605\u2606\u2606)",
   "  Modern deep nets tend to be overconfident, and simple post\u2011processing like temperature scaling can substantially improve probability calibration. Factors such as depth, width, weight decay, and batch\u2011norm affect calibrat",
   "  tested: about myself - feeds my self-check",
-  "\u2022 Gradient-based learning applied to document recognition (\u2605\u2605\u2605\u2605\u2606)",
-  "  The paper shows that gradient\u2011based training, especially via back\u2011propagation in convolutional and graph\u2011transformer networks, can jointly optimize multiple modules (e.g., segmentation, recognition, language models) for ",
-  "  tested: about myself - feeds my self-check",
-  "\u2022 Compensation and Incentives: Practice vs. Theory (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper highlights that real-world incentive structures often deviate from pure profit\u2011maximizing models, emphasizing fairness, promotion pathways, and low penalties rather than strict performance\u2011based pay.",
-  "  tested: prop mission - feeds my strategy designer and self-check",
-  "This week's tests: 141 run - 4 promising, 71 not confirmed, 29 don't fit my data, 37 translation failures",
+  "This week's tests: 142 run - 4 promising, 72 not confirmed, 29 don't fit my data, 37 translation failures",
   "",
-  "21 papers waiting in my queue."
+  "29 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

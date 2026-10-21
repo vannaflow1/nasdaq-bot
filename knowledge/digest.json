@@ -1,5 +1,50 @@
 [
 {
+"title": "Assessing energy security: An overview of commonly used methodologies",
+"learned": "The paper highlights that most security\u2011of\u2011supply studies are static, single\u2011carrier and lack forward\u2011looking, adaptive modeling, suggesting a need for dynamic, multi\u2011factor, and sensitivity\u2011rich approaches.",
+"concepts": [
+"static vs dynamic modeling",
+"multi\u2011carrier comparison",
+"adaptive capacity",
+"sensitivity analysis",
+"service\u2011oriented security"
+],
+"relevance": 1,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://www.sciencedirect.com/science/article/pii/S0360544214007725/pdf",
+"date": "2026-10-21"
+},
+{
+"title": "Do Behavioral Biases Affect Prices?",
+"learned": "CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
+"concepts": [
+"loss aversion",
+"afternoon risk taking",
+"price reversal",
+"temporary mispricing",
+"behavioral price impact"
+],
+"relevance": 4,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "http://deepblue.lib.umich.edu/bitstream/2027.42/115930/1/jofi723.pdf",
+"date": "2026-10-21"
+},
+{
+"title": "A decomposition-integration framework coupling singular spectrum analysis with a volatility-adaptive LSTM for stock price forecasting",
+"learned": "The paper builds a forecasting pipeline that first splits a price series with CEEMDAN, clusters the resulting intrinsic modes by frequency, denoises the high\u2011frequency part with Singular Spectrum Analysis, and then predicts each component with a new LSTM cell that contains a differentiable GARCH(1,1) layer. The GARCH output scales the LSTM forget gate, so the memory decay adapts to the current volatility. Across five major US and Chinese equity indices the full system reduces out\u2011of\u2011sample RMSE by 9\u201124% versus the best competing model and by 60\u201170% versus a plain LSTM.",
+"concepts": [
+"CEEMDAN decomposition",
+"Singular Spectrum Analysis",
+"GARCH\u2011modulated LSTM",
+"Volatility\u2011adaptive forgetting",
+"Ensemble forecasting"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 2227 signal days, hit 54.1% (always-long 56.5%), strategy +1.0 bps/day vs +4.6 for the same average exposure held constantly -> timing adds -3.6 bps/day, t=-1.09, positive in 4/10 years",
+"url": "https://arxiv.org/abs/2610.24384v1",
+"date": "2026-10-21"
+},
+{
 "title": "Historical Perspectives in Volatility Forecasting Methods with Machine Learning",
 "learned": "The paper surveys volatility forecasting techniques, comparing classic models like implied volatility and GARCH with modern machine\u2011learning approaches such as LSTM and Transformer, and provides an open\u2011source benchmark.",
 "concepts": [

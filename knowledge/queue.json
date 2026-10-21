@@ -1,28 +1,16 @@
 [
  {
-  "id": "arxiv:2610.24384v1",
-  "title": "A decomposition-integration framework coupling singular spectrum analysis with a volatility-adaptive LSTM for stock price forecasting",
-  "abstract": "Financial time series exhibit multi-scale, high-noise, and non-stationary volatility dynamics. Decomposition--integration frameworks built on complete ensemble empirical mode decomposition with adaptive noise (CEEMDAN) have advanced this field, yet existing CEEMDAN hybrids remain unstable: high-frequency mode mixing contaminates downstream predictors, and the heterogeneous volatility of decomposed components is not matched by any volatility-adaptive mechanism. To address these gaps, this paper proposes CEEMDAN-SE-SSA-VMGL. CEEMDAN adaptively decomposes the original series, and sample-entropy-driven K-means clustering groups the intrinsic mode functions into high-, mid-, and low-frequency and residual components. Singular spectrum analysis (SSA) is then applied to the high-frequency group, whose singular-value decomposition of the trajectory matrix and principal-component reconstruction decouple intertwined pseudo-oscillatory modes and alleviate mode mixing. We further design a plug-and-play robust LSTM variant, the volatility-modulated GARCH-LSTM (VMGL), which embeds a differentiable GARCH(1,1) layer inside the LSTM cell as a risk gate; the estimated conditional volatility multiplicatively scales the forget-gate activation, letting memory decay adapt to the instantaneous volatility while remaining fully end-to-end trainable. Component predictions are linearly combined. On five US and Chinese financial series (CSI 300, CSI 500, AAPL, GOOGL, S&P 500), the proposed model is compared with eleven benchmark architectures, lowering the forecasting error by 9% to 24% relative to the best benchmark and by 60% to 70% relative to a standard LSTM. Diebold--Mariano and model-confidence-set (MCS) tests confirm the statistical significance and stability of the gains, spectral analyses verify the SSA denoising efficacy, and backtesting demonstrates the framework's economic utility.",
-  "url": "https://arxiv.org/abs/2610.24384v1",
-  "pdf": "https://arxiv.org/pdf/2610.24384v1",
+  "id": "arxiv:2610.24386v1",
+  "title": "Learning volatility-adaptive forgetting via GARCH-modulated LSTM for stock price forecasting",
+  "abstract": "Stock price forecasting is hindered by the heteroscedastic nature of financial time series, in which turbulent and tranquil regimes alternate. Although the Long Short-Term Memory (LSTM) network is widely used for this task, its gates are oblivious to such volatility variation, so memory retention remains fixed regardless of market conditions. A common remedy is to supply volatility estimates as an additional input feature, yet this leaves the internal memory dynamics untouched. Instead, volatility can serve as a direct regulatory signal over the gate activation itself. This paper presents the Gsigmoid-LSTM model, which embeds Generalized Autoregressive Conditional Heteroscedasticity (GARCH(1,1))-derived volatility estimates into the LSTM forgetting gate through the Gsigmoid activation function, a volatility-adaptive variant of the sigmoid that combines a volatility adjustment factor with slope regulation via a learnable parameter. The model thereby automatically prioritizes recent information during turbulent periods while preserving long-term dependencies in stable markets. In the engineering application of daily stock price forecasting, extensive experiments, including activation function comparisons, baseline evaluations, and ablation studies, demonstrate that this structural gating modification effectively improves forecasting accuracy and robustness. The proposed model significantly outperforms a feature-level fusion baseline carrying the same volatility signal on all five datasets, as confirmed by Diebold-Mariano tests with all p<0.01, attains the best average rank of 1.00 in the Friedman test across nine models, and achieves the lowest MSE and MAE on all five datasets.",
+  "url": "https://arxiv.org/abs/2610.24386v1",
+  "pdf": "https://arxiv.org/pdf/2610.24386v1",
   "date": "2026-10-17",
-  "score": 15,
+  "score": 10,
   "source": "Frontier (arXiv, last 45 days)",
   "track": "frontier",
   "queued": "2026-10-21",
-  "text_file": "knowledge/papers/arxiv_2610.24384v1.txt"
- },
- {
-  "id": "openalex:W2170815702",
-  "title": "Do Behavioral Biases Affect Prices?",
-  "abstract": "ABSTRACT This paper documents strong evidence for behavioral biases among Chicago Board of Trade proprietary traders and investigates the effect these biases have on prices. Our traders appear highly loss\u2010averse, regularly assuming above\u2010average afternoon risk to recover from morning losses. This behavior has important short\u2010term consequences for afternoon prices, as losing traders actively purchase contracts at higher prices and sell contracts at lower prices than those that prevailed previously. However, the market appears to distinguish these risk\u2010seeking trades from informed trading. Prices set by loss\u2010averse traders are reversed significantly more quickly than those set by unbiased traders.",
-  "track": "prop",
-  "url": "http://deepblue.lib.umich.edu/bitstream/2027.42/115930/1/jofi723.pdf",
-  "source": "OpenAlex (prop mission)",
-  "topic": "prop: proprietary trading firm traders performance",
-  "score": 5,
-  "queued": "2026-10-21",
-  "text_failed": true
+  "text_file": "knowledge/papers/arxiv_2610.24386v1.txt"
  },
  {
   "id": "openalex:W2560647685",
@@ -37,6 +25,17 @@
   "text_file": "knowledge/papers/openalex_W2560647685.txt"
  },
  {
+  "id": "openalex:W7222953604",
+  "title": "Valuation Engines Under Market Incompleteness: An Empirical Benchmark of High-Order Option Pricing in Digital Asset Markets",
+  "abstract": "Financial derivatives occupy a core position in modern asset allocation, but the traditional option pricing framework, particularly the Black-Scholes (B-S) model, faces unprecedented challenges when applied to the highly volatile cryptocurrency market. The B-S assumption of constant volatility and continuous price paths fundamentally fails to capture the volatility smile, heavy-tailed distributions, and intermittent crashes inherent in digital assets. Furthermore, structural frictions such as liquidity fragmentation render the crypto ecosystem an incomplete market. This paper systematically reviews the mathematical transition from the B-S framework to high-order stochastic processes, specifically the Heston and Jump-Diffusion models. Most importantly, we contribute to the existing literature by providing a rigorous empirical evaluation using out-of-sample high-frequency options data from Deribit. Our empirical results quantitatively confirm the theoretical limitations of traditional pricing: while the Heston model reduces the Root Mean Square Error (RMSE) by approximately 45%, the Stochastic Volatility with Jumps (SVJ) model demonstrates absolute superiority in pricing tail risks. Specifically, the SVJ framework decreases the valuation error for deep out-of-the-money (OTM) options by over 72% compared to the baseline B-S model. Ultimately, this study emphasizes that structurally integrating both continuous volatility clustering and discrete market shocks is mathematically indispensable for robust risk management in decentralized financial markets.",
+  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1525/1466",
+  "source": "OpenAlex",
+  "date": "2026-10-19",
+  "score": 18,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W7222953604.txt"
+ },
+ {
   "id": "openalex:W639708223",
   "title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
   "abstract": "State-of-the-art object detection networks depend on region proposal algorithms to hypothesize object locations. Advances like SPPnet [1] and Fast R-CNN [2] have reduced the running time of these detection networks, exposing region proposal computation as a bottleneck. In this work, we introduce a Region Proposal Network (RPN) that shares full-image convolutional features with the detection network, thus enabling nearly cost-free region proposals. An RPN is a fully convolutional network that simultaneously predicts object bounds and objectness scores at each position. The RPN is trained end-to-end to generate high-quality region proposals, which are used by Fast R-CNN for detection. We further merge RPN and Fast R-CNN into a single network by sharing their convolutional features-using the recently popular terminology of neural networks with 'attention' mechanisms, the RPN component tells the unified network where to look. For the very deep VGG-16 model [3] , our detection system has a frame rate of 5 fps (including all steps) on a GPU, while achieving state-of-the-art object detection accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with only 300 proposals per image. In ILSVRC and COCO 2015 competitions, Faster R-CNN and RPN are the foundations of the 1st-place winning entries in several tracks. Code has been made publicly available.",
@@ -47,6 +46,61 @@
   "score": 4,
   "queued": "2026-10-21",
   "text_file": "knowledge/papers/openalex_W639708223.txt"
+ },
+ {
+  "id": "openalex:W7223074122",
+  "title": "The Term Structure of Implied Fee Rates in Liquidity Pools",
+  "abstract": "We develop a no-arbitrage framework to recover implied fee rates from option implied information and quantify fee compensation for liquidity providers in automated market maker (AMM) pools. Expected accumulated fees equal the current pool value minus the risk-neutral value of its terminal payoff, reducing forward looking LP compensation to pricing the LP payoff. We apply the framework to Uniswap v2 and Uniswap v3 ETH-USDC pools using a stochastic-volatility jump diffusion model calibrated to Deribit options. Implied fee rates are positive, time varying, downward sloping in maturity, and highly sensitive to range design, with tighter near-the-money ranges earning larger implied returns.",
+  "url": "https://hal.science/hal-05804816",
+  "source": "OpenAlex",
+  "date": "2026-10-18",
+  "score": 14,
+  "queued": "2026-10-21",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W7222943913",
+  "title": "From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution",
+  "abstract": "Option pricing theory is a cornerstone of modern financial engineering, but the classical Black-Scholes framework relies on continuous price trajectories, constant volatility, and lognormally distributed returns. These assumptions are difficult to reconcile with empirical features such as volatility smiles, fat-tailed returns, volatility clustering, and abrupt price movements. This review examines the evolution of Option pricing models from the Black-Scholes benchmark to stochastic-volatility, jump-diffusion, stochastic-volatility-jump, and affine jump-diffusion specifications. It shows that richer models generally improve cross-sectional pricing accuracy, especially for short-maturity and out-of-the-money options, but that this improvement is accompanied by higher parameter uncertainty, calibration complexity, and hedging instability. The review further emphasizes that evidence from emerging markets, particularly China\u2019s domestic derivatives market, remains comparatively limited and may require models that account for liquidity constraints, retail participation, and clustered jump behavior.",
+  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1505/1497",
+  "source": "OpenAlex",
+  "date": "2026-10-20",
+  "score": 12,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W7222943913.txt"
+ },
+ {
+  "id": "openalex:W7223000370",
+  "title": "Neural Network Calibration of the Heston Stochastic Volatility Model",
+  "abstract": "The Heston stochastic volatility model remains a standard benchmark for equity-option smiles, yet calibration is a nonlinear inverse problem shaped by pricing cost, objective design, parameter constraints and the information contained in the observed option grid. Neural approaches follow two main routes. Parameter-to-price (MtP) networks approximate the forward pricing map and retain an optimiser, whereas price-to-parameter (PtM) networks learn a direct inverse map and amortise calibration into a single inference step. This review compares both routes with differential, physics-informed and hybrid variants. PtM offers the clearest advantage in online latency, while MtP retains an explicit calibration objective and more transparent residual diagnostics. Existing studies do not establish a universal ranking in parameter stability, robustness or data efficiency, because results remain sensitive to the training domain, sampling scheme, quote representation and validation design. Both approaches can be trained on synthetic data, and neither resolves weak parameter identifiability. For practical deployment, neural acceleration should be combined with exact repricing, admissibility checks, uncertainty monitoring, distribution-shift controls and numerical fallback. The most credible architecture is therefore determined by the service requirement and the surrounding validation workflow rather than by the direction of the learned map alone.",
+  "url": "https://aemps.ewapub.com/article/view/37802.pdf",
+  "source": "OpenAlex",
+  "date": "2026-10-20",
+  "score": 11,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W7223000370.txt"
+ },
+ {
+  "id": "openalex:W7223032026",
+  "title": "Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales",
+  "abstract": "This work focuses on reconstructing a continuous implied volatility (IV) surface from a small number of option quotes, a fundamental task for option pricing and risk management. We propose Additive Martingale (AddMart), a few-shot IV surface reconstruction framework that satisfies static no-arbitrage conditions by construction. Rather than predicting IVs directly, AddMart maps sparse quotes to non-negative increment densities of an exponential additive martingale, from which valid risk-neutral marginals and IVs are recovered. By incorporating the no-arbitrage structure directly into its architecture, rather than enforcing it through regularization in the learning objective, AddMart produces IV surfaces that satisfy static no-arbitrage conditions throughout the domain. Extensive experiments on ten real-option datasets demonstrate that AddMart achieves competitive reconstruction accuracy with no material static arbitrage violations, while directly enabling the estimation of VaR, CVaR, and crash probabilities.",
+  "url": "https://doi.org/10.48550/arxiv.2610.25671",
+  "source": "OpenAlex",
+  "date": "2026-10-19",
+  "score": 10,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W7223032026.txt"
+ },
+ {
+  "id": "openalex:W7222935937",
+  "title": "Pricing European Options under Logistic Stock-Price Dynamics with a Continuous Dividend Yield",
+  "abstract": "Logistic stock-price dynamics have been proposed as a way of representing assets whose growth is bounded by competition, saturation or finite market capacity, but the derivations available in the literature retain a logistic drift while invoking a delta-hedging argument that removes it. This paper resolves that inconsistency and extends the framework to dividend-paying assets. It is first shown that, for a traded asset, no-arbitrage forces the logistic term out of the pricing equation; the logistic model is therefore developed as an incomplete-market model in which a state-dependent market price of risk fixes the pricing measure, and the pricing partial differential equation is obtained from the Feynman\u2013Kac representation rather than from hedging. The resulting equation carries a continuous dividend yield and reduces to the Black\u2013Scholes\u2013Merton equation as the carrying capacity grows without bound. A closed-form solution of the price process is derived through the reciprocal transformation, which linearises the stochastic logistic equation and expresses the price as a geometric Brownian motion divided by an exponential functional. Prices are computed by a Crank\u2013Nicolson scheme with Rannacher start-up; second-order convergence is demonstrated and the scheme is cross-validated against Monte Carlo simulation of the closed-form representation. Sensitivity analyses quantify the effect of carrying capacity, dividend yield and volatility, and a forward-price diagnostic measures the departure from put\u2013call parity, for which a first-order analytic expression is derived and verified numerically.",
+  "url": "https://www.irejournals.com/formatedpaper/1724119.pdf",
+  "source": "OpenAlex",
+  "date": "2026-10-19",
+  "score": 10,
+  "queued": "2026-10-21",
+  "text_failed": true
  },
  {
   "id": "arxiv:2610.25802v2",
@@ -70,6 +124,28 @@
   "score": 7,
   "queued": "2026-10-20",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W7222992888",
+  "title": "Comparative viral inactivation kinetics of electron beam and gamma irradiation and functional characterization of electron beam inactivated viruses",
+  "abstract": "Introduction Electron beam (eBeam) technology is increasingly being adopted in biomedical research and industry as an alternative to cobalt-60-based gamma irradiation. However, a comprehensive understanding of how eBeam energy and dose influence viral inactivation and the preservation of viral surface antigens remains limited. This study compared the inactivation kinetics of human rotavirus (RV), human respiratory syncytial virus (RSV), and influenza A virus (IAV) following exposure to high-energy electron beam (HEEB; 10 MeV), medium-energy electron beam (MEEB; 4.5 MeV), and gamma irradiation under conditions that were standardized to the greatest extent possible. Additionally, antigenic characterization was performed for HEEB and MEEB inactivated viruses. Methods Human rotavirus, human respiratory syncytial virus, and influenza A virus were irradiated using HEEB, MEEB and gamma irradiation using incremental doses under standardized experimental conditions. Viral inactivation kinetics (D 10 ) were determined using TCID 50 assays while preservation of viral antigenicity and virus\u2013host receptor interactions were evaluated by hemagglutination and ELISA assays. Heat and formalin inactivation were used as experimental controls. Results All three modalities effectively inactivated the tested viruses with comparable overall inactivation efficiency. The D 10 values of RV (1.23\u20131.29 kGy) and RSV (1.03\u20131.73 kGy) did not differ significantly ( p = 0.01) among the irradiation modalities. The IAV exhibited greater radioresistance, with D 10 value ranging between 1.62\u20132.27 kGy. Complete inactivation by both high- and medium-energy eBeam was confirmed by three serial passages. Importantly, eBeam-treated viruses retained viral antigenicity (VP4, F-protein, and HA) at levels comparable to untreated controls, whereas heat and formalin treatments reduced antigenicity by 5.09- to 256-fold and 1.26- to 2-fold, respectively. Furthermore, eBeam-inactivated viruses exhibited 1.54- to 23.11-fold greater virus-host receptor recognition than heat and formalin inactivated preparations. Discussion Both high-energy and medium-energy electron beam modalities achieved viral inactivation efficiencies comparable to gamma irradiation under standardized conditions, supporting their potential as non-radioisotopic alternatives for viral inactivation. Importantly, eBeam treatment preserved viral antigenicity and functional virus\u2013host receptor interactions more effectively than conventional heat",
+  "url": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2026.1963124/pdf",
+  "source": "OpenAlex",
+  "date": "2026-10-20",
+  "score": 7,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W7222992888.txt"
+ },
+ {
+  "id": "openalex:W7222987075",
+  "title": "Marginal Specification and Tail Dependence in Equity Markets",
+  "abstract": "Copula conclusions for equity markets depend on both marginal filtering and the temporal pairing of daily returns. We analyse S&P 500, FTSE 100, and Nikkei 225 returns from 2010 to 2025 in three pairwise panels. A rolling 756-day training and 63-day evaluation design compares empirical-CDF, Gaussian-GARCH, and Student-t-GARCH margins. The GARCH filters use a standard one-step-ahead recursion, and every candidate copula is estimated by pseudo maximum likelihood. The Student-t copula has the highest window-weighted density score under all three margins, with scores of 0.0924, 0.0703, and 0.0685. It is the numerical winner in eight of nine panel\u2013margin cells, but paired moving-block intervals support a positive advantage in only three cells. A lead\u2013lag check materially changes the S&P 500\u2013Nikkei 225 association, while a joint-downside probability score does not select the same family as the density score. The evidence therefore supports specification-aware conditional-dependence analysis, rather than an invariant model ranking or causal contagion claim.",
+  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1536/1476",
+  "source": "OpenAlex",
+  "date": "2026-10-19",
+  "score": 7,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W7222987075.txt"
  },
  {
   "id": "openalex:W4390582266",
@@ -250,5 +326,16 @@
   "score": 6,
   "queued": "2026-10-20",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W7222942938",
+  "title": "Put-Call Parity Violations and Market Frictions in China's SSE 50 ETF Options Market: Evidence from the AI Boom of 2023",
+  "abstract": "This paper empirically investigates the deviation of the put - call parity (PCP) in China's SSE 50ETF options market (510050 XSHG) for the whole year of 2023-when the release of ChatGPT triggered an unprecedented investor sentiment hype of artificial intelligence. Based on 15,604 pairs of matched call-put options covering all 242 trading days, we detected that there was always a systematic and persistent overpricing of calls over put options. We interpret this phenomenon as follows: The explosive market demand by retail investors on call options-a leveraged sentiment on AI-related market bullishness-out-weighted the arbitrage capacity of constrained arbitrageurs by market frictions to make corrections to the mispricing through a reverse arbitrage strategy (selling call options, buying put options, and buying spot options). Using quarterly dummy variables as proxies for AI market sentiment cycle, we found that by controlling time stage variables, the R\u00b2 rose from 8.9% to 71.67% to confirm that demand dynamics driven by market sentiment rather than the specific features of contracts-are the primary drivers for the variability in the PCP violation phenomena. Compared with the baseline of AI craze hype in the first quarter, the quarterly effect shows monotonically decreasing, while the implied residuals bias the fourth quarter, which is still a positive one. Confirmed is that the permanent structural friction lower limit will persist even after the sentiment premium of AI fades. Our research result provides fresh evidence in terms of behavioral demand shocks' interaction with the institutional friction on in emerging markets, thereby creating option price biases.",
+  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1507/1449",
+  "source": "OpenAlex",
+  "date": "2026-10-19",
+  "score": 6,
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/openalex_W7222942938.txt"
  }
 ]

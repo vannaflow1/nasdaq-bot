@@ -1,0 +1,361 @@
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management 
+(ICRAFM 2026) 
+E-ISSN: 3105-0522 P-ISSN: 3105-0514 
+DOI: https://doi.org/10.70267/icrafm.202617452458 
+
+452 
+
+From Black-Scholes to Jump-Diffusion: A Narrative 
+Review of Option pricing Model Evolution 
+
+Guangyu Wang* 
+Institute of Economics, Wuhan University of Technology, Wuhan, China 
+*Corresponding author: Guangyu Wang. 
+
+Abstract 
+Option pricing theory is a cornerstone of modern financial engineering, but the classical Black -Scholes 
+framework relies on continuous price trajectories, constant volatility, and lognormally distributed returns. 
+These assumptions are difficult to reconcile with empirical features such as volatility smiles, fat-tailed returns, 
+volatility clustering, and abrupt price movements. This review examines the evolution of Option pricing 
+models from the Black-Scholes benchmark to stochastic-volatility, jump-diffusion, stochastic-volatility-jump, 
+and affine jump-diffusion specifications. It shows that richer models generally improve cross-sectional pricing 
+accuracy, especially for short -maturity and out -of-the-money options, but that this improvement is 
+accompanied by higher parameter uncertainty, calibration complexity, and hedging instability. The review 
+further emphasizes that evidence from emerging markets, particularly China’s domestic derivatives market, 
+remains comparatively limited and may require models that a ccount for liquidity constraints, retail 
+participation, and clustered jump behavior. 
+Keywords 
+option pricing, jump-diffusion models, stochastic volatility, affine processes, emerging market options 
+
+1. Introduction 
+Option pricing theory transformed modern finance by providing a rigorous mechanism for valuing 
+derivative securities and managing nonlinear risk. The Black-Scholes (B-S) model [1], together with Merton's 
+rational Option pricing framework [2], established t he no -arbitrage benchmark under continuous trading, 
+constant volatility, and lognormally distributed returns. However, market evidence soon showed that these 
+assumptions were too restrictive. Empirical studies found systematic pricing errors and implied -volatility 
+patterns inconsistent with constant volatility, particularly for out-of-the-money options and after major market 
+stress episodes [3,4]. 
+The purpose of this review is therefore not to restate the standard chronology of Option pricing models, but 
+to synthesize why each structural extension emerged and where it remains limited. Existing reviews and 
+empirical summaries have tended to focus on mature U.S. and European option markets, while the institutional 
+and microstructure features of emerging markets have received less integrated attention. This gap matters 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+453 
+because jump clustering, liquidity frictions, and retail-driven trading may affect option prices differently from 
+the patterns observed in highly liquid index -option markets. Accordingly, this paper connects the main 
+theoretical line from jump -diffusion [5], stochastic volatility [6], stochastic -volatility-jump models [7], and 
+affine jump-diffusion frameworks [8] with transform -based valuation methods [9] and recent evidence from 
+China's option markets [10]. 
+This review addresses three research questions: (1) how have Option pricing models evolved structurally 
+in response to the limitations of the B-S model? (2) What empirical evidence supports the superiority of jump-
+diffusion or stochastic-volatility-jump models over simpler alternatives? (3) What practical gaps remain when 
+these models are applied to emerging markets, particularly China? 
+The research value of this paper lies in linking model design to market applicability. By comparing pricing 
+accuracy, hedging stability, parameter risk, and emerging -market suitability within one review, the paper 
+clarifies why more complex models are not automatically better in practice and identifies concrete directions 
+for China-based empirical testing. 
+2. Theoretical Background 
+2.1 Foundational Concepts and the B-S PDE 
+At the center of option pricing is the modeling of the underlying asset’s price dynamics. The B -S model 
+assumes that the asset price 𝑆𝑡 follows a geometric Brownian motion (GBM): 
+
+𝑑𝑆𝑡
+𝑆𝑡
+= 𝜇𝑑𝑡 + 𝜎𝑑𝑊𝑡 (1) 
+where 𝜇 denotes the drift, 𝜎 is the constant volatility, and 𝑊𝑡 is a standard Wiener process. Under the risk-
+neutral measure, this assumption leads to the Black -Scholes partial differential equation (PDE) for the price 
+𝐶(𝑆, 𝑡) of a European call option: 
+
+∂𝐶
+∂𝑡 + 𝑟𝑆
+∂𝐶
+∂𝑆 +
+1
+2 𝜎2𝑆2 ∂2𝐶∂𝑆2 = 𝑟𝐶 (2) 
+where 𝑟 denotes the risk-free interest rate. Despite its theoretical importance, the B -S framework restricts 
+the underlying asset to a smooth and continuous price path with constant variance, which is inconsistent with 
+several well-documented market features. 
+2.2 Beyond Black-Scholes: Jumps and Stochastic Volatility 
+To bring theory closer to observed market behavior, later models relaxed the B -S assumptions along two 
+main dimensions: discontinuous price jumps and time -varying volatility. These two extensions address 
+different empirical failures. Jump models focus on r are but large price movements and hence are directly 
+related to tail risk. Stochastic-volatility models focus on persistent changes in conditional variance and hence 
+are better suited to volatility clustering. Neither extension is complete on its own, whic h explains why later 
+research moved toward integrated specifications. 
+Jump-diffusion models. Merton [5] augmented the diffusion process with a Poisson -driven jump 
+component to capture discontinuous price changes caused by earnings surprises, macroeconomic 
+announcements, or geopolitical shocks. The dynamics can be expressed as follows: 
+ 𝑑𝑆𝑡 = 𝜇𝑆𝑡𝑑𝑡 + 𝜎𝑆𝑡𝑑𝑊𝑡 + 𝑆𝑡−𝑑𝐽𝑡 (3) 
+where the jump component is governed by a Poisson process with intensity, and the log -jump size is 
+commonly assumed to follow a normal distribution. The advantage of this specification is its direct treatment 
+of tail events; its limitation is that standard normally distributed jumps may not fully capture asymmetry or 
+clustered jump arrivals. Later double -exponential jump specifications partially address this asymmetry by 
+allowing different probabilities for upward and downward jumps [11]. 
+Stochastic volatility. Heston [6] addressed the constant -volatility assumption by modeling variance as a 
+mean-reverting square-root process, building on the broader stochastic-volatility approach to option valuation 
+[12]. The process can be written as follows: 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+454 
+ 𝑑𝑣𝑡 = 𝜅(𝜃 − 𝑣𝑡)𝑑𝑡 + 𝜎𝑣√𝑣𝑡 𝑑𝑊𝑡𝑣 (4) 
+where mean reversion, long-run variance, and volatility of volatility determine the evolution of conditional 
+variance. The strength of stochastic volatility is that it generates smiles and term -structure effects without 
+imposing abrupt price discontinuities. Its weakness is that it may understate crash risk when sudden jumps are 
+an important source of market movement. 
+2.3 Limitations of the B-S Framework 
+The need for these extensions becomes evident when B-S assumptions are compared with empirical market 
+data. First, realized returns display leptokurtosis, meaning that the empirical distribution has fatter tails and a 
+sharper peak than the normal distribution implied by the B-S model. Second, implied volatility is not constant 
+across strike prices; instead, it often forms a U-shaped volatility smile or a downward-sloping volatility smirk. 
+Deep in-the-money and out-of-the-money options therefore command high er implied volatilities than at-the-
+money options. Third, the same model can perform differently across markets: a specification calibrated to a 
+liquid U.S. index-option market may be less reliable in an emerging market where trading activity is thinner, 
+investor composition differs, and jumps may occur in clusters. These deviations show that model choice should 
+be judged not only by theoretical elegance but also by empirical fit, parameter stability, and market setting. 
+2.4 The Affine Jump-Diffusion (AJD) Unification 
+Duffie, Pan, and Singleton [8] unified the above ideas through the affine jump -diffusion framework. The 
+core innovation is that state variables such as volatility, interest rates, or jump intensity can be specified in an 
+affine form, so the conditional cha racteristic function of the asset price remains exponentially affine in those 
+state variables. This structure makes it possible to combine stochastic volatility, jumps, and sometimes 
+stochastic interest rates in one internally consistent model without losing analytical tractability. 
+The importance of the AJD framework lies in its balance between flexibility and computability. Fourier 
+inversion and related transform methods can recover option prices from the characteristic function much faster 
+than repeated simulation, while still allo wing the model to fit volatility smiles and term structures [9]. 
+Subsequent cosine-expansion methods further improved numerical efficiency for European-style options [13]. 
+This is why AJD-type models became a mainstream framework in derivatives research: they provide a practical 
+bridge between rich economic dynamics and feasible calibration. 
+3. Literature Review 
+The literature can be organized into four stages, but the main issue is not chronology alone. Each stage 
+reflects a specific trade -off between empirical realism, analytical tractability, and implementation risk. The 
+following review therefore combines hist orical development with evaluative comments on what each stage 
+solved and what it left unresolved. 
+3.1 The Foundational Era (1973–1980S) 
+The decade following the B-S model focused on establishing the no-arbitrage pricing paradigm. Black and 
+Scholes [1] and Merton [2] provided the theoretical foundation under continuous trading and constant volatility. 
+Although this framework was revolutiona ry, empirical tests by Rubinstein [3] and Jackwerth and Rubinstein 
+[4] showed that the B-S model systematically mispriced out-of-the-money options. These errors were closely 
+related to implied-volatility smirks, which suggested that the market was pricing crash risk and time -varying 
+volatility even when the basic model did not allow for them. 
+This foundational era is best understood as a benchmark -building stage rather than a complete empirical 
+explanation. Its main contribution was to define the no -arbitrage logic and replicating -portfolio method that 
+later models retained. Its main weakness w as that the assumptions required for a closed -form solution also 
+removed the very features--fat tails, skewness, and changing volatility--that are central to real option prices. 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+455 
+3.2 Single-Factor Extensions (1980S–1990S) 
+Researchers first addressed B -S failures through single -factor extensions. Merton [5] introduced a jump -
+diffusion model and derived a tractable solution for European options with discontinuous price movements. 
+Kou [11] later improved the jump specification by allowing asymmetric double -exponential jumps, which 
+better reflect the different market responses to upward and downward shocks. In parallel, Heston [6] developed 
+a stochastic-volatility model that relaxed the constant -volatility assumption and used ch aracteristic functions 
+to obtain a semi-analytical solution. Hull and White [12] also showed that stochastic volatility can materially 
+affect option values when volatility risk is not constant. 
+The contribution of this stage was to identify two separate sources of B -S misspecification: discontinuous 
+returns and random variance. However, single-factor extensions remained incomplete. A pure jump-diffusion 
+model can capture crash risk but often trea ts volatility too rigidly, whereas a pure stochastic -volatility model 
+can capture volatility clustering but may miss sudden discontinuities. This complementarity created the 
+theoretical motivation for multi-factor integration. 
+3.3 Multi-Factor Integration and Analytical Tractability (1990S–2000S) 
+As neither jumps nor stochastic volatility alone fully explained market dynamics, researchers began to 
+integrate both features. Bates [7] combined Heston's stochastic -volatility framework with Merton-type jumps 
+to form an SVJ model and showed that this hyb rid specification explained exchange-rate option smiles more 
+effectively than single -factor alternatives. Computational barriers were reduced when Duffie, Pan, and 
+Singleton [8] formalized the AJD framework, which allowed researchers to apply Fourier -transform methods 
+[9] and cosine expansions [13]. These techniques substantially reduced the computational burden associated 
+with option valuation, especially relative to simulation-intensive methods. 
+The key contribution of multi -factor integration was synthesis: it recognized that tail risk and volatility 
+clustering are not competing explanations but interacting channels. The limitation is that every added factor 
+increases calibration difficulty. SVJ and AJD models may fit option surfaces better, but they also require more 
+parameters and stronger assumptions about jump intensity, jump -size distribution, and volatility dynamics. 
+This makes their out-of-sample and hedging performance less certain than their in-sample pricing performance. 
+3.4 Empirical Validation and High-Frequency Advancements (2000S–Present) 
+Once tractable models became available, empirical validation expanded rapidly. Bakshi, Cao, and Chen 
+[14] and Broadie, Chernov, and Johannes [15] found that models incorporating stochastic volatility and jumps 
+can substantially reduce pricing errors relati ve to simpler diffusion models, especially for options away from 
+the money. Eraker [16] further showed that jumps are important for reconciling evidence from spot and option 
+prices. More recent research has shifted attention toward model features that standard AJD specifications may 
+not fully capture. Pan and Ma [10] report self -exciting jump behavior in China's CSI 300 ETF options, while 
+rough-volatility research argues that volatility can exhibit rough, persistent behavior at high frequency [17]. 
+This recent literature shows that the standard AJD framework is powerful but not final. Its common 
+Poisson-jump structure may understate jump clustering, and its Markovian volatility structure may miss rough 
+volatility patterns. Hawkes-type jumps and rough-volatility extensions therefore represent more than technical 
+refinements; they respond to observable features of modern option markets, particularly markets where 
+liquidity shocks and investor herding can make jump arrivals self-reinforcing. 
+4. Discussion and Synthesis 
+4.1 Consistencies and Empirical Dominance 
+According to Table 1, a consistent finding is that the B-S model is misspecified for modern liquid markets 
+because it cannot adequately capture tail risk or dynamic volatility. The reason more complex models improve 
+pricing is structural rather than mechanical: stochastic volatility changes the conditional variance path, jumps 
+add discontinuous tail events, and integrated SVJ or AJD models allow both channels to affect option values 
+simultaneously. This is why SVJ-type models are particularly useful for short-maturity and out-of-the-money 
+options, where crash risk and volatility skew are most visible [14-16]. 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+456 
+Table 1: Comparative synthesis of major Option pricing model classes 
+Model Pricing accuracy Hedging performance Suitable settings Main limitations 
+B-S Low when smiles, 
+smirks, and fat tails 
+are strong. 
+Simple and stable Greeks 
+under ideal assumptions. 
+Benchmark pricing, 
+teaching, quick at-the-
+money estimates. 
+Constant volatility, 
+continuous paths, 
+lognormal returns. 
+SV Improves smile and 
+term-structure fit 
+through random 
+variance. 
+Often more stable than 
+jump-rich models but 
+sensitive to volatility 
+risk. 
+Markets dominated by 
+volatility clustering 
+rather than abrupt 
+jumps. 
+Cannot fully capture crash 
+jumps or discontinuous 
+price moves. 
+SVJ Strong for short-
+maturity and out-of-
+the-money options. 
+More difficult because 
+jump risk is hard to 
+hedge dynamically. 
+Markets with news 
+shocks, crash risk, or 
+pronounced skew. 
+More parameters; jump 
+premia and intensities can 
+be unstable. 
+AJD High flexibility with 
+tractable transform-
+based valuation. 
+Depends on stable state-
+variable and jump-
+parameter calibration. 
+Institutional calibration 
+across volatility 
+surfaces and maturities. 
+Standard affine 
+assumptions may miss 
+rough volatility and self-
+exciting jumps. 
+At the same time, model superiority is conditional. A model that fits the implied -volatility surface more 
+closely may not be superior for every purpose. For pricing, richer state dynamics help explain curvature and 
+skew. For hedging, however, additional ju mp and volatility-risk factors create exposures that cannot always 
+be replicated continuously. The empirical dominance of SVJ and AJD models should therefore be interpreted 
+as strongest for pricing and calibration, not as a general guarantee of hedging superiority. 
+4.2 Contradictions, Trade-Offs, and Limitations 
+The main contradiction in the literature is the trade -off between pricing accuracy and implementation 
+reliability. Complex models often reduce in-sample pricing errors, but they require estimates of volatility mean 
+reversion, volatility of volatility, jump intensity, jump-size distribution, risk premia, and sometimes stochastic 
+interest-rate parameters. These estimates can be unstable when option data are noisy, sparse, or concentrated 
+in a small set of maturit ies. Model uncertainty can therefore become economically important even when the 
+model is mathematically coherent [18]. 
+The mature -market versus emerging -market distinction is central to this trade -off. In mature U.S. and 
+European index -option markets, deeper liquidity and broader institutional participation make continuous 
+calibration more feasible. In emerging markets, including China, option trading may be more affected by retail 
+behavior, policy news, margin constraints, and intermittent liquidity. These features can produce clustered 
+jumps and discontinuous changes in implied volatility that standard Gaussian or Poisson assumptions do not 
+fully capture [10]. As a result, the most suitable model for China may not simply be the most complex imported 
+model, but a specification that balances jump clustering, rough volatility, data availability, and recalibration 
+stability. 
+4.3 Future Research Directions 
+The limitations identified above point to three China-relevant research trajectories that can be developed as 
+complete empirical programs rather than as isolated technical extensions. 
+First, high-frequency calibration should be used to test whether intraday volatility bursts and jump arrivals 
+in Chinese ETF and index options differ from patterns documented in mature markets. Rather than relying 
+only on daily close -to-close data, future work can use intraday transaction and quote data to separate 
+continuous volatility from discrete jumps and to evaluate whether realized-volatility measures improve short-
+maturity option pricing [19]. This direction is especially relevant for China because policy announcements, 
+trading halts, and retail order flow may create concentrated intraday risk. 
+Second, machine-learning-assisted estimation can support model calibration without replacing economic 
+structure. Neural networks or regularized learning methods can be used to identify regime shifts, select stable 
+parameters, or approximate pricing functions when direct optimization is computationally expensive [20]. For 
+China's option market, a useful application would be to combine no-arbitrage model restrictions with machine-
+learning tools that detect liquidity regimes and adjust calibration windows accordingly. 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+457 
+Third, rough-volatility and Hawkes-type jump extensions should be tested jointly. Rough-volatility models 
+address persistent high -frequency volatility behavior, while Hawkes -type processes allow one jump to raise 
+the likelihood of subsequent jumps [10,17]. A promising China-focused study could compare standard AJD, 
+rough-volatility, and self -exciting-jump specifications using the same option panel, then evaluate not only 
+pricing errors but also hedging performance and parameter stability. 
+5. Conclusion 
+This review has traced the evolution of option pricing theory from the elegant but restrictive Black-Scholes 
+model to more flexible stochastic-volatility, jump-diffusion, SVJ, and AJD frameworks. The central pattern is 
+clear: each new generation of models emerged because the previous generation failed to capture an empirically 
+important market feature. Jumps address tail events, stochastic volatility addresses volatility clustering, and 
+affine transform methods make richer models computationally feasible. 
+Nevertheless, greater model richness does not eliminate practical risk. The same features that improve 
+pricing accuracy can also increase parameter instability, overfitting risk, and hedging difficulty. This tension 
+is especially important in emerging markets, where liquidity conditions, retail participation, policy shocks, and 
+clustered jump behavior may differ from those in mature markets. Future research should therefore move 
+beyond importing mature-market specifications and should test China-specific combinations of high-frequency 
+calibration, machine-learning-assisted estimation, rough volatility, and self-exciting jumps. Such work would 
+better connect theoretical elegance with real-world market frictions. 
+References 
+[1] Black, F., & Scholes, M. (1973). The pricing of options and corporate liabilities. Journal of Political 
+Economy, 81(3), 637-654. https://doi.org/10.1086/260062 
+[2] Merton, R. C. (1973). Theory of rational option pricing. The Bell Journal of Economics and Management 
+Science, 4(1), 141-183. https://doi.org/10.2307/3003143 
+[3] Rubinstein, M. (1985). Nonparametric tests of alternative option pricing models. The Journal of Finance, 
+40(2), 455-480. https://doi.org/10.1111/j.1540-6261.1985.tb04967.x 
+[4] Jackwerth, J. C., & Rubinstein, M. (1996). Recovering probability distributions from option prices. The 
+Journal of Finance, 51(5), 1611-1631. https://doi.org/10.1111/j.1540-6261.1996.tb05219.x 
+[5] Merton, R. C. (1976). Option pricing when underlying stock returns are discontinuous. Journal of 
+Financial Economics, 3(1-2), 125-144. https://doi.org/10.1016/0304-405X(76)90022-2 
+[6] Heston, S. L. (1993). A closed -form solution for options with stochastic volatility with applications to 
+bond and currency options. The Review of Financial Studies, 6(2), 327 -343. 
+https://doi.org/10.1093/rfs/6.2.327 
+[7] Bates, D. S. (1996). Jumps and stochastic volatility: Exchange rate processes implicit in Deutsche mark 
+options. The Review of Financial Studies, 9(1), 69-107. https://doi.org/10.1093/rfs/9.1.69 
+[8] Duffie, D., Pan, J., & Singleton, K. (2000). Transform analysis and asset pricing for affine jump-diffusions. 
+Econometrica, 68(6), 1343-1376. https://doi.org/10.1111/1468-0262.00164 
+[9] Carr, P., & Madan, D. B. (1999). Option valuation using the fast Fourier transform. Journal of 
+Computational Finance, 2(4), 61-73. https://doi.org/10.21314/JCF.1999.043 
+[10] Pan, D. T., & Ma, Y. (2022). Option pricing with cross -feedback between self -exciting jumps and 
+stochastic volatility. Journal of Management Science, 35(5), 127-143. 
+[11] Kou, S. G. (2002). A jump -diffusion model for option pricing. Management Science, 48(8), 1086 -1101. 
+https://doi.org/10.1287/mnsc.48.8.1086.166 
+[12] Hull, J., & White, A. (1987). The pricing of options on assets with stochastic volatilities. The Journal of 
+Finance, 42(2), 281-300. https://doi.org/10.1111/j.1540-6261.1987.tb02568.x 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+458 
+[13] Fang, F., & Oosterlee , C. W. (2008). A novel pricing method for European options based on Fourier -
+cosine series expansions. SIAM Journal on Scientific Computing, 31(2), 826 -848. 
+https://doi.org/10.1137/080713016 
+[14] Bakshi, G., Cao, C., & Chen, Z. (1997). Empirical performance of alternative option pricing models. The 
+Journal of Finance, 52(5), 2003-2049. https://doi.org/10.1111/j.1540-6261.1997.tb02747.x 
+[15] Broadie, M., Chernov, M., & Johannes, M. (2007). Model specification and risk premiums: Evidence 
+from futures options. The Journal of Finance, 62(3), 1143 -1181. https://doi.org/10.1111/j.1540-
+6261.2007.01232.x 
+[16] Eraker, B. (2004). Do stock prices and volatility jump? Reconciling evidence from spot and option prices. 
+The Journal of Finance, 59(3), 1367-1403. https://doi.org/10.1111/j.1540-6261.2004.00666.x 
+[17] Gatheral, J., Jaisson, T., & Rosenbaum, M. (2018). Volatility is rough. Quantitative Finance, 18(6), 933 -
+949. https://doi.org/10.1080/14697688.2017.1393551 
+[18] Cont, R. (2006). Model uncertainty and its impact on the pricing of derivative instruments. Mathematical 
+Finance, 16(3), 519-547. https://doi.org/10.1111/j.1467-9965.2006.00281.x 
+[19] Andersen, T. G., Bollerslev, T., Diebold, F. X., & Labys, P. (2003). Modeling and forecasting realized 
+volatility. Econometrica, 71(2), 579-625. https://doi.org/10.1111/1468-0262.00418 
+[20] Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. The Review of Financial 
+Studies, 33(5), 2223-2273. https://doi.org/10.1093/rfs/hhaa010 
+Funding 
+This research received no external funding. 
+Conflicts of Interest 
+The authors declare no conflict of interest. 
+Acknowledgment 
+This paper is an output of the science project. 
+Open Access 
+This chapter is licensed under the terms of the Creative Commons Attribution -NonCommercial 4.0 
+International License (http://creativecommons.org/licenses/by-nc/4.0/), which permits any noncommercial use, 
+sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate 
+credit to the original author(s) and the source, provide a link to the Creative Commons license and indicate if 
+changes were made. 
+The images or other third party material in this chapter are included in the chapter's Creative Commons license, 
+unless indicated otherwise in a credit line to the material. If material is not included in the chapter's Creative 
+Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, 
+you will need to obtain permission directly from the copyright holder.

@@ -1,0 +1,320 @@
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+© 2026 The Authors. This is an open access article distributed under the terms of the Creative Commons Attribution License 4.0
+(https://creativecommons.org/licenses/by/4.0/).
+209
+Neural Network Calibration of the Heston Stochastic
+Volatility Model
+ Yizhong Zhang
+School of Mathematics, Southwestern University of Finance and Economics, Chengdu, China
+gumuzhang0927@gmail.com
+Abstract. The Heston stochastic volatility model remains a standard benchmark for equity-
+option smiles, yet calibration is a nonlinear inverse problem shaped by pricing cost,
+objective design, parameter constraints and the information contained in the observed option
+grid. Neural approaches follow two main routes. Parameter-to-price (MtP) networks
+approximate the forward pricing map and retain an optimiser, whereas price-to-parameter
+(PtM) networks learn a direct inverse map and amortise calibration into a single inference
+step. This review compares both routes with differential, physics-informed and hybrid
+variants. PtM offers the clearest advantage in online latency, while MtP retains an explicit
+calibration objective and more transparent residual diagnostics. Existing studies do not
+establish a universal ranking in parameter stability, robustness or data efficiency, because
+results remain sensitive to the training domain, sampling scheme, quote representation and
+validation design. Both approaches can be trained on synthetic data, and neither resolves
+weak parameter identifiability. For practical deployment, neural acceleration should be
+combined with exact repricing, admissibility checks, uncertainty monitoring, distribution-
+shift controls and numerical fallback. The most credible architecture is therefore determined
+by the service requirement and the surrounding validation workflow rather than by the
+direction of the learned map alone.
+Keywords: Heston model, neural calibration, surrogate modelling, parameter identifiability,
+model risk
+1. Introduction
+The Black–Scholes model assumes constant volatility and therefore cannot reproduce the strike- and
+maturity-dependent smile and skew observed in equity-option markets. Heston introduced a mean-
+reverting square-root variance process that generates stochastic volatility while preserving a
+characteristic-function representation for European-option pricing [1]. Empirical comparisons show
+that stochastic-volatility specifications improve on constant-volatility benchmarks, although no
+single model eliminates specification risk [2]. Practical value therefore depends on whether Heston
+parameters can be calibrated quickly, consistently and transparently.
+Traditional calibration minimises price- or volatility-space errors using a numerical pricer and an
+optimiser. Its practical speed depends heavily on implementation. Cui et al. show that analytical
+gradients and careful handling of the characteristic function can make Heston calibration markedly
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+210
+faster [3]. The more persistent concern is calibration risk: changes in the objective, weights, bounds
+or quote set may produce a different parameter vector, even when the vanilla fit remains excellent
+[4, 5].
+Neural calibration shifts part of this repeated work into training. Dimitroff et al. estimate Heston
+parameters directly from implied-volatility surfaces [6]. Liu et al. instead place a neural pricer inside
+a global search routine [7], while Horvath et al. develop the broader two-step surrogate approach [8].
+Roeder and Dimitroff compare the direct and indirect maps on common synthetic data [9].
+Subsequent studies extend the discussion to production validation, interpretability, differential
+training, physics-informed operators, sampling design and no-arbitrage checks [10–15].
+Three conclusions emerge. First, the clearest trade-off is between online latency and the visibility
+of the calibration objective; it is not a simple choice between speed and stability. Second, reversing
+the learned map does not remove weak identification in the Heston inverse problem. Third,
+inference time is meaningful only when reported alongside exact repricing, admissibility checks,
+uncertainty and controls for distribution shift.
+2. Heston calibration as an inverse problem
+2.1. Model dynamics and objective design
+Under a risk-neutral measure Q with constant risk-free rate r and dividend yield q, the Heston
+dynamics are given by equations (1) and (2).
+(1)
+(2)
+Here, Sₜ is the asset price, vₜ is instantaneous variance, κ is the mean-reversion speed, θ̄ is long-
+run variance, σ is volatility of variance, and ρ is the Brownian correlation. The calibrated vector is
+commonly Θ = (v₀, κ, θ̄, σ, ρ), with positive variance parameters and −1 < ρ < 1. The Feller
+condition 2κθ̄ ≥ σ² is sufficient for strict positivity, although it is not always imposed as a hard
+calibration restriction. Box constraints can be enforced through bounded output transformations, but
+admissibility does not itself guarantee an adequate fit to current market quotes.
+For N observed contracts, a weighted price-space objective can be expressed as equation (3).
+(3)
+Quote space and weights materially affect the optimum. Absolute price errors emphasise
+expensive options, whereas relative errors can overemphasise cheap contracts. Inverse-vega, bid–ask
+or liquidity weights better align the objective with implied-volatility fit or quote reliability. Ordinary
+squared loss is not robust to low-quality quotes, so Huber losses and explicit filters are separate
+design choices affecting both exact and neural calibration.
+2.2. Identifiability and calibration risk
+A finite option grid may not distinguish all five parameters sharply. When the price Jacobian is ill-
+conditioned, parameter perturbations generate little first-order change in the fitted surface, creating
+dSt = (r −q)Stdt + √vtStdW St
+dvt = κ(¯θ −vt)dt +σ√vtdW vt , d⟨W S,W v⟩t = ρdt
+θ* = arg min
+θ∈Θ
+∑Ni=1wi[C mkti − ˆCi (θ)]2
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+211
+narrow valleys or locally flat directions. This is practical weak identifiability, not a claim that the
+full pricing map is everywhere non-injective. Empirically, different vectors can fit a finite surface
+almost equally well yet produce different prices or hedges outside the calibration set [4, 5, 9].
+Neither paradigm removes this information problem. MtP inherits flat regions from the forward
+map and may add surrogate error. PtM must assign one label to surfaces that may be nearly
+observationally equivalent, so its sampling distribution implicitly selects among plausible vectors.
+Low parameter RMSE on synthetic data does not establish unique recovery from noisy markets; set-
+valued, posterior or uncertainty outputs may therefore be more honest than a single precise vector.
+Identifiability should be assessed locally and economically. Useful diagnostics include singular
+values of the price Jacobian, profile objectives, repeated calibration from dispersed starting points
+and perturbation tests around the observed surface. A parameter may be statistically unstable yet
+economically unimportant if the relevant portfolio prices and hedges remain stable; the reverse can
+also occur outside the calibration grid. Accordingly, parameter dispersion, in-sample fit and
+downstream pricing error should be reported together rather than collapsed into one scalar score.
+3. Neural calibration paradigms
+3.1. MtP forward-surrogate calibration
+MtP approximates the forward map from model and contract inputs to prices or implied volatilities.
+Synthetic pairs are generated from a trusted Heston pricer over a chosen parameter domain, after
+which the network replaces the native pricer inside an optimiser. Liu et al. combine this structure
+with differential evolution [7], Horvath et al. formalise the two-step approach [8], and Amici et al.
+add price derivatives to improve the surrogate gradient [12].
+MtP's advantage is not uniqueness but a visible objective: bounds, quote weights, robust losses,
+stopping rules and residuals remain inspectable. Calibration is still iterative, and accuracy is
+controlled only within the training domain. Small pricing errors may distort gradients and the
+optimum, so validation should test prices, sensitivities and calibrated residuals rather than average
+prediction loss alone.
+The forward-surrogate studies are not interchangeable. Liu et al. train an artificial neural network
+on synthetic Heston and Bates prices, then use differential evolution to search the parameter domain
+[7]. Their reported robustness therefore reflects both the learned pricer and the global optimiser.
+Horvath et al. place greater emphasis on a reusable two-step architecture across stochastic and
+rough-volatility models [8]. Taken together, the studies support MtP most strongly when the native
+pricing engine is costly or must be called at scale. They offer less reason to replace a semi-closed-
+form Heston implementation that is already fast and well controlled.
+3.2. PtM direct-inverse calibration
+PtM learns a direct map from an option-price or implied-volatility surface to Θ and produces a
+vector in one forward pass. Dimitroff et al. apply convolutional networks to Heston surfaces [6]. On
+common synthetic datasets, Roeder and Dimitroff report that their direct network outperforms the
+two-step benchmark, although Heston remains harder than several rough-volatility cases [9]. That
+result is a useful warning against assuming that PtM must always be less stable.
+Like MtP, PtM can be trained on synthetic surfaces [6,9]. Its distinctive difficulty is label
+ambiguity in weakly identified regions and the usual reliance on a fixed grid. Bounds can be
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+212
+imposed through transformations, and every predicted vector can be repriced exactly. The absence of
+a residual is therefore a workflow failure, not an unavoidable property of direct networks.
+The direct evidence also needs to be read in context. Dimitroff et al. use a convolutional structure
+suited to regular implied-volatility grids, so performance depends on how the grid and parameter
+labels are constructed [6]. Roeder and Dimitroff improve comparability by testing direct and indirect
+methods on common synthetic datasets [9]. Their result favours the direct map in the reported
+experiments, but the Heston case is less accurate than several rough-volatility examples and the
+market-noise analysis is limited. The practical conclusion is narrower than a general ranking: a
+direct network can work well when its deployment surface closely resembles the surfaces used for
+training.
+3.3. Differential, operator and hybrid methods
+Recent work no longer fits neatly into a two-way classification. Amici et al. add price sensitivities to
+forward-surrogate training [12]. DeepSVM learns a constrained Heston pricing operator from
+physics-informed residuals [13], while Gutierrez shows that sampling design materially changes
+inverse-map generalisation [14]. No-arbitrage penalties and derivative checks provide a further layer
+of control [15]. These studies answer different questions, so their headline results should not be read
+as a leaderboard.
+Their contributions are best understood by the error they target. Differential training is intended
+to improve the gradients used during calibration, although derivative quality can still deteriorate near
+the boundary of the training range [12]. DeepSVM reduces dependence on labelled prices by
+enforcing pricing residuals and hard constraints, but it remains a learned forward operator rather
+than an end-to-end parameter estimator [13]. Hoshisashi et al. impose derivative-based no-arbitrage
+conditions on volatility smiles and skews [15]. Such restrictions strengthen the surface layer; they do
+not, by themselves, identify a unique Heston parameter vector.
+A practical hybrid uses PtM for a warm start, exact repricing for acceptance, and an MtP or exact
+pricer for refinement. This separates acceleration from validation and provides a clear control
+sequence: reject inadmissible outputs, reprice accepted candidates, refine those above a residual
+threshold and fall back to classical calibration when the input is outside the training domain. The
+design is attractive because neural approximation need not determine final acceptance. However, it
+adds operational complexity and duplicated validation, and the literature does not yet show that it
+dominates production deployment.
+4. Comparative evidence
+The studies are easiest to compare when speed, total cost, fit, robustness and validation are
+considered together. A fast inference result says little on its own if the candidate parameters must
+often be rejected or recalibrated.
+The published evidence is also heterogeneous. Some papers report parameter RMSE on
+independently generated synthetic surfaces; others report price or implied-volatility errors, and
+hardware descriptions vary in detail. A small error in one study cannot be placed directly beside a
+millisecond runtime in another without recreating the parameter range, quote grid, numerical
+tolerances and baseline implementation. The comparisons below therefore focus on what each
+experiment establishes about the calibration workflow. Quantitative claims are treated as conditional
+results, especially where the evidence comes from a working paper rather than a peer-reviewed or
+market-tested study.
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+213
+4.1. Efficiency and total computational cost
+PtM has the clearest online-latency advantage because the optimiser is removed from the critical
+path. The exact gain depends on input shape, batching and hardware. MtP still requires repeated
+forward passes, although automatic differentiation and batch evaluation can make each pass
+inexpensive [7, 12]. The relevant benchmark also matters: a well-implemented Heston calibration
+with analytical gradients may already be quick [3].
+Inference time is not total cost. Comparisons should include data generation, training,
+revalidation, hardware, model-risk controls and fallback calibration. In an interest-rate setting,
+Büchel et al. report roughly fourfold acceleration against an institutional benchmark with validation
+controls [10]. Although not a Heston experiment, it illustrates the evidence needed for production
+claims.
+4.2. Accuracy, stability and robustness
+Surface fit and parameter recovery are different targets. Synthetic data permit parameter error, but
+market data contain no observable 'true' Heston vector. Market evaluation should therefore
+emphasise reconstruction error, temporal stability and downstream pricing or hedging. Because
+distant vectors can produce similar fits, studies should report both parameter- and surface-space
+metrics whenever synthetic truth is available.
+MtP exposes residuals directly; PtM obtains the same diagnostic through exact repricing. Neither
+architecture guarantees parameter stability, which may arise from regularisation, warm starts,
+restricted domains or averaging. The stability reported by Büchel et al [10]. reflects their complete
+optimiser and validation design rather than a general theorem about MtP.
+Neither direction is inherently robust to noise. MtP's outer least-squares objective can be
+dominated by outlying quotes. PtM can be trained with noise, missing quotes and bid–ask
+perturbations, but it fails when live surfaces leave that augmentation scheme. Robustness comes
+from losses, weights, preprocessing and validation. The synthetic generalisation reported by Roeder
+and Dimitroff [9] and the sampling sensitivity found by Gutierrez [14] are compatible once the data-
+generating process is stated.
+Regime change is an out-of-distribution problem for both routes. Useful controls include range
+and distance-to-training checks, ensembles, exact repricing and a fallback optimiser.
+4.3. Data, constraints and deployment
+Both routes can use synthetic Heston evaluations. MtP must cover the parameter and contract
+domain; PtM must additionally represent surface grids, missingness and inverse ambiguity. Space-
+filling designs are useful in both [12, 14]. Historical surfaces remain important for realistic noise and
+external validation, not because direct calibration requires historical labels.
+Sampling is therefore part of the model specification rather than a neutral preprocessing step.
+Uniform draws over broad parameter boxes may devote many observations to surfaces that are
+economically unusual, while historical sampling can underrepresent stress regimes. Gutierrez shows
+that changes in the sampling design materially affect inverse-map generalisation [14]. A defensible
+training set should combine space-filling coverage with denser sampling near plausible market
+regions, then reserve boundary and out-of-domain cases for testing. For PtM, repeated surfaces
+generated by nearly equivalent parameter vectors are particularly informative because they expose
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+214
+whether the network is learning identification or merely reproducing the chosen labelling
+convention.
+No-arbitrage operates at different layers. A network that outputs prices or implied volatilities may
+violate strike or maturity conditions unless constrained [13,15]. PtM outputs parameters; if they are
+admissible and repriced with the Heston model, resulting prices inherit the model's risk-neutral
+structure. Its immediate risks are inadmissible parameters, poor reconstruction and model
+misspecification rather than neural-surface arbitrage.
+This distinction also changes the test suite. Forward surrogates should be checked for
+monotonicity, convexity, calendar consistency and derivative accuracy across the training boundary.
+Direct inverse models should be checked for parameter bounds, reconstruction error and stability
+under small quote perturbations. In both cases, passing a penalty term during training is not
+equivalent to a hard guarantee at deployment; exact post-inference tests remain necessary where
+violations have financial consequences.
+Design should follow the use case. MtP suits expensive native pricers, flexible quote sets and
+visible objectives. PtM suits standardised grids and very frequent repeated calibration. Hybrids suit
+rapid proposals screened by exact repricing. In risk-sensitive use, documented training ranges,
+reproducible residuals, uncertainty and fallback procedures matter more than the label.
+A practical selection decision should therefore begin with the service requirement rather than the
+architecture. If calibration is occasional and the semi-closed-form pricer is already fast, neural
+training may not repay its fixed cost. If thousands of standardised surfaces must be processed under
+a tight latency budget, PtM's amortisation is compelling. When quote sets change frequently or
+residual explainability is central to model governance, MtP is easier to defend. Hybrid deployment is
+most credible when the acceptance threshold and fallback path are specified before model training.
+5. Open challenges and research priorities
+5.1. Benchmarks, identifiability and uncertainty
+The field lacks a shared benchmark that varies parameter ranges, grids, noise, missingness and
+regimes while holding evaluation fixed. It should report reconstruction and parameter error,
+specified-hardware runtime, constraint violations, sensitivity quality and downstream pricing or
+hedge error. Without this design, claims that one architecture is 'more accurate' remain
+underdetermined.
+Such a benchmark should publish training, interpolation and deliberately out-of-domain splits,
+together with the exact pricing engine and numerical tolerances used to generate labels. Evaluation
+should separate offline cost from online latency and include both a competitive analytical-gradient
+calibration and a simple reproducible baseline. Releasing multiple random seeds and failed
+calibrations is equally important: averages alone conceal tail failures that determine whether a
+method is acceptable for risk systems.
+A deterministic PtM output conceals inverse uncertainty. Probabilistic networks, ensembles or
+Bayesian methods can represent plausible parameter sets; MtP can use profile objectives and
+Hessian or Jacobian diagnostics. Any coverage claim must state its distributional assumptions and
+connect uncertainty to repricing and risk-report consequences.
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+215
+5.2. Constraints, monitoring and governance
+Future work should separate hard admissibility, soft economic priors and surface-level no-arbitrage.
+Box and Feller constraints operate on parameters; static-arbitrage conditions operate across strikes
+and maturities; temporal smoothness operates across dates. Combining them in one penalty obscures
+the guarantee achieved. Physics-informed and derivative-constrained methods are valuable because
+they make selected restrictions explicit [13, 15].
+Interpretability can identify influential strikes and maturities [11], but it complements rather than
+replaces numerical validation. A production system should record the input surface, domain
+diagnostics, predicted parameters, exact reconstruction error, constraint checks, uncertainty, model
+version and fallback outcome. Defined performance deterioration should trigger retraining.
+6. Conclusion
+The literature does not support a simple verdict that one neural direction is both faster and more
+stable. PtM removes online optimisation and is therefore the natural choice when latency is the
+overriding constraint. MtP keeps the objective visible, which makes weights, bounds and refinement
+easier to scrutinise. The remaining questions—identifiability, robustness and data efficiency—turn
+mainly on the option grid, sampling design, loss and validation protocol.
+For production use, the label attached to the network matters less than the surrounding controls. A
+usable system must return an acceptable fit, respect parameter constraints, produce stable
+downstream risk and fall back safely when the input leaves the training domain. On the present
+evidence, neural proposals or surrogates are most persuasive when combined with exact repricing
+and, where needed, numerical refinement. Shared Heston benchmarks would make that full-system
+trade-off much easier to judge.
+References
+[1] Heston, S. L. (1993). A closed-form solution for options with stochastic volatility with applications to bond and
+currency options. Review of Financial Studies, 6(2), 327–343.
+[2] Bakshi, G., Cao, C., & Chen, Z. (1997). Empirical performance of alternative option pricing models. Journal of
+Finance, 52(5), 2003–2049.
+[3] Cui, Y., del Baño Rollin, S., & Germano, G. (2017). Full and fast calibration of the Heston stochastic volatility
+model. European Journal of Operational Research, 263(2), 625–638.
+[4] Guillaume, F., & Schoutens, W. (2012). Calibration risk: Illustrating the impact of calibration risk under the Heston
+model. Review of Derivatives Research, 15(1), 57–79. https://doi.org/10.1007/s11147-011-9069-2
+[5] Dai, M., Tang, L., & Yue, X. (2016). Calibration of stochastic volatility models: A Tikhonov regularization
+approach. Journal of Economic Dynamics and Control, 64, 66–81.
+[6] Dimitroff, G., Röder, D., & Fries, C. P. (2018). Volatility model calibration with convolutional neural networks.
+SSRN Working Paper 3252432. https://doi.org/10.2139/ssrn.3252432
+[7] Liu, S., Borovykh, A., Grzelak, L. A., & Oosterlee, C. W. (2019). A neural network-based framework for financial
+model calibration. Journal of Mathematics in Industry, 9, Article 9. https://doi.org/10.1186/s13362-019-0066-7
+[8] Horvath, B., Muguruza, A., & Tomas, M. (2021). Deep learning volatility: A deep neural network perspective on
+pricing and calibration in (rough) volatility models. Quantitative Finance, 21(1), 11–27.
+https://doi.org/10.1080/14697688.2020.1817974
+[9] Roeder, D., & Dimitroff, G. (2020). Volatility model calibration with neural networks: A comparison between direct
+and indirect methods. arXiv:2007.03494.
+[10] Büchel, P., Kratochwil, M., Nagl, M., & Rösch, D. (2022). Deep calibration of financial models: Turning theory
+into practice. Review of Derivatives Research, 25, 109–136. https://doi.org/10.1007/s11147-021-09183-7
+[11] Brigo, D., Huang, X., Pallavicini, A., & Sáez de Ocáriz Borde, H. (2026). Interpretability in deep learning for
+finance: A case study for the Heston model. Risk Sciences, 2, 100030.
+Proceedings of ICFTBA 2026 Symposium: Strategic Management & Business Analytics: Data-Driven Performance Models
+DOI: 10.54254/2754-1169/2026.LD37802
+216
+[12] Amici, G., Morandotti, M., & Zhang, C. (2024). Calibrating the Heston model with deep differential networks.
+arXiv:2407.15536.
+[13] Malandain, K. A., Kalici, S., & Chakhoyan, H. (2025). DeepSVM: Learning stochastic volatility models with
+physics-informed deep operator networks. arXiv:2512.07162.
+[14] Gutierrez, J. (2025). A co-evolutionary approach for Heston calibration. arXiv:2512.03922.
+[15] Hoshisashi, K., Phelan, C. E., & Barucca, P. (2023). No-arbitrage deep calibration for volatility smile and skewness.
+arXiv:2310.16703.

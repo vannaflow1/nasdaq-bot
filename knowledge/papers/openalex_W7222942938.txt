@@ -1,0 +1,403 @@
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management 
+(ICRAFM 2026) 
+E-ISSN: 3105-0522 P-ISSN: 3105-0514 
+DOI: https://doi.org/10.70267/icrafm.202617459467 
+
+459 
+
+Put-Call Parity Violations and Market Frictions in 
+China's SSE 50 ETF Options Market: Evidence from the 
+AI Boom of 2023 
+
+Yijia Sun* 
+Faculty of Arts & Humanities, University College London, London, UK 
+*Corresponding author: Yijia Sun. 
+
+Abstract 
+This paper empirically investigates the deviation of the put - call parity (PCP) in China's SSE 50ETF options 
+market (510050 XSHG) for the whole year of 2023-when the release of ChatGPT triggered an unprecedented 
+investor sentiment hype of artificial intelligence. Based on 15,604 pairs of matched call -put options covering 
+all 242 trading days, we detected that there was always a systematic and persistent overpricing of calls over 
+put options. We interpret this phenomenon as follows: The explosive market dem and by retail investors on 
+call options -a leveraged sentiment on AI -related market bullishness -out-weighted the arbitrage capacity of 
+constrained arbitrageurs by market frictions to make corrections to the mispricing through a reverse arbitrage 
+strategy (selling call options, buying put options, and buying spot options). Using quarterly dummy variables 
+as proxies for AI market sentiment cycle, we found that by controlling time stage variables, the R² rose from 
+8.9% to 71.67% to confirm that demand dynamics driven by market sentiment rather than the specific features 
+of contracts-are the primary drivers for the variability in the PCP violation phenomena. Compared with the 
+baseline of AI craze hype in the first quarter, the quarterly effect shows monotonically decreasing, while the 
+implied residuals bias the fourth quarter, which is still a positive one. Confirmed is that the permanent structural 
+friction lower limit will persist even after the sentiment premium of AI fades. Our research result provides 
+fresh evidence in terms of behavioral demand shocks' interaction with the institutional friction on in emerging 
+markets, thereby creating option price biases. 
+Keywords 
+put-call parity, option mispricing, SSE 50 ETF options, investor sentiment, market frictions 
+
+1. Introduction 
+Put-call parity (PCP) represents an important fundamental no-arbitrage condition in finance economics [1]. 
+In a frictionless market, the equality c − p = S0 − Ke−rT must always be fulfilled strictlyly: if DEV is positive 
+(DEV > 0) call options are overpriced with respect to puts, while for negative (DEV < 0) put options are 
+overpriced and the vice versa. In either case, arbitrageurs should be capable to arbitrage awa y the mispricing. 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+460 
+In fact, market frictions (transaction cost, capital constraint, and institutional limitations) can lead to 
+sustainable deviation within a band around the theoretical parity. 
+China's securities options market provides an interesting and illustrative case in point. The SSE 50 ETF 
+options market (510050 XSHG) that launched in 2015, has been operating under a regulatory regime that limits 
+securities lending, requires high margin r eserves on writing options, and features a large domestic retail 
+investor population characterized by strong directional biases. All these features set into the conditions for 
+persistent and economically meaningful violations of PCP. 
+The year of 2023 added a new strong factor for behavioral dimensions: the AI -driven euphoric frenzy 
+sparked by the launch of ChatGPT in late 2022 has spawned an unprecedented demand by retail investors to 
+use call options as a leveraged tool to express bullish views about AI-related technologies. Our main hypothesis 
+is that this explosion in demand for calls pushed the prices of calls consistently over their PCP prices, leading 
+to positive (DEV > 0) or DEV (i.e., call overpricing) in this case. This effect is most marked in Q1 2 02 3 - 
+when AI sentiment has been at its peak - but gradually fades throughout Q4s. 
+2. Literature Review 
+2.1 Put-Call Parity: Theory and Empirical Evidence 
+Standard PCP is the result of the application of the law of one price to a portfolio consisting of a portfolio 
+of options and the underlying stock asset [1]. With the presence of transaction costs in the market, the identity 
+becomes a no arbitrage band condition [2, 3]. For mature markets, Kamara and Miller [4] and Nisbet [5] find 
+that most of observed PCP violations disappear once bid -ask spreads and commissions have been accounted 
+for. For China's options of the SSE 50 ETF market (510050 XSHG), Xia [6] offers a gene ral four-element 
+analysis of PCP deviations, and identifies that bid-ask spreads, brokerage fees, the rate of financing spread and 
+option writing costs are the key friction elements in the system. 
+2.2 Call Overpricing, Retail Demand, and Option Writing Constraint 
+For the case of DEV > , call options are overpriced relative to puts. The theoretical arbitrage strategy that 
+should eliminate this discrepancy is: sell overpriced calls, buy underpriced puts, buy the underlying spot, and 
+borrow the present value of the strike price. This strate gy does not involve a short sale of the underlying, but 
+it does involve writing (selling) call options, an action that is heavily constrained in China's options market. 
+Writing an option requires a deposit of substantial margin guarantee, often on the orde r of 10 –20% of the 
+underlying value in addition to the option option option premium, which makes it a capital -intensive scale of 
+massive arbitrages feasible. Han [7] and Bollen and Whaley [8] prove that directional demand (with for specific 
+options e.g., calls), particularly retail investor demand for calls, can resu lt in persistent options mispricing 
+when arbitrage capacity of professional intermediaries is limited by their capital constraints. 
+The link between retail sentiment and call overpricing is well established. Garleanu, Pedersen, and 
+Poteshman [9] show that end-user demand for options is an important pricedetermining factor in option other 
+than the Black Scholes model, and that retail investors net call -buying pressure results in an upward bias of 
+implied volatility in calls. In the China where retail investor investors account for more than 70% of the total 
+volume of option options trading, this channel is particularly intense. 
+2.3 Short-Selling Limitation: Indirect Impact to Call over Pricing 
+While the restriction on short selling primarily operates as a mechanism that restricts arbitrageurs by 
+eliminating call over pricing (DEV > ) , it has a secondary effect of amplifying call over pricing, via the delta 
+hedging channel. Market makers who write (sell) call have to delta hedge by buying the underlying ETF, but 
+they cannot effectively manage their inventory risk if they are restricted from being able to short the ETF. The 
+resulting limited hedging capacity forces market makers to charge a higher premium to their writing, resulting 
+further driving c up, thereby increasing DEV > . This transmission channel is formal in [ Diamond and 
+Verrecchia [10], and Li, Du, and Hu [11] document the empirical relevance of the channel in Chinese equity 
+options markets. 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+461 
+2.4 Investor Sentiment and the AI Boom 
+Baker and Wurgler [12] establish that market investors' sentiment has an impact on asset price independent 
+of their fundamentals. Da, Engelberg, and Gao [13] develop internet search intensity as a proxy for retail 
+attention, documenting that this variable can predict short-term short-pressure on stock prices. The context of 
+Chinese options market, Fang, Wen, and Zhang [14] document the prediction effect of Baidu search intensity 
+on the asymmetries of the implied volatility. But daily search index is subject to high frequency noises, key 
+selection bias and concerns for manipulation. We follow the lit erature of macro sentiment [11, 15] that using 
+quarterly dummies as regimes proxies, which will eliminate noise of idiosyncratic daily variations, while 
+maintaining the macro phase structure of AI sentiment cycles with economical meaningfulness. 
+There has been previous literature for frictional structures [6], retail demand [7, 9], and short selling 
+constraint [10]; The 3 dimensions [11] respectively explained the reasons for option pricing bias, but these 3 
+have not been added into the unified system, lack of identification and measurement of how event -driven 
+emotional shocks synergistically amplify bias on the existing institutional frictions. There are 3 contributions 
+of this article. Firstly we demonstrated PCP bias of SSE 50 ETF Options market in 2023 is consistent positive, 
+all 15604 observations generated DEV >. Which indicates that the systematic pricing of call options is too high 
+compared to put option, which is consistent with AI -driven call option speculative demand. Secondly we 
+introduced quarterly dummy variables as a tool of artificial intelligence sentiment cycle, avoiding noise of 
+daily search index and key words biased, and clearly identified the macro stage shift from optimism in the 1st 
+quarter and normalization in the 4th quarter. This design elevated R² value from 8.9% to 71.67% indicated that 
+the time variation drivers by emotion is the primary driving factor. Thirdly, we demonstrated the option writing 
+constraint - the major friction preventing calls' pricing correction - has formed a structure of bottom at around 
+0.1241 yuan, which will exist after AI sentiment premium fades. These contributions filled the aforementioned 
+research gap. Chapter 3 builds a theoretical framework that involves the lower limit structural friction and the 
+component of emotional premium based on that, providing a hypothetical base of empirical analysis. 
+3. Theoretical Framework 
+3.1 Put-Call Parity and the Sign of Deviations 
+For European options on a non-dividend-paying underlying, PCP requires: 
+ c − p = S0 − Ke−rT (1) 
+Note: SSE 50 ETF generates minor annual cash dividends. This paper ignores dividend yields for simplicity, 
+and the resulting bias toward PCP deviations is empirically negligible. 
+We define the raw PCP deviation as: 
+ DEV = c − p − (S0 − Ke−rT) (2) 
+The sign of DEV determines which option is relatively overpriced: 
+Table 1: Sign of DEV and indications 
+Sign of DEV Meaning Corrective Arbitrage Friction Involved 
+DEV > 0 Call overpriced relative to 
+put (c − p too large) 
+SELL call + BUY put + BUY spot + 
+BORROW 
+Option writing margin; 
+transaction costs 
+DEV < 0 Put overpriced relative to 
+call (c − p too small) 
+BUY call + SELL put + SHORT 
+SELL spot + INVEST 
+Short-selling restrictions on 
+underlying ETF 
+Our empirical confirmation of constant positive DEV (100% positive; mean = +0.1524 yuan) identifies a 
+consistent call overpricing regime for the entire 2023 period. The corrective arbitrage –sell call, buy put, buy 
+spot, borrow–does not mandate shorting of the underlying ETF. The major friction lies in capital requirements 
+for writing calls and round trip transaction costs 
+3.2 No-Arbitrage Band under Option Writing Constraints 
+Following the asymmetric friction framework of Jouini and Kallal [3], the no-arbitrage condition becomes 
+a band: 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+462 
+ [−Clower, + Cupper] (3) 
+where C_lower incorporates the cost of the forward arbitrage (correcting DEV < 0, being limited by short-selling 
+costs), and C_upper incorporates the cost of the reverse arbitrage (correcting DEV > 0, being limited by option 
+writing margin and transaction costs). C_upper widens the larger the writing margin requirements for calls are–as 
+is usually the case with China exchanges requiring 10–20% of the underlying value of calls as naked call writing 
+collateral–allowing larger positive deviations to persist without activating a profit-reversing reverse arbitrage. 
+Restricted short selling also indirectly widens C_upper through the market maker channel: the restricted 
+delta-hedging capacity limits the premium market makers charge to write calls, increasing c and widening the 
+observed DEV. These option writing margin, transaction, and market -maker delta-hedging premium together 
+create a structural no-arbitrage floor DEV > 0, which cannot be arbitraged away. 
+3.3 The AI Sentiment Amplification Mechanism 
+We interpret the observed deviation as two components: 
+ DEVt = Floor + Sentimentt + εt (4) 
+where Floor indicates the cost of the underlying friction (option writing constraints + delta -hedging 
+premium), which creates a permanent overpricing, and Sentimentt captures the further deviation from call 
+demand in retail AI sentiment. In Q1 2023, the height of the ChatGPT -induced euphoria, rampant retail call 
+demand significantly inflated Sentimentt . As AI sentiment normalized during Q2–4, Sentimentt continuously 
+dropped, letting DEV drop to approach Floor. Therefore, this framework offers three testable predictions: (i) 
+DEV > 0 for the whole sample; (ii) DEV has its maximum Q1 and continuously decreases; (iii) Q4 still shows 
+substantial structural floor presence. 
+4. Data and Methodology 
+4.1 Data Sources and Sample Construction 
+Our sample includes the daily closing prices of all SSE 50 ETF options (510050 XSHG) traded on Shanghai 
+Stock Exchange for entire 2023. Options prices are extracted from JoinQuant's OPT_DAILY_PRICE database. 
+SSE ETF 50 closing prices and fixed annualized risk-free rate of 2% (comparable with prevailing three-month 
+Treasury bill) are used to derive PCP benchmarks. 
+We construct matched call-put pairs by restricting to identical strike K and expiry date on the same day. 
+We remove contracts that are within five days before the expiry (to eliminate the expiry bias) and contracts 
+that have zero closing price (to eliminate liquidity problems). The original sample contains 612 option 
+contracts over total 242 trading days for 2023. After applying the aforementioned inclusion and exclusion 
+filters, we have 15,604 matched call- put pairs from final sample. Table 2 presents the descriptive statistics of 
+key variables, including ETF closing price, call closing price, put closing price, and time to expiry retrieved 
+and DEV, |DEV| and Moneyness through calculation. 
+Table 2: Descriptive Statistics 
+Variable Mean Std. Dev. Min Max 
+DEV (yuan) 0.1524 0.0235 0.0953 0.2408 
+|DEV| (yuan) 0.1524 0.0235 0.0953 0.2408 
+S₀ — ETF closing price (yuan) 2.4479 0.1283 2.1700 2.6770 
+c — call closing price (yuan) 0.1363 0.1383 0.0001 0.7600 
+p — put closing price (yuan) 0.1180 0.1210 0.0001 0.6250 
+T — time to expiry (years) 0.2471 0.1854 0.0164 0.6685 
+Moneyness: ln(S₀/K) −0.0558 0.0896 −0.2910 0.2333 
+Notes: DEV = c − p − (S₀ − Ke^(−rT)). DEV > 0 indicates call overpricing relative to put. r = 2% p.a. Sample: 15,604 
+matched call-put pairs from 612 contracts on the SSE 50 ETF (510050.XSHG), covering all 242 trading days of 2023. 
+All 15,604 observations yield DEV > 0 (100% call-overpricing rate). 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+463 
+4.2 Phase Classification 
+Table 3: Quarterly Breakdown of PCP Deviations 
+Quarter Market Phase DEV Mean DEV Std. Dev. N 
+2023 Q1 AI Euphoria — peak call demand 0.1721 0.0083 4,820 
+2023 Q2 Transition — sentiment moderating 0.1616 0.0127 3,571 
+2023 Q3 Correction — AI re-rating 0.1516 0.0148 3,219 
+2023 Q4 Stabilization — sentiment normalized 0.1210 0.0150 3,994 
+Full Year 2023 0.1524 0.0235 15,604 
+Notes: DEV declines monotonically across all four quarters, consistent with diminishing AI sentiment premium. The Q4 
+mean of 0.1210 yuan is 29.7% below the Q1 mean of 0.1721 yuan. F-test for equality of quarterly means rejects H₀ at p 
+< 0.001. 
+4.3 Empirical Model 
+Daily internet search indices to find AI-related terms are noisy with high-frequency and keyword selection 
+bias [13], so we use quarterly dummy variables as instruments to the Ai sentiment sentiment cycle following 
+the literature [12, 15]. Q1 (January –March 2023) is the omitted group to reflect the peak of AI euphoria and 
+maximum call demand. Our main specification is: 
+ |DEVit| = α + β1 × SPREADit + β2 × MONEYNESSit + β3 × Tit + γ2 × Q2t + γ3 × Q3t + γ4 × Q4t + εit (5) 
+where SPREAD it represents transaction cost of calls (round -trip 2% of combined call and put price), 
+MONEYNESS it = lnS0/K), T it is time-to expiry (in years), and Q2 t, Q3 t and Q4 t are time indicators with 
+Q1 being the omitted group. The hypothesis about sentiment states that γ2 < γ3 < γ4<0: With the fading in AI-
+driven call demand over quarters, sentiment-amplified call overpricing also falls, causing a reduction of DEV. 
+Standard errors heteroskedasticity-robust (HC1). The constant term α represents structural friction floor that is 
+independent sentiment shock. 
+5. Empirical Results 
+5.1 Descriptive Evidence: Systematic Call Overpricing 
+Table 2 shows the sample mean deviation of PCP across entire 15,604 observations is +0.1524 yuan (std. 
+dev. = 0.0235 yuan). Significantly, the lowest deviation across the sample mean is +0.0953 yuan not single 
+observation has DEV≤0 DEV≤0 , we have 100% positive deviation rate that directly proves call options 
+systematically and persistently overpriced relative to puts, for entire 2023 period. The corrective arbitrage–sell 
+call, buy put, buy spot, borrow –fails to arbitrate due to the capita l constraints to write calls and related 
+transaction costs which places the deviation in the upper limit of the no -arbitrage band, Cupper. Thus result 
+has economic meaning within 2023 AI sentiment context. The massive retail retail call needs for call options–
+instruments leveraged against AI speculation –constantly raises c level above its PCP implied value. 
+Professional arbitragers who should correct the wedge by writing calls are constrained by margin requirements 
+and delta hedging premiums charged by short -seller market makers market makers struggling with their 
+residual inventory. 
+Table 3 shows the monotone quarterly decreases predicted by sentiment amplification model. The mean 
+DEV continuously reduces from 0.1721 (Q1) –> 0.1616 (Q2) –> 0.1516 (Q3) –> 0.1210 (Q4), a 29.7% 
+cumulative drop. Furthermore, the within quarter standard devia tion of DEV drops monotonically from the 
+0.830 in Q1 to 0.0150 in Q4, proving that the market continuously stabilizes by the gradual normalization of 
+AI sentiment. Remarkable, even at Q4 when the ChatGPT novelty premium had disappeared, the mean of 
+0.1210 yuan deviation are economically meaningful to verify the existence of a structural friction floor that 
+remains under independent sentiment shocks. 
+
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+464 
+5.2 Regression Results 
+Table 4: Regression Results: Determinants of |DEV| with Quarter Fixed Effects 
+Variable Coefficient Robust Std. 
+Err. 
+t-
+statistic 
+p-value 
+SPREAD (transaction cost 
+proxy) 
+0.1211 0.0508 2.38 0.017** 
+MONEYNESS ln(S₀/K) 0.0086 0.0012 7.38 0.000*** 
+T (time to expiry, years) −0.0110 0.0007 −16.63 0.000*** 
+Quarter 2 (Q2) −0.0102 0.0002 −43.24 0.000*** 
+Quarter 3 (Q3) −0.0198 0.0003 −74.27 0.000*** 
+Quarter 4 (Q4) −0.0502 0.0003 −180.75 0.000*** 
+Constant (α, Q1 Baseline) 0.1743 0.0003 630.13 0.000*** 
+Observations 15,604 
+R-squared 0.7167 (vs. 0.089 without quarter 
+dummies) 
+
+F-statistic 7,856.76 (df = 6, 15597) 0.000*** 
+Notes: Dependent variable is |DEV_it|. OLS with heteroskedasticity-robust standard errors (HC1). *** p < 0.01, ** p 
+< 0.05. SPREAD = 2% × (c + p). MONEYNESS = ln(S₀/K). T = time to expiry in years. Q1 (AI Euphoria, January–
+March 2023) is the omitted baseline. Without quarter dummies, R² = 0.089. 
+Since we have all positive DEVs from across all observations, we apply | DEVit | as dependent variable, 
+which numerically identical to DEVit. Table 4 shows the main regression results. The model has R2=71.67%, 
+which is considerable increase than the basic model that has R2=8.9%. The jump of model explanatory power 
+verifies the sentiment cycle hypothesis that most variation of PCP deviations is explained the macro sentiment 
+changes of AI sentiment investors from quarter to quarter, but not on contract level features. 
+The constant term ( α = 0.1743, t = 630.13) is the Q1 base line (Q1 2023 –the peak period of AI euphoria) 
+which combines the structural friction floor and the maximum sentiment premium of AI sentiment. It is quite 
+similar to the actual mean DEV value in Q1 of 0.1721 which confirms the model fit. 
+The quarterly dummy coefficients are all negative, monotonically increasing absolute value, and 
+significantly large (all p <0.001), as we expected. In comparison with the Q1 base line (Q1 2023, peak of AI 
+mania), call over -pricing, reduced by 0.0102 yuan ( t =−43.24), 0.0198 (t =−74.27),and 0.0502 yuan (t =− 
+180.75) respectively. The monotone compression of PCP wedge from quarter to quarter provides substantial 
+evidence that the call overpricing found is driven by the AI sentiment dynamics: while speculative enthusiasm 
+about generative Ai co oled down from quarter to quarter, excess demand for calls reduced, resulting in 
+approaching the no-arbitrage interval. 
+Remarkably, at Q4, the implied deviation is still 0.1743–0.0502=0.1 241 yuan. Thus structural floor–which 
+still at Q4 where the whole sentiment premium completely disappeared –is a result of the continued existence 
+of the option writing constraint and market maker delta hedging premium, which are the permanent friction 
+component of call over pricing in the options market in the options market. 
+Of the contract level control terms, the coefficient of SPREAD is positive (β =0. 1211 (t=0.017), which 
+confirms the fact that a higher transaction cost lead to wider no arbitrage range. The coefficient of 
+MONEYNESS are positive and significantly large (β =0.0086 (t <0.001), showing the fact that in the money 
+is higher than out of money, this is also consistent with with replication demand which leads to higher money. 
+Time to expiry is a negat ive coefficient (β = −0.0110, p <0.0001), reflecting the fact that closer to the day of 
+expiration, the the larger is the deviation from PCP as the liquidity deteriorates. 
+5.3 Decomposing Sentiment and Structural Components 
+Based on the result from the baseline regressions, we decompose the total mispricing into structural friction 
+component and sentiment premium components. The regression setup allows for a neat disentangling of the 
+total discrepancy of PCP into two economy components: 
+
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+465 
+Table 5: Components of PCP deviation 
+Component Value 
+(yuan) 
+Share of Q1 DEV Interpretation 
+Structural floor (Q4 
+implied) 
+0.1241 72.1% Option writing constraints + market-maker delta-
+hedging premium; persists permanently 
+AI sentiment premium 
+(Q1 − Q4) 
+0.0502 27.9% (= Q4 
+coefficient) 
+Excess call demand from AI euphoria; dissipates as 
+sentiment normalizes 
+Total (Q1 baseline) 0.1743 100% Peak call overpricing at height of ChatGPT mania 
+This decomposition does have important policy implications. The structural component (72.1%) reflects 
+structural frictions –option writing capital requirements and market maker delta hedging –which can be 
+alleviated by regulatory reforms. The sentiment compo nent (27.9%) reflects the sentiment dynamics of 
+investors–which is likely to be repeated in other future speculative episodes around other technologies or macro 
+economic sentiments–and is not possible to eliminate through regulatory interventions. 
+6. Robustness Checks 
+We perform three robustness tests. First, restricting the sample to near the money contracts | ln ( S0 / K ) | 
+<0.05 results in same monotone quarterly pattern with the R2 still remaining high with greater than 68%, ruling 
+out the concern that the observat ion from the high illiquidity of deep OTM or ITM contracts. Second, 
+restricting to contracts with between 30 and 90 day left to expiry provides 9,214 observations, all of which of 
+which dummy coefficients remains the sign and magnitude and statistical significance. Third, by using the 
+changing in risk free rate from The change on mean DEV by each quarter only in less than one one 0.002 yuan 
+among all four quarter, and regression parameters are all within one standard error from the baseline values, 
+which means the short maturity (mean of 0.247 years) of the considered options, and the discount value (by a 
+rate of one decimal point) is insensitive the rate variation. 
+7. Conclusion 
+This paper empirically examines the put-call parity deviations in the Chinese SSE 50 ETF options market 
+in 2023, using the AI sentiment wave generated by ChatGPT as a natural identification strategy. Three major 
+results are achieved. First, 2023 is a year where call options are systematically and persistently overpriced 
+relative to puts, with not a single observation giving DEV ≤ 0. Second, the inclusion of quarterly dummy 
+variables as proxies for the AI sentiment cycle raises R2 from 8.9% to 71.67%, indicating that the main source 
+of PCP deviation dynamics is sentiment -driven time variation. Third, the structural decomposition uncovers 
+that 72.1% of the peak Q1 deviation is a permanent friction floor due to option writing constraints and market-
+maker hedging costs, while 27.9% is the transient AI sentiment premium that dissipates by Q4. 
+So, we are inspired by the above findings. Even in a highly regulated environment (including Option 
+Writing Constraints and Market-maker Delta-hedging Premiums) call options are still overvalued and obvious 
+PCP deviations are still present even if AI sentiment completely fades (Q4). If the regulators want to reduce 
+the deviations in the options market, they should not focus on the sentiment of retail investors. Instead, they 
+should appropriately reduce the margin ratio for option sellers or relax restrictions on ETF short selling, so 
+that arbitrageurs can implement the “sell call, buy put” strategy at a lower cost and smooth out deviations, 
+especially during special periods affected by shocks (AI) and sentiment. If a call option is purchased in Q1 
+2023, a sentiment premium of 0.0502 yuan must be borne. For the average retail investor, when a highly 
+innovative technological concept is already quite well known (Q1), it is best to stay calm as the pur chase of 
+call options at this point would entail an extra sentiment premium. It would be more cost effective to sell call 
+options at this point or wait for sentiment to subside (Q4) to buy back. For quantitative researchers, the 
+quarterly decomposition met hod mentioned in the text can be used to predict the size of the price deviation 
+through the sentiment cycle, and adjust the strategy in advance. In the meantime, in the Chinese SSE 50ETF 
+options market, the existence of the price floor of 0.12 yuan, the theoretical no -arbitrage range should be not 
+set at 0 when researchers carry out arbitrage strategies but 0.12. Ar bitrage is only profitable when the price 
+deviation is much higher than 0.12 yuan. Several limitations need to be acknowledged. The transaction cost 
+measure is approximate; a more accurate friction decomposition would be possible with direct bid-ask spread 
+data. We assume the risk-free rate is fixed, but robustness checks show little sensitivity to this assumption. The 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+466 
+single-year sample only represents one sentiment episode. A multi-year panel is more appropriate to study the 
+co-evolution of structural and behavioral components with regulatory reform and market development in China. 
+References 
+[1] Stoll, H. R. (1969). The relationship between put and call option prices. Journal of Finance, 24(5), 801 –
+824. 
+[2] Leland, H.E. (1985) Option Pricing and Replication with Transaction Costs. Journal of Finance, 40(5), 
+pp.1283–1301. 
+[3] Jouini, E. and Kallal, H. (1995) Martingales and Arbitrage in Securities Markets with Transaction Costs. 
+Journal of Economic Theory, 66(1), pp.178–197. 
+[4] Kamara, A., & Miller, T. W. (1995). Daily and intradaily tests of European put -call parity. Journal of 
+Financial and Quantitative Analysis, 30(4), 519–539. 
+[5] Nisbet, M. (1992). Put -call parity theory and an empirical test of the efficiency of the London traded 
+options market. Journal of Banking & Finance, 16(2), 381–403. 
+[6] Xia, Z. (2019). The impact of asymmetric transaction costs on the SSE 50 ETF options market [Doctoral 
+dissertation, Shanghai Jiao Tong University]. 
+[7] Han, B. (2008). Investor sentiment and option prices. Review of Financial Studies, 21(1), 387–414. 
+[8] Bollen, N. P. B., & Whaley, R. E. (2004). Does net buying pressure affect the shape of implied volatility 
+functions? Journal of Finance, 59(2), 711–753. 
+[9] Garleanu, N., Pedersen, L. H., & Poteshman , A. M. (2009). Demand -based option pricing. Review of 
+Financial Studies, 22(10), 4259–4299. 
+[10] Diamond, D. W., & Verrecchia, R. E. (1987). Constraints on short -selling and asset price adjustment to 
+private information. Journal of Financial Economics, 18(2), 277–311. 
+[11] Li, X., Du, J., & Hu, Z. (2014). Short -selling restrictions and stock market efficiency: Evidence from 
+China. Economic Research Journal, 49(10), 147–159. 
+[12] Baker, M., & Wurgler, J. (2006). Investor sentiment and the cross -section of stock returns. Journal of 
+Finance, 61(4), 1645–1680. 
+[13] Da, Z., Engelberg, J., & Gao, P. (2011). In search of attention. Journal of Finance, 66(5), 1461–1499. 
+[14] Fang, H., Wen, F., & Zhang, Y. (2022). Investor attention and the implied volatility smile: Evidence from 
+China. International Review of Financial Analysis, 79, 101977. 
+[15] Huang, D., Jiang, F., Tu, J., & Zhou, G. (2015). Investor sentiment aligned: A powerful predictor of stock 
+returns. Review of Financial Studies, 28(3), 791–837. 
+Funding 
+This research received no external funding. 
+Conflicts of Interest 
+The authors declare no conflict of interest. 
+Acknowledgment 
+This paper is an output of the science project. 
+Vol. 17 (2026): Proceedings of the International Conference on Research in Accounting, Finance and Management (ICRAFM 2026) 
+467 
+Open Access 
+This chapter is licensed under the terms of the Creative Commons Attribution -NonCommercial 4.0 
+International License (http://creativecommons.org/licenses/by-nc/4.0/), which permits any noncommercial use, 
+sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate 
+credit to the original author(s) and the source, provide a link to the Creative Commons license and indicate if 
+changes were made. 
+The images or other third party material in this chapter are included in the chapter's Creative Commons license, 
+unless indicated otherwise in a credit line to the material. If material is not included in the chapter's Creative 
+Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, 
+you will need to obtain permission directly from the copyright holder.
