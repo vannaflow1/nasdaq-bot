@@ -1,10 +1,47 @@
-scanned 62 papers, queued 0, queue size 20 ['arxiv: HTTPError']
-read (2*): Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread 
-read (1*): China futures price forecasting based on online search and information
-read (1*): Deep catastrophic-risk-aware reinforcement learning
-read 3, AI units today 3117/7000
-curiosity asked: Strategy: LowGamma_TakeOvernightHigh
-tested: Strategy: LowGamma_TakeOvernightHigh - On low dealer‑gamma d -> NOT CONFIRMED on my data: too few trades (24 in 2014-2023, need 150). in-sample 2014-2023:
-tested: Trade next-day QQQ in the direction of the 20-day return, bu -> NOT CONFIRMED on my data: 1805 signal days, hit 54.7% (always-long 57.2%), strategy +5.2 b
-tested: Measure intraday lead-lag between NQ futures and QQQ to time -> TRANSLATION FAILED - formula gives too little usable data
-testing used 711 AI units
+scanned 62 papers, queued 0, queue size 17 ['arxiv: HTTPError']
+triage failed: RuntimeError free AI daily limit reached
+read 0, AI units today 3828/7000
+Traceback (most recent call last):
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 60, in ai
+    out, units = _call(url, model, system, user, max_tokens)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 47, in _call
+    r = json.loads(urllib.request.urlopen(req, timeout=150).read())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 239, in <module>
+    main()
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 232, in main
+    used += test_engine.curiosity(ask)                   # Volta asks itself a question first
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py", line 499, in curiosity
+    out, units = ask(system, user)
+                 ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 225, in <lambda>
+    ask = lambda system, user: ai(url, BIG, system, user, 300)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/learn_read.py", line 64, in ai
+    if "4006" in msg or "daily free allocation" in msg: raise RuntimeError("free AI daily limit reached")
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: free AI daily limit reached
