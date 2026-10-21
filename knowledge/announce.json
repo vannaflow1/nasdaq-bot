@@ -1,6 +1,0 @@
-[
- {
-  "title": "\ud83c\udf81 Wish granted: Combine several weak strategies into one prop account (portfolio of strategies)",
-  "body": "New portfolio stage in the nightly prop search: 2-4 strategies with daily-P&L correlation <= 0.3 trade together in ONE account (equal risk per member, contract limits counted per unit). Everything is chosen on 2014-21; the top 5 combinations are validated once on 2022-23 (EV per eval + 5 copy-traded accounts). Results: knowledge/prop_search/portfolios.csv and the PORTFOLIOS block in /search. In a short local test run the best combination reached EV +612 on 2014-21 but only +72 on 2022-23 - real runs will tell. Undo: git revert e4ecfaf"
- }
-]
