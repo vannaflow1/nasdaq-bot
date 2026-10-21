@@ -3,7 +3,8 @@
 The owner's goal: a prop algo that passes evaluations and keeps paying out NOW and in the coming weeks. So the RECENT
 regime decides; old years only guard against a strategy that is a lucky fit. Checks (v2, 21 Oct 2026):
   1. RECENT REGIME DECIDES: re-scored under the CURRENT simulator rules, payouts minus fee per eval must be > 0 on the
-     locked 2024-26 exam years AND on 2022-23 (the two most recent independent stretches).
+     locked 2024-26 exam years AND on 2022-23 (the two most recent independent stretches) AND for accounts started in the
+     LATEST ~6 months of data (closest to the future - so an edge that already faded inside the exam period fails).
   2. LUCK ON THE UNSEEN YEARS: the same plan, sizing, stop and target with entries at a random minute (same side) or a
      coin-flip side on the 2024-26 days. If random entries pay about as much (p >= 0.10), the payouts come from the prop
      rules and the period, not from the strategy -> FLUKE.
@@ -59,6 +60,16 @@ def review(spec, X, plan, exam_ev=None, reps=40, seed=3):
         return "FLUKE", f"under the current simulator rules the unseen 2024-26 years do not pay out ({ev_exam}$/eval)", det
     if ev_val is None or ev_val <= 0:
         fails.append(f"2022-23 does not pay out ({ev_val}$/eval) - only one recent stretch works")
+    # 1b. the LATEST stretch (closest to the future): accounts started in the last ~6 months of data (leaving 60 days for
+    #     them to play out) must pay out too - otherwise the recent profit came from an older stretch that already ended
+    import prop_sim
+    pts, worst, stop = S._prop_inputs(E, M); size = S._sizer(spec, stop)
+    a0, a1 = max(0, len(pts) - 126 - 60), max(1, len(pts) - 60)       # ~6 months of start days
+    last = prop_sim.evaluate(pts, worst, plan, size, starts=range(a0, a1, 1))
+    det["latest_6m"] = {"accounts": last["accounts"], "pass_rate": last["pass_rate"], "share_with_payout": last["share_with_payout"], "ev": last["ev_per_eval"]}
+    if last["ev_per_eval"] <= 0:
+        fails.append(f"accounts started in the latest 6 months never made money (pass {last['pass_rate']:.0%}, "
+                     f"{last['share_with_payout']:.0%} got a payout, EV {last['ev_per_eval']:+.0f}$/eval) - the profit came from an earlier stretch")
     # 2. luck on the unseen years
     evs = _placebo(S, D, M, spec, plan, E, reps, seed); p = float((evs >= ev_exam).mean())
     det["placebo_unseen"] = {"strategy_ev": round(ev_exam, 1), "random_mean_ev": round(float(evs.mean()), 1),

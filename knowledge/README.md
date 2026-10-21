@@ -67,7 +67,7 @@ Never without the owner: money, accounts, secrets/permissions, deleting data, we
   The RECENT regime decides: re-scored under the current simulator rules, payouts > fee on 2024-26 AND 2022-23; beats random
   entries on the unseen 2024-26 days (p < 0.10); lucky-number test (the strategy stays fixed - neighbouring settings
   stop/target +-20%, entry +-15 min must mostly pay on 2022-26, >= 4/6, else the exact numbers were a lucky grid pick);
-  1.5x costs still pay; 2014-21 may be dormant but not clearly worse than random entries (anti-edge guard).
+  1.5x costs still pay; accounts started in the LATEST ~6 months of data must make money too; 2014-21 may be dormant but not clearly worse than random entries (anti-edge guard).
   Regime watch (strategy_forward, every evening): a CONFIRMED algo is demoted to FRAGILE when its forward trades are
   significantly worse than its 2022-26 trades (one-sided t < -1.645 after >= 15 trades) - announced on Discord.
   `python review_prop.py` reviews exam-passers without a review (`--all` re-reviews all). Claude's nightly session
