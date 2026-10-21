@@ -91,7 +91,7 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 233 papers read (39 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
+  "LEARNING: 233 papers read (40 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 On Calibration of Modern Neural Networks (\u2605\u2605\u2605\u2606\u2606)",
   "  Modern deep nets tend to be overconfident, and simple post\u2011processing like temperature scaling can substantially improve probability calibration. Factors such as depth, width, weight decay, and batch\u2011norm affect calibrat",
