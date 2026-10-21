@@ -71,8 +71,10 @@
   "query": "intraday momentum noise area breakout futures",
   "why": "F2 mechanism: does noise-band momentum hold across futures markets and sessions?",
   "source": "focus",
-  "status": "open",
-  "key": "focus:intraday momentum noise area breakout futures"
+  "status": "nothing found",
+  "key": "focus:intraday momentum noise area breakout futures",
+  "searched": "2026-10-21",
+  "papers": []
  },
  {
   "id": "h7",
@@ -80,8 +82,10 @@
   "query": "intraday time series momentum commodity futures gold crude oil",
   "why": "F2-pool: evidence that the mechanism exists in gold and oil",
   "source": "focus",
-  "status": "open",
-  "key": "focus:intraday time series momentum commodity futures gold crude oil"
+  "status": "nothing found",
+  "key": "focus:intraday time series momentum commodity futures gold crude oil",
+  "searched": "2026-10-21",
+  "papers": []
  },
  {
   "id": "h8",
@@ -89,8 +93,10 @@
   "query": "intraday momentum European session London open futures",
   "why": "F2-session: same mechanism in a second session",
   "source": "focus",
-  "status": "open",
-  "key": "focus:intraday momentum European session London open futures"
+  "status": "nothing found",
+  "key": "focus:intraday momentum European session London open futures",
+  "searched": "2026-10-21",
+  "papers": []
  },
  {
   "id": "h9",
