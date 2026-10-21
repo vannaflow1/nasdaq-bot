@@ -1,6 +1,0 @@
-[
- {
-  "title": "🏦 New prop firms in the simulator: Tradeify, FundedNext, TradeDay",
-  "body": "Added 6 bot-friendly plans to knowledge/prop_firms.json: Tradeify Select 50K (Flex and Daily funded), FundedNext Legacy 25K / Rapid 25K / Flex 50K, TradeDay Fast Pass 50K. Left out on purpose: Topstep (orders from a VPS or remote server are banned, and Volta runs in the cloud), Apex (all automation banned since Sep 2026), Take Profit Trader (manual only), MyFundedFutures (fully autonomous bots banned), Bulenox (10-day / $1,000-minimum payouts, incomplete data). Also fixed the LucidPro buffer: payouts must leave $1,000 ($2,000 on 50K) above the locked floor, it was $100. No-edge baseline 2014-2023 (08:31 bracket, long/short, 2 sizings): Lucid Flex/Pro 25K lose about -$38 per eval, TradeDay -$51, FundedNext -$60 to -$106, Tradeify -$106 to -$130. Lucid stays the cheapest place to look for an edge; the new firms matter once a strategy has one. Monthly-billed plans (Tradeify, TradeDay) are charged one month only."
- }
-]
