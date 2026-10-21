@@ -1,0 +1,43 @@
+{
+ "2974840b5d": {
+  "name": "with the open's side of the overnight range at 08:31, no red-folder news",
+  "review": "FRAGILE (auto v2, 2026-10-21): accounts started in the latest 6 months never made money (pass 18%, 0% got a payout, EV -104$/eval) - the profit came from an earlier stretch; variance-driven: at half the risk the unseen years pay -104$/eval (bold-play tell)",
+  "review_detail": {
+   "recent": {
+    "2024-26 exam": 143.9,
+    "2022-23": 1593.4
+   },
+   "latest_6m": {
+    "accounts": 126,
+    "pass_rate": 0.175,
+    "share_with_payout": 0.0,
+    "ev": -104.0
+   },
+   "placebo_unseen": {
+    "strategy_ev": 143.9,
+    "random_mean_ev": -87.0,
+    "random_p90_ev": -95.7,
+    "p": 0.025
+   },
+   "neighbours_2022_26": {
+    "stop -20%": 504.7,
+    "stop +20%": 260.3,
+    "target -20%": 745.2,
+    "target +20%": 700.5,
+    "entry -15 min": 825.3,
+    "entry +15 min": 364.6
+   },
+   "bold_play": {
+    "0.5x risk": -104.0,
+    "0.25x risk": -104.0
+   },
+   "exam_costs_1.5x": 185.7,
+   "old_2014_21": {
+    "ev": -60.8,
+    "random_mean": -49.6,
+    "random_p10": -104.0
+   }
+  },
+  "updated": "2026-10-21 14:34"
+ }
+}

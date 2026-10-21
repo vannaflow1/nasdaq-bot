@@ -83,11 +83,18 @@ def placebo_mean(S, T, rng, j):
         lo = S.mins(e["window"][0]) if e["type"] == "level" else 1
         hi = S.mins(e["window"][1]) if e["type"] == "level" else min(S.mins(sp.get("exit", "14:55")) - 5, 380)
         lo, hi = max(lo, 1), max(hi, lo + 2)
-        for i, sd, k in zip(g.i.values, g.side.values, g.k.values):
-            ov = (int(rng.integers(lo, hi)), int(sd)) if j % 2 == 0 else (int(k), int(rng.choice([-1, 1])))
+        intraday = intraday_side(sp)                           # side decided during the session: a random EARLIER minute with that
+        for i, sd, k in zip(g.i.values, g.side.values, g.k.values):   # side would use the future -> coin-flip twins only
+            ov = (int(rng.integers(lo, hi)), int(sd)) if (j % 2 == 0 and not intraday) else (int(k), int(rng.choice([-1, 1])))
             r = S.simulate_session(D, int(i), sp, entry_override=ov)
             if r: Rs.append(r[1])
     return float(np.mean(Rs)) if len(Rs) >= 20 else np.nan
+
+
+def intraday_side(sp):
+    """True when a spec's direction is only known during the session (own:day, schedules, OCO brackets)."""
+    e = sp.get("entry", {})
+    return e.get("type") in ("schedule", "oco") or str(e.get("side", "")).lstrip("-").startswith("own:day") or str(e.get("side", "")) in ("own:day", "own:-day")
 
 
 def ledger():
@@ -143,6 +150,11 @@ def exam_family(fam, R, V, X, S):
     g["R"] = g.pnl / (TE_.assign(st=TE_.pnl / TE_.R.replace(0, np.nan)).groupby("session").st.apply(lambda s: s.abs().sum()).reindex(g.session).values)
     spec0 = dict(v["sleeve"][0], prop={"risk": 0.2, "eval_risk": 0.35})
     pr = S.prop_score(g, M, spec0)[0]; det["priced"] = pr
+    try:
+        import prop_sim
+        pts_, w_, st_ = S._prop_inputs(g, M); det["bootstrap"] = prop_sim.bootstrap(pts_, w_, pr["plan"], S._sizer(spec0, st_))
+    except Exception as e_:
+        det["bootstrap"] = f"skipped: {type(e_).__name__}"
     return v, (f"PROMISING STRATEGY (family {fam['id']}, passed the locked exam): edge on 2024-now {ee['edge']:+.3f}R "
                f"(90% lower bound {ee['edge_lb10']:+.3f}R, {ee['n']} trades); priced on {pr['plan']}: pass {pr['pass_rate']:.0%}, "
                f"EV {pr['ev_per_eval']:+.0f}$/eval"), det
@@ -154,6 +166,20 @@ def main():
     reps = int(sys.argv[sys.argv.index("--reps") + 1]) if "--reps" in sys.argv else 100
     F = json.load(open(REG)) if os.path.exists(REG) else []
     _, X = TE.frame(); out_lines = []
+    for fam in F:                                             # families that passed but met a full exam week: exam only
+        if fam.get("status") != "awaiting_exam" or (only and fam["id"] != only): continue
+        R = pd.read_csv(os.path.join(K, "research_out", f"family_{fam['id']}.csv")); V = variants(fam)
+        v, verdict, det = exam_family(fam, R, V, X, S)
+        if "WAITING FOR EXAM" in verdict: print(fam["id"], "still waiting for an exam slot"); continue
+        today = datetime.now(timezone.utc).date().isoformat()
+        e = {"date": today, "name": f"family {fam['id']}: {fam['name']} {v['params']}", "spec": v["sleeve"][0] if len(v["sleeve"]) == 1 else {"sleeve": v["sleeve"]},
+             "source": "family", "family": fam["id"], "verdict": verdict, "exam_detail": json.loads(json.dumps(det, default=float))}
+        if verdict.startswith("PROMISING STRATEGY"):
+            e["review"] = f"PENDING (auto family exam, {today}): passed the family test and the locked exam - waiting for Claude's review"
+        with open(S.LOG, "a") as f: f.write(json.dumps(e, default=float) + "\n")
+        L = ledger(); L.loc[L.family == fam["id"], "verdict"] = str(verdict)[:300]; L.to_csv(LEDGER, index=False)
+        fam["status"] = "scored"; fam["exam_date"] = today
+        out_lines.append(f"{fam['id']} {fam['name']}: locked exam -> {verdict[:220]}"); print(out_lines[-1])
     for fam in F:
         if fam.get("status") != "registered" or (only and fam["id"] != only): continue
         if not fam.get("frozen") or fam.get("hash") != fam_hash(fam):
@@ -174,7 +200,7 @@ def main():
         L = ledger(); pd.concat([L, pd.DataFrame([row])], ignore_index=True).to_csv(LEDGER, index=False)
         os.makedirs(os.path.join(K, "research_out"), exist_ok=True)
         R.to_csv(os.path.join(K, "research_out", f"family_{fam['id']}.csv"), index=False)
-        fam["status"] = "scored"; fam["scored"] = row["date"]
+        fam["status"] = "awaiting_exam" if "WAITING FOR EXAM" in str(verdict) else "scored"; fam["scored"] = row["date"]
         out_lines.append(f"{fam['id']} {fam['name']}: median edge 2014-21 {res.get('median_edge_A')}, 2022-23 {res.get('median_edge_B')}R, "
                          f"{res.get('share_positive_B')} of variants positive, placebo p={res.get('p')} (need < {res.get('alpha')}) -> {str(verdict)[:200]}")
         print(out_lines[-1], f"({time.time() - t0:.0f}s)")

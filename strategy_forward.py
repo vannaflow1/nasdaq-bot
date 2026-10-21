@@ -181,20 +181,18 @@ def main():
     st["strategies"] = lines; json.dump(st, open(STATUS, "w"), indent=1)
     try:                                                      # regime watch: demote a CONFIRMED algo when the coming weeks break from 2022-26
         import review_prop
-        L = entries(); changed = []
-        for e in L:
-            rv = str(e.get("review", ""))
+        L = entries(); changed = []; RV = review_prop.load_reviews()
+        for e0 in L:
+            e = review_prop.effective(e0, RV); rv = str(e.get("review", ""))
             if rv.startswith("CONFIRMED"):
                 nr = review_prop.regime_watch(e, F)
-                if nr: e["review"] = nr; changed.append(e["name"] + " (demoted by the regime watch)")
+                if nr: review_prop.save_review(e0, review=nr); changed.append(e["name"] + " (demoted by the regime watch)")
             elif rv.startswith("PENDING (recent track"):            # new-regime candidates: the coming weeks are the exam
                 nr = review_prop.recent_forward(e, F)
                 if nr and nr != rv:
-                    e["review"] = nr
+                    review_prop.save_review(e0, review=nr)
                     if not nr.startswith("PENDING"): changed.append(f"{e['name']}: {nr[:200]}")
         if changed:
-            with open(S.LOG, "w") as f:
-                for e in L: f.write(json.dumps(e) + "\n")
             import test_engine as TE
             ann = json.load(open(TE.ANN)) if os.path.exists(TE.ANN) else []
             ttl = "🏁 New-regime prop algo CONFIRMED by the coming weeks" if any("CONFIRMED (recent" in c for c in changed) else "⚠️ Prop algo review update"

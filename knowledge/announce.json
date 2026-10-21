@@ -6,5 +6,9 @@
  {
   "title": "\ud83e\uddec Family test results",
   "body": "F1 Intraday momentum into the close, gamma-conditioned: median edge 2014-21 -0.0396, 2022-23 0.1721R, 0.917 of variants positive, placebo p=0.5 (need < 0.0125) -> FAILED"
+ },
+ {
+  "title": "\ud83e\uddec Family test results",
+  "body": "F1 Intraday momentum into the close, gamma-conditioned: median edge 2014-21 -0.0396, 2022-23 0.1721R, 0.917 of variants positive, placebo p=0.0 (need < 0.0125) -> NOT CONFIRMED - failed the locked exam (family): edge on 2024-now -0.074R (90% lower bound -0.170R, 163 trades)\nF2 Noise-band breakout with re-entry: median edge 2014-21 -0.1421, 2022-23 0.0605R, 0.92 of variants positive, placebo p=0.0 (need < 0.01) -> PASSED THE FAMILY TEST, WAITING FOR EXAM (weekly exam budget used up)\nF4 Direction-free volatility brackets: median edge 2014-21 -0.0559, 2022-23 -0.0708R, 0.292 of variants positive, placebo p=0.94 (need < 0.00833) -> FAILED"
  }
 ]

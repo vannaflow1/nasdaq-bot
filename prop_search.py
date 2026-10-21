@@ -160,8 +160,9 @@ def placebo_edges(spec, T, S, rng, reps=4):
     lo, hi = max(lo, 1), max(hi, lo + 2); out = []
     for j in range(reps):
         Rs = []
+        import families as _F; intraday = _F.intraday_side(spec)
         for i, sd, k in zip(T.i.values, T.side.values, T.k.values):
-            ov = (rng.randint(lo, hi - 1), int(sd)) if j % 2 == 0 else (int(k), rng.choice((-1, 1)))
+            ov = (rng.randint(lo, hi - 1), int(sd)) if (j % 2 == 0 and not intraday) else (int(k), rng.choice((-1, 1)))
             r = S.simulate_session(D, int(i), spec, entry_override=ov)
             if r: Rs.append(r[1])
         if len(Rs) >= 30: out.append(float(np.mean(Rs)))

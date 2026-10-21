@@ -45,7 +45,8 @@ def _fwd_trades(e, F, S):
 
 def inputs():
     import strategy_lab as S
-    E = _jl(S.LOG)
+    import review_prop as _RP
+    RV = _RP.load_reviews(); E = [_RP.effective(e, RV) for e in _jl(S.LOG)]
     exams = [e for e in E if "LOCKED EXAM" in str(e.get("verdict", "")) or "RECENT EXAM" in str(e.get("verdict", ""))]
     passed = list({S.spec_id(e["spec"]): e for e in exams if str(e.get("verdict", "")).startswith("PROMISING STRATEGY")}.values())
     dates = sorted({e["date"] for e in E if e.get("source") == "prop-search"} | {e["date"] for e in exams})

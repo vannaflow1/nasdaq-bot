@@ -6,6 +6,7 @@ on:
     paths: ["knowledge/families.json"]
   schedule:
     - cron: "30 4 * * 0"         # Sundays: power curve (20 null worlds)
+    - cron: "30 5 * * 1"         # Mondays: families waiting for an exam slot (new exam week)
   workflow_dispatch:
 permissions:
   contents: write
@@ -23,8 +24,8 @@ jobs:
       - run: pip install -q -r requirements.txt scipy
       - run: python families.py --reps 100
         env: { PYTHONUNBUFFERED: "1" }
-      - if: github.event_name != 'push'
-        run: python power.py --family F5 --worlds 20 --reps 40
+      - if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 4 * * 0'
+        run: python power.py --family F2 --worlds 20 --reps 40
         env: { PYTHONUNBUFFERED: "1" }
       - if: always()
         run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "families" && break; sleep $((RANDOM % 20 + 5)); done

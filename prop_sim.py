@@ -164,3 +164,23 @@ def farm(day_pts, day_worst, dates, plan, size_fn, slots=5, budget_per_month=Non
             "worst_month": round(float(s.min()), 1), "best_month": round(float(s.max()), 1), "positive_months": round(float((s > 0).mean()), 2),
             "total": round(float(s.sum()), 0), "fees": round(fees, 0), "payouts": round(paid_tot, 0), "evals_bought": bought,
             "blown": blown, "reached_live": live, "worst_day_all_accounts": round(float(worst_day), 0), "stuck": stuck}
+
+
+def bootstrap(day_pts, day_worst, plan, size_fn=None, paths=600, block=10, horizon=400, seed=0):
+    """EV per eval with uncertainty (expert review, upgrade 9e): build `paths` synthetic histories by resampling 10-day
+    blocks of the strategy's own days (keeps streaks), run one account through each, and report the mean, the 20th and
+    80th percentile of the per-eval EV estimate (bootstrap of the mean over paths) and P(at least one payout).
+    Historical starts stay the primary view (recency); this answers 'could +$X per eval just be noise?'."""
+    P = plans(True)[plan] if isinstance(plan, str) else plan
+    size_fn = size_fn or (lambda phase, profit, buf: 2)
+    pts, wst = np.asarray(day_pts, float), np.asarray(day_worst, float); n = len(pts)
+    if n < 2 * block: return None
+    rng = np.random.default_rng(seed); res = []
+    for _ in range(paths):
+        idx = np.concatenate([np.arange(s, s + block) % n for s in rng.integers(0, n, horizon // block + 1)])[:horizon]
+        r = run_account(pts[idx], wst[idx], 0, P, size_fn, max_days=horizon)
+        res.append((sum(r["payouts"]) - P["fee"] - (P.get("activation", 0) if r["passed"] else 0), len(r["payouts"]) > 0))
+    ev = np.array([x[0] for x in res]); got = np.array([x[1] for x in res])
+    boot = [rng.choice(ev, len(ev)).mean() for _ in range(400)]
+    return {"plan": P["id"], "paths": paths, "ev_mean": round(float(ev.mean()), 1), "ev_p20": round(float(np.percentile(boot, 20)), 1),
+            "ev_p80": round(float(np.percentile(boot, 80)), 1), "p_payout": round(float(got.mean()), 3)}

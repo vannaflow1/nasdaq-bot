@@ -132,3 +132,20 @@ not edge; K grew with every run; the 2024-26 exam was reused; power was never me
 - **Forward test (recent track)**: sequential Bayesian - skeptical Normal(0, 0.05R) prior on mean R; CONFIRMED when
   P(edge > 0) > 0.9 with >= 60 trades; FRAGILE when P < 0.1 after >= 20 trades or no confirmation after 180 trades.
 - Owner-only blockers: Feb-Oct 2026 backfill + RTY/YM (+ re-upload ES raw 1-min) for pooled multi-market families.
+
+## Expert review, phase 3 (21 Oct 2026)
+- **Multi-trade grammar** (strategy_lab.simulate_day, used when entry.type is "schedule"/"oco" or max_trades > 1):
+  schedule = check every N min while flat (signal "band" noise band from the past 14 sessions at that minute, "day" = session
+  direction, "vwap"); oco = two stop orders at open +- k x expected range, stop {"other_side": true}; target {"range": m};
+  max_trades 1-10, reentry after_stop/always/never. Trades never overlap (next check after the exit bar). The old single-trade
+  path is untouched (parity-checked on 5 spec types, byte-identical). _prop_inputs sums same-day trades; that day's worst
+  point = every trade at its stop.
+- **Placebo fix**: for specs whose direction is decided during the session (own:day, schedule, oco) every placebo uses only
+  coin-flip twins at the same minute - a random EARLIER minute with the later-known direction used future information
+  (F1's first score was invalid because of this; its ledger row was removed and it was re-scored).
+- **Review store**: reviews live in knowledge/reviews.json (key = spec_id), written only by reviewers (review_prop.save_review);
+  strategies.jsonl stays append-only. A search job's state commit had silently reverted an edited line on 21 Oct. Readers use
+  review_prop.effective(e). Claude's nightly review writes "review_claude" (and an overturned "review") into reviews.json.
+- **Bootstrap accounts** (prop_sim.bootstrap: 10-day blocks, 600 paths): review requires the 20th percentile of the unseen-years
+  EV per eval > 0; families report it when pricing.
+- F2 noise-band breakout and F4 volatility brackets registered (multi-trade / OCO grammar).

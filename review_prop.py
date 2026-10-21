@@ -24,6 +24,37 @@ import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 
 
+# ------------------------------------------------------------------ review store (separate from the append-only strategy log)
+# Long-running search jobs append to strategies.jsonl and their state commits win merge conflicts, so an edited line could be
+# silently reverted (it happened on 21 Oct). Reviews therefore live in knowledge/reviews.json, keyed by the spec id; only
+# reviewers write it. A review written into a strategies.jsonl line at append time is the fallback.
+REVIEWS = os.path.join(HERE, "knowledge", "reviews.json")
+
+
+def review_key(e):
+    import strategy_lab as S
+    return S.spec_id(e["spec"]) if isinstance(e.get("spec"), dict) else str(e.get("name"))
+
+
+def load_reviews():
+    import json
+    try: return json.load(open(REVIEWS))
+    except Exception: return {}
+
+
+def save_review(e, **fields):
+    import json
+    R = load_reviews(); k = review_key(e); cur = R.get(k, {"name": e.get("name")})
+    cur.update({k2: v for k2, v in fields.items() if v is not None}); cur["updated"] = pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d %H:%M")
+    R[k] = cur; json.dump(R, open(REVIEWS, "w"), indent=1, default=float)
+
+
+def effective(e, R=None):
+    """The strategy entry with its latest review merged in (reviews.json wins over the line's own fields)."""
+    R = load_reviews() if R is None else R; x = dict(e); x.update(R.get(review_key(e), {}))
+    return x
+
+
 def _ev(S, T, M, spec, plan):
     return S.prop_score(T, M, spec, plan)[0]["ev_per_eval"] if len(T) >= 30 else None
 
@@ -36,9 +67,11 @@ def _placebo(S, D, M, spec, plan, T, reps, seed):
     lo, hi = max(lo, 1), max(hi, lo + 2); evs = []
     for r in range(reps):
         rows = []
+        import families as _F; intraday = _F.intraday_side(spec)
         for s_, i, sd, k0 in zip(T.session.values, T.i.values, T.side.values, T.k.values):
-            side = int(sd) if r % 2 == 0 else int(rng.choice([-1, 1]))
-            k = int(rng.integers(lo, hi)) if r % 2 == 0 else int(k0)
+            even = r % 2 == 0 and not intraday                         # intraday-decided side: coin-flip twins only (no future info)
+            side = int(sd) if even else int(rng.choice([-1, 1]))
+            k = int(rng.integers(lo, hi)) if even else int(k0)
             x = S.simulate_session(D, int(i), spec, entry_override=(k, side))
             if x: rows.append((s_, i, x[0], x[1], x[2], x[3]))
         P = pd.DataFrame(rows, columns=["session", "i", "pnl", "R", "side", "k"])
@@ -101,6 +134,13 @@ def review(spec, X, plan, exam_ev=None, reps=40, seed=3):
     det["bold_play"] = half
     if half.get("0.5x risk") is not None and half["0.5x risk"] <= 0:
         fails.append(f"variance-driven: at half the risk the unseen years pay {half['0.5x risk']:+.0f}$/eval (bold-play tell)")
+    # 3c. bootstrap account paths on the unseen years: the 20th percentile of the EV estimate must be > 0 (review upgrade 9e)
+    try:
+        import prop_sim
+        pts_, w_, st_ = S._prop_inputs(E, M); bs = prop_sim.bootstrap(pts_, w_, plan, S._sizer(spec, st_)); det["bootstrap_exam"] = bs
+        if bs and bs["ev_p20"] <= 0: fails.append(f"bootstrap: 20th percentile of the EV per eval is {bs['ev_p20']:+.0f}$ - could be noise")
+    except Exception as e_:
+        det["bootstrap_exam"] = f"skipped: {type(e_).__name__}"
     # 4. costs
     c = _ev(S, S.backtest(spec, X, exam, cost_mult=1.5), M, spec, plan); det["exam_costs_1.5x"] = c
     if c is None or c <= 0: fails.append(f"with 1.5x costs the unseen years pay {c}$/eval")
@@ -245,9 +285,9 @@ def recent_forward(e, F):
 
 if __name__ == "__main__":                                     # review every exam-passer without a review (--all: re-review all)
     import json, strategy_lab as S
-    L = [json.loads(l) for l in open(S.LOG) if l.strip()]
+    L = [json.loads(l) for l in open(S.LOG) if l.strip()]; RV = load_reviews()
     for e in L:
-        if str(e.get("verdict", "")).startswith("PROMISING STRATEGY") and ("--all" in sys.argv or not e.get("review")):
-            e.update(review_entry(e)); print(e["name"][:70], "->", e["review"][:500]); print(json.dumps(e["review_detail"]))
-    with open(S.LOG, "w") as f:
-        for e in L: f.write(json.dumps(e) + "\n")
+        x = effective(e, RV)
+        if str(e.get("verdict", "")).startswith("PROMISING STRATEGY") and e.get("source") != "family" and isinstance(e.get("spec"), dict) \
+                and e["spec"].get("kind", "strategy") == "strategy" and ("--all" in sys.argv or not x.get("review")):
+            r = review_entry(e); save_review(e, **r); print(e["name"][:70], "->", r["review"][:500])

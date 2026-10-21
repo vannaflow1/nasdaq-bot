@@ -119,11 +119,34 @@ def _add_slip_cols(M, market):
 def slip_ticks(D, i, M=None):
     """Ticks a stop order pays in session i: 1 normally; more on fast (range above expected) and news days if HARSH."""
     if not HARSH: return 1.0
-    M = D["M"].iloc[i] if M is None else M
+    M = _row(D, i) if M is None else M
     O = D["O"][i]; rng_ = float(np.nanmax(D["H"][i]) - np.nanmin(D["L"][i])); exp_ = float(M.get("fc_frac", np.nan)) * float(O[0])
     x = min(max(np.floor((rng_ / exp_ - 1) / SLIP_RANGE_STEP), 0), SLIP_RANGE_MAX) if np.isfinite(exp_) and exp_ > 0 else 0.0
     news = M.get("slip_news", 0.0)
     return 1.0 + x + (float(news) if np.isfinite(news) else 0.0)
+
+
+class _Row:
+    """Fast read-only view of one session row (pandas .iloc[i] was half of every simulated trade's cost)."""
+    __slots__ = ("_c", "_i")
+
+    def __init__(self, cols, i): self._c = cols; self._i = i
+
+    def __getattr__(self, k):
+        try: return self._c[k][self._i]
+        except KeyError: raise AttributeError(k)
+
+    def __getitem__(self, k): return self._c[k][self._i]
+
+    def get(self, k, default=None):
+        c = self._c.get(k); return default if c is None else c[self._i]
+
+
+def _row(D, i):
+    cols = D.get("_cols")
+    if cols is None or len(next(iter(cols.values()))) != len(D["M"]):
+        cols = {c: D["M"][c].to_numpy() for c in D["M"].columns}; D["_cols"] = cols
+    return _Row(cols, i)
 
 
 def mins(hhmm):
@@ -132,7 +155,7 @@ def mins(hhmm):
 
 def vwap_paths(D, i):
     """VWAP and sigma known BEFORE each bar (anchored at midnight New York), shape (390,)."""
-    M = D["M"].iloc[i]; H, L, C, V = D["H"][i], D["L"][i], D["C"][i], D["V"][i]
+    M = _row(D, i); H, L, C, V = D["H"][i], D["L"][i], D["C"][i], D["V"][i]
     tp = (H + L + C) / 3
     pv = M.vw_pv + np.concatenate([[0], np.cumsum(tp * V)[:-1]]); v = M.vw_v + np.concatenate([[0], np.cumsum(V)[:-1]])
     pv2 = M.vw_pv2 + np.concatenate([[0], np.cumsum(tp * tp * V)[:-1]])
@@ -141,7 +164,7 @@ def vwap_paths(D, i):
 
 
 def level_path(D, i, name):
-    M = D["M"].iloc[i]
+    M = _row(D, i)
     if name in DYNAMIC:
         vw, sd = vwap_paths(D, i)
         k = {"vwap": 0, "vwap_up1": 1, "vwap_dn1": -1, "vwap_up2": 2, "vwap_dn2": -2}[name]
@@ -172,21 +195,33 @@ def validate(spec):
     if not isinstance(spec, dict): raise Bad("spec must be an object")
     if (spec.get("market") or "NQ").upper() not in MARKETS: raise Bad(f"market must be one of {', '.join(MARKETS)}")
     e = spec.get("entry") or {}
-    if e.get("type") not in ("level", "time"): raise Bad("entry.type must be level or time")
+    if e.get("type") not in ("level", "time", "schedule", "oco"): raise Bad("entry.type must be level, time, schedule or oco")
+    if e["type"] == "schedule":
+        if e.get("signal", "band") not in ("band", "day", "vwap"): raise Bad("schedule.signal must be band, day or vwap")
+        if not (5 <= int(e.get("every_min", 30)) <= 120): raise Bad("schedule.every_min must be 5-120")
+        if not (1 <= mins(e.get("from", "09:00")) < mins(e.get("to", "14:30")) <= 385): raise Bad("schedule from/to must be within 08:31-14:55")
+        if not (0.3 <= float(e.get("mult", 1.0)) <= 3): raise Bad("schedule.mult must be 0.3-3")
+    if e["type"] == "oco":
+        if not (0 <= mins(e.get("at", "")) <= 380): raise Bad("oco.at must be 08:30-14:50")
+        if not (0.05 <= float(e.get("k", 0.2)) <= 1.0): raise Bad("oco.k must be 0.05-1.0 (share of the expected range)")
+    if not (1 <= int(spec.get("max_trades", 1)) <= 10): raise Bad("max_trades must be 1-10")
+    if spec.get("reentry", "after_stop") not in ("after_stop", "always", "never"): raise Bad("reentry must be after_stop, always or never")
     if e["type"] == "level":
         if e.get("level") not in LEVELS: raise Bad(f"unknown level '{e.get('level')}' (use one of {', '.join(LEVELS)})")
         if e.get("action") not in ("fade", "break"): raise Bad("entry.action must be fade or break")
         w = e.get("window") or ["08:30", "11:00"]
         if not (0 <= mins(w[0]) < mins(w[1]) <= 385): raise Bad("window must be within 08:30-14:55")
-    else:
+    elif e["type"] == "time":
         if not (0 <= mins(e.get("at", "")) <= 380): raise Bad("entry.at must be 08:30-14:50")
         sd = str(e.get("side", "long"))
         if sd.startswith("own:") and sd[4:].lstrip("-") not in ("gap", "mid", "pos", "day"): raise Bad("own: side must be gap, mid, pos or day")
     st, tg = spec.get("stop") or {}, spec.get("target") or {}
-    if not (("points" in st and 2 <= float(st["points"]) <= 200) or ("range" in st and 0.03 <= float(st["range"]) <= 1.5)):
-        raise Bad("stop must be {points: 2-200} or {range: 0.03-1.5}")
-    if not (("R" in tg and 0.3 <= float(tg["R"]) <= 15) or ("points" in tg and 2 <= float(tg["points"]) <= 600) or tg.get("level") in LEVELS):
-        raise Bad("target must be {R: 0.3-15}, {points: 2-600} or {level: <LEVEL>}")
+    if not (("points" in st and 2 <= float(st["points"]) <= 200) or ("range" in st and 0.03 <= float(st["range"]) <= 1.5)
+            or (st.get("other_side") and e["type"] == "oco")):
+        raise Bad("stop must be {points: 2-200}, {range: 0.03-1.5} or (oco only) {other_side: true}")
+    if not (("R" in tg and 0.3 <= float(tg["R"]) <= 15) or ("points" in tg and 2 <= float(tg["points"]) <= 600) or tg.get("level") in LEVELS
+            or ("range" in tg and 0.05 <= float(tg["range"]) <= 3)):
+        raise Bad("target must be {R: 0.3-15}, {points: 2-600}, {range: 0.05-3} or {level: <LEVEL>}")
     ex = spec.get("exit", "14:55")
     if not (1 <= mins(ex) <= 389): raise Bad("exit must be 08:31-14:59")       # up to the cash close (since 21 Oct 2026)
     mg = spec.get("manage")
@@ -207,7 +242,7 @@ def _filters(spec, X):
     if spec.get("filter"):
         f = T.evaluate(spec["filter"], X); allow = (f.reindex(dates).values > 0)
     e = spec["entry"]
-    if e["type"] == "time":
+    if e["type"] == "time" or (e["type"] in ("schedule", "oco") and e.get("side")):
         sd = e.get("side", "long")
         if sd in ("long", "short"): side[:] = 1 if sd == "long" else -1
         elif sd.lstrip("own:-") == "day" and sd.startswith("own:"):   # direction of the session so far: decided AT the entry minute
@@ -224,12 +259,14 @@ def _filters(spec, X):
 
 def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, stop_mult=1.0, tgt_mult=1.0, win_shift=0):
     """One session -> (pnl points, R, side) or None if no trade."""
-    O, H, L, C = D["O"][i], D["H"][i], D["L"][i], D["C"][i]; M = D["M"].iloc[i]
+    O, H, L, C = D["O"][i], D["H"][i], D["L"][i], D["C"][i]; M = _row(D, i)
     tk, cm = D.get("tick", TICK), D.get("comm", COMM)
     sl = slip_ticks(D, i, M) * tk                                      # stop-order slippage (points) this session
     e = spec["entry"]; xe = min(mins(spec.get("exit", "14:55")), 389)
     st = spec["stop"]
-    stop_pts = float(st["points"]) if "points" in st else float(st["range"]) * float(M.fc_frac) * O[0]
+    if "points" in st: stop_pts = float(st["points"])
+    elif "other_side" in st: stop_pts = 2 * float(e.get("k", 0.2)) * float(M.fc_frac) * O[0]   # OCO: stop at the other order
+    else: stop_pts = float(st["range"]) * float(M.fc_frac) * O[0]
     if not np.isfinite(stop_pts): return None
     stop_pts = max(round(stop_pts * stop_mult / tk) * tk, 8 * tk)
     if entry_override is not None:                                     # placebo: market entry at a random minute
@@ -263,31 +300,42 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
             near = [abs(level_path(D, i, c)[k] - lvl) for c in conf.get("levels", []) if c != e["level"] and c in LEVELS]
             if not any(np.isfinite(x) and x <= float(conf.get("within", 10)) for x in near): return None
         ep = lvl if e["action"] == "fade" else lvl + s * (tk + sl)       # break = stop order: 1 tick through + slippage
+    r = _run_trade(D, i, spec, k, s, ep, stop_pts, xe, sl, cost_mult, tgt_mult)
+    return r[:4] if r else None
+
+
+def _run_trade(D, i, spec, k, s, ep, stop_pts, xe, sl, cost_mult=1.0, tgt_mult=1.0):
+    """Exit side of one trade entered at bar k, side s, price ep -> (pnl, R, s, k, exit_bar) or None. Pessimistic: the
+    stop wins any bar where both could hit; management changes apply from the next bar."""
+    O, H, L, C = D["O"][i], D["H"][i], D["L"][i], D["C"][i]; M = _row(D, i)
+    tk, cm = D.get("tick", TICK), D.get("comm", COMM)
     if k >= xe: return None
     stop = ep - s * stop_pts
     tg = spec["target"]
     if "R" in tg: tgt = ep + s * float(tg["R"]) * tgt_mult * stop_pts
     elif "points" in tg: tgt = ep + s * float(tg["points"]) * tgt_mult
+    elif "range" in tg: tgt = ep + s * float(tg["range"]) * tgt_mult * float(M.fc_frac) * O[0]   # a share of the expected range
     else:
         tl = level_path(D, i, tg["level"])[k]
         if not np.isfinite(tl) or (tl - ep) * s <= 2 * tk: return None
         tgt = tl
     # fill bar: only the stop can hit (pessimistic)
     mg = spec.get("manage")
+    xb = xe
     if (s == 1 and L[k] <= stop) or (s == -1 and H[k] >= stop):
-        xp = stop - s * sl
+        xp = stop - s * sl; xb = k
     elif mg:                                                           # trade management: bar by bar, pessimistic, no lookahead
         cur, best, rem, got = stop, ep, 1.0, 0.0
         be, tr, part = mg.get("be_at_R"), mg.get("trail_R"), mg.get("partial")
         for j in range(k + 1, xe):
             if (s == 1 and L[j] <= cur) or (s == -1 and H[j] >= cur):  # stop (or moved stop) first within a bar
-                got += rem * ((cur - s * sl) - ep) * s; rem = 0.0; break
+                got += rem * ((cur - s * sl) - ep) * s; rem = 0.0; xb = j; break
             if part and rem == 1.0:
                 pl = ep + s * float(part["at_R"]) * stop_pts
                 if (s == 1 and H[j] >= pl + tk) or (s == -1 and L[j] <= pl - tk):
                     f = float(part.get("frac", 0.5)); got += f * (pl - ep) * s; rem -= f
             if (s == 1 and H[j] >= tgt + tk) or (s == -1 and L[j] <= tgt - tk):
-                got += rem * (tgt - ep) * s; rem = 0.0; break
+                got += rem * (tgt - ep) * s; rem = 0.0; xb = j; break
             best = max(best, H[j]) if s == 1 else min(best, L[j]); fav = (best - ep) * s
             if be is not None and fav >= float(be) * stop_pts:         # move the stop to breakeven (applies from the next bar)
                 cur = max(cur, ep) if s == 1 else min(cur, ep)
@@ -295,7 +343,7 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
                 ts = best - s * float(tr) * stop_pts; cur = max(cur, ts) if s == 1 else min(cur, ts)
         if rem > 0: got += rem * ((O[xe] - s * tk) - ep) * s           # time exit for whatever is left
         pnl = got - cm * cost_mult
-        return pnl, pnl / stop_pts, s, k
+        return pnl, pnl / stop_pts, s, k, xb
     else:
         j0, j1 = k + 1, xe
         if j0 >= j1:
@@ -305,10 +353,79 @@ def simulate_session(D, i, spec, side=0, entry_override=None, cost_mult=1.0, sto
             ht = (H[j0:j1] >= tgt + tk) if s == 1 else (L[j0:j1] <= tgt - tk)
             a = int(np.argmax(hs)) if hs.any() else 10 ** 6; b = int(np.argmax(ht)) if ht.any() else 10 ** 6
             if a == b == 10 ** 6: xp = O[xe] - s * tk                   # time exit at the exit bar's open
-            elif a <= b: xp = stop - s * sl                             # stop first (or same bar)
-            else: xp = tgt
+            elif a <= b: xp = stop - s * sl; xb = j0 + a                # stop first (or same bar)
+            else: xp = tgt; xb = j0 + b
     pnl = (xp - ep) * s - cm * cost_mult
-    return pnl, pnl / stop_pts, s, k
+    return pnl, pnl / stop_pts, s, k, xb
+
+
+def is_multi(spec):
+    return spec["entry"]["type"] in ("schedule", "oco") or int(spec.get("max_trades", 1)) > 1
+
+
+def simulate_day(D, i, spec, side=0, cost_mult=1.0, stop_mult=1.0, tgt_mult=1.0, win_shift=0):
+    """Several trades in one session (one position at a time) -> list of (pnl, R, s, k).
+    entry.type "schedule": every `every_min` minutes from `from` to `to`, while flat, check a signal at the last CLOSED bar:
+        "band"  - noise band: close outside open*(1 +- mult*sigma_t), sigma_t = average |close/open - 1| at that minute over
+                  the past `lookback` sessions (past only) -> trade in the direction of the break;
+        "day"   - direction of the session so far (close vs open);  "vwap" - close vs session VWAP.
+    entry.type "oco": at `at`, buy stop at open+k*expected range and sell stop at open-k*expected range; the first one
+        filled (1 tick through + slippage) is the trade (the other is cancelled); stop {"other_side": true} = the other order.
+    After an exit the next entry can come at the next check (max_trades per day; reentry "after_stop" = only after a loss,
+    "always", or "never")."""
+    O, H, L, C = D["O"][i], D["H"][i], D["L"][i], D["C"][i]; M = _row(D, i)
+    tk = D.get("tick", TICK); sl = slip_ticks(D, i, M) * tk
+    e = spec["entry"]; xe = min(mins(spec.get("exit", "14:55")), 389)
+    st = spec["stop"]
+    if "points" in st: stop_pts = float(st["points"])
+    elif "other_side" in st: stop_pts = 2 * float(e.get("k", 0.2)) * float(M.fc_frac) * O[0]
+    else: stop_pts = float(st["range"]) * float(M.fc_frac) * O[0]
+    if not np.isfinite(stop_pts): return []
+    stop_pts = max(round(stop_pts * stop_mult / tk) * tk, 8 * tk)
+    maxn = int(spec.get("max_trades", 1)); re_ = spec.get("reentry", "after_stop"); out = []
+    if e["type"] == "oco":
+        at = mins(e["at"]); w1 = min(mins(e.get("until", spec.get("exit", "14:55"))), xe - 1)
+        dist = float(e.get("k", 0.2)) * float(M.fc_frac) * O[0]
+        if not np.isfinite(dist) or dist < 2 * tk: return []
+        up, dn = O[at] + dist, O[at] - dist; j = at
+        while j <= w1 and len(out) < maxn:
+            hu = np.where(H[j:w1 + 1] >= up + tk)[0]; hd = np.where(L[j:w1 + 1] <= dn - tk)[0]
+            if not len(hu) and not len(hd): break
+            ju = j + hu[0] if len(hu) else 10 ** 6; jd = j + hd[0] if len(hd) else 10 ** 6
+            if ju == jd: break                                         # both in one bar: ambiguous, skip (no fill assumed)
+            s, k, ep = (1, ju, up + tk + sl) if ju < jd else (-1, jd, dn - tk - sl)
+            r = _run_trade(D, i, spec, k, s, ep, stop_pts, xe, sl, cost_mult, tgt_mult)
+            if not r: break
+            out.append(r[:4]); j = r[4] + 1
+            if re_ == "never" or (re_ == "after_stop" and r[0] > 0): break
+        return out
+    ev = int(e.get("every_min", 30)); f0 = mins(e.get("from", "09:00")) + win_shift; t1 = min(mins(e.get("to", "14:30")) + win_shift, xe - 1)
+    sig = e.get("signal", "band"); mult = float(e.get("mult", 1.0)); lb = int(e.get("lookback", 14))
+    if sig == "band":
+        if i < lb: return []
+        Cp, Op = D["C"][i - lb:i], D["O"][i - lb:i, :1]
+        sigma = np.nanmean(np.abs(Cp / Op - 1.0), axis=0)               # per minute, past sessions only
+    if sig == "vwap":
+        vw = level_path(D, i, "vwap")
+    t = max(f0, 1); free_from = 0
+    while t <= t1 and len(out) < maxn:
+        if t < free_from: t += ev; continue
+        c = C[t - 1]; s = 0
+        if sig == "band":
+            sg = sigma[t - 1]
+            if np.isfinite(sg) and sg > 0:
+                if c > O[0] * (1 + mult * sg): s = 1
+                elif c < O[0] * (1 - mult * sg): s = -1
+        elif sig == "day": s = int(np.sign(c - O[0]))
+        elif sig == "vwap": s = int(np.sign(c - vw[t - 1])) if np.isfinite(vw[t - 1]) else 0
+        if side in (1, -1) and s != side: s = 0                           # optional daily direction filter from the spec's side
+        if s != 0:
+            r = _run_trade(D, i, spec, t, s, O[t] + s * tk, stop_pts, xe, sl, cost_mult, tgt_mult)
+            if r:
+                out.append(r[:4]); free_from = r[4] + 1
+                if re_ == "never" or (re_ == "after_stop" and r[0] > 0): break
+        t += ev
+    return out
 
 
 def backtest(spec, X, sessions=None, **kw):
@@ -316,10 +433,15 @@ def backtest(spec, X, sessions=None, **kw):
     allow, side = _filters(spec, X)
     idx = np.arange(len(M)) if sessions is None else sessions
     rows = []
+    multi = is_multi(spec); sv = M.session.to_numpy()
     for i in idx:
         if not allow[i]: continue
+        if multi:
+            for r in simulate_day(D, i, spec, side=int(side[i]) if abs(side[i]) == 1 else 0, **kw):
+                rows.append((sv[i], i, r[0], r[1], r[2], r[3]))
+            continue
         r = simulate_session(D, i, spec, side=side[i], **kw)
-        if r: rows.append((M.session.iloc[i], i, r[0], r[1], r[2], r[3]))
+        if r: rows.append((sv[i], i, r[0], r[1], r[2], r[3]))
     return pd.DataFrame(rows, columns=["session", "i", "pnl", "R", "side", "k"])
 
 
@@ -340,10 +462,12 @@ def placebo(spec, T, reps=100, seed=7):
     hi = mins(e["window"][1]) if e["type"] == "level" else min(mins(spec.get("exit", "14:55")) - 5, 380)
     lo, hi = max(lo, 1), max(hi, lo + 2)
     means = []
+    intraday = e["type"] in ("schedule", "oco") or str(e.get("side", "")).startswith(("own:day", "own:-day"))
     for _ in range(reps):
         Rs = []
-        for i, s in zip(T.i.values, T.side.values):
-            r = simulate_session(D, int(i), spec, entry_override=(int(rng.integers(lo, hi)), int(s)))
+        for i, s, k0 in zip(T.i.values, T.side.values, T.k.values):
+            ov = (int(k0), int(rng.choice([-1, 1]))) if intraday else (int(rng.integers(lo, hi)), int(s))   # no future info
+            r = simulate_session(D, int(i), spec, entry_override=ov)
             if r: Rs.append(r[1])
         means.append(np.mean(Rs) if Rs else 0.0)
     return np.array(means)
@@ -360,12 +484,18 @@ def _prop_inputs(T, M):
     ses = M.session.values; ses = ses[(ses >= T.session.min()) & (ses <= T.session.max())] if len(T) else ses
     pv = float(M.attrs.get("pv", 2.0)) if hasattr(M, "attrs") else 2.0
     eq = T.pnl.values * pv / 2.0                                       # dollars per micro, expressed in MNQ points ($2/pt)
-    pts = pd.Series(0.0, index=ses); pts[T.session.values] = eq
     neg = np.abs(eq[eq < 0])
     stop = float(np.median(neg)) if len(neg) else 20.0
     R = T.R.values if "R" in T else np.zeros(len(T))
     own = np.where(np.abs(R) > 1e-9, np.abs(eq / np.where(np.abs(R) > 1e-9, R, 1.0)), stop)   # this trade's stop (pnl / R)
-    wst = pd.Series(0.0, index=ses); wst[T.session.values] = -np.maximum(own, np.maximum(-eq, 0.0))
+    w1 = -np.maximum(own, np.maximum(-eq, 0.0))
+    if T.session.duplicated().any():                                   # several trades a day: sum them; the day's worst point =
+        g = pd.DataFrame({"s": T.session.values, "pnl_eq": eq, "w": w1}).groupby("s", sort=False).sum()   # every trade at its stop
+        pts = pd.Series(0.0, index=ses); pts[g.index.values] = g.pnl_eq.values
+        wst = pd.Series(0.0, index=ses); wst[g.index.values] = g.w.values
+    else:
+        pts = pd.Series(0.0, index=ses); pts[T.session.values] = eq
+        wst = pd.Series(0.0, index=ses); wst[T.session.values] = w1
     return pts.values, np.where(pts.values != 0, np.minimum(wst.values, -1e-9), 0.0), stop
 
 
@@ -420,8 +550,10 @@ def prop_path(spec, X, T, M, out, head):
     evs = []
     for _ in range(20):
         rows = []
-        for s_, i, sd in zip(T.session.values, T.i.values, T.side.values):
-            r = simulate_session(D, int(i), spec, entry_override=(int(rng.integers(lo, hi)), int(sd)))
+        for s_, i, sd, k_ in zip(T.session.values, T.i.values, T.side.values, T.k.values):
+            ov = (int(k_), int(rng.choice([-1, 1]))) if (e["type"] in ("schedule", "oco") or str(e.get("side", "")).startswith(("own:day", "own:-day"))) \
+                else (int(rng.integers(lo, hi)), int(sd))
+            r = simulate_session(D, int(i), spec, entry_override=ov)
             if r: rows.append((s_, i, r[0], r[1], r[2], r[3]))
         P = pd.DataFrame(rows, columns=["session", "i", "pnl", "R", "side", "k"])
         evs.append(prop_score(P, M, spec, plan)[0]["ev_per_eval"] if len(P) else -best["fee"])
