@@ -91,8 +91,11 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 238 papers read (40 more skipped as not relevant enough), 131 ideas tested on my memory, 2 promising.",
+  "LEARNING: 240 papers read (41 more skipped as not relevant enough), 132 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Jumps, Cojumps and Macro Announcements, (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper shows that specific U.S. macro releases\u2014especially non\u2011farm payroll, Fed funds target, and GDP\u2014significantly raise the probability of intraday jumps and simultaneous jumps (cojumps) across Nasdaq futures, bond ",
+  "  tested: NOT CONFIRMED on my data: 0 sell-vol + 2033 buy-vol trades on real QQQ option prices, avg -5.5 bp of QQQ per trade (placebo avg -5.4, p=0.573), halves -11.7/+0.",
   "\u2022 DeepAR: Probabilistic forecasting with autoregressive recurrent networks (\u2605\u2605\u2605\u2605\u2606)",
   "  DeepAR trains a single autoregressive recurrent network on many related time series and outputs a full predictive distribution, not just point forecasts. It learns shared patterns while still adapting to each series via ",
   "  tested: about myself - feeds my self-check",
@@ -108,12 +111,9 @@
   "\u2022 Compensation and Incentives: Practice vs. Theory (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper highlights that real-world incentive structures often deviate from pure profit\u2011maximizing models, emphasizing fairness, promotion pathways, and low penalties rather than strict performance\u2011based pay.",
   "  tested: prop mission - feeds my strategy designer and self-check",
-  "\u2022 Economic Incentives and Social Preferences: Substitutes or Complements? (\u2605\u2605\u2605\u2605\u2606)",
-  "  Explicit monetary incentives can weaken or strengthen intrinsic motivations depending on framing, perceived autonomy, and informational signals. When incentives are poorly designed they may crowd out the trader's intrins",
-  "  tested: prop mission - feeds my strategy designer and self-check",
-  "This week's tests: 140 run - 4 promising, 70 not confirmed, 29 don't fit my data, 37 translation failures",
+  "This week's tests: 141 run - 4 promising, 71 not confirmed, 29 don't fit my data, 37 translation failures",
   "",
-  "25 papers waiting in my queue."
+  "24 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

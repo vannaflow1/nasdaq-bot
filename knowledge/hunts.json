@@ -35,7 +35,7 @@
   "query": "dealer gamma hedging daily range volatility Nasdaq index futures",
   "why": "promising result to understand: On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant m",
   "source": "automatic",
-  "status": "open",
+  "status": "nothing found",
   "papers": [],
   "key": "promising:self:2026-10-21:0",
   "searched": "2026-10-21"
@@ -46,8 +46,23 @@
   "query": "Asian session daily return reversal Nasdaq index futures",
   "why": "promising result to understand: When the NQ opens near the high of the Asian session (k_open_vs_asia = 1), are we more likely to break yesterday's high during the NY session?",
   "source": "automatic",
-  "status": "open",
+  "status": "searched",
+  "papers": [
+   "openalex:W2598501477",
+   "openalex:W4246938855"
+  ],
+  "key": "promising:q:2026-10-21:3",
+  "searched": "2026-10-21"
+ },
+ {
+  "id": "h5",
+  "date": "2026-10-21",
+  "query": "Profitability of selected 0DTE index options strategies",
+  "why": "promising result to understand: Selling a same-day iron condor pays when the realized move stays inside the options-priced move; my memory has only daily close-to-close returns and daily range",
+  "source": "automatic",
+  "status": "nothing found",
   "papers": [],
-  "key": "promising:q:2026-10-21:3"
+  "key": "promising:openalex:W4406740838",
+  "searched": "2026-10-21"
  }
 ]

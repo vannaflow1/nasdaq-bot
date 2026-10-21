@@ -1,5 +1,35 @@
 [
 {
+"title": "Jumps, Cojumps and Macro Announcements,",
+"learned": "The paper shows that specific U.S. macro releases\u2014especially non\u2011farm payroll, Fed funds target, and GDP\u2014significantly raise the probability of intraday jumps and simultaneous jumps (cojumps) across Nasdaq futures, bond futures and FX, with different assets reacting differently.",
+"concepts": [
+"intraday jumps",
+"cojumps",
+"macro news surprises",
+"jump detection statistic",
+"probit jump model"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: 0 sell-vol + 2033 buy-vol trades on real QQQ option prices, avg -5.5 bp of QQQ per trade (placebo avg -5.4, p=0.573), halves -11.7/+0.7, win 42%, worst -973 bp, positive in 2/9 years",
+"url": "https://s3.amazonaws.com/real.stlouisfed.org/wp/2007/2007-032.pdf",
+"date": "2026-10-21"
+},
+{
+"title": "Expiration day effects of the EURO STOXX 50 index futures and options",
+"learned": "The study finds that on the monthly options and quarterly futures expiration days of the EURO STOXX 50, trading volume and intraday volatility (especially around 12:00 CET) are unusually high, and there is a pattern of higher returns before expiration and lower returns after, leading to a reversal effect.",
+"concepts": [
+"expiration day effect",
+"intraday volatility spike",
+"return reversal",
+"program trading",
+"liquidity driven moves"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://aaltodoc.aalto.fi/handle/123456789/429",
+"date": "2026-10-21"
+},
+{
 "title": "Design of High-Frequency Trading Algorithm Based on Machine Learning",
 "learned": "The paper combines three components\u2014VPIN (a liquidity\u2011risk indicator), a GARCH volatility model, and an SVM classifier\u2014into a deep\u2011learning\u2011style optimizer for high\u2011frequency market\u2011making on CSI\u2011300 futures.",
 "concepts": [

@@ -1,20 +1,5 @@
 [
  {
-  "id": "openalex:W3121286014",
-  "title": "Jumps, Cojumps and Macro Announcements,",
-  "abstract": "We use recently proposed tests to extract jumps and cojumps from three types of assets: stock index futures, bond futures, and exchange rates.We then characterize the dynamics of these discontinuities and informally relate them to U.S. macroeconomic releases before using limited dependent variable models to formally model how news surprises explain (co)jumps.Nonfarm payroll and federal funds target announcements are the most important news across asset classes.Trade balance shocks are important for foreign exchange jumps.We relate the size, frequency and timing of jumps across asset classes to the likely sources of shocks and the relation of asset prices to fundamentals in the respective classes.",
-  "url": "https://s3.amazonaws.com/real.stlouisfed.org/wp/2007/2007-032.pdf",
-  "date": "2007-01-01",
-  "cites": 8,
-  "score": 56.2,
-  "track": "hunt",
-  "hunt": "h1",
-  "topic": "hunt: overnight trading range macroeconomic announcements Nasdaq index futures",
-  "source": "Hunt: overnight trading range macroeconomic announcements Nasdaq i",
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W3121286014.txt"
- },
- {
   "id": "openalex:W2103409209",
   "title": "Duration modelling of the after-hours electronic futures market",
   "abstract": "This thesis explores a class of models for modelling the time between trades, known as trade duration, in the after-hours electronic market for U.S. equity futures. These electronic markets have grown significantly over the last 10 years but little empirical work has been done to describe them. This is particularly so with duration modelling. High frequency trade duration data for the S&P 500 and NASDAQ-100 modelled in this thesis are collected from the GLOBEX electronic trading platform from the Chicago Mercantile Exchange for the period of 2004 to 2008. This thesis first fits standard linear Autoregressive Conditional Duration (ACD) models with Exponential, Weibull and Generalized Gamma error distributional assumptions to the period 2004 to 2006. The Generalized Gamma distribution outperforms the alternatives but still provides unsatisfactory results in the form of serially correlated residuals (volume is used as an additional mark in the model specifications). In order to improve the models, nonlinear forms of ACDmodel are estimated. In particular, the threshold and logarithmic forms are implemented. Although the results improve with these more flexible forms, there remains continued evidence of nonlinearity in the results. As a consequence, and taking into consideration the fact that the sample period of this thesis is much longer than the 3 month samples typically examined in the existing ACD literature, the thesis then examines the S&P 500 data for potential structural changes. Structural breaks are detected using a range of conditional Lagrange Multiplier tests associated with Andrews (1993) and Andrews and Ploberger (1994). FittingWeibull ACD models to the segmented sub-periods identified with the structural break tests significantly improves the model estimation results. Finally, this thesis examines the evidence for structural breaks in ACD models in the global financial crisis period using S&P 500 data from 2006 to 2008. The most significant structural change is found to occur in July, 2007, which is consistent with the onset of the crisis. Many of the structural change points detected in the data can be aligned with economic events during the crisis period, and sub-period estimations reveal the impact of the crisis on the electronic futures market.",
@@ -57,6 +42,19 @@
   "track": "frontier",
   "queued": "2026-10-21",
   "text_failed": true
+ },
+ {
+  "id": "arxiv:2610.24384v1",
+  "title": "A decomposition-integration framework coupling singular spectrum analysis with a volatility-adaptive LSTM for stock price forecasting",
+  "abstract": "Financial time series exhibit multi-scale, high-noise, and non-stationary volatility dynamics. Decomposition--integration frameworks built on complete ensemble empirical mode decomposition with adaptive noise (CEEMDAN) have advanced this field, yet existing CEEMDAN hybrids remain unstable: high-frequency mode mixing contaminates downstream predictors, and the heterogeneous volatility of decomposed components is not matched by any volatility-adaptive mechanism. To address these gaps, this paper proposes CEEMDAN-SE-SSA-VMGL. CEEMDAN adaptively decomposes the original series, and sample-entropy-driven K-means clustering groups the intrinsic mode functions into high-, mid-, and low-frequency and residual components. Singular spectrum analysis (SSA) is then applied to the high-frequency group, whose singular-value decomposition of the trajectory matrix and principal-component reconstruction decouple intertwined pseudo-oscillatory modes and alleviate mode mixing. We further design a plug-and-play robust LSTM variant, the volatility-modulated GARCH-LSTM (VMGL), which embeds a differentiable GARCH(1,1) layer inside the LSTM cell as a risk gate; the estimated conditional volatility multiplicatively scales the forget-gate activation, letting memory decay adapt to the instantaneous volatility while remaining fully end-to-end trainable. Component predictions are linearly combined. On five US and Chinese financial series (CSI 300, CSI 500, AAPL, GOOGL, S&P 500), the proposed model is compared with eleven benchmark architectures, lowering the forecasting error by 9% to 24% relative to the best benchmark and by 60% to 70% relative to a standard LSTM. Diebold--Mariano and model-confidence-set (MCS) tests confirm the statistical significance and stability of the gains, spectral analyses verify the SSA denoising efficacy, and backtesting demonstrates the framework's economic utility.",
+  "url": "https://arxiv.org/abs/2610.24384v1",
+  "pdf": "https://arxiv.org/pdf/2610.24384v1",
+  "date": "2026-10-17",
+  "score": 15,
+  "source": "Frontier (arXiv, last 45 days)",
+  "track": "frontier",
+  "queued": "2026-10-21",
+  "text_file": "knowledge/papers/arxiv_2610.24384v1.txt"
  },
  {
   "id": "openalex:W2170815702",
