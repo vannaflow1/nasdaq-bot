@@ -498,5 +498,155 @@
   "hash": "092265597088",
   "frozen": "afb0db1b2108341682e131f778d2dc4bf6a0d919",
   "scored": "2026-10-21"
+ },
+ {
+  "id": "F8",
+  "name": "F2-pool: noise-band breakout with re-entry on NQ + gold + oil",
+  "mechanism": "Moves beyond a day's normal noise band, measured at the same time of day, tend to continue intraday - in any liquid futures market, not just NQ.",
+  "citation": "Zarattini, Aziz & Barbon 2024; expert review 2 (21 Oct 2026): same frozen F2 variants, pooled across markets for more independent trades",
+  "rules": "v2",
+  "markets": [
+   "NQ",
+   "GC",
+   "CL"
+  ],
+  "sleeve": [
+   {
+    "name": "F2-pool noise-band breakout",
+    "entry": {
+     "type": "schedule",
+     "signal": "band",
+     "every_min": "{EV}",
+     "from": "09:00",
+     "to": "14:30",
+     "mult": "{MU}",
+     "lookback": 14
+    },
+    "stop": {
+     "range": 0.15
+    },
+    "target": {
+     "R": 5
+    },
+    "exit": "14:59",
+    "max_trades": 3,
+    "reentry": "after_stop",
+    "manage": {
+     "trail_R": 1.0
+    }
+   }
+  ],
+  "grid": {
+   "param.EV": [
+    15,
+    30,
+    60
+   ],
+   "param.MU": [
+    0.8,
+    1.0,
+    1.2
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.2
+    }
+   ],
+   "manage": [
+    null,
+    {
+     "trail_R": 0.5
+    },
+    {
+     "trail_R": 1.0
+    }
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-21",
+  "hash": "6e217109c97a",
+  "frozen": "61960eabd54dfac8ce52e083b6072b87d004fed1"
+ },
+ {
+  "id": "F9",
+  "name": "F2-LV: noise-band breakout with low-variance exits (NQ + gold + oil)",
+  "mechanism": "The same intraday momentum beyond the noise band, harvested with a fixed target (or a partial at 0.7R) instead of a trail - lower noise per trade, easier payout days.",
+  "citation": "Zarattini, Aziz & Barbon 2024; expert review 2 (21 Oct 2026), F2-LV",
+  "rules": "v2",
+  "markets": [
+   "NQ",
+   "GC",
+   "CL"
+  ],
+  "sleeve": [
+   {
+    "name": "F2-LV noise-band breakout",
+    "entry": {
+     "type": "schedule",
+     "signal": "band",
+     "every_min": "{EV}",
+     "from": "09:00",
+     "to": "14:30",
+     "mult": "{MU}",
+     "lookback": 14
+    },
+    "stop": {
+     "range": 0.15
+    },
+    "target": {
+     "R": "{T}"
+    },
+    "exit": "14:59",
+    "max_trades": 3,
+    "reentry": "after_stop"
+   }
+  ],
+  "grid": {
+   "param.EV": [
+    15,
+    30,
+    60
+   ],
+   "param.MU": [
+    0.8,
+    1.0,
+    1.2
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.2
+    }
+   ],
+   "param.T": [
+    1.0,
+    1.5,
+    2.0
+   ],
+   "manage": [
+    null,
+    {
+     "partial": {
+      "at_R": 0.7,
+      "frac": 0.5
+     }
+    }
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-21",
+  "hash": "5a6a348567ea",
+  "frozen": "61960eabd54dfac8ce52e083b6072b87d004fed1"
  }
 ]
