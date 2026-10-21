@@ -35,6 +35,9 @@ BROAD = {  # wider trading toolbox: models, risk, strategy research - also welco
 EXTRA = {r"skew": 1, r"order flow|price impact|liquidity": 1, r"momentum|reversal": 1, r"regime": 1, r"forecast|predict": 1}
 NEG = (r"insurance|credit default|\bcds\b|real estate|housing|agricultur|carbon|esg|climate|blockchain technology|"
        r"sovereign debt|banking|pension|corporate governance|\bipo\b|merger|accounting|venture|household|labor|education|electricity")
+JUNK = (r"patient|clinical|thyroid|cancer|tumou?r|disease|medical|medicine|surgery|hospital|health|nurs|covid|vaccine|"
+        r"quantum|protein|genom|gene expression|molecul|cell biology|neuron firing|blindness|vision impairment|speech recognition|"
+        r"document recognition|image classification|agricultur|soil|crop")   # never trading research, whatever the track
 OTHER_ASSET = r"crypto|bitcoin|ethereum|\bbond|treasury|exchange rate|currenc|\bfx\b|commodit|oil price"   # allowed, mild penalty
 
 
@@ -521,6 +524,7 @@ def main(max_new=10):
             new += fr
     except Exception as e:
         errs.append(f"frontier: {type(e).__name__}")
+    new = [p for p in new if p.get("curated") or (len(p["title"].split()) >= 3 and not re.search(JUNK, p["title"].lower()))]
     for p in new:
         p["abstract"] = p["abstract"][:2500]; p["queued"] = datetime.now(timezone.utc).date().isoformat()
     queue += new
