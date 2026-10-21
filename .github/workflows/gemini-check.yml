@@ -1,5 +1,5 @@
 name: gemini-check
-# v3: never crashes on odd keys. v2: tries header, ?key= and Bearer auth.
+# v4: also tests the key with whitespace removed. v3: never crashes on odd keys. v2: tries header, ?key= and Bearer auth.
 # Checks that the owner's Gemini API key secret exists and works. Writes ONLY a status line (never the key)
 # to knowledge/research_out/gemini_check.txt. Runs when this file changes, or by hand.
 on:
@@ -35,7 +35,13 @@ jobs:
           found = [(v, os.environ.get(k, "").strip()) for k, v in names.items() if os.environ.get(k, "").strip()]
           if not found:
               out.append("NO KEY FOUND under: " + ", ".join(names.values()))
+          found2 = []
           for name, key in found:
+              clean = "".join(key.split()).strip("'\"")
+              if clean != key:
+                  out.append(f"{name}: raw value has {len(key) - len(clean)} extra character(s) (spaces/line breaks/quotes) - testing it with them removed")
+              found2.append((name, clean))
+          for name, key in found2:
               base = "https://generativelanguage.googleapis.com/v1beta"
               def call(url, body=None):
                   req = urllib.request.Request(url, data=json.dumps(body).encode() if body else None,
