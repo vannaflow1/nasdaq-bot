@@ -1,5 +1,5 @@
 name: gemini-check
-# v2: tries header, ?key= and Bearer auth.
+# v3: never crashes on odd keys. v2: tries header, ?key= and Bearer auth.
 # Checks that the owner's Gemini API key secret exists and works. Writes ONLY a status line (never the key)
 # to knowledge/research_out/gemini_check.txt. Runs when this file changes, or by hand.
 on:
@@ -46,6 +46,8 @@ jobs:
                       try: msg = json.loads(e.read()).get("error", {}).get("message", "")[:160]
                       except Exception: msg = ""
                       return e.code, {"error": msg}
+                  except Exception as e:
+                      return -1, {"error": f"{type(e).__name__} (request could not be sent)"}
               st, js = call(base + "/models?pageSize=200")
               if st != 200:                     # new auth keys: also try ?key= and Bearer before giving up
                   for mode in ("query", "bearer"):
@@ -56,8 +58,10 @@ jobs:
                       try:
                           with urllib.request.urlopen(urllib.request.Request(url, headers=h), timeout=60) as r: st2 = r.status
                       except urllib.error.HTTPError as e: st2 = e.code
+                      except Exception as e: st2 = type(e).__name__
                       out.append(f"{name}: header auth HTTP {st}; {mode} auth HTTP {st2}")
-                  out.append(f"{name}: key length {len(key)}, starts with 'AQ.': {key.startswith('AQ.')}, starts with 'AIza': {key.startswith('AIza')}")
+                  out.append(f"{name}: key length {len(key)}, starts with 'AQ.': {key.startswith('AQ.')}, starts with 'AIza': {key.startswith('AIza')}, "
+                              f"only plain ASCII letters/digits/._-: {all(c.isascii() and (c.isalnum() or c in '._-') for c in key)}")
                   out.append(f"{name}: present, but listing models failed: HTTP {st} {js.get('error','')}"); continue
               models = [m["name"].split("/")[-1] for m in js.get("models", [])
                         if "generateContent" in m.get("supportedGenerationMethods", [])]
