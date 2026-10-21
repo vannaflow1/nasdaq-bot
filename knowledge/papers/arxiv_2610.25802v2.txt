@@ -1,0 +1,1023 @@
+Amortized Neural Filtering for Calibrated Posteriors in
+Statistical Arbitrage
+Minkey Chang
+Seoul National University
+Seoul, Republic of Korea
+minkey.chang@gmail.com
+Abstract
+Statistical arbitrage trades on an estimate of the state of a residual
+spread, and conventional practice discards the uncertainty of that
+estimate. We keep the uncertainty and use it in the trading decision.
+A Neural Filter Estimator (NFE) is trained on simulated paths of a
+mean-reverting process whose innovation law is selected by test-
+ing candidates against real residuals; once trained, it returns the
+posterior over the latent state of every spread in a cross-section in
+one forward pass. Three results follow. On simulated paths with
+known truth, every practical estimator, ours included, falls in one
+narrow band of accuracy well below an estimator given full in-
+formation, so the posterior gains no accuracy over a point esti-
+mate; its contribution is a correct account of its own uncertainty.
+On Korean equities, net of costs, the conventional point estimate
+forecasts about a thousand basis points per holding period more
+than it realizes, and the amortized methods cut that gap by a fac-
+tor of roughly two to eight. Sizing positions from the posterior
+on the same learned factors as the end-to-end Attention Factor
+Model matches the Sharpe ratio of those factors under the base
+rule within the period’s noise, at no more risk.
+CCS Concepts
+•Computing methodologies→Machine learning;Learning in
+probabilistic graphical models;•Applied computing→Econom-
+ics.
+Keywords
+statistical arbitrage, amortized inference, calibration, filtering,
+simulation-based inference, regime switching
+ACM Reference Format:
+Minkey Chang. 2026. Amortized Neural Filtering for Calibrated Posteriors
+in Statistical Arbitrage. In7th ACM International Conference on AI in Fi-
+nance (ICAIF ’26), November 14–17, 2026, Milan, Italy.ACM, New York, NY,
+USA, 9 pages. https://doi.org/10.1145/3858063.3858894
+1 Introduction
+In the old tale of the blind men and the elephant, each man touches
+the animal and describes a different beast. Economics and finance
+pose the same difficulty. It is nearly impossible to say where the
+market standsat the moment, and certainty arrives only after the
+This work is licensed under a Creative Commons Attribution 4.0 International Li-
+cense.
+ICAIF ’26, Milan, Italy
+©2026 Copyright held by the owner/author(s).
+ACM ISBN 979-8-4007-3087-0/2026/11
+https://doi.org/10.1145/3858063.3858894
+fact. A familiar example is the business cycle, whose recessions are
+dated by the NBER many months after they begin [21]. The term
+nowcastingarose from this predicament [8]. Rather than wait for
+the whole animal to come into view, we estimate thepresentstate
+from the part within reach. A forecast means little without know-
+ing where one stands. The same problem appears in statistical ar-
+bitrage, where knowing what is happening now matters more to
+the next action than predicting what happens next.
+Conventional statistical arbitrage [1, 6] handles this problem
+with a hand-crafted pipeline. One regresses returns on factors, ac-
+cumulates the residuals, fits a mean-reversion model on a trailing
+window, and uses the fitted point estimates to decide when to en-
+ter and exit. The procedure treats the assumed process as if it were
+true, and despite the namestatisticalarbitrage it discards the uncer-
+tainty of the estimates, so that a genuine opportunity and an opti-
+mistic misreading of the data become indistinguishable. In practice,
+moreover, the procedure is applied to a large universe of candidate
+spreads: the candidates are ranked by these estimates and the top-
+ranked ones are traded. However, such ranking compounds the
+problem, because the candidates with the most favorable estima-
+tion errors are precisely the ones selected; this is the winner’s curse
+of post-selection inference [3]. More recent work learns the factors
+end to end [4, 11]. This improves the construction of the residuals
+but leaves their use unchanged: the trading decision is still made
+from a point estimate, with no estimate of the latent state and no
+measure of its uncertainty.
+Despite these differences, the methods above share one struc-
+ture. Each compresses a panel of returns, one day’s cross-section
+of many assets, into a few factors, and trades what the factors
+do not explain. They differ only in how the factors are obtained.
+Fama–French [5] fix them in advance as characteristic portfolios;
+Avellaneda–Lee [1] extract them from the data by principal com-
+ponents and trade the residual spread as a mean-reverting pro-
+cess; Epstein et al. [4] learn them end to end from characteris-
+tics with a trading objective. Outside finance, tabular foundation
+models [16, 23] perform the same compression with a network pre-
+trained on a synthetic prior rather than fitted to each dataset. This
+paper takes the next step in that sequence. It keeps the residual
+spread and its mean-reversion state from Avellaneda–Lee, the task-
+driven factor learning of Epstein et al., and the synthetic-prior pre-
+training of the tabular models, and it adds what none of them has:
+a dynamic model of the latent state, with the uncertainty of its
+filtered estimate. We call the resulting estimator the Neural Filter
+Estimator (NFE).
+Our claim concerns how the regime is defined and estimated.
+Most statistical-arbitrage strategies already condition on some no-
+tion of regime, but in practice that notion is a heuristic, such as a
+arXiv:2610.25802v2 [q-fin.GN] 20 Oct 2026
+ICAIF ’26, November 14–17, 2026, Milan, Italy Chang
+volatility threshold or a trailing return, or a label assigned ex post,
+once the outcome is known. We instead define the regime as a la-
+tent variable of an explicit generative model of the spread: whether
+the spread is currently converging to its level or diverging from it,
+and how fast. We then show that a single amortized filter can esti-
+mate this regime for every spread in a cross-section from past data
+alone, with a calibrated probability attached, and that the trading
+decision can use that probability in place of a point estimate.
+Two choices in this definition need justification: the number of
+states and the use of a probability. In the regime-switching liter-
+ature [12], a latent state is called a regime when a change in it
+changes the distribution of the observed process, for example its
+mean, its variance or its speed of mean reversion. For a trader, only
+the changes that alter the trading decision matter, so we define the
+regime relative to the decision. For a contrarian strategy held over
+a fixed horizon this leaves two states: one in which enough of the
+deviation reverts within the horizon for a position taken against it
+to pay, and one in which it does not, so that the same position earns
+nothing but its costs. Acting on this regime requires a judgment of
+how certain its assignment is, because the two states call for differ-
+ent actions and a mistaken assignment is costly. A point estimate
+assigns the spread to one state outright and gives no measure of
+that certainty, which makes the assignment difficult to act on; a
+posterior assigns a probability to each state, which the decision
+can weigh against the cost of being on the wrong side. Conven-
+tional practice lacks this measure not out of neglect but because
+its plug-in estimates do not provide it.
+The rest of the paper supports this claim with three measure-
+ments. The first checks the simulator. The filter is trained only on
+simulated spreads, so the simulated process must resemble the real
+residuals before anything learned from it can be trusted on real
+data. We test this directly: a classifier is trained to distinguish simu-
+lated windows from real ones, and a candidate process passes only
+if the classifier largely fails. The Gaussian noise of the classical
+model is rejected. The only candidate that passes on both cross-
+sections has both time-varying volatility and asymmetric shocks;
+fat tails alone are not enough.
+The second measures how well the regime can be identified
+at all. On simulated spreads the true regime is known, so every
+method can be compared with the best possible classifier, one that
+knows the true model, level and volatility. Every practical method,
+ours included, lands in one narrow band far below that ideal. The
+shortfall comes not from the estimator but from the window: the
+level of the spread must be estimated from the same window as
+its reversion, and that alone accounts for most of the loss. Better
+inference cannot close this gap; only more information can.
+The third asks what the posterior changes in trading. Under
+fixed trading rules and after costs, posterior sizing earns about
+the same as the point estimate; the posterior adds no alpha. What
+changes is the strategy’s own forecast of its return. The point esti-
+mate predicts far more than it realizes, a direct consequence of the
+winner’s curse above; the posterior-based strategies reduce this
+gap several-fold. The mean-reverting structure in the data is real,
+but it is smaller than the cost of trading on it, and the value of the
+posterior lies in saying so.
+2 Related Work
+Factor models and statistical arbitrage.The line of work this paper
+extends begins with static characteristic factors: Fama–French [5]
+explain the cross-section of returns with a few factor portfolios
+fixed in advance. Dynamic factor models let the factors evolve as
+a latent linear state [7, 26]. Statistical arbitrage trades the residu-
+als that the factor models leave unexplained. Gatev et al. [6] trade
+pairs selected by the distance method, and Avellaneda and Lee [1],
+in what has become the standard treatment, fit a mean-reversion
+model to cumulative factor residuals and trade its point estimates.
+Recent deep-learning work trades factor portfolios instead of se-
+lected pairs and learns the trading policy from residual histories
+end to end [11], and Epstein et al. [4] learn conditional factors by
+attention over characteristics, jointly with an after-cost trading ob-
+jective. In all of these methods the trading decision rests on a point
+estimate, and the uncertainty of the latent state plays no part in it.
+Tabular foundation models.Outside finance, a parallel line of
+work arrived at the same computation. Prior-data fitted networks
+[20] train a transformer on draws from a synthetic prior, so that
+one forward pass approximates a posterior predictive. Hollmann
+et al. [13] make the approach practical for small tables with
+TabPFN [14], Qu et al. [23] scale it with a column-then-row en-
+coding, and Kong and Das [16] combine these in TabFM, which
+alternates attention across columns and rows, compresses each
+row to one vector, and predicts from those vectors in context. A
+factor model also compresses each cross-section into a few num-
+bers; in this sense the conditional factor of Epstein et al. [4] is the
+finance special case of the learned row embedding. These models
+are not built for financial panels: their in-context stage attends
+over rows as an exchangeable set, and a time-ordered panel is not
+one. This paper closes part of that gap by placing a latent-state
+dynamic model under the row embedding and inferring the state
+from the past alone.
+Filtering and amortized inference.In state-space models, filter-
+ing refers to the estimation of a latent state from past observations
+alone [15]. Hamilton [12] introduced its regime-switching form to
+economics, and modern deep variants learn the state-space model
+itself [17] or amortize the filter with a variational inference net-
+work [19]. When the latent state can be simulated together with
+the observations, a different approach becomes possible. Neural
+posterior estimation trains a conditional density estimator on sim-
+ulator draws and then evaluates the posterior in one forward pass
+[22]; it is the core of simulation-based inference [2], and its cali-
+bration can be checked by simulation [27]. The NFE applies neu-
+ral posterior estimation to the spreads of a time-ordered panel,
+restricts the prior to a dynamic process whose innovation law is
+tested against real data, and amortizes the filtering posterior over
+the state.
+3 Method
+3.1 Notation
+We consider𝑁assets observed on trading days𝑡=1,...,𝑇, with
+daily returns𝑅𝑡∈R 𝑁 and𝑀characteristics𝑋 𝑡∈R 𝑁×𝑀 , following
+the notation of Epstein et al. [4]. A characteristic is an attribute of
+a firm known at the start of day𝑡, such as its market capitalization,
+book-to-price ratio or recent return and volatility. From returns
+Amortized Neural Filtering for Calibrated Posteriors ICAIF ’26, November 14–17, 2026, Milan, Italy
+Panel
+Samsung Elec. SK Hynix ··· Nongshim
++3.95 +4.03 ··· −0.01
+−1.27 −0.49 ··· −1.81
+−3.42 −5.15 ··· +0.55
++1.62 +2.64 ··· +1.70
++3.31 +0.69 ··· −0.18
+cross-sectional step:
+factor model
+time-series step:
+sequence encoder
+Neural Filter Estimator
+spread𝑆 𝑖,𝑡 = ˝𝑠≤𝑡 𝜀𝑖,𝑠 ; window𝑤 𝑖,𝑡
+ℎ1 ℎ2 ··· ℎ𝐿 GRU𝜓
+MDN𝜓 : five-component mixture inlog 2𝜏
+half-life𝜏
+𝑃(𝑧=D|𝑤)= tail mass
+𝑞𝜓(𝜏|𝑤 𝑖,𝑡)
+decision layer (Section 3.4): per-asset prior, posterior-sized positions
+portfolio P&L
+generative model:
+prior draws(𝑤,𝜃,𝑧)
+truth known
+⇒NLL training
+split-conformal
+(predictive distributions)
+Figure 1: The Neural Filter Estimator: the panel with its cross-sectional and time-series steps (left); the posterior head and the
+pre-specified decision layer (right); dashed, training on simulated draws and the conformal layer.
+and characteristics a residual return𝜀𝑖,𝑡 is constructed for each as-
+set, and its cumulative sum𝑆 𝑖,𝑡 = ˝𝑠≤𝑡 𝜀𝑖,𝑠 is the spread. We drop
+the asset index𝑖where it is immaterial. Two horizons are used
+throughout: the filter reads a look-back window of𝐿trading days,
+and a position is held for𝐻trading days (𝐿=60and𝐻=20in
+Section 4).
+3.2 Data-Generating Process
+The filter is trained by neural posterior estimation (Section 3.5):
+on simulated draws in which the latent state is known, it learns
+the map from an observed window to the posterior over the state,
+and it is then applied to real windows without further fitting. This
+amortization requires a process to simulate from, and the posterior
+is worth only as much as that process resembles the data, so the
+data-generating process is the object on which the method rests
+and must be stated explicitly. Conventional strategies assume one
+implicitly when they expect the spread to revert to a stationary
+level, and the end-to-end approaches leave theirs in the training
+distribution.
+The process describes the increment of the spread: since the
+spread is a cumulative sum of residual returns, its daily increment
+is the residual return itself, and mean reversion means that this
+increment tends to move the spread back toward a level𝑚 𝑖,𝑡 . We
+write the law of the increment conditional on where the spread
+stands, indexed by a latent variable𝑧𝑖,𝑡∈Zand by parameters𝜃,
+𝑆𝑖,𝑡+1−𝑆𝑖,𝑡 ∼𝑝  ·|𝑆 𝑖,𝑡 ;𝜃, 𝑧𝑖,𝑡.(1)
+Given the latent variables, the spread is Markov: the next incre-
+ment depends on the past only through𝑆𝑖,𝑡 , so a filter can carry its
+state forward one day at a time, and𝑧 𝑖,𝑡 selects which conditional
+law is in force on day𝑡. The following definition fixes which values
+of the index count as regimes.
+Definition 3.1 (Regime).Let the increment of a spread follow (1)
+with latent index𝑧𝑖,𝑡∈Z, and for a horizon𝐻let
+𝜌𝐻(𝑧)=E
+𝑆𝑖,𝑡−𝑆𝑖,𝑡+𝐻
+𝑆𝑖,𝑡−𝑚𝑖,𝑡
+𝑆𝑖,𝑡,𝑚 𝑖,𝑡, 𝑧𝑖,𝑡 =𝑧  (2)
+be the expected fraction of the deviation from the level that is
+reversed over the next𝐻days when the index equals𝑧. Given a
+threshold𝜌∗∈(0,1), theregimesof the process are the two classes
+{𝑧:𝜌 𝐻(𝑧)>𝜌 ∗}and{𝑧:𝜌 𝐻(𝑧)≤𝜌 ∗}ofZ.
+Different regimes thus have different conditional laws, as in
+Hamilton [12], and a change of index is a change of regime only
+if it changes what a trade can expect. We instantiate the kernel as
+Ornstein–Uhlenbeck (OU) mean reversion with regime-indexed
+speed,
+𝑆𝑖,𝑡+1−𝑆𝑖,𝑡 =𝜅(𝑧 𝑖,𝑡)  𝑚𝑖,𝑡−𝑆𝑖,𝑡 +𝜎 𝑖,𝑡𝜁𝑖,𝑡,(3)
+where the innovation scale𝜎 𝑖,𝑡 , the level𝑚 𝑖,𝑡 and the law of the
+innovation𝜁 𝑖,𝑡 are themselves latent processes (Appendix A). For
+𝜅constant over the horizon,𝜌 𝐻 =1−𝑒 −𝜅𝐻 (exact in continuous
+time), so a threshold on𝜌 𝐻 is a threshold𝜏 ∗ on the half-life𝜏=
+ln 2/𝜅, and the two regimes are C={𝜏≤𝜏 ∗}and D={𝜏>
+𝜏∗}, converging and diverging. We set𝜏 ∗ =𝐿=60days, because
+a slower reversion cannot be told from none within the window
+and the decision cannot act on it; with𝐻=20this is𝜌 ∗ =1−
+2−𝐻/𝜏∗≈0.21, so in C at least a fifth of the deviation reverts within
+the holding period and in D less, down to the boundary𝜅=0at
+which the pull vanishes. The two speeds𝜃=(𝜅(C),𝜅(D))lie on
+either side of𝜏∗ (half-lives of10and120days in the simulations of
+Section 4); the hyper-parameters of the innovation processes are
+fixed by moment matching (Appendix A). The regime path follows
+a first-order chain with transition matrix𝐴, so the prior factorizes
+as𝑝(𝜃,𝑧 1:𝑇)=𝑝(𝜃)𝑝(𝑧 1) ˛𝑇𝑡=2𝐴𝑧𝑡−1𝑧𝑡 .
+The mean-reversion kernel is the standard model of the liter-
+ature this work extends [1], and adopting it entails little loss of
+generality: the filter can be trained on any kernel of (1) that can
+be simulated, and the direct variant of Section 3.3 drops the ker-
+nel’s link between the state and the forecast. The innovation law,
+by contrast, is chosen by a two-sample test [18]: a candidate law is
+retained only if a classifier cannot separate its simulated windows
+from real residual windows beyond a pre-specified threshold, and
+only stochastic volatility with asymmetric innovations passes on
+both cross-sections (Appendix A).
+The regime is a latent variable of the process; the data provide
+only an estimate of it. With the whole path in hand the best es-
+timate is the smoothed assignment ˆ𝑧𝑖,𝑡 =arg max 𝑧𝑝(𝑧𝑖,𝑡 =𝑧|
+𝑆𝑖,1:𝑇, ˆ𝜃), available only ex post. What a trader needs at time𝑡is
+thefilteringposterior, which conditions only on the past,
+𝑝(𝜃,𝑧 𝑡|𝑆 1:𝑡)= 𝑝(𝑆 1:𝑡|𝜃,𝑧 𝑡)𝑝(𝜃,𝑧 𝑡)˝
+𝑧′
+∫
+𝑝(𝑆 1:𝑡|𝜃 ′,𝑧′)𝑝(𝜃 ′,𝑧′)d𝜃′.(4)
+ICAIF ’26, November 14–17, 2026, Milan, Italy Chang
+Its likelihood is marginalized over the earlier states and the latent
+scale and level paths, so the posterior is intractable; computing it
+is the filtering problem of state-space models. The NFE is a neural
+network trained to return the marginal of this posterior that the
+decision uses, the posterior over the current speed, in a single for-
+ward pass for every window and every asset: an amortized filter.
+3.3 Neural Filter Estimator
+Once the process is fixed, the question is what information to give
+the filter at time𝑡. A single spread’s window identifies its state
+only partly, since the level must be estimated from the same win-
+dow; the rest of the panel, the same day’s returns and characteris-
+tics of the other assets, enters through the cross-sectional step. As
+shown in Figure 1, the panel is a table with days as rows and as-
+sets as columns, and the NFE processes it along both axes: a cross-
+sectional step across the assets of one day, which removes what
+the assets share and leaves each asset’s own spread, and a time-
+series step along each asset’s window, which reads the spread’s dy-
+namics. The tabular foundation models [16, 23] organize in-context
+learning on tables the same way, and the cross-sectional step cor-
+responds to their row embedding (Section 2), with one deliberate
+difference: those models treat rows as exchangeable, which a time-
+ordered panel is not, so the NFE’s time-series step is a recursion
+that keeps the order of days, while its cross-sectional step, a factor
+model, is indifferent to the order of assets.
+Cross-sectional step.The classical construction uses returns
+alone: the factors are the leading principal components of the
+recent return covariance, and each asset’s residual is what they
+leave. The Attention Factor Model (AFM) [4] instead computes
+the factor weights each day by attention over the characteristics,
+so that assets with similar characteristics are pooled into the
+same factor portfolio and the factors adapt as the characteristics
+change. In either construction a factor model maps returns and
+characteristics to one residual return per asset,
+𝐹𝑡 =Ω 𝑡−1𝑅𝑡, 𝜀 𝑡 =𝑅𝑡−𝛽⊤𝑡−1𝐹𝑡,(5)
+whereΩ 𝑡−1 holds the factor weights and𝛽 𝑡−1 the loadings, both
+estimated with information up to𝑡−1; the cumulative sum of𝜀 𝑡
+is the spread the time-series step reads. The filter takes this resid-
+ual from whichever factor model supplies it rather than learning
+its own: the factor construction is where the earlier generations of
+the lineage in Section 2 differ, and holding it fixed isolates the con-
+tribution of the posterior. Section 4 evaluates both constructions;
+the NFE of that section uses AFM’s factors, refit annually as in the
+AFM strategy.
+Time-series step.A filter is a recursion: the estimate of the state
+is updated from the previous estimate and each new observation
+without revisiting the past, which is what makes it causal. A recur-
+rent network has this form, so we encode each spread’s look-back
+window with a gated recurrent unit (GRU),ℎ 𝑗 =GRU𝜓(ℎ𝑗−1,𝑤𝑖,𝑗)
+for𝑗=𝑡−𝐿+1,...,𝑡, where𝑤 𝑖,𝑗 is the day-𝑗entry of the window
+𝑤𝑖,𝑡 , the spread and its increment standardized by the window’s
+own mean and standard deviation, and the final stateℎ 𝑡 summa-
+rizes the window. The standardization makes the input invariant
+to location and scale, so the filter reads the shape of the window
+and not its units, and the simulator has to match the data in shape
+only. A panel form, both steps as alternating attention in one net-
+work, is tested only on simulated draws in which the latent truth
+is known (truth-known draws hereafter) and is left for future work
+(Section 4.2).
+Posterior head.The state the decision needs is the half-life of the
+current regime,𝜏𝑡 =ln 2/𝜅(𝑧 𝑡). From the final stateℎ 𝑡 a mixture-
+density head outputs a posterior𝑞 𝜓(𝜏|𝑤 𝑖,𝑡), a five-component
+Gaussian mixture inlog 2𝜏whose weights, locations and widths
+are functions ofℎ 𝑡 . The half-life spans two orders of magnitude,
+hence the logarithmic scale, and a mixture rather than a single
+Gaussian lets an ambiguous window spread its mass over both
+regimes instead of committing to one. The regime probability of
+Definition 3.1 is the tail mass of this posterior beyond𝜏∗,
+𝑃 𝑧𝑖,𝑡 =D|𝑤 𝑖,𝑡 = ∫ ∞
+𝜏∗
+𝑞𝜓
+ 𝜏|𝑤 𝑖,𝑡 d𝜏,(6)
+so the regime probability and the half-life posterior are consis-
+tent by construction. The decision layer uses the half-life posterior
+through its moments; the regime probability is reported but is not
+an input to the sizing rule. Adirect variantplaces the same head on
+the standardized𝐻-day increment of the spread,𝑞𝜓(Δ𝑆|𝑤 𝑖,𝑡). It is
+a control for the functional form and not a deployable filter, since
+the decision layer needs a posterior over the half-life: the OU-form
+posterior ties the predictive mean to the half-life through the ker-
+nel (3), and the comparison of Section 4.2 tells whether that form
+limits the forecast.
+3.4 Decision layer
+The decision layer is pre-specified: the rules below were fixed be-
+fore any run and apply with the same conventions to every strat-
+egy, and the filter is never fitted to realized profit, so the posterior
+is the only interface between the filter and the portfolio. If the rule
+were learned, as in AFM’s end-to-end trading network, a difference
+in performance could come from the rule as much as from the state
+estimate; with the rule fixed, the strategies differ only in the resid-
+ual they trade and in whether the position is sized from a point
+estimate or from the posterior. Three components are selected on
+the training split: the threshold rule’s entry level and AFM’s char-
+acteristic set, by their training-split Sharpe ratios, and the per-asset
+prior below, from the training split’s half-lives.
+The signal is the standardized deviation𝑑, the last entry of the
+window’s spread channel: the spread’s distance from its window
+mean in units of the window’s standard deviation, clipped at±3.
+This is the signal of the classical pipeline [1]. The base rule sets the
+position proportional to−𝑑, a contrarian position against the de-
+viation with no tuned parameter; the threshold rule of Avellaneda
+and Lee [1] opens a unit position once|𝑑|exceeds an entry thresh-
+old tuned on the training split. Both rules act on the deviation as
+if it would revert; the NFE instead sizes positions on the same sig-
+nal from the posterior. Under the kernel (3) with reversion rate
+𝜅, the expected change of the spread over the holding period is
+−𝑑(1−𝑒 −𝜅𝐻)in standardized units and, with the scale and level at
+their window estimates, its variance is1−𝑒 −2𝜅𝐻 ; when𝜅is uncer-
+tain, the law of total variance adds the variance of that expected
+Amortized Neural Filtering for Calibrated Posteriors ICAIF ’26, November 14–17, 2026, Milan, Italy
+change across the posterior, and the mean–variance optimal posi-
+tion is the expected change divided by the total variance,
+𝜔𝑖,𝑡 ∝
+−𝑑E
+
+1−𝑒 −𝜅𝐻 
+E
+
+1−𝑒 −2𝜅𝐻 +𝑑 2 Var 𝑒−𝜅𝐻 ,(7)
+with all moments taken under𝑞𝜓(·|𝑤 𝑖,𝑡)through𝜅=ln 2/𝜏. The
+term𝑑 2 Var(𝑒−𝜅𝐻)is identically zero for any point estimate, so (7)
+with a point estimate is the plug-in rule of the classical pipeline;
+Section 4 compares the posterior with the base rule on the same
+residuals and, at matched signal and window, with this plug-in
+rule. The term shrinks the position when the posterior is wide
+and leaves it unchanged when the posterior is narrow. Positions
+are then demeaned across assets and scaled to unit gross exposure,
+the dollar-neutral convention under which every strategy is eval-
+uated, so within a fixed gross the penalty moves exposure from
+spreads whose posterior is wide to those whose posterior is nar-
+row. It accounts for uncertainty in the reversion speed only; the
+level appears in𝑑as a window estimate and is not penalized, the
+omission Section 4.2 finds to be the largest source of identification
+loss.
+The training prior over𝜏is deliberately wide, flat inlog 2𝜏over
+[3,400]days, so that one network serves every spread. At deploy-
+ment it is replaced, for each stock, by a narrower Gaussian prior
+inlog 2𝜏centred on that stock’s own half-life, estimated on𝐿-day
+blocks of the training split and shrunk toward the panel mean by
+empirical Bayes, so that a stock with few or noisy blocks is pulled
+further toward the mean. Because the head is trained under a flat
+prior, its output is likelihood-shaped, and the new prior is applied
+by reweighting the posterior draws used in (7); the network is not
+retrained.
+3.5 Training
+Real data never reveal the latent state, but simulated draws in-
+clude it by construction, so the simulator supplies the labels. The
+filter is trained as in neural posterior estimation [22], by maximiz-
+ing the likelihood of the known half-life under the head,L(𝜓)=
+−E(𝜏,𝑤)∼𝑝 train[log𝑞𝜓(𝜏|𝑤)], on windows drawn from the pro-
+cess of Section 3.2 with one simplification: in training the half-
+life is held fixed over the window and drawn uniformly inlog 2𝜏
+on[3,400]days, with the innovation hyper-parameters at their
+moment-matched values (Table 5). Each window then carries one
+half-life, so𝜃reduces to𝜏, and the flat prior gives the likelihood-
+shaped head on which the per-asset prior relies. The two-state
+chain of Section 3.2 is the process of the two-sample test and of the
+identification experiments of Section 4.2; the calibration check of
+Figure 2(b) uses the training draws themselves. No real returns en-
+ter the training of the network. This keeps the posterior checkable:
+its calibration is measured on simulated draws, where the truth is
+known (Section 4.2), and it cannot have been fitted to the outcomes
+it is later scored on. Real data enter the filter only through the
+choice of innovation law, by the two-sample test on full-sample
+windows (Appendix A), and the moment matching of its hyper-
+parameters on the training split; at deployment they enter through
+the per-asset prior, the split-conformal layer [24] on every learned
+predictive distribution of Section 4.2, and the direct variant’s target
+scale, all fitted on the training split (Appendix B).
+Table 1: Out-of-sample performance, KRX panel, 2018-04 to
+2026-07 (evaluation days), net of costs; bold marks the best
+of the four generations.
+strategy SR𝜇(%)𝜎(%) MDD (%) turnoverΔSR
+FF3−0.12−1.1 8.8 23.00.052−0.01
+PCA0.57 3.86.77.1 0.053+0.59
+AFM1.45 10.4 7.2 4.2 0.055+1.35
+NFE1.49 10.67.14.10.055+1.38
+market-adjusted−0.12−1.2 9.2 21.8 0.052−0.01
+random benchmark−0.23−1.0 4.4 16.0 0.071
+4 Experiment
+We report one empirical study: walk-forward statistical-arbitrage
+portfolios on120Korea Exchange (KRX) stocks over2010–2026,
+with annual refits (Table 5), net of transaction and shorting costs;
+the package, the experiment scripts and the data pipeline are
+available at https://github.com/minkeymouse/nfe. One strategy
+represents each generation of the line of work in Section 2.
+Fama–French three-factor characteristic residuals (FF3) [5], rolling
+principal-component residuals (PCA) and Attention Factor Model
+residuals (AFM) [4] are each traded by the same base rule; the
+NFE, posterior sizing on the AFM factors, is the fourth generation.
+In Table 1, AFM denotes AFM’s residuals under the base rule in
+our own implementation; its learned trading network is reported
+among the variants. We compare orderings, not levels, so absolute
+Sharpe ratios are not compared with the published U.S. figures.
+The conventions, fixed in advance and identical across strategies,
+are collected in Table 5 and Appendix B, and every label-free diag-
+nostic is reported with its null model and positive control. Results
+come from one training seed and are exploratory unless stated;
+a result is calledconfirmedwhen it was reproduced on a disjoint
+period or on disjoint seeds against criteria fixed beforehand.
+4.1 Results
+Table 1 reports the later period,2018to2026, on the days after
+its training split, one row per generation, with a market-adjusted
+residual as a negative control;ΔSR is the annualized Sharpe ratio of
+the daily return difference to the random benchmark (Appendix B).
+The four generations.FF3’s fixed characteristics earn no excess
+return over the random benchmark, and neither does the market-
+adjusted control. Statistical factors rank above the benchmark
+(PCA, Sharpe0.57) and learned factors higher still (AFM,1.45). In
+the earlier period no strategy outperforms the benchmark. The
+ordering therefore depends on the period, and because the panel
+is selected at the end of the sample, the levels are an upper bound.
+The fourth generation.The NFE matches AFM’s Sharpe, a differ-
+ence in level of+0.04, within the period’s noise, at slightly lower
+volatility and drawdown and with equal turnover. The standard
+error of either strategy’sΔSR is0.41, so a difference of this size is
+not resolvable here. Posterior sizing also raises the PCA-residual
+strategy’s Sharpe ratio from0.57to0.68, a difference subject to
+the same noise. The per-asset prior of Section 3.4 was confirmed
+on three disjoint training seeds. With the training prior the NFE’s
+mean Sharpe ratio is1.424in this period and−0.259in the earlier
+ICAIF ’26, November 14–17, 2026, Milan, Italy Chang
+one; with the per-asset prior it is1.470and−0.193; with the per-
+asset centres permuted across stocks it is1.458and−0.215. The
+gains are consistent in sign across seeds but small relative to the
+period’s noise, and most of them come from calibrating the prior’s
+centre and width to the panel rather than from the per-stock cen-
+tres. Figure 2(a) shows the cumulative returns.
+Window length.A posterior over the reversion speed condi-
+tioned on a250-day window, applied to the same60-day signal,
+has a largerΔSR than AFM on two training seeds. The gain over
+AFM, however, is a window effect: a pre-specified control that
+trades the250-day deviation directly reaches a Sharpe ratio of2.77
+in this period, above every strategy, and−0.91in the other, so
+we do not claim it and retain the60-day window. What survives
+at matched signal and window is that this posterior outperforms
+the plug-in rule with a250-day least-squares point estimate of the
+speed.
+Other variants.A cross-sectional step learned on the panel itself,
+asset attention trained within the NFE in place of AFM’s factors,
+reaches a Sharpe ratio of−0.03, within the random benchmark’s
+noise, so the NFE keeps AFM’s factor extraction. Among the rule
+variants, the threshold rule reaches0.75on PCA residuals, above
+both the base rule and posterior sizing there, and AFM’s own end-
+to-end trading network, evaluated under this paper’s60-day win-
+dow and20-day holds instead of its native daily rebalancing, has
+the lowest Sharpe ratio of any strategy on its factors (0.25); under
+a convention that is not its own, that row is not a replication of
+Epstein et al. [4], and the NFE adopts AFM’s factors and not its
+trading network.
+Overshoot.One secondary finding contradicts the pre-stated pre-
+diction that the contrarian rule earns more after a window labeled
+converging than after one labeled diverging: with the label com-
+puted from the deviation about a level𝑔(𝑋)learned from char-
+acteristics (Appendix A; this pre-registered label is not the pos-
+terior of (6)), the base rule’s realized P&L per holding period is
++118bp after a diverging window and+27bp after a converging
+one, a converging-minus-diverging difference of−92±25bp. The
+difference survives its controls: the injected positive control recov-
+ers the predicted sign (+81±20), the random-walk null shows no
+difference (+8±21), the ordering persists when P&L is normal-
+ized by position weight, which rules out a sizing artifact, and it
+reproduces on a disjoint period (−90±37, with the fundamentals
+at their neutral fill before2016). On this panel a60-day divergence
+behaves as an overshoot: the label orders expected return within
+a profitable rule and does not separate a profitable state from an
+unprofitable one, so its use is as a sizing input and not as a signal
+to stand aside. The sizing rule (7) does not use it, and the shrink-
+age it applies to slow-reversion windows runs against this finding,
+which is left open.
+4.2 Analysis
+Identification.On truth-known draws of the special case of the
+generative model with Gaussian innovations of constant scale, the
+only case in which the exact likelihood-ratio detector can be com-
+puted, every practical estimator and the reference detectors fall
+within one band of0.61–0.66AUC. The Bayes bound, i.e. the exact
+likelihood-ratio detector given the true level and scale, computed
+2021 2022 2023 2024 2025 2026
+1.0
+1.5
+2.0
+Cumulative return
+(vol-matched)
+FF3
+PCA
+AFM
+NFE
+random benchmark
+(a)
+0.0 0.2 0.4 0.6 0.8 1.0
+nominal coverage
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+empirical coverage
+perfect calibration
+NFE posterior
+point estimate (half-width) (b)
+Figure 2: (a) Cumulative net return of the strategies of Ta-
+ble 1, scaled to a common volatility; the random benchmark
+at its own scale. (b) Coverage of the true half-life on truth-
+known draws: the NFE posterior and the same posterior at
+half its width.
+on draws whose state is constant over the window, reaches0.93;
+any detector that sees only the window is bounded by it. In ac-
+curacy the amortized posterior is indistinguishable from the plug-
+in estimator of Avellaneda and Lee [1]: the window limits accu-
+racy whatever the estimator, and the largest loss comes from the
+unknown level, since with the level known separation rises from
+0.62–0.64to0.79–0.81. Over60days the slow state (D, half-life120
+days) completes29%of its reversion and the fast state (C,10days)
+98%, so a level estimated from the window sits near the current
+value and makes the slow state resemble the fast one. In a separate
+input-channel experiment, a channel carrying the un-demeaned
+spread closes almost none of that gap: over three seeds it adds
++0.0002±0.0005AUC alone and+0.0010±0.0004together with
+the demeaned channel, against+0.139±0.002when the encoder is
+given the true level. On the half-life itself, an unamortized particle
+filter over the same model (25×256particles) is the more accurate,
+with rank correlation0.74against0.59for the NFE on truth-known
+draws, at7.9s against2.5ms per cross-section on a desktop CPU
+(training the NFE once takes104s); the NFE trades that fidelity for
+amortization.
+Calibration.The paper’s central claim is that the posterior is
+calibrated. Figure 2(b) tests the half-life posterior on truth-known
+draws under the training prior, before the per-asset reweighting,
+which is not separately checked: its coverage tracks the nominal
+level throughout, so the regime probability (6), the mass of the
+same posterior beyond𝜏∗, is calibrated in the same marginal sense.
+The same posterior at half its width under-covers at every level:
+the maximum deviation from nominal is0.022on the seed shown
+and at most0.010on two further seeds, against0.08–0.12at half
+width. A posterior that ignored the window would also pass this
+check, so it is read together with the identification band above. On
+real data, the predictive distribution of the𝐻-day change is scored
+on the held-out rolling-PCA residual series, which need no learned
+factors, with identical features and the same conformal layer for ev-
+ery method, against an unconditional baselineN(0, ˆ𝜎
+√
+𝐻), ˆ𝜎the
+asset’s trailing60-day volatility. Table 2 reports the continuous
+ranked probability skill score against the baseline (CRPSS), the dis-
+persion of the predictive mean relative to the variance of the out-
+come, and the coverage and width of the nominal90%interval,
+Amortized Neural Filtering for Calibrated Posteriors ICAIF ’26, November 14–17, 2026, Milan, Italy
+Table 2: Predictive distributions of the𝐻-day change on
+held-out KRX PCA residuals, 2018-04 to 2026-07 (evaluation
+days).
+predictive distribution CRPSS disp. cov. width gap (bp)
+unconditional baseline0.00 0.00 0.89 2.30 0
+OU point estimate−0.97 0.75— —1084
+mixture density net−0.50 0.71 0.87 3.99 798
+amortized OU-form (ours)−0.11 0.22 0.89 2.40 588
+amortized direct (ours)0.00 0.02 0.89 2.17 137
+boosted quantiles−0.03 0.08 0.88 2.28 277
+crediting sharpness only subject to calibration [9]. Its last column
+is theforecast–realized gap: with positions formed for every row by
+the same mean–variance rule from that row’s predictive mean and
+variance, the strategy’s own forecast of its return over the holding
+period minus the return it realizes, in basis points per holding pe-
+riod at unit gross. This is the postdecision surprise of Smith and
+Winkler [25], the optimizer’s curse, and the decision-level form of
+the winner’s curse of Section 1: a forecast that is too confident
+about the positions it selects overstates what they earn. The gap
+is smallest for a forecast of zero, so it is read together with the
+forecast’s dispersion.
+On real data, as reported in Table 2, no method has positive skill
+against the baseline, and the point estimate and the mixture den-
+sity net score well below it, with returns alone or with fundamen-
+tals added (the latter not tabulated). Where the methods differ is in
+how accurately they assess their own error. The OU point estimate,
+the unshrunk window plug-in that mean–variance sizing requires,
+has the largest forecast dispersion in the table and gives no inter-
+val; its forecast exceeds its realized return by roughly a thousand
+basis points per holding period. The gap of the amortized meth-
+ods is roughly two to eight times smaller, and the ordering holds
+on three training seeds:572–593bp for the OU-form posterior and
+120–150for the direct variant, against1084for the point estimate
+and658–838for the mixture density net. The reduction is a uni-
+form shrinkage rather than a conditional one: the gap falls with
+forecast dispersion in every row of Table 2, and a point forecast
+scaled by a single constant, chosen so that its mean absolute fore-
+cast on the training split equals the posterior’s, reaches the pos-
+terior’s gap within sampling error. The OU-form posterior’s gap
+minus the rescaled point forecast’s is−1to−5bp over three seeds
+on truth-known draws of the admitted process, and+1±17and
+−13±12bp in the two periods of a KRX panel rebuilt under the
+same universe rule from a second price source; on the no-reversion
+null it is−38±10and−42±10bp, so there the posterior is the more
+cautious (Appendix B). The gap that remains for every method we
+attribute to the level estimated from the window, the loss identified
+by the level-known comparison above. The conformal layer brings
+every learned method to nominal coverage, but coverage says noth-
+ing about the conditional mean. The amortized OU-form posterior
+is constrained by its functional form: its forecast dispersion on the
+volatility-matched random-walk null (Table 5) is as large as on real
+data. The amortized direct variant matches the baseline’s skill with
+a narrower interval, has the smallest gap of any learned method,
+and shows no dispersion on that null. Figure 3 shows the mecha-
+nism on truth-known draws: the encoder state is organized by the
+(a) encoder embeddings, t-SNE
+2 4 6 8 10
+log2 half-life (days)
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+qψ
+P(z = D) = tail mass
+(b) example posteriors
+fast (true HL 3d)
+ambiguous (true HL 73d)
+slow (true HL 371d)
+2
+3
+4
+5
+6
+7
+8
+true log2 half-life (days)
+Figure 3: (a) t-SNE of encoder states on truth-known draws,
+colored by the truelog 2 half-life. (b) Posteriors for a fast, an
+ambiguous and a slow window; dotted,𝜏 ∗ =60days.
+latent half-life, which it never receives as input, and an ambiguous
+window yields a wide posterior and, through (7), a smaller posi-
+tion; whether the sizing results of Section 4.1 come from the width
+varying across windows or from the dependence of the penalty on
+𝑑 2, which reweights large deviations even at a fixed width, has not
+been separated on real data.
+Panel form.On truth-known panel draws, the panel form of Sec-
+tion 3.3, which is not the filter used in the portfolio, outperforms
+the recurrent time-series step, and by as much on panels whose in-
+novation hyper-parameters are independent across assets, so that
+margin reflects capacity and not pooling. Pooling is measured sep-
+arately, as the contrast between panels whose levels share a com-
+mon factor and an independent-factor control. On shared-factor
+panels the held-out negative log-likelihood of the half-life falls
+from2.088to1.762, of which0.179±0.003is the contrast with
+the independent-factor control; the panel form recovers most of
+that factor and stays calibrated, and the true innovation hyper-
+parameters, the most that pooling a shared volatility state could
+supply, bring no further improvement, so the gain comes from the
+shared factor. The contrast reproduces on disjoint seeds (0.170±
+0.002) in a confirmation run that also replaces the exploration’s
+rolling-PCA cross-sectional step by asset attention.
+5 Conclusion
+This paper nowcasts the state of a residual spread instead of fore-
+casting its next move. It builds on the classical and the end-to-end
+approaches to statistical arbitrage, trains its filter on a simulated
+process whose innovation law was chosen by testing candidates
+against real residuals, and uses the uncertainty of the estimate in
+the trading decision. Three measured results follow. Within them,
+four findings have passed a confirmation run: the overshoot find-
+ing, the panel-form pooling contrast, the per-asset prior and the
+ordering of the forecast–realized gaps.
+First, the regime is identifiable, but only marginally: every prac-
+tical estimator and the strong reference detectors fall in one nar-
+row band near0.61–0.66AUC, against0.93for a fully informed
+detector, and the largest loss comes from estimating the level from
+the same window as the reversion. Second, a calibrated posterior
+gives an accurate account of its own error. A point estimate’s fore-
+cast exceeds its realized return by roughly a thousand basis points
+per hold and gives no interval; the amortized methods reduce that
+gap by a factor of roughly two to eight, and since a point forecast
+rescaled by one constant reaches the same gap, the reduction is
+a uniform shrinkage, and the interval, which the point estimate
+lacks, is what the posterior adds. No method shows skill against
+ICAIF ’26, November 14–17, 2026, Milan, Italy Chang
+an unconditional baseline, with returns alone or with fundamen-
+tals added. Third, in the portfolio evaluation the residual construc-
+tion matters more than the trading policy. Posterior sizing matches
+AFM’s Sharpe, within the period’s noise, at no more risk. No pre-
+specified decision-layer configuration adds return of the size the
+residual construction adds; the gain from a longer window is un-
+stable across periods and not claimed; and the fully learned cross-
+sectional step does no better than the random benchmark.
+One methodological lesson runs through all three results: a
+label-free diagnostic needs a null model and a positive control
+before its output can be interpreted. Without them several of
+ours lacked power or were biased upward, and we withdrew the
+conclusions drawn from them, the250-day gain among them. A
+simulator can pass a two-sample test that has almost no power
+against the kernel it appears to validate: changing the kernel
+moves the AUC by at most0.014(Appendix A).
+Since the largest identification loss comes from the level esti-
+mated from the same window, the natural next step is the panel
+form of the NFE: one causal network over the cross-section and
+time, pretrained on a panel-level generative model, that pools the
+cross-section inside the network and returns its posteriors jointly,
+with a selective state-space encoder [10] as its time-series step. On
+truth-known draws with a shared factor in the levels, the panel
+form already improves the half-life posterior over the per-asset fil-
+ter, in part through capacity, and stays calibrated (Section 4.2); on
+real data the two cross-sectional routes tried here, a learned cross-
+sectional step and a level learned from characteristics, did not help,
+so its value there is untested. Whether on real data the information
+is worth more than the cost of acting on it is the question this work
+leaves open.
+Acknowledgments
+We thank Jae Young Kim (Seoul National University) and Young Jae
+Cho (ATZ Trading) for their guidance and support, and the three
+anonymous ICAIF reviewers for their careful reading and construc-
+tive comments.
+Ethics and Privacy Statement
+This work uses only public daily market data and simulated data;
+no vendor prices are redistributed and no personal data is used.
+References
+[1] Marco Avellaneda and Jeong-Hyun Lee. 2010. Statistical Arbitrage in the US
+Equities Market.Quantitative Finance10, 7 (2010), 761–782. doi:10.1080/
+14697680903124632
+[2] Kyle Cranmer, Johann Brehmer, and Gilles Louppe. 2020. The Frontier of
+Simulation-Based Inference.Proceedings of the National Academy of Sciences
+117, 48 (2020), 30055–30062. doi:10.1073/pnas.1912789117
+[3] Bradley Efron. 2011. Tweedie’s Formula and Selection Bias.J. Amer. Statist.
+Assoc.106, 496 (2011), 1602–1614. doi:10.1198/jasa.2011.tm11181
+[4] Elliot L. Epstein, Rose Wang, Jaewon Choi, and Markus Pelger. 2025. Atten-
+tion Factors for Statistical Arbitrage. InProceedings of the 6th ACM International
+Conference on AI in Finance (ICAIF ’25). ACM, New York, NY, USA, 396–404.
+doi:10.1145/3768292.3770398
+[5] Eugene F. Fama and Kenneth R. French. 1993. Common Risk Factors in the
+Returns on Stocks and Bonds.Journal of Financial Economics33, 1 (1993), 3–56.
+doi:10.1016/0304-405X(93)90023-5
+[6] Evan Gatev, William N. Goetzmann, and K. Geert Rouwenhorst. 2006. Pairs
+Trading: Performance of a Relative-Value Arbitrage Rule.The Review of Financial
+Studies19, 3 (2006), 797–827. doi:10.1093/rfs/hhj020
+[7] John Geweke. 1977. The Dynamic Factor Analysis of Economic Time Series. In
+Latent Variables in Socio-Economic Models, Dennis J. Aigner and Arthur S. Gold-
+berger (Eds.). North-Holland, Amsterdam, 365–383.
+[8] Domenico Giannone, Lucrezia Reichlin, and David Small. 2008. Nowcasting: The
+Real-Time Informational Content of Macroeconomic Data.Journal of Monetary
+Economics55, 4 (2008), 665–676.
+[9] Tilmann Gneiting, Fadoua Balabdaoui, and Adrian E. Raftery. 2007. Probabilistic
+forecasts, calibration and sharpness.Journal of the Royal Statistical Society: Series
+B69, 2 (2007), 243–268. doi:10.1111/j.1467-9868.2007.00587.x
+[10] Albert Gu and Tri Dao. 2023. Mamba: Linear-Time Sequence Modeling with
+Selective State Spaces.arXiv preprint arXiv:2312.00752(2023).
+[11] Jorge Guijarro-Ordonez, Markus Pelger, and Greg Zanotti. 2021. Deep Learning
+Statistical Arbitrage. arXiv:2106.04028 [cs.LG]
+[12] James D. Hamilton. 1989. A New Approach to the Economic Analysis of Nonsta-
+tionary Time Series and the Business Cycle.Econometrica57, 2 (1989), 357–384.
+doi:10.2307/1912559
+[13] Noah Hollmann, Samuel Müller, Katharina Eggensperger, and Frank Hutter.
+2023. TabPFN: A Transformer That Solves Small Tabular Classification Prob-
+lems in a Second. InInternational Conference on Learning Representations.
+[14] Noah Hollmann, Samuel Müller, Lennart Purucker, Arjun Krishnakumar, Max
+Körfer, Shi Bin Hoo, Robin Tibor Schirrmeister, and Frank Hutter. 2025. Accurate
+Predictions on Small Data with a Tabular Foundation Model.Nature637 (2025),
+319–326. doi:10.1038/s41586-024-08328-6
+[15] Rudolf E. Kalman. 1960. A New Approach to Linear Filtering and Prediction
+Problems.Journal of Basic Engineering82, 1 (1960), 35–45.
+[16] Weihao Kong and Abhimanyu Das. 2026. Introducing TabFM: A Zero-Shot Foun-
+dation Model for Tabular Data. Google Research Blog. https://research.google/
+blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/
+[17] Rahul G. Krishnan, Uri Shalit, and David Sontag. 2015. Deep Kalman Filters.
+arXiv preprint arXiv:1511.05121(2015).
+[18] David Lopez-Paz and Maxime Oquab. 2017. Revisiting Classifier Two-Sample
+Tests. InInternational Conference on Learning Representations.
+[19] Joseph Marino, Milan Cvitkovic, and Yisong Yue. 2018. A General Method for
+Amortizing Variational Filtering. InAdvances in Neural Information Processing
+Systems 31.
+[20] Samuel Müller, Noah Hollmann, Sebastian Pineda Arango, Josif Grabocka, and
+Frank Hutter. 2022. Transformers Can Do Bayesian Inference. InInternational
+Conference on Learning Representations.
+[21] National Bureau of Economic Research. 2026. Business Cycle Dating. https:
+//www.nber.org/research/business-cycle-dating. Accessed August 2026.
+[22] George Papamakarios and Iain Murray. 2016. Fast𝜖-free Inference of Simulation
+Models with Bayesian Conditional Density Estimation. InAdvances in Neural
+Information Processing Systems 29. 1028–1036.
+[23] Jingang Qu, David Holzmüller, Gaël Varoquaux, and Marine Le Morvan. 2025.
+TabICL: A Tabular Foundation Model for In-Context Learning on Large Data. In
+Proceedings of the 42nd International Conference on Machine Learning.
+[24] Yaniv Romano, Evan Patterson, and Emmanuel J. Candès. 2019. Conformalized
+Quantile Regression. InAdvances in Neural Information Processing Systems 32.
+[25] James E. Smith and Robert L. Winkler. 2006. The Optimizer’s Curse: Skepticism
+and Postdecision Surprise in Decision Analysis.Management Science52, 3 (2006),
+311–322. doi:10.1287/mnsc.1050.0451
+[26] James H. Stock and Mark W. Watson. 2002. Forecasting Using Principal Compo-
+nents from a Large Number of Predictors.J. Amer. Statist. Assoc.97, 460 (2002),
+1167–1179. doi:10.1198/016214502388618960
+[27] Sean Talts, Michael Betancourt, Daniel Simpson, Aki Vehtari, and Andrew Gel-
+man. 2018. Validating Bayesian Inference Algorithms with Simulation-Based
+Calibration. arXiv:1804.06788 [stat.ME]
+A The Generative Model
+The scale, level, and innovation law of (3) evolve as
+log𝜎𝑖,𝑡 =𝜙log𝜎 𝑖,𝑡−1+𝜂𝜈 𝑖,𝑡, 𝑚 𝑖,𝑡 =𝑚𝑖,𝑡−1+𝛿𝜉 𝑖,𝑡,
+𝜁𝑖,𝑡 =  𝑒𝛾𝑢 𝑖,𝑡−E[𝑒 𝛾𝑢] sd[𝑒𝛾𝑢], (8)
+with𝜈,𝑢,𝜉∼ N(0,1). Table 4 lists the parameters of each com-
+ponent and how each is fixed. Only the innovation law and the
+scale are fitted to data, by moment matching on the training split’s
+real windows and never on the two-sample test; the kernel car-
+ries the two speeds,𝜂is fixed so thatlog𝜎has stationary standard
+deviation0.5, and the level step𝛿is held at a fixed default. The
+two-sample test constrains the innovation law and the scale but
+not the kernel, so the number of regimes is a modeling choice, two
+Amortized Neural Filtering for Calibrated Posteriors ICAIF ’26, November 14–17, 2026, Milan, Italy
+Table 3: Two-sample AUC between real and simulated resid-
+ual windows, mean±SE over5seeds.
+innovation law crypto KRX verdict
+Gaussian, constant𝜎0.903±.002 0.904±.001fail
+Student-𝑡0.809±.002 0.788±.002fail
+lognormal0.890±.001 0.885±.001fail
+stochastic vol (SV)0.744±.004 0.712±.002fail/pass
+SV + lognormal0.686±.003 0.678±.002pass
+random walk, Gaussian0.895±.001 0.898±.001fail
+Table 4: Components of the generative model.
+component form parameters fixed by tested
+kernel OU, regime-indexed speed𝜅(C),𝜅(D)prior no
+innovations centered lognormal𝛾moment matching yes
+scale AR(1) log-volatility𝜙,𝜂 𝜙matched;𝜂fixed yes
+level random walk, step𝛿 𝛿fixed no
+being the smallest set that separates a reversion the trade can use
+from one it cannot. The level is untested, every candidate being
+simulated with𝑚≡0; a level𝑔(𝑋)learned from characteristics
+by gradient boosting on slow window statistics and the six fun-
+damentals, fitted causally, does not outperform a250-day trailing
+mean of the spread on held-out data, and is retained only as the pre-
+registered anchor of the overshoot test in Section 4.1. The injected
+positive controls of Section 4 add a trend away from the level.
+The two-sample test.For each candidate innovation law a classi-
+fier is trained to distinguish simulated residual windows from real
+ones and its AUC recorded (Table 3); a candidate passes when its
+AUC plus two standard errors lies below0.75.
+Windowsreal: one fixed set of cross-sectionally demeaned cu-
+mulative residuals over the full sample (the PCA and AFM
+series are not re-tested); simulated: five seeds, which give
+the standard error.
+Classifiergradient boosting on scale-invariant window sta-
+tistics: tail weight, skewness, autocorrelations of the incre-
+ments and of their absolute values, zero crossings, range,
+half-window volatility ratio.
+Controlssame-process windows score0.50and a wrong pro-
+cess0.90; the kernel moves the AUC by at most0.014, so the
+statistics constrain the innovation law, not the kernel.
+Candidatesfifteen: the laws of Table 3 and their combina-
+tions, plus random walks under the same laws as controls
+without mean reversion; the table reports one representa-
+tive per feature.
+Student-𝑡innovations score0.809/0.788and worsen the fit when
+combined with stochastic volatility, so the data are better matched
+by a day-to-day varying scale with asymmetric innovations than
+by a fixed fat-tailed law. The bar of0.75, halfway between chance
+and perfect separation, was registered before any run as a conven-
+tion, not derived; at0.678the selected process remains distinguish-
+able from the data, and the posterior claims on the KRX portfolio
+should be interpreted in light of that residual discrepancy.
+Table 5: Protocol and configuration, fixed in advance.
+universe top-200KRX by median traded value;120names with complete history,
+2010–2026(4,072d)
+characteristics ROE, D/E, net margin, revenue growth, B/P, E/P (DART, point-in-time,
+from2016)
+split2018-04; the first30%of each period trains
+window, hold𝐿=60,𝐻=20(non-overlapping);𝜏 ∗ =60d
+residuals PCA,𝐾=3on252d; FF3 on[1,size,B/P]
+sizing64posterior draws;𝑑∈[−3,3]; dollar-neutral at unit gross
+costs5bp per unit of turnover;1bp per day on the short notional
+benchmark, nulls random signal held𝐻d; vol-matched random walk;10d/120d switching
+encoder, training GRU-64; five-component MDN; Adam,4,000steps, batch512, rate
+3×10−3 cosine;60,000draws
+half-life priorlog𝑈(3,400)d; per-stock centres at test
+(𝜙,𝛾), training split(0.09,0.08)in2010–18;(0.28,0.12)in2018–26
+two-state chain half-lives10d (C) and120d (D)
+AFM𝐾=5; annual refits;40epochs
+panel form2blocks, width64,4heads;30k panels,3k steps, batch16, rate3×10 −4
+B Experiment Details
+Data.Both universe filters use end-of-sample information (liquid-
+ity ranking at the sample end; delisted stocks dropped). The six
+characteristics are point-in-time: each becomes available on the
+first trading day after disclosure, flows are trailing-twelve-month,
+capitalization is split-consistent, and a missing stock-day receives
+a neutral rank.
+Definitions.
+Weights and costsdefined on the residual portfolios of (5)
+[4]; the implied factor-hedge legs are not separately traded
+or costed.
+Turnoverthe mean daily absolute change in these weights as
+a fraction of gross.
+ΔSRthe annualized Sharpe ratio of the daily return difference
+between a strategy and the random benchmark (bootstrap
+SE0.41–0.42); the benchmark redraws its random positions
+every𝐻days at the same gross, hence its higher turnover.
+Not modeledthe Korean transaction tax and short-sale re-
+strictions in force during part of the window; levels are
+therefore not implementable returns.
+Estimation notes.
+FF3needs size and B/P on the same stock-day, with joint cov-
+erage only from2017, so part of its weakness, in the earlier
+period especially, reflects limited coverage.
+Conformal layerwidths are multiplicative per quantile; the
+outcome-fitted methods fit on the first80%of the training
+split and calibrate on the remaining20%after an𝐿-day gap,
+simulator methods on the full training split.
+Shrinkage controlkeeps the point estimate’s positions and
+rescales only its forecast by one constant fixed on the train-
+ing split; its KRX run uses a panel rebuilt under the same
+rule from a second vendor’s adjusted prices, on which Ta-
+ble 2’s ordering also holds.

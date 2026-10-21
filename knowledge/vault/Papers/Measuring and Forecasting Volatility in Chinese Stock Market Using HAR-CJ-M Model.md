@@ -19,6 +19,9 @@ har-cj-m model, [[volatility forecasting]], [[realized volatility]]
 Can the HAR-CJ-M model's performance be replicated in Nasdaq/S&P index futures and options using daily realized volatility and momentum effect data?
 
 ## Test
-queued for testing
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 6/9 unseen years
+How: feature `0.5*lag(rng,1) + 0.3*lag(rng5,1) + 0.2*lag(rng20,1)` added to the brain's range model
+Touches: [[Brain]]
+In the [[Near-miss pool]] - re-tested together with the others monthly.
 
 Part of [[Research engine]]

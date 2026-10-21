@@ -1,9 +1,11 @@
-scanned 76 papers, queued 0, queue size 23 []
-read (2*): The cross-section of speculator skill: Evidence from day trading
-prop-read failed: JSONDecodeError Unterminated string starting at: line 1 column 5674 (char 5673)
-read 1, AI units today 738/7000
-curiosity asked: Strategy: LowGamma_Exp70_Breakout
-tested: Strategy: LowGamma_Exp70_Breakout - Break above the 70% expe -> NOT CONFIRMED on my data: too few trades (1 in 2014-2023, need 150). in-sample 2014-2023: 
-tested: Can simple linear models like HAR and ridge regression outpe -> NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 7/9 unse
-tested: Can a hybrid fuzzy neural network predict the direction of t -> NOT CONFIRMED on my data: 2223 signal days, hit 46.6% (always-long 56.5%), strategy -5.7 b
-testing used 507 AI units
+Exceeded 5000 form XObject invocations while extracting text; further form content is skipped.
+scanned 78 papers, queued 3, queue size 25 []
+read for the mission (2*): The restaurant at the end of the random walk: recent developments in t
+read for the mission (4*): Economic Incentives and Social Preferences: Substitutes or Complements
+read for the mission (1*): Savings by and for the Poor: A Research Review and Agenda
+read 3, AI units today 1433/7000
+curiosity asked: Strategy: GammaTilt_Exp90_Break
+tested: Strategy: GammaTilt_Exp90_Break - Low dealer gamma (gex_rank -> NOT CONFIRMED on my data: too few trades (18 in 2014-2023, need 150). in-sample 2014-2023:
+tested: Can the HAR-CJ-M model's performance be replicated in Nasdaq -> NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 6/9 unse
+tested: Can a CNN-LSTM model trained on historical stock price data  -> DOESN'T FIT MY DATA - Testing a CNN‑LSTM versus a simple moving average requires the model
+testing used 710 AI units

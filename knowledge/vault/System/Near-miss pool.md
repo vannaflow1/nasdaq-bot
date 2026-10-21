@@ -13,5 +13,6 @@ Ideas that helped the range forecast a little and fairly consistently. Re-tested
 - where(gex_rank < 0.2, 1, 0) (+0.2%, 4/9 years) - Negative gamma hurts most under stress
 - clip(r20, -1, 0) (+0.2%, 3/9 years) - Countercyclical volatility (recent drawdown)
 - 0.5*mean(rng,5) + 0.3*mean(rng5,5) + 0.2*mean(rng20,5) (+0.1%, 7/9 years) - Forecasting cryptocurrencies volatility using statistical and machine learning methods: A comparative study
+- 0.5*lag(rng,1) + 0.3*lag(rng5,1) + 0.2*lag(rng20,1) (+0.1%, 6/9 years) - Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model
 
 Last combined test (2026-10-20): NOT CONFIRMED - the combination does not hold on unseen years (picked +1.76%, unseen years -0.46%)

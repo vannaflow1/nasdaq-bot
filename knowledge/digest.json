@@ -1,5 +1,50 @@
 [
 {
+"title": "Savings by and for the Poor: A Research Review and Agenda",
+"learned": "The paper studies why low\u2011income people save less due to high costs, trust issues, information gaps, social pressures, and behavioral biases, and reviews experiments addressing these frictions.",
+"concepts": [
+"transaction costs",
+"trust barriers",
+"information gaps",
+"social constraints",
+"behavioral biases"
+],
+"relevance": 1,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/roiw.12101",
+"date": "2026-10-21"
+},
+{
+"title": "Economic Incentives and Social Preferences: Substitutes or Complements?",
+"learned": "Explicit monetary incentives can weaken or strengthen intrinsic motivations depending on framing, perceived autonomy, and informational signals. When incentives are poorly designed they may crowd out the trader's intrinsic drive for disciplined, optimal performance, reducing overall payoff. Well\u2011crafted incentives that respect autonomy and signal supportive oversight can complement intrinsic motivation, enhancing performance.",
+"concepts": [
+"crowding out",
+"crowding in",
+"autonomy framing",
+"intrinsic motivation",
+"incentive design"
+],
+"relevance": 4,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "http://repec.deps.unisi.it/quaderni/617.pdf",
+"date": "2026-10-21"
+},
+{
+"title": "The restaurant at the end of the random walk: recent developments in the description of anomalous transport by fractional dynamics",
+"learned": "The paper reviews fractional dynamics, especially superdiffusion and first\u2011passage\u2011time (FPT) analysis for anomalous transport, showing how boundary conditions affect the probability of reaching a target before a barrier.",
+"concepts": [
+"fractional diffusion",
+"superdiffusion",
+"first\u2011passage\u2011time density",
+"anomalous scaling",
+"boundary\u2011value problems"
+],
+"relevance": 2,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://iopscience.iop.org/article/10.1088/0305-4470/37/31/R01/pdf",
+"date": "2026-10-21"
+},
+{
 "title": "The cross-section of speculator skill: Evidence from day trading",
 "learned": "The paper studies a large sample of day\u2011trading accounts and finds a wide cross\u2011section of ability: a small fraction consistently earn positive risk\u2011adjusted returns while the majority underperform after costs. Skill appears persistent over months and is linked to higher turnover and larger position sizes.",
 "concepts": [
@@ -390,7 +435,7 @@
 "Machine Learning"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "DOESN'T FIT MY DATA - Testing a CNN\u2011LSTM versus a simple moving average requires the model's out\u2011of\u2011sample forecasts (predicted next\u2011day log returns). Those forecasts are not present in the available columns, so the idea cannot be expressed with the existing data.",
 "url": "https://downloads.hindawi.com/journals/complexity/2020/6622927.pdf",
 "date": "2026-10-20"
 },
@@ -403,7 +448,7 @@
 "realized volatility"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 6/9 unseen years",
 "url": "https://downloads.hindawi.com/journals/aaa/2013/143194.pdf",
 "date": "2026-10-20"
 },

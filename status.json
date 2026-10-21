@@ -95,8 +95,11 @@
   "No FOMC, CPI or jobs report on Wed 21 Oct."
  ],
  "learning": [
-  "LEARNING: 221 papers read (36 more skipped as not relevant enough), 118 ideas tested on my memory, 1 promising.",
+  "LEARNING: 224 papers read (36 more skipped as not relevant enough), 120 ideas tested on my memory, 1 promising.",
   "",
+  "\u2022 Economic Incentives and Social Preferences: Substitutes or Complements? (\u2605\u2605\u2605\u2605\u2606)",
+  "  Explicit monetary incentives can weaken or strengthen intrinsic motivations depending on framing, perceived autonomy, and informational signals. When incentives are poorly designed they may crowd out the trader's intrins",
+  "  tested: prop mission - feeds my strategy designer and self-check",
   "\u2022 OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper derives an optimal risky\u2011asset allocation when an investor must keep wealth above a stochastic floor equal to a fixed fraction \u03b1 of the historical maximum wealth. The optimal exposure is proportional to the sur",
   "  tested: queued for testing",
@@ -112,10 +115,7 @@
   "\u2022 Volatility Forecasting using GARCH Processes with Exogenous Variables (thesis) (\u2605\u2605\u2605\u2606\u2606)",
   "  Advanced GARCH variants did not beat simple ones on average; training length mattered; exogenous variables helped for big US/EU indices like S&P 500 and Russell 2000.",
   "  tested: TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding th",
-  "\u2022 Hybrid LSTM-GARCH Framework for Financial Market Volatility Risk Prediction (Nasdaq 100) (\u2605\u2605\u2605\u2606\u2606)",
-  "  GARCH parameters fed into an LSTM beat standalone LSTM and GARCH variants on Nasdaq-100 volatility (MSE/RMSE).",
-  "  tested: TESTED ON MY DATA (Oct 2026): GARCH, GJR-GARCH and EGARCH (t-dist, refit yearly) alone have 21-27% higher out-of-sample error than my range brain, and adding th",
-  "This week's tests: 120 run - 2 promising, 63 not confirmed, 27 don't fit my data, 28 translation failures",
+  "This week's tests: 123 run - 2 promising, 65 not confirmed, 28 don't fit my data, 28 translation failures",
   "",
   "22 papers waiting in my queue."
  ],

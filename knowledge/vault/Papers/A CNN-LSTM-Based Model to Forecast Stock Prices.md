@@ -19,6 +19,6 @@ cnn-lstm, stock price forecasting, [[machine learning]]
 Can a CNN-LSTM model trained on historical stock price data (e.g., QQQ) outperform a simple moving average model in predicting next-day log returns (y_r)?
 
 ## Test
-queued for testing
+[[DOESN'T FIT]] - DOESN'T FIT MY DATA - Testing a CNN‑LSTM versus a simple moving average requires the model's out‑of‑sample forecasts (predicted next‑day log returns). Those forecasts are not present in the available columns, so the idea cannot be expressed with the existing data.
 
 Part of [[Research engine]]

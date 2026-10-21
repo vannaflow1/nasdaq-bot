@@ -1,19 +1,5 @@
 [
  {
-  "id": "openalex:W2166672289",
-  "title": "Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model",
-  "idea": "Can the HAR-CJ-M model's performance be replicated in Nasdaq/S&P index futures and options using daily realized volatility and momentum effect data?",
-  "relevance": 3,
-  "added": "2026-10-20"
- },
- {
-  "id": "openalex:W3110420963",
-  "title": "A CNN-LSTM-Based Model to Forecast Stock Prices",
-  "idea": "Can a CNN-LSTM model trained on historical stock price data (e.g., QQQ) outperform a simple moving average model in predicting next-day log returns (y_r)?",
-  "relevance": 3,
-  "added": "2026-10-20"
- },
- {
   "id": "openalex:W4323528528",
   "title": "Uncovering the asymmetric information content of high-frequency options",
   "idea": "Build OTM call/put realized semivariances from intraday QQQ option prices and add them to the range forecast. (Retest as a POWER if it is about the next session's day type, yesterday's high/low, the gap, the first hour or a tail day.)",

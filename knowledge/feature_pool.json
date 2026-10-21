@@ -52,5 +52,14 @@
   "paper": "Forecasting cryptocurrencies volatility using statistical and machine learning methods: A comparative study",
   "id": "openalex:W4389410587",
   "added": "2026-10-21"
+ },
+ {
+  "expr": "0.5*lag(rng,1) + 0.3*lag(rng5,1) + 0.2*lag(rng20,1)",
+  "template": null,
+  "gain": 0.1,
+  "years": "6/9",
+  "paper": "Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model",
+  "id": "openalex:W2166672289",
+  "added": "2026-10-21"
  }
 ]
