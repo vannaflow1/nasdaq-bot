@@ -19,6 +19,6 @@ black‑scholes pricing error, moneyness bias, atm call overpricing, historical 
 Short (sell) near‑ATM XSP calls that have a high absolute relative pricing error (e.g., ARPE > 30%) and buy the corresponding puts of similar moneyness, betting that the market will correct the call overprice while the put is fairly priced.
 
 ## Test
-queued for testing
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 
 Part of [[Research engine]]

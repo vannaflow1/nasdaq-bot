@@ -19,6 +19,6 @@ ann, svm, [[technical indicators]], [[financial time series]]
 Can an ANN model outperform an SVM model in predicting the direction of daily Nasdaq-100 index movements using technical indicators derived from trading data?
 
 ## Test
-queued for testing
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 
 Part of [[Research engine]]

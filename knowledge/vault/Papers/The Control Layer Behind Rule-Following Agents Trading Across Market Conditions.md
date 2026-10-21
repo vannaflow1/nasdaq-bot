@@ -19,6 +19,6 @@ ai trading agents, rule adherence, [[risk management]]
 Can an AI trading agent maintain high rule adherence during different market conditions?
 
 ## Test
-queued for testing
+[[TRANSLATION FAILED]] - TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 
 Part of [[Research engine]]

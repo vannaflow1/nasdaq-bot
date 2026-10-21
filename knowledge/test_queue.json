@@ -1,26 +1,5 @@
 [
  {
-  "id": "openalex:W3216327941",
-  "title": "Predicting the Direction Movement of Financial Time Series Using Artificial Neural Network and Support Vector Machine",
-  "idea": "Can an ANN model outperform an SVM model in predicting the direction of daily Nasdaq-100 index movements using technical indicators derived from trading data?",
-  "relevance": 3,
-  "added": "2026-10-20"
- },
- {
-  "id": "arxiv:2610.26324v1",
-  "title": "The Control Layer Behind Rule-Following Agents Trading Across Market Conditions",
-  "idea": "Can an AI trading agent maintain high rule adherence during different market conditions?",
-  "relevance": 3,
-  "added": "2026-10-20"
- },
- {
-  "id": "openalex:W7222900652",
-  "title": "Black\u2013Scholes Pricing and Market Mispricing of XSP European Index Options",
-  "idea": "Short (sell) near\u2011ATM XSP calls that have a high absolute relative pricing error (e.g., ARPE > 30%) and buy the corresponding puts of similar moneyness, betting that the market will correct the call overprice while the put is fairly priced.",
-  "relevance": 3,
-  "added": "2026-10-20"
- },
- {
   "id": "openalex:W2046913100",
   "title": "OPTIMAL INVESTMENT STRATEGIES FOR CONTROLLING DRAWDOWNS",
   "idea": "Scale daily exposure to Nasdaq futures (or QQQ) in proportion to the surplus (current equity curve minus \u03b1 times its running maximum). Set \u03b1\u22480.8 and exposure\u202f=\u202fk\u00b7(W\u2011\u03b1M)/W, with k calibrated to target a given volatility.",

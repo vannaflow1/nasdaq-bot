@@ -1,4 +1,6 @@
-scanned 80 papers, queued 0, queue size 17 []
+fontTools is required to fully parse the encoding of a CFF Type1 font in font dictionary {'/Type': '/Font', '/Subtype': '/Type1', '/BaseFont': '/UCZEOH+Times-Roman', '/Encoding': IndirectObject(240, 0, 140713951361072), '/FirstChar': 32, '/FontDescriptor': IndirectObject(239, 0, 140713951361072), '/LastChar': 118, '/Widths': [250, 0, 0, 0, 0, 833, 0, 0, 333, 333, 0, 0, 0, 564, 0, 278, 500, 500, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 722, 0, 667, 0, 611, 556, 0, 0, 333, 0, 0, 611, 0, 722, 722, 0, 0, 667, 0, 611, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 444, 0, 444, 500, 444, 333, 500, 500, 278, 0, 0, 278, 0, 500, 500, 500, 0, 333, 389, 278, 0, 500]}, but is not installed. Consider installing fontTools if you encounter encoding problems.
+fontTools is required to fully parse the encoding of a CFF Type1 font in font dictionary {'/Type': '/Font', '/Subtype': '/Type1', '/BaseFont': '/LXHQPE+Times-Roman', '/Encoding': IndirectObject(457, 0, 140713951361072), '/FirstChar': 32, '/FontDescriptor': IndirectObject(456, 0, 140713951361072), '/LastChar': 121, '/Widths': [250, 0, 0, 0, 0, 0, 778, 0, 0, 0, 0, 0, 0, 564, 250, 278, 500, 500, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 722, 0, 667, 0, 611, 556, 0, 0, 333, 0, 0, 611, 0, 722, 722, 0, 0, 667, 556, 611, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 444, 500, 444, 500, 444, 333, 0, 500, 278, 0, 0, 278, 778, 500, 500, 500, 0, 333, 389, 278, 0, 500, 0, 0, 500]}, but is not installed. Consider installing fontTools if you encounter encoding problems.
+scanned 80 papers, queued 2, queue size 19 []
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
@@ -65,9 +67,9 @@ scanned 80 papers, queued 0, queue size 17 []
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-triage failed: RuntimeError free AI daily limit reached
+self-triage failed: RuntimeError free AI daily limit reached
 read 0, AI units today 4595/7000
-tested: Check whether the volatility spike from US CPI or payrolls f -> TRANSLATION FAILED - RuntimeError: free AI daily limit reached
-tested: Intraday volatility transmission among precious metals, ener -> TRANSLATION FAILED - RuntimeError: free AI daily limit reached
-tested: Investigate the relationship between put-call parity violati -> TRANSLATION FAILED - RuntimeError: free AI daily limit reached
+tested: Can an ANN model outperform an SVM model in predicting the d -> TRANSLATION FAILED - RuntimeError: free AI daily limit reached
+tested: Can an AI trading agent maintain high rule adherence during  -> TRANSLATION FAILED - RuntimeError: free AI daily limit reached
+tested: Short (sell) near‑ATM XSP calls that have a high absolute re -> TRANSLATION FAILED - RuntimeError: free AI daily limit reached
 testing used 0 AI units

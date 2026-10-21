@@ -321,7 +321,7 @@
 "relative pricing error"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "https://aemps.ewapub.com/article/view/37764.pdf",
 "date": "2026-10-20"
 },
@@ -431,7 +431,7 @@
 "risk management"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "https://arxiv.org/abs/2610.26324v1",
 "date": "2026-10-20"
 },
@@ -445,7 +445,7 @@
 "Financial Time Series"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "TRANSLATION FAILED - RuntimeError: free AI daily limit reached",
 "url": "https://downloads.hindawi.com/journals/complexity/2021/2906463.pdf",
 "date": "2026-10-20"
 },
