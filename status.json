@@ -285,55 +285,22 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 3 (job 3/8): 1344 new strategies this run, 14,204 tested in total (grid 985,824 + mutations, 1.4% covered)",
-  "Stage A (2014-21, EV after fee > 0): 2494 | Stage B (still positive on unseen 2022-23): 645 | exams taken: 4",
-  "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): NQ +3307 at 1984 validated tries (2390 placebos, avg +8) -> 0 beat it | GC +3112 at 208 validated tries (174 placebos, avg -15) -> 0 beat it | CL +2776 at 189 validated tries (80 placebos, avg +22) -> 0 beat it",
-  "Market focus: NQ 56% / GC 21% / CL 24%  (evidence: NQ 0/9020 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/2710 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/2474 beat the luck bar on 2022-23; locked exams 0/0 pas)",
+  "PROP STRATEGY SEARCH - run 1 (job 6/8): 1263 new strategies this run, 14,123 tested in total (grid 985,824 + mutations, 1.4% covered)",
+  "Stage A (2014-21, EV after fee > 0): 2496 | Stage B (still positive on unseen 2022-23): 645 | exams taken: 4",
+  "LUCK BAR (best 2022-23 EV that many no-edge random-entry strategies reach, 95%): NQ +3307 at 1990 validated tries (2402 placebos, avg +10) -> 0 beat it | GC +1673 at 201 validated tries (160 placebos, avg -9) -> 0 beat it | CL +2776 at 193 validated tries (88 placebos, avg +18) -> 0 beat it",
+  "Market focus: NQ 56% / GC 21% / CL 24%  (evidence: NQ 0/8995 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/2660 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/2468 beat the luck bar on 2022-23; locked exams 0/0 pas)",
   "",
   "LEADERBOARD (ranked by EV per eval on unseen 2022-23 above the market's luck bar; 'luck-level' = not above it, likely a lucky survivor):",
-  "- [CL] break london_low 08:30-10:00, every day | lucid_pro_50k risk 12%/20% | 2014-21 EV +26 (pass 22%) | 2022-23 EV +1504 (pass 68%) | luck-level | 5 accounts: +642$/month (12% months positive) | 1197 trades, -0.06R",
-  "- with 20d trend at 10:00, calm VIX (below 60d avg) | tradeday_fastpass_50k risk 12%/20% | 2014-21 EV +1 (pass 21%) | 2022-23 EV +1872 (pass 94%) | luck-level | 5 accounts: +813$/month (38% months positive) | 1167 trades, -0.04R",
-  "- mutant: long at 11:30, calm VIX (below 60d avg) | tradeday_fastpass_50k risk 20%/35% | 2014-21 EV +34 (pass 15%) | 2022-23 EV +1651 (pass 63%) | luck-level | 5 accounts: +829$/month (33% months positive) | 1168 trades, -0.02R",
-  "- mutant: long at 11:30, calm VIX (below 60d avg) | tradeday_fastpass_50k risk 20%/35% | 2014-21 EV +34 (pass 15%) | 2022-23 EV +1651 (pass 63%) | luck-level | 5 accounts: +829$/month (33% months positive) | 1168 trades, -0.02R",
-  "- fade vwap_dn2 10:00-14:00, mean-reverting (Hurst<0.5) | tradeify_select_daily_50k risk 30%/50% | 2014-21 EV +24 (pass 24%) | 2022-23 EV +1414 (pass 82%) | luck-level | 5 accounts: +358$/month (12% months positive) | 206 trades, -0.19R",
-  "- with yesterday at 08:31, mean-reverting (Hurst<0.5) | lucid_pro_50k risk 30%/50% | 2014-21 EV +244 (pass 38%) | 2022-23 EV +1400 (pass 56%) | luck-level | 5 accounts: -26$/month (0% months positive) | 541 trades, -0.03R",
+  "- mutant: [GC] break or15_low 08:45-11:30, no red-folder news | tradeday_fastpass_50k risk 30%/50% | 2014-21 EV +189 (pass 24%) | 2022-23 EV +792 (pass 55%) | luck-level | 5 accounts: +652$/month (25% months positive) | 504 trades, -0.00R",
+  "- [GC] break or15_low 08:45-11:30, no red-folder news | tradeday_fastpass_50k risk 30%/50% | 2014-21 EV +95 (pass 16%) | 2022-23 EV +774 (pass 57%) | luck-level | 5 accounts: +584$/month (25% months positive) | 562 trades, -0.02R",
+  "- mutant: [GC] break or15_low 08:45-11:30, no red-folder news | tradeday_fastpass_50k risk 30%/50% | 2014-21 EV +164 (pass 17%) | 2022-23 EV +747 (pass 57%) | luck-level | 5 accounts: +557$/month (25% months positive) | 562 trades, -0.02R",
+  "- mutant: [GC] break or15_low 08:45-11:30, no red-folder news | tradeday_fastpass_50k risk 20%/50% | 2014-21 EV +59 (pass 18%) | 2022-23 EV +745 (pass 62%) | luck-level | 5 accounts: +123$/month (8% months positive) | 562 trades, +0.00R",
+  "- [GC] break ewma1_up 10:00-14:00, every day | lucid_pro_50k risk 30%/50% | 2014-21 EV +15 (pass 21%) | 2022-23 EV +642 (pass 64%) | luck-level | 5 accounts: +534$/month (8% months positive) | 355 trades, -0.11R",
+  "- [GC] with its overnight-range side at 08:31, every day | lucid_pro_50k risk 12%/20% | 2014-21 EV +107 (pass 15%) | 2022-23 EV +573 (pass 58%) | luck-level | 5 accounts: -22$/month (0% months positive) | 2762 trades, -0.07R",
   "",
   "PORTFOLIOS (2-4 low-correlation strategies in ONE account; chosen on 2014-21, validated on 2022-23; 5 combinations validated so far):",
   "- with overnight at 09:00, low dealer gamma + with gap at 09:00, tail-day risk high + with the open's side of the overnight range at 10:00, tail-d + [CL | tradeday_fastpass_50k risk 30%/50%, 6 micros/unit, max corr 0.14 | 2014-21 EV +660 (pass 37%, best single +988) | 2022-23 EV -28 (pass 16%) | 5 accounts: +56$/month (12% months positive)",
   "- break ewma1_up 08:45-11:30, every day + with overnight at 09:00, low dealer gamma | tradeday_fastpass_50k risk 30%/50%, 3 micros/unit, max corr 0.05 | 2014-21 EV +706 (pass 66%, best single +1109) | 2022-23 EV -85 (pass 0%) | 5 accounts: -106$/month (0% months positive)",
-  "- with overnight at 09:00, low dealer gamma + with the open's side of the overnight range at 10:00, tail-d + against overnight at 13:30, gap fill likely | lucid_pro_50k risk 30%/50%, 5 micros/unit, max corr 0.09 | 2014-21 EV +757 (pass 41%, best single +988) | 2022-23 EV -104 (pass 10%) | 5 accounts: -169$/month (0% months positive)",
-  "",
-  "EXAM: [CL] break london_low 08:30-10:00, every day -> NOT CONFIRMED on my data: in-sample 2014-2023: 1372 trades, win 41%, avg -0.09R (-0.0 pts/trade after costs), PF 0.92, positive in 6/15 years, max drawdown -196.2R | PROP SIM best plan lucid_flex_50k: pass 21%, $155 paid out per eval, EV after the $104 fee +51",
-  "",
-  "EXAM: [CL] break on_low 08:45-11:30, every day -> NOT CONFIRMED (prop path): random entries on the same days pay about as much (random EV +592, p=1.00). in-sample 2014-2023: 1418 trades, win 35%, avg -0.22R (-0.1 pts/trade after costs), PF 0.75, positive in 2/15 years, max drawdown -346.6R | PROP SIM best pla"
- ],
- "prop_search_recent": [
-  "NEW-REGIME PROP SEARCH (since 2024) - run 1 (job 1/2): 21237 new strategies this run, 21,237 tested in total (grid 985,824 + mutations, 2.2% covered)",
-  "Stage A (2024-01..2025-03, EV after fee > 0): 2243 | Stage B (still positive on unseen 2025-04..now): 302 | exams taken: 0",
-  "LUCK BAR (best 2025-04..now EV that many no-edge random-entry strategies reach, 99%): NQ +2768 at 1478 validated tries (2956 placebos, avg -46) -> 0 beat it | GC +2952 at 358 validated tries (716 placebos, avg -53) -> 0 beat it | CL +804 at 368 validated tries (736 placebos, avg -100) -> 0 beat it",
-  "Market focus: NQ 48% / GC 26% / CL 26%  (evidence: NQ 0/10511 beat the luck bar on 2022-23; locked exams 1/1 passed, GC 0/5398 beat the luck bar on 2022-23; locked exams 0/0 passed, CL 0/5328 beat the luck bar on 2022-23; locked exams 0/0 pa)",
-  "",
-  "LEADERBOARD (ranked by EV per eval on unseen 2025-04..now above the market's luck bar; 'luck-level' = not above it, likely a lucky survivor):",
-  "- [CL] with its move since midnight at 11:30, volatile VIX (above 60d av | tradeify_select_daily_50k risk 30%/50% | 2024-01..2025-03 EV +139 (pass 16%) | 2025-04..now EV +796 (pass 89%) | luck-level | 5 accounts: +348$/month (25% months positive) | 154 trades, -0.13R",
-  "- against 20d trend at 08:31, volatile VIX (above 60d avg), breakeven at | lucid_flex_50k risk 30%/50% | 2024-01..2025-03 EV +290 (pass 33%) | 2025-04..now EV +2584 (pass 89%) | luck-level | 5 accounts: +1493$/month (25% months positive) | 153 trades, +0.12R",
-  "- [CL] fade r1 08:30-10:00, no FOMC | tradeify_select_daily_50k risk 30%/50% | 2024-01..2025-03 EV +71 (pass 31%) | 2025-04..now EV +393 (pass 50%) | luck-level | 5 accounts: -47$/month (11% months positive) | 81 trades, +0.14R",
-  "- long at 09:00, small overnight, trail 1.0R | tradeday_fastpass_50k risk 20%/50% | 2024-01..2025-03 EV +187 (pass 34%) | 2025-04..now EV +2288 (pass 90%) | luck-level | 5 accounts: +2665$/month (56% months positive) | 259 trades, -0.07R",
-  "- short at 13:00, high dealer gamma | lucid_flex_50k risk 30%/50% | 2024-01..2025-03 EV +23 (pass 36%) | 2025-04..now EV +2266 (pass 74%) | luck-level | 5 accounts: +3691$/month (62% months positive) | 101 trades, +0.20R",
-  "- [CL] fade london_high 08:45-11:30, every day | tradeify_select_daily_50k risk 20%/35% | 2024-01..2025-03 EV +98 (pass 28%) | 2025-04..now EV +301 (pass 52%) | luck-level | 5 accounts: +20$/month (13% months positive) | 161 trades, -0.00R"
- ],
- "eta": [
-  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
-  "If there is one to find: most likely in 8 weeks (80% range under a week to 17 months). Overall chance within 1 month 18%, 3 months 30%, 6 months 37%, 1 year 43%.",
-  "Chance there is NO such algo in what I search (or I never catch it): 50%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
-  "Based on: 1 exams (classic + new-regime track) in 1 days (1 passed, 0 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on data it never saw in my simulator AND isn't luck (classic: locked 2024-26 exam + review; new-regime track: recent exam + the coming weeks).",
-  "Waiting: with the open's side of the overnight range at 08:31, n (review)",
-  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time."
- ],
- "eta_levers": [
-  "MY TIMER LEVERS (what-if): now 30% within 3 months / 43% within 1 year.",
-  "- more candidates reach the exam (2x exam rate: more search, more markets, portfolios): 37% / 47%",
-  "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 40% / 48%",
-  "- both: 45% / 49%",
-  "Biggest single lever right now: better candidates. Exam rate today 2.3/week of max 10 (room to grow)."
+  "- with overnight at 09:00, low dealer gamma + with the open's side of the overnight range at 10:00, tail-d + against overnight at 13:30, gap fill likely | lucid_pro_50k risk 30%/50%, 5 micros/unit, max corr 0.09 | 2014-21 EV +757 (pass 41%, best single +988) | 2022-23 EV -104 (pass 10%) | 5 accounts: -169$/month (0% months positive)"
  ]
 }
