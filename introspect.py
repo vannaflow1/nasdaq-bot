@@ -111,6 +111,8 @@ Then you decide how to improve yourself. You can do three things:
    that digs into a near-miss or a pattern in your failures. Each is {"why": "...", "spec": <a question or strategy spec>}.
    Question spec: {"kind":"question","question":"...","target":"<y_ formula>","expr":"<known-columns formula or empty>"}
    Strategy spec: {"kind":"strategy","name":"...","entry":{...},"filter":"...","stop":{...},"target":{...},"exit":"14:55"}
+   optional trade management: "manage": {"be_at_R": 0.5} (breakeven) | {"trail_R": 1} | {"partial": {"at_R": 1, "frac": 0.5}};
+   optional account playbook: "prop": {"risk": 0.2, "eval_risk": 0.5, "eval_finish": true, "funded_micros": 2}
    Use only columns/levels that exist (k_*, p_*, y_* for targets only, pw_*, gex_rank, iv30, vix, vix_curve, nq_vs_es,
    levels yday_high/low, asia_high/low, london_high/low, on_high/low, or15_high/low, vwap bands, open, midnight_open).
 3. paper_hunts (max 2): when you notice a specific pattern, near-miss, failure reason or an exam result you want to
