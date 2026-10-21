@@ -1,5 +1,9 @@
-checked 2026-10-21 07:42 UTC
+checked 2026-10-21 07:53 UTC
 GEMINI_API_KEY: raw value has 1 extra character(s) (spaces/line breaks/quotes) - testing it with them removed
 GEMINI_API_KEY: VALID, 46 text models. flash: gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-flash-latest, gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash | pro: nano-banana-pro-preview, lyria-3-pro-preview, gemini-pro-latest, gemini-3.1-pro-preview-customtools, gemini-3.1-pro-preview, gemini-2.5-pro
-  gemini-omni-flash-preview: generate FAILED HTTP 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/
-  nano-banana-pro-preview: generate FAILED HTTP 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/
+  gemini-flash-latest: generate FAILED HTTP 503 This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+  gemini-3.8-flash: generate FAILED HTTP 503 This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+  gemini-flash-lite-latest: generate OK -> 'OK'
+  gemini-pro-latest: generate FAILED HTTP 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/
+  gemini-2.5-pro: generate FAILED HTTP 404 This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and i
+  gemini-2.5-flash: generate FAILED HTTP 404 This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and impro
