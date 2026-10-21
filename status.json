@@ -306,27 +306,18 @@
  ],
  "eta": [
   "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (my own estimate - a range, not a promise)",
-  "If there is one to find: most likely in 8 weeks (80% range under a week to 17 months). Overall chance within 1 month 18%, 3 months 30%, 6 months 37%, 1 year 43%.",
-  "Chance there is NO such algo in what I search (or I never catch it): 50%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
-  "Based on: 1 exams (classic + new-regime track) in 1 days (1 passed, 0 rejected by review), about 2.3 exams/week. 'Found' = passes evals and pays out on data it never saw in my simulator AND isn't luck (classic: locked 2024-26 exam + review; new-regime track: recent exam + the coming weeks).",
-  "Waiting: with the open's side of the overnight range at 08:31, n (review)",
-  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time."
+  "If there is one to find: most likely in 3 months (80% range 2 weeks to 2.1 years). Overall chance within 1 month 10%, 3 months 22%, 6 months 30%, 1 year 36%.",
+  "Chance there is NO such algo in what I search (or I never catch it): 55%. Honest: most strategy searches find nothing; each failed exam nudges this up, a confirmed algo ends it.",
+  "Based on: 2 exams (classic + new-regime track) in 1 days (1 passed, 1 rejected by review), about 2.0 exams/week. 'Found' = passes evals and pays out on data it never saw in my simulator AND isn't luck (classic: locked 2024-26 exam + review; new-regime track: recent exam + the coming weeks).",
+  "Nothing waiting for review.",
+  "Assumptions until I have more history: 50/50 that such an algo exists here; if it does, ~1 in 20 exams catches it; a lucky strategy still passes the exam 1 in 4 times; the review (right after each exam) spots a real one 85% of the time.",
+  "Rejected by review: with the open's side of the overnight range at 08:31, n (FRAGILE (auto v2, 2026-10-21): accounts started in the latest 6 months never made money (pass 18%, 0% got a pa)"
  ],
  "eta_levers": [
-  "MY TIMER LEVERS (what-if): now 30% within 3 months / 43% within 1 year.",
-  "- more candidates reach the exam (2x exam rate: more search, more markets, portfolios): 37% / 47%",
-  "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 40% / 48%",
-  "- both: 45% / 49%",
-  "Biggest single lever right now: better candidates. Exam rate today 2.3/week of max 10 (room to grow)."
- ],
- "families": [
-  "MECHANISM FAMILIES (family = mechanism + 20-50 variants; passes only as a plateau beating a placebo family, with a multiplicity-corrected p-value):",
-  "- F5 Gap fill sized by the gap-fill power: FAILED (p=0.53, median 2022-23 -0.1382R)",
-  "- F6 Scheduled-event drifts (pooled sleeve): FAILED (p=0.82, median 2022-23 -0.0565R)",
-  "- F3 Gamma-regime switch on the forecast range: FAILED (p=0.5, median 2022-23 -0.1531R)",
-  "- F1 Intraday momentum into the close, gamma-conditioned: NOT CONFIRMED - failed the locked exam (family): edge on 2024-now -0.074R (90% lower bound -0.170R, 163 trades) (p=0.0, median 2022-23 0.1721R)",
-  "- F2 Noise-band breakout with re-entry: NOT CONFIRMED - failed the locked exam (family): edge on 2024-now +0.061R (90% lower bound -0.054R, 474 trades) (p=0.0, median 2022-23 0.0605R)",
-  "- F4 Direction-free volatility brackets: FAILED (p=0.94, median 2022-23 -0.0708R)",
-  "- F7 0DTE gamma pinning: afternoon VWAP reversion: FAILED (p=0.34, median 2022-23 -0.2174R)"
+  "MY TIMER LEVERS (what-if): now 22% within 3 months / 36% within 1 year.",
+  "- more candidates reach the exam (2x exam rate: more search, more markets, portfolios): 22% / 36%",
+  "- better candidates (2x hit rate: ideas from papers/hunts that fit the CURRENT regime, new data): 29% / 39%",
+  "- both: 29% / 39%",
+  "Biggest single lever right now: better candidates. Exam rate today 2.0/week of max 2 (near the cap - only better candidates help)."
  ]
 }
