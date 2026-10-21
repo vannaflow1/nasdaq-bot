@@ -381,11 +381,12 @@
     }
    ]
   },
-  "status": "awaiting_exam",
+  "status": "scored",
   "registered": "2026-10-21",
   "hash": "fd0d96810da2",
   "frozen": "da2f2b154e885df7182ad2da54a9fd9d12cc4aba",
-  "scored": "2026-10-21"
+  "scored": "2026-10-21",
+  "exam_date": "2026-10-21"
  },
  {
   "id": "F4",
