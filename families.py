@@ -187,7 +187,7 @@ def score_contrast(fam, X, S, reps=100, seed=7):
     L = ledger(); j = int((L.get("rules", pd.Series(dtype=str)).astype(str) == "v2").sum()) + 1 if len(L) else 1
     alpha = SE.alpha_v2(j); passed = med > 0 and share >= 0.6 and p < alpha
     return {"variants": len(V), "usable": len(R), "median_edge_A": round(float(R.edge_low.median()), 4),
-            "median_edge_B": round(float(R.edge_high.median()), 4), "share_positive_B": round(share, 3),
+            "median_edge_B": round(float(R.edge_high.median()), 4), "median_contrast": round(med, 4), "share_positive_B": round(share, 3),
             "placebo_median_mean": round(float(pl.mean()), 4), "p": round(p, 5), "families_scored": len(L) + 1,
             "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2", "null": "v3-shared",
             "verdict": (f"{'PASSED' if passed else 'FAILED'} (contrast test): median low-minus-high {c['feature']} edge {med:+.3f}R, "

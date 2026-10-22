@@ -820,7 +820,16 @@
   "registered": "2026-10-22",
   "hash": "6bd363463cba",
   "frozen": "186898796d130efd34f5d7008ea646ba19e3eb62",
-  "scored": "2026-10-22"
+  "scored": "2026-10-22",
+  "correction": {
+   "date": "2026-10-22",
+   "null": "v3-shared",
+   "p_v3": 0.2125,
+   "alpha": 0.004,
+   "verdict": "VOID",
+   "why": "passed only under the too-narrow independent-coin null; 76% of the contrast is also in the no-information twins (cost share of R, not gamma)",
+   "record": "knowledge/ledgers/null_v3_rescore.json"
+  }
  },
  {
   "id": "F12",
@@ -897,6 +906,15 @@
   "hash": "9e46d7d16f9a",
   "frozen": "14f7f1834842e3a99d152bb40cbb77c155822272",
   "forward_variant": 43,
-  "scored": "2026-10-22"
+  "scored": "2026-10-22",
+  "correction": {
+   "date": "2026-10-22",
+   "null": "v3-shared",
+   "p_v3": 0.0002,
+   "alpha": 0.0023,
+   "verdict": "family test stands",
+   "why": "its registration rationale (F11) is void; F12 = F10's variant on F10's low-gamma days, so it is not independent evidence",
+   "record": "knowledge/ledgers/null_v3_rescore.json"
+  }
  }
 ]

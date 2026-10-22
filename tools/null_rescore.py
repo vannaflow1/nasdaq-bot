@@ -25,7 +25,8 @@ def main():
         t0 = time.time()
         res, _, _ = FA.score_family(fam, X, S)
         if "p" not in res: out["families"].append({"family": r.family, "note": res.get("verdict")}); continue
-        alpha = float(r.alpha); med = res.get("median_edge_B"); share = res.get("share_positive_B"); p = res["p"]
+        alpha = float(r.alpha); share = res.get("share_positive_B"); p = res["p"]
+        med = res["median_contrast"] if fam.get("statistic") == "contrast" else res.get("median_edge_B")   # contrast: low minus high
         old_pass = bool(r.passed) if isinstance(r.passed, (bool, np.bool_)) else str(r.passed) == "True"
         new_pass = bool(med is not None and med > 0 and share >= 0.6 and p < alpha)
         row = {"family": r.family, "name": r.name, "alpha": alpha, "p_original": float(r.p), "p_null_v3": p,
