@@ -207,7 +207,7 @@ def validate(spec):
     e = spec.get("entry") or {}
     if e.get("type") not in ("level", "time", "schedule", "oco"): raise Bad("entry.type must be level, time, schedule or oco")
     if e["type"] == "schedule":
-        if e.get("signal", "band") not in ("band", "day", "vwap", "vwap_fade"): raise Bad("schedule.signal must be band, day, vwap or vwap_fade")
+        if e.get("signal", "band") not in ("band", "band_fade", "day", "vwap", "vwap_fade"): raise Bad("schedule.signal must be band, band_fade, day, vwap or vwap_fade")
         if not (5 <= int(e.get("every_min", 30)) <= 120): raise Bad("schedule.every_min must be 5-120")
         if not (1 <= mins(e.get("from", "09:00")) < mins(e.get("to", "14:30")) <= 385): raise Bad("schedule from/to must be within 08:31-14:55")
         if not (0.1 <= float(e.get("mult", 1.0)) <= 3): raise Bad("schedule.mult must be 0.1-3")
@@ -411,7 +411,7 @@ def simulate_day(D, i, spec, side=0, cost_mult=1.0, stop_mult=1.0, tgt_mult=1.0,
         return out
     ev = int(e.get("every_min", 30)); f0 = mins(e.get("from", "09:00")) + win_shift; t1 = min(mins(e.get("to", "14:30")) + win_shift, xe - 1)
     sig = e.get("signal", "band"); mult = float(e.get("mult", 1.0)); lb = int(e.get("lookback", 14))
-    if sig == "band":
+    if sig in ("band", "band_fade"):
         if i < lb: return []
         Cp, Op = D["C"][i - lb:i], D["O"][i - lb:i, :1]
         sigma = np.nanmean(np.abs(Cp / Op - 1.0), axis=0)               # per minute, past sessions only
@@ -421,11 +421,12 @@ def simulate_day(D, i, spec, side=0, cost_mult=1.0, stop_mult=1.0, tgt_mult=1.0,
     while t <= t1 and len(out) < maxn:
         if t < free_from: t += ev; continue
         c = C[t - 1]; s = 0
-        if sig == "band":
+        if sig in ("band", "band_fade"):                               # band_fade (22 Oct 2026): the same band, faded
             sg = sigma[t - 1]
             if np.isfinite(sg) and sg > 0:
                 if c > O[0] * (1 + mult * sg): s = 1
                 elif c < O[0] * (1 - mult * sg): s = -1
+            if sig == "band_fade": s = -s
         elif sig == "day": s = int(np.sign(c - O[0]))
         elif sig == "vwap": s = int(np.sign(c - vw[t - 1])) if np.isfinite(vw[t - 1]) else 0
         elif sig == "vwap_fade":                                        # far from VWAP (mult x expected range): fade back toward it
