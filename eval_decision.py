@@ -23,6 +23,9 @@ SIZINGS = (0.08, 0.12, 0.2)                                   # share of the buf
 EDGES = (-0.10, -0.05, 0.0, 0.03, 0.05, 0.08, 0.11, 0.15, 0.20)
 PATHS, BLOCK, HORIZON = 1500, 10, 250
 BREAK_PER_YEAR = 0.30
+EXTRA_COMM_PTS = 0.25   # expert review 4: Lucid charges $0.50/side = $1.00 per MNQ round trip; the engine's cost model has $0.50
+                        # (0.25 NQ points). The missing 0.25 points per trade is charged HERE only - the frozen forward test keeps
+                        # its own cost model. EDGES therefore mean "net edge under the engine's costs", before this extra cost.
 
 
 def shape(fid="F10"):
@@ -38,7 +41,7 @@ def shape(fid="F10"):
 
 
 def day_series(T, R, st, ses, edge):
-    pnl = (R - R.mean() + edge) * st; worst = -np.maximum(st, np.maximum(-pnl, 0.0))
+    pnl = (R - R.mean() + edge) * st - EXTRA_COMM_PTS; worst = -np.maximum(st, np.maximum(-pnl, 0.0))
     g = pd.DataFrame({"s": T.session.values, "p": pnl, "w": worst}).groupby("s").sum()
     pts = pd.Series(0.0, index=ses); pts[g.index] = g.p.values; wst = pd.Series(0.0, index=ses); wst[g.index] = g.w.values
     return pts.to_numpy(), np.where(pts.to_numpy() != 0, np.minimum(wst.to_numpy(), -1e-9), 0.0)
@@ -67,7 +70,7 @@ def run_paths(pts, wst, P, size_fn, seed=0):
 
 def curves():
     import strategy_lab as S, prop_sim as PS
-    T, R, st, ses = shape(); plans = PS.plans(True); med = float(np.median(st)); out = {"date": datetime.now(timezone.utc).date().isoformat(),
+    T, R, st, ses = shape(); plans = PS.plans(True); med = float(np.median(st)); out = {"date": datetime.now(timezone.utc).date().isoformat(), "extra_comm_pts": EXTRA_COMM_PTS,
         "shape": f"F10 forward variant, {len(T)} trades 2022-now, observed mean {R.mean():+.3f}R (sd {R.std():.2f}), median stop {med:.1f} MNQ pts",
         "paths": PATHS, "horizon_sessions": HORIZON, "rows": []}
     series = {e: day_series(T, R, st, ses, e) for e in EDGES}
@@ -92,6 +95,8 @@ def belief():
 
 def main():
     stale = not os.path.exists(CURVES) or (time.time() - os.path.getmtime(CURVES)) > 6.5 * 86400
+    try: stale = stale or json.load(open(CURVES)).get("extra_comm_pts") != EXTRA_COMM_PTS   # cost model changed -> recompute
+    except Exception: stale = True
     C = curves() if ("--curves" in sys.argv or stale) else json.load(open(CURVES))
     rule = json.load(open(os.path.join(K, "frozen", "eval_rule.json")))
     mu, sd, n_fwd, fw = belief(); rng = np.random.default_rng(1); draws = rng.normal(mu, sd, 20000)
@@ -118,7 +123,7 @@ def main():
                "NOT YET - preconditions unmet (" + ", ".join(x for x, ok in (("SIM execution path >= 20 sessions", sim_ok),
                (f">= 60 clean forward trades ({n_fwd} so far)", fwd_ok)) if not ok) + ")" if not (sim_ok and fwd_ok) else
                ("ALLOWED by the frozen rule (the owner decides)" if meets else "NO - expected value criterion not met"))
-    out = {"date": datetime.now(timezone.utc).date().isoformat(), "belief": {"mean": round(mu, 4), "sd": round(sd, 4), "forward_trades": n_fwd},
+    out = {"date": datetime.now(timezone.utc).date().isoformat(), "extra_comm_pts": EXTRA_COMM_PTS, "belief": {"mean": round(mu, 4), "sd": round(sd, 4), "forward_trades": n_fwd},
            "verdict": verdict, "best": best, "best_fast": fast.iloc[0].to_dict() if len(fast) else None, "all": R.to_dict("records"),
            "curves_date": C.get("date"), "note": "EV from published Lucid rules as modelled in prop_firms.json; zero_edge_ev = the same account with no edge"}
     json.dump(out, open(OUT, "w"), indent=1, default=float)
