@@ -283,7 +283,7 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 8 (job 2/2): 0 new strategies this run, 314,166 tested in total (286,611 with the edge metric; grid 985,824 + mutations, markets NQ)",
+  "PROP STRATEGY SEARCH - run 8 (job 1/2): 0 new strategies this run, 314,166 tested in total (286,611 with the edge metric; grid 985,824 + mutations, markets NQ)",
   "Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. Stage A (2014-21, edge > 0 with 90% confidence): 5238 | Stage B (edge still > 0 on unseen 2022-23): 607 | exams taken: 2",
   "LUCK BAR (best 2022-23 edge that many no-edge random-entry twins reach, 95%): NQ +1.146R at 4930 validated tries (19720 placebos, avg +0.006R) -> 0 beat it",
   "",
