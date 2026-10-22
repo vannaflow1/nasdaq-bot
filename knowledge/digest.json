@@ -1,5 +1,50 @@
 [
 {
+"title": "Anomalous transport in the crowded world of biological cells",
+"learned": "Anomalous transport describes how particle motion deviates from normal diffusion due to crowding, showing sublinear MSD growth, time\u2011varying diffusion rates and non\u2011Gaussian displacement distributions. Different stochastic models (fractional Brownian motion, CTRW, Lorentz) capture these effects via distinct propagators despite similar MSDs. The key insight is that apparent randomness can mask underlying heterogeneous constraints that affect risk and return dynamics.",
+"concepts": [
+"subdiffusion",
+"time\u2011varying volatility",
+"non\u2011Gaussian returns",
+"model selection via propagators",
+"heterogeneous environments"
+],
+"relevance": 1,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://iopscience.iop.org/article/10.1088/0034-4885/76/4/046602/pdf",
+"date": "2026-10-22"
+},
+{
+"title": "SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions",
+"learned": "The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe over six months on large\u2011cap stocks and SPY. News helps in supervised training but hurts performance when kept during RL.",
+"concepts": [
+"strategy\u2011level option selection",
+"reinforcement learning for options",
+"option\u2011implied return distribution",
+"news impact on RL",
+"structured strategy families"
+],
+"relevance": 4,
+"verdict": "NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0, win 44%, worst -973 bp, positive in 3/9 years",
+"url": "https://arxiv.org/abs/2610.10407v1",
+"date": "2026-10-22"
+},
+{
+"title": "Control variates for variance-reduced ratio of means estimators",
+"learned": "The paper extends the classic control\u2011variates technique to estimate ratios of expectations (e.g., a numerator and denominator) by applying control variates to both parts and jointly optimizing their coefficients to minimise the estimator\u2019s variance.",
+"concepts": [
+"control variates",
+"ratio of means estimator",
+"variance reduction",
+"multi\u2011fidelity Monte Carlo",
+"joint coefficient optimization"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://arxiv.org/abs/2510.13504v3",
+"date": "2026-10-22"
+},
+{
 "title": "Inferring Dealer Networks in the Foreign Exchange Market Using Conditional Transfer Entropy: Analysis of a Central Bank Announcement",
 "learned": "The paper proposes using conditional transfer entropy on high\u2011frequency dealer bid/ask data to map how information from events (e.g., an ECB announcement) flows through FX dealer networks, identifying dealers that act as sources, conduits, or sinks of information.",
 "concepts": [

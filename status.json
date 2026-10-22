@@ -99,8 +99,11 @@
   "No FOMC, CPI or jobs report on Thu 22 Oct."
  ],
  "learning": [
-  "LEARNING: 258 papers read (41 more skipped as not relevant enough), 135 ideas tested on my memory, 2 promising.",
+  "LEARNING: 261 papers read (41 more skipped as not relevant enough), 136 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
+  "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
+  "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
   "\u2022 Patterns and Determinants of the Intraday Bid-Ask Spread and Depth of CBOE Equity Options (\u2605\u2605\u2605\u2606\u2606)",
   "  Option bid\u2011ask spreads are highest at market open and drop sharply within the first 90\u202fminutes, then stay relatively stable; spread widens again near market close. Factors widening spreads include higher underlying stock",
   "  tested: not testable with my data yet",
@@ -116,12 +119,9 @@
   "\u2022 Do Behavioral Biases Affect Prices? (\u2605\u2605\u2605\u2605\u2606)",
   "  CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
   "  tested: prop mission - feeds my strategy designer and self-check",
-  "\u2022 A decomposition-integration framework coupling singular spectrum analysis with a volatility-adaptive LSTM for  (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper builds a forecasting pipeline that first splits a price series with CEEMDAN, clusters the resulting intrinsic modes by frequency, denoises the high\u2011frequency part with Singular Spectrum Analysis, and then predi",
-  "  tested: NOT CONFIRMED on my data: 2227 signal days, hit 54.1% (always-long 56.5%), strategy +1.0 bps/day vs +4.6 for the same average exposure held constantly -> timing",
-  "This week's tests: 148 run - 4 promising, 75 not confirmed, 31 don't fit my data, 38 translation failures",
+  "This week's tests: 150 run - 4 promising, 77 not confirmed, 31 don't fit my data, 38 translation failures",
   "",
-  "32 papers waiting in my queue."
+  "29 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

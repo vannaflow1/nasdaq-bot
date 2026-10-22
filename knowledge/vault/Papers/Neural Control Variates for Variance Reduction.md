@@ -13,7 +13,7 @@ The paper proposes using neural networks as flexible control variates to cut Mon
 The work is about generic Monte‑Carlo integration, not about market data, pricing, or futures/options, so it offers little direct insight for traders.
 
 ## Concepts
-control variates, [[neural networks]], [[variance reduction]], [[monte carlo]], overfitting constraint
+[[control variates]], [[neural networks]], [[variance reduction]], [[monte carlo]], overfitting constraint
 
 
 Part of [[Research engine]]

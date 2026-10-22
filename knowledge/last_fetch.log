@@ -1,11 +1,9 @@
-hunt 'low dealer gamma intraday volatility impact': 14 found, queued 3
-hunt 'breakout strategies low gamma regime futures': 15 found, queued 0
-scanned 0 papers, queued 3, queue size 35 []
-read (3*): The impact of option hedging on the spot market volatility
-read (3*): Patterns and Determinants of the Intraday Bid-Ask Spread and Depth of 
-read (1*): Inferring Dealer Networks in the Foreign Exchange Market Using Conditi
-read 3, AI units today 1343/7000
-curiosity asked: Strategy: GammaTilt_Exp70_Break_FadeGap
-tested: Strategy: GammaTilt_Exp70_Break_FadeGap - On low‑gamma days  -> TRANSLATION FAILED - only > < >= <= comparisons allowed
-tested: Test whether days with lower dealer gamma rank (more short g -> NOT CONFIRMED on my data: range-forecast miss 0.557% -> 0.557% (-0.0%), better in 3/8 unse
-testing used 543 AI units
+scanned 0 papers, queued 0, queue size 32 []
+read (1*): Control variates for variance-reduced ratio of means estimators
+read (4*): SOTA: Stock Options Trading Agents Guided by Option-Implied Return Dis
+read for the mission (1*): Anomalous transport in the crowded world of biological cells
+read 3, AI units today 2234/7000
+curiosity asked: Strategy: GammaTilt_Exp70_Multi
+tested: Strategy: GammaTilt_Exp70_Multi - Low‑gamma day gives large  -> NOT CONFIRMED on my data: too few trades (50 in 2014-2023, need 150). in-sample 2014-2023:
+tested: Using the daily implied‑return distribution metrics (e.g., t -> NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -
+testing used 541 AI units

@@ -1,45 +1,5 @@
 [
  {
-  "id": "arxiv:2510.13504v3",
-  "title": "Control variates for variance-reduced ratio of means estimators",
-  "abstract": "The control variates method is a classical variance reduction technique for Monte Carlo estimators that exploits correlated auxiliary variables without introducing bias. In many applications, the quantity of interest can be expressed as a ratio of expectations. We propose a variance-reduced estimator for such ratios, which applies control variates to both the numerator and the denominator. The control variates coefficients are optimized jointly to minimize the approximated variance of the resulting estimator. This approach guarantees variance reduction and naturally extends to approximate control variates. Simulation studies show significant variance reduction, particularly when correlations between variables and control variates are strong. The practical value of the method is illustrated on multi-fidelity applications: estimating a proportion in an aircraft design use case and a conditional value-at-risk in an electromagnetic dataset.",
-  "url": "https://arxiv.org/abs/2510.13504v3",
-  "pdf": "https://arxiv.org/pdf/2510.13504v3",
-  "date": "2025-10-15",
-  "score": 58.2,
-  "track": "hunt",
-  "hunt": "h11",
-  "topic": "hunt: variance reduction control variates backtest evaluation",
-  "source": "Hunt: variance reduction control variates backtest evaluation",
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/arxiv_2510.13504v3.txt"
- },
- {
-  "id": "arxiv:2610.10407v1",
-  "title": "SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions",
-  "abstract": "As option markets grow and AI advances, agentic systems for option trading are gaining increasing attention. Language-model-based agents can reason over contextual information such as news, but option trading presents a particularly challenging decision problem: a single stock can have thousands of contracts, and the agent must decide both which contracts to trade and how to combine them. Existing approaches often sidestep this complexity by restricting the policy to a fixed strategy structure, such as a straddle, limiting their ability to switch strategies as market conditions change. We present SOTA (Stock Options Trading Agents), an agentic trading framework for structured option-strategy selection. SOTA abstracts the large option universe into strategy-level decisions while deterministic resolvers handle portfolio implementation. We develop SOTA by post-training Qwen3.8-27B with supervised fine-tuning followed by reinforcement learning. SOTA is evaluated on options on nine large-cap U.S. equities and SPY against rule-based and machine-learning strategy selectors in the same trading environment. Over a six-month out-of-sample period, SOTA earns an 18.3% total return with a Sharpe ratio of 1.60 and a maximum drawdown of 8.96%. We also document an asymmetric role of news: news improves frontier-teacher trajectories, but retaining news during reinforcement learning reduces out-of-sample return from 18.3% to -2.7%.",
-  "url": "https://arxiv.org/abs/2610.10407v1",
-  "pdf": "https://arxiv.org/pdf/2610.10407v1",
-  "date": "2026-10-07",
-  "score": 17,
-  "source": "Frontier (arXiv, last 45 days)",
-  "track": "frontier",
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/arxiv_2610.10407v1.txt"
- },
- {
-  "id": "openalex:W1978079922",
-  "title": "Anomalous transport in the crowded world of biological cells",
-  "abstract": "A ubiquitous observation in cell biology is that the diffusive motion of macromolecules and organelles is anomalous, and a description simply based on the conventional diffusion equation with diffusion constants measured in dilute solution fails. This is commonly attributed to macromolecular crowding in the interior of cells and in cellular membranes, summarizing their densely packed and heterogeneous structures. The most familiar phenomenon is a sublinear, power-law increase of the mean-square displacement (MSD) as a function of the lag time, but there are other manifestations like strongly reduced and time-dependent diffusion coefficients, persistent correlations in time, non-Gaussian distributions of spatial displacements, heterogeneous diffusion and a fraction of immobile particles. After a general introduction to the statistical description of slow, anomalous transport, we summarize some widely used theoretical models: Gaussian models like fractional Brownian motion and Langevin equations for visco-elastic media, the continuous-time random walk model, and the Lorentz model describing obstructed transport in a heterogeneous environment. Particular emphasis is put on the spatio-temporal properties of the transport in terms of two-point correlation functions, dynamic scaling behaviour, and how the models are distinguished by their propagators even if the MSDs are identical. Then, we review the theory underlying commonly applied experimental techniques in the presence of anomalous transport like single-particle tracking, fluorescence correlation spectroscopy (FCS) and fluorescence recovery after photobleaching (FRAP). We report on the large body of recent experimental evidence for anomalous transport in crowded biological media: in cyto- and nucleoplasm as well as in cellular membranes, complemented by in vitro experiments where a variety of model systems mimic physiological crowding conditions. Finally, computer simulations are discussed which play an important role in testing the theoretical models and corroborating the experimental findings. The review is completed by a synthesis of the theoretical and experimental progress identifying open questions for future investigation.",
-  "track": "prop",
-  "url": "https://iopscience.iop.org/article/10.1088/0034-4885/76/4/046602/pdf",
-  "source": "OpenAlex (prop mission)",
-  "topic": "prop: first passage time random walk barrier",
-  "score": 4,
-  "queued": "2026-10-21",
-  "text_failed": true
- },
- {
   "id": "arxiv:2610.24562v1",
   "title": "No-Regret Revenue Maximization in Sequential Market Making Under Inventory Constraints",
   "abstract": "Market makers keep trading efficient by setting bid and ask prices for buyers and sellers. In sequential market making, trades happen independently based on price thresholds, requiring the market maker to maintain balanced, low-risk inventory over T rounds. This paper studies how to maximize revenue with unknown buyer and seller valuations using regret minimization. When the market maker only sees trade success or failure, an algorithm achieves regret and inventory bounds proportional to T to the power of 2/3. When full order book data is available for failed trades, regret and inventory limits improve significantly to the square root of T. We also establish a fundamental trade-off via a lower bound, by proving that tighter round-by-round inventory limits strictly force higher minimum regret.",
