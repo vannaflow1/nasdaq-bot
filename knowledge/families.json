@@ -821,5 +821,80 @@
   "hash": "6bd363463cba",
   "frozen": "186898796d130efd34f5d7008ea646ba19e3eb62",
   "scored": "2026-10-22"
+ },
+ {
+  "id": "F12",
+  "name": "F12: F2 on Nasdaq, low-gamma days only (gamma rank below 0.5)",
+  "mechanism": "F11 (pre-registered, 2014-21) showed F2's direction carries more information on low dealer-gamma days. Trading only the bottom half of days by gamma rank should keep most of the edge and cut losing days - lower drawdowns for prop accounts.",
+  "citation": "F11 contrast result (22 Oct 2026); Baltussen, Da & Soebhag; expert review 3",
+  "rules": "v2",
+  "markets": [
+   "NQ"
+  ],
+  "sealed": false,
+  "forward_source": "futures",
+  "sleeve": [
+   {
+    "name": "F12 F2 low-gamma",
+    "entry": {
+     "type": "schedule",
+     "signal": "band",
+     "every_min": "{EV}",
+     "from": "09:00",
+     "to": "14:30",
+     "mult": "{MU}",
+     "lookback": 14
+    },
+    "stop": {
+     "range": 0.15
+    },
+    "target": {
+     "R": 5
+    },
+    "exit": "14:59",
+    "max_trades": 3,
+    "reentry": "after_stop",
+    "manage": {
+     "trail_R": 1.0
+    },
+    "filter": "0.5 - gex_rank"
+   }
+  ],
+  "grid": {
+   "param.EV": [
+    15,
+    30,
+    60
+   ],
+   "param.MU": [
+    0.8,
+    1.0,
+    1.2
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.2
+    }
+   ],
+   "manage": [
+    null,
+    {
+     "trail_R": 0.5
+    },
+    {
+     "trail_R": 1.0
+    }
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-22",
+  "hash": "9e46d7d16f9a",
+  "frozen": "14f7f1834842e3a99d152bb40cbb77c155822272"
  }
 ]
