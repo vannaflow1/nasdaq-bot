@@ -87,6 +87,35 @@ def proxy_trades(S, X, sleeve, lo=None, hi=None, window=None):
     return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=["session", "i", "pnl", "R", "side", "k", "market", "spec"])
 
 
+def archive_trades(S, X, sleeve, lo, hi):
+    """Trades of a frozen sleeve on REAL futures bars from the nightly archive (tools/bar_archive.py, Yahoo, Chicago time),
+    for forward days lo..hi. Look-back features (noise bands, ATR, expected range) need ~45 days of history before the
+    archive starts: those come from the proxy feed (only to compute bands - no warm-up day is ever scored)."""
+    import glob
+    from tools import dukascopy as DK
+    rows = []
+    for sp in sleeve:
+        mk = (sp.get("market") or "NQ").upper()
+        fs = sorted(glob.glob(os.path.join(K, "data", "archive", f"{mk}_*.csv.gz")))
+        if not fs: continue
+        a = pd.concat([pd.read_csv(f, parse_dates=["ts"]) for f in fs]).drop_duplicates("ts").sort_values("ts")
+        a = a.rename(columns={"open": "o", "high": "h", "low": "l", "close": "c", "volume": "v"}); a["sym"] = mk
+        start = a.ts.min().normalize() + pd.Timedelta(days=1)   # first full archive day
+        a = a[a.ts >= start - pd.Timedelta(hours=7)]            # from 17:00 CT the evening before
+        w = DK.fetch(mk, (start - pd.Timedelta(days=WARMUP_DAYS)).date(), (start - pd.Timedelta(days=1)).date())
+        w = w[w.ts < a.ts.min()] if len(w) else w
+        n = pd.concat([w[["ts", "o", "h", "l", "c", "v", "sym"]], a[["ts", "o", "h", "l", "c", "v", "sym"]]], ignore_index=True) if len(w) else a
+        A, M = DK.sessions(n)
+        if A is None: continue
+        name = f"{mk}_FWD"; S.install_market(name, A, M, like=mk)
+        lo2 = max(lo, start.strftime("%Y-%m-%d"))
+        idx = np.where((M.session >= lo2) & (M.session <= hi))[0]
+        if not len(idx): continue
+        T = S.backtest(dict(sp, market=name), X, idx)
+        if len(T): rows.append(T.assign(market=mk, spec=json.dumps(sp)))
+    return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=["session", "i", "pnl", "R", "side", "k", "market", "spec"])
+
+
 def obf_bounds(looks=LOOKS, alpha=ALPHA_SEQ, sims=200000, seed=11):
     """O'Brien-Fleming boundaries z_k = C * sqrt(looks / k) with P(cross any | no edge) = alpha (Monte Carlo, fixed seed)."""
     rng = np.random.default_rng(seed)

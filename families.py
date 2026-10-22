@@ -65,7 +65,7 @@ def variants(fam, seed=0):
 def fam_hash(fam):
     import hashlib
     h = {"sleeve": fam["sleeve"], "grid": fam["grid"]}
-    for k in ("markets", "rules"):                             # v2: the market list and rule set are frozen too
+    for k in ("markets", "rules", "sealed", "forward_source"):                             # v2: the market list and rule set are frozen too
         if fam.get(k): h[k] = fam[k]
     return hashlib.sha1(json.dumps(h, sort_keys=True).encode()).hexdigest()[:12]
 
@@ -184,6 +184,10 @@ def exam_family_v2(fam, R, V, X, S, res):
     se_x, n_days = SE.expected_exam_se(val, days_pm, mkts); shrunk = 0.5 * float(res.get("median_edge_B") or 0)
     det = {"validation": val, "exam_se_expected": se_x, "sealed_days": n_days, "shrunk_edge": shrunk,
            "power_sealed_alone": round(SE.exam_power(shrunk, se_x), 3), "markets": mkts, "route": "forward"}
+    if fam.get("sealed") is False:                            # proxy too far from this market's futures (calibration): no
+        det["route"] = "forward"                              # sealed block; real futures days from the archive only
+        return v, (f"PASSED THE FAMILY TEST -> FORWARD ROUTE on real futures bars (no sealed block: the free proxy does not "
+                   f"reproduce this family's trades well enough); group-sequential test from {fam.get('registered')}"), det
     if not S.spend_exam(f"family {fam['id']} (sealed window)", "family"):
         return v, "PASSED THE FAMILY TEST, WAITING FOR EXAM (weekly exam budget used up)", det
     dec, st = SE.forward_decision(SE.proxy_trades(S, X, v["sleeve"]))
@@ -203,8 +207,11 @@ def forward_route(fam, X, S):
     V = variants(fam); v = V[int(fam["forward_variant"])]
     lo = (pd.Timestamp(fam["registered"]) + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
     hi = (datetime.now(timezone.utc).date() - pd.Timedelta(days=1)).isoformat()
-    parts = [SE.proxy_trades(S, X, v["sleeve"])]
-    if hi >= lo: parts.append(SE.proxy_trades(S, X, v["sleeve"], lo=lo, hi=hi))
+    parts = [] if fam.get("sealed") is False else [SE.proxy_trades(S, X, v["sleeve"])]
+    if hi >= lo:
+        parts.append(SE.archive_trades(S, X, v["sleeve"], lo, hi) if fam.get("forward_source") == "futures"
+                     else SE.proxy_trades(S, X, v["sleeve"], lo=lo, hi=hi))
+    if not parts: return "WAITING", {"n": 0}
     return SE.forward_decision(pd.concat(parts, ignore_index=True))
 
 
