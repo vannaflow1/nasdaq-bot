@@ -143,7 +143,27 @@
   "query": "free intraday historical data index futures CFD research proxy",
   "why": "data: more markets and longer free 1-minute history",
   "source": "focus",
+  "status": "nothing found",
+  "key": "focus:free intraday historical data index futures CFD research proxy",
+  "searched": "2026-10-22",
+  "papers": []
+ },
+ {
+  "id": "h13",
+  "date": "2026-10-22",
+  "query": "low dealer gamma intraday volatility impact",
+  "why": "I need academic/industry evidence on how low GEX days affect intraday NQ volatility and move magnitude to justify the low‑gamma filter.",
+  "source": "self-check",
   "status": "open",
-  "key": "focus:free intraday historical data index futures CFD research proxy"
+  "papers": []
+ },
+ {
+  "id": "h14",
+  "date": "2026-10-22",
+  "query": "breakout strategies low gamma regime futures",
+  "why": "There may be prior work showing that break‑outs are more reliable on low‑gamma days, which could inform parameter choices.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

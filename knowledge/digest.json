@@ -1,5 +1,50 @@
 [
 {
+"title": "Some Control Variates for exotic options",
+"learned": "The paper shows how to pick optimal linear combinations of the log\u2011returns (X_i) as control variates to cut variance when Monte\u2011Carlo pricing Asian or lookback options, proving the variance reduction equals 1\u2011sum of squared correlations.",
+"concepts": [
+"Monte Carlo",
+"Control variate",
+"Variance reduction",
+"Asian option",
+"Lookback option"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://arxiv.org/abs/0806.4675v1",
+"date": "2026-10-22"
+},
+{
+"title": "Neural Control Variates for Variance Reduction",
+"learned": "The paper proposes using neural networks as flexible control variates to cut Monte\u2011Carlo estimation variance, and adds a constraint to stop the network from over\u2011fitting when sample sizes are tiny.",
+"concepts": [
+"Control variates",
+"Neural networks",
+"Variance reduction",
+"Monte Carlo",
+"Overfitting constraint"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://arxiv.org/abs/1806.00159v2",
+"date": "2026-10-22"
+},
+{
+"title": "Intelligent Portfolio Theory and Application in Stock Investment with Multi-Factor Models and Trend Following Trading Strategies",
+"learned": "The authors combine multi\u2011factor stock\u2011selection models with simple trend\u2011following exits (high\u2011low channel breakout or PSR) to build an \"Intelligent Portfolio\" that trades a few stocks rather than holds them, reporting good returns and drawdowns on Chinese A\u2011shares.",
+"concepts": [
+"multi\u2011factor stock ranking",
+"trend\u2011following breakout",
+"parabolic SAR",
+"sector\u2011focused factor model",
+"rule\u2011based portfolio construction"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://www.sciencedirect.com/science/article/pii/S1877050921009285/pdf",
+"date": "2026-10-22"
+},
+{
 "title": "The Economic Limits of Bitcoin and the Blockchain",
 "learned": "The paper shows that security in proof\u2011of\u2011work systems relies on a balance between ongoing reward flows and one\u2011time attack benefits, with attack costs rising sharply with required hashpower. This creates a natural asymmetry: small, frequent losses are cheap, while large, rare gains (or attacks) are prohibitively expensive.",
 "concepts": [

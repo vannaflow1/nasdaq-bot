@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # neural networks
-15 papers mention this:
+16 papers mention this:
 
 - [[An Empirical Study of Machine Learning Algorithms for Stock Daily Trading Strategy]]
 - [[An Overview of Machine Learning, Deep Learning, and Reinforcement Learning-Based Technique]]
@@ -16,6 +16,7 @@ tags: [concept]
 - [[Enhancing Time-Series Momentum Strategies Using Deep Neural Networks]]
 - [[Historical Perspectives in Volatility Forecasting Methods with Machine Learning]]
 - [[Méthodes d'apprentissage par renforcement pour les stratégies systématiques de market maki]]
+- [[Neural Control Variates for Variance Reduction]]
 - [[Neural Network–Based Financial Volatility Forecasting A Systematic Review]]
 
 Related part of Volta: [[Neural net (live)]]

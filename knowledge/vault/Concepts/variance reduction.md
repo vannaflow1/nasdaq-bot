@@ -1,0 +1,10 @@
+---
+tags: [concept]
+---
+# variance reduction
+2 papers mention this:
+
+- [[Neural Control Variates for Variance Reduction]]
+- [[Some Control Variates for exotic options]]
+
+Related part of Volta: [[Brain]]
