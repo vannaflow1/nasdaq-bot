@@ -65,7 +65,7 @@ def variants(fam, seed=0):
 def fam_hash(fam):
     import hashlib
     h = {"sleeve": fam["sleeve"], "grid": fam["grid"]}
-    for k in ("markets", "rules", "sealed", "forward_source"):                             # v2: the market list and rule set are frozen too
+    for k in ("markets", "rules", "sealed", "forward_source", "statistic", "contrast", "window"):                             # v2: the market list and rule set are frozen too
         if fam.get(k): h[k] = fam[k]
     return hashlib.sha1(json.dumps(h, sort_keys=True).encode()).hexdigest()[:12]
 
@@ -106,7 +106,59 @@ def ledger():
     return pd.read_csv(LEDGER) if os.path.exists(LEDGER) else pd.DataFrame()
 
 
+def _day_feature(S, X, T, feat):
+    """Value of a known-at-the-open feature (X keyed by memory date) for each trade's session."""
+    if not len(T): return np.array([])
+    vals = []
+    for mk, g in T.groupby("market"):
+        M = S.data(mk)["M"]; dm = dict(zip(M.session, M.date))
+        f = X[feat].reindex(pd.to_datetime(g.session.map(dm))).to_numpy(); vals.append(pd.Series(f, index=g.index))
+    return pd.concat(vals).reindex(T.index).to_numpy(float)
+
+
+def score_contrast(fam, X, S, reps=100, seed=7):
+    """Expert review 3 (F11): a pre-registered CONTRAST - median over variants of (edge on low-feature days - edge on
+    high-feature days) inside one window; placebo family = coin-flip twins of the same trades, split the same way."""
+    import sealed as SE
+    from statistics import NormalDist
+    c = fam["contrast"]; lo_w, hi_w = fam["window"]; V = variants(fam); rng = np.random.default_rng(seed); rows, keep = [], []
+    for v in V:
+        T = trades(S, X, v["sleeve"], lo_w, hi_w); f = _day_feature(S, X, T, c["feature"])
+        lo_m = (f >= c["low"][0]) & (f <= c["low"][1]); hi_m = (f >= c["high"][0]) & (f <= c["high"][1])
+        if lo_m.sum() < 20 or hi_m.sum() < 20: continue
+        rows.append({"params": json.dumps(v["params"]), "n_low": int(lo_m.sum()), "n_high": int(hi_m.sum()),
+                     "edge_low": float(T.R[lo_m].mean()), "edge_high": float(T.R[hi_m].mean()),
+                     "contrast": float(T.R[lo_m].mean() - T.R[hi_m].mean())})
+        keep.append((T, lo_m, hi_m))
+    R = pd.DataFrame(rows)
+    if len(R) < 5: return {"verdict": "TOO FEW TRADES", "variants": len(V), "usable": len(R)}, R, V
+    med = float(R.contrast.median()); share = float((R.contrast > 0).mean()); pl = []
+    for j in range(reps):
+        m = []
+        for T, lo_m, hi_m in keep:
+            tw = []
+            for spec_s, g in T.groupby("spec", sort=False):
+                sp = json.loads(spec_s); D = S.data(sp.get("market"))
+                for ix, i, k in zip(g.index, g.i.values, g.k.values):
+                    r = S.simulate_session(D, int(i), sp, entry_override=(int(k), int(rng.choice([-1, 1]))))
+                    tw.append((ix, r[1] if r else np.nan))
+            tw = pd.Series(dict(tw)).reindex(T.index).to_numpy(float)
+            m.append(np.nanmean(tw[lo_m]) - np.nanmean(tw[hi_m]))
+        pl.append(float(np.median(m)))
+    pl = np.array(pl); p = float(1 - NormalDist(float(pl.mean()), max(float(pl.std(ddof=1)), 1e-9)).cdf(med))
+    L = ledger(); j = int((L.get("rules", pd.Series(dtype=str)).astype(str) == "v2").sum()) + 1 if len(L) else 1
+    alpha = SE.alpha_v2(j); passed = med > 0 and share >= 0.6 and p < alpha
+    return {"variants": len(V), "usable": len(R), "median_edge_A": round(float(R.edge_low.median()), 4),
+            "median_edge_B": round(float(R.edge_high.median()), 4), "share_positive_B": round(share, 3),
+            "placebo_median_mean": round(float(pl.mean()), 4), "p": round(p, 5), "families_scored": len(L) + 1,
+            "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2",
+            "verdict": (f"{'PASSED' if passed else 'FAILED'} (contrast test): median low-minus-high {c['feature']} edge {med:+.3f}R, "
+                        f"{share:.0%} of variants positive, placebo {pl.mean():+.3f}R, p={p:.4f} vs alpha {alpha:.4f} "
+                        "(median_edge_A/B columns = low/high-day edges)")}, R, V
+
+
 def score_family(fam, X, S, reps=100, seed=7):
+    if fam.get("statistic") == "contrast": return score_contrast(fam, X, S, reps, seed)
     if fam.get("rules") == "v2": reps = min(reps, int(os.environ.get("V2_REPS", 100)))   # measured: ~0.3h for 50 variants x 3 markets
     import prop_search as PS
     V = variants(fam); rng = np.random.default_rng(seed); rows = []
@@ -271,7 +323,9 @@ def main():
         t0 = time.time()
         res, R, V = score_family(fam, X, S, reps=reps)
         verdict, det = res.get("verdict", "PASSED" if res.get("passed") else "FAILED"), {}
-        if res.get("passed"):
+        if fam.get("statistic") == "contrast":
+            pass                                              # an explanatory test: verdict only, no exam / forward route
+        elif res.get("passed"):
             if fam.get("rules") == "v2": v, verdict, det = exam_family_v2(fam, R, V, X, S, res)
             else: v, verdict, det = exam_family(fam, R, V, X, S)
             if fam.get("rules") == "v2" and det.get("route") == "forward":
