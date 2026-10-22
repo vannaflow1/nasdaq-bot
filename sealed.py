@@ -98,6 +98,44 @@ def nq_fc_frac(sessions, X):
     return np.array([out.get(str(s)[:10], np.nan) for s in sessions], float)
 
 
+SUB_COLS = ["l_vix9d", "l_vix", "l_vix3m", "l_vvix", "r1", "r5", "r20"]
+
+
+def _sub_features(rng_frac, mem_dates):
+    """Inputs that exist for EVERY day (macro_daily.csv: VIX family; the market's own past RTH ranges)."""
+    mac = pd.read_csv(os.path.join(K, "macro_daily.csv"), parse_dates=["date"]).set_index("date")
+    r = pd.Series(np.asarray(rng_frac, float))
+    F = pd.DataFrame({"r1": np.log(r.shift(1)), "r5": np.log(r.shift(1).rolling(5).mean()), "r20": np.log(r.shift(1).rolling(20).mean())})
+    d = pd.to_datetime(pd.Series(mem_dates), errors="coerce")
+    for c in ("vix9d", "vix", "vix3m", "vvix"): F["l_" + c] = np.log(mac[c].reindex(d).to_numpy())
+    return F[SUB_COLS].replace([np.inf, -np.inf], np.nan)
+
+
+def fit_nq_fc_substitute():
+    """A stand-in for exp(l_bot) where the brain memory has a gap (Dec 2025 - Oct 2026): OLS of l_bot on the VIX family and
+    NQ's past ranges, fitted on every seen NQ futures session (input replication only - never chosen by any strategy's R).
+    Expert review 4 measured the 2014-21 fit on 2022-now: R^2 0.775, typical error 14%, F10 v43 daily-R corr 0.898.
+    NOT used by any frozen test unless an addendum in knowledge/frozen/ says so."""
+    import strategy_lab as S
+    D = S.data("NQ"); M = D["M"]
+    rng = (np.nanmax(D["H"], 1) - np.nanmin(D["L"], 1)) / D["O"][:, 0]
+    F = _sub_features(rng, M.date.values); y = np.log(M.fc_frac.to_numpy(float))
+    ok = np.isfinite(F.values).all(1) & np.isfinite(y)
+    A = np.c_[np.ones(ok.sum()), F.values[ok]]; b = np.linalg.lstsq(A, y[ok], rcond=None)[0]; res = y[ok] - A @ b
+    out = {"cols": SUB_COLS, "coef": [float(x) for x in b], "fit_rows": int(ok.sum()), "resid_sd_log": round(float(res.std()), 4),
+           "fit_window": [str(M.session[ok].min()), str(M.session[ok].max())]}
+    os.makedirs(os.path.join(K, "research_out"), exist_ok=True)
+    json.dump(out, open(os.path.join(K, "research_out", "nq_fc_substitute.json"), "w"), indent=1)
+    return out
+
+
+def substitute_fc(A, M, fit):
+    """The substitute stop input for sessions M with bars A (the proxy's own past ranges + the VIX family)."""
+    rng = (np.nanmax(A["H"], 1) - np.nanmin(A["L"], 1)) / A["O"][:, 0]
+    F = _sub_features(rng, M.date.values)
+    return np.exp(np.c_[np.ones(len(F)), F.values] @ np.asarray(fit["coef"], float))
+
+
 def match_futures_inputs(M, mk, X):
     """Give proxy / archive sessions the inputs the futures backtest used (NQ: the brain's stop forecast)."""
     if (mk or "NQ").upper() == "NQ":

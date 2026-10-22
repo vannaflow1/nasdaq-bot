@@ -181,11 +181,14 @@ def nq_detail(start=date(2025, 4, 1), end=date(2025, 6, 13)):
     fam10 = next(f for f in json.load(open(F.REG)) if f["id"] == "F10"); v43 = F.variants(fam10)[int(fam10["forward_variant"])]
     tests = [("F2 v" + str(i), V[i]["sleeve"][0]) for i in range(0, len(V), 5)] + [("F10 v43", v43["sleeve"][0])]
     import sealed as SE
-    builds = []
+    builds = []; fit = SE.fit_nq_fc_substitute(); out["substitute_fit"] = fit
     for pname, n in (("bid", nb), ("ask", na), ("mid", mid)):
         A, Mp0 = sessions(n)
         builds.append((pname + "|realized20", A, Mp0))                        # stop input as dukascopy.sessions makes it
         builds.append((pname + "|brain", A, SE.match_futures_inputs(Mp0, "NQ", X)))   # the futures backtest's input
+        if pname in ("bid", "mid"):                                           # what a sealed Feb-Oct 2026 block could use:
+            Ms = Mp0.copy(); Ms["fc_frac"] = SE.substitute_fc(A, Mp0, fit)    # proxy prices + the VIX-family substitute
+            builds.append((pname + "|substitute", A, Ms))
     for name, A, Mp in builds:
         ip = {s: i for i, s in enumerate(Mp.session)}
         common = sorted(set(Mp.session) & set(Mf.session[(Mf.session >= str(start)) & (Mf.session <= str(end))]))
