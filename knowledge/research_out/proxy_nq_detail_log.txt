@@ -1,0 +1,4 @@
+spread {'median_rth': 1.46, 'median_0830_bar': 1.45, 'p90_0830_bar': 1.52, 'median_0730_bar': 3.47, 'median_overnight': 3.46}
+bid {'median_daily_R_corr': 0.688, 'mean_bias_R': -0.143, 'median_first_trade_match': 0.926} {'open_diff_pts_median_abs': 37.88, 'close_0834_diff_pts_median_abs': 36.8}
+ask {'median_daily_R_corr': 0.688, 'mean_bias_R': -0.138, 'median_first_trade_match': 0.926} {'open_diff_pts_median_abs': 36.89, 'close_0834_diff_pts_median_abs': 36.7}
+mid {'median_daily_R_corr': 0.688, 'mean_bias_R': -0.143, 'median_first_trade_match': 0.926} {'open_diff_pts_median_abs': 36.87, 'close_0834_diff_pts_median_abs': 36.75}

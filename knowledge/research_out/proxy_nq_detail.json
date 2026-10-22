@@ -1,0 +1,350 @@
+{
+ "window": "2025-04-01..2025-06-13 (already seen - calibration only)",
+ "spread_pts": {
+  "median_rth": 1.46,
+  "median_0830_bar": 1.45,
+  "p90_0830_bar": 1.52,
+  "median_0730_bar": 3.47,
+  "median_overnight": 3.46
+ },
+ "bid": {
+  "sessions": 52,
+  "basis_ratio": 0.99578,
+  "open_diff_pts_median_abs": 37.88,
+  "open_diff_pts_p90_abs": 73.8,
+  "close_0834_diff_pts_median_abs": 36.8,
+  "tests": {
+   "F2 v0": {
+    "daily_R_corr": 0.714,
+    "mean_R_futures": 0.028,
+    "mean_R_proxy": 0.128,
+    "trades_futures": 40,
+    "trades_proxy": 37,
+    "first_trade_same_minute_and_side": 0.935,
+    "trade_days_only_one": 0
+   },
+   "F2 v5": {
+    "daily_R_corr": 0.724,
+    "mean_R_futures": 0.131,
+    "mean_R_proxy": -0.145,
+    "trades_futures": 54,
+    "trades_proxy": 55,
+    "first_trade_same_minute_and_side": 0.923,
+    "trade_days_only_one": 2
+   },
+   "F2 v10": {
+    "daily_R_corr": 0.652,
+    "mean_R_futures": 0.029,
+    "mean_R_proxy": -0.334,
+    "trades_futures": 85,
+    "trades_proxy": 77,
+    "first_trade_same_minute_and_side": 0.878,
+    "trade_days_only_one": 1
+   },
+   "F2 v15": {
+    "daily_R_corr": 0.684,
+    "mean_R_futures": -0.126,
+    "mean_R_proxy": -0.109,
+    "trades_futures": 74,
+    "trades_proxy": 64,
+    "first_trade_same_minute_and_side": 0.974,
+    "trade_days_only_one": 0
+   },
+   "F2 v20": {
+    "daily_R_corr": 0.688,
+    "mean_R_futures": 0.162,
+    "mean_R_proxy": 0.098,
+    "trades_futures": 39,
+    "trades_proxy": 40,
+    "first_trade_same_minute_and_side": 0.935,
+    "trade_days_only_one": 0
+   },
+   "F2 v25": {
+    "daily_R_corr": 0.644,
+    "mean_R_futures": 0.028,
+    "mean_R_proxy": -0.149,
+    "trades_futures": 60,
+    "trades_proxy": 51,
+    "first_trade_same_minute_and_side": 0.912,
+    "trade_days_only_one": 0
+   },
+   "F2 v30": {
+    "daily_R_corr": 0.811,
+    "mean_R_futures": 0.026,
+    "mean_R_proxy": 0.093,
+    "trades_futures": 41,
+    "trades_proxy": 39,
+    "first_trade_same_minute_and_side": 1.0,
+    "trade_days_only_one": 0
+   },
+   "F2 v35": {
+    "daily_R_corr": 0.706,
+    "mean_R_futures": 0.016,
+    "mean_R_proxy": 0.019,
+    "trades_futures": 34,
+    "trades_proxy": 33,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   },
+   "F2 v40": {
+    "daily_R_corr": 0.447,
+    "mean_R_futures": -0.011,
+    "mean_R_proxy": -0.112,
+    "trades_futures": 87,
+    "trades_proxy": 76,
+    "first_trade_same_minute_and_side": 0.864,
+    "trade_days_only_one": 0
+   },
+   "F2 v45": {
+    "daily_R_corr": 0.646,
+    "mean_R_futures": 0.32,
+    "mean_R_proxy": 0.078,
+    "trades_futures": 33,
+    "trades_proxy": 35,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   },
+   "F10 v43": {
+    "daily_R_corr": 0.698,
+    "mean_R_futures": 0.387,
+    "mean_R_proxy": -0.155,
+    "trades_futures": 38,
+    "trades_proxy": 38,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   }
+  },
+  "summary": {
+   "median_daily_R_corr": 0.688,
+   "mean_bias_R": -0.143,
+   "median_first_trade_match": 0.926
+  }
+ },
+ "ask": {
+  "sessions": 52,
+  "basis_ratio": 0.99585,
+  "open_diff_pts_median_abs": 36.89,
+  "open_diff_pts_p90_abs": 74.54,
+  "close_0834_diff_pts_median_abs": 36.7,
+  "tests": {
+   "F2 v0": {
+    "daily_R_corr": 0.714,
+    "mean_R_futures": 0.028,
+    "mean_R_proxy": 0.127,
+    "trades_futures": 40,
+    "trades_proxy": 37,
+    "first_trade_same_minute_and_side": 0.935,
+    "trade_days_only_one": 0
+   },
+   "F2 v5": {
+    "daily_R_corr": 0.754,
+    "mean_R_futures": 0.131,
+    "mean_R_proxy": -0.105,
+    "trades_futures": 54,
+    "trades_proxy": 54,
+    "first_trade_same_minute_and_side": 0.949,
+    "trade_days_only_one": 1
+   },
+   "F2 v10": {
+    "daily_R_corr": 0.681,
+    "mean_R_futures": 0.029,
+    "mean_R_proxy": -0.3,
+    "trades_futures": 85,
+    "trades_proxy": 76,
+    "first_trade_same_minute_and_side": 0.902,
+    "trade_days_only_one": 0
+   },
+   "F2 v15": {
+    "daily_R_corr": 0.687,
+    "mean_R_futures": -0.126,
+    "mean_R_proxy": -0.114,
+    "trades_futures": 74,
+    "trades_proxy": 66,
+    "first_trade_same_minute_and_side": 0.974,
+    "trade_days_only_one": 0
+   },
+   "F2 v20": {
+    "daily_R_corr": 0.688,
+    "mean_R_futures": 0.162,
+    "mean_R_proxy": 0.097,
+    "trades_futures": 39,
+    "trades_proxy": 40,
+    "first_trade_same_minute_and_side": 0.935,
+    "trade_days_only_one": 0
+   },
+   "F2 v25": {
+    "daily_R_corr": 0.644,
+    "mean_R_futures": 0.028,
+    "mean_R_proxy": -0.149,
+    "trades_futures": 60,
+    "trades_proxy": 51,
+    "first_trade_same_minute_and_side": 0.912,
+    "trade_days_only_one": 0
+   },
+   "F2 v30": {
+    "daily_R_corr": 0.81,
+    "mean_R_futures": 0.026,
+    "mean_R_proxy": 0.081,
+    "trades_futures": 41,
+    "trades_proxy": 39,
+    "first_trade_same_minute_and_side": 0.97,
+    "trade_days_only_one": 0
+   },
+   "F2 v35": {
+    "daily_R_corr": 0.706,
+    "mean_R_futures": 0.016,
+    "mean_R_proxy": 0.019,
+    "trades_futures": 34,
+    "trades_proxy": 33,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   },
+   "F2 v40": {
+    "daily_R_corr": 0.47,
+    "mean_R_futures": -0.011,
+    "mean_R_proxy": -0.105,
+    "trades_futures": 87,
+    "trades_proxy": 75,
+    "first_trade_same_minute_and_side": 0.909,
+    "trade_days_only_one": 0
+   },
+   "F2 v45": {
+    "daily_R_corr": 0.646,
+    "mean_R_futures": 0.32,
+    "mean_R_proxy": 0.077,
+    "trades_futures": 33,
+    "trades_proxy": 35,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   },
+   "F10 v43": {
+    "daily_R_corr": 0.698,
+    "mean_R_futures": 0.387,
+    "mean_R_proxy": -0.155,
+    "trades_futures": 38,
+    "trades_proxy": 38,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   }
+  },
+  "summary": {
+   "median_daily_R_corr": 0.688,
+   "mean_bias_R": -0.138,
+   "median_first_trade_match": 0.926
+  }
+ },
+ "mid": {
+  "sessions": 52,
+  "basis_ratio": 0.99582,
+  "open_diff_pts_median_abs": 36.87,
+  "open_diff_pts_p90_abs": 74.58,
+  "close_0834_diff_pts_median_abs": 36.75,
+  "tests": {
+   "F2 v0": {
+    "daily_R_corr": 0.714,
+    "mean_R_futures": 0.028,
+    "mean_R_proxy": 0.127,
+    "trades_futures": 40,
+    "trades_proxy": 37,
+    "first_trade_same_minute_and_side": 0.935,
+    "trade_days_only_one": 0
+   },
+   "F2 v5": {
+    "daily_R_corr": 0.724,
+    "mean_R_futures": 0.131,
+    "mean_R_proxy": -0.145,
+    "trades_futures": 54,
+    "trades_proxy": 55,
+    "first_trade_same_minute_and_side": 0.923,
+    "trade_days_only_one": 2
+   },
+   "F2 v10": {
+    "daily_R_corr": 0.652,
+    "mean_R_futures": 0.029,
+    "mean_R_proxy": -0.334,
+    "trades_futures": 85,
+    "trades_proxy": 77,
+    "first_trade_same_minute_and_side": 0.878,
+    "trade_days_only_one": 1
+   },
+   "F2 v15": {
+    "daily_R_corr": 0.685,
+    "mean_R_futures": -0.126,
+    "mean_R_proxy": -0.1,
+    "trades_futures": 74,
+    "trades_proxy": 65,
+    "first_trade_same_minute_and_side": 0.974,
+    "trade_days_only_one": 0
+   },
+   "F2 v20": {
+    "daily_R_corr": 0.688,
+    "mean_R_futures": 0.162,
+    "mean_R_proxy": 0.098,
+    "trades_futures": 39,
+    "trades_proxy": 40,
+    "first_trade_same_minute_and_side": 0.935,
+    "trade_days_only_one": 0
+   },
+   "F2 v25": {
+    "daily_R_corr": 0.644,
+    "mean_R_futures": 0.028,
+    "mean_R_proxy": -0.149,
+    "trades_futures": 60,
+    "trades_proxy": 51,
+    "first_trade_same_minute_and_side": 0.912,
+    "trade_days_only_one": 0
+   },
+   "F2 v30": {
+    "daily_R_corr": 0.811,
+    "mean_R_futures": 0.026,
+    "mean_R_proxy": 0.093,
+    "trades_futures": 41,
+    "trades_proxy": 39,
+    "first_trade_same_minute_and_side": 1.0,
+    "trade_days_only_one": 0
+   },
+   "F2 v35": {
+    "daily_R_corr": 0.706,
+    "mean_R_futures": 0.016,
+    "mean_R_proxy": 0.019,
+    "trades_futures": 34,
+    "trades_proxy": 33,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   },
+   "F2 v40": {
+    "daily_R_corr": 0.447,
+    "mean_R_futures": -0.011,
+    "mean_R_proxy": -0.113,
+    "trades_futures": 87,
+    "trades_proxy": 76,
+    "first_trade_same_minute_and_side": 0.864,
+    "trade_days_only_one": 0
+   },
+   "F2 v45": {
+    "daily_R_corr": 0.646,
+    "mean_R_futures": 0.32,
+    "mean_R_proxy": 0.078,
+    "trades_futures": 33,
+    "trades_proxy": 35,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   },
+   "F10 v43": {
+    "daily_R_corr": 0.698,
+    "mean_R_futures": 0.387,
+    "mean_R_proxy": -0.155,
+    "trades_futures": 38,
+    "trades_proxy": 38,
+    "first_trade_same_minute_and_side": 0.926,
+    "trade_days_only_one": 0
+   }
+  },
+  "summary": {
+   "median_daily_R_corr": 0.688,
+   "mean_bias_R": -0.143,
+   "median_first_trade_match": 0.926
+  }
+ },
+ "missing_days": 2
+}
