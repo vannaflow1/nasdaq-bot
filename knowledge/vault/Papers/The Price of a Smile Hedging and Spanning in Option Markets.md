@@ -13,7 +13,7 @@ Using daily S&P 500 index options from 1986 to 1995, the authors test whether op
 Useful background on why put skew is its own risk signal rather than a restatement of ATM IV, but it is a pricing-theory test on 1986-95 S&P options with no direct trading rule for NQ/QQQ.
 
 ## Concepts
-volatility smile, spanning test, [[stochastic volatility]], pricing kernel, 1987 crash
+[[volatility smile]], spanning test, [[stochastic volatility]], pricing kernel, 1987 crash
 
 ## Idea
 If the smile carries a risk factor beyond ATM IV, add put skew (as a z-score vs its past year) and its interaction with 30d IV to the next-day NQ range forecast.

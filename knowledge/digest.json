@@ -1,5 +1,35 @@
 [
 {
+"title": "Valuation Engines Under Market Incompleteness: An Empirical Benchmark of High-Order Option Pricing in Digital Asset Markets",
+"learned": "The paper shows that for crypto options, the Black\u2011Scholes model is far off; using Heston cuts pricing RMSE by ~45% and a stochastic\u2011volatility\u2011with\u2011jumps model improves deep OTM pricing errors by >70%. It argues that jumps and stochastic volatility are essential in incomplete markets.",
+"concepts": [
+"stochastic volatility",
+"jump\u2011diffusion",
+"model error reduction",
+"market incompleteness",
+"volatility smile"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://journals.zeuspress.org/index.php/conference/article/download/1525/1466",
+"date": "2026-10-22"
+},
+{
+"title": "No-Regret Revenue Maximization in Sequential Market Making Under Inventory Constraints",
+"learned": "The paper designs online algorithms for a market maker that posts bid and ask prices to unknown buyer/seller valuations while keeping its inventory small. With only trade\u2011success feedback, regret grows as\u202fT^{2/3}; with limit\u2011order\u2011book feedback (seeing the counter\u2011party\u2019s valuation when a trade fails), regret improves to\u202f\u221aT. It also shows a lower bound linking tighter per\u2011round inventory limits to higher unavoidable regret.",
+"concepts": [
+"online learning",
+"regret minimization",
+"inventory constraints",
+"limit order book feedback",
+"dynamic bid\u2011ask quoting"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/abs/2610.24562v1",
+"date": "2026-10-22"
+},
+{
 "title": "Anomalous transport in the crowded world of biological cells",
 "learned": "Anomalous transport describes how particle motion deviates from normal diffusion due to crowding, showing sublinear MSD growth, time\u2011varying diffusion rates and non\u2011Gaussian displacement distributions. Different stochastic models (fractional Brownian motion, CTRW, Lorentz) capture these effects via distinct propagators despite similar MSDs. The key insight is that apparent randomness can mask underlying heterogeneous constraints that affect risk and return dynamics.",
 "concepts": [

@@ -1,41 +1,5 @@
 [
  {
-  "id": "arxiv:2610.24562v1",
-  "title": "No-Regret Revenue Maximization in Sequential Market Making Under Inventory Constraints",
-  "abstract": "Market makers keep trading efficient by setting bid and ask prices for buyers and sellers. In sequential market making, trades happen independently based on price thresholds, requiring the market maker to maintain balanced, low-risk inventory over T rounds. This paper studies how to maximize revenue with unknown buyer and seller valuations using regret minimization. When the market maker only sees trade success or failure, an algorithm achieves regret and inventory bounds proportional to T to the power of 2/3. When full order book data is available for failed trades, regret and inventory limits improve significantly to the square root of T. We also establish a fundamental trade-off via a lower bound, by proving that tighter round-by-round inventory limits strictly force higher minimum regret.",
-  "url": "https://arxiv.org/abs/2610.24562v1",
-  "pdf": "https://arxiv.org/pdf/2610.24562v1",
-  "date": "2026-10-17",
-  "score": 9,
-  "source": "Frontier (arXiv, last 45 days)",
-  "track": "frontier",
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/arxiv_2610.24562v1.txt"
- },
- {
-  "id": "openalex:W7222953604",
-  "title": "Valuation Engines Under Market Incompleteness: An Empirical Benchmark of High-Order Option Pricing in Digital Asset Markets",
-  "abstract": "Financial derivatives occupy a core position in modern asset allocation, but the traditional option pricing framework, particularly the Black-Scholes (B-S) model, faces unprecedented challenges when applied to the highly volatile cryptocurrency market. The B-S assumption of constant volatility and continuous price paths fundamentally fails to capture the volatility smile, heavy-tailed distributions, and intermittent crashes inherent in digital assets. Furthermore, structural frictions such as liquidity fragmentation render the crypto ecosystem an incomplete market. This paper systematically reviews the mathematical transition from the B-S framework to high-order stochastic processes, specifically the Heston and Jump-Diffusion models. Most importantly, we contribute to the existing literature by providing a rigorous empirical evaluation using out-of-sample high-frequency options data from Deribit. Our empirical results quantitatively confirm the theoretical limitations of traditional pricing: while the Heston model reduces the Root Mean Square Error (RMSE) by approximately 45%, the Stochastic Volatility with Jumps (SVJ) model demonstrates absolute superiority in pricing tail risks. Specifically, the SVJ framework decreases the valuation error for deep out-of-the-money (OTM) options by over 72% compared to the baseline B-S model. Ultimately, this study emphasizes that structurally integrating both continuous volatility clustering and discrete market shocks is mathematically indispensable for robust risk management in decentralized financial markets.",
-  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1525/1466",
-  "source": "OpenAlex",
-  "date": "2026-10-19",
-  "score": 18,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W7222953604.txt"
- },
- {
-  "id": "openalex:W2112891119",
-  "title": "Where Is the Semantic System? A Critical Review and Meta-Analysis of 120 Functional Neuroimaging Studies",
-  "abstract": "Semantic memory refers to knowledge about people, objects, actions, relations, self, and culture acquired through experience. The neural systems that store and retrieve this information have been studied for many years, but a consensus regarding their identity has not been reached. Using strict inclusion criteria, we analyzed 120 functional neuroimaging studies focusing on semantic processing. Reliable areas of activation in these studies were identified using the activation likelihood estimate (ALE) technique. These activations formed a distinct, left-lateralized network comprised of 7 regions: posterior inferior parietal lobe, middle temporal gyrus, fusiform and parahippocampal gyri, dorsomedial prefrontal cortex, inferior frontal gyrus, ventromedial prefrontal cortex, and posterior cingulate gyrus. Secondary analyses showed specific subregions of this network associated with knowledge of actions, manipulable artifacts, abstract concepts, and concrete concepts. The cortical regions involved in semantic processing can be grouped into 3 broad categories: posterior multimodal and heteromodal association cortex, heteromodal prefrontal cortex, and medial limbic regions. The expansion of these regions in the human relative to the nonhuman primate brain may explain uniquely human capacities to use language productively, plan, solve problems, and create cultural and technological artifacts, all of which depend on the fluid and efficient retrieval and manipulation of semantic knowledge.",
-  "track": "self",
-  "url": "https://academic.oup.com/cercor/article-pdf/19/12/2767/17300551/bhp055.pdf",
-  "source": "OpenAlex (about itself)",
-  "topic": "self: complementary learning systems hippocampus neocortex",
-  "score": 5,
-  "queued": "2026-10-21",
-  "text_failed": true
- },
- {
   "id": "openalex:W639708223",
   "title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
   "abstract": "State-of-the-art object detection networks depend on region proposal algorithms to hypothesize object locations. Advances like SPPnet [1] and Fast R-CNN [2] have reduced the running time of these detection networks, exposing region proposal computation as a bottleneck. In this work, we introduce a Region Proposal Network (RPN) that shares full-image convolutional features with the detection network, thus enabling nearly cost-free region proposals. An RPN is a fully convolutional network that simultaneously predicts object bounds and objectness scores at each position. The RPN is trained end-to-end to generate high-quality region proposals, which are used by Fast R-CNN for detection. We further merge RPN and Fast R-CNN into a single network by sharing their convolutional features-using the recently popular terminology of neural networks with 'attention' mechanisms, the RPN component tells the unified network where to look. For the very deep VGG-16 model [3] , our detection system has a frame rate of 5 fps (including all steps) on a GPU, while achieving state-of-the-art object detection accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with only 300 proposals per image. In ILSVRC and COCO 2015 competitions, Faster R-CNN and RPN are the foundations of the 1st-place winning entries in several tracks. Code has been made publicly available.",
