@@ -38,6 +38,7 @@
     "random_p10": -104.0
    }
   },
-  "updated": "2026-10-21 14:34"
+  "updated": "2026-10-22 01:49",
+  "review_claude": "agree (Claude, 2026-10-22): FRAGILE is if anything generous. +0.023R/trade over 1024 trades with PF 1.08 and 5/10 positive years is indistinguishable from zero against ~1R per-trade noise; 2014-21 prop EV -61$ is no better than random entries (-50$), 2014-18 half pays +8$; the prop profit is variance (0.5x and 0.25x risk both pay -104$/eval = never a payout) and the latest 6 months gave 0% payouts. No lookahead found (overnight-range side is known at 08:31, red-folder calendar is scheduled in advance), but nothing here is a tradeable edge; do not size it."
  }
 }
