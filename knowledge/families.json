@@ -816,9 +816,10 @@
     }
    ]
   },
-  "status": "registered",
+  "status": "scored",
   "registered": "2026-10-22",
   "hash": "6bd363463cba",
-  "frozen": "186898796d130efd34f5d7008ea646ba19e3eb62"
+  "frozen": "186898796d130efd34f5d7008ea646ba19e3eb62",
+  "scored": "2026-10-22"
  }
 ]
