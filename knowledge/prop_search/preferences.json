@@ -1,14 +1,14 @@
 {
  "weights": {
-  "NQ": 0.453,
-  "GC": 0.385,
-  "CL": 0.162
+  "NQ": 0.431,
+  "GC": 0.409,
+  "CL": 0.16
  },
- "why": "evidence: NQ 986/300418 held up on 2022-23 (top EV +2533); locked exams 1/1 passed; live 1 trades -1.0R, GC 317/10007 held up on 2022-23 (top EV +925); locked exams 0/0 passed, CL 37/3685 held up on 2022-23 (top EV +791); locked exams 0/0 passed (exam weight x1, 2022-23 weight ^0.80)",
+ "why": "evidence: NQ 989/300474 held up on 2022-23 (top EV +2533); locked exams 1/1 passed; live 1 trades -1.0R, GC 317/10007 held up on 2022-23 (top EV +925); locked exams 0/0 passed, CL 37/3685 held up on 2022-23 (top EV +791); locked exams 0/0 passed (exam weight x1, 2022-23 weight ^0.80)",
  "stats": {
   "NQ": {
-   "tested": 300418,
-   "validated": 986,
+   "tested": 300474,
+   "validated": 989,
    "top5": 2532.8,
    "exams": 1,
    "passed": 1,
@@ -85,6 +85,14 @@
     "NQ": 0.453,
     "GC": 0.385,
     "CL": 0.162
+   }
+  },
+  {
+   "date": "2026-10-22",
+   "weights": {
+    "NQ": 0.431,
+    "GC": 0.409,
+    "CL": 0.16
    }
   }
  ],
