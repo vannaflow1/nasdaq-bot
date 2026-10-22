@@ -186,3 +186,22 @@ Diagnosis: Volta's edges are small (~0.05R per trade) against ~1.5-2R of noise p
 - **Measured, not assumed.**
   - Paired placebo (strategy R minus coin-flip twin R) cuts F2's noise per trade by only 3-21%, not "a lot". Low-variance exits (F2-LV) and more markets are the real levers.
   - Placebos already match trades per day and entry minute (same trades, random side).
+
+## Expert review 3 (22 Oct 2026): F10, the alpha budget and the eval decision
+- **F10 (F2 on NQ only).** Passed its v2 family test: validation 2022-now median +0.084R, 98% of variants positive. This evidence is partly post-hoc and the regime flips (2014-21 was −0.14R), so the realistic belief is P(edge > 0) ≈ 0.5-0.75. Only forward days count as clean evidence. The forward test runs on REAL NQ futures from the nightly archive; the Dukascopy proxy doesn't reproduce F2's NQ trades (F2 daily-R correlation 0.62-0.67, biased against F2).
+- **Frozen before F10's first forward day** (`knowledge/frozen/`, hash-checked by `tools/ledger_check.py`):
+  - `F10_forward_design.json`:
+    - Futility looks at 100/200/300 trades.
+    - Conditional power < 1%. The review proposed 10%, but simulation showed that would stop a true +0.08R edge 56% of the time; at 1% it stops a true +0.08R edge 14% of the time, a dead one 34%, a −0.05R one 50%.
+    - Posterior P(edge > 0) < 0.2.
+    - CUSUM kill on daily R (k 0.062, h 40.4: a false kill about once per 3 years).
+    - O'Brien-Fleming backstop up to 600 trades.
+  - `eval_rule.json`: Bayesian decision to start a prop eval.
+    - Preconditions: a SIM execution path with matching fills, and ≥ 60 forward trades.
+    - Start when E[EV] > 0 and P(EV > 0) > 0.6, assuming a 30%/yr regime-break risk.
+    - Max 3 evals, one at a time, never on the funded account.
+    - The evaluator and SIM path are NOT built yet.
+  - `alpha_slots.json`: the remaining 0.0086 is split into fixed slots. Slot 4 = 0.0040 (F11), then 0.0023, 0.0023, then no more families.
+- **F11 (contrast).** Does F2 pay on low-gamma days and not on high-gamma days in 2014-21? This is a mechanism test of the regime flip; it gives a verdict only, with no exam.
+- **Timer v3 (`eta.py`).** F10's outlook: belief, chance of eval-readiness (statistical half), chance of a futility kill, chance of formal proof.
+- **Owner data.** Databento needs a card (declined). TradingView reaches back only ~10 days. Next to check: whether the owner's Lucid login works in NinjaTrader or Quantower for a Feb-Oct 2026 NQ export.
