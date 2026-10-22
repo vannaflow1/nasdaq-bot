@@ -32,7 +32,9 @@ jobs:
       - run: python families.py --reps 100
         env: { PYTHONUNBUFFERED: "1" }
       - if: github.event.schedule == '30 4 * * 0'
-        run: python power.py --family F2 --worlds 40
+        run: python power.py --family F10 --worlds 400        # null v3 (shared draws): cheap, so many more worlds
+        env: { PYTHONUNBUFFERED: "1" }
+      - run: python eval_decision.py || true                   # frozen eval rule: E[EV] vs the zero-edge account (curves weekly)
         env: { PYTHONUNBUFFERED: "1" }
       - if: always()
         run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "families" && break; sleep $((RANDOM % 20 + 5)); done

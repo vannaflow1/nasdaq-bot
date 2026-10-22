@@ -39,13 +39,13 @@ CACHE = os.path.expanduser(os.environ.get("PROXY_CACHE", "~/.proxy_cache"))   # 
                                                                # families / calibration workflows only
 
 
-def day(mk, d):
-    """One UTC day of 1-minute bid candles -> DataFrame(ts_utc, o, h, l, c, v)."""
-    fn = os.path.join(CACHE, mk, f"{d}.bi5")
+def day(mk, d, side="BID"):
+    """One UTC day of 1-minute bid (or ask) candles -> DataFrame(ts_utc, o, h, l, c, v)."""
+    fn = os.path.join(CACHE, mk if side == "BID" else f"{mk}_{side}", f"{d}.bi5")
     if os.path.exists(fn) and (date.today() - d).days > 3:
         raw = open(fn, "rb").read()
     else:
-        raw = _get(URL.format(s=SYMS[mk], y=d.year, m=d.month - 1, d=d.day))
+        raw = _get(URL.format(s=SYMS[mk], y=d.year, m=d.month - 1, d=d.day).replace("BID_candles", f"{side}_candles"))
         if raw is not None and (date.today() - d).days > 3:
             os.makedirs(os.path.dirname(fn), exist_ok=True); open(fn, "wb").write(raw)
     if raw is None: MISSING.append((mk, str(d))); return pd.DataFrame()
@@ -58,11 +58,11 @@ def day(mk, d):
     return df[df.v > 0]                                       # Dukascopy pads closed minutes with flat zero-volume candles
 
 
-def fetch(mk, start, end, workers=3):
+def fetch(mk, start, end, workers=3, side="BID"):
     """All 1-minute bars between two dates, timestamps converted to Chicago time (Volta's session clock)."""
     from concurrent.futures import ThreadPoolExecutor
     days = [start + timedelta(i) for i in range((end - start).days + 1)]
-    with ThreadPoolExecutor(workers) as ex: parts = list(ex.map(lambda d: day(mk, d), days))
+    with ThreadPoolExecutor(workers) as ex: parts = list(ex.map(lambda d: day(mk, d, side), days))
     n = pd.concat([p for p in parts if len(p)], ignore_index=True) if any(len(p) for p in parts) else pd.DataFrame()
     if not len(n): return n
     n["ts"] = n.ts.dt.tz_localize("UTC").dt.tz_convert("America/Chicago").dt.tz_localize(None)
@@ -154,8 +154,65 @@ def calibrate(markets=("GC", "CL", "NQ"), start=date(2025, 4, 1), end=date(2025,
     return out
 
 
+def nq_detail(start=date(2025, 4, 1), end=date(2025, 6, 13)):
+    """Expert review 4 (22 Oct 2026): WHY does the NQ proxy not reproduce F2's futures trades (daily-R corr 0.67, bias
+    -0.11R) when GC/CL do (0.96 / 0.91)? On the same already-seen calibration window, three price constructions of the
+    CFD - bid candles (current), ask candles, mid = (bid + ask) / 2 - are compared with Volta's futures: F2 daily-R
+    correlation, mean R, and whether each session's FIRST trade has the same minute and side. Also measured: the spread
+    at the 08:30 CT open versus the rest of the session, and the gap between the proxy's and the futures' open (after the
+    basis). Never touches the sealed window (Feb-Oct 2026). Output: knowledge/research_out/proxy_nq_detail.json."""
+    import strategy_lab as S, families as F, test_engine as TE
+    _, X = TE.frame(); out = {"window": f"{start}..{end} (already seen - calibration only)"}
+    fn = os.path.join(HERE, "knowledge", "research_out", "proxy_nq_detail.json")
+    nb = fetch("NQ", start - timedelta(45), end, side="BID"); na = fetch("NQ", start - timedelta(45), end, side="ASK")
+    if not len(nb) or not len(na): out["error"] = "no data"; json.dump(out, open(fn, "w"), indent=1); return out
+    m = nb.merge(na[["ts", "o", "h", "l", "c"]], on="ts", suffixes=("", "_a"))
+    mid = pd.DataFrame({"ts": m.ts, "o": (m.o + m.o_a) / 2, "h": (m.h + m.h_a) / 2, "l": (m.l + m.l_a) / 2,
+                        "c": (m.c + m.c_a) / 2, "v": m.v, "sym": m.sym})
+    sp = (m.c_a - m.c); mm = m.ts.dt.hour * 60 + m.ts.dt.minute
+    out["spread_pts"] = {"median_rth": round(float(sp[(mm >= 510) & (mm < 900)].median()), 2),
+                         "median_0830_bar": round(float(sp[mm == 510].median()), 2), "p90_0830_bar": round(float(sp[mm == 510].quantile(0.9)), 2),
+                         "median_0730_bar": round(float(sp[mm == 450].median()), 2), "median_overnight": round(float(sp[(mm < 450) | (mm >= 960)].median()), 2)}
+    print("spread", out["spread_pts"], flush=True)
+    Df = S.data("NQ"); Mf = Df["M"]; jf = {s: i for i, s in enumerate(Mf.session)}
+    fam2 = next(f for f in json.load(open(F.REG)) if f["id"] == "F2"); V = F.variants(fam2)
+    fam10 = next(f for f in json.load(open(F.REG)) if f["id"] == "F10"); v43 = F.variants(fam10)[int(fam10["forward_variant"])]
+    tests = [("F2 v" + str(i), V[i]["sleeve"][0]) for i in range(0, len(V), 5)] + [("F10 v43", v43["sleeve"][0])]
+    for name, n in (("bid", nb), ("ask", na), ("mid", mid)):
+        A, Mp = sessions(n); ip = {s: i for i, s in enumerate(Mp.session)}
+        common = sorted(set(Mp.session) & set(Mf.session[(Mf.session >= str(start)) & (Mf.session <= str(end))]))
+        S.install_market("NQ_PX_" + name.upper(), A, Mp, like="NQ")
+        ipx = np.array([ip[s] for s in common]); jfx = np.array([jf[s] for s in common])
+        scale = float(np.median([A["C"][ip[s]][-1] / Df["C"][jf[s]][-1] for s in common]))
+        od = np.array([A["O"][ip[s]][0] / scale - Df["O"][jf[s]][0] for s in common])           # open gap after the basis
+        c5 = np.array([A["C"][ip[s]][4] / scale - Df["C"][jf[s]][4] for s in common])           # same at 08:34
+        res = {"sessions": len(common), "basis_ratio": round(scale, 5), "open_diff_pts_median_abs": round(float(np.median(np.abs(od))), 2),
+               "open_diff_pts_p90_abs": round(float(np.quantile(np.abs(od), 0.9)), 2), "close_0834_diff_pts_median_abs": round(float(np.median(np.abs(c5))), 2),
+               "tests": {}}
+        for tname, spec in tests:
+            Tf = S.backtest(dict(spec, market="NQ"), X, jfx); Tp = S.backtest(dict(spec, market="NQ_PX_" + name.upper()), X, ipx)
+            if not len(Tf) or not len(Tp): continue
+            a = Tf.groupby("session").R.sum(); b = Tp.groupby("session").R.sum(); j = a.index.union(b.index)
+            a, b = a.reindex(j).fillna(0.0), b.reindex(j).fillna(0.0)
+            f1 = Tf.sort_values("k").groupby("session").first(); p1 = Tp.sort_values("k").groupby("session").first()
+            both = f1.index.intersection(p1.index)
+            same = float(np.mean((f1.loc[both, "k"].values == p1.loc[both, "k"].values) & (f1.loc[both, "side"].values == p1.loc[both, "side"].values))) if len(both) else np.nan
+            res["tests"][tname] = {"daily_R_corr": round(float(np.corrcoef(a, b)[0, 1]), 3), "mean_R_futures": round(float(Tf.R.mean()), 3),
+                                   "mean_R_proxy": round(float(Tp.R.mean()), 3), "trades_futures": int(len(Tf)), "trades_proxy": int(len(Tp)),
+                                   "first_trade_same_minute_and_side": round(same, 3), "trade_days_only_one": int(len(j) - len(both))}
+        t = res["tests"]
+        res["summary"] = {"median_daily_R_corr": round(float(np.median([x["daily_R_corr"] for x in t.values()])), 3),
+                          "mean_bias_R": round(float(np.mean([x["mean_R_proxy"] - x["mean_R_futures"] for x in t.values()])), 3),
+                          "median_first_trade_match": round(float(np.median([x["first_trade_same_minute_and_side"] for x in t.values()])), 3)}
+        out[name] = res; print(name, res["summary"], {k: res[k] for k in ("open_diff_pts_median_abs", "close_0834_diff_pts_median_abs")}, flush=True)
+        os.makedirs(os.path.dirname(fn), exist_ok=True); json.dump(out, open(fn, "w"), indent=1)
+    out["missing_days"] = len(MISSING); json.dump(out, open(fn, "w"), indent=1)
+    return out
+
+
 if __name__ == "__main__":
     if sys.argv[1:2] == ["calibrate"]: calibrate()
+    elif sys.argv[1:2] == ["nq_detail"]: nq_detail()
     elif sys.argv[1:2] == ["probe"]:                          # quick format/scale probe on a seen day
         for mk in SYMS: d = day(mk, date(2025, 6, 4)); print(mk, len(d), d.iloc[[0, len(d) // 2, -1]].to_dict("records") if len(d) else "", flush=True)
         print("missing:", MISSING)

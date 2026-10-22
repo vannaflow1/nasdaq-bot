@@ -1,0 +1,34 @@
+name: proxy-nq-detail
+# Expert review 4 (22 Oct 2026): why the NQ CFD proxy does not reproduce F2's futures trades - bid vs ask vs mid candles,
+# open gap and spread at the open, on the ALREADY-SEEN calibration window only (tools/dukascopy.py nq_detail).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/proxy-nq-detail.trigger"]
+permissions:
+  contents: write
+concurrency:
+  group: proxy
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt scipy
+      - uses: actions/cache@v4               # proxy days (outside the repo, never committed) - bid days reused from calibrate
+        with:
+          path: ~/.proxy_cache
+          key: proxy-v1-${{ github.run_id }}
+          restore-keys: proxy-v1-
+      - run: |
+          mkdir -p knowledge/research_out
+          python -W ignore tools/dukascopy.py nq_detail > knowledge/research_out/proxy_nq_detail_log.txt 2>&1 || true
+          tail -c 3000 knowledge/research_out/proxy_nq_detail_log.txt
+        env: { PYTHONUNBUFFERED: "1" }
+      - if: always()
+        run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "proxy-nq-detail" && break; sleep $((RANDOM % 20 + 5)); done

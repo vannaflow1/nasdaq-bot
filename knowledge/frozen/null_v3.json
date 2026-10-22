@@ -1,0 +1,17 @@
+{
+ "declared": "2026-10-22",
+ "source": "expert review 4 (22 Oct 2026)",
+ "decision": "From 22 Oct 2026 every family test (families.score_family, score_contrast) and the power test (power.py) use null v3: ONE random draw per market-session, shared by every variant of the family - the trade's side reversed at the same minute (sign-flip randomization of the direction) or, where the side is known before the session, the same side at one random minute. 20,000 draws, exact randomization p = (1 + draws >= observed) / (1 + draws).",
+ "why": "The old placebo family drew INDEPENDENT coin flips / minutes for every variant and took the median over ~50 variants. The variants are near-copies of one signal (median pairwise correlation of their daily R 0.39-0.42 on F1, F2, F10, F11, F12), so the real family's median moves as one while the old null averaged 50 independent draws: the old null was 3.0-3.8x too narrow (null sd 0.0062-0.0159R vs 0.0227-0.0482R with shared draws) and every family p-value was too small. The old power test let the same independent draws pose as the strategy, so its 0% false-pass rate was guaranteed by construction.",
+ "measured_on_22_oct": {
+  "F1 2022-23": {"p_old": "~0", "p_v3": 0.0002},
+  "F2 2022-23": {"p_old": "~0", "p_v3": 0.0021},
+  "F2 2024-now (reference)": {"p_v3": 0.001},
+  "F10 2022-now": {"p_old": "~0", "p_v3": 0.00005},
+  "F11 contrast 2014-21": {"p_old": 0.00017, "p_v3": 0.2125, "alpha": 0.004, "verdict": "VOID - the contrast passed only because of the narrow null; 76% of it (+0.104R of +0.137R) is also in the no-information twins (costs are a smaller share of R on volatile, low-gamma days), not a gamma mechanism"},
+  "F12 2022-now": {"p_old": "~0", "p_v3": 0.0002, "alpha": 0.0023, "verdict": "its own family test stands under v3; its registration rationale (F11) is void; F12 is nested in F10 (same variant, half the days) and is not independent evidence"}
+ },
+ "past_verdicts": "Not rewritten: families_ledger.csv rows (frozen commit, p, alpha) stay as scored and hash-chained. The full re-score of every family under v3, at its original alpha and window, is recorded once in knowledge/ledgers/null_v3_rescore.json. Only F11 changes (pass -> void).",
+ "alpha": "Unchanged: slots 4 (F11) and 5 (F12) are spent; slot 6 = 0.0023 remains.",
+ "power_v3_F10_trades": "400 worlds at alpha 0.0023: false passes 0.2%; planted +0.05R found 5%, +0.10R 41%, +0.20R 100% (at alpha 0.05: 36%, 84%, 100%). No-edge worlds sit at the no-information level (-0.024R), not at 0."
+}

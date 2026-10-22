@@ -4,8 +4,10 @@ Instead of discovering thousands of single specs (where the luck bar rises as fa
 number of PRE-REGISTERED families. Each family = a one-sentence mechanism + a fixed grid of 20-50 variants, frozen in git
 before its validation years are ever looked at. One family statistic decides:
     the MEDIAN validation edge (mean net R per trade on 2022-23) across ALL variants,
-compared with a placebo family on the same days (each variant's trades re-entered at a random minute / with a coin-flip
-side, 100 draws). A real mechanism shows up as a plateau (most variants pay); luck shows up as a spike (one variant).
+compared with a placebo family on the same days (null v3 since 22 Oct 2026: every trade re-entered with its side
+reversed, or at a random minute when the side is known before the session - ONE random draw per market-session shared
+by all variants, 20,000 draws, exact randomization p; see null_draws and knowledge/frozen/null_v3.json).
+A real mechanism shows up as a plateau (most variants pay); luck shows up as a spike (one variant).
 Multiplicity: every family ever scored is in the ledger (knowledge/families_ledger.csv); a family passes only if its
 p-value < 0.05 / (number of families scored so far, itself included) AND its median validation edge > 0 AND >= 60% of
 its variants have a positive validation edge.
@@ -80,20 +82,64 @@ def trades(S, X, sleeve, lo, hi):
     return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=["session", "i", "pnl", "R", "side", "k", "market", "spec"])
 
 
-def placebo_mean(S, T, rng, j):
-    """Mean R of a no-edge twin of trades T: even j = same side at a random minute, odd j = same minute, coin-flip side."""
-    Rs = []
-    for spec_s, g in T.groupby("spec"):
-        sp = json.loads(spec_s); D = S.data(sp.get("market")); e = sp["entry"]
+NULL_REPS = int(os.environ.get("NULL_REPS", 20000))
+MINUTE_BINS = 16
+
+
+def twin_tables(S, T, minute_bins=MINUTE_BINS):
+    """NULL v3 (22 Oct 2026, knowledge/frozen/null_v3.json). For every trade of T: R1 = its real result, R0 = the same
+    minute with the side REVERSED, and - only when the side is known before the session - Rm[:, b] = the same side at the
+    b-th of `minute_bins` evenly spaced minutes of its entry window. Simulated once; each null draw then only picks columns.
+    key = market|session: the unit that gets ONE shared random draw in every null world."""
+    n = len(T); R1 = T.R.to_numpy(float); R0 = np.full(n, np.nan); Rm = None
+    key = (T.market.astype(str) + "|" + T.session.astype(str)).to_numpy() if n else np.array([], dtype=object)
+    pos = {ix: j for j, ix in enumerate(T.index)}
+    for spec_s, g in T.groupby("spec", sort=False):
+        sp = json.loads(spec_s); D = S.data(sp.get("market")); e = sp["entry"]; intraday = intraday_side(sp)
         lo = S.mins(e["window"][0]) if e["type"] == "level" else 1
         hi = S.mins(e["window"][1]) if e["type"] == "level" else min(S.mins(sp.get("exit", "14:55")) - 5, 380)
         lo, hi = max(lo, 1), max(hi, lo + 2)
-        intraday = intraday_side(sp)                           # side decided during the session: a random EARLIER minute with that
-        for i, sd, k in zip(g.i.values, g.side.values, g.k.values):   # side would use the future -> coin-flip twins only
-            ov = (int(rng.integers(lo, hi)), int(sd)) if (j % 2 == 0 and not intraday) else (int(k), int(rng.choice([-1, 1])))
-            r = S.simulate_session(D, int(i), sp, entry_override=ov)
-            if r: Rs.append(r[1])
-    return float(np.mean(Rs)) if len(Rs) >= 20 else np.nan
+        if not intraday and Rm is None: Rm = np.full((n, minute_bins), np.nan)
+        for ix, i, k, sd in zip(g.index, g.i.values, g.k.values, g.side.values):
+            j = pos[ix]
+            r = S.simulate_session(D, int(i), sp, entry_override=(int(k), -int(sd)))
+            R0[j] = r[1] if r else np.nan
+            if not intraday:                                   # side decided during the session: a random EARLIER minute with
+                for b in range(minute_bins):                   # that side would use the future -> reversed-side twins only
+                    r = S.simulate_session(D, int(i), sp, entry_override=(int(lo + (b + 0.5) * (hi - lo) / minute_bins), int(sd)))
+                    Rm[j, b] = r[1] if r else np.nan
+    return {"R1": R1, "R0": R0, "Rm": Rm, "key": key}
+
+
+def null_draws(tabs, stat, reps=NULL_REPS, seed=7):
+    """Null distribution of a family statistic. ONE random draw per market-session, SHARED by every variant: the variants
+    are near-copies of one signal (median pairwise correlation of their daily R ~0.4 on F2), so a no-edge world must move
+    them together. The old null drew independent coins per variant; averaging those across 50 variants made it 3-4x too
+    narrow (measured 22 Oct 2026 on F1, F2, F10, F11, F12) - every p-value was too small and F11 passed only because of it.
+    Even draws: same minute, side reversed on a random half of the sessions (an exact sign-flip randomization test of
+    "the direction carries no information"). Odd draws, where the side is known before the session: same side, one random
+    minute per session (timing carries no information). stat(xs) -> family statistic, xs[v] = variant v's R per trade."""
+    rng = np.random.default_rng(seed)
+    keys = sorted(set().union(*[set(t["key"]) for t in tabs])); kp = {k: j for j, k in enumerate(keys)}
+    for t in tabs: t["ki"] = np.array([kp[k] for k in t["key"]], int)
+    has_m = any(t["Rm"] is not None for t in tabs); out = np.empty(reps)
+    for r in range(reps):
+        c = rng.random(len(keys)) < 0.5
+        mb = rng.integers(0, MINUTE_BINS, len(keys)) if (has_m and r % 2 == 1) else None
+        xs = []
+        for t in tabs:
+            x = np.where(c[t["ki"]], t["R0"], t["R1"])
+            if mb is not None and t["Rm"] is not None:
+                xm = t["Rm"][np.arange(len(x)), mb[t["ki"]]]; x = np.where(np.isfinite(xm), xm, x)
+            xs.append(x)
+        out[r] = stat(xs)
+    return out
+
+
+def null_p(obs, null):
+    """Randomization p-value: (1 + draws at least as extreme) / (1 + draws) - never 0, resolution 1/(reps+1)."""
+    null = np.asarray(null, float); null = null[np.isfinite(null)]
+    return float((1 + np.sum(null >= obs)) / (1 + len(null)))
 
 
 def intraday_side(sp):
@@ -132,26 +178,18 @@ def score_contrast(fam, X, S, reps=100, seed=7):
         keep.append((T, lo_m, hi_m))
     R = pd.DataFrame(rows)
     if len(R) < 5: return {"verdict": "TOO FEW TRADES", "variants": len(V), "usable": len(R)}, R, V
-    med = float(R.contrast.median()); share = float((R.contrast > 0).mean()); pl = []
-    for j in range(reps):
-        m = []
-        for T, lo_m, hi_m in keep:
-            tw = []
-            for spec_s, g in T.groupby("spec", sort=False):
-                sp = json.loads(spec_s); D = S.data(sp.get("market"))
-                for ix, i, k in zip(g.index, g.i.values, g.k.values):
-                    r = S.simulate_session(D, int(i), sp, entry_override=(int(k), int(rng.choice([-1, 1]))))
-                    tw.append((ix, r[1] if r else np.nan))
-            tw = pd.Series(dict(tw)).reindex(T.index).to_numpy(float)
-            m.append(np.nanmean(tw[lo_m]) - np.nanmean(tw[hi_m]))
-        pl.append(float(np.median(m)))
-    pl = np.array(pl); p = float(1 - NormalDist(float(pl.mean()), max(float(pl.std(ddof=1)), 1e-9)).cdf(med))
+    med = float(R.contrast.median()); share = float((R.contrast > 0).mean())
+    tabs = [twin_tables(S, T) for T, _, _ in keep]                 # null v3: the reversed-side twin of every trade, simulated once
+    for t in tabs: t["Rm"] = None                                  # a contrast asks about direction only: sign-flip draws
+    masks = [(lo_m, hi_m) for _, lo_m, hi_m in keep]
+    pl = null_draws(tabs, lambda xs: float(np.median([np.nanmean(x[a]) - np.nanmean(x[b]) for x, (a, b) in zip(xs, masks)])), seed=seed)
+    p = null_p(med, pl)
     L = ledger(); j = int((L.get("rules", pd.Series(dtype=str)).astype(str) == "v2").sum()) + 1 if len(L) else 1
     alpha = SE.alpha_v2(j); passed = med > 0 and share >= 0.6 and p < alpha
     return {"variants": len(V), "usable": len(R), "median_edge_A": round(float(R.edge_low.median()), 4),
             "median_edge_B": round(float(R.edge_high.median()), 4), "share_positive_B": round(share, 3),
             "placebo_median_mean": round(float(pl.mean()), 4), "p": round(p, 5), "families_scored": len(L) + 1,
-            "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2",
+            "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2", "null": "v3-shared",
             "verdict": (f"{'PASSED' if passed else 'FAILED'} (contrast test): median low-minus-high {c['feature']} edge {med:+.3f}R, "
                         f"{share:.0%} of variants positive, placebo {pl.mean():+.3f}R, p={p:.4f} vs alpha {alpha:.4f} "
                         "(median_edge_A/B columns = low/high-day edges)")}, R, V
@@ -175,15 +213,9 @@ def score_family(fam, X, S, reps=100, seed=7):
     if len(ok) < 5:
         return {"verdict": "TOO FEW TRADES", "variants": len(V), "usable": len(ok)}, R, V
     med_B = float(ok.edge_B.median()); share_pos = float((ok.edge_B > 0).mean()); med_A = float(R[R.n_A >= 20].edge_A.median())
-    pl = []                                                  # placebo family: median over variants of placebo means
-    for j in range(reps):
-        m = [placebo_mean(S, TB_all[i], rng, j) for i in ok.index]
-        m = [x for x in m if np.isfinite(x)]
-        if m: pl.append(float(np.median(m)))
-    pl = np.array(pl); p = float((pl >= med_B).mean()) if len(pl) else 1.0
-    if v2 and len(pl) >= 10:                                 # v2: alphas get small (0.03, 0.0076, ...) - an empirical p from a few
-        from statistics import NormalDist                    # dozen placebo draws cannot resolve them; pre-declared normal
-        p = float(1 - NormalDist(float(pl.mean()), max(float(pl.std(ddof=1)), 1e-9)).cdf(med_B))   # approximation instead
+    tabs = [twin_tables(S, TB_all[i]) for i in ok.index]      # null v3: shared draws per market-session (see null_draws)
+    pl = null_draws(tabs, lambda xs: float(np.median([np.nanmean(x) for x in xs])), seed=seed)
+    p = null_p(med_B, pl)                                    # exact randomization p (20,000 draws resolve alphas down to ~1e-4)
     L = ledger(); k = (len(L) + 1)
     if v2:
         import sealed as SE
@@ -194,7 +226,8 @@ def score_family(fam, X, S, reps=100, seed=7):
     passed = med_B > 0 and share_pos >= 0.6 and p < alpha
     res = {"variants": len(V), "usable": len(ok), "median_edge_A": round(med_A, 4), "median_edge_B": round(med_B, 4),
            "share_positive_B": round(share_pos, 3), "placebo_median_mean": round(float(pl.mean()), 4) if len(pl) else None,
-           "p": round(p, 4), "families_scored": k, "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2" if v2 else "v1"}
+           "p": round(p, 5), "families_scored": k, "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2" if v2 else "v1",
+           "null": "v3-shared"}
     return res, R, V
 
 
