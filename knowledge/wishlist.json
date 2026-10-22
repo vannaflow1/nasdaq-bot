@@ -116,8 +116,15 @@
   "why": "My strategies and filters rely on gex_rank but currently I only have it in backtest; a live column would let me deploy low‑gamma tactics in real time.",
   "evidence": "Near‑miss feature where(gex_rank < 0.2,1,0) gave +0.2% edge on 4/9 tests.",
   "impact": "high",
-  "status": "frozen",
+  "status": "open",
   "votes": 1,
-  "note": "Claude 2026-10-22: live data feed = live briefing side, frozen by expert review 2. gex_rank stays research-only until a family using it is CONFIRMED."
+  "gemini": {
+   "status": "error",
+   "date": "2026-10-22",
+   "attempts": 1,
+   "branch": null,
+   "summary": "daily Gemini budget used up (120 calls)",
+   "guard": null
+  }
  }
 ]
