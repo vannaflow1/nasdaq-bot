@@ -94,8 +94,7 @@ def digest():
                                                        for x in lib_by.get(h["id"], [])[:3]) or "nothing read yet") for h in H[-6:]))
     try:
         import eta
-        I = eta.inputs()
-        out.append("MY TIMER (time until I have a prop algo that passes evals and keeps paying out): " + " ".join(eta.lines(I)[1:4]))
+        out.append("MY F10 OUTLOOK (forward test of the one live candidate): " + " ".join(eta.lines()[1:4]))
 
     except Exception:
         pass

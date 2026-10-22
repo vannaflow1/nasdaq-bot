@@ -301,18 +301,11 @@
   "- fade gap at 08:31, big expected range (top third), trail 1.0 + with the open's side of the overnight range at 10:00, mean-r + break ewma1_up 08:45-11: | lucid_pro_50k risk 30%/50%, 10 micros/unit, max corr 0.08 | 2014-21 EV +1123 (pass 52%, best single +1453) | 2022-23 EV -58 (pass 6%) | 5 accounts: -59$/month (4% months positive)"
  ],
  "eta": [
-  "\u23f3 WHEN WILL I HAVE A PROP ALGO THAT PASSES EVALS AND KEEPS PAYING OUT? (v2: built on measured power - a range, not a promise)",
-  "Chance within 1 month 0%, 3 months 0%, 6 months 0%, 1 year 2%, 2 years 42%.",
-  "In the worlds where I find one within 2 years: most likely after 20 months (80% range 14 months to 23 months).",
-  "Why it is slow: my edges are small (~0.03-0.08R per trade) against ~1.75R of noise per trade. Confirming +0.06R needs roughly 4,000-7,000 trades; I make about 2.7 trades a day across 3 markets.",
-  "Fastest ways to raise it: more independent trades per day (more markets), less noise per trade (low-variance exits), and the sealed Feb-Oct 2026 window (one clean shot per family)."
- ],
- "eta_levers": [
-  "MY TIMER LEVERS (what-if): now 0% within 6 months / 2% within 1 year.",
-  "- 2x trades per day (ES/YM/RTY added, more markets): 6% / 42%",
-  "- half the noise per trade (low-variance exits work): 2% / 24%",
-  "- 2x families tested per week (good ideas only): 0% / 3%",
-  "Biggest single lever right now: 2x trades per day (ES/YM/RTY added, more markets)."
+  "\u23f3 F10 (Nasdaq noise-band breakout) - WHAT THE COMING MONTHS WILL TELL ME (v3; a range, not a promise)",
+  "Belief now: true edge +0.028R per trade (\u00b1 0.043), P(edge > 0) 74%; 0 clean forward trades so far.",
+  "Ready for a first eval (statistically; the SIM execution check is not built yet): 3 months 4%, 6 months 18%, 12 months 34%.",
+  "Killed as dead (futility): 6 months 0%, 12 months 9%. Formally proven (O'Brien-Fleming): 12 months 1%, 24 months 8%.",
+  "Proof of a +0.08R edge at ~1 trade a day takes years; the forward test's real job is to kill F10 early if it is dead and to feed the frozen eval rule (max 3 evals, one at a time, never on the funded account)."
  ],
  "families": [
   "MECHANISM FAMILIES (family = mechanism + 20-50 variants; passes only as a plateau beating a placebo family, with a multiplicity-corrected p-value):",
