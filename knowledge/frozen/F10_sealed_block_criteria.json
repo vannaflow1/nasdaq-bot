@@ -1,0 +1,19 @@
+{
+ "family": "F10",
+ "declared": "2026-10-22 (before the proxy diagnostic with the substitute stop input has reported)",
+ "source": "expert review 4, section 7",
+ "question": "May the sealed Feb-Oct 2026 NQ block (Dukascopy proxy + substitute stop input) be added to F10's forward test as clean data?",
+ "replication_target": "F10 forward variant 43 on real NQ futures with the validated stop input exp(l_bot), calibration window(s) already seen",
+ "candidate_inputs": "proxy candles {bid, mid} x stop input {substitute (sealed.fit_nq_fc_substitute, fitted on seen sessions only)}",
+ "choice_rule": "the candidate with the highest F10 daily-R correlation on the calibration window (input matching only - never by a strategy's R level)",
+ "accept_if_all": {
+  "daily_R_corr_min": 0.9,
+  "abs_mean_R_diff_max": 0.03,
+  "trade_days_ratio_range": [
+   0.9,
+   1.1
+  ]
+ },
+ "if_accepted": "freeze an addendum naming the exact candidate and substitute coefficients BEFORE the block is scored; the block then enters F10's frozen futility/CUSUM/OBF test as the first chronological data",
+ "if_rejected": "the sealed NQ block stays closed for F10; forward days only"
+}
