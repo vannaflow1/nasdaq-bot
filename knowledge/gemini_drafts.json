@@ -36,5 +36,17 @@
   ],
   "calls_left_today": -1,
   "status": "error"
+ },
+ {
+  "wish": 9,
+  "title": "Add real‑time GEX rank to live data feed",
+  "outcome": "error",
+  "summary": "daily Gemini budget used up (120 calls)",
+  "how_to_use": "",
+  "date": "2026-10-22",
+  "steps": 0,
+  "models": [],
+  "calls_left_today": -1,
+  "status": "error"
  }
 ]

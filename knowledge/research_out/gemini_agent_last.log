@@ -5,38 +5,9 @@
  "summary": "daily Gemini budget used up (120 calls)",
  "how_to_use": "",
  "date": "2026-10-22",
- "steps": 24,
- "models": [
-  "gemini-3.8-flash",
-  "gemini-flash-latest",
-  "gemini-flash-lite-latest"
- ],
+ "steps": 0,
+ "models": [],
  "calls_left_today": -1,
  "status": "error",
- "log": [
-  "0: search(pattern='gex_rank') -> './introspect.py:126:   Use only columns/levels that exist (k_*, p_*, y_* for targets only, pw_*, gex'",
-  "1: search(pattern='qqq_gex_daily', path_glob='*.py') -> './learn_post.py:6:import qqq_gex_daily as q\\n./learn_fetch.py:544:        import qqq_gex_daily as q\\n.'",
-  "2: search(pattern='data feed|live data|live feed') -> 'no match'",
-  "3: search(pattern='wishes', path_glob='*.py') -> './introspect.py:2:open wishes), writes a short diary, queues follow-up questions/strategies it can r'",
-  "4: list_dir(path='knowledge') -> 'MISSION.md  (2154 bytes)\\nREADME.md  (20301 bytes)\\nai_budget.json  (51 bytes)\\nai_test.txt  (1956 byte'",
-  "5: (text) ",
-  "6: search(pattern='wish') -> './introspect.py:2:open wishes), writes a short diary, queues follow-up questions/strategies it can r'",
-  "7: read_file(start_line='1', max_lines='100', path='knowledge/wishlist.json') -> 'knowledge/wishlist.json (122 lines; showing 1-100)\\n1: [\\n2:  {\\n3:   \"id\": 1,\\n4:   \"date\": \"2026-10-20'",
-  "8: read_file(path='knowledge/wishlist.json', max_lines='30', start_line='100') -> 'knowledge/wishlist.json (122 lines; showing 100-122)\\n100:   \"title\": \"Add a GARCH\\\\u2011RNN hybrid vo'",
-  "9: search(path_glob='*.py', pattern='gex') -> './news.py:37:# company -> (weight, regex). Weight ~ importance to NDX moves.\\n./greeks.py:93:    gex '",
-  "10: search(pattern='gex_rank', path_glob='*.py') -> './introspect.py:126:   Use only columns/levels that exist (k_*, p_*, y_* for targets only, pw_*, gex'",
-  "11: search(path_glob='live_tracker.py', pattern='gex') -> './live_tracker.py:69:         \"gex\": bp.get(\"gex_rank\"), \"ev\": None if bp.get(\"event_prem\") is None '",
-  "12: read_file(start_line='45', max_lines='50', path='live_tracker.py') -> 'live_tracker.py (274 lines; showing 45-94)\\n45:     u = \"https://query1.finance.yahoo.com/v8/finance/'",
-  "13: search(pattern='bp', path_glob='*.py') -> './news.py:45:    \"PLTR\": (1, r\"\\\\bpalantir\\\\b\"), \"ARM\": (1, r\"\\\\barm holdings\\\\b\"), \"INTC\": (1, r\"\\\\binte'",
-  "14: search(pattern='gex_rank', path_glob='*strat*.py') -> './strategy_lab.py:707:   open), k_ columns, gex_rank, iv30, vix, vix_curve, nq_vs_es etc. Never y_ c'",
-  "15: search(pattern='brain_preds', path_glob='*.py') -> './introspect.py:26:        p = pd.read_csv(os.path.join(HERE, \"brain_preds.csv\")).dropna(subset=[\"ac'",
-  "16: search(path_glob='*.py', pattern='gexn') -> './test_engine.py:109:             \"spx_gexn\": \"SPX dealer gamma, normalised (collected from Oct 2026'",
-  "17: search(path_glob='*.py', pattern='brain_pred') -> './introspect.py:26:        p = pd.read_csv(os.path.join(HERE, \"brain_preds.csv\")).dropna(subset=[\"ac'",
-  "18: read_file(max_lines='100', path='strategy_forward.py', start_line='1') -> 'strategy_forward.py (235 lines; showing 1-100)\\n1: \"\"\"strategy_forward.py - every evening: (1) trade '",
-  "19: search(path_glob='*.py', pattern='gex_rank') -> './introspect.py:126:   Use only columns/levels that exist (k_*, p_*, y_* for targets only, pw_*, gex'",
-  "20: search(path_glob='*.py', pattern='brain_preds.csv') -> './introspect.py:26:        p = pd.read_csv(os.path.join(HERE, \"brain_preds.csv\")).dropna(subset=[\"ac'",
-  "21: search(path_glob='*.py', pattern='brain\\\\.py') -> './gemini_agent.py:28:LIVE = [\"nasdaq_bot.py\", \"brain.py\", \"brain_model.json\", \"live_tracker.py\", \"vo'",
-  "22: search(path_glob='*.py', pattern='gex_rank') -> './introspect.py:126:   Use only columns/levels that exist (k_*, p_*, y_* for targets only, pw_*, gex'",
-  "23: search(pattern='live_tracker', path_glob='*.py') -> './live_tracker.py:2:live_tracker.py - Volta during the US session (runs every 5 min, standard librar'"
- ]
+ "log": []
 }
