@@ -731,5 +731,94 @@
    "decision": "WAITING",
    "n": 0
   }
+ },
+ {
+  "id": "F11",
+  "name": "F11: F2 pays on low-gamma days, not on high-gamma days (2014-21)",
+  "mechanism": "Intraday momentum beyond the noise band comes from dealer hedging flows, which push WITH moves when dealer gamma is low/negative and against them when it is high. Prediction: even in 2014-21 (where F2 lost overall), F2's edge on low-gamma days exceeds its edge on high-gamma days.",
+  "citation": "Baltussen, Da & Soebhag (intraday momentum and hedging demand); Zarattini et al. 2024; expert review 3 (22 Oct 2026), step 2",
+  "rules": "v2",
+  "markets": [
+   "NQ"
+  ],
+  "statistic": "contrast",
+  "contrast": {
+   "feature": "gex_rank",
+   "low": [
+    0.0,
+    0.3333
+   ],
+   "high": [
+    0.6667,
+    1.0
+   ],
+   "note": "QQQ/NDX gamma proxy rank known at the open; bottom vs top tercile"
+  },
+  "window": [
+   "2014-01-01",
+   "2021-12-31"
+  ],
+  "sleeve": [
+   {
+    "name": "F11 F2 by gamma",
+    "entry": {
+     "type": "schedule",
+     "signal": "band",
+     "every_min": "{EV}",
+     "from": "09:00",
+     "to": "14:30",
+     "mult": "{MU}",
+     "lookback": 14
+    },
+    "stop": {
+     "range": 0.15
+    },
+    "target": {
+     "R": 5
+    },
+    "exit": "14:59",
+    "max_trades": 3,
+    "reentry": "after_stop",
+    "manage": {
+     "trail_R": 1.0
+    }
+   }
+  ],
+  "grid": {
+   "param.EV": [
+    15,
+    30,
+    60
+   ],
+   "param.MU": [
+    0.8,
+    1.0,
+    1.2
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.2
+    }
+   ],
+   "manage": [
+    null,
+    {
+     "trail_R": 0.5
+    },
+    {
+     "trail_R": 1.0
+    }
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-22",
+  "hash": "6bd363463cba",
+  "frozen": "186898796d130efd34f5d7008ea646ba19e3eb62"
  }
 ]
