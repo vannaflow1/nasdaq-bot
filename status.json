@@ -1,7 +1,7 @@
 {
  "for": "Thu 22 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Thu 22 Oct) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
@@ -28,35 +28,24 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 14  (7,507 XP, next level at 7,840)",
-  "Papers read 252 | ideas & strategies tested 60 | prop strategies searched 314,053",
-  "Survived unseen 2022-23: 1337 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 5",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +64 validated"
- ],
- "updated": "Thu 22 Oct 14:50 Lux",
+ "level": "NORMAL",
+ "updated": "Thu 22 Oct 15:27 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  Wed 28 Oct: FOMC rate decision 19:00 Lux, Powell 19:30; GOOGL earnings after close; MSFT earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Dow Jones Futures: Meta, Tesla Are Earnings Movers Late After SpaceX, Super Micro Lead Bullish Nasdaq Move  [Yahoo (megacaps)]\n    META, TSLA, earnings",
-  "- Meta posts Q3 revenue beat and strong guidance: Live updates  [CNBC tech]\n    META, shock, earnings",
-  "- Four workers killed after fall at TSMC\u2019s 2nm fab construction site  [Tom's Hardware]\n    TSM, AI chips/capex",
-  "- Gas Prices Are Skyrocketing. Can Bitcoin Actually Hedge Against Inflation?  [Yahoo (megacaps)]\n    Fed/macro",
-  "- UK inflation jumps to 3.5% \u2014 cementing rate hike expectations  [CNBC economy]\n    Fed/macro",
-  "- Tesla Third-Quarter Earnings Top Views as Automotive, Energy Generation Sales Decline  [Yahoo (megacaps)]\n    TSLA, earnings",
-  "- Tesla's Q3 Energy-Segment Revenue Misses Estimates By A Mile  [Yahoo (megacaps)]\n    TSLA, earnings",
-  "- Tesla Earnings Mixed, FSD Revenue Strong; Elon Musk Looms (Live Coverage)  [Yahoo (megacaps)]\n    TSLA, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Google\u2019s TPUs for AI workloads now run in Meta's data centers  [Tom's Hardware]\n    META, GOOGL, AI chips/capex",
+  "- Stock Market Today: Dow Falls As Oil Prices Jump; Meta, Tesla Slide On Earnings (Live Coverage)  [Yahoo (megacaps)]\n    META, TSLA, earnings",
+  "- Meta reports third-quarter revenue beat and issues strong guidance  [CNBC tech]\n    META, shock, earnings",
+  "- To help world gorge on GPUs, Nvidia brings cash bucket to fatten wafer-thin supply chain  [The Register]\n    NVDA, AI chips/capex",
+  "- A Recession Is Coming Eventually, and History Says There's a Major Silver Lining for Investors  [Yahoo (megacaps)]\n    Fed/macro",
+  "- Meta Stock Falls Despite Strong Q3 Results As AI Spending Takes Focus  [Yahoo (megacaps)]\n    META, earnings"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Thu 04:29 [tech/chips, economy] American Manufacturing is BOOMING. Jobs are coming HOME. We're breaking ALL Economic Estimates. Now Apple is committing to purchasing 100 MILLION DOLLARS of PENNSYLVANIA Titanium for its NEW iPhone. The Radical Left said it couldn't be done. We proved them wrong, AGAIN! I WILL\u2026",
-  "- Wed 19:20 [oil/geopolitics] Stephen Hubbard and Family COMING HOME from Russia. Should have been done a long time ago by Sleepy Joe Biden and the Dumocrats! President DONALD J. TRUMP View image",
-  "- Wed 19:20 [oil/geopolitics] RT @ realDonaldTrump Numerous people, who requested that sanctions be immediately imposed on Russia, have called to apologize to President Trump in that they didn\u2019t know that he was negotiating the release of Stephen Hubbard, a truly big and important deal for the U.S. If\u2026"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- Thu 04:29 [tech/chips, economy] American Manufacturing is BOOMING. Jobs are coming HOME. We're breaking ALL Economic Estimates. Now Apple is committing to purchasing 100 MILLION DOLLARS of PENNSYLVANIA Titanium for its NEW iPhone. The Radical Left said it couldn't be done. We proved them wrong, AGAIN! I WILL\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -131,7 +120,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: META earnings after close; TSLA earnings after close"
+  "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
   "LIVE options read - Thu 22 Oct 15:06 Lux (09:06 NY), quotes ~15 min delayed, QQQ 714.19",
