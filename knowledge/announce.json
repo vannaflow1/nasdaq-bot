@@ -1,0 +1,6 @@
+[
+ {
+  "title": "\ud83e\uddec Family test results",
+  "body": "F12 F12: F2 on Nasdaq, low-gamma days only (gamma rank below 0.5): median edge 2014-21 -0.0924, 2022-23 0.1078R, 1.0 of variants positive, placebo p=0.0 (need < 0.0023) -> PASSED THE FAMILY TEST -> FORWARD ROUTE on real futures bars (no sealed block: the free proxy does not reproduce this family's trades well enough); group-sequential test from 2026-10-22"
+ }
+]
