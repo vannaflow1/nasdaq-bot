@@ -64,8 +64,10 @@
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
+/home/runner/work/nasdaq-bot/nasdaq-bot/pool_review.py:23: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  D = I.memory()[I.BASE + ["y_rng"]].join(F, rsuffix="_p").replace([np.inf, -np.inf], np.nan).dropna()
 {
- "date": "2026-10-21",
+ "date": "2026-10-22",
  "pool_size": 7,
  "pick_years": [
   2020,
