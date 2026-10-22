@@ -323,5 +323,17 @@
  ],
  "spx_morning": [
   "SPX DEALER CHECK (2026-10-22): dealer gamma +8.1 (avg +1.5), SPX walls 7700 / 7760 (1.8x their usual distance) -> today's range bigger (+3.3%)"
+ ],
+ "power": [
+  "\u26a1 POWER CURVE - THE SCOREBOARD (family F10 trades, null v3 with shared draws, 400 worlds): can my family test find a planted edge?",
+  "False passes with no edge: 0.2% (alpha for the next family 0.0023)",
+  "Found a planted edge at that alpha: +0.05R 5%, +0.10R 41%, +0.20R 100% | at alpha 0.05: +0.05R 36%, +0.10R 84%, +0.20R 100% (planted on 60% of sessions, all variants together: true lift 0.6x)",
+  "The edge has to clear the costs first: a no-edge world sits at the no-information level (-0.024R), not at 0."
+ ],
+ "eval_rule": [
+  "\ud83c\udf9f\ufe0f EVAL RULE (frozen) - NOT YET - preconditions unmet (SIM execution path >= 20 sessions, >= 60 clean forward trades (0 so far))",
+  "Belief about F10's net edge: +0.028R \u00b1 0.043 (0 clean forward trades).",
+  "Best account: lucid_flex_50k at risk 0.08 of the buffer per trade - E[EV] +223$/eval, P(EV>0) 99%; the same account with ZERO edge +125$ -> F10 adds +98$. Median 89 sessions to pass, 126 to a first payout.",
+  "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -30$/eval (zero edge -42$), 22% pass within 21 sessions."
  ]
 }
