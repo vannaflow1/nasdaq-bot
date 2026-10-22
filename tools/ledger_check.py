@@ -28,6 +28,8 @@ def state():
         st["families"] = {r.family: _h(f"{r.frozen}|{r.p}|{r.alpha}") for r in L.itertuples()}
     except Exception:
         st["families"] = {}
+    fz = os.path.join(K, "frozen")
+    st["frozen"] = {f: _h(open(os.path.join(fz, f), "rb").read()) for f in sorted(os.listdir(fz))} if os.path.isdir(fz) else {}
     return st
 
 
@@ -44,6 +46,8 @@ def check():
     for f, h in last["families"].items():
         if f not in cur["families"]: errs.append(f"family {f} vanished from families_ledger.csv")
         elif cur["families"][f] != h: errs.append(f"family {f}: frozen commit / p-value / alpha changed after scoring")
+    for f, h in last.get("frozen", {}).items():                # frozen decisions (forward designs, eval rule, alpha slots)
+        if cur["frozen"].get(f) != h: errs.append(f"frozen decision file {f} was changed or removed")
     return cur, errs, chain
 
 

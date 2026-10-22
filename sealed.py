@@ -142,6 +142,15 @@ def forward_decision(Tf, n_max=N_MAX, looks=LOOKS):
 
 
 def alpha_v2(j, alpha=ALPHA_SEQ):
+    """Expert review 3: j = 1..3 used the sequence (F8, F9, F10); the remaining 0.0086 is split into FIXED slots declared in
+    knowledge/frozen/alpha_slots.json (j = 4: 0.0040, 5 and 6: 0.0023); after that 0 - no more families."""
+    if j >= 4:
+        try: return float(json.load(open(os.path.join(K, "frozen", "alpha_slots.json")))["slots"].get(str(j), 0.0))
+        except Exception: return 0.0
+    return _alpha_seq(j, alpha)
+
+
+def _alpha_seq(j, alpha=ALPHA_SEQ):
     """Families registered under the v2 rules: the j-th family scored gets alpha * 6 / (pi^2 j^2) - the sequence sums to
     alpha in total (the old alpha/k rule summed to ~0.13 after 7 families; those verdicts stand, the old rule is retired)."""
     return float(alpha * 6 / (np.pi ** 2 * j * j))
@@ -150,3 +159,43 @@ def alpha_v2(j, alpha=ALPHA_SEQ):
 if __name__ == "__main__":
     print("OBF boundaries:", obf_bounds())
     for j in range(1, 6): print("alpha_v2", j, round(alpha_v2(j), 5))
+
+
+def forward_decision_v3(Tf, design):
+    """Futility-first forward test (expert review 3), frozen in knowledge/frozen/<family>_forward_design.json:
+    futility looks at 100/200/300 trades (conditional power for +0.08R < 10% or posterior P(edge > 0) < 0.2, each judged on
+    exactly the first L trades), CUSUM kill on daily R, O'Brien-Fleming efficacy backstop up to N_MAX = 600."""
+    from statistics import NormalDist
+    N = NormalDist(); d = design; out = {"n": int(len(Tf))}
+    if not len(Tf): return "WAITING", out
+    Tf = Tf.sort_values(["session", "k"]).reset_index(drop=True); R = Tf.R.to_numpy(float)
+    pv = d["posterior"]; vv = (pv["validation"]["se"] ** 2) / pv["validation"]["weight"]
+    def posterior(r):
+        sd = max(float(np.std(r, ddof=1)) if len(r) > 2 else 2.0, 1.5); prec_f = len(r) / sd ** 2
+        prec = 1 / 0.05 ** 2 + 1 / vv + prec_f; mu = (pv["validation"]["edge"] / vv + (r.mean() if len(r) else 0) * prec_f) / prec
+        return mu, prec ** -0.5, 1 - N.cdf(-mu * prec ** 0.5)
+    ef = d["efficacy"]; nmax = ef["n_max"]; bounds = obf_bounds(ef["looks"], ef["alpha_one_sided"])
+    fu = d["futility"]; sd_cp = fu["cp_sd_per_trade_R"]; delta = fu["cp_alternative_edge_R"]
+    def cond_power(r):
+        n = len(r); m = max(nmax - n, 1); b = bounds[-1]
+        return 1 - N.cdf((b * sd_cp * np.sqrt(nmax) - r.sum() - delta * m) / (sd_cp * np.sqrt(m)))
+    mu, sdp, p_pos = posterior(R); out.update(edge=float(R.mean()), posterior_mean=round(mu, 4), posterior_sd=round(sdp, 4),
+                                              p_edge_pos=round(p_pos, 3), cond_power=round(cond_power(R), 3))
+    for L in fu["looks_trades"]:                                  # futility, judged on exactly the first L trades
+        if len(R) >= L:
+            r = R[:L]; cp = cond_power(r); pp = posterior(r)[2]
+            out[f"look_{L}"] = {"cond_power": round(cp, 3), "p_edge_pos": round(pp, 3)}
+            if cp < fu["stop_if_conditional_power_below"] or pp < fu["stop_if_posterior_p_edge_pos_below"]:
+                return "STOPPED (futility)", out
+    cu = d["cusum_kill"]; dayR = Tf.groupby("session").R.sum().to_numpy(); C = 0.0; cmax = 0.0
+    for x in dayR:
+        C = max(0.0, C + (cu["k"] - x)); cmax = max(cmax, C)
+        if C > cu["h"]: out["cusum"] = round(C, 2); return "STOPPED (CUSUM kill)", out
+    out["cusum"] = round(C, 2)
+    st = edge_days(Tf, B=1000); k = min(ef["looks"], int(len(R) / (nmax / ef["looks"])))
+    out.update(z=st["z"], look=k)
+    if k >= 1:
+        out["boundary"] = bounds[k - 1]
+        if st["z"] >= bounds[k - 1]: return "CONFIRMED", out
+        if k >= ef["looks"]: return "NOT CONFIRMED", out
+    return "CONTINUE", out

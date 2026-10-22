@@ -1,0 +1,53 @@
+{
+ "family": "F10",
+ "declared": "2026-10-22",
+ "before_first_forward_day": "2026-10-23",
+ "source": "expert review 3 (22 Oct 2026), step 0",
+ "clean_data": "forward days after registration only, real NQ futures bars from the nightly archive (sessions >= 2026-10-23)",
+ "efficacy": {
+  "type": "O'Brien-Fleming backstop",
+  "n_max": 600,
+  "looks": 10,
+  "alpha_one_sided": 0.05
+ },
+ "futility": {
+  "looks_trades": [
+   100,
+   200,
+   300
+  ],
+  "stop_if_conditional_power_below": 0.01,
+  "cp_alternative_edge_R": 0.08,
+  "cp_sd_per_trade_R": 2.07,
+  "stop_if_posterior_p_edge_pos_below": 0.2,
+  "evaluated_on": "exactly the first L forward trades (chronological) at look L",
+  "calibration": "Review 3 proposed CP < 10%. Simulated before any forward data (sd 2.07R, N_max 600): CP < 10% at 100/200/300 trades stops a TRUE +0.08R edge 56% of the time (zero edge 78%) - it barely discriminates. CP < 1% stops a true +0.08R edge 14%, a zero edge 34%, a -0.05R edge 50% within 300 trades. The posterior rule (P < 0.2) practically never fires with the validation at half weight; kept as declared. 300 trades cannot separate 0 from +0.08R well (SE ~0.12R) - this test mostly kills edges that are clearly dead or negative."
+ },
+ "posterior": {
+  "prior": "N(0, 0.05^2) R per trade",
+  "validation": {
+   "edge": 0.1081,
+   "se": 0.0604,
+   "n": 991,
+   "weight": 0.5,
+   "note": "variant 43 on 2022-01..2026-01; contaminated (post-hoc market choice) -> half weight = variance x2"
+  },
+  "forward": "mean R per trade with variance sd^2/n, sd = max(sample sd, 1.5)"
+ },
+ "cusum_kill": {
+  "series": "daily R summed over each forward trade day (days without trades skipped)",
+  "direction": "lower",
+  "k": 0.0621,
+  "h": 40.41,
+  "calibration": "block-bootstrap of variant 43's 2022-now trade days recentred to +0.08R/trade: false kill about once per 3 years (ARL ~440-470 trade days); a zero edge is killed after a median ~180 trade days"
+ },
+ "variant": 43,
+ "variant_params": {
+  "param.EV": 60,
+  "param.MU": 1.2,
+  "stop": {
+   "range": 0.2
+  },
+  "manage": null
+ }
+}

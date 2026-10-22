@@ -212,6 +212,10 @@ def forward_route(fam, X, S):
         parts.append(SE.archive_trades(S, X, v["sleeve"], lo, hi) if fam.get("forward_source") == "futures"
                      else SE.proxy_trades(S, X, v["sleeve"], lo=lo, hi=hi))
     if not parts: return "WAITING", {"n": 0}
+    fd = os.path.join(K, "frozen", f"{fam['id']}_forward_design.json")
+    if os.path.exists(fd):                                     # expert review 3: futility-first design, frozen before day 1
+        T = pd.concat(parts, ignore_index=True)
+        return SE.forward_decision_v3(T[T.session >= lo], json.load(open(fd)))
     return SE.forward_decision(pd.concat(parts, ignore_index=True))
 
 

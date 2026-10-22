@@ -1,0 +1,29 @@
+{
+ "declared": "2026-10-22",
+ "source": "expert review 3, Q1 (owner's decision to act stays his)",
+ "applies_to": "F10 (and any later family that reaches its forward route)",
+ "preconditions": [
+  "automated order path ran in a SIM account >= 20 sessions; simulator vs real fills within 0.05R per trade",
+  ">= 60 clean forward trades, not significantly worse than validation (z > -1.645)"
+ ],
+ "posterior_ev": {
+  "edge_draws": "from the F10 posterior (frozen design file)",
+  "per_draw": "prop_sim bootstrap with that edge",
+  "regime_break": "30% per year probability that the edge becomes 0 net of costs"
+ },
+ "start_eval_when": {
+  "E_ev_per_eval_gt": 0,
+  "P_ev_gt_0_gt": 0.6
+ },
+ "caps": {
+  "concurrent_evals": 1,
+  "total_evals": 3
+ },
+ "stop_all_evals_if": [
+  "forward futility rule fires",
+  "posterior P(edge > 0) < 0.5",
+  "CUSUM kill fires"
+ ],
+ "separation": "never on the manually traded funded account",
+ "status": "rule frozen; evaluator and SIM execution path not built yet (preconditions unmet)"
+}
