@@ -1,6 +1,0 @@
-[
- {
-  "title": "\ud83e\uddec Family test results",
-  "body": "F11 F11: F2 pays on low-gamma days, not on high-gamma days (2014-21): median edge 2014-21 -0.0866, 2022-23 -0.2147R, 1.0 of variants positive, placebo p=0.00017 (need < 0.004) -> PASSED (contrast test): median low-minus-high gex_rank edge +0.137R, 100% of variants positive, placebo +0.105R, p=0.0002 vs alpha 0.0040 (median_edge_A/B columns = low/high-day edges)"
- }
-]
