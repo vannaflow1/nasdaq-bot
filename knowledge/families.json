@@ -720,9 +720,11 @@
     }
    ]
   },
-  "status": "registered",
+  "status": "forward",
   "registered": "2026-10-22",
   "hash": "0f6b44318d6c",
-  "frozen": "111aa894ef26b8d6e9701f4b43200126552c2542"
+  "frozen": "111aa894ef26b8d6e9701f4b43200126552c2542",
+  "forward_variant": 43,
+  "scored": "2026-10-22"
  }
 ]
