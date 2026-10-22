@@ -60,9 +60,10 @@ def expected_exam_se(val, val_days_per_market, markets):
     return float(val["se"] * np.sqrt(vd / max(sealed_days, 1))), int(sealed_days)
 
 
-def load_proxy(mk, lo, hi):
+def load_proxy(mk, lo, hi, X=None):
     """Fetch [lo - warm-up, hi] from the proxy feed and install it in memory as market '<mk>_SEALED'.
-    Returns (market name, session indices inside [lo, hi])."""
+    Returns (market name, session indices inside [lo, hi]). NQ sessions get the validated stop input (match_futures_inputs);
+    where it does not exist (brain memory has no Feb-Oct 2026 rows) they cannot trade until a substitute is calibrated."""
     import strategy_lab as S
     from tools import dukascopy as DK
     d0 = date.fromisoformat(lo) - timedelta(WARMUP_DAYS); d1 = date.fromisoformat(hi)
@@ -70,9 +71,38 @@ def load_proxy(mk, lo, hi):
     miss = [d for m, d in DK.MISSING if m == mk and lo <= d <= hi]
     if not len(n) or len(miss) > 5: raise RuntimeError(f"proxy data for {mk} incomplete ({len(miss)} weekdays missing) - try again later")
     A, M = DK.sessions(n)
+    M = match_futures_inputs(M, mk, X)
     name = f"{mk}_SEALED"; S.install_market(name, A, M, like=mk)
     idx = np.where((M.session >= lo) & (M.session <= hi))[0]
     return name, idx
+
+
+def nq_fc_frac(sessions, X):
+    """NQ's stop input, the same one every NQ futures backtest and validation used: strat_sessions.fc_frac == exp(l_bot), the
+    brain's evening forecast for that session (checked 22 Oct 2026: corr 1.0000, ratio 0.9999). dukascopy.sessions puts a
+    20-session REALIZED range there instead - 1.64x larger on NQ: F2/F10 traded on it are a different strategy (on identical
+    futures prices it alone gives daily-R corr 0.68 vs the validated rule - the whole 'NQ proxy failure'). Source: brain
+    memory (memory date + gap_days = the session), then brain_preds.csv (next_date = the session). A session without the
+    forecast gets NaN: no trade, never a different stop rule (knowledge/frozen/F10_forward_inputs.json)."""
+    import math
+    out = {}
+    if X is not None and "l_bot" in X and "gap_days" in X:
+        for d, lb, gd in zip(X.index, X["l_bot"].to_numpy(float), X["gap_days"].fillna(1).to_numpy(float)):
+            if np.isfinite(lb): out[(pd.Timestamp(d) + pd.Timedelta(days=int(gd))).strftime("%Y-%m-%d")] = math.exp(lb)
+    fp = os.path.join(os.path.dirname(K), "brain_preds.csv")
+    if os.path.exists(fp):
+        P = pd.read_csv(fp)
+        for nd, f in zip(P["next_date"].astype(str).str[:10], P["feat"]):
+            try: out.setdefault(nd, math.exp(float(json.loads(f)["l_bot"])))
+            except Exception: pass
+    return np.array([out.get(str(s)[:10], np.nan) for s in sessions], float)
+
+
+def match_futures_inputs(M, mk, X):
+    """Give proxy / archive sessions the inputs the futures backtest used (NQ: the brain's stop forecast)."""
+    if (mk or "NQ").upper() == "NQ":
+        M = M.copy(); M["fc_frac"] = nq_fc_frac(M.session, X)
+    return M
 
 
 def proxy_trades(S, X, sleeve, lo=None, hi=None, window=None):
@@ -81,7 +111,7 @@ def proxy_trades(S, X, sleeve, lo=None, hi=None, window=None):
     for sp in sleeve:
         mk = (sp.get("market") or "NQ").upper(); a, b = window or SEALED[mk]
         a = lo or a; b = hi or b
-        name, idx = load_proxy(mk, a, b)
+        name, idx = load_proxy(mk, a, b, X)
         T = S.backtest(dict(sp, market=name), X, idx)
         if len(T): rows.append(T.assign(market=mk, spec=json.dumps(sp)))
     return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=["session", "i", "pnl", "R", "side", "k", "market", "spec"])
@@ -107,10 +137,13 @@ def archive_trades(S, X, sleeve, lo, hi):
         n = pd.concat([w[["ts", "o", "h", "l", "c", "v", "sym"]], a[["ts", "o", "h", "l", "c", "v", "sym"]]], ignore_index=True) if len(w) else a
         A, M = DK.sessions(n)
         if A is None: continue
+        M = match_futures_inputs(M, mk, X)                    # 22 Oct 2026: the validated stop input, not a realized range
         name = f"{mk}_FWD"; S.install_market(name, A, M, like=mk)
         lo2 = max(lo, start.strftime("%Y-%m-%d"))
         idx = np.where((M.session >= lo2) & (M.session <= hi))[0]
         if not len(idx): continue
+        miss = [s for s in M.session.values[idx] if not np.isfinite(M.fc_frac.values[M.session.values == s][0])]
+        if miss: print(f"WARNING {mk}: no stop forecast for forward session(s) {miss[:5]} - no trade there (not a different rule)")
         T = S.backtest(dict(sp, market=name), X, idx)
         if len(T): rows.append(T.assign(market=mk, spec=json.dumps(sp)))
     return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=["session", "i", "pnl", "R", "side", "k", "market", "spec"])

@@ -116,6 +116,8 @@ def calibrate(markets=("GC", "CL", "NQ"), start=date(2025, 4, 1), end=date(2025,
         t0 = time.time(); n = fetch(mk, start - timedelta(45), end)
         if not len(n): out[mk] = {"error": "no data"}; continue
         A, Mp = sessions(n); Df = S.data(mk); Mf = Df["M"]
+        import sealed as SE
+        Mp = SE.match_futures_inputs(Mp, mk, X)               # NQ: the brain's stop forecast, as in the futures backtest
         common = sorted(set(Mp.session) & set(Mf.session[(Mf.session >= str(start)) & (Mf.session <= str(end))]))
         ip = {s: i for i, s in enumerate(Mp.session)}; jf = {s: i for i, s in enumerate(Mf.session)}
         rp = np.concatenate([np.diff(np.log(A["C"][ip[s]])) for s in common]); rf = np.concatenate([np.diff(np.log(Df["C"][jf[s]])) for s in common])
@@ -178,10 +180,16 @@ def nq_detail(start=date(2025, 4, 1), end=date(2025, 6, 13)):
     fam2 = next(f for f in json.load(open(F.REG)) if f["id"] == "F2"); V = F.variants(fam2)
     fam10 = next(f for f in json.load(open(F.REG)) if f["id"] == "F10"); v43 = F.variants(fam10)[int(fam10["forward_variant"])]
     tests = [("F2 v" + str(i), V[i]["sleeve"][0]) for i in range(0, len(V), 5)] + [("F10 v43", v43["sleeve"][0])]
-    for name, n in (("bid", nb), ("ask", na), ("mid", mid)):
-        A, Mp = sessions(n); ip = {s: i for i, s in enumerate(Mp.session)}
+    import sealed as SE
+    builds = []
+    for pname, n in (("bid", nb), ("ask", na), ("mid", mid)):
+        A, Mp0 = sessions(n)
+        builds.append((pname + "|realized20", A, Mp0))                        # stop input as dukascopy.sessions makes it
+        builds.append((pname + "|brain", A, SE.match_futures_inputs(Mp0, "NQ", X)))   # the futures backtest's input
+    for name, A, Mp in builds:
+        ip = {s: i for i, s in enumerate(Mp.session)}
         common = sorted(set(Mp.session) & set(Mf.session[(Mf.session >= str(start)) & (Mf.session <= str(end))]))
-        S.install_market("NQ_PX_" + name.upper(), A, Mp, like="NQ")
+        S.install_market("NQ_PX_" + name.replace("|", "_").upper(), A, Mp, like="NQ")
         ipx = np.array([ip[s] for s in common]); jfx = np.array([jf[s] for s in common])
         scale = float(np.median([A["C"][ip[s]][-1] / Df["C"][jf[s]][-1] for s in common]))
         od = np.array([A["O"][ip[s]][0] / scale - Df["O"][jf[s]][0] for s in common])           # open gap after the basis
@@ -190,7 +198,7 @@ def nq_detail(start=date(2025, 4, 1), end=date(2025, 6, 13)):
                "open_diff_pts_p90_abs": round(float(np.quantile(np.abs(od), 0.9)), 2), "close_0834_diff_pts_median_abs": round(float(np.median(np.abs(c5))), 2),
                "tests": {}}
         for tname, spec in tests:
-            Tf = S.backtest(dict(spec, market="NQ"), X, jfx); Tp = S.backtest(dict(spec, market="NQ_PX_" + name.upper()), X, ipx)
+            Tf = S.backtest(dict(spec, market="NQ"), X, jfx); Tp = S.backtest(dict(spec, market="NQ_PX_" + name.replace("|", "_").upper()), X, ipx)
             if not len(Tf) or not len(Tp): continue
             a = Tf.groupby("session").R.sum(); b = Tp.groupby("session").R.sum(); j = a.index.union(b.index)
             a, b = a.reindex(j).fillna(0.0), b.reindex(j).fillna(0.0)

@@ -1,1 +1,1 @@
-2026-10-22T15:45:13Z expert review 4: NQ proxy bid/ask/mid diagnostic
+2026-10-22T15:59:37Z rerun: bid/ask/mid x realized20/brain stop input

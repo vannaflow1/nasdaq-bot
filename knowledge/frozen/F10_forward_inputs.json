@@ -1,0 +1,10 @@
+{
+ "declared": "2026-10-22",
+ "before_first_forward_day": "2026-10-23 (first forward session; scored by the families job on 2026-10-24 06:40 UTC)",
+ "source": "expert review 4 (22 Oct 2026)",
+ "applies_to": ["F10", "F12", "any NQ family on the forward route or a proxy block"],
+ "decision": "NQ forward (archive) and proxy sessions use the SAME stop input as every NQ futures backtest and validation: fc_frac = exp(l_bot), the brain's evening forecast for that session (brain memory by memory date + gap_days, else brain_preds.csv next_date). A session without that forecast does not trade; it never falls back to a different stop rule. Implemented in sealed.nq_fc_frac / match_futures_inputs (archive_trades, load_proxy) and in tools/dukascopy.py calibrate / nq_detail.",
+ "why": "strat_sessions.fc_frac (NQ futures, 2014-Jan 2026) equals exp(l_bot) exactly (corr 1.0000, median ratio 0.9999). dukascopy.sessions puts a 20-session realized RTH range there instead, 1.64x larger on NQ, so the forward route as first wired would have traded F10 with stops ~1.6x wider than the validated strategy (on 2022-now that variant has 890 instead of 991 trades and a different R spread than the frozen futility/CUSUM calibration assumes).",
+ "evidence": "On identical NQ futures prices, swapping only this input gives F2's daily-R correlation 0.679 vs the validated rule on the Apr-Jun 2025 calibration window (the 'NQ proxy failure' measured 0.674) and a -0.17R bias on that window - the proxy's poor NQ calibration is explained by the input, not by the CFD prices (minute-return corr 0.988). GC and CL use the realized-range input in both their futures backtests and the proxy, which is why they calibrated fine (0.96 / 0.91).",
+ "consequence_for_sealed_block": "The brain memory has no rows for Feb-Oct 2026 (gap 2025-12-12 -> 2026-10-19), so a sealed Feb-Oct 2026 NQ block cannot use the validated input; it trades nothing until a substitute input (e.g. from VXN/VIX) is calibrated against exp(l_bot) on already-seen months and frozen BEFORE the block is scored."
+}
