@@ -650,5 +650,79 @@
   "hash": "5a6a348567ea",
   "frozen": "61960eabd54dfac8ce52e083b6072b87d004fed1",
   "scored": "2026-10-21"
+ },
+ {
+  "id": "F10",
+  "name": "F2-NQ: noise-band breakout on Nasdaq, confirmed on real futures going forward",
+  "mechanism": "Moves beyond a day's normal noise band, measured at the same time of day, tend to continue intraday in US stock-index futures (F8 showed the effect is absent in gold and oil).",
+  "citation": "Zarattini, Aziz & Barbon 2024 (SPY); expert review 2; owner 22 Oct 2026: Nasdaq is the market that matters",
+  "rules": "v2",
+  "markets": [
+   "NQ"
+  ],
+  "sealed": false,
+  "forward_source": "futures",
+  "sleeve": [
+   {
+    "name": "F2-NQ noise-band breakout",
+    "entry": {
+     "type": "schedule",
+     "signal": "band",
+     "every_min": "{EV}",
+     "from": "09:00",
+     "to": "14:30",
+     "mult": "{MU}",
+     "lookback": 14
+    },
+    "stop": {
+     "range": 0.15
+    },
+    "target": {
+     "R": 5
+    },
+    "exit": "14:59",
+    "max_trades": 3,
+    "reentry": "after_stop",
+    "manage": {
+     "trail_R": 1.0
+    }
+   }
+  ],
+  "grid": {
+   "param.EV": [
+    15,
+    30,
+    60
+   ],
+   "param.MU": [
+    0.8,
+    1.0,
+    1.2
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.2
+    }
+   ],
+   "manage": [
+    null,
+    {
+     "trail_R": 0.5
+    },
+    {
+     "trail_R": 1.0
+    }
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-22",
+  "hash": "0f6b44318d6c",
+  "frozen": "111aa894ef26b8d6e9701f4b43200126552c2542"
  }
 ]
