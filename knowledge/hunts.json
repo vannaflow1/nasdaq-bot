@@ -154,8 +154,13 @@
   "query": "low dealer gamma intraday volatility impact",
   "why": "I need academic/industry evidence on how low GEX days affect intraday NQ volatility and move magnitude to justify the low‑gamma filter.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "searched",
+  "papers": [
+   "openalex:W4213420418",
+   "openalex:W2780593906",
+   "openalex:W4401996097"
+  ],
+  "searched": "2026-10-22"
  },
  {
   "id": "h14",
@@ -163,7 +168,8 @@
   "query": "breakout strategies low gamma regime futures",
   "why": "There may be prior work showing that break‑outs are more reliable on low‑gamma days, which could inform parameter choices.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-10-22"
  }
 ]

@@ -1,5 +1,49 @@
 [
 {
+"title": "Inferring Dealer Networks in the Foreign Exchange Market Using Conditional Transfer Entropy: Analysis of a Central Bank Announcement",
+"learned": "The paper proposes using conditional transfer entropy on high\u2011frequency dealer bid/ask data to map how information from events (e.g., an ECB announcement) flows through FX dealer networks, identifying dealers that act as sources, conduits, or sinks of information.",
+"concepts": [
+"conditional transfer entropy",
+"information flow network",
+"dealer heterogeneity",
+"event\u2011driven volatility",
+"FX microstructure"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://www.mdpi.com/1099-4300/26/9/738/pdf?version=1725005032",
+"date": "2026-10-22"
+},
+{
+"title": "Patterns and Determinants of the Intraday Bid-Ask Spread and Depth of CBOE Equity Options",
+"learned": "Option bid\u2011ask spreads are highest at market open and drop sharply within the first 90\u202fminutes, then stay relatively stable; spread widens again near market close. Factors widening spreads include higher underlying stock price, larger stock spread, longer time\u2011to\u2011expiry, lower depth, higher volatility, and VIX level.",
+"concepts": [
+"L\u2011shaped intraday spread",
+"option depth",
+"underlying stock price effect",
+"VIX impact",
+"time\u2011of\u2011day liquidity"
+],
+"relevance": 3,
+"verdict": "not testable with my data yet",
+"url": "https://harvest.usask.ca/bitstream/10388/8317/1/CHEN-THESIS-2018.pdf",
+"date": "2026-10-22"
+},
+{
+"title": "The impact of option hedging on the spot market volatility",
+"learned": "The paper models how the aggregate gamma exposure of option market makers (OMMs) feeds back into spot market volatility via their delta\u2011hedging trades, showing that a net short\u2011gamma position by OMMs raises volatility.",
+"concepts": [
+"option market maker gamma",
+"delta\u2011hedge impact",
+"linear permanent price impact",
+"spot volatility feedback"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.557% -> 0.557% (-0.0%), better in 3/8 unseen years",
+"url": "https://www.sciencedirect.com/science/article/pii/S0261560622000304/pdf",
+"date": "2026-10-22"
+},
+{
 "title": "Some Control Variates for exotic options",
 "learned": "The paper shows how to pick optimal linear combinations of the log\u2011returns (X_i) as control variates to cut variance when Monte\u2011Carlo pricing Asian or lookback options, proving the variance reduction equals 1\u2011sum of squared correlations.",
 "concepts": [
