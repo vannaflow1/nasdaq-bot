@@ -1,0 +1,17 @@
+{
+ "date": "2026-10-22",
+ "rule": "knowledge/frozen/F10_sealed_block_criteria.json (frozen 18:11 Lux, before the diagnostic reported)",
+ "evidence": "knowledge/research_out/proxy_nq_detail.json (workflow proxy-nq-detail, run 39810737937, calibration window 2025-04-01..2025-06-13, already seen; 52 sessions, 0 missing days)",
+ "candidates": {
+  "bid|substitute": {"F10_v43_daily_R_corr": 0.833, "mean_R_futures": 0.387, "mean_R_proxy": 0.198, "trades_futures": 38, "trades_proxy": 41, "trade_days_only_one_side": 0},
+  "mid|substitute": {"F10_v43_daily_R_corr": 0.833, "mean_R_futures": 0.387, "mean_R_proxy": 0.197, "trades_futures": 38, "trades_proxy": 41, "trade_days_only_one_side": 0}
+ },
+ "chosen": "bid|substitute (tie on daily-R correlation; the rule picks by correlation only)",
+ "checks": {
+  "daily_R_corr >= 0.90": {"value": 0.833, "pass": false},
+  "|mean R diff| <= 0.03": {"value": 0.189, "pass": false},
+  "trade days ratio in [0.9, 1.1]": {"value": 1.0, "pass": true}
+ },
+ "verdict": "REJECTED - the sealed Feb-Oct 2026 NQ block stays closed for F10; forward days only",
+ "context": "The proxy PRICES are not the problem: with the validated stop input exp(l_bot) the same proxy reproduces F10 v43 with daily-R corr 0.991 (mean R 0.366 vs 0.387, 38/38 trades; F2 grid median 0.938, bias -0.003R). The block fails only because the validated input does not exist for Feb-Oct 2026 (brain memory gap) and the VIX-family substitute (typical error ~13%) is not close enough. A better substitute (e.g. one built on VXN) would be a NEW candidate: it needs its own frozen acceptance rule before it is measured, and F10's results on the sealed block must never be looked at while choosing it."
+}
