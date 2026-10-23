@@ -67,7 +67,7 @@
 /home/runner/work/nasdaq-bot/nasdaq-bot/pool_review.py:23: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
   D = I.memory()[I.BASE + ["y_rng"]].join(F, rsuffix="_p").replace([np.inf, -np.inf], np.nan).dropna()
 {
- "date": "2026-10-22",
+ "date": "2026-10-23",
  "pool_size": 7,
  "pick_years": [
   2020,
