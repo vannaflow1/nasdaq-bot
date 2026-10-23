@@ -1,9 +1,6 @@
-hunt arxiv: HTTPError
-hunt arxiv: HTTPError
-hunt 'using forecasted daily range as a position‑sizing factor intraday futures': 14 found, queued 0
 scanned 0 papers, queued 0, queue size 26 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
-read 0, AI units today 906/7000
-curiosity asked: Strategy: LowGammaGapBreak70
-tested: Strategy: LowGammaGapBreak70 - On low‑gamma days with a low  -> NOT CONFIRMED on my data: too few trades (0 in 2014-2023, need 150). in-sample: no trades 
-testing used 369 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
+read 0, AI units today 1278/7000
+curiosity asked: Strategy: GammaLow_Exp70_Break_Midday
+tested: Strategy: GammaLow_Exp70_Break_Midday - On low‑gamma days th -> NOT CONFIRMED on my data: too few trades (20 in 2014-2023, need 150). in-sample 2014-2023:
+testing used 365 AI units
