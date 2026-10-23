@@ -85,11 +85,11 @@
   "spx_factor": 1.0175
  },
  "live": [
-  "LIVE - Fri 23 Oct 21:21 Lux",
-  "NQ 29,158 | range so far 339 pts (1.16%), high 29,326 / low 28,987 | data as of 15:11 NY (may lag a few minutes)",
+  "LIVE - Fri 23 Oct 21:31 Lux",
+  "NQ 29,144 | range so far 339 pts (1.16%), high 29,326 / low 28,987 | data as of 15:21 NY (may lag a few minutes)",
   "Brain this morning: ~818 pts for the day (2.81%) - 41% of it already used.",
-  "Updated with what happened so far: full day ~369 pts (80%: 350-445) -> typically ~30 more pts to come (80%: 11-106).",
-  "(brain + neural net, re-estimated at 14:00 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "Updated with what happened so far: full day ~360 pts (80%: 346-411) -> typically ~21 more pts to come (80%: 7-72).",
+  "(brain + neural net, re-estimated at 14:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
   "Far levels today: high 29,937 / low 28,147 (~90% of days stay inside each)"
  ],
  "playbook": [
@@ -155,7 +155,7 @@
   "Status: gamma regime = validated. Everything else = context; tested, did NOT improve forecasts."
  ],
  "shortvol": [
-  "SHORT-VOL CHECK Fri 23 Oct 15:26 NY - QQQ 705.25, gamma rank 0.08 (needs > 0.7)",
+  "SHORT-VOL CHECK Fri 23 Oct 15:31 NY - QQQ 705.08, gamma rank 0.08 (needs > 0.7)",
   "Not a short-vol day: no paper trade.",
   "(rank vs last 252 readings; 5 of them live from 2026 - it gets sharper as live history builds)",
   "",
