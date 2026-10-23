@@ -171,5 +171,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-10-22"
+ },
+ {
+  "id": "h15",
+  "date": "2026-10-23",
+  "query": "using forecasted daily range as a position‑sizing factor intraday futures",
+  "why": "My range forecasts are accurate but under‑utilized; understanding how others embed range uncertainty into sizing may boost edge.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
