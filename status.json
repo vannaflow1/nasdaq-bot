@@ -127,7 +127,7 @@
   "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
-  "Read from the US close (Fri 23 Oct), made 23:06 Lux. Live refresh every 30 min once the US market opens (15:30 Lux).",
+  "LIVE options read - Fri 23 Oct 23:18 Lux (17:18 NY), quotes ~15 min delayed, QQQ 705.42",
   "",
   "VOLATILITY: 30-day IV 24.4% -> higher than 81% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -139,7 +139,7 @@
   "  Wed 28 Oct (5d): \u00b12.35% (~686 NQ pts), ATM IV 25.0%",
   "  Thu 29 Oct (6d): \u00b12.77% (~808 NQ pts), ATM IV 26.9%",
   "  Fri 30 Oct (7d): \u00b13.06% (~894 NQ pts), ATM IV 27.6%",
-  "  Mon 02 Nov (10d): \u00b13.35% (~977 NQ pts), ATM IV 25.2%",
+  "  Mon 02 Nov (10d): \u00b13.35% (~978 NQ pts), ATM IV 25.2%",
   "  flat: no special near-term fear",
   "",
   "SKEW (~30d): 25-delta puts +7.6 vol pts vs calls; wings +0.3 pts vs ATM",
