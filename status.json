@@ -1,7 +1,7 @@
 {
  "for": "Fri 23 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Fri 23 Oct) - risk \ud83d\udfe0 ELEVATED",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
   "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size."
  ],
  "gamma": [
@@ -28,34 +28,25 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 14  (7,730 XP, next level at 7,840)",
-  "Papers read 263 | ideas & strategies tested 66 | prop strategies searched 370,081",
-  "Survived unseen 2022-23: 1377 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 5",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +6 validated"
- ],
- "updated": "Fri 23 Oct 11:14 Lux",
+ "level": "ELEVATED",
+ "updated": "Fri 23 Oct 15:23 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  Wed 28 Oct: FOMC rate decision 19:00 Lux, Powell 19:30; GOOGL earnings after close; MSFT earnings after close",
   "  Thu 29 Oct: AMZN earnings after close; INTC earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- GPUs from stolen $470,000 Nvidia RTX 5090 shipment at Brazil airport appear for sale online, identified by serial numbers  [Tom's Hardware]\n    NVDA, AI chips/capex",
-  "- Dow Jones Futures: Moderna Crashes, Meta Fuels AI Meltdown, But Warren Buffett Market Thriving  [Yahoo (megacaps)]\n    META, shock",
-  "- Stock Market Today: Nasdaq Thrashed, Dow Up; Moderna, Meta Lead Sell-Off (Live Coverage)  [Yahoo (megacaps)]\n    META, shock",
-  "- Tesla beats on earnings and sales even as auto revenue declines  [CNBC tech]\n    TSLA, earnings",
-  "- Meta Platforms beat the Street. Here's why analysts are bullish on the stock  [CNBC markets]\n    META, earnings",
-  "- Tesla is falling even after earnings. What analysts are saying  [CNBC markets]\n    TSLA, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Illegal Nvidia Blackwell Ultra B300 GPUs found inside state-owned China Telecom's network  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Treasury yields log biggest drop since the 2023 banking crisis. Here\u2019s what\u2019s going on.  [MarketWatch]\n    Fed/macro",
+  "- France is getting its credit rating reviewed. The French debt turmoil has helped turn U.S. Treasury yields around. What comes next?  [MarketWatch]\n    Fed/macro",
+  "- Wolves roam into Finnish villages after Google destroys 1,300 acres of forest for AI data centers  [Tom's Hardware]\n    GOOGL, AI chips/capex",
+  "- How Accounting Helped Tesla Beat Gross Profit Numbers  [Yahoo (megacaps)]\n    TSLA, earnings",
+  "- With earnings in rearview mirror, SpaceX-Tesla merger chatter takes center stage  [CNBC tech]\n    TSLA, earnings"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Fri 05:41 [economy] Senator Roger Marshall of Kansas has done an incredible job in representing his Great State! Because of him, working together with the Trump Administration, Bombardier is investing 270 MILLION DOLLARS, creating THOUSANDS of American Jobs in Kansas, Texas, and Indiana. Senator\u2026",
-  "- Thu 17:41 [stock market, oil/geopolitics] THE WALL STREET JOURNAL: \u201cMore Oil Is Now Coming Out of the Persian Gulf Than Before the Iran War.\u201d",
-  "- Thu 17:40 [oil/geopolitics] Iran is doing everything they can to drive up the price of Oil prior to the U.S. Midterm Election. They are even making up fake hits, mines, and everything else, because more Oil is coming through the Hormuz Strait now than it did even prior to the beginning of the Conflict.\u2026"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- Fri 05:41 [economy] Senator Roger Marshall of Kansas has done an incredible job in representing his Great State! Because of him, working together with the Trump Administration, Bombardier is investing 270 MILLION DOLLARS, creating THOUSANDS of American Jobs in Kansas, Texas, and Indiana. Senator\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
