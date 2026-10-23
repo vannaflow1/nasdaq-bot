@@ -1,6 +1,6 @@
 [
  {
   "title": "\ud83c\udf81 Wish granted (tested, not adopted): Dynamic position sizing based on consecutive profit days",
-  "body": "Wish #11 tested with the new read-only tools/streak_check.py on F10's frozen variant 43, seen years 2014-23 only (1544 days, 2391 trades). Days after >=2 profit days: -0.042R vs +0.108R otherwise (permutation p=0.75 that streaks help). Lag-1 daily-R autocorrelation -0.069 (p=0.006). Streak sizing (+0.5x per profit day after the first, cap 2x) lowers edge per unit risk +0.091 -> +0.078R/day and raises max drawdown 92.7R -> 109.4R. Not adopted; nothing in prop_sim, F10's forward test or knowledge/frozen changed. Undo: git revert <commit>"
+  "body": "Wish #11 tested with the new read-only tools/streak_check.py on F10's frozen variant 43, seen years 2014-23 only (1544 days, 2391 trades). Days after >=2 profit days: -0.042R vs +0.108R otherwise (permutation p=0.75 that streaks help). Lag-1 daily-R autocorrelation -0.069 (p=0.006). Streak sizing (+0.5x per profit day after the first, cap 2x) lowers edge per unit risk +0.091 -> +0.078R/day and raises max drawdown 92.7R -> 109.4R. Not adopted; nothing in prop_sim, F10's forward test or knowledge/frozen changed. Undo: git revert 2b312e3"
  }
 ]

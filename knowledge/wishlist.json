@@ -116,7 +116,7 @@
   "why": "My strategies and filters rely on gex_rank but currently I only have it in backtest; a live column would let me deploy low\u2011gamma tactics in real time.",
   "evidence": "Near\u2011miss feature where(gex_rank < 0.2,1,0) gave +0.2% edge on 4/9 tests.",
   "impact": "high",
-  "status": "open",
+  "status": "frozen",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -125,7 +125,8 @@
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
-  }
+  },
+  "note": "Live side frozen until a strategy is CONFIRMED (README stop list). gex_rank already exists for research (estimated from end-of-day QQQ/NDX/SPX chains); a real-time feed needs live intraday options data (wish #2 context). Claude, 2026-10-23."
  },
  {
   "id": 10,
@@ -136,8 +137,9 @@
   "why": "All my promising low\u2011gamma ideas stall without live gex_rank; a low\u2011latency feed would let me trigger entries exactly when dealer gamma drops below 0.2.",
   "evidence": "Low gamma near\u2011miss features add +0.2% edge in backtests (7/9 hits).",
   "impact": "high",
-  "status": "open",
-  "votes": 1
+  "status": "frozen",
+  "votes": 1,
+  "note": "Live side frozen until a strategy is CONFIRMED (README stop list). gex_rank already exists for research (estimated from end-of-day QQQ/NDX/SPX chains); a real-time feed needs live intraday options data (wish #2 context). Duplicate of #9. Claude, 2026-10-23."
  },
  {
   "id": 11,
