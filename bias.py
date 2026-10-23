@@ -93,11 +93,11 @@ def main():
     # 2) today's check
     h = max([c for c in CHECKS if now.hour * 60 + now.minute >= c * 60] or [None], key=lambda x: x or -1)
     if h is None or now.hour * 60 + now.minute > 15 * 60 or today not in S:
-        L.to_csv(LOG, index=False); print("no check now"); return
+        (None if dry else L.to_csv(LOG, index=False)); print("no check now"); return
     if ((L.date.astype(str) == str(today)) & (L.check_ct == h)).any():
-        L.to_csv(LOG, index=False); print("already checked", h); return
+        (None if dry else L.to_csv(LOG, index=False)); print("already checked", h); return
     hist = [S[d] for d in sorted(S) if d < today and S[d][2] >= 300][-LOOKBACK:]
-    if len(hist) < MIN_HIST: print("not enough history:", len(hist)); L.to_csv(LOG, index=False); return
+    if len(hist) < MIN_HIST: print("not enough history:", len(hist)); (None if dry else L.to_csv(LOG, index=False)); return
     t = h * 60 - 510; o, c_today, _ = S[today]; c = c_today[t - 1]
     sig = float(np.nanmean([abs(hc[t - 1] / ho - 1) for ho, hc, _ in hist])); band = MULT * sig
     dist = (c / o - 1) / sig if sig > 0 else 0.0
