@@ -1,5 +1,5 @@
 scanned 0 papers, queued 0, queue size 26 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
-read 0, AI units today 2517/7000
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
+read 0, AI units today 2520/7000
 test queue empty
 testing used 0 AI units
