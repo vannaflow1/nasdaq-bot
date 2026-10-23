@@ -62,5 +62,22 @@
    "explain": "higher implied move relative to today\u2019s range predicts the day staying inside the iron\u2011condor width"
   },
   "date": "2026-10-21"
+ },
+ {
+  "id": "q:2026-10-23:3",
+  "title": "Volta's own question (inspired by: Neural Control Variates for Variance Reduction; Valuation Engines Under Market Incompleteness: An Empirical )",
+  "idea": "Do days with higher SPX dealer gamma exposure (k_spx_gex) tend to have a relatively smaller NQ intraday range (y_range) compared to its 20\u2011day average (k_range20)?",
+  "relevance": 6,
+  "spec": {
+   "kind": "question",
+   "question": "Do days with higher SPX dealer gamma exposure (k_spx_gex) tend to have a relatively smaller NQ intraday range (y_range) compared to its 20\u2011day average (k_range20)?",
+   "target": "y_range / k_range20",
+   "expr": "k_spx_gex",
+   "explain": "Inspired by prior research linking dealer gamma to market volatility, this asks whether SPX gamma levels can predict NQ range compression, extending the earlier investigation of gamma's effect on NQ ranges."
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: average 1.03, median 0.907 over 2906 sessions (2014-19: 1.03, 2020-25: 1.03). Predictor: lowest-fifth days 0.833 vs highest-fifth 1.22, skill +7.4% vs the base rate, better in 4/5 unseen years",
+  "how": "Q: Do days with higher SPX dealer gamma exposure (k_spx_gex) tend to have a relatively smaller NQ intraday range (y_range) compared to its 20\u2011day average (k_range20)? | answer = `y_range / k_range20` | predicted by `k_spx_gex` | stress: skill +7.40; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-10-23"
  }
 ]
