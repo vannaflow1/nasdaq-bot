@@ -118,7 +118,7 @@
   "\u2022 Do Behavioral Biases Affect Prices? (\u2605\u2605\u2605\u2605\u2606)",
   "  CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
   "  tested: prop mission - feeds my strategy designer and self-check",
-  "This week's tests: 156 run - 4 promising, 79 not confirmed, 31 don't fit my data, 42 translation failures",
+  "This week's tests: 157 run - 4 promising, 80 not confirmed, 31 don't fit my data, 42 translation failures",
   "",
   "26 papers waiting in my queue."
  ],
