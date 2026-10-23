@@ -727,7 +727,7 @@
   "forward_variant": 43,
   "scored": "2026-10-22",
   "forward": {
-   "date": "2026-10-22",
+   "date": "2026-10-23",
    "decision": "WAITING",
    "n": 0
   }
@@ -917,7 +917,7 @@
    "record": "knowledge/ledgers/null_v3_rescore.json"
   },
   "forward": {
-   "date": "2026-10-22",
+   "date": "2026-10-23",
    "decision": "WAITING",
    "n": 0
   }

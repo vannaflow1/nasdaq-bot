@@ -335,7 +335,7 @@
  "eval_rule": [
   "\ud83c\udf9f\ufe0f EVAL RULE (frozen) - NOT YET - preconditions unmet (SIM execution path >= 20 sessions, >= 60 clean forward trades (0 so far))",
   "Belief about F10's net edge: +0.028R \u00b1 0.043 (0 clean forward trades).",
-  "Best account: lucid_flex_50k at risk 0.08 of the buffer per trade - E[EV] +223$/eval, P(EV>0) 99%; the same account with ZERO edge +125$ -> F10 adds +98$. Median 89 sessions to pass, 126 to a first payout.",
-  "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -30$/eval (zero edge -42$), 22% pass within 21 sessions."
+  "Best account: lucid_flex_50k at risk 0.08 of the buffer per trade - E[EV] +198$/eval, P(EV>0) 99%; the same account with ZERO edge +109$ -> F10 adds +90$. Median 90 sessions to pass, 126 to a first payout.",
+  "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -32$/eval (zero edge -43$), 22% pass within 21 sessions."
  ]
 }
