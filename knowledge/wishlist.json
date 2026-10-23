@@ -142,7 +142,7 @@
   "gemini": {
    "status": "error",
    "date": "2026-10-23",
-   "attempts": 1,
+   "attempts": 2,
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
