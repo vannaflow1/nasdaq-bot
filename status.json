@@ -284,9 +284,9 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 16 (job 2/2): 6516 new strategies this run, 408,472 tested in total (380,917 with the edge metric; grid 985,824 + mutations, markets NQ)",
-  "Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. Stage A (2014-21, edge > 0 with 90% confidence): 6868 | Stage B (edge still > 0 on unseen 2022-23): 753 | exams taken: 2",
-  "LUCK BAR (best 2022-23 edge that many no-edge random-entry twins reach, 95%): NQ +1.146R at 6462 validated tries (25848 placebos, avg +0.004R) -> 0 beat it",
+  "PROP STRATEGY SEARCH - run 17 (job 1/2): 10060 new strategies this run, 428,208 tested in total (400,653 with the edge metric; grid 985,824 + mutations, markets NQ)",
+  "Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. Stage A (2014-21, edge > 0 with 90% confidence): 7212 | Stage B (edge still > 0 on unseen 2022-23): 796 | exams taken: 2",
+  "LUCK BAR (best 2022-23 edge that many no-edge random-entry twins reach, 95%): NQ +1.146R at 6785 validated tries (27140 placebos, avg +0.004R) -> 0 beat it",
   "",
   "LEADERBOARD (edge on unseen 2022-23 above the luck bar; 'luck-level' = not above it):",
   "- break r1 08:30-10:00, big expected range (top third), breakeven at 1.0 | 2014-21 +0.162R (t 1.6, 161 trades) | 2022-23 +0.732R (t 2.5) | luck-level | priced: lucid_flex_50k EV +85$/eval",
