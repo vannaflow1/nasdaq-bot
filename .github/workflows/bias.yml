@@ -1,0 +1,30 @@
+name: bias
+# Intraday NQ bias (owner request 23 Oct 2026; separate from the prop-edge hunt): hourly checks 09:00-14:00 Chicago,
+# Discord post at the first check and on every change, graded after the close. bias.py explains the evidence.
+on:
+  schedule:
+    - cron: "4 13-21 * * 1-5"      # every hour in UTC; bias.py decides from Chicago time (covers both DST states)
+  workflow_dispatch:
+    inputs:
+      dry: { description: "dry run (print only)", default: "yes" }
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt
+      - run: |
+          if [ "${{ github.event.inputs.dry }}" = "yes" ]; then python bias.py --dry; else python bias.py; fi
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_LIVE: ${{ secrets.DISCORD_WEBHOOK_LIVE }}
+      - if: always()
+        run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "bias" && break; sleep $((RANDOM % 20 + 5)); done
