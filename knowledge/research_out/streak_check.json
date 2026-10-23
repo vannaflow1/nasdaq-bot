@@ -1,0 +1,32 @@
+{
+ "family": "F10",
+ "variant": 43,
+ "params": {
+  "param.EV": 60,
+  "param.MU": 1.2,
+  "stop": {
+   "range": 0.2
+  },
+  "manage": null
+ },
+ "window": [
+  "2014-01-01",
+  "2023-12-31"
+ ],
+ "days": 1544,
+ "trades": 2391,
+ "ac1": -0.0692,
+ "after2": -0.0424,
+ "other": 0.1078,
+ "gap": -0.1502,
+ "edge_flat": 0.0905,
+ "edge_streak_per_risk": 0.0783,
+ "n_after2": 178,
+ "p_gap_one_sided": 0.752249550089982,
+ "p_ac1_two_sided": 0.00639872025594881,
+ "maxdd_R_flat": 92.68,
+ "maxdd_R_streak": 109.41,
+ "mean_size_streak": 1.076,
+ "reps": 5000,
+ "rule": "size = min(1 + 0.5*(profit-day streak - 1), 2); flat = 1"
+}

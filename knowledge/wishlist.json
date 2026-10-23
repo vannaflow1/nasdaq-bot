@@ -148,7 +148,8 @@
   "why": "Literature suggests scaling size after streaks improves long\u2011run EV while preserving drawdown limits; implementing this could turn modest per\u2011trade edges into higher overall EV.",
   "evidence": "Current flat size yields ~+0.03R per trade; scaling could amplify to ~+0.05R on winning streaks.",
   "impact": "medium",
-  "status": "open",
-  "votes": 1
+  "status": "declined",
+  "votes": 1,
+  "note": "Tested 2026-10-23 by Claude (tools/streak_check.py, research_out/streak_check.json): on F10 v43, seen years 2014-23 (1544 days), days after >=2 profit days averaged -0.042R vs +0.108R otherwise (p=0.75 that streaks help); lag-1 daily-R autocorrelation -0.069 (p=0.006). Streak sizing (+0.5x/day, cap 2x) lowers edge per unit risk +0.091 -> +0.078R/day and raises max DD 92.7R -> 109.4R. Not adopted; no change to prop_sim or the frozen forward test."
  }
 ]
