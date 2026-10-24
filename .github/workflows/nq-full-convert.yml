@@ -1,0 +1,20 @@
+name: nq-full-convert
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt
+      - run: python tools/nq_full_to_npz.py | tee knowledge/data/nq_full/convert_log.txt
+      - if: always()
+        run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "nq-full-convert" && break; sleep $((RANDOM % 20 + 5)); done
