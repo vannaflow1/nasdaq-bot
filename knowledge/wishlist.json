@@ -174,11 +174,11 @@
   "status": "open",
   "votes": 1,
   "gemini": {
-   "status": "out_of_time",
+   "status": "error",
    "date": "2026-10-24",
-   "attempts": 1,
+   "attempts": 2,
    "branch": null,
-   "summary": "stopped after 45 minutes (32 model turns)",
+   "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
   }
  }
