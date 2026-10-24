@@ -98,7 +98,7 @@
   "No FOMC, CPI or jobs report on Mon 26 Oct."
  ],
  "learning": [
-  "LEARNING: 263 papers read (42 more skipped as not relevant enough), 136 ideas tested on my memory, 2 promising.",
+  "LEARNING: 265 papers read (42 more skipped as not relevant enough), 136 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
@@ -118,7 +118,7 @@
   "\u2022 Do Behavioral Biases Affect Prices? (\u2605\u2605\u2605\u2605\u2606)",
   "  CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
   "  tested: prop mission - feeds my strategy designer and self-check",
-  "This week's tests: 164 run - 5 promising, 85 not confirmed, 31 don't fit my data, 43 translation failures",
+  "This week's tests: 165 run - 5 promising, 86 not confirmed, 31 don't fit my data, 43 translation failures",
   "",
   "26 papers waiting in my queue."
  ],

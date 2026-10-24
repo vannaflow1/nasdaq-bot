@@ -13,7 +13,7 @@ A hybrid model that first fits a HAR to capture multi‑scale volatility, then f
 The paper deals with energy‑future volatility, not directly Nasdaq/S&P, but the hybrid approach could be adapted to equity index volatility forecasts.
 
 ## Concepts
-har volatility model, lstm neural network, garch residual modeling, hybrid forecasting, [[realized volatility]]
+har volatility model, [[lstm neural network]], garch residual modeling, hybrid forecasting, [[realized volatility]]
 
 ## Idea
 Build a HAR‑LSTM‑GARCH pipeline on the daily log‑realized volatility column (l_rv20) for the Nasdaq futures, using the HAR component on 1‑day, 5‑day, 20‑day lagged volatility, an LSTM on the HAR residuals, and a GARCH(1,1) on the LSTM residuals; then evaluate forecast RMSE versus a plain HAR and a plain GARCH.

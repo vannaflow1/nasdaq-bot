@@ -1,5 +1,35 @@
 [
 {
+"title": "Term Structure of Interest Rates with Short-run and Long-run Risks",
+"learned": "The paper proposes a consumption\u2011based model with long\u2011run and short\u2011run risks, showing that the variance risk premium from interest\u2011rate derivatives strongly predicts short\u2011horizon Treasury excess returns, more so than standard forward\u2011rate factors.",
+"concepts": [
+"variance risk premium",
+"term structure",
+"long\u2011run risk",
+"short\u2011run risk",
+"predictability of bond returns"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.17016/feds.2015.095",
+"date": "2026-10-24"
+},
+{
+"title": "Long Short\u2010Term Memory\u2010Based Prediction of Indonesian Composite Stock Index Returns for Early Identification of Market Crises",
+"learned": "The paper shows an LSTM model using multiple market inputs can predict a crash in Indonesia's composite index one day ahead with about 78% accuracy.",
+"concepts": [
+"LSTM neural network",
+"crash signal detection",
+"multivariate time series",
+"hyperparameter tuning",
+"early warning accuracy"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1155/acis/6174081",
+"date": "2026-10-24"
+},
+{
 "title": "Valuation Engines Under Market Incompleteness: An Empirical Benchmark of High-Order Option Pricing in Digital Asset Markets",
 "learned": "The paper shows that for crypto options, the Black\u2011Scholes model is far off; using Heston cuts pricing RMSE by ~45% and a stochastic\u2011volatility\u2011with\u2011jumps model improves deep OTM pricing errors by >70%. It argues that jumps and stochastic volatility are essential in incomplete markets.",
 "concepts": [
