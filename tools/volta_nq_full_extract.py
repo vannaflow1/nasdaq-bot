@@ -54,10 +54,13 @@ def main():
     hrs = df.ts.dt.hour.value_counts().sort_index(); print("bars per hour (should cover the night too):", dict(hrs))
     os.makedirs(OUT, exist_ok=True)
     for y, g in df.groupby(df.ts.dt.year):
-        p = os.path.join(OUT, f"NQ_1m_{y}.parquet"); g.to_parquet(p, index=False); print(" ", os.path.basename(p), f"{os.path.getsize(p) / 1e6:.1f} MB")
+        p = os.path.join(OUT, f"NQ_1m_{y}.parquet")
+        try: g.to_parquet(p, index=False)
+        except ImportError: p = p.replace(".parquet", ".csv.gz"); g.to_csv(p, index=False)      # no pyarrow: compressed csv
+        print(" ", os.path.basename(p), f"{os.path.getsize(p) / 1e6:.1f} MB")
     z = os.path.join(ROOT, "volta_out", "nq_full.zip")
     with zipfile.ZipFile(z, "w", zipfile.ZIP_STORED) as zf:
-        for p in sorted(glob.glob(os.path.join(OUT, "*.parquet"))): zf.write(p, os.path.basename(p))
+        for p in sorted(glob.glob(os.path.join(OUT, "NQ_1m_*"))): zf.write(p, os.path.basename(p))
     print(f"\nDONE -> {z} ({os.path.getsize(z) / 1e6:.0f} MB). Attach it to the chat (or the yearly files if it is too big).")
 
 
