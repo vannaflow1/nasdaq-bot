@@ -1,6 +1,5 @@
 scanned 0 papers, queued 0, queue size 26 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 1853/7000
-curiosity asked: Strategy: LowGamma_OH_Break_FadeGap
-tested: Strategy: LowGamma_OH_Break_FadeGap - On low‑gamma days (dea -> TRANSLATION FAILED - only > < >= <= comparisons allowed
-testing used 366 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
+read 0, AI units today 2222/7000
+test queue empty
+testing used 0 AI units
