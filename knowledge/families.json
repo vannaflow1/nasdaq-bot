@@ -1024,7 +1024,12 @@
     "usd_per_month_per_slot": 26.0
    }
   },
-  "scored": "2026-10-24"
+  "scored": "2026-10-24",
+  "forward": {
+   "date": "2026-10-24",
+   "decision": "WAITING",
+   "n": 0
+  }
  },
  {
   "id": "F14",
@@ -1076,9 +1081,10 @@
    ]
   },
   "disclosure": "Before freezing, Claude ran ONE engine smoke test on 2025-01..03 (validation window): 11 trades of one NY variant (mean -0.52R, reversed side +1.01R). Seen before the fill-bar fix and price scaling; noted for honesty. All other development used 2018 (search years) only.",
-  "status": "registered",
+  "status": "scored",
   "registered": "2026-10-24",
   "hash": "c578474570eb",
-  "frozen": "8db29b61b85c5cf221c9a34e35abacdf9730c790"
+  "frozen": "8db29b61b85c5cf221c9a34e35abacdf9730c790",
+  "scored": "2026-10-24"
  }
 ]
