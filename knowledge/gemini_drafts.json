@@ -75,5 +75,21 @@
   "models": [],
   "calls_left_today": -2,
   "status": "error"
+ },
+ {
+  "wish": 12,
+  "title": "Intraday IV term‑structure data feed",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (32 model turns)",
+  "how_to_use": "",
+  "date": "2026-10-24",
+  "steps": 32,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-latest",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 13,
+  "status": "out_of_time"
  }
 ]
