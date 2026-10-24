@@ -67,7 +67,7 @@ def variants(fam, seed=0):
 def fam_hash(fam):
     import hashlib
     h = {"sleeve": fam["sleeve"], "grid": fam["grid"]}
-    for k in ("markets", "rules", "sealed", "forward_source", "statistic", "contrast", "window", "epoch"):                             # v2: the market list and rule set are frozen too
+    for k in ("markets", "rules", "sealed", "forward_source", "statistic", "contrast", "window", "epoch", "engine"):                             # v2: the market list and rule set are frozen too
         if fam.get(k): h[k] = fam[k]
     return hashlib.sha1(json.dumps(h, sort_keys=True).encode()).hexdigest()[:12]
 
@@ -204,6 +204,8 @@ def _alpha_for(fam, L, SE):
 
 
 def score_family(fam, X, S, reps=100, seed=7):
+    if fam.get("engine") == "owner_model":                    # the owner's model (om.py): own engine, same statistics
+        import om; return om.score_family(fam)
     if fam.get("statistic") == "contrast": return score_contrast(fam, X, S, reps, seed)
     if fam.get("rules") == "v2": reps = min(reps, int(os.environ.get("V2_REPS", 100)))   # measured: ~0.3h for 50 variants x 3 markets
     import prop_search as PS
@@ -363,8 +365,8 @@ def main():
         t0 = time.time()
         res, R, V = score_family(fam, X, S, reps=reps)
         verdict, det = res.get("verdict", "PASSED" if res.get("passed") else "FAILED"), {}
-        if fam.get("statistic") == "contrast":
-            pass                                              # an explanatory test: verdict only, no exam / forward route
+        if fam.get("statistic") == "contrast" or fam.get("engine") == "owner_model":
+            pass                                              # verdict only here (owner model: forward route built after a pass)                                              # an explanatory test: verdict only, no exam / forward route
         elif res.get("passed"):
             if fam.get("rules") == "v2": v, verdict, det = exam_family_v2(fam, R, V, X, S, res)
             else: v, verdict, det = exam_family(fam, R, V, X, S)
