@@ -284,9 +284,9 @@
   "Virtual money - this is Volta's live track record, not advice."
  ],
  "prop_search": [
-  "PROP STRATEGY SEARCH - run 25 (job 1/2): 6353 new strategies this run, 569,188 tested in total (541,633 with the edge metric; grid 985,824 + mutations, markets NQ)",
-  "Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. Stage A (2014-21, edge > 0 with 90% confidence): 9621 | Stage B (edge still > 0 on unseen 2022-23): 1017 | exams taken: 2",
-  "LUCK BAR (best 2022-23 edge that many no-edge random-entry twins reach, 95%): NQ +1.146R at 9045 validated tries (36180 placebos, avg +0.004R) -> 0 beat it",
+  "PROP STRATEGY SEARCH - run 26 (job 1/2): 10668 new strategies this run, 585,860 tested in total (558,305 with the edge metric; grid 985,824 + mutations, markets NQ)",
+  "Ranked on EDGE (mean net R per trade, bootstrap 10th percentile > 0), prop EV only prices it. Stage A (2014-21, edge > 0 with 90% confidence): 9936 | Stage B (edge still > 0 on unseen 2022-23): 1037 | exams taken: 2",
+  "LUCK BAR (best 2022-23 edge that many no-edge random-entry twins reach, 95%): NQ +1.146R at 9340 validated tries (37360 placebos, avg +0.003R) -> 0 beat it",
   "",
   "LEADERBOARD (edge on unseen 2022-23 above the luck bar; 'luck-level' = not above it):",
   "- break r1 08:30-10:00, big expected range (top third), breakeven at 1.0 | 2014-21 +0.162R (t 1.6, 161 trades) | 2022-23 +0.732R (t 2.5) | luck-level | priced: lucid_flex_50k EV +85$/eval",
@@ -303,9 +303,9 @@
  ],
  "eta": [
   "\u23f3 F10 (Nasdaq noise-band breakout) - WHAT THE COMING MONTHS WILL TELL ME (v3; a range, not a promise)",
-  "Belief now: true edge +0.028R per trade (\u00b1 0.043), P(edge > 0) 74%; 0 clean forward trades so far.",
-  "Ready for a first eval (statistically; the SIM execution check is not built yet): 3 months 4%, 6 months 18%, 12 months 34%.",
-  "Killed as dead (futility): 6 months 0%, 12 months 9%. Formally proven (O'Brien-Fleming): 12 months 1%, 24 months 8%.",
+  "Belief now: true edge +0.027R per trade (\u00b1 0.043), P(edge > 0) 73%; 2 clean forward trades so far.",
+  "Ready for a first eval (statistically; the SIM execution check is not built yet): 3 months 3%, 6 months 15%, 12 months 31%.",
+  "Killed as dead (futility): 6 months 0%, 12 months 10%. Formally proven (O'Brien-Fleming): 12 months 1%, 24 months 8%.",
   "Proof of a +0.08R edge at ~1 trade a day takes years; the forward test's real job is to kill F10 early if it is dead and to feed the frozen eval rule (max 3 evals, one at a time, never on the funded account)."
  ],
  "families": [
