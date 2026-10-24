@@ -1,9 +1,9 @@
 {
  "2026-W43": {
-  "tested": 168,
+  "tested": 169,
   "promising": 6,
   "not_confirmed": 88,
   "unfit": 31,
-  "failed": 43
+  "failed": 44
  }
 }

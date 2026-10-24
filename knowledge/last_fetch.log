@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 26 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 1674/7000
-curiosity asked: Strategy: GammaFlip_PW_TakeBreak
-tested: Strategy: GammaFlip_PW_TakeBreak - Break above yesterday's h -> NOT CONFIRMED on my data: in-sample 2014-2023: 246 trades, win 30%, avg +0.03R (+2.9 pts/t
-testing used 177 AI units
+read 0, AI units today 1853/7000
+curiosity asked: Strategy: LowGamma_OH_Break_FadeGap
+tested: Strategy: LowGamma_OH_Break_FadeGap - On low‑gamma days (dea -> TRANSLATION FAILED - only > < >= <= comparisons allowed
+testing used 366 AI units
