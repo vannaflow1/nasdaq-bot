@@ -1,0 +1,54 @@
+{
+ "family": "F13",
+ "declared": "2026-10-24",
+ "before_first_forward_day": "2026-10-26",
+ "source": "expert review 3 (22 Oct 2026), step 0",
+ "clean_data": "forward days after registration only, real NQ futures bars from the nightly archive (sessions >= 2026-10-23)",
+ "efficacy": {
+  "type": "O'Brien-Fleming backstop",
+  "n_max": 600,
+  "looks": 10,
+  "alpha_one_sided": 0.05
+ },
+ "futility": {
+  "looks_trades": [
+   100,
+   200,
+   300
+  ],
+  "stop_if_conditional_power_below": 0.01,
+  "cp_alternative_edge_R": 0.049,
+  "cp_sd_per_trade_R": 1.42,
+  "stop_if_posterior_p_edge_pos_below": 0.2,
+  "evaluated_on": "exactly the first L forward trades (chronological) at look L",
+  "calibration": "same rule as F10 (CP < 1% at 100/200/300 trades), alternative = F13's own validation edge"
+ },
+ "posterior": {
+  "prior": "N(0, 0.05^2) R per trade",
+  "validation": {
+   "edge": 0.0495,
+   "se": 0.0309,
+   "n": 2068,
+   "weight": 0.5,
+   "note": "F13 forward variant 2022-now; same mechanism as F10 -> half weight"
+  },
+  "forward": "mean R per trade with variance sd^2/n, sd = max(sample sd, 1.5)"
+ },
+ "cusum_kill": {
+  "series": "daily R summed over each forward trade day (days without trades skipped)",
+  "direction": "lower",
+  "k": 0.0694,
+  "h": 43.98,
+  "calibration": "variant 2 trade days 2022-now recentred to +0.049R/trade; ARL ~3 years"
+ },
+ "variant": 2,
+ "variant_params": {
+  "param.EV": 15,
+  "param.MU": 1.2,
+  "stop": {
+   "range": 0.2
+  },
+  "param.T": 2.0
+ },
+ "note": "F13 did NOT qualify on the fast-track speed metric (best $26/month per account); forward-tested for information only, never counted as a confirmation independent of F10."
+}
