@@ -1000,9 +1000,30 @@
     2.0
    ]
   },
-  "status": "registered",
+  "status": "forward",
   "registered": "2026-10-24",
   "hash": "440adfc8b441",
-  "frozen": "7d02910ab5e9a630ecb3ad82490e8f2e5a362d3b"
+  "frozen": "7d02910ab5e9a630ecb3ad82490e8f2e5a362d3b",
+  "forward_variant": 2,
+  "speed": {
+   "qualifies": false,
+   "validation_edge": 0.0495,
+   "edge_used_half": 0.0247,
+   "best_fast": null,
+   "best_per_month": {
+    "plan": "lucid_flex_50k",
+    "risk": 0.12,
+    "pass_rate": 0.255,
+    "pass_within_21": 0.073,
+    "median_days_to_pass": 35,
+    "p_payout": 0.113,
+    "median_days_to_first_payout": 64,
+    "median_account_life_days": 46,
+    "ev_per_eval": 57.0,
+    "ev_se": 23.9,
+    "usd_per_month_per_slot": 26.0
+   }
+  },
+  "scored": "2026-10-24"
  }
 ]
