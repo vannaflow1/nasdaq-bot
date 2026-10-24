@@ -66,13 +66,14 @@ def sessions(b):
 
 
 def read_log():
-    return pd.read_csv(LOG) if os.path.exists(LOG) else pd.DataFrame(columns=["date", "check_ct", "bias", "price", "open", "band_pct", "dist_bands", "close", "result"])
+    L = pd.read_csv(LOG) if os.path.exists(LOG) else pd.DataFrame(columns=["date", "check_ct", "bias", "price", "open", "band_pct", "dist_bands", "close", "result"])
+    L["result"] = L["result"].astype(object)                  # all-empty column reads as float -> grading crashed (23 Oct)
+    return L
 
 
 def main():
     dry = "--dry" in sys.argv
     now = datetime.strptime(sys.argv[sys.argv.index("--at") + 1], "%Y-%m-%d %H:%M") if "--at" in sys.argv else datetime.now(CT).replace(tzinfo=None)
-    if now.weekday() >= 5: print("weekend"); return
     S = sessions(bars(now)); today = now.date(); L = read_log()
     # 1) grade finished days (close 14:59 CT)
     for d in sorted({r for r in L.date.astype(str)}):
@@ -83,13 +84,16 @@ def main():
                 L.loc[m, "close"] = close
                 L.loc[m, "result"] = np.where(L.loc[m, "bias"] == "NONE", "n/a",
                                               np.where((close - L.loc[m, "price"]) * np.where(L.loc[m, "bias"] == "LONG", 1, -1) > 0, "right", "wrong"))
-                if not dry and d == str(today):
+                if not dry:                                   # scoreboard for every newly graded day
                     g = L[(L.date.astype(str) == d) & L.bias.isin(["LONG", "SHORT"])]; a = L[L.bias.isin(["LONG", "SHORT"]) & L.result.isin(["right", "wrong"])]
                     if len(g):
                         import qqq_gex_daily as q
-                        q.push("🧭 Bias scoreboard", f"Today: {(g.result == 'right').sum()}/{len(g)} bias checks right. Since start: "
+                        q.push("🧭 Bias scoreboard", f"{d}: {(g.result == 'right').sum()}/{len(g)} bias checks right. Since start: "
                                f"{(a.result == 'right').mean():.0%} of {len(a)} (history says ~54% is the honest expectation).",
                                hook=os.environ.get("DISCORD_WEBHOOK_LIVE") or None)
+    if now.weekday() >= 5:
+        if not dry: L.to_csv(LOG, index=False)
+        print("weekend"); return
     # 2) today's check
     h = max([c for c in CHECKS if now.hour * 60 + now.minute >= c * 60] or [None], key=lambda x: x or -1)
     if h is None or now.hour * 60 + now.minute > 15 * 60 or today not in S:
