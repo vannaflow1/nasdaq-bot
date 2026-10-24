@@ -29,16 +29,24 @@ def read(fn):
     head = open(fn, "r", errors="replace").read(4000).splitlines()
     sep = ";" if head[0].count(";") >= head[0].count(",") else ","
     dec = "," if sep == ";" else "."
-    df = pd.read_csv(fn, sep=sep, decimal=dec, low_memory=False)
+    df = pd.read_csv(fn, sep=sep, decimal=dec, thousands="." if dec == "," else None, low_memory=False, dtype=str)
+    for col in df.columns:                                     # numbers like 3.575,75 (thousands '.', decimal ',')
+        if col.strip().lower() not in ("date", "time", "datetime", "timestamp", "symbol", "contract", "ticker"):
+            x = df[col].astype(str).str.strip()
+            if dec == ",": x = x.str.replace(".", "", regex=False).str.replace(",", ".", regex=False)
+            df[col] = pd.to_numeric(x, errors="coerce")
     cols = {c: c.strip().lower() for c in df.columns}; df = df.rename(columns=cols)
     pick = lambda *ks: next((c for c in df.columns if any(k == c or c.startswith(k) for k in ks)), None)
     o, h, l, c = pick("open", "o"), pick("high", "h"), pick("low", "l"), pick("close", "last", "c")
     v = pick("volume", "vol", "v")
     d, t = pick("date"), pick("time")
     dt = pick("datetime", "timestamp", "date time", "date_time")
-    if dt: ts = pd.to_datetime(df[dt], dayfirst=True, errors="coerce")
-    elif d and t: ts = pd.to_datetime(df[d].astype(str) + " " + df[t].astype(str), dayfirst=True, errors="coerce")
-    else: ts = pd.to_datetime(df.iloc[:, 0], dayfirst=True, errors="coerce")
+    raw = (df[dt] if dt else (df[d].astype(str) + " " + df[t].astype(str)) if (d and t) else df[d or df.columns[0]]).astype(str).str.strip()
+    ts = None
+    for fmt in ("%m/%d/%Y %I:%M %p", "%m/%d/%Y %I:%M:%S %p", "%d.%m.%Y %H:%M", "%d.%m.%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%d/%m/%Y %H:%M"):
+        t_ = pd.to_datetime(raw, format=fmt, errors="coerce")
+        if t_.notna().mean() > 0.95: ts = t_; print("date format:", fmt); break
+    if ts is None: ts = pd.to_datetime(raw, errors="coerce")
     out = pd.DataFrame({"ts": ts, "open": pd.to_numeric(df[o], errors="coerce"), "high": pd.to_numeric(df[h], errors="coerce"),
                         "low": pd.to_numeric(df[l], errors="coerce"), "close": pd.to_numeric(df[c], errors="coerce"),
                         "volume": pd.to_numeric(df[v], errors="coerce") if v else 0})
