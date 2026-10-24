@@ -1086,5 +1086,54 @@
   "hash": "c578474570eb",
   "frozen": "8db29b61b85c5cf221c9a34e35abacdf9730c790",
   "scored": "2026-10-24"
+ },
+ {
+  "id": "F15",
+  "name": "F15 (fast 3): noise-band breakout in the LONDON session (Nasdaq futures)",
+  "mechanism": "The one mechanism that held 12 years on New York hours (F2/F10: moves beyond the time-of-day noise band continue), applied to the London session (02:00-08:25 CT = 09:00-15:25 Lux), which Volta has never examined. If it holds, London adds trades on top of F10's New York trades - more trades per day, faster prop payouts.",
+  "citation": "Zarattini, Aziz & Barbon 2024; expert review 2 (F2-session); owner's full-session NQ data (24 Oct 2026)",
+  "rules": "v2",
+  "epoch": "fast",
+  "engine": "owner_model",
+  "engine_variant": "london_band",
+  "markets": [
+   "NQ"
+  ],
+  "sealed": false,
+  "forward_source": "futures",
+  "sleeve": [],
+  "grid": {
+   "every": [
+    15,
+    30,
+    60
+   ],
+   "mult": [
+    0.8,
+    1.0,
+    1.2
+   ],
+   "stop_frac": [
+    0.15,
+    0.25
+   ],
+   "tgt": [
+    2,
+    5
+   ],
+   "trail": [
+    false,
+    true
+   ],
+   "exit": [
+    "08:25",
+    "10:30"
+   ]
+  },
+  "disclosure": "Engine smoke test ran on 2017 (search years) only - trade count and the first 3 trades printed, no averages. The London session's results on 2022-now have never been looked at by anyone.",
+  "status": "registered",
+  "registered": "2026-10-24",
+  "hash": "ffbf84566611",
+  "frozen": "635a13b0426de28347ff5fc90baf93ba779816c1"
  }
 ]
