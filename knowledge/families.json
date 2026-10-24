@@ -1131,9 +1131,10 @@
    ]
   },
   "disclosure": "Engine smoke test ran on 2017 (search years) only - trade count and the first 3 trades printed, no averages. The London session's results on 2022-now have never been looked at by anyone.",
-  "status": "registered",
+  "status": "scored",
   "registered": "2026-10-24",
   "hash": "ffbf84566611",
-  "frozen": "635a13b0426de28347ff5fc90baf93ba779816c1"
+  "frozen": "635a13b0426de28347ff5fc90baf93ba779816c1",
+  "scored": "2026-10-24"
  }
 ]

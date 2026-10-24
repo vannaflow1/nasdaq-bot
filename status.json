@@ -310,7 +310,6 @@
  ],
  "families": [
   "MECHANISM FAMILIES (family = mechanism + 20-50 variants; passes only as a plateau beating a placebo family, with a multiplicity-corrected p-value):",
-  "- F3 Gamma-regime switch on the forecast range: FAILED (p=0.5, median 2022-23 -0.1531R)",
   "- F1 Intraday momentum into the close, gamma-conditioned: NOT CONFIRMED - failed the locked exam (family): edge on 2024-now -0.074R (90% lower bound -0.170R, 163 trades) (p=0.0, median 2022-23 0.1721R)",
   "- F2 Noise-band breakout with re-entry: NOT CONFIRMED - failed the locked exam (family): edge on 2024-now +0.061R (90% lower bound -0.054R, 474 trades) (p=0.0, median 2022-23 0.0605R)",
   "- F4 Direction-free volatility brackets: FAILED (p=0.94, median 2022-23 -0.0708R)",
@@ -321,7 +320,8 @@
   "- F11 F11: F2 pays on low-gamma days, not on high-gamma days (2014-21): PASSED (contrast test): median low-minus-high gex_rank edge +0.137R, 100% of variants positive, placebo +0.105R, p=0.0002 vs alpha 0.0040 (median_edge_A/B colum (p=0.00017, median 2022-23 -0.2147R)",
   "- F12 F12: F2 on Nasdaq, low-gamma days only (gamma rank below 0.5): PASSED THE FAMILY TEST -> FORWARD ROUTE on real futures bars (no sealed block: the free proxy does not reproduce this family's trades well enough); group-sequen (p=0.0, median 2022-23 0.1078R)",
   "- F13 F13 (fast 1): Nasdaq noise-band breakout with quick fixed targets and re-entries: PASSED THE FAMILY TEST -> FORWARD ROUTE on real futures bars (no sealed block: the free proxy does not reproduce this family's trades well enough); group-sequen (p=5e-05, median 2022-23 0.0186R)",
-  "- F14 F14 (fast 2): the owner's model - volume-profile levels with confluences, limit entries, London or New York: FAILED (p=0.9992, median 2022-23 -0.3014R)"
+  "- F14 F14 (fast 2): the owner's model - volume-profile levels with confluences, limit entries, London or New York: FAILED (p=0.9992, median 2022-23 -0.3014R)",
+  "- F15 F15 (fast 3): noise-band breakout in the LONDON session (Nasdaq futures): FAILED (p=0.97835, median 2022-23 -0.0947R)"
  ],
  "spx_morning": [
   "SPX DEALER CHECK (2026-10-23): dealer gamma -7.4 (avg +1.5), SPX walls 7650 / 7665 (0.5x their usual distance) -> today's range bigger (+1.8%)"
