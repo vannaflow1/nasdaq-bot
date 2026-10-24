@@ -118,7 +118,7 @@
   "\u2022 Do Behavioral Biases Affect Prices? (\u2605\u2605\u2605\u2605\u2606)",
   "  CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
   "  tested: prop mission - feeds my strategy designer and self-check",
-  "This week's tests: 161 run - 5 promising, 83 not confirmed, 31 don't fit my data, 42 translation failures",
+  "This week's tests: 164 run - 5 promising, 85 not confirmed, 31 don't fit my data, 43 translation failures",
   "",
   "26 papers waiting in my queue."
  ],
@@ -200,13 +200,12 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-10-23)",
-  "I confirmed that low\u2011dealer\u2011gamma days (gex_rank<0.2) consistently give a modest +0.2% edge on my near\u2011miss features, but I still haven\u2019t turned that into a robust intraday profit. My best in\u2011sample breakout idea (first 15\u2011min up move) barely beats break\u2011even and only works on a subset of sessions. I need to fuse the low\u2011gamma signal with a more disciplined entry/exit framework and test it across both NQ and ES to increase trade count.",
+  "VOLTA'S SELF-CHECK (2026-10-24)",
+  "I see my range forecasts are solid but still not yielding profit; low\u2011gamma (gex_rank<0.2) nudges edge +0.2% but I haven\u2019t built a high\u2011probability trade around it. My best in\u2011sample idea (first\u201115\u2011min breakout) is weak and needs tighter filters. I\u2019ll focus on coupling low\u2011gamma regime detection with a momentum\u2011breakout entry and test a tighter stop/target grid.",
   "",
   "WISHES (what I need to get better):",
-  "#9 [for Claude] Add real\u2011time GEX rank to live data feed - My strategies and filters rely on gex_rank but currently I only have it in backtest; a live column would let me deploy low\u2011gamma tactics in ",
   "#10 [for Claude] Real\u2011time GEX rank feed for live strategy - All my promising low\u2011gamma ideas stall without live gex_rank; a low\u2011latency feed would let me trigger entries exactly when dealer gamma drop",
-  "#11 [for Claude] Dynamic position sizing based on consecutive profit days - Literature suggests scaling size after streaks improves long\u2011run EV while preserving drawdown limits; implementing this could turn modest pe",
+  "#12 [for Claude] Intraday IV term\u2011structure data feed - Current data only gives end\u2011of\u2011day IV30; the IV ratio test requires 7\u2011day and 30\u2011day implied vols updated at least every 5\u202fminutes.",
   "",
   "Recently granted: #4 Correct the prop search for luck (multiple-testing control); #5 Market focus: weight locked-exam passes far above 2022-23 su; #6 Make the prop simulator harsher where reality is harsher"
  ],

@@ -181,5 +181,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-10-23"
+ },
+ {
+  "id": "h16",
+  "date": "2026-10-24",
+  "query": "intraday IV term structure as predictor of short‑term returns",
+  "why": "My second self‑action tests a 7‑day vs 30‑day IV ratio; need literature to confirm its signal strength.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
