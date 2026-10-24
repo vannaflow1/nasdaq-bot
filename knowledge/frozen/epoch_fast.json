@@ -1,0 +1,21 @@
+{
+ "declared": "2026-10-24",
+ "owner_ok": "2026-10-24 11:24 Lux ('ok' to a fresh, pre-declared test budget for a fast track)",
+ "name": "epoch 'fast' - edges that pay out FAST on prop accounts",
+ "why": "The v2 budget is spent (one 0.0023 slot left) and the owner's requirement is speed: payouts within about a month. The old track optimised for slow, patient accounts.",
+ "budget": {
+  "total_alpha": 0.05,
+  "slots": {
+   "1": 0.01,
+   "2": 0.01,
+   "3": 0.01,
+   "4": 0.01,
+   "5": 0.01
+  },
+  "after_slots": "STOP - report honestly whether anything was found; no further fast families without a new, owner-approved declaration"
+ },
+ "family_test": "unchanged v2 machinery: frozen family (hash + commit) before its validation is looked at, validation 2022-now on NQ futures, null v3 (shared draws, exact randomization p), pass = median edge > 0, >= 60% variants positive, p < slot alpha",
+ "speed_metric": "$ per month per account slot = E[EV per eval] / median account life (days) x 21, on Lucid plans with Lucid's real commission; a fast-track family QUALIFIES only if, at HALF its validation edge, some Lucid setup has median days to first payout <= 30 AND E[EV per eval] > 0",
+ "after_a_pass": "same as F10: frozen futility-first forward design committed BEFORE its first forward day, real NQ futures from the nightly archive; no money before >= 60 clean forward trades and a tested SIM execution path (frozen eval rule)",
+ "honesty": "Every result - pass, fail, qualify or not - is reported. Nothing is re-registered with tweaks after a failure. The owner's own strategy has priority for a slot once his rules/trade log arrive."
+}

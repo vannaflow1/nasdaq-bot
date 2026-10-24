@@ -67,7 +67,7 @@ def variants(fam, seed=0):
 def fam_hash(fam):
     import hashlib
     h = {"sleeve": fam["sleeve"], "grid": fam["grid"]}
-    for k in ("markets", "rules", "sealed", "forward_source", "statistic", "contrast", "window"):                             # v2: the market list and rule set are frozen too
+    for k in ("markets", "rules", "sealed", "forward_source", "statistic", "contrast", "window", "epoch"):                             # v2: the market list and rule set are frozen too
         if fam.get(k): h[k] = fam[k]
     return hashlib.sha1(json.dumps(h, sort_keys=True).encode()).hexdigest()[:12]
 
@@ -184,8 +184,7 @@ def score_contrast(fam, X, S, reps=100, seed=7):
     masks = [(lo_m, hi_m) for _, lo_m, hi_m in keep]
     pl = null_draws(tabs, lambda xs: float(np.median([np.nanmean(x[a]) - np.nanmean(x[b]) for x, (a, b) in zip(xs, masks)])), seed=seed)
     p = null_p(med, pl)
-    L = ledger(); j = int((L.get("rules", pd.Series(dtype=str)).astype(str) == "v2").sum()) + 1 if len(L) else 1
-    alpha = SE.alpha_v2(j); passed = med > 0 and share >= 0.6 and p < alpha
+    L = ledger(); j, alpha = _alpha_for(fam, L, SE); passed = med > 0 and share >= 0.6 and p < alpha
     return {"variants": len(V), "usable": len(R), "median_edge_A": round(float(R.edge_low.median()), 4),
             "median_edge_B": round(float(R.edge_high.median()), 4), "median_contrast": round(med, 4), "share_positive_B": round(share, 3),
             "placebo_median_mean": round(float(pl.mean()), 4), "p": round(p, 5), "families_scored": len(L) + 1,
@@ -193,6 +192,15 @@ def score_contrast(fam, X, S, reps=100, seed=7):
             "verdict": (f"{'PASSED' if passed else 'FAILED'} (contrast test): median low-minus-high {c['feature']} edge {med:+.3f}R, "
                         f"{share:.0%} of variants positive, placebo {pl.mean():+.3f}R, p={p:.4f} vs alpha {alpha:.4f} "
                         "(median_edge_A/B columns = low/high-day edges)")}, R, V
+
+
+def _alpha_for(fam, L, SE):
+    """v2 families: the v2 sequence/slots; fast-track families (epoch 'fast'): their own 5 slots of 0.01."""
+    if fam.get("epoch") == "fast":
+        j = int((L.get("epoch", pd.Series(dtype=str)).astype(str) == "fast").sum()) + 1 if len(L) else 1
+        return j, SE.alpha_fast(j)
+    j = int(((L.get("rules", pd.Series(dtype=str)).astype(str) == "v2") & (L.get("epoch", pd.Series("", index=L.index)).astype(str) != "fast")).sum()) + 1 if len(L) else 1
+    return j, SE.alpha_v2(j)
 
 
 def score_family(fam, X, S, reps=100, seed=7):
@@ -219,14 +227,13 @@ def score_family(fam, X, S, reps=100, seed=7):
     L = ledger(); k = (len(L) + 1)
     if v2:
         import sealed as SE
-        j = int((L.get("rules", pd.Series(dtype=str)).astype(str) == "v2").sum()) + 1 if len(L) else 1
-        alpha = SE.alpha_v2(j)
+        j, alpha = _alpha_for(fam, L, SE)
     else:
         alpha = ALPHA / k
     passed = med_B > 0 and share_pos >= 0.6 and p < alpha
     res = {"variants": len(V), "usable": len(ok), "median_edge_A": round(med_A, 4), "median_edge_B": round(med_B, 4),
            "share_positive_B": round(share_pos, 3), "placebo_median_mean": round(float(pl.mean()), 4) if len(pl) else None,
-           "p": round(p, 5), "families_scored": k, "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2" if v2 else "v1",
+           "p": round(p, 5), "families_scored": k, "alpha": round(alpha, 5), "passed": bool(passed), "rules": "v2" if v2 else "v1", "epoch": fam.get("epoch", ""),
            "null": "v3-shared"}
     return res, R, V
 
@@ -363,6 +370,17 @@ def main():
             else: v, verdict, det = exam_family(fam, R, V, X, S)
             if fam.get("rules") == "v2" and det.get("route") == "forward":
                 fam["forward_variant"] = V.index(v)
+            if fam.get("epoch") == "fast" and fam.get("forward_variant") is not None:   # frozen speed metric (epoch_fast.json)
+                try:
+                    json.dump(F, open(REG, "w"), indent=1); os.environ.setdefault("ED_PATHS", "600")
+                    from tools import speed_check as SC
+                    sp = SC.check(fam["id"]); fam["speed"] = {k: sp[k] for k in ("qualifies", "validation_edge", "edge_used_half", "best_fast", "best_per_month")}
+                    bf = sp["best_fast"]; bm = sp["best_per_month"]
+                    verdict += (f" | SPEED: {'QUALIFIES' if sp['qualifies'] else 'does NOT qualify'} at half its validation edge"
+                                + (f" - {bf['plan']} risk {bf['risk']}: first payout ~{bf['median_days_to_first_payout']} days, EV {bf['ev_per_eval']:+.0f}$/eval" if bf else "")
+                                + f"; best ${bm['usd_per_month_per_slot']:.0f}/month per account ({bm['plan']} risk {bm['risk']})")
+                except Exception as e_:
+                    verdict += f" | speed check failed: {type(e_).__name__}"
             today = datetime.now(timezone.utc).date().isoformat()
             e = {"date": today, "name": f"family {fam['id']}: {fam['name']} {v['params']}", "spec": v["sleeve"][0] if len(v["sleeve"]) == 1 else {"sleeve": v["sleeve"]},
                  "source": "family", "family": fam["id"], "verdict": verdict, "family_test": res, "exam_detail": json.loads(json.dumps(det, default=float))}

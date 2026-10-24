@@ -212,6 +212,12 @@ def forward_decision(Tf, n_max=N_MAX, looks=LOOKS):
     return "CONTINUE", st
 
 
+def alpha_fast(j):
+    """Fast-track epoch (owner OK 24 Oct 2026, knowledge/frozen/epoch_fast.json): 5 fixed slots of 0.01, then 0."""
+    try: return float(json.load(open(os.path.join(K, "frozen", "epoch_fast.json")))["budget"]["slots"].get(str(j), 0.0))
+    except Exception: return 0.0
+
+
 def alpha_v2(j, alpha=ALPHA_SEQ):
     """Expert review 3: j = 1..3 used the sequence (F8, F9, F10); the remaining 0.0086 is split into FIXED slots declared in
     knowledge/frozen/alpha_slots.json (j = 4: 0.0040, 5 and 6: 0.0023); after that 0 - no more families."""

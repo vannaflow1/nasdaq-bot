@@ -21,7 +21,7 @@ CURVES = os.path.join(K, "research_out", "eval_ev_curves.json"); OUT = os.path.j
 PLANS = ("lucid_flex_25k", "lucid_pro_25k", "lucid_flex_50k", "lucid_pro_50k")
 SIZINGS = (0.08, 0.12, 0.2)                                   # share of the buffer risked per trade (eval_finish on)
 EDGES = (-0.10, -0.05, 0.0, 0.03, 0.05, 0.08, 0.11, 0.15, 0.20)
-PATHS, BLOCK, HORIZON = 1500, 10, 250
+PATHS, BLOCK, HORIZON = int(os.environ.get("ED_PATHS", 1500)), 10, 250
 BREAK_PER_YEAR = 0.30
 EXTRA_COMM_PTS = 0.25   # expert review 4: Lucid charges $0.50/side = $1.00 per MNQ round trip; the engine's cost model has $0.50
                         # (0.25 NQ points). The missing 0.25 points per trade is charged HERE only - the frozen forward test keeps
