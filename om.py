@@ -197,9 +197,56 @@ def day_trades(Dd, i, var, cache):
 def variant_trades(var, lo, hi, cache=None):
     Dd = days(); cache = cache if cache is not None else {"lev": {}, "intra": {}}
     idx = np.where((Dd["dates"] >= lo) & (Dd["dates"] <= hi) & (Dd["have"] > 600))[0]
-    rows = []
-    for i in idx: rows += day_trades(Dd, int(i), var, cache)
+    rows = []; fn = band_day if var.get("engine") == "london_band" else day_trades
+    for i in idx: rows += fn(Dd, int(i), var, cache)
     return pd.DataFrame(rows, columns=["day", "t", "side", "R", "R_rev", "conf"])
+
+
+# ---------------------------------------------------------------- engine 2: noise-band breakout in the LONDON session
+LONDON_OPEN = m_of(2, 0)
+
+
+def band_day(Dd, i, var, cache):
+    """F2's mechanism (moves beyond the time-of-day noise band continue) on the London session: open = 02:00 CT price;
+    sigma_t = mean |close_t / open - 1| over the last 14 sessions at the same minute; checks every `ev` minutes from 02:30 to
+    06:30 CT; entry at the next bar's open in the break's direction; stop = stop_frac x average London range (02:00-08:25 CT,
+    last 20 sessions); target R; optional 1R trail; flat at `exit`; up to 3 trades, re-entry only after a stop.
+    Each trade also carries R_rev = the same entry with the side reversed (null v3)."""
+    if i < 21: return []
+    if "lon" not in cache:
+        Dd2 = Dd; o = Dd2["o"][:, LONDON_OPEN]; seg = slice(LONDON_OPEN, m_of(8, 25))
+        dev = np.abs(Dd2["c"] / o[:, None] - 1.0); rng = (Dd2["h"][:, seg].max(1) - Dd2["l"][:, seg].min(1))
+        cache["lon"] = {"o": o, "dev": dev, "rng": rng}
+    Lc = cache["lon"]; o0 = float(Lc["o"][i])
+    if not np.isfinite(o0): return []
+    sig = np.nanmean(Lc["dev"][i - 14:i], axis=0); avr = float(np.nanmean(Lc["rng"][i - 20:i]))
+    S = float(var["stop_frac"]) * avr
+    if not (np.isfinite(S) and S > 4 * TICK): return []
+    H, L, C, O = Dd["h"][i], Dd["l"][i], Dd["c"][i], Dd["o"][i]
+    xe = m_of(*map(int, var["exit"].split(":"))); ev = int(var["every"]); out = []; free = 0
+    t = LONDON_OPEN + 30
+    while t <= m_of(6, 30) and len(out) < 3:
+        if t >= free:
+            c = C[t - 1]; b = float(var["mult"]) * sig[t - 1]
+            s = 1 if c > o0 * (1 + b) else -1 if c < o0 * (1 - b) else 0
+            if s and np.isfinite(b) and b > 0:
+                r, u = _band_trade(H, L, C, O, t, s, S, float(var["tgt"]), var["trail"], xe)
+                rr, _ = _band_trade(H, L, C, O, t, -s, S, float(var["tgt"]), var["trail"], xe)
+                out.append({"day": i, "t": t, "side": s, "R": r, "R_rev": rr, "conf": 0}); free = u + 1
+                if r > 0: break
+        t += ev
+    return out
+
+
+def _band_trade(H, L, C, O, t, s, S, tgt, trail, xe):
+    ep = O[t] + s * TICK; stop = ep - s * S; best = ep; tp = ep + s * tgt * S
+    for u in range(t, xe + 1):
+        if (L[u] <= stop if s > 0 else H[u] >= stop): return (s * (stop - ep) - SLIP - COMM) / S, u
+        if (H[u] >= tp if s > 0 else L[u] <= tp): return (tgt * S - COMM) / S, u
+        if trail:
+            best = max(best, H[u]) if s > 0 else min(best, L[u])
+            if s * (best - ep) >= S: stop = max(stop, best - S) if s > 0 else min(stop, best + S)
+    return (s * (C[xe] - ep) - COMM) / S, xe
 
 
 # ---------------------------------------------------------------- the family
@@ -207,7 +254,8 @@ def variants(fam):
     import itertools, random
     g = fam["grid"]; keys = list(g); combos = list(itertools.product(*[g[k] for k in keys]))
     if len(combos) > 50: combos = random.Random(0).sample(combos, 50)
-    return [dict(zip(keys, c)) for c in combos]
+    base = {"engine": fam["engine_variant"]} if fam.get("engine_variant") else {}
+    return [dict(base, **dict(zip(keys, c))) for c in combos]
 
 
 def score_family(fam, X=None, S=None, reps=None):
