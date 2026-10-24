@@ -937,5 +937,72 @@
    "z": NaN,
    "look": 0
   }
+ },
+ {
+  "id": "F13",
+  "name": "F13 (fast 1): Nasdaq noise-band breakout with quick fixed targets and re-entries",
+  "mechanism": "The one mechanism that held for 12 years (F2/F10: moves beyond the time-of-day noise band continue) - harvested FAST: checks every 15-30 min, fixed 1-2R targets, up to 4 trades a day with re-entry, no trailing. More, shorter trades -> faster evals and payouts if the information survives quick exits.",
+  "citation": "Zarattini, Aziz & Barbon 2024; F10 (Volta); fast-track epoch (knowledge/frozen/epoch_fast.json)",
+  "rules": "v2",
+  "epoch": "fast",
+  "markets": [
+   "NQ"
+  ],
+  "sealed": false,
+  "forward_source": "futures",
+  "sleeve": [
+   {
+    "name": "F13 fast noise-band breakout",
+    "entry": {
+     "type": "schedule",
+     "signal": "band",
+     "every_min": "{EV}",
+     "from": "09:00",
+     "to": "14:30",
+     "mult": "{MU}",
+     "lookback": 14
+    },
+    "stop": {
+     "range": 0.15
+    },
+    "target": {
+     "R": "{T}"
+    },
+    "exit": "14:59",
+    "max_trades": 4,
+    "reentry": "always"
+   }
+  ],
+  "grid": {
+   "param.EV": [
+    15,
+    30
+   ],
+   "param.MU": [
+    0.8,
+    1.0,
+    1.2
+   ],
+   "stop": [
+    {
+     "range": 0.1
+    },
+    {
+     "range": 0.15
+    },
+    {
+     "range": 0.2
+    }
+   ],
+   "param.T": [
+    1.0,
+    1.5,
+    2.0
+   ]
+  },
+  "status": "registered",
+  "registered": "2026-10-24",
+  "hash": "440adfc8b441",
+  "frozen": "7d02910ab5e9a630ecb3ad82490e8f2e5a362d3b"
  }
 ]
