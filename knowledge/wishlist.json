@@ -137,7 +137,7 @@
   "why": "All my promising low\u2011gamma ideas stall without live gex_rank; a low\u2011latency feed would let me trigger entries exactly when dealer gamma drops below 0.2.",
   "evidence": "Low gamma near\u2011miss features add +0.2% edge in backtests (7/9 hits).",
   "impact": "high",
-  "status": "open",
+  "status": "frozen",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -146,7 +146,8 @@
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
-  }
+  },
+  "note": "Duplicate of wish #9 (real-time GEX rank for the live feed). Live side frozen until a strategy is CONFIRMED (README stop list); gex_rank already exists for research from end-of-day QQQ/NDX/SPX chains. Claude, 2026-10-24."
  },
  {
   "id": 11,
@@ -170,7 +171,8 @@
   "why": "Current data only gives end\u2011of\u2011day IV30; the IV ratio test requires 7\u2011day and 30\u2011day implied vols updated at least every 5\u202fminutes.",
   "evidence": "Self\u2011action #2 cannot be evaluated without intraday IV term\u2011structure; failure limits edge discovery.",
   "impact": "high",
-  "status": "open",
-  "votes": 1
+  "status": "blocked",
+  "votes": 1,
+  "note": "Claude, 2026-10-24: a 5-minute live IV term-structure feed is live-side (frozen) and needs paid intraday options/index data. The research question behind it (Q013: low gex_rank + 7d/30d IV ratio from VIX9D/VIX) was already tested on 2907 sessions: NOT CONFIRMED (skill -0.0% vs base rate, 5/9 unseen years). If the owner wants an intraday version, SPX weekly option minute quotes 2019-2025 (wish #1, k_spx_*) could rebuild it historically, but that is a new family idea and the alpha budget is nearly spent - left for the owner/Claude chat."
  }
 ]
