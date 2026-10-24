@@ -1,9 +1,6 @@
-hunt 'intraday IV term structure as predictor of short‑term returns': 15 found, queued 2
-scanned 0 papers, queued 2, queue size 28 []
-read (1*): Long Short‐Term Memory‐Based Prediction of Indonesian Composite Stock 
-read (1*): Term Structure of Interest Rates with Short-run and Long-run Risks
+scanned 0 papers, queued 0, queue size 26 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 2, AI units today 798/7000
-curiosity asked: Strategy: LowGex_Exp70_Break_Midday
-tested: Strategy: LowGex_Exp70_Break_Midday - On low‑gamma days the  -> NOT CONFIRMED on my data: too few trades (15 in 2014-2023, need 150). in-sample 2014-2023:
-testing used 373 AI units
+read 0, AI units today 1174/7000
+curiosity asked: Strategy: GammaLow_Exp90_Break_09_30
+tested: Strategy: GammaLow_Exp90_Break_09_30 - On low‑gamma days the -> NOT CONFIRMED on my data: too few trades (8 in 2014-2023, need 150). in-sample 2014-2023: 
+testing used 385 AI units
