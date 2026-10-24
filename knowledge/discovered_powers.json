@@ -52,5 +52,14 @@
   "expr": "k_spx_gex",
   "verdict": "PROMISING (stress test: survived) : FACT: average 1.03, median 0.907 over 2906 sessions (2014-19: 1.03, 2020-25: 1.03). Predictor: lowest-fifth days 0.833 vs highest-fifth 1.22, skill +7.4% vs the base rate, better in 4/5 unseen years",
   "active": true
+ },
+ {
+  "id": 7,
+  "date": "2026-10-24",
+  "question": "Do larger overnight gaps (k_gap) increase the probability that NQ closes above yesterday's high (y_closed_above_yday_high)?",
+  "target": "y_closed_above_yday_high",
+  "expr": "k_gap",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 35% of 2808 sessions (2014-19: 35%, 2020-25: 35%). Predictor: lowest-fifth days 11% vs highest-fifth 61%, skill +14.2% vs the base rate, better in 9/9 unseen years",
+  "active": true
  }
 ]

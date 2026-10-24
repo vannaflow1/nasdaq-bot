@@ -79,5 +79,22 @@
   "verdict": "PROMISING (stress test: survived) : FACT: average 1.03, median 0.907 over 2906 sessions (2014-19: 1.03, 2020-25: 1.03). Predictor: lowest-fifth days 0.833 vs highest-fifth 1.22, skill +7.4% vs the base rate, better in 4/5 unseen years",
   "how": "Q: Do days with higher SPX dealer gamma exposure (k_spx_gex) tend to have a relatively smaller NQ intraday range (y_range) compared to its 20\u2011day average (k_range20)? | answer = `y_range / k_range20` | predicted by `k_spx_gex` | stress: skill +7.40; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
   "date": "2026-10-23"
+ },
+ {
+  "id": "q:2026-10-24:3",
+  "title": "Volta's own question (inspired by: Control variates for variance-reduced ratio of means estimat; Valuation Engines Under Market Incompleteness: An Empirical )",
+  "idea": "Do larger overnight gaps (k_gap) increase the probability that NQ closes above yesterday's high (y_closed_above_yday_high)?",
+  "relevance": 6,
+  "spec": {
+   "kind": "question",
+   "question": "Do larger overnight gaps (k_gap) increase the probability that NQ closes above yesterday's high (y_closed_above_yday_high)?",
+   "target": "y_closed_above_yday_high",
+   "expr": "k_gap",
+   "explain": "Research on overnight news and event premia suggested that pre\u2011open information moves the open price. Extending that idea, we test whether the magnitude of the overnight gap itself predicts the chance of a strong upside finish, i.e., closing above the prior day's high."
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 35% of 2808 sessions (2014-19: 35%, 2020-25: 35%). Predictor: lowest-fifth days 11% vs highest-fifth 61%, skill +14.2% vs the base rate, better in 9/9 unseen years",
+  "how": "Q: Do larger overnight gaps (k_gap) increase the probability that NQ closes above yesterday's high (y_closed_above_yday_high)? | answer = `y_closed_above_yday_high` | predicted by `k_gap` | stress: skill +14.20; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-10-24"
  }
 ]
