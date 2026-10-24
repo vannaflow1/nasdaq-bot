@@ -727,9 +727,17 @@
   "forward_variant": 43,
   "scored": "2026-10-22",
   "forward": {
-   "date": "2026-10-23",
-   "decision": "WAITING",
-   "n": 0
+   "date": "2026-10-24",
+   "decision": "CONTINUE",
+   "n": 2,
+   "edge": -1.0063,
+   "posterior_mean": 0.0266,
+   "posterior_sd": 0.0431,
+   "p_edge_pos": 0.731,
+   "cond_power": 0.184,
+   "cusum": 2.07,
+   "z": NaN,
+   "look": 0
   }
  },
  {
@@ -917,9 +925,17 @@
    "record": "knowledge/ledgers/null_v3_rescore.json"
   },
   "forward": {
-   "date": "2026-10-23",
-   "decision": "WAITING",
-   "n": 0
+   "date": "2026-10-24",
+   "decision": "CONTINUE",
+   "n": 2,
+   "edge": -1.0063,
+   "posterior_mean": 0.0266,
+   "posterior_sd": 0.0466,
+   "p_edge_pos": 0.716,
+   "cond_power": 0.181,
+   "cusum": 2.07,
+   "z": NaN,
+   "look": 0
   }
  }
 ]
