@@ -1,11 +1,6 @@
-hunt 'daily range forecast position sizing volatility trading': 21 found, queued 3
-scanned 0 papers, queued 3, queue size 37 []
-read (4*): Range-Based Volatility Estimation and Forecasting
-read (2*): Study on the Validity of Volatility Trading
-read (3*): Synthetic American Option Pricing via Jump-HMM-Driven Heston Implied V
-read 3, AI units today 1293/7000
-curiosity asked: Strategy: GammaGapFade_09-45
-tested: Strategy: GammaGapFade_09-45 - Low‑gamma day with high chanc -> TRANSLATION FAILED - translator JSON not closed
-tested: Create a daily range forecast model that combines the Parkin -> NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 7/9 unse
-tested: Use the GROMM‑generated risk‑neutral variance for the next‑d -> NOT CONFIRMED on my data: 2230 signal days, hit 47.7% (always-long 56.5%), strategy -1.8 b
-testing used 752 AI units
+scanned 0 papers, queued 0, queue size 34 []
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
+read 0, AI units today 2048/7000
+curiosity: unusable translator gave no JSON
+test queue empty
+testing used 177 AI units
