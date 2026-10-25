@@ -327,9 +327,9 @@
  ],
  "power": [
   "\u26a1 POWER CURVE - THE SCOREBOARD (family F10 trades, null v3 with shared draws, 400 worlds): can my family test find a planted edge?",
-  "False passes with no edge: 0.2% (alpha for the next family 0.0023)",
-  "Found a planted edge at that alpha: +0.05R 5%, +0.10R 41%, +0.20R 100% | at alpha 0.05: +0.05R 36%, +0.10R 84%, +0.20R 100% (planted on 60% of sessions, all variants together: true lift 0.6x)",
-  "The edge has to clear the costs first: a no-edge world sits at the no-information level (-0.024R), not at 0."
+  "False passes with no edge: 0.0% (alpha for the next family 0.0000)",
+  "Found a planted edge at that alpha: +0.05R 0%, +0.10R 0%, +0.20R 0% | at alpha 0.05: +0.05R 34%, +0.10R 87%, +0.20R 100% (planted on 60% of sessions, all variants together: true lift 0.6x)",
+  "The edge has to clear the costs first: a no-edge world sits at the no-information level (-0.023R), not at 0."
  ],
  "eval_rule": [
   "\ud83c\udf9f\ufe0f EVAL RULE (frozen) - NOT YET - preconditions unmet (SIM execution path >= 20 sessions, >= 60 clean forward trades (2 so far))",
