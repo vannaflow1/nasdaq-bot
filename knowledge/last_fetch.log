@@ -1,6 +1,5 @@
 scanned 0 papers, queued 0, queue size 34 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
-read 0, AI units today 3084/7000
-curiosity asked: Strategy: LowGamma_TailBreak_Exp70
-tested: Strategy: LowGamma_TailBreak_Exp70 - On low‑gamma days with  -> NOT CONFIRMED on my data: too few trades (1 in 2014-2023, need 150). in-sample 2014-2023: 
-testing used 365 AI units
+read 0, AI units today 3452/7000
+test queue empty
+testing used 0 AI units
