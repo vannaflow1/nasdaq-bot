@@ -171,7 +171,7 @@
   "why": "Current data only gives end‑of‑day IV30; the IV ratio test requires 7‑day and 30‑day implied vols updated at least every 5 minutes.",
   "evidence": "Self‑action #2 cannot be evaluated without intraday IV term‑structure; failure limits edge discovery.",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -180,7 +180,8 @@
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
-  }
+  },
+  "note": "Needs owner (2026-10-25, Claude): historical intraday 7d/30d implied vols every 5 min are only sold by paid vendors (account + money), so this cannot be granted research-side. Closest free data already in the session table: SPX weekly option ticks 2019-2025 (k_spx_*, wish #1) give short-tenor intraday IV but no 30-day leg; daily VIX9D/VIX could proxy the ratio end-of-day only. Testing an IV-ratio signal would also be a NEW family, and the alpha budget is nearly spent (alpha_slots.json) - left for the owner/Claude chat."
  },
  {
   "id": 13,
@@ -191,7 +192,7 @@
   "why": "Both self‑actions and the new strategy need real‑time 0‑DTE QQQ option prices to compute strike offsets and IV30; current data feed only updates every 30 min.",
   "evidence": "All 65 tested strategies failed due to missing intraday option quotes; the only live edge (short‑vol straddle) requires precise 0‑DTE pricing.",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "rejected by guard",
@@ -200,6 +201,7 @@
    "branch": null,
    "summary": "Built qqq_intraday.py to fetch and log 0-DTE QQQ option chain snapshots every 5 minutes, resolving Wish #13 successfully. Verified with python test_engine.py (exits 0).",
    "guard": "touched files outside the research side: knowledge/qqq_intraday.csv"
-  }
+  },
+  "note": "Needs owner (2026-10-25, Claude): a real-time 0-DTE QQQ chain every 5 min needs a paid/live data account; free snapshots are delayed and forward-only (no backtest history), and a real-time feed for trading is live-side (frozen until a strategy is CONFIRMED). The evidence line is inaccurate: the 65 strategies failed on edge/prop checks, not missing option quotes, and the live candidate is F10 (NQ noise-band breakout), not a short-vol straddle. Intraday SPX 0DTE option ticks 2019-2025 already exist for research (k_spx_*, wish #1; F7 used them and FAILED)."
  }
 ]
