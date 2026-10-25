@@ -194,5 +194,14 @@
    "openalex:W2179969068"
   ],
   "searched": "2026-10-24"
+ },
+ {
+  "id": "h17",
+  "date": "2026-10-25",
+  "query": "daily range forecast position sizing volatility trading",
+  "why": "I want a principled method to scale the size of a volatility‑selling trade based on the predicted daily range, which could turn my range forecasts into profit.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

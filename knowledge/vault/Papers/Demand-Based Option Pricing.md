@@ -13,7 +13,7 @@ Because dealers cannot hedge options perfectly, heavy end-user demand for an opt
 A foundational reason why dealer positioning (the basis of GEX) and put skew matter for index options like QQQ/NDX, though it explains option prices rather than giving a next-day trading signal.
 
 ## Concepts
-demand pressure, dealer positioning, unhedgeable risk, volatility smirk, expensive index puts
+demand pressure, dealer positioning, unhedgeable risk, [[volatility smirk]], expensive index puts
 
 ## Idea
 Measure end-user net demand by strike in QQQ options and relate it to skew changes.

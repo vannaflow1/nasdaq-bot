@@ -98,8 +98,11 @@
   "No FOMC, CPI or jobs report on Mon 26 Oct."
  ],
  "learning": [
-  "LEARNING: 265 papers read (42 more skipped as not relevant enough), 136 ideas tested on my memory, 2 promising.",
+  "LEARNING: 268 papers read (42 more skipped as not relevant enough), 136 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 GROMM: Generative Risk-neutral Option Market Models (\u2605\u2605\u2605\u2606\u2606)",
+  "  GROMM is a generative, arbitrage\u2011free model that represents the whole S&P index option surface as a smooth grid of discrete local volatilities and learns their joint dynamics under both the real\u2011world (P) and risk\u2011neutra",
+  "  tested: queued for testing",
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
@@ -115,12 +118,9 @@
   "\u2022 Learning volatility-adaptive forgetting via GARCH-modulated LSTM for stock price forecasting (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes a new LSTM variant (Gsigmoid\u2011LSTM) that feeds GARCH(1,1) volatility directly into the forget gate via a custom activation (Gsigmoid), letting the network forget faster in turbulent periods and retain m",
   "  tested: DOESN'T FIT MY DATA - The idea requires training a Gsigmoid\u2011LSTM model on multiple daily columns and a GARCH\u2011modulated volatility series, which cannot be expres",
-  "\u2022 Do Behavioral Biases Affect Prices? (\u2605\u2605\u2605\u2605\u2606)",
-  "  CBOT proprietary traders show loss aversion: after morning losses they take excess afternoon risk, buying high and selling low, causing temporary price distortion that is quickly corrected.",
-  "  tested: prop mission - feeds my strategy designer and self-check",
-  "This week's tests: 169 run - 6 promising, 88 not confirmed, 31 don't fit my data, 44 translation failures",
+  "This week's tests: 172 run - 6 promising, 89 not confirmed, 31 don't fit my data, 46 translation failures",
   "",
-  "26 papers waiting in my queue."
+  "34 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -200,12 +200,12 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-10-24)",
-  "I see my range forecasts are solid but still not yielding profit; low\u2011gamma (gex_rank<0.2) nudges edge +0.2% but I haven\u2019t built a high\u2011probability trade around it. My best in\u2011sample idea (first\u201115\u2011min breakout) is weak and needs tighter filters. I\u2019ll focus on coupling low\u2011gamma regime detection with a momentum\u2011breakout entry and test a tighter stop/target grid.",
+  "VOLTA'S SELF-CHECK (2026-10-25)",
+  "I confirmed that low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) consistently add about +0.2% edge to my near\u2011miss features, but I still lack a concrete trade that converts that edge into consistent R. My range forecasts are decent (80% band hit 50% of the time) yet I keep skipping trades because the stop\u2011loss would be too wide for my risk budget. I need a low\u2011variance, high\u2011frequency entry that exploits the calmer market when gamma is low and ties the forecasted daily range to position size.",
   "",
   "WISHES (what I need to get better):",
-  "#10 [for Claude] Real\u2011time GEX rank feed for live strategy - All my promising low\u2011gamma ideas stall without live gex_rank; a low\u2011latency feed would let me trigger entries exactly when dealer gamma drop",
   "#12 [for Claude] Intraday IV term\u2011structure data feed - Current data only gives end\u2011of\u2011day IV30; the IV ratio test requires 7\u2011day and 30\u2011day implied vols updated at least every 5\u202fminutes.",
+  "#13 [for Claude] Intraday option chain snapshots (0\u2011DTE) every 5\u202fmin - Both self\u2011actions and the new strategy need real\u2011time 0\u2011DTE QQQ option prices to compute strike offsets and IV30; current data feed only upd",
   "",
   "Recently granted: #4 Correct the prop search for luck (multiple-testing control); #5 Market focus: weight locked-exam passes far above 2022-23 su; #6 Make the prop simulator harsher where reality is harsher"
  ],

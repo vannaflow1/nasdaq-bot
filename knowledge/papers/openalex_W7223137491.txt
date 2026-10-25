@@ -1,0 +1,722 @@
+Geliş/Received: 04.06.2026 | Revizyon/Revised: 04.09.2026 |Kabul/Accepted: 13.09.2026 
+How to cite this article / Bu makaleye atıf vermek için: 
+Öztop, A. O., (2026). Multi-dimensional risk profiling of BIST-100 stocks: A comparative analysis of the MEREC-AROMAN MCDM framework and the classical 
+CAPM beta. KOCATEPEİİBFD, 28(Special Issue), 135-152. https://doi.org/10.33707/akuiibfd.1963956 
+
+Research Article (Special Issue) | Araştırma Makalesi (Özel Sayı) 
+
+Multi-dimensional risk profiling of BIST-100 stocks: A comparative analysis of 
+the MEREC-AROMAN MCDM framework and the classical CAPM beta 
+
+Ali Osman Öztop Asst. Prof., Muğla Sıtkı Koçman University, aliosmanoztop@mu.edu.tr, 0000-0002-7568-5927 
+
+Corresponding author/Sorumlu yazar: Ali Osman Öztop 
+Abstract 
+Our study creates a multi-dimensional risk profile for Borsa Istanbul 100 (BIST-100) stocks combining MEREC and AROMAN from multi-criteria 
+decision-making (MCDM) techniques. For this purpose, 7 risk dimensions were calculated using daily price and volume data of 91 BIST -100 
+stocks for the period between January 1, 2015 - April 30, 2026: market beta, downside beta, VaR, CVaR, max drawdown, lower -tail 
+dependence, Amihud illiquidity. In the results obtained, the MEREC -AROMAN ranking was compared with the classical CAPM beta ranking. 
+Accordingly, although the two rankings show a moderate Spearman correlation (+0. 28), there is a divergence stemming theoretically from 
+liquidity and tail-risk channels. Furthermore, in out -of-sample tests conducted during the post -2023 monetary policy normalization period, 
+the MEREC-AROMAN ranking predicts realized volatility (Mann-Whitney p = 0.033; Holm-adjusted p = 0.065), whereas the beta ranking works 
+in the opposite direction. In robustness tests, the robustness of findings was confirmed with sectoral fixed effects regressi on, behavioral 
+regime analysis based on the Risk Appetite Index (RISE) published by the Central Securities Depository, and trapezoidal fuzzy AROMAN 
+extension. Our study presents an important methodological contribution to advanced MCDM in finance by revealing that liquidit y-adjusted 
+multi-dimensional risk measures are superior to single-factor beta in regime-change environments. 
+Keywords: Multi-Criteria Decision-Making, MEREC-AROMAN, Risk Profiling, Borsa Istanbul JEL Codes: G11, G12, G14, C44 
+BIST-100 hisse senetlerinin çok boyutlu risk profillemesi: MEREC- AROMAN 
+MCDM çerçevesi ile klasik CAPM beta modelinin karşılaştırmalı analizi 
+
+Öz 
+Çalışmamız çok-kriterli karar verme (ÇKKV) yöntemlerinden MEREC ve AROMAN'ı birleştirerek Borsa İstanbul 100 (BIST-100) hisseleri için çok 
+boyutlu risk profili oluşturmaktadır. Bu amaçla 1 Ocak 2015 – 30 Nisan 2026 tarihleri arasındaki döneme ait 91 BIST-100 hissesinin günlük fiyat 
+ve hacim verileri kullanılarak yedi risk boyutu hesaplanmıştır: piyasa betası, aşağı yönlü beta, Riske Maruz Değer, Koşullu Riske Maruz Değer, 
+maksimum çöküş, endeksle alt-kuyruk bağımlılığı ve Amihud likidite ölçütü. Elde edilen sonuçlarda MEREC -AROMAN sıralaması klasik CAPM 
+beta sıralamasıyla karşılaştırılmıştır. Buna göre iki sıralama, orta düzeyde bir Spearman korelasyonu (+0,28) gösterse de, teorik açıdan likidite 
+ve kuyruk-riski kanallarından kaynaklanan bir ayrışma söz konusudur. Dahası, 2023 sonrası para politikası normalizasyon döneminde yapılan 
+örneklem-dışı testlerde MEREC -AROMAN sıralaması, gerçekleşen oynaklığı öngörmekte (Mann -Whitney p = 0,033; Holm -düzeltmeli p = 
+0,065), buna karşın beta sıralaması ters yönde çalışmaktadır. Sağlamlık testlerinde sektörel sabit etkili regresyon, Merkezi Kayıt Kuruluşu 
+tarafından yayımlanan Risk Eğilim Endeksi'ne (RISE) dayalı davranışsal rejim analizi ve yamuk bulanık AROMAN uzantısıyla bulguların sağlamlığı 
+teyit edilmiştir. Çalışmamız likidite -ayarlı çok -boyutlu risk ölçütlerinin rejim -değişikliği ortamlarında tek -faktörlü betadan üstün olduğunu 
+ortaya koyarak ileri ÇKKV'nin finans alanındaki uygulamalarına önemli bir metodolojik katkı sunmaktadır. 
+Anahtar Kelimeler: Çok Kriterli Karar Verme, MEREC-AROMAN, Risk Profilleme, Borsa İstanbul JEL Kodları: G11, G12, G14, C44 
+Introduction 
+Accurate measurement of stock risk remains a central concern in asset pricing. Since Sharpe (1964) and Lintner (1965), the Capital 
+Asset Pricing Model (CAPM) has provided a parsimonious single-factor representation of systematic risk through the market beta 
+coefficient. Accumulating empirical evidence, however, has documented anomalies that the single-factor beta cannot account for: 
+the size effect (Banz, 1981), value premia (Fama & French, 1992), momentum (Carhart, 1997), liquidity risk (Acharya & Pederse n, 
+2005; Amihud, 2002; Pástor & Stambaugh, 2003), and downside-conditional risk (Ang et al., 2006; Estrada, 2002). Taken together, 
+the anomaly evidence points to risk that is multi -dimensional; no single statistic seems sufficient to summarize cross -sectional 
+differences in stock returns. 
+Beta nevertheless remains the workhorse risk measure across many emerging markets, the Turkish market among them, and this 
+reliance is troubling on two counts. Liquidity heterogeneity in emerging markets is far wider than in developed ones, so igno ring 
+liquidity risk carries unusually severe consequences (Brunnermeier & Pedersen, 2009). In addition, the monetary- policy breaks 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+136 
+Türkiye has gone through since 2018 render the beta coefficient non -stationary and erode its reliability as a stable risk measure. 
+To address these limitations, this study proposes a multi -dimensional risk profiling framework for the Borsa Istanbul 100 (BIST -
+100) index. Seven theoretically motivated risk criteria are combined into one composite ranking with two recent MCDM tools. 
+Criterion weights are obtained from the Method based on the Removal Effects of Criteria (MEREC) of Keshavarz- Ghorabaee et al. 
+(2021); the ranking step then relies on the Alternative Ranking Order Method Accounting for Two -Step Normalization (AROMAN) 
+of Bošković et al. (2023). 
+The analysis is organized around three questions: 
+(i) How far does the MEREC-AROMAN composite ranking depart from the classical beta ordering? 
+(ii) Do the MCDM weights shift with monetary-policy and investor-sentiment regimes? 
+(iii) Is the MEREC-AROMAN ranking more accurate out of sample than its beta counterpart? 
+Four contributions follow. To our knowledge this is the first application of the MEREC -AROMAN combination to BIST -100 stocks. 
+Empirically, liquidity emerges as the principal driver of cross -sectional risk dispersion in the index. On the theoretical side, 
+downside-conditional risk gains discriminating power once sentiment turns pessimistic, in line with the loss-aversion argument of 
+Kahneman and Tversky (1979), a result obtained thro ugh behavioral regime analysis built on the MKK Risk Appetite Index (RISE). 
+In practical terms, the MEREC -AROMAN ranking delivers an out -of-sample prediction of realized volatility over the post -2023 
+normalization period that remains significant at the 10 percent level after multiple-testing correction, a test the beta ranking fails. 
+The article proceeds with the theoretical background and related literature in Section 1. Section 2 details the data and 
+methodology. Section 3 presents the empirical findings. Section 4 discusses the implications, and the final section concludes . 
+1. Theoretical Background and Literature Review 
+This section reviews the literature underpinning the seven-criterion framework adopted in the present study, organized into four 
+thematic strands. 
+1.1. The CAPM and Its Multi-Factor Extensions 
+The CAPM of Sharpe (1964) and Lintner (1965) ties the expected excess return on an asset to the covariance of that asset with the 
+market portfolio, scaled by the variance of the market. This proportionality coefficient is the asset's beta coefficient. Even allowing 
+for the zero-beta extension of Black (1972), empirical tests have rejected the CAPM repeatedly. Fama and French (1992) state that 
+the relationship between β and average return is " absorbed by the combination of size and book -to-market equity." Beta alone, 
+in other words, cannot carry the cross-section, which led Fama and French (1993) to their three-factor model. Carhart (1997) then 
+added momentum as a fourth factor, capturing a further slice of cross-sectional return variation. While these extensions improve 
+explanatory power, they remain within the linear factor framework of the CAPM. 
+A separate strand asks what happens where linear factor structures fall short. Estrada (2002) introduces the downside beta and 
+the D-CAPM on the grounds that variance and beta presume a symmetry that equity returns rarely display. Ang et al. (2006) put 
+the annual premium on high-downside-risk stocks at roughly 6%. Bali et al. (2009) and Atilgan et al. (2020) further show that left -
+tail measures such as Value -at-Risk and expected shortfall carry significant predictive content for the cross -section of expected 
+returns. 
+1.2. Liquidity and Tail-Risk Considerations 
+Liquidity entered the pricing framework through a different door. Amihud (2002) finds that illiquidity, the daily ratio of absolute 
+return to dollar volume, earns a positive return premium, strongest among small firms. Pástor and Stambaugh (2003) build a 
+market-wide liquidity factor whose sensi tivity turns out to be priced in the cross -section. Acharya and Pedersen (2005) tie a 
+security's required return, within a liquidity-adjusted CAPM, both to its expected liquidity and to liquidity-related covariances with 
+the market. Brunnermeier and Pedersen (2009) supply the theory behind a familiar crisis pattern: market liquidity and funding 
+liquidity are determined jointly and can spiral downward together. 
+Co-movement in the tails is a further dimension the linear framework misses. Longin and Solnik (2001) show that equity 
+correlations across countries rise sharply in extreme downturns, eroding the diversification gains promised under multivariat e 
+normality. Joe (1997) gives lower -tail dependence its formal copula treatment: the conditional probability that one series sits in 
+its lower tail given that the other one does. 
+1.3. Behavioral Finance and Sentiment 
+Behavioral finance adds a preference -based reason to care about the downside. Losses weigh more heavily than gains of equal 
+size, a property formalized by Kahneman and Tversky (1979) in prospect theory; loss aversion of this kind implies compensatio n 
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+137 
+for downside risk beyond what symmetric variance captures. Baker and Wurgler (2006) find the cross -sectional footprint of 
+aggregate sentiment to be anything but uniform: stocks that are hard to value or to arbitrage earn lower returns after high-
+sentiment periods. 
+In the Turkish context, investor sentiment is captured directly by an institutional measure: Türkiye's Central Securities Depository 
+(Merkezi Kayıt Kuruluşu, MKK) publishes a weekly RISE based on actual portfolio shifts of registered investors between risk-bearing 
+and safe-haven assets. The RISE thus provides a revealed-preference measure of investor sentiment. 
+1.4. MCDM Methods in Finance and Emerging-Market Applications 
+MCDM offers a more comprehensive perspective compared to traditional univariate approaches by integrating criteria such as 
+financial ratios, risk metrics and market liquidity (Kılıçarslan, 2025; Shah et al., 2024). Zopounidis and Doumpos (2002) pro vide an 
+early review of MCDM applications in financial decision-making, and Kou et al. (2014) extend MCDM to clustering-based financial 
+risk analysis. Recent advances in objective weighting methods include MEREC (Keshavarz -Ghorabaee et al., 2021) and the 
+Logarithmic Percentage Change -Driven Objective Weighting (LOPCOW) method (Ecer & Pamucar, 2022). For the ranking step, 
+recent contributions include the Measurement of Alternatives and Ranking according to Compromise Solution (MARCOS) method 
+(Stević et al., 2020), the Ranking of Alternatives through Functional mapping of criterion sub-intervals into a Single Interval (RAFSI) 
+method (Žižović et al., 2020), and AROMAN (Bošković et al., 2023). 
+Hybrid models integrating soft computing techniques improve risk profiling in emerging markets such as Türkiye (Narang et al., 
+2023). Goutte et al. (2025) reported higher risk -adjusted returns in Vietnam's VN100 index when compared with MCDM -based 
+portfolios. Gupta et al. (2023), on the other hand, found that TOPSIS -based selection integrating financial beta with India's NSE -
+100 index revealed favorable risk -return profiles. Yildiz et al. (2022) revealed that Borsa Istanbul exhibits a distinct downside risk 
+sensitivity that cannot be captured by classical beta, as one of the emerging markets with the highest global downside beta 
+(approximately 1.74). Comparative evidence also extends beyond Asia: Basilio et al. (2018) applied PROMETHEE -II rankings to 
+portfolio formation on the Brazilian exchange (B3), and Poklepović and Babić (2014) selected stocks listed in Zagreb through a 
+hybrid consensus of five MCDM methods, extending MCDM -based stock evaluation to Latin American and Eastern European 
+capital markets. Although the MEREC -AROMAN combination has been applied to sustainable competitiveness assessment for 
+Türkiye (Kara et al., 2024), to our knowledge, no previous study has applied it to risk profiling of stocks on the BIST -100. This gap 
+is addressed in the present study. 
+The choice of methods rests on three grounds. First, MEREC weights are fully data -driven, derived from each criterion's removal 
+effect on overall performance scores; no subjective expert input is required in a 91 × 7 matrix, and the logarithmic aggregation is 
+relatively robust to extreme values. Second, AROMAN's two -step normalization blends min -max and vector normalization, 
+mitigating the scale sensitivity of single -normalization methods, and its few free parameters (β, λ) permit ful l sensitivity analysis 
+(Section 3.6). Third, both are post-2018 methods whose combination has a Turkish precedent (Kara et al., 2024); the present study 
+applies it to stock-level risk profiling. The weighting choice is further tested against LOPCOW, Entropy, and CRITIC in Section 3.6. 
+2. Data and Methodology 
+2.1. Data Sources and Sample 
+Daily data for BIST -100 firms over January 1, 2015– April 30, 2026 were compiled from the Yahoo Finance online database 
+(http://finance.yahoo.com/). The initial stock pool obtained from the union of two BIST -100 component lists during this period 
+consists of 118 stocks. After applying the 750 trading day minimum requirement, the full panel contains 97 stocks. For replicability, 
+the sample is constructed in four steps : (i) an initial pool of 118 stocks, the union of two independent BIST -100 constituent lists 
+for 2024–2026; (ii) exclusion of 21 stocks (delisted issuers and short -history IPOs) with fewer than 750 trading days over January 
+2015–April 2026, a threshold ensuring sufficient observations for 5-percent VaR/CVaR and 10-percent lower-tail dependence; (iii) 
+a full panel of the remaining 97 stocks; (iv) 91 stocks with sufficient in-sample history (2015–2022) entering the main analysis, the 
+remaining six (recent IPOs) entering only the out -of-sample validation. Additionally, sectoral classification information for each 
+stock was obtained from company information records on the Public Disclosure Platform (PDP) (https://kap.org.tr). The Risk 
+Appetite Index (RISE) wa s obtained from the Data Analysis Platform affiliated with the Central Securities Depository of Türkiye 
+(https://www.vap.org.tr/reks). 
+The sample is divided into two as the in -sample period (2015– 2022) and the out -of-sample validation period (2023– 2026); this 
+division was made in accordance with the structural break in Türkiye’s monetary policy in mid-2023. Descriptive statistics of seven 
+risk criteria throughout the in-sample period are presented in Table 1. 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+138 
+Table 1. Descriptive Statistics and Correlations of the Risk Criteria 
+Panel A: Descriptive Statistics 
+ Mean Std. Dev. Min Q1 Median Q3 Max 
+Beta 0.813 0.254 0.084 0.624 0.844 0.977 1.293 
+Downside Beta 0.933 0.249 0.142 0.773 1.000 1.114 1.319 
+VaR 95% 0.038 0.011 0.017 0.033 0.036 0.042 0.086 
+CVaR 95% 0.060 0.014 0.029 0.051 0.057 0.065 0.101 
+Max Drawdown 0.521 0.147 0.120 0.410 0.539 0.627 0.799 
+Tail Dependence 0.433 0.113 0.143 0.378 0.448 0.510 0.652 
+Amihud (log) 1.533 1.716 0.039 0.445 0.873 2.114 11.366 
+Panel B: Pearson Correlation Matrix 
+ Beta D-Beta VaR CVaR MaxDD TailDep Amihud 
+Beta 1.000 
+D-Beta 0.852*** 1.000 
+VaR -0.242** -0.243** 1.000 
+CVaR -0.220** -0.132 0.944*** 1.000 
+MaxDD 0.499*** 0.678*** 0.124 0.273*** 1.000 
+TailDep 0.859*** 0.745*** -0.519*** -0.501*** 0.308*** 1.000 
+Amihud -0.234** 0.013 0.061 0.189* 0.263** -0.242** 1.000 
+Source: Authors. Significance levels in Panel B: *** p<0.01, ** p<0.05, * p<0.10. n=91. 
+Panel A shows wide cross-sectional dispersion in every criterion, and nowhere more so than in Amihud illiquidity: the log measure 
+runs from 0.039 for the most liquid stock to 11.366 for the least liquid, a gap of more than two orders of magnitude, and its 
+coefficient of variation of 1.12 is the highest in the table. BIST -100 nominally gathers the most liquid Turkish stocks, yet liquidity 
+inside the index is far from homogeneous. Because MEREC rewards criteria that discriminate, this spread already hints at Amihud’s 
+dominance in the weighting step; the systematic -risk dimensions (Beta, Downside Beta, Tail Dependence) and the daily- loss 
+dimensions (VaR, CVaR) sit in visibly tighter ranges. 
+Panel B carries three messages. The systematic -risk trio (Beta, Downside Beta, Tail Dependence) moves together, with pairwise 
+correlations above 0.74). VaR and CVaR are close to co -linear (𝑟𝑟 = 0.944). Amihud, in contrast, correlates only weakly with the 
+remaining six criteria (largest |𝑟𝑟| = 0.263),so the information it carries is largely orthogonal, which is exactly why MEREC ends up 
+weighting it heavily. 
+Eleven sectors are represented in the sample. Industrials (25.3%), Basic Materials (17.6%), and Financial Services (14.3%) jointly 
+account for over half of the BIST -100 constituents. The full sectoral composition is reported in Table 7 together with mean risk 
+rankings. 
+2.2. Risk Criteria 
+For each stock i examined in the study, seven risk criteria were calculated using 𝑅𝑅𝑖𝑖,𝑡𝑡 and BIST-100 index returns 𝑅𝑅𝑚𝑚,𝑡𝑡 throughout 
+the sample period. The seven criteria cover four theoretical risk channels: systematic exposure (Beta, Downside Beta), tail l oss 
+magnitudes (VaR, CVaR, Maximum Drawdown), market co -tail behavior (Tail Dependence), and liquidity (Amihud illiquidity) 
+criteria were evaluated. All criteria are coded as costs: high values mean high risk. Each criterion was estimated as a singl e full-
+window statistic over 2015–2022, yielding a stable, time-averaged cross-sectional risk profile rather than short-run dynamics. 
+No winsorization or trimming is applied when computing the tail-risk criteria (VaR, CVaR, Maximum Drawdown, Tail Dependence); 
+the extreme observations such filters would remove are precisely the signal these criteria exist to record. To verify robustness to 
+this choice, the analysis was repeated with returns winsorized stock-by-stock at the 1/99 and 2.5/97.5 percent levels: the trimmed-
+sample AROMAN rankings correlate with the baseline at 0.990 and 0.975, the MEREC weight vectors at 0.964, and Amihud retains 
+its dominant weight (0.445 and 0.433). 
+The market beta is computed as (Equation 1): 
+𝛽𝛽𝑖𝑖 = Cov�𝑅𝑅𝑖𝑖,𝑡𝑡, 𝑅𝑅𝑚𝑚,𝑡𝑡�Var�𝑅𝑅𝑚𝑚,𝑡𝑡� . (1) 
+The downside beta is computed as the conditional regression coefficient of stock on market returns, restricted to observations in 
+which 𝑅𝑅𝑚𝑚,𝑡𝑡 falls below its sample mean 𝜇𝜇𝑚𝑚 (Ang et al., 2006) (Equation 2): 
+𝛽𝛽𝑖𝑖− = Cov� 𝑅𝑅𝑖𝑖,𝑡𝑡, 𝑅𝑅𝑚𝑚,𝑡𝑡 ∣∣ 𝑅𝑅𝑚𝑚,𝑡𝑡 < 𝜇𝜇𝑚𝑚 �Var� 𝑅𝑅𝑚𝑚,𝑡𝑡 ∣∣ 𝑅𝑅𝑚𝑚,𝑡𝑡 < 𝜇𝜇𝑚𝑚 � . (2) 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+139 
+The Value-at-Risk at the 95 percent confidence level is computed as the negative of the empirical fifth percentile of the daily return 
+distribution (Equation 3): 
+VaR𝑖𝑖0.05 = −𝐹𝐹𝑖𝑖−1(0.05), (3) 
+where 𝐹𝐹𝑖𝑖 denotes the empirical cumulative distribution function of the returns of stock 𝑖𝑖. The Conditional Value-at-Risk (Expected 
+Shortfall) at the same confidence level is (Equation 4): 
+CVaR𝑖𝑖0.05 = −𝔼𝔼� 𝑅𝑅𝑖𝑖,𝑡𝑡 ∣∣ 𝑅𝑅𝑖𝑖,𝑡𝑡 ≤ −VaR𝑖𝑖0.05 �. (4) 
+The maximum drawdown is computed from the cumulative price path 𝑃𝑃𝑖𝑖,𝑡𝑡 as (Equation 5): 
+MDD𝑖𝑖 = max𝑡𝑡∈[1,𝑇𝑇] �𝑀𝑀𝑖𝑖,𝑡𝑡 − 𝑃𝑃𝑖𝑖,𝑡𝑡𝑀𝑀𝑖𝑖,𝑡𝑡 � , 𝑀𝑀𝑖𝑖,𝑡𝑡 = max𝑠𝑠≤𝑡𝑡 𝑃𝑃𝑖𝑖,𝑠𝑠, (5) 
+where 𝑀𝑀𝑖𝑖,𝑡𝑡 denotes the running maximum of the price path for stock 𝑖𝑖 up to and including time 𝑡𝑡. 
+The empirical lower-tail dependence with the market index at quantile 𝑞𝑞 = 0.10 is (Equation 6): 
+𝜆𝜆𝑖𝑖𝐿𝐿 = ∑ 𝟙𝟙�𝑅𝑅𝑖𝑖,𝑡𝑡 ≤ 𝐹𝐹𝑖𝑖−1(𝑞𝑞) ∧ 𝑅𝑅𝑚𝑚,𝑡𝑡 ≤ 𝐹𝐹𝑚𝑚−1(𝑞𝑞)�𝑡𝑡 ∑ 𝟙𝟙�𝑅𝑅𝑚𝑚,𝑡𝑡 ≤ 𝐹𝐹𝑚𝑚−1(𝑞𝑞)�𝑡𝑡 . (6) 
+The Amihud illiquidity following Amihud (2002) is the average daily ratio of absolute return to Turkish lira trading volume 𝑉𝑉𝑖𝑖,𝑡𝑡 
+(Equation 7): 
+ILLIQ𝑖𝑖 = 1𝑇𝑇𝑖𝑖 � �𝑅𝑅𝑖𝑖,𝑡𝑡�𝑉𝑉𝑖𝑖,𝑡𝑡
+𝑇𝑇𝑖𝑖
+𝑡𝑡=1
+. (7) 
+Raw Amihud values stretch across roughly five orders of magnitude in this sample; a logarithmic transformation therefore brings 
+the criterion onto a scale comparable with the others without disturbing the rank ordering (Equation 8): 
+ILLIQ𝑖𝑖log = log(1 + 109 ⋅ ILLIQ𝑖𝑖). (8) 
+The scale c o nst a nt c = 1 0 ⁹ i s t he r e c i pr o c a l o f t he me di a n r a w I L L I Q ( 1/ me di a n ≈ 7 .2 × 1 0 ⁸ ) r o unde d t o t he ne a r est o r de r o f 
+magnitude, placing the median stock at the center of the log(1+x) transition region and aligning Amihud with the other six criteria. 
+Since the ranking is not strictly insensitive to c, sensitivity was assessed over c ∈ {10⁶, …, 10¹²}: Amihud remains the highest -
+weighted MEREC criterion throughout (0.224–0.750), and the ranking correlates with the baseline above 0.96 within one order of 
+magnitude (10⁸–10¹⁰) and never below 0.75, leaving the qualitative conclusions unaffected. 
+
+2.3. The MEREC Weighting Method 
+The MEREC procedure (Keshavarz-Ghorabaee et al., 2021) derives objective weights in five steps. Let 𝑋𝑋 = [𝑥𝑥𝑖𝑖𝑖𝑖 ] denote the 𝑚𝑚 × 𝑛𝑛 
+decision matrix, where 𝑚𝑚 is the number of alternatives (stocks) and 𝑛𝑛 is the number of criteria. 
+In the first step, since all seven criteria are cost, normalization is (Equation 9): 
+𝑛𝑛𝑖𝑖𝑖𝑖 = 𝑥𝑥𝑖𝑖𝑖𝑖
+max
+𝑘𝑘
+�𝑥𝑥𝑘𝑘𝑖𝑖 � , (9) 
+mapping values to (0,1]. (The analogous benefit-criteria form is min𝑘𝑘 (𝑥𝑥𝑘𝑘𝑖𝑖 )/𝑥𝑥𝑖𝑖𝑖𝑖 .) 
+The second step computes each alternative's overall performance score through a logarithmic aggregation (Equation 10): 
+𝑆𝑆𝑖𝑖 = ln �1 + 1𝑛𝑛 ��ln�𝑛𝑛𝑖𝑖𝑖𝑖 ��
+𝑛𝑛
+𝑖𝑖=1
+� . (10) 
+In the third step, an alternative overall performance score is computed by removing criterion 𝑗𝑗 (Equation 11): 
+𝑆𝑆𝑖𝑖𝑖𝑖′ = ln �1 + 1𝑛𝑛 � |ln(𝑛𝑛𝑖𝑖ℓ)|
+ℓ≠𝑖𝑖
+� , (11) 
+where the summation index ℓ runs over criteria (excluding 𝑗𝑗); the symbol ℓ is used in place of 𝑘𝑘 to avoid notational conflict with 
+the alternatives-index 𝑘𝑘 used in equations (9), (14), and (15). 
+The fourth step quantifies the removal effect of criterion 𝑗𝑗 on the overall ranking is (Equation 12): 
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+140 
+𝐸𝐸𝑖𝑖 = ��𝑆𝑆𝑖𝑖𝑖𝑖′ − 𝑆𝑆𝑖𝑖 �
+𝑚𝑚
+𝑖𝑖=1
+. (12) 
+Finally, the weight of criterion 𝑗𝑗 is computed as the proportion of its removal effect to the total removal effect across all criteria 
+(Equation 13): 
+𝑤𝑤𝑖𝑖 = 𝐸𝐸𝑖𝑖∑ 𝐸𝐸𝑙𝑙𝑛𝑛𝑙𝑙=1 . (13) 
+Criteria whose removal substantially alters the overall scores receive higher weights, on the rationale that such criteria carry more 
+information for distinguishing among alternatives. 
+
+2.4. The AROMAN Ranking Method 
+The AROMAN procedure (Bošković et al., 2023) ranks alternatives in five steps, starting from two normalizations computed in 
+parallel. The min-max version rescales each column onto the unit interval (Equation 14): 
+𝑡𝑡𝑖𝑖𝑖𝑖lin = 𝑥𝑥𝑖𝑖𝑖𝑖 − min𝑘𝑘 �𝑥𝑥𝑘𝑘𝑖𝑖 �max
+𝑘𝑘
+�𝑥𝑥𝑘𝑘𝑖𝑖 � − min𝑘𝑘 �𝑥𝑥𝑘𝑘𝑖𝑖 � . (14) 
+Vector normalization instead divides each entry by the Euclidean norm of its column (Equation 15): 
+𝑡𝑡𝑖𝑖𝑖𝑖vec = 𝑥𝑥𝑖𝑖𝑖𝑖
+�∑ 𝑥𝑥𝑘𝑘𝑖𝑖2𝑚𝑚𝑘𝑘=1
+. (15) 
+In the second step, the two normalized matrices are aggregated using a balance parameter 𝛽𝛽 ∈ [0,1] (set to 𝛽𝛽 = 0.5 in this study, 
+following the original AROMAN specification) (Equation 16): 
+𝑡𝑡𝑖𝑖𝑖𝑖norm = 𝛽𝛽 ⋅ 𝑡𝑡𝑖𝑖𝑖𝑖lin + (1 − 𝛽𝛽) ⋅ 𝑡𝑡𝑖𝑖𝑖𝑖vec2 . (16) 
+The third step applies the criterion weights element-wise (Equation 17): 
+𝑡𝑡̂𝑖𝑖𝑖𝑖norm = 𝑤𝑤𝑖𝑖 ⋅ 𝑡𝑡𝑖𝑖𝑖𝑖norm. (17) 
+In the fourth step, the weighted normalized values are partitioned into cost -criterion and benefit-criterion sums (Equation 18): 
+𝐿𝐿𝑖𝑖 = � 𝑡𝑡̂𝑖𝑖𝑖𝑖norm
+𝑖𝑖: cost
+,  𝐴𝐴𝑖𝑖 = � 𝑡𝑡̂𝑖𝑖𝑖𝑖norm
+𝑖𝑖: benefit
+. (18) 
+In the fifth step, the final preference rating is computed through a power -law aggregation with parameter 𝜆𝜆 ∈ [0,1] (set to 𝜆𝜆 =
+0.5) (Equation 19): 
+𝑄𝑄𝑖𝑖 = 𝐿𝐿𝑖𝑖𝜆𝜆 + 𝐴𝐴𝑖𝑖(1−𝜆𝜆). (19) 
+In this study, all seven criteria are coded as costs, so 𝐴𝐴𝑖𝑖 = 0 identically, and the preference rating reduces to 𝑄𝑄𝑖𝑖 = 𝐿𝐿𝑖𝑖0.5. Under this 
+configuration, lower values of 𝑄𝑄𝑖𝑖 correspond to lower aggregate risk, in direct analogy to the beta ordering. Because 𝑄𝑄𝑖𝑖 = 𝐿𝐿𝑖𝑖𝜆𝜆 is a 
+monotonic transformation of 𝐿𝐿𝑖𝑖 for any 𝜆𝜆 > 0, the resulting ranking is mathematically invariant to the choice of 𝜆𝜆; the empirical 
+sensitivity to the remaining free parameter 𝛽𝛽 is examined in Section 3.6. 
+2.5. Out-of-Sample Validation Design 
+An out-of-sample validation procedure was applied from in- sample (2015–2022) data to test whether it has predictive power for 
+realized risk outcomes in the validation period (June 2023 – April 2026). Two realized risk outcomes, namely the realized maximum 
+drawdown and the realized annualized volatility, were calculated for each stock throughout the validation period. Three 
+complementary tests serve this purpose. A direction-aware Mann–Whitney U test (Mann & Whitney, 1947) compares fourth- and 
+first-quartile outcomes under a one -sided alternative. Next, the Spe arman rank correlation (Spearman, 1904) was computed to 
+link the in-sample ranking to the realized outcome. Finally, the Diebold and Mariano (1995) test, together with the Harvey et al. 
+(1997) correction, was then applied to the ranking-based linear predictions of realized volatility. The same test sequence was also 
+applied to the beta ranking for comparison purposes. For each ranking, the two realized-outcome tests (maximum drawdown and 
+volatility) form one test family, and Mann–Whitney p-values are reported with the Holm (1979) correction. 
+For the fuzzy AROMAN robustness extension (Section 3.6), the stationary block bootstrap of Politis and Romano (1994) is used 
+wherever bootstrap-based dispersion is required, keeping serial dependence intact. Augmented Dickey-Fuller tests reject the unit-
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+141 
+root null for the BIST-100 daily log-return series over 2015–2026 at the one-percent level (ADF 𝑡𝑡 = −14.51, 𝑝𝑝 < 0.001), and the 
+same null is rejected at 𝑝𝑝 < 0.001 for every individual stock, supporting the stationarity assumption of the methods above. 
+2.6. Regime Boundaries: Identification and Statistical Validation 
+Sub-period boundaries are chosen on well-documented Turkish monetary policy events, namely the August 2018 currency crisis 
+(P1→P2; CBRT, 2018) and the June 2023 return to orthodox monetary policy with the 8.5%→50% rate -tightening cycle (P2→P3; 
+CBRT, 2023), and validated by formal structural-break testing. The Bai and Perron (2003) methodology is operationalized with the 
+Pruned Exact Linear Time (PELT) algorithm of Killick et al. (2012) applied to BIST -100 and USD/TRY 30-day realized volatilities and 
+the log USD/TRY level, using two complementary cost functions: a least -squares (L₂) cost detecting mean -level shifts and a radial 
+basis function (RBF) kernel cost detecting broader distributional change. The two cost functions place the USD/TRY level 
+breakpoint at 9 July 2018 (L₂) and 21 May 2018 (RBF), within 23 and 72 days of the hypothesized P1→P2 boundary, respectively; 
+the closest detected break to the P2→P3 boundary is 4 December 2023 (BIST -100 volatility, L₂), 186 days after the policy event. 
+The convergence of two distinct detection criteria on dates close to the policy events indicates that the detected break dates are 
+statistically proximate to, though not exactly coincident with, the policy events; the policy-event boundaries are therefore treated 
+as externally imposed rather than data-derived. 
+3. Empirical Findings 
+3.1. Cross-Sectional Risk Profile 
+Applying the MEREC procedure to the in-sample decision matrix yields the criterion weights reported in Table 2. 
+Table 2. MEREC Weights by Monetary Policy Regime 1 
+ In-Sample (2015–2022) P1 Orthodox (2015–2018) P2 Crisis (2018–2022) P3 Normalization (2023–2026) 
+Beta 0.087 0.105 0.076 0.057 
+Downside Beta 0.063 0.076 0.062 0.058 
+VaR 95% 0.144 0.104 0.124 0.105 
+CVaR 95% 0.092 0.122 0.079 0.169 
+Max Drawdown 0.076 0.085 0.083 0.117 
+Tail Dependence 0.075 0.079 0.068 0.069 
+Amihud (log) 0.463 0.429 0.507 0.426 
+Source: Authors. 
+The results obtained highlight three observations. First, Amihud illiquidity has the highest weight in each period (43–51%). This 
+result is consistent with Acharya and Pedersen's (2005) findings that illiquidity is a determining factor on costs and expect ed 
+returns in asset pricing. Second, the beta weight has monotonically declined throughout the years following the Orthodox period. 
+This result shows that systematic risk dispersion has decreased across periods and beta has lost its discriminatory power. Third, 
+CVaR and Maximum Drawdown weights increase significantly during the normalization period; this shows that as market -wide 
+systematic risk narrows, the discriminatory power of idiosyncratic tail -loss events increases. 
+Applying the in- sample MEREC weights, the AROMAN procedure produces a complete ranking of the 91 stocks. Table 3 reports 
+the ten lowest-risk and ten highest-risk stocks. 
+Table 3. AROMAN Ranking: Lowest- and Highest-Risk Stocks 
+Rank Ticker AROMAN Score Beta Beta Rank Rank Ticker AROMAN Score Beta Beta Rank 
+1 KCAER 0.196 0.343 5 82 BSOKE 0.367 0.782 36 
+2 BIMAS 0.219 0.596 17 83 BRYAT 0.370 0.877 50 
+3 DAPGM 0.234 0.357 7 84 VESTL 0.372 1.083 81 
+4 EUREN 0.242 0.084 1 85 BERA 0.382 0.831 44 
+5 GENIL 0.243 0.453 10 86 KUYAS 0.386 0.777 35 
+6 ENKAI 0.250 0.602 19 87 IEYHO 0.389 0.753 32 
+7 CANTE 0.252 0.325 2 88 RYGYO 0.396 0.889 53 
+8 ENJSA 0.261 0.721 28 89 TTKOM 0.406 1.022 77 
+9 GRSEL 0.264 0.376 8 90 TURSG 0.453 0.891 56 
+10 TCELL 0.264 0.844 46 91 RALYH 0.518 0.343 6 
+Source: Authors. (left block: AROMAN ranks 1–10; right block: ranks 82–91) 
+
+1 Columns P1, P2, and P3 correspond to the orthodox-policy, heterodox/crisis, and post-normalization monetary policy regimes 
+defined in Section 2.6. 
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+142 
+In Table 3, the multi-criteria composite index created by the AROMAN method reweights the cross-section across risk dimensions 
+that beta alone cannot capture. According to AROMAN ranking, the lowest risk companies consist of basic consumer goods, 
+utilities, telecommunications and large industrial companies, while the highest risk companies consist of real estate, construction 
+and second-tier industrial companies. EUREN (β = 0.084), which has the lowest market beta throughout the entire sample period, 
+ranks fourth in the AROMAN ranking. In contrast, RALYH (β = 0.343), which ranks 6th in the beta ranking, ranks last in the AROMAN 
+ranking (AROMAN Rank = 91). Similarly, although TCELL has a mid -upper level market beta within BIST-100 (β = 0.844; Beta Rank 
+= 46), it ranks among the safest ten stocks in the AROMAN ranking (AROMAN Rank = 10) due to high liquidity and sectoral stability. 
+Figure 1. Heatmap of Normalized Risk Criteria 
+
+Source: Authors. S t o c k s s o r t e d b y A R O M A N r i s k r a n k w i t h t h e l o w e s t-risk stocks at the top; color intensity represents the 
+normalized risk score from yellow = low to dark red = high. 
+Figure 1 shows the [0, 1]-normalized cross-sectional risk structure for 7 risk criteria for all 91 BIST-100 stocks from the safest (top) 
+to the riskiest (bottom) according to AROMAN ranking. Some stocks ranked as safe according to AROMAN exhibit high marke t 
+betas, while some stocks ranked as risky exhibit low betas. In contrast, the Beta and Downside Beta columns exhibit a less 
+monotonic pattern. Overall, the transition from yellow at the top to dark red at the bottom is most pronounced in the Amihud 
+column, where the lowest risk decile is uniformly liquid and the highest risk decile is unifor mly illiquid. 
+3.2. Comparison with the Classical Beta Ranking 
+Between the AROMAN and beta rankings, the Spearman rank correlation is +0.285 ( 𝑝𝑝 = 0.006), with a Kendall 𝜏𝜏 of +0.199 (𝑝𝑝 =
+0.005). These statistics indicate positive but moderate correspondence: the squared rank correlation is only 𝜌𝜌2 ≈ 0.08, so a beta-
+based monotone ordering leaves most of the cross-sectional rank-variation in the AROMAN composite unaccounted for, implying 
+that the multi-criteria ranking incorporates information beyond systematic risk alone. Figure 2 visualizes the relationship between 
+the cloud geometry encoding the directional misclassification on which the deviation in the cross -method ranking is based. 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+143 
+Figure 2. Beta Rank versus AROMAN Rank 
+
+Source: Authors. Each point represents a stock. 
+In the lower right corner showing high beta ranking but low AROMAN ranking, there are large -cap holding companies (SAHOL, 
+KCHOL, SISE) and major banks (GARAN, AKBNK, ISCTR, YKBNK, VAKBN, HALKB). We see that extraordinary trading liquidity offsets 
+high market sensitivity in these companies. The upper left corner showing low beta ranking but high AROMAN ranking contains 
+small-cap illiquid issuers (RALYH, KONTR, ISMEN, KUYAS, IEYHO) that view liquidity as the dominant risk dimension rather than 
+market exposure. 
+The largest rank discrepancies follow a systematic pattern documented in Table 4. 
+Table 4. Largest AROMAN–Beta Rank Discrepancies 
+Ticker Beta Beta Rank AROMAN Score AROMAN Rank Rank Difference 
+RALYH 0.343 6 0.518 91 +85 
+SAHOL 1.078 80 0.285 18 −62 
+KCHOL 1.044 78 0.282 17 −61 
+KONTR 0.600 18 0.359 79 +61 
+ISMEN 0.561 15 0.349 72 +57 
+BTCIM 0.658 25 0.360 81 +56 
+IEYHO 0.753 32 0.389 87 +55 
+AKBNK 1.262 90 0.304 37 −53 
+GARAN 1.232 85 0.302 33 −52 
+KUYAS 0.777 35 0.386 86 +51 
+Source: Authors. Negative rank difference indicates that AROMAN considers the stock safer than beta does; positive rank 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+144 
+difference indicates the opposite. 
+When evaluated together with Figure 3, Table 4 fundamentally highlights two systematic patterns. First, large -cap holdings and 
+major commercial banks (i.e. SAHOL, KCHOL, AKBNK, GARAN) exhibit beta rankings in the range of 78–90, while AROMAN rankings 
+are in the range of 17 –37. In the broader commercial banking sample (n = 9), the average beta ranking is 84.4 while the average 
+AROMAN ranking is 44.9. This difference of approximately 40 ranks shows th at beta systematically exaggerates the risk of large 
+financial institutions because it cannot weigh market sensitivity against liquidity. Second, some small and medium -cap issuers 
+(RALYH, KONTR, ISMEN, BTCIM, IEYHO, KUYAS) exhibit high AROMAN rankings despite having relatively low beta rankings. 
+Liquidity-driven risk profiles and high tail -loss exposure that the beta ranking misses emerge. Overall, we can say that classical 
+beta is too pessimistic for large liquid issuers and too optimistic for small il liquid issuers. 
+3.3. Regime Dependence: Monetary Policy and Investor Sentiment 
+Table 5 presents the AROMAN–beta ranking correlation varies significantly across monetary policy regimes. 
+Table 5. AROMAN–Beta Rank Correlation by Sub-Period 
+Sub-Period Time Window Spearman ρ 𝒑𝒑-value Interpretation 
+In-Sample (full) 2015-01 to 2022-12 +0.285 0.006 Moderate positive 
+P1, Orthodox 2015-01 to 2018-07 +0.331 0.004 Moderate positive 
+P2, Heterodox/Crisis 2018-08 to 2022-12 +0.239 0.022 Weak positive 
+P3, Normalization 2023-06 to 2026-04 −0.305 0.002 Negative (inverted) 
+Source: Authors. 
+The correlation results obtained reveal moderately positive and statistically significant results in both the orthodox policy period 
+(ρ = +0.331, p = 0.004) and the heterodox/crisis period (ρ = +0.239, p = 0.022). On the other hand, the negative correlation of P3 
+indicates systematic disagreement regarding relative risk levels between beta and MEREC-AROMAN rankings during the post-2023 
+normalization process (ρ = −0.305, p = 0.002). These findings show that the beta -weight shown in Table 2 decreased during the 
+normalization period. 
+In addition to monetary policy, another dimension of regime dependence is investor sentiment. In this study, risk appetite was 
+used as a proxy variable for investor sentiment. To assess whether the AROMAN ranking is sensitive to investor risk appetite, the 
+RISE series, which is an MKK -based index, was divided into "Risk -On" and "Risk -Off" months throughout the sample period. The 
+obtained time series and regime classification are presented in Figure 3. 
+Figure 3. Monthly RISE Index and Sentiment Regimes 
+
+Source: Authors, based on RISE data derived from https://www.vap.org.tr/reks 
+As can be seen from the Figure 3, the RISE descended into distinct Risk-Off zones during the currency crisis in the summer of 2018 
+and the pandemic shock at the beginning of 2020, however it returned to the Risk -On zone in the intermediate periods. This 
+pattern confirms that the median- split regime classification is based on real temporal variation. MEREC weights are then re -
+estimated separately for each regime, and the results are reported in Table 6. 
+Table 6. MEREC Weights by Sentiment Regime (RISE) 
+ Risk-On (RISE High) Risk-Off (RISE Low) Δ (Off−On) 
+Beta 0.188 0.180 -0.008 
+Downside Beta 0.106 0.158 +0.051 
+VaR 95% 0.121 0.124 +0.003 
+CVaR 95% 0.072 0.075 +0.003 
+Max Drawdown 0.072 0.058 -0.013 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+145 
+ Risk-On (RISE High) Risk-Off (RISE Low) Δ (Off−On) 
+Tail Dependence 0.055 0.060 +0.006 
+Amihud (log) 0.387 0.345 -0.042 
+Source: Authors. Risk-On and Risk-Off months are defined as those above and below the median RISE value, respectively, over the 
+2015–2022 period. 
+The most prominent change is observed in the Downside Beta weight, which increased from 10.61% to 15.75%; this corresponds 
+to an increase of 5.14 percentage points. This result shows that downside sensitivity gains discriminatory power during decli ne 
+periods of stock markets for investors. This aligns with Kahneman and Tversky's (1979) loss aversion mechanism. The Amihud 
+weight declines by 4.2% (from 38.7 to 34.5 percent) in the Risk-Off regime, a pattern that likely reflects the compression of cross-
+sectional liquidity dispersion during sentiment -driven sell -offs. The Spearman correlation between the Risk -On and Risk -Off 
+AROMAN rankings is +0.724 ( 𝑝𝑝 < 0.001), with a squared rank correlation of 𝜌𝜌2 ≈ 0.52, indicating that roughly half of the cross -
+regime rank -variation is captured by a single ranking and the remainder shifts across regimes. At the same time, the Amihud 
+liquidity weight decreases by 4.2 percentage points (from 38.7% to 34.5%). This pattern is consistent with the compression of 
+cross-sectional liquidity dispersion during sentiment-based sell-offs. 
+3.4. Out-of-Sample Predictive Validation 
+Figure 4 presents the out-of-sample validation results for both rankings, detailing the realized outcomes of the high -risk (Q4) and 
+low-risk (Q1) portfolios. It also includes the Mann–Whitney p-values and Spearman rank correlations between the in-sample rank 
+and realized outcome. 
+Figure 4. Out-of-Sample Realized Outcomes of Q4 and Q1 Portfolios: (a) Maximum Drawdown, (b) Volatility 
+
+Source: Authors. 
+To estimate the out -of-sample power of Beta and AROMAN ranking, the highest risk 25 percent (Q4) and lowest risk 25 percent 
+(Q1) portfolios were determined from the rankings created under both methods in the in -sample period (2015- 2022). The 
+maximum drawdown (Panel a) and annualized volatility (Panel b) realized by these portfolios in the out -of-sample period (June 
+2023 – April 2026) were calculated. For each method, red bars reflect the realized risk average of the Q4 portfolio, while green 
+bars reflect the average of the Q1 portfolio. The results clearly reveal the asymmetry between the out -of-sample performances 
+of both methods. In the MEREC-AROMAN ranking, the high-risk portfolio was found to have higher realized maximum drawdown 
+(0.584 versus 0.527) and annualized volatility (0.565 versus 0.522) than the low -risk portfolio. This difference in the volatility 
+dimension is significant at the individual -test level (Mann –Whitney p = 0.033; full -sample Spearman ρ = +0.229, p = 0.029) and 
+remains significant at the 10 percent level after the Holm (1979) correction within the two-test family (adjusted p = 0.065). In the 
+beta ranking, the direction was reversed in both risk indicators. The high- beta-ranked portfolio recorded lower values than the 
+low-beta-ranked portfolio in realized maximum drawdown (0.461 versus 0.609) and volatility (0.457 versus 0.585). The 
+corresponding Spearman correlations are at the levels of −0.331 and −0.419 respectively, and both coefficients are statistica lly 
+significant at the 1 percent significance level. Additionally, when the Diebold –Mariano (1995) test was applied with the Harvey e 
+al. (1997) correction in the formal prediction-accuracy test, it yields DM = +1.791 (p = 0.072, two-sided) and attributes a marginal 
+advantage to Beta in the mean -squared-error plane; this result is MSE -based and carries no directional information. Because the 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+146 
+two tests measure different loss functions, both are reported without further interpretation: the Diebold–Mariano test marginally 
+favors beta in the mean -squared-error plane (p = 0.072), whereas the beta -ranked forecasts correlate negatively with realized 
+volatility (Spearman ρ = −0.419). Consequently, it is observed that the single-factor classical beta ranking predicts both weakly and 
+systematically in the opposite direction during the post -2023 monetary policy normalization period. This documents the 
+advantage that the multi-dimensional composite risk ranking offers in terms of direction. 
+The inversion in the beta ranking mirrors, quite directly, the market structure peculiar to the normalization period. Large banks 
+and holding companies (stocks such as SAHOL, KCHOL, AKBNK, GARAN as identified in Table 4), which constitute a significant 
+portion of high -beta stocks, exhibited a relatively safer profile during this period due to high trading volumes and the positive 
+effect of the interest rate tightening process on bank profitability. Small and medium-sized real estate, construction and secondary 
+industrial companies, which constitute the majority of low-beta stocks, recorded higher levels in realized volatility and drawdown 
+values due to liquidity constraints, tail-risk intensity and sectoral macroeconomic pressures. The beta coefficient could not capture 
+these mechanisms because it only measures market sensitivity; in contrast, the MEREC -AROMAN composite index was able to 
+internalize the same information through the Amihud liquidity and tail -dependence dimensions it contains. 
+3.5. Sectoral Mechanism Analysis 
+The robust pattern of low AROMAN risk for major banks raises the question of whether this effect reflects sector-specific factors 
+or whether it is mediated by the liquidity characteristic. To distinguish between these explanations, an ordinary least -squares 
+(OLS) regression (Equation 20) is estimated: 
+ARRank𝑖𝑖 = 𝛼𝛼 + 𝜃𝜃1BetaRank𝑖𝑖 + 𝜃𝜃2AmihudRank𝑖𝑖 + � 𝛾𝛾𝑘𝑘
+𝐾𝐾−1
+𝑘𝑘=1
+Sec𝑖𝑖𝑘𝑘 + 𝜀𝜀𝑖𝑖, (20) 
+where 𝜃𝜃1 and 𝜃𝜃2 denote the OLS slope coefficients on the Beta-rank and Amihud-rank predictors, respectively; 𝜃𝜃 rather than 𝛽𝛽 is 
+used to avoid notational conflict with the market beta 𝛽𝛽𝑖𝑖 of equation (1) and the AROMAN balance parameter 𝛽𝛽 of equation (16). 
+The sectoral mean ranks are reported in Table 7, and the regression results are reported in Table 8. 
+Table 7. Sectoral Composition and Mean Risk Rankings 
+Sector n % Mean AROMAN Rank Mean Beta Rank Mean Amihud (log) 
+Energy 1 1.1 13.0 48.0 0.19 
+Consumer Defensive 6 6.6 29.8 35.5 1.07 
+Utilities 6 6.6 32.8 43.8 0.74 
+Technology 2 2.2 36.5 21.5 0.50 
+Healthcare 4 4.4 38.0 26.0 1.43 
+Industrials 23 25.3 44.6 41.0 1.57 
+Real Estate 5 5.5 47.6 38.2 1.74 
+Financial Services 13 14.3 49.0 64.9 1.80 
+Consumer Cyclical 11 12.1 51.5 53.4 1.52 
+Communication Services 4 4.4 55.0 44.0 2.00 
+Basic Materials 16 17.6 55.3 48.4 1.80 
+Total 91 100.0 — — — 
+Source: Authors. Sectoral classification from Yahoo Finance. Sectors are sorted by mean AROMAN rank (ascending). 
+Table 7 clearly shows the sectoral divergence between AROMAN and beta rankings. The Financial Services sector has the highest 
+average Beta rank (64.9) while positioning at a lower rank in AROMAN (49.0). The compensation of systematic risk perception b y 
+the high liquidity of large banks may be the rationale for this difference. On the other hand, although Healthcare an d Technology 
+sectors have low Beta ranks (26.0 and 21.5 respectively), they are positioned higher in the AROMAN average. 
+Table 8. OLS Regression of AROMAN Rank with Sector Fixed Effects 
+ Coefficient HC1 Std. Error HC1 𝒕𝒕-statistic HC1 𝒑𝒑-value 
+(Intercept) -17.284 7.165 -2.412 0.016 
+Beta Rank +0.520 0.067 7.790 <0.001 
+Amihud Rank +0.853 0.057 14.986 <0.001 
+Consumer 
+Defensive -7.871 8.129 -0.968 0.333 
+Industrials +1.716 6.102 0.281 0.779 
+Consumer 
+Cyclical -6.053 5.908 -1.025 0.306 
+Utilities -3.655 5.815 -0.629 0.530 
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+147 
+Basic Materials +2.023 5.609 0.361 0.718 
+Real Estate +4.426 8.261 0.536 0.592 
+Healthcare -1.735 7.778 -0.223 0.824 
+Communication +5.699 8.520 0.669 0.504 
+Technology +20.431 15.983 1.278 0.201 
+Energy -2.335 5.159 -0.453 0.651 
+Source: Authors. N = 91, R² = 0.769, adjusted R² = 0.733. Baseline sector: Financial Services. Standard errors are heteroscedasticity-
+consistent (HC1; MacKinnon & White, 1985). 
+Beta Rank (𝑡𝑡 = 7.79, 𝑝𝑝 < 0.001) and Amihud Rank (𝑡𝑡 = 14.99, 𝑝𝑝 < 0.001) are both highly significant under HC1 robust standard 
+errors; the Amihud coefficient (0.853) is approximately 1.6 times larger than the Beta coefficient (0.520). Under HC1 inferen ce, 
+none of the sector dummies are significant at conventional levels — the largest |𝑡𝑡|-statistic among sector dummies is 1.28 for 
+Technology (𝑝𝑝 = 0.201), a tightening relative to the homoscedastic-SE result and one that strengthens, rather than weakens, the 
+inference that sectoral identity contributes no additional explanatory power beyond beta and liquidity. Conditional on beta a nd 
+liquidity, sectoral i dentity contributes no additional explanatory power. Figure 5 shows the AROMAN -rank distribution across 
+sectors. 
+Figure 5. Distribution of AROMAN Ranks Across Sectors 
+
+Source: Authors. 
+Intra-sector rank distributions exhibit wider heterogeneity than the inter-sector average difference. Particularly, interquartile 
+range is high in Industrials and Basic Materials, narrow in Healthcare and Technology. This confirms that the favorable AROMAN 
+ranking of banks is driven by high liquidity rather than implicit sectoral preference. 
+3.6. Robustness Checks 
+Three categories of robustness checks are conducted, considering (i) measurement uncertainty in the underlying risk metrics; (ii) 
+alternative MCDM procedures; and (iii) parameter sensitivity within the AROMAN ranking step. 
+To address measurement uncertainty in the underlying risk metrics, a trapezoidal fuzzy extension of the AROMAN procedure is 
+implemented. Each crisp risk -metric value 𝑥𝑥𝑖𝑖𝑖𝑖 is replaced (Equation 21) by a four -point trapezoidal fuzzy number 𝑥𝑥�𝑖𝑖𝑖𝑖 =
+(𝑎𝑎𝑖𝑖𝑖𝑖, 𝑏𝑏𝑖𝑖𝑖𝑖 , 𝑐𝑐𝑖𝑖𝑖𝑖, 𝑑𝑑𝑖𝑖𝑖𝑖 ) with relative dispersion 𝛿𝛿: 
+𝑎𝑎𝑖𝑖𝑖𝑖 = 𝑥𝑥𝑖𝑖𝑖𝑖 (1 − 2𝛿𝛿), 𝑏𝑏𝑖𝑖𝑖𝑖 = 𝑥𝑥𝑖𝑖𝑖𝑖 (1 − 𝛿𝛿), 𝑐𝑐𝑖𝑖𝑖𝑖 = 𝑥𝑥𝑖𝑖𝑖𝑖 (1 + 𝛿𝛿), 𝑑𝑑𝑖𝑖𝑖𝑖 = 𝑥𝑥𝑖𝑖𝑖𝑖 (1 + 2𝛿𝛿). (21) 
+The AROMAN procedure is applied in fuzzy arithmetic and the final fuzzy preference rating (Equation 22) is defuzzified using the 
+Yager (1981) ordering function for trapezoidal fuzzy numbers: 
+𝑄𝑄𝑖𝑖crisp = 𝑎𝑎𝑖𝑖 + 2𝑏𝑏𝑖𝑖 + 2𝑐𝑐𝑖𝑖 + 𝑑𝑑𝑖𝑖6 . (22) 
+Table 9 reports the rank-correlation between the crisp and fuzzy AROMAN rankings across alternative dispersion levels. 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+148 
+Table 9. AROMAN Robustness to Fuzzy Uncertainty 
+Dispersion δ Spearman ρ (Crisp vs Fuzzy) Mean Fuzzy Width Maximum Rank Shift 
+±5% 0.9995 0.020 2 positions 
+±10% 0.9989 0.039 4 positions 
+±15% 0.9977 0.056 4 positions 
+±20% 0.9972 0.073 4 positions 
+±25% 0.9964 0.089 4 positions 
+Source: Authors. Mean Fuzzy Width is the average width of the fuzzy AROMAN score interval (d − a) across the 91 stocks at the 
+indicated dispersion level. Maximum Rank Shift is the largest absolute change in any single stock’s position relative to the crisp 
+baseline ranking. 
+At all dispersion levels from ±5% to ±25%, the fuzzy ranking exhibits Spearman correlation above 0.996 with the crisp ranking. 
+Moreover, no rank shift greater than 4 positions is observed in any stock. This proves that the ranking is resistant to measurement 
+noise and parameter uncertainty. Figure 6 visualizes the fuzzy uncertainty intervals at ±10% relative dispersion. 
+Figure 6. Fuzzy AROMAN Uncertainty Intervals (±10% Dispersion) 
+
+Source: Authors. 
+The interval widths under ±10% dispersion shown in Figure 6 (average 0.039) correspond to approximately 12% of the total 
+AROMAN score spread (~0.32). Neighboring intervals barely overlap, so large rank shifts would be surprising, and none occur: 
+even at ±25 percent relative dispersion the crisp and fuzzy rankings correlate above 0.996, and no stock moves more than four 
+positions. On this evidence the crisp AROMAN ranking is robust to measurement uncertainty. 
+To verify that the empirical findings are not artifacts of the specific MCDM methods chosen, three alternative procedures are 
+implemented and the resulting rank correlations are reported in Table 10. 
+Table 10. Robustness to Alternative MCDM Methods 
+Comparison Spearman ρ Kendall τ 
+MEREC weights vs LOPCOW weights +0.857 +0.714 
+MEREC-AROMAN vs MEREC-MARCOS ranking +0.784 +0.612 
+
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+149 
+Comparison Spearman ρ Kendall τ 
+MEREC-AROMAN vs MEREC-RAFSI ranking +0.871 +0.715 
+MEREC-AROMAN vs LOPCOW-AROMAN ranking +0.877 +0.741 
+MEREC-AROMAN vs Entropy-AROMAN ranking +0.931 +0.805 
+MEREC-AROMAN vs CRITIC-AROMAN ranking +0.749 +0.579 
+Source: Authors. The LOPCOW method is from Ecer and Pamucar (2022); MARCOS from Stević et al. (2020); RAFSI from Žižović et 
+al. (2020). Entropy weighting follows Shannon (1948); CRITIC follows Diakoulaki et al. (1995). 
+Five of the six comparisons exceed 0.78, and even under the correlation-adjusted CRITIC weighting the ranking correlation is +0.75. 
+Entropy assigns Amihud an even higher weight than MEREC (0.665) while CRITIC spreads weights almost evenly (Amihud 0.134), 
+yet all rankings correlate strongly with the baseline, indicating that the qualitative conclusions of the analysis are not con tingent 
+on the specific MCDM methods chosen. The MEREC and LOPCOW objective weighting methods produce highly congruent weights, 
+and the AROMAN, MARCOS, and RAFSI ranking methods produce mutually consistent rankings when fed the same MEREC weights. 
+The AROMAN procedure contains two free parameters : β in equation (16) and λ in equation (19), both set to 0.5 following the 
+original AROMAN paper. As noted in Section 2.4, 𝜆𝜆 is mathematically inert under all-cost coding. The genuine sensitivity question 
+concerns β; the corresponding sensitivity results are reported in Table 11. 
+4. Discussion 
+Our study revealed the multi-dimensional risk profile of BIST -100 stocks through the MEREC -AROMAN MCDM framework, and 
+compared it with the classical CAPM beta model. First, the dominance of Amihud illiquidity in MEREC weighting confirms the 
+central role of liquidity risk in BIST-100. This finding is consistent with the liquidity pricing literature of Acharya and Pedersen 
+(2005) and Brunnermeier and Pedersen (2009) and with the BIST-specific cross-sectional liquidity premium documented by Atilgan 
+et al. (2016) for the 1999–2012 period. Therefore, risk metrics not enhanced with liquidity cannot adequately explain risk profiling. 
+Second, when (i) the regime dependence of MEREC weights (see Table 2) and (ii) the direction change of AROMAN-beta correlation 
+(see Table 5) are evaluated together, single -factor beta is not stationary across monetary policy regimes. Beta suffers significant 
+information-content losses during structural -break periods. However, the negative P3 correlation (ρ = −0.305) reveals that the 
+multi-dimensional composite index maintains its discriminatory power. This result is consistent with broader evidence on 
+conditional and time -varying beta in asset pricing (Lewellen & Nagel, 2006). Third, the out -of-sample prediction superiority of 
+AROMAN ranking for realized volatility (Mann -Whitney p = 0.033; Holm -adjusted p = 0.065) represents a methodological 
+contribution to the MCDM method. Unlike most MCDM -finance studies, the ranking has been subjected to such validation. In 
+contrast, the classical beta ranking exhibits a strong inverse relationship during the same validation period. Fourth, the behavioral 
+regime analysis using the RISE shows that downside conditional risk measures become more discriminatory during pessimistic 
+regimes. This finding shows parallelism with Kahneman and Tversky (1979) and Baker and Wurgler (2006). The 5.1 percentage 
+point increase in Downside Beta weight during the Risk Aversion regime is consistent with the cross-sectional pricing of downside 
+conditional risk documented by Ang et al. (2006). The sectoral control analysis addresses the potential concern that the favorable 
+AROMAN ranking of banks may reflect sector -specific factors. OLS results show that sectoral identity does not contribute 
+additional explanatory power beyond beta and liquidity, and that the Amihud coefficient is approximately 1.6 times larger than 
+the beta coefficient. The multi-dimensional ranking functions through observable liquidity rather than sectoral preferences. 
+Conclusion 
+In this study, a multi -dimensional risk profile was created for stocks in the Borsa Istanbul 100 index by combining seven 
+theoretically grounded risk criteria through MEREC and AROMAN multi -criteria decision making methods. The MEREC -AROMAN 
+composite ranking exhib its a moderate but theoretically significant deviation when compared with the classical CAPM beta 
+ranking. These deviations are particularly concentrated between large-cap holdings and major banks (appearing safer in the multi-
+dimensional ranking) and small-cap issuers (appearing riskier in the multi -dimensional ranking). We reveal that Amihud liquidity 
+has the largest MEREC weight in the cross-sectional distribution of BIST-100. 
+Sub-period analysis reveals that the AROMAN-beta relationship is regime-dependent. This relationship shows positive correlation 
+in both heterodox and orthodox policy periods until 2023, and negative correlation in the post -2023 normalization period. This 
+direction change is consistent with high -liquid stocks such as major banks and holding companies becoming safer during the 
+interest rate tightening period, while low -beta small -scale stocks become riskier. On the other hand, sectoral fixed effect 
+regressions, RISE-based behavioral regime analysis, structural break tests and fuzzy AROMAN extension confirm robustness. These 
+controls were subjected to robustness checks along four axes and remained stable: (i) sectoral fixed effect regression reveal ed 
+that sectoral identity does not provide additional explanatory power beyond beta and liquidity; (ii) RISE-based behavioral regime 
+analysis showed that downside risk measures gain discriminatory power in pessimist regimes; (iii) structural break tests supported 
+policy-event based regime boundaries on a data -driven basis; (iv) fuzzy AROMAN extension, alternative MCDM methods 
+KOCATEPEİİBFD 28(Special Issue) 
+ Öztop (2026). 
+150 
+(LOPCOW, MARCOS, RAFSI) and sensitivity tests to the normalization -balance parameter confirmed that the ranking remained 
+independent of measurement uncertainty and method preference. 
+The contribution of this study is threefold. Methodologically, it represents, to our knowledge, the first application of the MEREC -
+AROMAN combination to BIST -100 and integrates the out -of-sample predictive validation step that is missing in most of the 
+previous MCDM-finance literature. Empirically, it documents the dominant role of liquidity risk in the cross -sectional distribution 
+of the Turkish stock market and the regime dependence of the beta -multidimensional risk relationship. Practically, it provides 
+evidence that liquidity -enhanced multi-dimensional risk profiling can outperform single -factor beta in regime -change 
+environments, leading to potential applications in portfolio construction and systemic risk monitoring. 
+Future research can extend the results of the study by including different markets. On the other hand, the integration of hig h-
+frequency intraday data will enable further improvement of liquidity and tail risk measurement. Finally, the integration of multiple 
+investor type-specific RISE variants (domestic, foreign, qualified, fund) will enable a richer behavioral regime analysis . 
+This research article has been licensed with Creative Commons Attribution - Non-Commercial 4.0 International 
+License. Bu araştırma makalesi, Creative Commons Atıf - Gayri Ticari 4.0 Uluslararası Lisansı ile lisanslanmıştır. 
+Author Contributions 
+The author has not declared any other contributors. 
+Acknowledgments 
+The author(s) did not provide acknowledgment. 
+Funding and Support 
+The author(s) did not report any funding or support information. 
+Conflict of Interests 
+The author(s) did not report any conflict of interest. 
+Ethics Statement 
+The author(s) did not report ethical committee approval as the research content does not require. 
+References 
+Acharya, V. V., & Pedersen, L. H. (2005). Asset pricing with liquidity risk. Journal of Financial Economics , 77(2), 375– 410. 
+https://doi.org/10.1016/j.jfineco.2004.06.007 
+Amihud, Y. (2002). Illiquidity and stock returns: Cross -section and time -series effects. Journal of Financial Markets , 5(1), 31–56. 
+https://doi.org/10.1016/S1386-4181(01)00024-6 
+Ang, A., Chen, J., & Xing, Y. (2006). Downside Risk. Review of Financial Studies , 19(4), 1191– 1239. 
+https://doi.org/10.1093/rfs/hhj035 
+Atilgan, Y., Bali, T. G., Demirtas, K. O., & Gunaydin, A. D. (2020). Left-tail momentum: Underreaction to bad news, costly arbitrage 
+and equity returns. Journal of Financial Economics, 135(3), 725–753. https://doi.org/10.1016/j.jfineco.2019.07.006 
+Atilgan, Y., Demirtas, K. O., & Gunaydin, A. D. (2016). Liquidity and equity returns in Borsa Istanbul. Applied Economics, 48(52), 
+5075–5092. https://doi.org/10.1080/00036846.2016.1170935 
+Bai, J., & Perron, P. (2003). Computation and analysis of multiple structural change models. Journal of Applied Econometrics, 18(1), 
+1–22. https://doi.org/10.1002/jae.659 
+Baker, M., & Wurgler, J. (2006). Investor Sentiment and the Cross -Se

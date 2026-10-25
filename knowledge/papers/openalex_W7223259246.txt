@@ -1,0 +1,949 @@
+Journal of Applied Finance & Banking, Vol. 16, No. 6, 2026, 75-124 
+ISSN: 1792-6580 (print version), 1792-6599(online) 
+https://doi.org/10.47260/jafb/1665 
+Scientific Press International Limited 
+
+Feasibility Bounds for Option-Hedged BNPL 
+Lending with Volatile Collateral 
+
+Gleb Skvortsov1 
+
+Abstract 
+
+This paper derives and empirically evaluates algebraic feasibility bounds for option-
+hedged buy -now-pay-later (BNPL) lending secured by volatile collateral. In a 
+merchant-fee-funded lending structure, the bounds identify loan -to-value ratios 
+consistent wit h option strikes, observed put premiums, loan maturities, and a 
+specified residual-loss budget. The framework encompasses over-protective, exact, 
+and under -protective hedges and is applied to historical Deribit ETH put 
+transactions and ETH spot prices from January 2021 to August 2025. 
+Feasibility increases with merchant fees and is generally stronger at shorter 
+maturities. Although many individual option observations fail the zero-loss screen, 
+the option chain frequently contains at least one feasible quote on an observed date. 
+Allowing bounded residual losses expands feasibility only modestly. 
+An execution-price sensitivity analysis quantifies how increases in protection costs 
+narrow feasible lending intervals and eliminate feasibility for some initially 
+admissible options, with differences across maturities. Because historical closing 
+prices re present last recorded transactions rather than verified executable ask 
+quotations, these results assess historical price -based feasibility, not hedge 
+executability. 
+The framework provides an origination-time screening tool rather than a complete 
+model of commercial lending profitability. 
+
+JEL classification numbers: G13, G23. 
+Keywords: Collateralized Lending, BNPL, Option hedging, Loan -to-value, 
+Feasibility bounds, Volatile collateral. 
+
+1 Independent Researcher, Miami, FL, USA. 
+
+Article Info: Received: October 4, 2026. Revised: October 20, 2026. 
+Published online: October 23, 2026. 
+
+76 Skvortsov 
+1. Introduction 
+Lending can broadly be divided into unsecured and secured (collateralized) credit. 
+In both settings, expected credit losses are commonly organized through the 
+Probability of Default, Loss Given Default, and Exposure at Default framework 
+(Basel Committee on Banking Supervision, 2006): 
+Expected Loss = PD × LGD × EAD 
+Here, 𝑃𝐷 denotes the probability that the borrower defaults, 𝐿𝐺𝐷 denotes the 
+share of exposure that is not recovered conditional on default, and 𝐸𝐴𝐷 denotes 
+the exposure outstanding at the time of default. This framework is not specific to 
+unsecured lending. Rather, what changes across lending structures is which 
+component is most important and how it is modeled. 
+In unsecured lending, the lender has no direct claim on a specific pledged asset. As 
+a result, credit risk modeling is primarily driven by the borrower’s ability and 
+willingness to repay (Consumer Financial Protection Bureau, 2022b; Office of the 
+Comptroller of the Currency, 2001). The main modeling emphasis is often placed 
+on borrower -level default risk, including income, leverage, repayment history, 
+financial condition, and other variables that affect 𝑃𝐷. 
+Secured lending changes the focus of the credit problem. When a borrower pledges 
+collateral, the lender’s recovery depends not only on the borrower’s 
+creditworthiness, but also on the presence, quality, and realizable value of the 
+pledged asset (Schuermann, 2004; Grunert and Weber, 2009). The liquidation value 
+of collateral may also depend on market liquidity, liquidation conditions, and the 
+relationship between borrower default risk and collateral -value risk (Shleifer and 
+Vishny, 1992; Barbiero et al., 202 3). Legal enforceability also matters, since 
+stronger creditor rights and enforcement institutions can increase expected recovery 
+rates on collateral (Degryse et al., 2018). In this setting, borrower default remains 
+relevant, but the lender’s loss given de fault becomes closely linked to collateral 
+value and asset-price dynamics. The central question is therefore not only whether 
+the borrower defaults, but whether the pledged asset can provide sufficient 
+protection if default occurs. 
+This distinction is especially important for crypto -collateralized lending. Major 
+crypto assets are globally traded, continuously priced, and often liquid, although 
+liquidity varies substantially across assets and market conditions (Wei, 2018). At 
+the same time, they are highly volatile and exhibit heavy-tailed return distributions, 
+meaning that extreme price moves occur more often than they would under a thin -
+tailed benchmark such as a normal distribution (Katsiampa, 2017; Borri, 2019). This 
+makes crypto a particularly demanding collateral class for downside -protection 
+analysis. Crypto -collateralized lending may also be implemented through 
+programmable mechanisms such as smart contracts, where collateral requirements, 
+repayment rules, and liquidation trigge rs can be encoded directly into the lending 
+arrangement (Chiu et al., 2023; Cong and He, 2019). Such automation can reduce 
+operational frictions and make the mechanism more transparent, but it does not 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 77 
+remove market risk: even if contractual rules are automated, the value of the pledged 
+collateral can still fall sharply. A lender can reduce this risk by requiring a low loan-
+to-value ratio, but this limits the borrower’s credit capacity. Alternatively, the lender 
+can allow a higher LTV and rely on liquidation rules, but liquidation may be costly 
+or unreliable during sharp price declines, market gaps, liquidity shocks, or 
+operational delays (Qin et al., 2021; Chiu et al., 2023). In these cases, 
+overcollateralization and automation alone may not fully eliminate lender risk. If an 
+option-hedged feasibility framework can be informative in this setting, where 
+collateral returns are volatile and tail risk is material, the same logic may also be 
+applicable to ligh ter-tailed collateral assets, provided that sufficiently liquid 
+downside hedges are available. 
+The lending structure considered in this paper is motivated by a BNPL -style 
+collateralized transaction. In standard BNPL arrangements, consumers obtain point-
+of-sale financing and repay the purchase amount through short-term, often interest-
+free installmen ts, while merchants pay fees to BNPL platforms in exchange for 
+supporting the transaction and shifting credit risk (Consumer Financial Protection 
+Bureau, 2022a; Cornelli et al., 2023; Di Maggio et al., 2022). In the collateralized 
+version considered here, a buyer obtains financing at the point of purchase, the 
+lender or platform pays the merchant at origination, and the merchant pays a fee 
+proportional to the financed amount. The borrower repays the financed amount at 
+maturity and does not pay explicit inte rest. To secure the loan, the borrower posts 
+collateral that can be used for recovery if repayment does not occur. This setup 
+differs from a standard interest -bearing secured loan because the lender’s main 
+deterministic revenue is earned upfront through th e merchant fee, while the main 
+uncertainty comes from the future value of the pledged collateral. As a result, the 
+feasibility of the product depends on whether this fee revenue can support the cost 
+of downside protection. 
+The idea of hedging collateral exposure with options is not new. In traditional 
+finance, derivative instruments are commonly used to manage downside risk, and 
+option-based portfolio insurance has long been studied as a way to create downside 
+protection (Rubinstein, 1985; Lien and Tse, 2001). Moreover, credit payoffs can 
+naturally be related to option -like exposures: the structural credit -risk literature 
+shows that corporate liabilities can be represented using option-pricing logic (Black 
+and Scholes, 1973; Merton, 1974). The focus of this paper is not to introduce option 
+hedging as a new risk-management idea, but to study how this logic behaves in the 
+fee-funded lending structure described above. In this setting, the hedge is not only 
+a financial instrument, but also a product-design variable: its cost must be supported 
+by merchant fee revenue, while its strike and maturity interact with the loan’s LTV, 
+collateral threshold, and acceptable downside exposure. 
+This paper studies this formulation by analyzing the use of listed put options as ex-
+ante downside protection for collateralized loans, with crypto collateral serving as 
+the motivating and empirical setting. Instead of relying only on liquidation after 
+collateral value deteriorates, the lender can purchase a hedge that creates a floor on 
+the recoverable collateral value. The key question is not whether option hedging can 
+78 Skvortsov 
+reduce downside risk in principle, but whether the cost of such protection is 
+compatible with the economics of the lending product and can be evaluated using 
+market-observable option prices. The paper’s novelty is therefore twofold: it studies 
+option hedgi ng in a BNPL -style collateralized lending structure, and it derives 
+algebraic feasibility bounds that allow observed option -market data to be screened 
+for lending decisions based on observed premiums. 
+Put options are a natural hedging instrument in this setting because the lender’s 
+unhedged exposure resembles a shortfall payoff. If the collateral value remains 
+above the loan principal, the lender is protected by the collateral. If the collateral 
+value f alls below the loan principal, the lender faces a loss. A put option can 
+partially or fully offset this shortfall by increasing in value when the collateral price 
+declines. 
+The central research question is: when is an option -hedged BNPL -style 
+collateralized loan economically feasible? More specifically, given a loan amount, 
+collateral value, LTV, maturity, fee revenue, and observed put option price, what 
+conditions guarantee bounded lender loss or non-negative economics? 
+This paper makes three main contributions. First, it formalizes the payoff of a 
+BNPL-style collateralized loan in which the lender earns fee revenue upfront, 
+receives no borrower interest, and relies on pledged collateral for repayment 
+protection. Second, it derives market -observable algebraic feasibility bounds that 
+link the LTV-implied collateral threshold, option strike, option premium, maturity, 
+fee revenue, and bounded -loss tolerance. These bounds combine over -protective, 
+exact, and under-protective hedge structures into a single feasibility screen that can 
+be applied directly to observed option quotes. Third, it applies the framework to 
+historical ETH option-market data, showing that feasibility is strongly increasing in 
+merchant fee revenue and decrea sing in loan maturity. The empirical results also 
+show that day-level feasibility is substantially stronger than quote-level feasibility, 
+meaning that the option chain often contains at least one option feasible at its 
+observed premium even when many individual quotes are infeasible. 
+The remainder of the paper is organized as follows. Section 2 reviews related 
+approaches to collateral risk mitigation, including static collateral buffers, dynamic 
+collateral management, and derivative hedging. Section 3 defines the BNPL -style 
+loan struct ure, collateral variables, fee revenue, and maturity setup. Section 4 
+formalizes the lender’s payoff in the unhedged and option -hedged cases, showing 
+how collateral shortfall risk can be represented through a put-like exposure. Section 
+5 derives the algebr aic feasibility bounds for zero -loss and bounded -loss lending 
+structures, including over -protective, exact, and under -protective hedge regimes, 
+and examines how execution pricing affects these bounds. Section 6 applies these 
+bounds to historical ETH option -market data and evaluates feasibility across 
+merchant fees, target maturities, time periods, best available structures, bounded -
+loss assumptions, and execution -price sensitivity. Section 7 discusses the 
+interpretation, limitations, and possible extensions of the framework. Section 8 
+concludes. 
+
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 79 
+2. Related Approaches to Collateral Risk Mitigation 
+Before developing the formal loan payoff model, it is useful to position the proposed 
+framework relative to common approaches for mitigating collateral downside risk. 
+The goal of this section is not to provide a complete survey of credit -risk 
+management, b ut to distinguish the origination -time option -hedging approach 
+studied in this paper from three related mechanisms: static collateral buffers, 
+dynamic collateral management, and derivative hedging. 
+
+2.1 Static Collateral Buffers: Overcollateralization, Haircuts, and LTV 
+Limits 
+A common way to manage collateral risk is to restrict the amount that can be 
+borrowed against a pledged asset. This can be implemented through 
+overcollateralization, collateral haircuts, conservative loan -to-value limits, or 
+eligibility rules on the types of collateral that can be accepted. These mechanisms 
+are expressed differently across markets, but they perform the same economic 
+function: they limit leverage by creating an initial cushion between the current value 
+of collateral and the amount owed to th e lender (Geanakoplos, 2010; Gorton and 
+Metrick, 2012). 
+Overcollateralization requires the borrower to post collateral whose market value 
+exceeds the loan principal. Haircuts achieve the same effect by recognizing only 
+part of the collateral’s market value when determining borrowing capacity. For 
+example, if an asset is worth 100 dollars but receives a 30 percent haircut, the lender 
+treats it as supporting only 70 dollars of financing. LTV limits express the same 
+constraint from the opposite direction: they cap the loan amount as a percentage of 
+collateral value. In each case, the lender is not eliminating collateral-price risk, but 
+reducing the probability that ordinary collateral-price movements create a shortfall 
+(Gorton and Metrick, 2012; Baklanova et al., 2016). 
+These static buffers are attractive because they are simple, transparent, and easy to 
+apply at origination. They do not require the lender to trade derivatives, estimate a 
+hedge cost, or manage a separate protection position. They also provide protection 
+before any dynamic intervention is needed: if collateral prices fall moderately, the 
+initial buffer can absorb the decline without forcing the lender to liquidate 
+immediately or rely on additional borrower action. 
+The limitation is that the required buffer depends on the riskiness and liquidity of 
+the collateral asset. For relatively stable assets, a moderate haircut may provide a 
+meaningful cushion. For highly volatile or heavy -tailed assets, however, the 
+required overcollateralization can become severe. A low LTV reduces lender 
+exposure, but it also reduces borrower capital efficiency: the borrower must lock a 
+large amount of collateral to obtain a relatively small loan. This trade -off is 
+especially visible in cryp to-collateralized lending, where high collateral volatility 
+often leads to conservative borrowing capacity and large haircuts (Chiu et al., 2023). 
+Static buffers also do not fully resolve downside exposure in stressed states. 
+Collateral values may fall sharply exactly when market liquidity deteriorates, 
+80 Skvortsov 
+funding conditions tighten, or many lenders attempt to reduce exposure at the same 
+time. In such environments, the realizable value of collateral may be lower than its 
+pre-stress market value, and the initial haircut may be insufficient to prevent losses 
+(Brunnermeier and Pedersen, 2009; Gorton and Metrick, 2012). Thus, 
+overcollateralization and haircuts reduce collateral risk by limiting the initial loan 
+size, but they do not transform the downside exposure itself. 
+This observation motivates the framework developed in this paper. Instead of 
+relying only on a larger static collateral buffer, the lender can ask whether the 
+remaining downside exposure can be explicitly hedged, and whether the cost of that 
+hedge can be supported by the economics of the loan. The issue is therefore not only 
+how conservative the initial LTV should be, but whether observed market prices for 
+downside protection imply an economically feasible range of LTVs. 
+
+2.2 Dynamic Collateral Management: Margin Calls, Top -Ups, and 
+Liquidation 
+A second way to manage collateral risk is to monitor the value of pledged collateral 
+after origination and intervene when the collateral buffer becomes too small. Instead 
+of relying only on the initial LTV, the lender marks the collateral to market over the 
+life of the loan. If the collateral value declines and the loan becomes too close to 
+being undercollateralized, the borrower may be required to post additional collateral, 
+repay part of the loan, or face liquidation of the pledged asset. This type of dynamic 
+margining is a standard risk -management mechanism in collateralized financial 
+markets, where margin requirements are used to protect against changing market 
+values and counterparty exposures (Basel Committee on Banking Supervision et al., 
+2022). 
+This approach is common in settings where collateral values can be observed 
+frequently and where the borrower is expected to actively manage the position. 
+Margin calls and collateral top-ups allow the lender to restore protection before the 
+collateral value falls below the loan amount. Liquidation triggers provide a further 
+safeguard: if the borrower does not add collateral or reduce exposure, the lender can 
+sell the pledged asset and recover value before losses become too large. In this sense, 
+dynamic coll ateral management tries to preserve the collateral buffer over time 
+rather than relying only on the buffer set at origination. 
+The advantage of this approach is that it adapts to market conditions. A loan that is 
+safe at origination may become risky after a decline in collateral value, and dynamic 
+monitoring allows the lender to respond to that deterioration. Compared with a 
+purely static haircut or LTV rule, margining and liquidation can support higher 
+initial borrowing capacity because the lender does not need to make the entire risk-
+control decision at time zero. Instead, protection is maintained through ongoing 
+adjustment. 
+However, dynamic collateral management is still reactive. The lender acts after 
+collateral value has already moved against the position. Its effectiveness therefore 
+depends on whether the borrower can provide additional collateral quickly, whether 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 81 
+the liquidation mechanism works reliably, and whether the pledged asset can be 
+sold at a price close to its observed market value. In calm and liquid markets, these 
+assumptions may be reasonable. In stressed markets, however, collateral prices can 
+move discontinuously, liquidity can deteriorate, and many lenders or protocols may 
+attempt to liquidate similar assets at the same time. Under such conditions, margin 
+requirements and liquidation rules can interact with funding liquidity and market 
+liquidity, whil e realized liquidation values may fall below pre -stress valuations 
+(Brunnermeier and Pedersen, 2009; Shleifer and Vishny, 1992). 
+These limitations are especially relevant for crypto -collateralized lending. DeFi 
+lending protocols often automate collateral monitoring and liquidation through 
+smart contracts, but automation does not eliminate market risk or liquidation 
+frictions. Empirical studies of DeFi liquidations show that liquidation mechanisms 
+can incentivize liquidators and maintain protocol solvency, but they may also lead 
+to discounted collateral sales, borrower losses, and instability during sharp market 
+moves (Qin et al., 202 1). More recent theoretical work also highlights that the 
+rigidity of smart-contract lending rules and the absence of liquidity backstops can 
+contribute to fragility in DeFi lending markets (Chiu et al., 2023). 
+This limitation is also relevant for the lending structure considered in this paper. In 
+a professional margin account, repeated margin calls and collateral top-ups are part 
+of the expected relationship between the borrower and the lender. In a BNPL -style 
+point-of-sale transaction, the borrower has already completed the purchase, and the 
+product is intended to be simple, short -term, and consumer -facing. Requiring the 
+borrower to actively monitor collateral ratios and repeatedly add crypto collateral 
+may be inconsistent with that product design. The lender may still define liquidation 
+rules, but the practical objective is not to create an actively margined trading 
+account; it is to determine whether the loan can be originated with acceptable 
+downside protection. 
+For this reason, the framework in this paper treats liquidation -based protection as 
+useful but incomplete. The question is not whether dynamic collateral management 
+can reduce risk in principle. Rather, the question is whether the lender can evaluate, 
+at origination, a structure in which downside protection is already purchased and its 
+cost is known. This shifts the focus from reacting to collateral deterioration after it 
+occurs to screening whether a loan can be economically originated under a 
+predefined loss constraint. 
+
+2.3 Derivative Hedging: Forwards, Futures, Swaps, and Options 
+A third approach is to hedge collateral exposure using derivatives. Instead of relying 
+only on collateral buffers or liquidation rules, the lender can enter into a financial 
+contract whose value moves against the collateral risk. If the collateral asset declines 
+in value, the derivative hedge is intended to generate gains that offset part of the 
+lender’s loss on the loan. This approach is most natural when the collateral asset is 
+sufficiently liquid and has tradable instruments that can be used for risk tra nsfer. 
+Standard derivative instruments used for this purpose include forwards, futures, 
+82 Skvortsov 
+swaps, and options (Hull, 2022). 
+Different derivatives hedge different types of exposure. Forwards and futures are 
+natural instruments when the lender wants to reduce approximately linear exposure 
+to the collateral price. If the lender is exposed to a decline in the collateral asset, a 
+short futures or forward position can gain value when the asset price falls. Swaps 
+can serve a similar purpose when the lender wants to transfer broader exposure to 
+an asset return, funding rate, or index. These instruments are useful when the risk 
+being hedged is close to linear: every dollar move in the collateral price creates a 
+roughly proportional change in the lender’s exposure. 
+The payoff of a collateralized loan, however, is not fully linear. If the collateral 
+value remains above the loan repayment amount, the lender is already protected: 
+additional upside in the collateral does not increase the lender’s contractual payoff. 
+The economically relevant loss begins only when collateral value falls below the 
+repayment threshold. In other words, the lender is not equally exposed to all 
+collateral-price movements. The exposure is concentrated in downside states where 
+the collateral becomes insufficient to cover the loan. This focus on adverse lower -
+tail outcomes is consistent with the broader risk -management view that hedging is 
+often most valuable when it protects against costly downside states rather than 
+merely reducing symmetric return variability (Stulz, 1996). 
+This nonlinear exposure is especially important in the BNPL -style collateralized 
+structure considered in this paper. As described formally in Section 3, Loan 
+Structure and Risk Setup, the lender pays the merchant at origination, earns fee 
+revenue upfront, receives no explicit interest from the borrower, and relies on 
+pledged collateral for repayment protection. Therefore, the lender’s upside is 
+limited by the fee revenue, while the downside is driven by collateral shortfall. This 
+payoff shape makes a put option more directly aligned with the loan-level risk than 
+a linear hedge. The connection between credit payoffs and option-like exposures is 
+also standard in structural credit-risk models, where debt and default-related claims 
+can be represented using optio n-pricing logic (Black and Scholes, 1973; Merton, 
+1974). 
+A put option generates value when the collateral price falls below a chosen strike. 
+Therefore, it can be aligned with the shortfall region of the loan payoff. If the option 
+strike is chosen near the collateral threshold, the put can offset the lender’s shortfall 
+when the collateral value becomes insufficient. If the strike is lower, the hedge 
+becomes cheaper but leaves some residual downside exposure. If the strike is higher, 
+the hedge provides stronger protection but requires a larger premium. This is closely 
+related to the logic of option-based portfolio insurance, where put-like protection is 
+used to create a downside floor (Rubinstein, 1985). It is also consistent with the 
+distinction between futures and options in downside-risk hedging: linear derivatives 
+can reduce directional exposure, while options can be more directly suited to 
+asymmetric downside-risk objectives (Lien and Tse, 2001). 
+The important distinction is that the derivative is not only a risk -management 
+overlay. In the lending structure considered here, the hedge cost directly affects 
+whether the product can be originated economically. A futures or forward hedge 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 83 
+may reduce directional risk, but it does not match the nonlinear shortfall payoff as 
+directly as a put. A put option matches the downside shape more naturally, but it 
+introduces an upfront premium that must be funded by the transaction’s fee revenue. 
+The c entral question is therefore not simply whether derivatives can reduce 
+collateral risk, but whether the specific hedge that matches the loan payoff can be 
+purchased at a cost compatible with the lending economics. 
+This is where the paper’s framework enters. The model treats the put strike, option 
+premium, maturity, and LTV-implied collateral threshold as linked design variables. 
+Rather than choosing a hedge separately from the loan terms, the lender can use 
+observed option prices to determine which lending structures are feasible. The 
+derivative hedge is therefore integrated into the origination decision: the loan is 
+feasible only if the available fee revenue can cover the hedge cost while keeping 
+residual downside exposure within the chosen loss constraint. 
+
+3. Loan Structure and Risk Setup 
+This section defines the structure of the lending arrangement considered in the paper. 
+The motivating use case is a crypto-collateralized BNPL transaction. A buyer makes 
+a purchase from a merchant but does not pay the full purchase price upfront. Instead, 
+a lender or platform pays the merchant at origination and receives a merchant fee 
+proportional to the financed amount. The merchant is willing to pay this fee because 
+embedded financing can reduce the buyer’s upfront payment constraint, support 
+customer acquisition, increase conversion, and potentially increase average order 
+value. 
+From the buyer’s perspective, the loan is interest-free: the buyer repays exactly the 
+financed amount 𝐿 at maturity. To secure the loan, the buyer deposits crypto 
+collateral. The collateral remains locked during the life of the loan and is returned 
+if the buyer repays according to the contract terms. If the buyer fails to repay, the 
+lender relies on the collateral value available at maturity 𝑇. 
+The economic problem is therefore different from a standard unsecured BNPL 
+product. The lender’s revenue is generated upfront through the merchant fee, while 
+the buyer does not pay interest. The main risk is that the crypto collateral may fall 
+in value bef ore the loan matures. The remainder of this section introduces the 
+notation used to formalize the lending structure and the collateral shortfall risk. 
+At time 𝑡, the lender originates a loan of size 
+𝐿 
+denominated in USD. The spot price of the crypto collateral is 
+𝑆𝑡 
+The loan is issued against a target loan-to-value ratio, 
+𝜆 : = LTV 
+where 0 < 𝜆 < 1. 
+84 Skvortsov 
+Therefore, the required collateral value is 
+𝑉𝑡 : = 𝐿𝜆 
+The number of crypto units posted as collateral is then 
+𝑞 : = 𝑉𝑡
+𝑆𝑡
+= 𝐿𝜆𝑆𝑡 
+Equivalently, the loan becomes undercollateralized when the collateral price falls 
+below the LTV-implied threshold 
+𝐾0 : = 𝜆𝑆𝑡 
+This threshold is central to the model. If the collateral price remains above 𝐾0, the 
+posted collateral is sufficient to cover the loan principal. If the collateral price falls 
+below 𝐾0, the collateral value becomes lower than the loan amount and the lender 
+is exposed to a shortfall. 
+The lender earns upfront revenue through a loan fee. 
+Let 
+𝜙 
+
+denote the merchant fee rate charged on the financed amount. Then total upfront 
+revenue is 
+Revenue : = 𝜙𝐿 
+The loan resolves at maturity date 𝑇 . In the motivating BNPL setting, 𝑇 is 
+generally measured in months rather than years; for example, a typical maturity may 
+fall in the range of two to six months. This paper assumes that no early liquidation 
+is allowed. Collateral recovery is evaluated only at maturity. This assumption 
+isolates the terminal collateral shortfall and allows the unhedged and hedged payoff 
+structures to be compared directly. Equivalently, the model treats liquidation-based 
+protection as outside the contract design and focuses on whether downside exposure 
+can be bounded ex ante through the initial collateral requirement and option hedge. 
+The lender’s economics are therefore driven by two components. The first 
+component is deterministic at origination: the fee revenue 𝜙𝐿 . The second 
+component is uncertain: the value of the collateral at maturity, when the loan is 
+repaid or the lender recovers value from the posted collateral. Let 𝑆𝑇 denote the 
+collateral price at the resolution date 𝑇. 
+
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 85 
+The terminal collateral value is then 
+𝑉𝑇 = 𝑞𝑆𝑇 
+If 𝑉𝑇 ≥ 𝐿, the collateral is sufficient to cover the loan principal. If 𝑉𝑇 < 𝐿, the 
+lender faces a collateral shortfall equal to 
+𝐿 − 𝑞𝑆𝑇 
+Thus, the central risk in the contract is not the initial collateralization level itself, 
+but the possibility that collateral value falls below the loan principal before the loan 
+is resolved. The next section formalizes this exposure in the unhedged versio n of 
+the contract, where the lender relies only on overcollateralization and terminal 
+collateral recovery. 
+
+4. Lending Payoff Model 
+4.1 Unhedged Lending Model 
+Before introducing option protection, this section formalizes the lender’s payoff in 
+the unhedged version of the contract. In this baseline structure, the lender relies only 
+on the initial overcollateralization of the loan and the value of the posted colla teral 
+at maturity. Consistent with the setup in Section 3, no early liquidation is allowed, 
+and collateral recovery is evaluated only at the maturity date 𝑇. 
+The lender receives deterministic merchant fee revenue equal to 
+𝜙𝐿 
+The uncertain component of the contract is the terminal collateral value, 
+𝑉𝑇 = 𝑞𝑆𝑇 
+We assume that the borrower is economically rational. Therefore, if the terminal 
+collateral value is below the repayment amount, 𝑞𝑆𝑇 < 𝐿, or equivalently 𝑆𝑇 < 𝐾0, 
+the borrower forfeits the collateral rather than repaying the loan. In this case, the 
+lender’s recovery is limited to the terminal collateral value, and the lender faces a 
+collateral shortfall. 
+This forfeiture rule represents a conservative underwriting assumption rather than a 
+prediction of actual borrower behavior. It assumes that borrowers do not repay when 
+collateral value falls below the loan principal, even though credit -score 
+considerations, customer relationships, or off -chain collection mechanisms could 
+mitigate the lender’s losses. 
+The shortfall is given by 
+(𝐿 − 𝑞𝑆𝑇)+ 
+where (𝑥)+ = max(𝑥, 0) 
+
+86 Skvortsov 
+Therefore, the unhedged lender profit can be written as 
+Π0(𝑆𝑇) = 𝜙𝐿 − (𝐿 − 𝑞𝑆𝑇)+ 
+This expression shows that the lender’s upside is capped at the merchant fee revenue, 
+while the downside depends on the terminal value of the collateral. Using the LTV-
+implied collateral threshold 𝐾0, the same payoff can be written as 
+Π0(𝑆𝑇) = {𝜙𝐿, if 𝑆𝑇 ≥ 𝐾0𝜙𝐿 − (𝐿 − 𝑞𝑆𝑇), if 𝑆𝑇 < 𝐾0 
+The first region represents the capped-upside part of the payoff: once the collateral 
+is sufficient to cover the loan, further increases in 𝑆𝑇 do not increase the lender’s 
+contractual profit. The second region is the shortfall region: the lender still earns the 
+merchant fee, but this revenue is reduced dollar -for-dollar as the collateral value 
+declines below the loan principal. 
+It is also useful to distinguish the principal-coverage threshold from the profit break-
+even threshold. In the shortfall region, the lender breaks even when 
+𝜙𝐿 − (𝐿 − 𝑞𝑆𝑇) = 0. 
+Solving for 𝑆𝑇 gives 
+𝑆𝑇𝐵𝐸 = 𝐿(1 − 𝜙)𝑞 
+Using 𝐿/𝑞 = 𝐾0, this can be written as 
+𝑆𝑇𝐵𝐸 = (1 − 𝜙)𝐾0 
+Thus, 𝐾0 is the collateral price below which the lender begins to experience 
+principal shortfall, while 𝑆𝑇𝐵𝐸 is the collateral price below which the lender’s total 
+profit becomes negative after accounting for merchant fee revenue. 
+The location of 𝐾0 highlights the basic trade-off created by overcollateralization. 
+From the lender’s perspective, a lower LTV is safer because it reduces 𝐾0 = 𝜆𝑆𝑡, 
+meaning the collateral price must fall further before a shortfall occurs. However, 
+lower LTV also reduces the borrower’s capital efficiency: for the same loan amount 
+𝐿, the borrower must post more collateral. Therefore, while the lender would prefer 
+a lower LTV to reduce shortfall risk, market adoption and borrower demand place 
+practical limits on how conservative the LTV can be. 
+Figure 1 illustrates these two thresholds graphically. The flat upper region 
+corresponds to the capped upside 𝜙𝐿, the kink occurs at 𝐾0, and the zero -profit 
+crossing occurs at 𝑆𝑇𝐵𝐸. 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 87 
+
+Figure 1: Unhedged Lender Profit and Collateral Shortfall Thresholds 
+Note: Unhedged lender profit Π0(𝑆𝑇) as a function of terminal collateral price 𝑆𝑇. The upper flat 
+region equals 𝜙𝐿, showing that the lender’s upside is capped by merchant fee revenue. The payoff 
+begins to decline once 𝑆𝑇 < 𝐾0 and becomes negative when 𝑆𝑇 < 𝑆𝑇𝐵𝐸. 
+Source: Authors’ own work. 
+From a financial-instrument perspective, the unhedged contract has a capped-upside 
+and downside-exposed payoff. The lender’s maximum profit is fixed at 𝜙𝐿, but the 
+lender absorbs losses when the collateral price falls sufficiently far below the LTV-
+implied threshold. This shortfall term has a put-like structure: 
+the lender is exposed to 
+(𝐿 − 𝑞𝑆𝑇)+ 
+The purpose of option hedging, introduced in the next subsection, is to modify this 
+shortfall exposure by adding downside protection that increases in value when the 
+collateral price declines. 
+
+4.2 Option-Hedged Lending Model 
+Section 4.1 showed that the unhedged loan exposes the lender to the collateral 
+shortfall 
+(𝐿 − 𝑞𝑆𝑇)+ 
+Using the notation introduced earlier, and recalling that 𝐿 = 𝑞𝐾0, this shortfall can 
+be rewritten as 
+(𝐿 − 𝑞𝑆𝑇)+ = 𝑞(𝐾0 − 𝑆𝑇)+ 
+
+88 Skvortsov 
+This representation makes the option -like structure of the contract explicit. The 
+lender’s downside exposure is equivalent to being short a put -like payoff on the 
+collateral asset with an effective strike given by the LTV -implied threshold 𝐾0. 
+This is precisely why the notation 𝐾0 is useful: it identifies the price level at which 
+the loan begins to experience a shortfall and highlights the natural connection 
+between the unhedged contract and put-option protection. 
+A natural hedge for this exposure is therefore to purchase long put options on the 
+collateral asset. Suppose that at origination the lender buys one put option per unit 
+of posted collateral, with strike 𝐾, maturity 𝑇, and per -unit premium 𝑃𝑡(𝐾, 𝑇). 
+The total hedge premium paid at time 𝑡 is then 
+𝑞𝑃𝑡(𝐾, 𝑇) 
+and the terminal payoff of the hedge is 
+𝑞(𝐾 − 𝑆𝑇)+ 
+Relative to the unhedged structure, the option hedge adds explicit downside 
+protection that increases in value when the collateral price declines. The hedged 
+lender profit can therefore be written as 
+Π𝐻(𝑆𝑇) = 𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇) − 𝑞(𝐾0 − 𝑆𝑇)+ + 𝑞(𝐾 − 𝑆𝑇)+. 
+This expression has a straightforward interpretation. The lender still earns merchant 
+fee revenue 𝜙𝐿 , but now pays an upfront insurance premium 𝑞𝑃𝑡(𝐾, 𝑇) . In 
+exchange, the long put offsets part or all of the shortfall exposure from the unhedged 
+contract. Section 5 will characterize the feasibility boundaries implied by this trade-
+off. At this stage, the focus is only on the structure of the hedge and the e conomic 
+meaning of the strike choice. 
+The key design variable in the hedge is the put strike 𝐾. This strike determines the 
+type of insurance policy the lender purchases. When 
+𝐾 = 𝐾0 
+the option hedge matches the shortfall threshold of the loan exactly. In this case, 
+once the collateral price enters the shortfall region, the long put offsets the lender’s 
+shortfall dollar-for-dollar. Ignoring the premium cost, this is the natural benchmark 
+case of an exact hedge. 
+When 
+𝐾 < 𝐾0 
+the hedge is under -protective. The put only begins to pay off after the collateral 
+price has already fallen below the shortfall threshold of the loan. As a result, part of 
+the tail loss remains unhedged. For terminal prices below the option strike, 𝑆𝑇 ≤ 𝐾, 
+the hedge pays off but does not fully eliminate the shortfall; the residual unprotected 
+loss is 𝑞(𝐾0 − 𝐾). This case is economically attractive because lower -strike puts 
+are generally cheaper, but the lender accepts residual downside risk. 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 89 
+When 
+𝐾 > 𝐾0 
+the hedge is over -protective relative to the principal shortfall region. In this case, 
+the put begins to pay off before the loan actually enters shortfall. This provides 
+stronger protection, but it also requires paying a higher option premium. Therefore, 
+the choice of 𝐾 determines how the lender trades off hedge cost against residual 
+tail exposure. 
+This trade-off is central to the economics of the hedged contract. Smaller values of 
+𝐾 generally reduce the premium cost of protection, which improves upfront 
+economics. At the same time, they leave more of the downside tail unprotected. 
+Larger values of 𝐾 provide stronger insurance, but they make the hedge more 
+expensive. The strike choice therefore acts as an insurance design variable: it 
+determines how much risk is transferred to the options market and how much 
+remains on the lender’s balance sheet. 
+The strike trade-off interacts closely with the choice of LTV. 
+Since 
+𝐾0 = 𝜆𝑆𝑡 
+a lower LTV implies a lower effective strike 𝐾0, pushing the shortfall region further 
+into the downside tail. This makes the loan safer even before hedging. In the hedged 
+setting, it also allows the lender to purchase lower -strike and therefore cheaper 
+protection. From the lender’s perspective, lower 𝐾0 is attractive for both risk and 
+hedge-cost reasons. However, lower LTV also reduces borrower capital efficiency, 
+because the borrower must post more collateral for the same loan amount. As in the 
+unhedged case, practical market adoption discourages quotin g excessively 
+conservative LTV levels. 
+In practice, the hedge can be implemented using different option instruments. The 
+most direct approach is to use options written on the same crypto asset that serves 
+as collateral, whether through centralized venues or on-chain markets. Alternatively, 
+the lender may hedge using options on a crypto ETF or another closely related 
+instrument, with an assumed conversion factor linking the hedge notional to the 
+collateral exposure. The latter approach may be operationally convenient, but it 
+introduces basis risk because the hedge asset and the posted collateral are no longer 
+identical. 
+A second practical dimension is the choice of option maturity. Ideally, the option 
+maturity should match the loan maturity so that hedge protection is aligned with the 
+collateral exposure. Since the lender controls the tenor of the quoted loan, this 
+alignment can often be enforced or at least made approximate. If an exact maturity 
+match is unavailable, one possibility is to use a longer -dated option and close, 
+monetize, or exercise the position at loan maturity, depending on the contract’s 
+exercise style. If the option is American-style, early exercise is available; otherwise 
+the position may need to be unwound before expiry. A shorter -dated option is also 
+90 Skvortsov 
+possible, but in that case the lender becomes exposed after the hedge expires unless 
+the position is rolled. These maturity choices involve operational and pricing trade-
+offs and are therefore left outside the current algebraic treatment. 
+Several implementation frictions are also worth noting. In practice, strikes are 
+discrete, hedge quantities may not match the collateral exposure exactly, and option 
+prices incorporate bid -ask spreads and execution costs. These frictions do not 
+change the core logic of the hedge, but they affect the exact profitability and 
+feasibility region of the lending structure. For this reason, the present section treats 
+the option hedge in idealized form and leaves the precise feasibility boundaries to 
+the next section. 
+Figure 2 illustrates the hedged payoff structure for different choices of the put strike 
+relative to 𝐾0. When 𝐾 = 𝐾0, the shortfall region is exactly offset apart from the 
+premium cost. When 𝐾 < 𝐾0, the lender remains exposed to residual tail loss below 
+the option strike. When 𝐾 > 𝐾0, the hedge begins to pay before the shortfall region, 
+providing stronger but more expensive protection. These payoff shapes make clear 
+that the option strike 𝐾 is not merely a market input; it is a product-design variable 
+that determines the form and cost of insurance embedded in the loan. 
+
+Figure 2: Hedged Lender Profit under Alternative Put Strikes 
+Note: Hedged lender profit Π𝐻(𝑆𝑇) for different choices of put strike 𝐾 relative to the LTV-
+implied threshold 𝐾0. Lower strikes reduce hedge cost but leave more residual tail exposure, while 
+higher strikes provide stronger protection at a higher premium. 
+Source: Authors’ own work. 
+
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 91 
+The option-hedged payoff therefore converts the lending problem into a trade -off 
+between three quantities: fee revenue, hedge premium, and residual downside 
+exposure. The strike 𝐾 determines how much of the collateral shortfall is 
+transferred to the option market, while the LTV -implied threshold 𝐾0 determines 
+where the loan begins to experience shortfall in the first place. The next section 
+turns this payoff structure into explicit market -observable algebraic feasibility 
+bounds, deriving the conditions under which the hedge cost can be covered by fe e 
+revenue and the remaining downside exposure can be kept within an acceptable loss 
+threshold. 
+
+5. Algebraic Feasibility Bounds 
+Section 4 introduced the hedged payoff 
+Π𝐻(𝑆𝑇) = 𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇) − 𝑞(𝐾0 − 𝑆𝑇)+ + 𝑞(𝐾 − 𝑆𝑇)+. 
+This section derives algebraic conditions under which the hedged loan is 
+economically feasible. The objective is to convert the payoff structure into simple 
+bounds on the LTV -implied threshold 𝐾0, given an observed option strike 𝐾, 
+option premium 𝑃𝑡(𝐾, 𝑇), and merchant fee rate 𝜙. 
+Using the notation from Section 3, 𝑃𝑡(𝐾, 𝑇) denotes the option premium per unit 
+of collateral, so the total hedge cost is 𝑞𝑃𝑡(𝐾, 𝑇). Since 𝐿 = 𝑞𝐾0, we can write 
+𝑞 = 𝐿𝐾0. 
+This identity allows the feasibility conditions to be expressed directly in terms of 
+𝐾0, the strike-like threshold that links the loan structure to the option market. 
+
+5.1 Premium-Coverage Margin 
+The relevant origination-time margin is the amount of fee revenue remaining after 
+the hedge premium is paid: 
+PCM(𝐾0, 𝐾, 𝑇) = 𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇) = 𝐿 (𝜙 − 𝑃𝑡(𝐾, 𝑇)𝐾0 ) 
+This quantity measures whether the transaction can fund the hedge from its own fee 
+revenue. It is not intended to capture speculative gains from the hedge in collateral 
+drawdown states. In the exact and under -protective cases, PCM is also the 
+maximum terminal profit. In the over -protective case, terminal put payoffs may 
+generate additional gains when the collateral price falls sharply, but those gains arise 
+in adverse collateral states and are not the objective of the lending produ ct. The 
+framework therefore uses PCM as the premium -coverage margin relevant for 
+origination feasibility. 
+
+92 Skvortsov 
+Non-negative premium coverage requires 
+PCM(𝐾0, 𝐾, 𝑇) ≥ 0 
+Using the expression above and dividing by 𝐿 > 0, 
+𝜙 − 𝑃𝑡(𝐾, 𝑇)𝐾0 ≥ 0 
+which is equivalent to 
+𝐾0 ≥ 𝑃𝑡(𝐾, 𝑇)𝜙 
+This premium-coverage condition has a direct economic interpretation. The LTV -
+implied threshold must be large enough so that the collateral quantity 𝑞 = 𝐿/𝐾0, 
+and therefore the total hedge cost 𝑞𝑃𝑡(𝐾, 𝑇), does not exceed the fee revenue 𝜙𝐿. 
+
+5.2 Worst-Case Profit for Under-Protection 
+Now consider the case where the option strike is below or equal to the LTV-implied 
+threshold: 
+𝐾 ≤ 𝐾0 
+This is the economically important case in which the lender uses an exact hedge 
+(𝐾 = 𝐾0) or a cheaper under -protective hedge (𝐾 < 𝐾0). If 𝐾 < 𝐾0 , the put 
+option starts paying only after the loan has already entered the shortfall region. 
+Therefore, the lender remains exposed to residual tail loss. 
+In deep downside states where 𝑆𝑇 ≤ 𝐾, the residual shortfall is capped by the gap 
+between the loan’s effective strike 𝐾0 and the option strike 𝐾 . Per unit of 
+collateral, this residual loss is 𝐾0 − 𝐾. For 𝑞 units of collateral, the maximum 
+residual loss is 𝑞(𝐾0 − 𝐾). 
+The worst-case hedged profit is therefore 
+Profitmin = 𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇) − 𝑞(𝐾0 − 𝐾) 
+Substituting 𝑞 = 𝐿/𝐾0, 
+Profitmin = 𝜙𝐿 − 𝐿𝐾0 𝑃𝑡(𝐾, 𝑇) − 𝐿𝐾0 (𝐾0 − 𝐾) 
+A zero-loss feasibility condition requires 
+Profitmin ≥ 0 
+Thus, 
+𝜙𝐿 − 𝐿𝐾0 𝑃𝑡(𝐾, 𝑇) − 𝐿𝐾0 (𝐾0 − 𝐾) ≥ 0 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 93 
+Dividing by 𝐿 > 0, 
+𝜙 − 𝑃𝑡(𝐾, 𝑇)𝐾0 − (𝐾0 − 𝐾)𝐾0 ≥ 0 
+After re-arranging this becomes 
+𝐾 − 𝑃𝑡(𝐾, 𝑇)
+𝐾0
+≥ 1 − 𝜙 
+Assuming 0 < 𝜙 < 1, this implies 
+𝐾0 ≤ 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 
+This is the upper feasibility boundary for 𝐾0. Economically, it says that 𝐾0 cannot 
+be too high relative to the selected option strike 𝐾. A higher 𝐾0 corresponds to a 
+higher LTV and a larger unprotected gap 𝐾0 − 𝐾, which increases residual tail loss. 
+
+5.3 Worst-Case Profit under Over-Protection 
+The previous subsection considered the exact -hedge and under -protective cases, 
+where 
+𝐾 ≤ 𝐾0. 
+In this region, the option strike is at or below the loan’s LTV -implied shortfall 
+threshold, so the lender may retain residual downside exposure equal to the gap 
+between 𝐾0 and 𝐾. We now consider the opposite case, 
+𝐾 > 𝐾0. 
+This is the over-protective case. The put option begins paying before the collateral 
+value falls below the loan principal. Equivalently, the option strike is above the 
+loan’s shortfall threshold, so the hedge provides protection even in states where the 
+collateral would still be sufficient to cover the loan. 
+Starting from the hedged payoff, 
+Π𝐻(𝑆𝑇) = 𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇) − 𝑞(𝐾0 − 𝑆𝑇)+ + 𝑞(𝐾 − 𝑆𝑇)+. 
+consider the terminal hedge-shortfall component, 
+−(𝐾0 − 𝑆𝑇)+ + (𝐾 − 𝑆𝑇)+ 
+When 𝐾 > 𝐾0, this component is always non -negative. If 𝑆𝑇 ≥ 𝐾, both option -
+like terms are zero. If 𝐾0 ≤ 𝑆𝑇 < 𝐾, the loan has no collateral shortfall, but the put 
+is already in the money. If 𝑆𝑇 < 𝐾0, the put payoff more than offsets the collateral 
+shortfall. Therefore, the over -protective hedge does not leave residual terminal 
+downside exposure. 
+94 Skvortsov 
+As a result, the worst-case profit is not generated by a deep downside state. Instead, 
+the lowest profit occurs when the put expires worthless and the lender has simply 
+paid the hedge premium. Therefore, 
+Profitmin = 𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇). 
+Similarly to Section 5.2, the zero-loss condition is 
+Profitmin ≥ 0 
+or equivalently, 
+𝐾0 ≥ 𝑃𝑡(𝐾, 𝑇)𝜙 . 
+Combining this with the over -protection condition 𝐾0 < 𝐾, the over -protective 
+feasible region is 
+𝐾0 ∈ [𝑃𝑡(𝐾, 𝑇)𝜙 , 𝐾). 
+This result shows that over -protective structures are governed by a different 
+feasibility condition than under-protective structures. In the under -protective case, 
+feasibility must control both hedge premium and residual tail exposure. In the over-
+protective case, the terminal shortfall is fully covered, so feasibility reduces to 
+whether merchant fee revenue can cover the hedge premium. 
+
+5.4 Feasible Interval for 𝑲𝟎 
+Combining the premium -coverage condition, the hedge -strike regime, and the 
+worst-case loss condition gives the feasible set for the LTV -implied threshold 𝐾0. 
+Because the hedged payoff behaves differently depending on whether the option 
+strike is below or above the loan’s shortfall threshold, it is useful to first write the 
+feasible region branch by branch. 
+In the exact-hedge and under-protective case, 
+𝐾 ≤ 𝐾0 
+the feasible interval is 
+𝐾0 ∈ [max (𝐾, 𝑃𝑡(𝐾, 𝑇)𝜙 ) , 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 ]. 
+The left boundary combines two requirements: 𝐾0 ≥ 𝐾, which keeps the structure 
+in the exact -hedge or under -protective region, and 𝐾0 ≥ 𝑃𝑡(𝐾, 𝑇)/𝜙 , which 
+ensures that fee revenue covers the hedge premium. The right boundary ensures that, 
+in the under-protective region, the residual unprotected tail loss does not exceed the 
+surplus left after paying for the hedge. 
+
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 95 
+In the over-protective case, 
+𝐾 > 𝐾0 
+the put option begins paying before the collateral value reaches the loan’s shortfall 
+threshold. In this region, there is no residual terminal tail loss left by the hedge. 
+Therefore, feasibility is governed by the premium-coverage condition together with 
+the over-protection condition. The feasible region is 
+𝐾0 ∈ [𝑃𝑡(𝐾, 𝑇)𝜙 , 𝐾). 
+The general zero-loss feasible set is therefore the union of the over -protective and 
+exact/under-protective branches: 
+[𝑃𝑡(𝐾, 𝑇)𝜙 , 𝐾) ∪ [max (𝐾, 𝑃𝑡(𝐾, 𝑇)𝜙 ) , 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 ]. 
+This union can be written as a single compact interval when the option quote is not 
+too expensive relative to fee revenue. To see this, define 
+𝑎 : = 𝑃𝑡(𝐾, 𝑇)𝜙 
+and 
+𝑏 : = 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 . 
+The over -protective branch is [𝑎, 𝐾), while the exact/under -protective branch is 
+[max(𝐾, 𝑎), 𝑏]. The union becomes one connected positive-width interval when the 
+two branches connect through the boundary 𝐾0 = 𝐾. This requires 
+𝑎 < 𝐾 < 𝑏. 
+The first inequality, 𝑎 < 𝐾, is equivalent to 
+𝑃𝑡(𝐾, 𝑇) < 𝜙𝐾. 
+The second inequality, 𝐾 < 𝑏, is also equivalent to the same condition. Indeed, 
+𝐾 < 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 
+is equivalent, since 1 − 𝜙 > 0, to 
+𝐾(1 − 𝜙) < 𝐾 − 𝑃𝑡(𝐾, 𝑇), 
+which simplifies to 
+𝑃𝑡(𝐾, 𝑇) < 𝜙𝐾. 
+96 Skvortsov 
+Thus, when 
+𝑃𝑡(𝐾, 𝑇) < 𝜙𝐾, 
+the over-protective branch covers 
+[𝑃𝑡(𝐾, 𝑇)𝜙 , 𝐾), 
+while the exact/under-protective branch begins at 𝐾0 = 𝐾 and extends to 
+𝐾 − 𝑃𝑡(𝐾, 𝑇)
+1 − 𝜙 . 
+The two branches therefore connect at 𝐾0 = 𝐾, and the global feasible set becomes 
+𝐾0 ∈ [𝑃𝑡(𝐾, 𝑇)𝜙 , 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 ]. 
+This interval is the central algebraic feasibility result. It is not only the exact-hedge 
+interval. Rather, it is the global zero -loss interval obtained by combining the over -
+protective, exact-hedge, and under-protective cases. 
+The same derivation gives a simple market-observable feasibility test: 
+𝑃𝑡(𝐾, 𝑇) < 𝜙𝐾, 
+or equivalently, 
+𝑃𝑡(𝐾, 𝑇)
+𝐾 < 𝜙. 
+Thus, before imposing the additional admissibility restriction 0 < 𝐾0 < 𝑆𝑡 , an 
+option quote passes the zero -loss feasibility screen if its premium -to-strike ratio is 
+below the merchant fee rate. Quotes with 𝑃𝑡(𝐾, 𝑇) ≥ 𝜙𝐾 are too expensive 
+relative to fee revenue, while quotes with 𝑃𝑡(𝐾, 𝑇) < 𝜙𝐾 generate a positive -
+width zero-loss feasible set. 
+The interval remains necessary because the lender does not only need to know 
+whether a feasible structure exists. The lender also needs to know which LTVs can 
+be quoted. Once the lender observes the current spot price 𝑆𝑡, the merchant fee rate 
+𝜙, and the market option quote (𝐾, 𝑃𝑡(𝐾, 𝑇)), the feasible 𝐾0 interval can be 
+translated into an admissible LTV interval through 
+𝐾0 = 𝜆𝑆𝑡. 
+Before imposing the admissibility restriction 0 < 𝐾0 < 𝑆𝑡, the raw LTV bounds 
+are 
+𝐿𝑇𝑉left = 1𝑆𝑡 𝑃𝑡(𝐾, 𝑇)𝜙 , 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 97 
+and 
+𝐿𝑇𝑉right = 1𝑆𝑡 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 . 
+The feasible loan structures are then obtained by intersecting the 𝐾0 interval with 
+the economically admissible region 
+0 < 𝐾0 < 𝑆𝑡, 
+or equivalently, 
+0 < 𝜆 < 1. 
+Thus, after imposing admissibility, the raw LTV interval is intersected with (0,1), 
+and the quote is usable only if the adjusted interval remains non-empty. 
+If the resulting LTV interval is empty, the option quote cannot support a zero -loss 
+hedged loan under the model assumptions. If the interval is non-empty, every LTV 
+inside the interval corresponds to a feasible loan structure. The width of the interval 
+measures how much flexibility the lender has in choosing the loan-to-value ratio. 
+Importantly, the loan amount 𝐿 cancels out of the feasibility interval. The loan size 
+determines the scale of the transaction, but the existence of a feasible structure 
+depends on the fee rate, the collateral spot price, and the option market terms. 
+
+5.5 Bounded-Loss Extension 
+The zero-loss condition 
+Profitmin ≥ 0 
+is conservative. In practice, the lender may be willing to tolerate a limited worst -
+case residual tail loss after the hedge premium has already been covered by fee 
+revenue. The loss budget is not used to finance the option premium and is not treated 
+as additional revenue. Instead, it measures how much residual shortfall exposure the 
+lender is willing to retain when the hedge is under-protective. 
+Let 𝐵 ≥ 0 denote this maximum acceptable residual tail loss, and define the loss 
+budget as a fraction of the loan amount: 
+𝛽 : = 𝐵𝐿. 
+Throughout this extension, the premium-coverage condition remains separate from 
+the residual-loss condition. Therefore, any feasible structure must still satisfy 
+𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇) ≥ 0, 
+or equivalently, using 𝑞 = 𝐿/𝐾0, 
+98 Skvortsov 
+𝐾0 ≥ 𝑃𝑡(𝐾, 𝑇)𝜙 . 
+The loss budget affects the exact-hedge and under-protective region, where 
+𝐾 ≤ 𝐾0. 
+In this region, the lender may retain residual downside exposure equal to the gap 
+between the loan’s shortfall threshold 𝐾0 and the option strike 𝐾. The bounded-
+loss condition becomes 
+Profitmin ≥ −𝐵. 
+Using the expression for Profitmin in the under-protective region, 
+𝜙𝐿 − 𝐿𝐾0 𝑃𝑡(𝐾, 𝑇) − 𝐿𝐾0 (𝐾0 − 𝐾) ≥ −𝐵. 
+Dividing by 𝐿, 
+𝜙 − 𝑃𝑡(𝐾, 𝑇)𝐾0 − 𝐾0 − 𝐾𝐾0 ≥ −𝛽. 
+Rearranging gives 
+𝐾0 ≤ 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 − 𝛽 , 
+provided that 
+1 − 𝜙 − 𝛽 > 0. 
+Economically, this restriction requires the combined merchant fee rate and accepted 
+loss budget to remain below 100% of the loan principal, ensuring that the bounded-
+loss condition imposes a meaningful upper bound on the feasible collateral 
+threshold. 
+Thus, allowing a bounded residual -loss budget relaxes the right boundary of the 
+feasible interval. The general bounded-loss feasible interval becomes 
+𝐾0 ∈ [𝑃𝑡(𝐾, 𝑇)𝜙 , 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 − 𝛽 ], 
+before imposing the admissibility restriction 
+0 < 𝐾0 < 𝑆𝑡. 
+When 𝛽 = 0, this reduces to the zero-loss interval: 
+𝐾0 ∈ [𝑃𝑡(𝐾, 𝑇)𝜙 , 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 ]. 
+Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral 99 
+The bounded -loss interval also implies a simple market -observable screening 
+condition. A positive-width bounded-loss feasible interval exists when 
+𝐾 − 𝑃𝑡(𝐾, 𝑇)
+1 − 𝜙 − 𝛽 > 𝑃𝑡(𝐾, 𝑇)𝜙 . 
+Since 1 − 𝜙 − 𝛽 > 0, this is equivalent to 
+𝜙(𝐾 − 𝑃𝑡(𝐾, 𝑇)) > 𝑃𝑡(𝐾, 𝑇)(1 − 𝜙 − 𝛽). 
+Expanding and cancelling the common term −𝜙𝑃𝑡(𝐾, 𝑇) gives 
+𝜙𝐾 > 𝑃𝑡(𝐾, 𝑇)(1 − 𝛽), 
+or 
+𝑃𝑡(𝐾, 𝑇) < 𝜙1 − 𝛽 𝐾. 
+Equivalently, 
+𝑃𝑡(𝐾, 𝑇)
+𝐾 < 𝜙1 − 𝛽. 
+This relaxed screening condition should not be interpreted as allowing the loss 
+budget to subsidize the hedge premium. The lower boundary 𝑃𝑡(𝐾, 𝑇)/𝜙 is 
+unchanged. The relaxation arises because a positive 𝛽 permits a larger residual 
+under-protected gap 𝐾0 − 𝐾, which increases the admissible right boundary of the 
+𝐾0 interval. 
+As 𝛽 increases, while 1 − 𝜙 − 𝛽 > 0, the lender permits more residual downside 
+exposure in the under-protective region. This expands the feasible 𝐾0 interval and 
+can make additional option quotes feasible. However, the lender must still have 
+enough fee revenue to pay for the hedge premium. 
+The feasible LTV bounds under bounded -loss feasibility are obtained by dividing 
+the 𝐾0 interval by the spot price 𝑆𝑡. Before imposing admissibility, 
+𝐿𝑇𝑉left = 1𝑆𝑡 𝑃𝑡(𝐾, 𝑇)𝜙 , 
+and 
+𝐿𝑇𝑉right(𝛽) = 1𝑆𝑡 𝐾 − 𝑃𝑡(𝐾, 𝑇)1 − 𝜙 − 𝛽 . 
+The final admissible LTV interval is obtained by intersecting these raw bounds with 
+(0,1). Thus, the bounded -loss extension provides a direct way to incorporate 
+residual tail-risk appetite into the algebraic framework while preserving the market-
+observable structure of the feasibility screen. 
+100 Skvortsov 
+
+5.6 Risk-Based Interpretation of the Loss Budget 
+The bounded-loss extension treats 𝐵 as the maximum loss the lender is willing to 
+tolerate from residual downside exposure after the premium-coverage condition has 
+been imposed. In the algebraic framework above, 𝐵 can be chosen directly as a 
+risk appetite parameter. For example, a lender may decide that the worst -case 
+residual loss should not exceed a fixed percentage of the loan amount, 𝐵 = 𝛽𝐿. 
+A more risk -based interpretation is to connect 𝐵 to a tail -risk measure. If the 
+terminal collateral price 𝑆𝑇 is modeled as a random variable, then the hedged profit 
+Π𝐻(𝑆𝑇) = 𝜙𝐿 − 𝑞𝑃𝑡(𝐾, 𝑇) − 𝑞(𝐾0 − 𝑆𝑇)+ + 𝑞(𝐾 − 𝑆𝑇)+ 
+also becomes a random variable. Defining losses as 
+ℒ𝐻 = max(−Π𝐻(𝑆𝑇),0), 
+the lender may choose 𝐵 so that it covers a tail-risk measure such as 
+𝐵 = CVaR𝛼(ℒ𝐻). 
+Equivalently, if 𝐵 is specified in advance, a risk-based feasibility condition would 
+require 
+CVaR𝛼(ℒ𝐻) ≤ 𝐵. 
+This interpretation provides a bridge between the algebraic bounds and probabilistic 
+risk management. The present paper keeps the main analysis focused on market -
+observable feasibility conditions derived from option prices. A full two -stage 
+framework, in which the algebraic bounds are first used as a market screen and then 
+candidate structures are evaluated under simulated or empirically estimated 
+collateral-price distributions, is left for future work. 
+
+5.7 Bid-Ask Spread and Execution Pricing 
+The feasibility conditions derived above depend on the cost of acquiring the 
+protective put. This distinction matters when the reference option premium is 
+obtained from historical transactions: the price of the last trade need not be the price 
+at which a l ender can subsequently purchase protection. A lender submitting a 
+marketable buy order generally faces the prevailing ask quotation, which may 
+exceed the last -trade price. Execution pricing can therefore reduce the admissible 
+lending range even when the or iginal premium passes the zero -loss feasibility 
+screen.

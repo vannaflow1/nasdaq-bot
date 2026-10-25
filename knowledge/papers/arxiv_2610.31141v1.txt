@@ -1,0 +1,1117 @@
+Intraday Forecasting Ability and Liquidity
+Provision of Institutional Traders ∗
+Xinlei Hao † Jiajun Guo ‡ Jussi Keppo § Xianhua Peng ¶ ‖
+October 23, 2026
+Abstract
+This study uses a high-frequency dataset from a stock exchan ge to examine
+how forecasting ability and liquidity provision relate to i nstitutional traders’
+proprietary intraday proﬁtability. We discover persisten t forecasting abilities
+among traders. Speciﬁcally, we demonstrate that hypotheti cal ﬂow-following
+strategies based on the execution ﬂows of these skillful tra ders yield annualized
+Sharpe ratios ranging from 16 to 63 across various trading fr equencies. We
+match buy and sell executions into positions, linking reali zed proﬁt and loss
+(P&L) to horizon-matched forecasting proxies and the liqui dity roles of both
+executions. Our ﬁndings indicate a direct correlation betw een improved fore-
+casting ability and proﬁtability, where a one-standard-de viation increase in the
+forecasting ability proxy is associated with 1.02 – 1.19 cur rency units higher
+P&L per matched position. Additionally, we measure liquidi ty-provision inten-
+sity within a matched position by its number of passive execu tions: zero, one,
+or two. In these regressions, P&L is 1.28 – 1.31 currency unit s higher for one
+passive execution than for none, and a further 3.79 – 3.82 hig her for two than
+for one, underscoring the signiﬁcant ﬁnancial beneﬁts of li quidity provision.
+Keywords: proﬁtability, forecasting ability, liquidity provision , high fre-
+quency trading, proprietary trading, institutional trade rs
+JEL classiﬁcation : G10, G12, G14
+∗This research is supported by the Natural Science Foundation of G uangdong Province of China
+(Grant No. 2024A1515010329). We thank the comments and sugg estions from the participants at
+the 10th PKU-NUS International Conference on Quantitative Eco nomics and Finance.
+†HSBC Business School, Peking University, University Town, Nanshan District, Shenzhen,
+518055, China. Email: xinleihao@stu.pku.edu.cn
+‡Department of Mathematics, The Hong Kong University of Science a nd Technology, Clear
+Water Bay, Kowloon, Hong Kong. Email: jguo@connect.ust.hk.
+§Business School, National University of Singapore, 1 Business Link, Singapore 117592, Singa-
+pore. Email: keppo@nus.edu.sg.
+¶HSBC Business School, Peking University, University Town, Nanshan District, Shenzhen,
+518055, China. Email: xianhuapeng@pku.edu.cn.
+‖Sargent Institute of Quantitative Economics and Finance, HSBC Bu siness School, Peking Uni-
+versity, University Town, Nanshan District, Shenzhen, 518055, C hina.
+1
+arXiv:2610.31141v1 [q-fin.TR] 22 Oct 2026
+1 Introduction
+An important question about trading in ﬁnancial markets is where pr oprietary intra-
+day trading proﬁts come from. High-frequency traders are fast intermediaries who
+trade for their own account and whose proﬁts can reﬂect severa l economic chan-
+nels, including liquidity provision, information processing, order-ﬂow prediction, and
+speed-based rents ( Menkveld; 2016). The answer matters because these channels have
+diﬀerent implications for market quality: proﬁts from intermediation can compen-
+sate traders for supplying immediacy and bearing inventory or adve rse-selection risk,
+whereas proﬁts from prediction or anticipation can reﬂect informa tional rents earned
+from other traders. Existing evidence shows that high-frequenc y trading (HFT) prof-
+its can be large and persistent ( Baron et al. ; 2019), but understanding their source
+requires measuring proﬁts and candidate mechanisms at the same e mpirical unit.
+This measurement requirement is demanding at high frequency. Ret urn pre-
+dictability is informative for both aggressive trading and passive mar ket making, but
+translating predictability into dollar proﬁts depends on order-book dynamics, ﬁlls,
+fees, rebates, and price impact ( A ¨ ıt-Sahalia et al.; 2025). Similarly, distinguishing liq-
+uidity provision from information-based trading requires knowing no t only whether an
+execution supplies or demands liquidity, but also how the resulting pro ﬁt is matched
+to the trader, the holding interval, and the market state. We ther efore focus on two
+central and observable channels emphasized by the literature, pr ice-forecasting ability
+and liquidity provision.
+We use a high-frequency data set from a stock exchange that rec ords all limit
+order book events for ﬁve stocks from November 22 to November 26, 2010, including
+opening and closing call auctions. For each limit order book event, ou r data provides
+detailed information such as the time of the event, the type of even t, the number of
+shares, the price, the identity of both the liquidity taker and the liqu idity provider,
+and the trading capacity indicating whether the order was for a clien t or the trader’s
+own proprietary trading. These ﬁelds allow us to study proprietary institutional
+trading through two linked measurements. First, for each of 26 tim e horizons ranging
+from 1 second to 30 minutes, we construct a horizon-speciﬁc price -forecasting ability
+measure for a trader by the correlation between the normalized ex ecution ﬂow of the
+trader in an interval with length being the given horizon and the volum e-weighted
+average price (VW AP) change in the subsequent time interval. Seco nd, we consider a
+2
+proﬁt-and-loss (P&L) of a trader at the ﬁnest granularity that c omprises a buy (resp.,
+sell) execution of the trader and a subsequent sell (resp., buy) ex ecution of the same
+trader. We match proprietary executions into ﬁrst-in-ﬁrst-out (FIFO) buy-sell or
+sell-buy P&Ls and attach to each P&L its holding interval, a horizon-m atched price-
+forecasting ability measure, the passive or aggressive roles of its e xecutions, trade and
+order-book controls, and trader and stock ﬁxed eﬀects.
+We use these measurements to address two questions. First, do s ome institutional
+traders display persistent price-forecasting abilities at various int raday time horizons?
+Second, how does a proprietary intraday P&L carried out by a trad er vary with
+the trader’s price-forecasting ability at the time horizon of the P&L and with the
+passiveness of the two executions constituting the P&L? Our ﬁrst question relates to
+research on trading predictability and the persistence of trading s kill. The second
+question provides an empirical accounting of how a P&L covaries with two central
+mechanisms in the existing literature, rather than a structural mo del of all possible
+proﬁt sources. The related literature falls into several strands, each measuring part
+of this problem at a diﬀerent horizon or accounting unit.
+The ﬁrst strand of related research studies the predictive conte nt of daily stock-
+level aggregate institutional net trading ﬂows and fund-level tra ding skill within a
+quarter. Campbell et al. (2009) infer daily stock-level institutional net trading ﬂows
+from TAQ transactions and quarterly 13F holdings data. They ﬁnd t hat these ﬂows
+predict subsequent daily stock returns, with generally positive coe ﬃcients on the
+25-day-half-life measure of lagged ﬂows, and anticipate ﬁrm-level earnings surprises
+and post-earnings announcement drift. Puckett and Yan (2011) use institutional
+transaction data to measure fund-level intra-quarter trading s kill as the diﬀerence
+between benchmark-adjusted returns on buys and sells from exe cution to quarter-
+end.
+At shorter trading horizons, studies examine traders’ anticipatio n of local price
+paths or order ﬂow and estimate investor-speciﬁc trading skill ove r order-execution
+horizons. Fishe et al. (2019) use millisecond-level order-book data from WTI crude-oil
+futures to identify traders who anticipate “local price paths,” who se average dura-
+tion across all identiﬁed paths is about 102.8–115.6 seconds, depen ding on direction.
+These anticipatory traders trade early in the direction of an emerg ing path or before
+a local reversal and need not be the fastest participants. Hirschey (2021) studies
+a diﬀerent anticipatory channel, ﬁnding that aggregate net marke table buying by
+3
+NASDAQ-identiﬁed HFT ﬁrms (using marketable limit orders) in a given s econd
+predicts cumulative non-HFT net marketable buying over the followin g ﬁve minutes.
+Sa˘ glam et al.(2019) estimate institutional-investor-speciﬁc short-term predictive a bil-
+ity from institutional parent-order executions lasting 5–390 minut es, decomposing
+sign-adjusted returns into an investor-speciﬁc timing component and an investor-
+independent price-impact component.
+Our ﬁrst question examines whether the aggregate execution ﬂow of traders iden-
+tiﬁed by horizon-speciﬁc price predictability continues to predict pr ice changes at
+the same horizon in a subsequent period. Related evidence concern s persistence in
+fund-level interim trading performance, anticipatory trading str ategies, and individ-
+ual HFTs’ ability to predict non-HFT order ﬂow. We complement evide nce on this
+by testing the persistence of forecasting ability at 26 prediction ho rizons ranging from
+1 second to 30 minutes. Puckett and Yan (2011) ﬁnd that fund-level interim trading
+performance persists over the subsequent four quarters. Fishe et al. (2019) compare
+the retention of intraday anticipatory trading skills in 2014 among ac counts iden-
+tiﬁed in 2011 as trading early in the direction of local price trends or a nticipating
+price reversals, ﬁnding greater retention for the latter, althoug h account attrition and
+changes in account identiﬁers limit tracking. Hirschey (2021) ﬁnds persistent diﬀer-
+ences in individual HFTs’ ability to predict order ﬂow across months. Groups formed
+on this ability also diﬀer in how their aggregate net marketable buying p redicts NBBO
+midpoint returns in the postsort month.
+A second strand measures HFT proﬁtability and its components usin g aggregate
+measures, such as daily ﬁrm-level P&L, rather than individual matc hed buy-sell or
+sell-buy P&L observations. Baron et al. (2019) calculate daily mark-to-market P&L
+for each HFT ﬁrm and each stock from cash ﬂows and end-of-day in ventory values, and
+document large and persistent proﬁts. Menkveld (2013) decomposes one particular
+HFT account’s average gross trading proﬁt per trade over 200 tr ading days into net
+spread revenues and positioning gains or losses, showing that pass ive spread revenues
+can oﬀset inventory-related positioning losses.
+Related evidence examines how HFT trading revenues vary with liquidit y de-
+mand and supply and with the direction of institutional order ﬂow. Brogaard et al.
+(2014) estimate aggregate trading revenues of HFT ﬁrms per stock-da y separately for
+liquidity-demanding and liquidity-supplying trades. They show that HF T liquidity-
+demanding marketable orders trade in the direction of permanent p rice changes and
+4
+against transitory pricing errors, while liquidity-supplying limit orders face adverse
+selection and have negative revenues before rebates; after reb ates, their revenues be-
+come signiﬁcantly positive in large stocks. van Kervel and Menkveld (2019) measure
+HFT ﬁrms’ aggregate gross trading revenue in the corresponding stock over the lifes-
+pan of each institutional meta order (4.26 hours on average), valu ing residual positions
+at the end-of-day price. Using cumulative HFT net ﬂow, they show t hat HFT ﬁrms
+as a group initially trade against and later trade along with the directio n of informed
+long-lasting institutional orders (i.e., with the wind), with stronger w ith-wind trading
+associated with higher HFT gross trading revenue. Together, the se studies imply the
+relevance of both information and liquidity provision to HFT trading re venues.
+The HFT proﬁtability studies above report ﬁrm-stock-day trading revenues, aver-
+age per-trade proﬁt components for a single HFT, or revenues ag gregated across HFT
+ﬁrms over stock-days or institutional meta-order execution wind ows. By contrast, our
+question concerns how realized P&L from a single FIFO-matched pair of executions in
+opposite direction covaries with a horizon-matched measure of the trader’s forecasting
+ability and with the passiveness of its two constituent executions.
+To address this question, we construct a FIFO-matched P&L fram ework for pro-
+prietary institutional intraday trades that brings forecasting, e xecution, and prof-
+itability measures together at the individual P&L observation level. S peciﬁcally,
+the framework links each FIFO-matched buy-sell or sell-buy P&L ob servation to
+a horizon-matched measure of the trader’s forecasting ability, th e passiveness of its
+two constituent executions, and trade and order-book controls . This observation-level
+linkage allows us to estimate how realized proprietary intraday P&L co varies with the
+trader’s price-forecasting ability and to compare the P&L across le vels of liquidity-
+provision intensity, deﬁned here by the number of passive executio ns comprising the
+P&L.
+To address the ﬁrst question, we measure a trader’s price-forec asting ability at a
+particular time horizon, e.g., 1 second, by the Pearson correlation b etween the trader’s
+normalized execution ﬂow in each time interval and the volume-weighted average price
+(VW AP) changes in the next time interval. A trader with statistically s igniﬁcant
+positive correlation at a time horizon is classiﬁed as having price-fore casting ability
+at that time horizon. We consider 26 time horizons ranging from 1 sec ond to 30
+minutes. To test the persistence of traders’ price-forecasting ability, we split the ﬁve-
+day sample into two periods comprising the ﬁrst two days and the sub sequent three
+5
+days, respectively. For each time horizon, we use the ﬁrst-two-d ay period to identify
+the group of traders consisting of those with price-forecasting a bility at that time
+horizon (Group 1), while the remaining traders constitute Group 2. The subsequent
+three-day period serves as the out-of-sample validation window to test whether the
+traders in Group 1 are able to predict subsequent price movements persistently.
+We construct group execution ﬂows by summing standardized exec ution ﬂows of
+all traders within each group, so traders with diﬀerent execution v olume are compa-
+rable. We measure the price-forecasting ability of each group by th e Group Measure
+(GM), deﬁned as the correlation between group execution ﬂow and subs equent price
+movements. From Table 9, Group 1’s GM is signiﬁcantly positive in the validation
+period at all tested horizons from 1 second to 2 minutes.
+To gauge the economic signiﬁcance of the forecasting ability of trad ers in Group
+1, we simulate three zero-cost trading strategies during the last- three-day validation
+period. These strategies are carried out for each given time horizo n δ that we consider.
+At the end of each δ-length time interval, the strategy 1 takes a directional position
+on the stock with size equal to the normalized execution ﬂows of Gro up 1 in the time
+interval and takes an opposite position on the risk-free asset, lev eraging the forecasting
+ability of traders in Group 1. Similarly, the strategy 2 trades with pos ition size equal
+to the normalized execution ﬂows of Group 2, and the strategy 3 tr ades with position
+size equal to the normalized diﬀerence between the execution ﬂow o f Group 1 and
+Group 2. The positions of the strategies are held for time δ and adjusted at the
+end of the next δ-length interval. We report statistical tests and annualized Sharp e
+ratios adjusted for trading-session duration for various horizon s. From Table 11, the
+annualized Sharpe ratios of strategies 1 and 3 range from 16 to 63 a cross the tested
+horizons from 1 second to 2 minutes during this validation period, bef ore transaction
+costs. We also examine the strategies’ sensitivity to transaction c osts; results are
+shown in Figures 4 and 5.
+We also check whether the trading value of Group 1 accounts for on ly a small share
+of total trading value, which helps distinguish persistent predictab ility from mechan-
+ical price pressure. Across most horizons, the execution ﬂow of G roup 1 accounts for
+less than 15% of the total trading value per stock and exhibits lower absolute volumes
+than those of Group 2, thereby ruling out self-generated price mo mentum as a driver
+of the observed persistence.
+For the second research question, we analyze the relation betwee n the proﬁtability
+6
+of proprietary trading and traders’ price-forecasting ability and liquidity provision.
+We deﬁne a P&L at the ﬁnest granularity as the proﬁt or loss resultin g from a pair of
+a buy (resp., sell) execution and a subsequent sell (resp., buy) exe cution of the same
+number of shares by the same trader in the same stock. We use a FI FO matching
+algorithm to obtain all the P&Ls of each trader from the trader’s pr oprietary execu-
+tions, including executions during opening and closing calls. These auc tion sessions
+account for more than 12% of total trading value in the data set an d are therefore
+important for accurate matching. The regression sample retains P &L observations
+whose two executions occur during continuous trading on the same day.
+Building on this foundation, for each matched P&L of a trader, we at tach to it the
+trader’s forecasting ability measure at the horizon of the P&L and t he passiveness of
+the two executions constituting the P&L. Speciﬁcally, for each tra der n and horizon
+δj, we calculate ρjn, the correlation between the trader’s execution ﬂow in an interval
+of length δj and the price change in the subsequent interval across 26 horizon s from
+1 second to 30 minutes. For each P&L P Li carried out by trader n, we use three
+alternative approaches to ﬁnd the horizon δk among the 26 horizons that is the closest
+to the horizon of the P&L, which is deﬁned as the duration between t he two executions
+constituting the P&L. Under each approach, we then deﬁne the pr oxy of forecasting
+ability of the trader for this particular P&L by fi = ρkn.
+We deﬁne two dummies SLi and LLi for P Li, indicating that exactly one and both
+of the two executions constituting the P&L are passive, respectiv ely. The omitted
+category consists of P&L observations in which both executions ar e aggressive.
+We then regress P Li on fi, SLi, and LLi, together with trade characteristics,
+order-book controls, and trader ﬁxed eﬀects, with stock ﬁxed e ﬀects added in the
+pooled regressions, so the comparison is made within a common accou nting unit and
+conditional on the state of the order book. These estimates ask w hether a P&L is
+higher when the trader has stronger forecasting ability at the par ticular horizon of
+the P&L and when the trader uses passive limit orders to carry out t he executions.
+In the pooled regressions, conditional on the other regressors, a one-standard-
+deviation increase in fi is associated with 1.02 – 1.19 currency units higher P&L per
+matched position across the three horizon-matching approaches . The execution-type
+coeﬃcients also exhibit a consistent ordering in P&L, holding the othe r regressors
+ﬁxed. Relative to positions with no passive executions (MM), position s with exactly
+one passive execution (SL) have 1.28–1.31 currency units higher P& L, whereas posi-
+7
+tions with two passive executions (LL) have 5.08–5.13 currency unit s higher P&L. The
+estimated diﬀerence between LL and SL is 3.79–3.82 currency units a nd is statistically
+signiﬁcant under all approaches ( p < 0.001).
+Our empirical analysis yields four key ﬁndings. First, the execution ﬂ ow of the
+group of traders whose execution ﬂow can forecast future price changes in the ﬁrst
+two-day time period continues to have statistically signiﬁcant positiv e correlation
+with future price changes in the second three-day time period. The results hold at 22
+time horizons ranging from 1 second to 2 minutes. This group-level e vidence supports
+persistence in the price-forecasting ability captured by the initial c lassiﬁcation.
+Second, hypothetical trading strategies that take positions bas ed on the execution
+ﬂow of the group of traders whose execution ﬂow has statistically s igniﬁcant positive
+correlation with future price change in the ﬁrst two-day period ach ieve high annualized
+Sharpe ratios in the second three-day period. The results hold at 2 3 time horizons
+ranging from 1 second to 5 minutes, further illustrating the econom ic signiﬁcance of
+the identiﬁed price-forecasting ability and its persistence.
+Third, a P&L consisting of a pair of executions by a trader in opposite direc-
+tions is positively associated with the price-forecasting ability of the trader at the
+particular time horizon that is commensurate with that of the P&L. T his links the
+proxy of forecasting ability to proﬁts from actual proprietary ex ecutions, conditional
+on execution roles and the other controls.
+Fourth, holding the other regressors ﬁxed, a P&L is higher with mor e executions
+constituting the P&L being passive. This evidence on liquidity provision is consistent
+with prior work showing that liquidity suppliers and market makers can earn returns
+for providing immediacy ( Jylh¨ a et al.; 2014; Hendershott and Seasholes ; 2007). A
+close HFT comparison comes from Brogaard et al. (2014), who decompose stock-
+day HFT revenues and show that liquidity-demanding marketable ord ers have an
+informational advantage suﬃcient to overcome the bid-ask sprea d and trading fees.
+By contrast, liquidity-supplying nonmarketable limit orders are adve rsely selected,
+although spread-related revenues and exchange liquidity rebates can more than oﬀset
+the associated adverse-selection costs. Our execution matching analysis therefore
+provides complementary evidence from a broader proprietary-tr ader sample and a
+diﬀerent empirical unit. It preserves the liquidity roles of both exec utions in each P&L
+observation, allowing us to distinguish supplying liquidity on one side fro m supplying
+it on both sides, conditional on the forecasting proxy and the othe r regressors.
+8
+The rest of the paper is organized as follows. Section 2 introduces the data set
+we use. Section 3 analyzes institutional traders’ persistence in forecasting intrad ay
+stock price movements. Section 4 examines how execution-matched P&L relates to
+forecasting ability and passive execution composition. Finally, Sectio n 5 concludes
+the paper.
+2 Data
+The data set contains the information of all limit order book events, including those
+occurring in opening and closing calls, for ﬁve stocks, labeled by Stoc k-1, Stock-2,
+Stock-3, Stock-4, and Stock-5, during November 22, 2010 to No vember 26, 2010.
+There are three types of limit order book events: limit order submiss ion, limit order
+cancellation, and execution. Each execution is caused by the match ing of an incoming
+market order or marketable limit order, which is submitted by a liquidity taker, with a
+limit order on the order book, which was previously submitted by a liquid ity provider.
+The information for each limit order book event includes the time of th e event, the
+type of the event, number of shares, price, whether an order is a hidden order or
+a displayed order, identity of the trader for order submission or ca ncellation, and
+the identity of the liquidity taker and that of the liquidity provider for execution.
+Notably, the data set contains the trading capacity of each limit ord er and market
+order submitted by a trader, which indicates whether the order is s ubmitted on behalf
+of the trader’s client or for the trader’s own proprietary trading.
+The data set has three distinctive features. (i) The data set prov ides explicit iden-
+tity of the trader for each limit order and market order, enabling pr ecise tracking of
+individual trading behavior. (ii) The trading capacity of each limit orde r and market
+order is provided, distinguishing traders’ proprietary trading beh avior from that for
+the traders’ clients. Because clients’ trading volume is almost half o f the total trading
+volume, it is essential to exclude orders from clients in order to stud y traders’ pro-
+prietary trading. (iii) The data set contains information of all execu tions occurring
+during opening and closing call auction sessions, unlike conventional datasets that
+only include information of continuous trading sessions. Such inform ation is impor-
+tant because the trading value during opening call and closing call ac counts for more
+than 12% of the total trading value in our data set. This allows us to c alculate proﬁt
+and loss of traders more accurately by taking into account the exe cution of traders
+9
+during opening call and closing call.
+Section 2.1 discusses the opening call and closing call sessions and presents su m-
+mary statistics for the ﬁve stocks. Section 2.2 presents summary statistics of the
+proprietary trading of institutional traders.
+2.1 Opening and closing calls
+The stock exchange has three sessions during a trading day: open ing call, continuous
+trading, and closing call. During the opening call, order entry and full order man-
+agement are allowed but no matching of buy and sell orders takes pla ce. At the end
+of the opening call, there is an uncross taking place at 9:00, which last s a short time,
+usually a fraction of a second. During the uncross, crossing order s are executed at the
+equilibrium price. 1 Unexecuted orders remaining after the opening uncross constitu te
+the initial limit order book for the continuous trading session. During the continuous
+trading, there is automatic matching of orders; each new coming or der is immediately
+checked for execution against limit orders on the opposite side of th e limit order book.
+Continuous trading is followed by the closing call, which is similar to the op ening call.
+During the closing call, order entry and full order management is allow ed but there
+is no automatic matching. At the end of closing call, an uncross takes place between
+17:29:30 and 17:30:00. During the closing call uncross, crossing orde rs are executed
+based on the equilibrium price of orders in that phase. Unexecuted o rders remaining
+after the closing call uncross are canceled.
+Table 1 shows the trading value in unit of currency for the opening call, cont inuous
+trading, and the closing call for each stock in our data set. We ﬁnd t hat the trading
+value during the opening and closing calls is high, especially the closing ca ll, so it
+is necessary to consider the executions during all the three sessio ns when computing
+traders’ proﬁts and losses. Table 2 shows the summary statistics for bid-ask spread
+and the size at best bid and ask prices. It is clear that Stock-1 and S tock-2 are the
+most liquid in terms of trading value, bid-ask spread, and size at best bid and ask
+1The equilibrium price is determined according to the following criteria: ( 1) The price that
+maximizes the number of shares to be executed at the time of uncro ss. (2) If more than one price
+exists under (1), the uncross shall occur at the price that minimize s any imbalance. (3) If more than
+one price exists under (2), the uncross shall occur at the price wit h the highest market pressure (i.e.
+shares will remain unexecuted in the cross). (4) If more than one p rice exists under (3), the uncross
+shall occur at a price that is the average price between the highest price with positive imbalance and
+the lowest price with negative imbalance. If the price is oﬀ tick, it will be rounded to the nearest
+tick. In the case of equal distance it will be rounded down.
+10
+Table 1: The trading value of the opening call, continuous trading, a nd
+the closing call for each stock. “Total” is the sum of the trading values in the
+three sessions, “OC”, “CT”, and “CC” represent the trading valu e in the opening
+call session, continuous trading session, and closing call session, r espectively. The
+last two rows show the ratio of trading value during opening call and c losing call to
+that during continuous trading, respectively. The unit of trading v alue is currency,
+and the stocks are sorted in the order of total trading values. Th e number aeb is the
+scientiﬁc notation of a · 10b.
+Session Stock-1 Stock-2 Stock-3 Stock-4 Stock-5
+Total 7.05e+08 1.79e+08 1.61e+08 1.41e+08 1.38e+08
+OC 5.67e+06 9.44e+05 1.21e+06 1.08e+06 8.12e+05
+CT 6.05e+08 1.56e+08 1.40e+08 1.23e+08 1.19e+08
+CC 9.42e+07 2.13e+07 1.97e+07 1.67e+07 1.87e+07
+OC/CT 0.94% 0.60% 0.87% 0.87% 0.68%
+CC/CT 15.57% 13.61% 14.06% 13.50% 15.77%
+prices.
+2.2 Order’s trading capacity and trader’s proprietary trad ing
+The data set contains the trading capacity of each limit order and ma rket order,
+which indicates whether the order is submitted for a trader’s own pr oprietary trading
+or for a trader’s client (i.e., an order for brokerage service). As we aim to study the
+proprietary trading of institutional investors in this paper, we only use the orders
+for proprietary trading when we analyze traders’ orders and exe cutions unless we
+explicitly mention orders for clients.
+Table 3 shows the number of clients’ orders and the clients’ trading volume during
+the continuous trading sessions. Clients’ trading volume is almost ha lf of the total
+trading volume, i.e., they are a substantial part of the market activ ity. Thus, the
+trading capacity information is essential for the analysis of the pro ﬁtability of traders’
+proprietary trading.
+Table 4 shows the number of traders who have larger proprietary execut ion value
+carried out by limit orders than that carried out by market orders d uring continuous
+trading session, and the percentage of such traders for each st ock. Table 5 shows the
+number of traders who have larger proprietary execution volume c arried out by limit
+orders than that carried out by market orders during continuous trading session, and
+11
+Table 2: Summary statistics of bid-ask spread and the size at best bid and
+ask prices. Panel A reports the mean and standard error of the bid-ask spre ad in
+unit of currency and in unit of ticks. Panel B reports the mean and s tandard error of
+best bid and ask sizes in unit of shares. Tick size is the smallest amount of allowed
+price movement. The samples of the bid-ask spread and best bid and ask sizes are
+collected from snapshots of the limit order book per millisecond, so th e standard
+error is small. The stocks are sorted in the order of the total trad ing values in unit
+of currency. Standard errors are in the parentheses. The numb er aeb is the scientiﬁc
+notation of a · 10b.
+Stock-1 Stock-2 Stock-3 Stock-4 Stock-5
+Panel A: Bid-ask spread
+Currency 6.55e-03 9.18e-03 1.68e-02 1.63e-02 2.02e-02
+(3.02e-07) (8.66e-07) (1.34e-06) (1.03e-06) (1.44e-06)
+Number of ticks 1.31 1.84 1.68 1.63 2.02
+(6.04e-05) (1.73e-04) (1.34e-04) (1.03e-04) (1.44e-04)
+Panel B: The size at best bid and ask prices
+Best bid size (shares) 3.37e+04 8.94e+03 4.52e+03 5.60e+03 2.76e+0 3
+(2.35) (7.00e-01) (7.67e-01) (6.35e-01) (2.35e-01)
+Best ask size (shares) 3.50e+04 9.21e+03 3.62e+03 5.14e+03 2.80e+ 03
+(3.55) (7.34e-01) (2.68e-01) (3.86e-01) (2.10e-01)
+12
+Table 3: The percentage of clients’ orders and clients’ trading volu me rela-
+tive to all orders and trading volume during continuous trad ing sessions.
+“Total number of limit orders (market orders)” is the total numbe r of limit orders
+(market orders) in the data set. “Total buy (sell) volume” is the to tal buy (sell)
+volume in the data set (buy volume and sell volume are equal). The sto cks are sorted
+in the order of total trading value in unit of currency as in Table 1. The number aeb
+is the scientiﬁc notation of a · 10b.
+Stock-1 Stock-2 Stock-3 Stock-4 Stock-5
+Market cap (currency) 2.72e+10 5.40e+09 1.86e+10 6.09e+09 1.10e +10
+Total number of limit orders 9.97e+05 8.27e+05 9.71e+04 1.88e+05 1.8 3e+05
+Percentage of limit orders from clients 16.65% 20.46% 23.49% 14.94% 14 .18%
+Total number of market orders 2.43e+04 1.29e+04 8.62e+03 8.08e+ 03 8.60e+03
+Percentage of market orders from clients 47.09% 39.82% 49.93% 46.0 3% 46.11%
+Total number of cancellations 1.40e+06 1.23e+06 9.38e+04 2.09e+05 1.95e+05
+Percentage of cancellations from clients 14.22% 18.71% 20.51% 12.61% 11.41%
+Total buy volume (shares) 8.34e+07 2.31e+07 6.67e+06 1.05e+07 6.0 9e+06
+Percentage of buy volume from clients 48.15% 46.22% 54.20% 48.53% 52 .48%
+Total sell volume (shares) 8.34e+07 2.31e+07 6.67e+06 1.05e+07 6.0 9e+06
+Percentage of sell volume from clients 37.68% 45.68% 51.56% 53.07% 52 .03%
+the percentage of such traders for each stock. Both tables sho w that about half of
+the traders can be viewed as net liquidity providers for proprietary trading.
+Table 6 shows the quantiles of the total number of orders and executions for
+traders’ own proprietary trading during the continuous trading p eriods in the data
+set. As can be seen, the top 10% (resp., 5%) of the institutional tr aders had more
+than 1,853 (resp., 4791) orders for proprietary trading and carr ied out more than
+163 (resp., 295) executions for proprietary trading during one we ek. The most active
+Table 4: Number of traders who have larger proprietary execution val ue
+carried out by limit orders than that carried out by market or ders during
+continuous trading session. “#Liquidity provider” is the number of such traders.
+“Percentage” is “#Liquidity provider” divided by the total number o f institutional
+traders. The stocks are sorted in the order of total trading valu es in unit of currency
+as in Table 1.
+Stock-1 Stock-2 Stock-3 Stock-4 Stock-5
+#Liquidity provider 98 74 72 74 67
+Percentage 49.49% 61.16% 55.81% 57.36% 57.76%
+13
+Table 5: Number of traders who have larger proprietary execution vol ume
+carried out by limit orders than that carried out by market or ders during
+continuous trading session. “#Liquidity provider” is the number of such traders.
+“Percentage” is “#Liquidity provider” divided by the total number o f institutional
+traders. The stocks are sorted in the order of total trading valu es in money as in
+Table 1.
+Stock-1 Stock-2 Stock-3 Stock-4 Stock-5
+#Liquidity provider 98 74 72 73 67
+Percentage 49.49% 61.16% 55.81% 56.59% 57.76%
+(i.e., top 1%) traders had hundreds of thousands of orders and a f ew hundreds to
+thousands of executions.
+3 Traders’ ability of forecasting intraday price move-
+ments
+In this section, we study traders’ forecasting ability of future pr ice changes at a
+spectrum of time horizons ranging from 1 second to 30 minutes. We s plit our ﬁve-
+day data set into two time periods: the ﬁrst period is the ﬁrst two da ys and the
+second period is the last three days. We ﬁrst construct a measure of a trader’s ability
+of forecasting future price change at a given time horizon in Section 3.1. We then
+document the distribution of traders’ forecasting ability during th e ﬁrst time period
+in Section 3.2, and examine the persistence of this ability over the second time per iod
+in Section 3.3. To gauge the economic magnitude of the traders’ forecasting ab ility,
+we evaluate the performance of three hypothetical trading stra tegies in Section 3.4.
+Furthermore, we address potential price impact concerns by ana lyzing the execution
+ﬂow share of diﬀerent trader groups in Section 3.5. Finally, Section 3.6 presents
+robustness checks.
+3.1 The measure of the forecasting ability of traders
+For robustness, we consider 26 time horizons δ: 1 second (s) – 10 s (with one second
+increments: 1 s, 2 s, ..., and 10 s), 12 s – 30 s (with 2 s increments), 1 m inute (min),
+2 min, 5 min, 10 min, 20 min, and 30 min.
+14
+Table 6: Quantiles of total number of orders and executions for trade rs’
+proprietary trading during the continuous trading of the ﬁv e trading days
+for each stock. #Traders is the number of institutional traders in each stock. Pan el
+A shows the quantile of the total number of orders submitted for t he traders’ own
+proprietary trading and Panel B shows the quantile of the total nu mber of executions
+due to the traders’ own proprietary trading. The diﬀerence betw een the number of
+traders in Panel A and Panel B is the number of traders who have no executions due
+to proprietary trading, i.e. those traders do submit orders for pr oprietary trading but
+none of those orders result in any execution. The stocks are sort ed in the order of
+total trading values in money as in Table 1.
+Panel A: Quantiles of total number of orders
+Stock #Traders 1% 2% 5% 10% 25% 50% 75% 90% 95% 98% 99%
+Stock-1 227 1 1 1 2 7 38 194 2,494 21,394 56,282 270,586
+Stock-2 143 1 1 1 2 5 40 227 2,557 13,728 217,533 395,632
+Stock-3 142 1 1 1 3 8 42 243 1,853 4,791 15,630 17,641
+Stock-4 149 1 1 1 2 5 36 205 1,983 6,542 38,143 93,633
+Stock-5 134 1 1 2 2 7 56 326 2,209 5,814 35,110 62,096
+Panel B: Quantiles of total number of executions
+Stock #Traders 1% 2% 5% 10% 25% 50% 75% 90% 95% 98% 99%
+Stock-1 193 1 1 1 2 6 23 72 319 611 1,415 2,755
+Stock-2 121 1 1 1 1 4 18 63 300 633 934 951
+Stock-3 125 1 1 1 2 4 19 49 163 295 481 853
+Stock-4 126 1 1 1 1 4 11 50 164 284 489 563
+Stock-5 115 1 1 1 2 5 25 63 175 280 390 408
+15
+For a ﬁxed time horizon δ, we split the continuous trading session [0 , T ] of a day
+into 0 = t0 < t 1 < t 2 < · · · , where ti = iδ, i = 0 , 1, . . .. The ith time interval is
+(ti−1, ti] with duration equal to δ.
+For a ﬁxed time horizon δ, the execution ﬂow of the nth trader on the ith time
+interval (ti−1, ti] is the net money that the trader spends, i.e., the total value of bu y
+execution minus that of sell execution, during the ith time interval ( ti−1, ti], which is
+denoted as f lown,i.2 The volume weighted average stock price (P vwi ) for the ith time
+interval (ti−1, ti] is the volume weighted average transaction price of the stock dur ing
+the ith time interval ( ti−1, ti].3
+We split our ﬁve-day data set into two time periods: the ﬁrst period is the ﬁrst
+two days and the second time period is the last three days.
+For the ﬁxed time horizon δ, for each trader n, we measure the forecasting ability
+of the trader in the ﬁrst two days by the time series correlation bet ween the execution
+ﬂow f lown,i and the VW AP change:
+ρn := Correlation (f lown,i, P vwi+1 − P vwi ), (1)
+which is estimated using only the data in the ﬁrst time period.
+We classify the traders into two groups based on the estimated cor relations during
+the ﬁrst time period. Group 1 consists of traders whose estimated correlations are
+positive and statistically signiﬁcant in a two-sided test at the 5% level. 4 Group 2
+contains the remaining traders.
+For the jth group, j = 1, 2, suppose there are Nj traders in the group. We deﬁne
+the group ﬂow of group j in the ith time interval ( ti−1, ti] as
+GroupF lowji =
+Nj∑
+n=1
+N ormF lown,i, (2)
+where N ormF lown,i is the execution ﬂow of the nth trader in the time interval (ti−1, ti]
+normalized by its time series mean and standard deviation.
+We measure the forecasting ability of the group j by using the Group Measure
+(GM) deﬁned as
+GM j = Correlation (GroupF lowji , P vwi+1 − P vwi ) . (3)
+2See Appendix A.2 for details of this deﬁnition.
+3See Appendix A.3 for details of the deﬁnition.
+4We test the following hypothesis H0 : ρn = 0, H1 : ρn ⁄= 0, and the p-value is calculated by
+P (|r| > |d| | H0), where r is test statistic (sample correlation), and d is the observed test statistic.
+16
+We use DiﬀGroupFlowi to measure the diﬀerence of the execution ﬂow of the two
+groups in time interval ( ti−1, ti], which is deﬁned as
+DiﬀGroupFlowi = N ormGroupF low1i − N ormGroupF low2i , (4)
+where N ormGroupF lowji is the group ﬂow for the jth group in the time interval
+(ti−1, ti] normalized by its time series mean and standard deviation.
+Then, we use the ∆ Group Measure (denoted as ∆ GM) to measure the diﬀerence
+of the forecasting ability between the two groups, which is deﬁned a s
+∆GM = Correlation
+(
+DiﬀGroupFlowi, P vwi+1 − P vwi ) . (5)
+3.2 Forecasting ability of traders in the ﬁrst time period
+Table 7 shows the maximum, minimum, and the average of the correlation mea sure
+deﬁned in ( 1) for traders who have signiﬁcantly positive correlation (two-sided p-value
+< 0.05) in the ﬁrst time period (i.e., the ﬁrst two days) using the data du ring the
+ﬁrst time period. The correlations range from approximately 0.8% to 53.9%.
+Table 8 shows the percentage of traders classiﬁed into Group 1 in the ﬁrst time
+period. About 10% of the traders meet this positive-correlation sc reening criterion in
+the ﬁrst time period.
+For a given stock and time horizon, let N be the number of traders whose cor-
+relations can be estimated in the ﬁrst time period. We test whether t he number of
+traders with signiﬁcantly positive estimated correlations exceeds w hat would be ex-
+pected under the joint zero-correlation null. More precisely, we co nsider the following
+hypothesis
+H0 : ρn = 0, ∀n = 1, . . . , N, (6)
+H1 : otherwise . (7)
+Table 8 also reports the signiﬁcance of testing the hypothesis ( 6).5 Using the binomial
+reference distribution in Appendix I, we reject the joint zero-correlation null at the
+5% level in 32 of the 45 stock-horizon combinations reported in Table 8.
+5See Appendix I for the details of computing the p-value.
+17
+Table 7: Maximum, minimum, and the average of the correlation measur e deﬁned in (1) for traders with
+signiﬁcantly positive correlation (two-sided p-value < 0.05) in the ﬁrst time period (i.e., the ﬁrst two
+days). The stocks are sorted in the order of total trading values in money as in Table 1. The number aeb is the scientiﬁc
+notation of a · 10b. A dash indicates that no trader meets the selection criterion for t hat stock and horizon.
+δ Stock-1 Stock-2 Stock-3 Stock-4 Stock-5
+Max Min Average Max Min Average Max Min Average Max Min Average Max Min Average
+1 s 3.71e-02 9.61e-03 1.80e-02 3.15e-02 7.83e-03 1.52e-02 3.23e-02 7.77e-03 1.66e-02 4.51e-02 7.98e-03 1.53e-02 2.19e-02 8.58e-03 1.4 7e-02
+10 s 7.14e-02 2.49e-02 3.74e-02 9.59e-02 2.55e-02 4.61e-02 4.02e-0 2 2.48e-02 3.20e-02 5.68e-02 2.54e-02 3.74e-02 4.89e-02 2.62e-02 3 .76e-02
+30 s 1.28e-01 4.92e-02 7.11e-02 1.39e-01 4.78e-02 8.39e-02 9.68e-0 2 6.40e-02 8.51e-02 9.23e-02 4.42e-02 6.18e-02 1.20e-01 8.43e-02 9 .75e-02
+1 min 1.62e-01 6.12e-02 8.28e-02 1.64e-01 8.61e-02 1.18e-01 9.84e-0 2 6.36e-02 8.18e-02 1.35e-01 6.32e-02 8.46e-02 1.78e-01 6.48e-02 1 .09e-01
+2 min 1.42e-01 8.58e-02 1.11e-01 2.88e-01 8.62e-02 1.64e-01 1.73e-0 1 8.60e-02 1.16e-01 1.24e-01 9.21e-02 1.11e-01 2.14e-01 8.91e-02 1 .31e-01
+5 min 1.87e-01 1.42e-01 1.65e-01 2.28e-01 1.51e-01 1.96e-01 1.80e-0 1 1.54e-01 1.65e-01 2.51e-01 1.37e-01 1.71e-01 2.73e-01 1.48e-01 2 .10e-01
+10 min 3.36e-01 1.91e-01 2.29e-01 3.46e-01 2.03e-01 2.76e-01 2.94e- 01 1.91e-01 2.25e-01 3.13e-01 1.92e-01 2.42e-01 2.93e-01 1.98e-01 2.47e-01
+20 min 3.72e-01 2.79e-01 3.36e-01 5.25e-01 3.09e-01 4.16e-01 3.29e- 01 2.84e-01 3.12e-01 4.92e-01 2.70e-01 3.25e-01 4.25e-01 2.72e-01 3.48e-01
+30 min 5.10e-01 3.31e-01 4.22e-01 4.79e-01 3.43e-01 4.12e-01 – – – 5.3 9e-01 3.31e-01 3.97e-01 4.84e-01 3.34e-01 3.94e-01
+18
+Table 8: Percentage of traders with signiﬁcantly positive correlat ion in the
+ﬁrst time period (i.e., the ﬁrst two days). The percentage is based on positive
+estimated correlations with a two-sided p-value < 0.05. The stocks are sorted in the
+order of total trading values in money as in Table 1. Stars indicate the signiﬁcance
+of the upper-tail count test of hypothesis ( 6). Signiﬁcant levels are indicated by
+∗p < 0.05, ∗∗p < 0.01, and ∗∗∗p < 0.001. See Appendix I for the details of computing
+the p-value.
+δ Stock-1 Stock-2 Stock-3 Stock-4 Stock-5
+1 s 7.01%** 8.99%** 3.12% 8.33%** 5.81%
+10 s 8.28%*** 17.98%*** 6.25%* 11.46%*** 6.98%*
+30 s 5.10%* 12.36%*** 3.12% 8.33%** 4.65%
+1 min 7.01%** 12.36%*** 5.21% 8.33%** 11.63%***
+2 min 6.37%** 10.11%*** 6.25%* 6.25%* 15.12%***
+5 min 4.46% 6.74%* 5.21% 7.29%* 9.30%**
+10 min 7.64%*** 8.99%** 4.17% 6.25%* 3.49%
+20 min 4.46% 8.99%** 3.12% 6.25%* 2.33%
+30 min 5.10%* 10.11%*** 0.00% 7.29%* 8.14%**
+3.3 Persistence of forecasting ability of traders in the sec ond
+time period
+For each ﬁxed time horizon δ, we compute the group measure GM 1 and GM 2 deﬁned
+in ( 3) for the two groups and the ∆ GM deﬁned in ( 5) using the data in the second
+time period (i.e., the last three days).
+We ﬁnd that GM 1 and ∆ GM are signiﬁcantly positive for time horizons up to
+2 min, providing group-level evidence that the traders who are able to forecast the
+stock price change in the ﬁrst time period can persistently forecas t the price change
+in the second time period.
+Table 9 shows the GM for the two groups and the ∆ GM in the second time period
+for Stock-1 and Stock-2. GM 1 is the group measure in the second time period for the
+ﬁrst group, which consists of the traders who have signiﬁcantly po sitive correlation
+in the ﬁrst period, and GM 2 is the group measure in the second time period for the
+second group, which consists of the traders who are not in the ﬁrs t group. We ﬁnd
+that: ( i) the group measure of the ﬁrst group is signiﬁcantly positive for tim e horizons
+up to 2 min; ( ii) the group measure of the second group is signiﬁcantly negative fo r
+time horizons up to 2 min; ( iii) and the correlation between the diﬀerence of the
+19
+two group ﬂows and the change of VW AP price is signiﬁcantly positive f or time
+horizons up to 2 min. The less consistent signiﬁcance at longer horizo ns may partly
+be caused by smaller sample size, since fewer observations are availa ble for computing
+correlations at longer horizons.
+Figure 1 shows the group measures of the two groups for Stock-1 and Sto ck-2
+during the second period using the correlation between the execut ion ﬂow and the
+volume weighted average price change. Group 1 consists of the tra ders who have
+signiﬁcantly positive correlation during the ﬁrst period and Group 2 is the rest of the
+traders.
+We obtain similar results for the other three stocks, see Section K of the Online
+Appendix for details.
+1 s
+2 s
+3 s
+4 s
+5 s
+6 s
+7 s
+8 s
+9 s
+10 s
+12 s
+14 s
+16 s
+18 s
+20 s
+22 s
+24 s
+26 s
+28 s
+30 s
+1 min
+2 min
+5 min
+10 min
+20 min
+30 min
+Horizons
+-0.2
+-0.15
+-0.1
+-0.05
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+Group Measure
+Group 1
+Group 2
+Difference
+(a) Stock-1
+1 s
+2 s
+3 s
+4 s
+5 s
+6 s
+7 s
+8 s
+9 s
+10 s
+12 s
+14 s
+16 s
+18 s
+20 s
+22 s
+24 s
+26 s
+28 s
+30 s
+1 min
+2 min
+5 min
+10 min
+20 min
+30 min
+Horizons
+-0.2
+-0.15
+-0.1
+-0.05
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+Group Measure
+Group 1
+Group 2
+Difference
+(b) Stock-2
+Figure 1: Group measure and diﬀerence group measure for Stock-1 and
+Stock-2 during the second period. Group 1 consists of the traders who have
+signiﬁcantly positive correlation during the ﬁrst period and Group 2 is the rest of the
+traders.
+3.4 Three hypothetical trading strategies
+To illustrate the economic signiﬁcance of the forecasting ability of th e traders, we
+carry out three simple hypothetical trading strategies during the second time period
+(i.e., the last three days).
+For a ﬁxed time horizon δ, suppose ri+1 is the risk free interest rate for the time
+20
+Table 9: Group Measure for the two groups and ∆Group Measure in the
+second period for Stock-1 and Stock-2. GM 1 is the group measure of the ﬁrst
+group, which consists of the traders who have signiﬁcantly positive correlation in the
+ﬁrst period. GM 2 is the group measure of the second group, which consists of the
+traders who are not in the ﬁrst group. Signiﬁcant levels are indicate d by ∗p < 0.05,
+∗∗p < 0.01, and ∗∗∗p < 0.001. The number aeb is the scientiﬁc notation of a · 10b.
+δ Stock-1 Stock-2
+GM 1 GM 2 ∆GM GM 1 GM 2 ∆GM
+1 s 2.12e-02*** -1.04e-02** 2.11e-02*** 2.26e-02*** -1.66e-02* ** 2.64e-02***
+2 s 3.51e-02*** -1.81e-02*** 3.53e-02*** 4.03e-02*** -2.64e-02 *** 4.43e-02***
+3 s 2.50e-02*** -2.55e-02*** 3.35e-02*** 4.47e-02*** -3.92e-02 *** 5.62e-02***
+4 s 4.98e-02*** -3.82e-02*** 5.76e-02*** 4.61e-02*** -4.03e-02 *** 5.79e-02***
+5 s 4.55e-02*** -2.62e-02*** 4.63e-02*** 6.21e-02*** -5.42e-02 *** 7.77e-02***
+6 s 4.75e-02*** -3.27e-02*** 5.22e-02*** 5.79e-02*** -5.12e-02 *** 7.31e-02***
+7 s 5.19e-02*** -4.30e-02*** 6.30e-02*** 7.07e-02*** -4.91e-02 *** 7.91e-02***
+8 s 4.70e-02*** -2.76e-02** 5.03e-02*** 8.85e-02*** -5.14e-02* ** 9.26e-02***
+9 s 5.80e-02*** -2.29e-02* 5.35e-02*** 8.49e-02*** -5.52e-02** * 9.30e-02***
+10 s 6.18e-02*** -4.00e-02*** 6.61e-02*** 8.96e-02*** -5.66e-0 2*** 9.78e-02***
+12 s 7.00e-02*** -4.21e-02*** 7.31e-02*** 1.05e-01*** -5.70e-0 2*** 1.07e-01***
+14 s 8.58e-02*** -3.21e-02** 7.72e-02*** 1.17e-01*** -6.49e-02 *** 1.20e-01***
+16 s 9.32e-02*** -5.03e-02*** 9.59e-02*** 1.16e-01*** -6.36e-0 2*** 1.20e-01***
+18 s 6.75e-02*** -4.92e-02*** 7.58e-02*** 1.34e-01*** -7.20e-0 2*** 1.36e-01***
+20 s 8.27e-02*** -4.21e-02** 8.13e-02*** 1.15e-01*** -6.47e-02 *** 1.21e-01***
+22 s 9.85e-02*** -3.30e-02* 8.78e-02*** 1.24e-01*** -8.87e-02* ** 1.40e-01***
+24 s 9.85e-02*** -4.88e-02** 9.72e-02*** 1.27e-01*** -7.76e-02 *** 1.37e-01***
+26 s 5.28e-02** -4.23e-02** 6.40e-02*** 1.29e-01*** -9.60e-02* ** 1.49e-01***
+28 s 7.35e-02*** -3.63e-02* 7.42e-02*** 1.77e-01*** -9.92e-02* ** 1.83e-01***
+30 s 6.65e-02*** -3.93e-02* 7.10e-02*** 1.44e-01*** -9.54e-02* ** 1.59e-01***
+1 min 5.32e-02* -6.76e-02** 8.02e-02** 1.69e-01*** -1.28e-01*** 2.00e-01***
+2 min 7.25e-02* -9.63e-02** 1.16e-01*** 8.25e-02* -1.70e-01*** 1 .78e-01***
+5 min 8.86e-02 -2.00e-02 7.50e-02 6.13e-02 -1.23e-01* 1.29e-01**
+10 min 2.38e-01** -8.97e-03 1.81e-01** -1.25e-02 -8.77e-02 5.20e- 02
+20 min 2.51e-01* 1.39e-01 9.73e-02 -3.79e-02 -7.87e-02 2.81e-02
+30 min 9.88e-02 -9.45e-02 1.31e-01 -2.57e-02 -4.07e-02 1.05e-02
+21
+interval (ti, ti+1].6 The excess return of the stock in ( ti, ti+1] is then given by P vwi+1−P vwiP vwi −
+ri+1.
+Suppose that at the end of each time interval ( ti−1, ti] in the second time period,
+we are able to observe the execution ﬂow of the two groups during ( ti−1, ti]. We
+consider the following three trading strategies:
+Strategy 1: Trading according to the execution ﬂow of group 1. Mo re precisely, at each time
+ti, we form a zero-cost portfolio by borrowing at the funding rate ri+1 and taking
+a long position of size N ormGroupF low1i on the stock, where N ormGroupF low1i
+is the normalized execution ﬂow of group 1 in the time interval ( ti−1, ti]. We
+hold the positions during ( ti, ti+1] and liquidate the portfolio at time ti+1. Then,
+the cash return of the portfolio at time ti+1 is given by
+F lowW eightedReturn1i+1 = N ormGroupF low1i × ( P vwi+1 − P vwiP vwi − ri+1), ∀i,
+(8)
+which we call the ﬂow weighted excess return (F lowW eightedReturn) of strat-
+egy 1.
+Strategy 2: Trading according to the execution ﬂow of group 2. Mo re precisely, the strategy
+is the same as the strategy 1 except that N ormGroupF low1i is replaced by
+N ormGroupF low2i , which is the normalized execution ﬂow of group 2 in the
+time interval (ti−1, ti]. Then, the cash return of the strategy at time ti+1 is given
+by
+F lowW eightedReturn2i+1 = N ormGroupF low2i × ( P vwi+1 − P vwiP vwi − ri+1), ∀i,
+(9)
+which we call the ﬂow weighted excess return of strategy 2.
+Strategy 3: Trading according to the diﬀerence between the exec ution ﬂow of group 1 and
+that of group 2. More precisely, the strategy is the same as the st rategy 1 except
+that N ormGroupF low1i is replaced by Dif f GroupF lowi (deﬁned in ( 4)), which
+is the diﬀerence between normalized execution ﬂow of group 1 and th at of group
+6ri+1 is deﬁned as the eﬀective overnight interest rate computed as a we ighted average of all
+overnight unsecured lending transactions in the interbank market , multiplied by the time fraction
+ti+1 − ti.
+22
+2 in the time interval ( ti−1, ti]. Then, the cash return of the strategy at time
+ti+1 is given by
+F lowW eightedReturn3i+1 = N ormDif f GroupF lowi × ( P vwi+1 − P vwiP vwi − ri+1), ∀i,
+(10)
+which we call the ﬂow weighted excess return of strategy 3. N ormDif f GroupF lowi
+denotes Dif f GroupF lowi standardized by its mean and standard deviation.
+We measure the proﬁtability of three strategies by testing the sign iﬁcance of time
+series average ﬂow weighted excess return ( F lowW eightedReturn) and by the annu-
+alized Sharpe ratio
+√
+D × 252
+δ
+F lowW eightedReturn
+σ(F lowW eightedReturn), (11)
+where D is the duration of the continuous trading session.
+Table 10 and Figure 2 show the average ﬂow weighted return of Stock-1 and Stock-
+2 for the three strategies during the second time period (i.e., the las t three days). The
+average ﬂow weighted return for strategy 1 is signiﬁcantly positive for time horizons
+up to 30 s; the average ﬂow weighted return for strategy 2 is signiﬁ cantly negative for
+most time horizons up to 2 min; and the average ﬂow weighted return for strategy 3
+is signiﬁcantly positive for time horizons up to 2 min. The insigniﬁcance f or longer
+horizons may be due to smaller sample sizes.
+Table 11 and Figure 3 show the annualized Sharpe ratio of Stock-1 and Stock-2 for
+the three strategies during the last three days. We ﬁnd that the a nnualized Sharpe
+ratios of Strategy 1 and Strategy 3 are positive and substantially h igh, ranging from
+16 to 63 at tested horizons from 1 second to 2 minutes.
+We obtain similar results for the other three stocks, see Section K of the Online
+Appendix for details.
+We further investigate the eﬀect of transaction cost on the perf ormance of the
+three trading strategies. The transaction cost denoted as α is a percentage of the
+VW AP. That is, the trading strategies would buy a stock at an α percentage higher
+price than the VW AP, and sell at anα percentage lower price than the VW AP.Nasdaq
+(2014) reports the transaction cost varies from 1 .1 × 10−5 to 4 .7 × 10−5.
+Figures 4 and 5 show the annualized Sharpe ratios of Stock-1 and Stock-2 for the
+three strategies with transaction cost in the second time period (i.e ., the last three
+23
+Table 10: Average ﬂow weighted return of Stock-1 and Stock-2 for the
+three strategies during the second time period (i.e., the la st three days).
+S1 denotes Strategy 1, S2 denotes Strategy 2, and S3 denotes Strategy 3. Signiﬁcant
+levels are indicated by ∗p < 0.05, ∗∗p < 0.01, and ∗∗∗p < 0.001. The number aeb is
+the scientiﬁc notation of a · 10b.
+δ Stock-1 Stock-2
+S1 S2 S3 S1 S2 S3
+1 s 2.89e-06** -1.44e-06 2.89e-06** 2.64e-06** -1.92e-06* 3.07e- 06***
+2 s 6.50e-06*** -3.35e-06* 6.54e-06*** 6.50e-06*** -4.24e-06** 7.15e-06***
+3 s 5.51e-06*** -5.66e-06** 7.40e-06*** 8.70e-06*** -7.60e-06* ** 1.09e-05***
+4 s 1.23e-05*** -9.47e-06*** 1.43e-05*** 1.02e-05*** -8.95e-06 *** 1.29e-05***
+5 s 1.23e-05*** -7.13e-06** 1.26e-05*** 1.53e-05*** -1.34e-05* ** 1.92e-05***
+6 s 1.37e-05*** -9.41e-06** 1.50e-05*** 1.55e-05*** -1.36e-05* ** 1.95e-05***
+7 s 1.58e-05*** -1.32e-05*** 1.93e-05*** 2.04e-05*** -1.40e-05 *** 2.27e-05***
+8 s 1.51e-05*** -8.95e-06* 1.63e-05*** 2.73e-05*** -1.58e-05** * 2.85e-05***
+9 s 1.93e-05*** -7.67e-06 1.78e-05*** 2.72e-05*** -1.75e-05*** 2.97e-05***
+10 s 2.15e-05*** -1.39e-05** 2.30e-05*** 3.03e-05*** -1.89e-05 *** 3.29e-05***
+12 s 2.56e-05*** -1.54e-05** 2.68e-05*** 3.85e-05*** -2.07e-05 *** 3.91e-05***
+14 s 3.28e-05*** -1.23e-05* 2.96e-05*** 4.58e-05*** -2.53e-05* ** 4.70e-05***
+16 s 3.66e-05*** -1.98e-05*** 3.77e-05*** 4.76e-05*** -2.60e-0 5*** 4.94e-05***
+18 s 2.72e-05*** -1.99e-05** 3.06e-05*** 5.86e-05*** -3.13e-05 *** 5.92e-05***
+20 s 3.47e-05*** -1.78e-05* 3.42e-05*** 5.27e-05*** -2.95e-05* * 5.54e-05***
+22 s 4.28e-05*** -1.44e-05 3.82e-05*** 5.92e-05*** -4.23e-05** * 6.68e-05***
+24 s 4.35e-05*** -2.16e-05** 4.30e-05*** 6.26e-05*** -3.81e-05 *** 6.73e-05***
+26 s 2.38e-05* -1.91e-05* 2.89e-05** 6.67e-05*** -4.93e-05*** 7 .68e-05***
+28 s 3.40e-05** -1.68e-05 3.43e-05*** 9.31e-05*** -5.17e-05*** 9.61e-05***
+30 s 3.13e-05** -1.86e-05 3.35e-05** 7.81e-05*** -5.13e-05*** 8 .59e-05***
+1 min 3.04e-05 -3.86e-05* 4.58e-05* 1.23e-04*** -9.15e-05*** 1.45 e-04***
+2 min 5.16e-05 -6.85e-05* 8.29e-05** 8.03e-05* -1.63e-04*** 1.71e -04***
+5 min 9.38e-05 -2.13e-05 7.94e-05 8.91e-05 -1.72e-04 1.83e-04
+10 min 3.35e-04* -1.26e-05 2.54e-04 -1.88e-05 -1.73e-04 1.07e-04
+20 min 5.06e-04* 2.78e-04 1.97e-04 -9.89e-05 -2.15e-04 7.97e-05
+30 min 2.26e-04 -2.14e-04 2.99e-04 -7.11e-05 -1.18e-04 3.29e-05
+24
+1 s
+2 s
+3 s
+4 s
+5 s
+6 s
+7 s
+8 s
+9 s
+10 s
+12 s
+14 s
+16 s
+18 s
+20 s
+22 s
+24 s
+26 s
+28 s
+30 s
+1 min
+2 min
+5 min
+10 min
+20 min
+30 min
+Horizons
+-3
+-2
+-1
+0
+1
+2
+3
+4
+5
+6
+Average Flow Weighted Return (%)
+×10-4
+S1
+S2
+S3
+(a) Stock-1
+1 s
+2 s
+3 s
+4 s
+5 s
+6 s
+7 s
+8 s
+9 s
+10 s
+12 s
+14 s
+16 s
+18 s
+20 s
+22 s
+24 s
+26 s
+28 s
+30 s
+1 min
+2 min
+5 min
+10 min
+20 min
+30 min
+Horizons
+-3
+-2
+-1
+0
+1
+2
+3
+4
+5
+6
+Average Flow Weighted Return (%)
+×10-4
+S1
+S2
+S3
+(b) Stock-2
+Figure 2: Average ﬂow weighted return for Stock-1 and Stock-2 for the
+three trading strategies during the second time period (i.e ., the last three
+days). S1 denotes Strategy 1, S2 denotes Strategy 2, and S3 denotes Strategy 3.
+1 s
+2 s
+3 s
+4 s
+5 s
+6 s
+7 s
+8 s
+9 s
+10 s
+12 s
+14 s
+16 s
+18 s
+20 s
+22 s
+24 s
+26 s
+28 s
+30 s
+1 min
+2 min
+5 min
+10 min
+20 min
+30 min
+Horizons
+-40
+-20
+0
+20
+40
+60
+80
+Annualised Sharpe Ratio
+S1
+S2
+S3
+(a) Stock-1
+1 s
+2 s
+3 s
+4 s
+5 s
+6 s
+7 s
+8 s
+9 s
+10 s
+12 s
+14 s
+16 s
+18 s
+20 s
+22 s
+24 s
+26 s
+28 s
+30 s
+1 min
+2 min
+5 min
+10 min
+20 min
+30 min
+Horizons
+-40
+-20
+0
+20
+40
+60
+80
+Annualised Sharpe Ratio
+S1
+S2
+S3
+(b) Stock-2
+Figure 3: Annualized Sharpe Ratio of Stock-1 and Stock-2 for the three
+trading strategies during the second period. S1 denotes Strategy 1, S2 denotes
+Strategy 2, and S3 denotes Strategy 3.
+25
+Table 11: Annualized Sharpe ratios of Stock-1 and Stock-2 for the thre e
+strategies during the last three days. S1 denotes Strategy 1, S2 denotes
+Strategy 2, and S3 denotes Strategy 3. The Sharpe ratio for time horizon δ is√
+D×252
+δ × F lowW eightedReturnσ(F lowW eightedReturn), where D is the duration of the continuous trading
+session, F lowW eightedReturn and σ(F lowW eightedReturn) are the mean and stan-
+dard deviation of the ﬂow weighted return corresponding to horizo n δ. The number
+aeb is the scientiﬁc notation of a · 10b.
+δ Stock-1 Stock-2
+S1 S2 S3 S1 S2 S3
+1 s 2.60e+01 -1.41e+01 2.43e+01 2.87e+01 -2.25e+01 3.25e+01
+2 s 4.36e+01 -2.14e+01 3.93e+01 3.74e+01 -2.60e+01 3.86e+01
+3 s 3.14e+01 -2.37e+01 3.51e+01 4.08e+01 -3.79e+01 5.31e+01
+4 s 4.25e+01 -3.17e+01 4.63e+01 3.69e+01 -3.21e+01 4.48e+01
+5 s 3.40e+01 -2.34e+01 3.62e+01 4.21e+01 -3.62e+01 5.05e+01
+6 s 3.27e+01 -2.73e+01 3.81e+01 4.36e+01 -3.84e+01 5.40e+01
+7 s 5.09e+01 -3.50e+01 5.38e+01 4.48e+01 -3.48e+01 5.24e+01
+8 s 3.85e+01 -2.12e+01 3.95e+01 4.23e+01 -3.28e+01 4.88e+01
+9 s 4.53e+01 -1.54e+01 3.79e+01 4.82e+01 -3.51e+01 5.71e+01
+10 s 4.76e+01 -2.72e+01 4.70e+01 3.91e+01 -3.49e+01 4.89e+01
+12 s 4.46e+01 -2.65e+01 4.61e+01 3.89e+01 -3.14e+01 4.59e+01
+14 s 5.10e+01 -1.97e+01 4.55e+01 5.01e+01 -3.75e+01 5.85e+01
+16 s 4.87e+01 -3.00e+01 5.30e+01 3.88e+01 -2.95e+01 4.39e+01
+18 s 3.49e+01 -2.64e+01 3.91e+01 4.74e+01 -3.16e+01 5.13e+01
+20 s 3.64e+01 -2.07e+01 3.72e+01 5.60e+01 -2.71e+01 5.44e+01
+22 s 5.02e+01 -1.59e+01 4.20e+01 5.08e+01 -4.00e+01 5.90e+01
+24 s 4.76e+01 -2.42e+01 4.70e+01 4.49e+01 -3.31e+01 5.17e+01
+26 s 2.00e+01 -1.92e+01 2.57e+01 4.86e+01 -3.80e+01 5.47e+01
+28 s 2.87e+01 -1.64e+01 3.10e+01 5.74e+01 -3.99e+01 6.30e+01
+30 s 2.70e+01 -1.64e+01 2.89e+01 5.67e+01 -3.44e+01 5.90e+01
+1 min 1.60e+01 -1.87e+01 2.23e+01 4.20e+01 -3.43e+01 5.46e+01
+2 min 1.61e+01 -2.09e+01 2.56e+01 1.78e+01 -3.27e+01 3.68e+01
+5 min 1.09e+01 -2.64e+00 9.45e+00 6.60e+00 -1.59e+01 1.50e+01
+10 min 2.11e+01 -9.69e-01 1.71e+01 -8.09e-01 -7.70e+00 4.77e+00
+20 min 2.10e+01 9.48e+00 7.17e+00 -2.43e+00 -4.51e+00 1.83e+00
+30 min 5.85e+00 -7.36e+00 7.98e+00 -1.51e+00 -2.33e+00 6.28e-01
+26
+days). We ﬁnd that: ( i) At 5 s horizon for Stock-1, the Sharpe ratios of Strategy 1
+and Strategy 3 are positive when the transaction cost is less than 2 .5 × 10−5; ( ii) At
+5 s horizon for Stock-2, the Sharpe ratios of Strategy 1 and Stra tegy 3 are positive
+when the transaction cost is less than 3 .5 × 10−5; (iii) For longer horizons, the Sharpe
+ratios of Strategy 1 and Strategy 3 are positive for larger transa ction costs.
+1 1.5 2 2.5 3 3.5 4 4.5 5 5.5
+Transcation Cost ×10-5
+-120
+-100
+-80
+-60
+-40
+-20
+0
+20
+Annualised Sharpe Ratio
+S1
+S2
+S3
+(a) 5 s horizon
+1 1.5 2 2.5 3 3.5 4 4.5 5 5.5
+Transcation Cost ×10-5
+-120
+-100
+-80
+-60
+-40
+-20
+0
+20
+Annualised Sharpe Ratio
+S1
+S2
+S3
+(b) 30 s horizon
+1 1.5 2 2.5 3 3.5 4 4.5 5 5.5
+Transcation Cost ×10-5
+-120
+-100
+-80
+-60
+-40
+-20
+0
+20
+Annualised Sharpe Ratio
+S1
+S2
+S3
+(c) 1 min horizon
+1 1.5 2 2.5

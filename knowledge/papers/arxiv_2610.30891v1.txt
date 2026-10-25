@@ -1,0 +1,991 @@
+Preprint 2026
+Equilibria and Learning in Competitive Market Making
+Matteo Ongermatteo.onger@unimi.it
+Luigi F oscariluigi.foscari@unimi.it
+Department of Computer Science, University of Milan
+Abstract
+We propose a market-making game played among N≥ 2 strategic market makers and a
+single non-strategic representative trader. In a continuous quote space, standard finite-game
+arguments do not apply, while non-convex and discontinuous payoffs rule out classical
+continuous existence results and complicate learning. Nonetheless, we characterize pure-
+strategy Nash equilibria (PSNEs) and show that at least one PSNE always exists under
+minimal assumptions on the underlying asset value distribution, and that the equilibrium
+bid–ask spread widens strictly with asset value volatility. To obtain a tractable learning
+framework, we discretize prices and, under an additional regularity condition, show that
+the time-averaged play of no-internal-regret learners approaches the continuous Nash price
+envelope as the tick size vanishes. Finally, we empirically validate our theoretical results
+through numerical simulations.
+Keywords:Market making, Online learning, Equilibrium selection, Market microstructure
+1. Introduction
+Classical models of price competition, such as the Bertrand oligopoly model (Bertrand,
+1883), elegantly explain why competition may drive prices toward marginal cost. However,
+applying this one-sided logic directly to financial market making overlooks a fundamental
+structural feature of liquidity provision: market makers operate simultaneously on both the
+buy and sell sides of the market, and their quotes actively shape the direction of incoming
+order flow.
+This two-sided interaction is particularly prominent in financial markets characterized by
+inelastic trading demand, such as commodity markets (Bogmans et al., 2024), where overall
+trading volume does not respond to price changes and market participants simply choose
+whether to buy or sell. In conventional Bertrand competition, a firm’s price reduction allows
+it to gain market share at the cost of a lower margin; in contrast, liquidity providers in
+inelastic markets post bid and ask quotes that establish a marketmid-price, which acts as
+a threshold determining whether buying or selling is advantageous relative to the asset’s
+fundamental value, ultimately dictating trade direction and, indirectly, execution priority.
+To study this mechanism, and how makers learn in it, we model liquidity provision
+as a static game played among N≥ 2 strategic market makers and a single non-strategic
+representative trader. The former simultaneously post bid–ask quotes for a single asset with
+uncertain fundamental value, while the latter, upon observing the posted quotes, submits
+either a buy or a sell order according to a fixed decision rule that compares the realized
+fundamental value of the asset with the market mid-price induced by the quoted prices.
+arXiv:2610.30891v1 [cs.GT] 22 Oct 2026
+Onger Foscari
+Contributions.By bridging Bertrand-style oligopoly (Bertrand, 1883) and classic market-
+making models ` a la Glosten and Milgrom (1985), our framework provides a tractable baseline
+for studying competition and learning dynamics in two-sided inelastic markets. To the best
+of our knowledge, this work provides the first theoretical and algorithmic analysis of market
+making in this setting. Our main contributions are summarized below:
+• Nash Equilibrium Existence (Section 3):We characterize pure-strategy Nash equi-
+libria (PSNEs) in continuous quote spaces and prove that at least one PSNE always exists
+with minimal assumptions on the underlying asset value distribution. This equilibrium
+establishes a zero-profit competitive benchmark that guarantees perfect parity among all
+market makers, serving as an explicit reference model for competitive liquidity provision.
+• Impact of V olatility on Competitive Pricing (Section 3.1):We investigate how
+fundamental market uncertainty shapes equilibrium quotes. For location-scale families
+of asset distributions, we derive a structural scaling result: the equilibrium bid–ask
+spread scales linearly with asset value standard deviation. Crucially, this demonstrates
+that spread widenings can arise purely from competitive risk adjustments, rather than
+algorithmic collusion (Calvano et al., 2020; Harrington, 2018) or a higher share of informed
+traders (Glosten and Milgrom, 1985).
+• Learning the Competitive Benchmark (Section 4):To obtain a tractable learning
+framework, we analyze learning over a discrete price grid with tick size ∆. Under an
+additional regularity condition, we prove that all grid correlated equilibria uniformly
+concentrate on the continuous Nash price envelope as ∆ → 0. Consequently, the time-
+averaged play of adaptive market makers using no-internal-regret learning algorithms is
+guaranteed to asymptotically approach the continuous competitive benchmark.
+Finally, theoretical predictions and learning dynamics are empirically validated through
+numerical simulations in Section 5.
+1.1. T echnical Challenges
+Analyzing this market-making game presents distinct theoretical and algorithmic challenges:
+• Two-Sided Coupling:Updating a quote shifts the implied mid-price, directly coupling
+execution risk across both sides of the book. As a result, the game cannot be reduced to
+two independent Bertrand competitions. Indeed, since strategies consist of quote pairs,
+market makers can execute cross-side deviations (e.g., aggressively lowering the ask while
+retreating on the bid), thereby expanding the space of potentially profitable strategies in
+ways that break standard single-side equilibrium arguments.
+• Continuous vs. Discrete Tension:Payoffs in this game are inherently non-convex
+and discontinuous. In continuous quote spaces, this rules out standard PSNE existence
+theorems and complicates learning dynamics. Discretizing prices resolves these hurdles,
+but it introduces grid-dependent equilibria that obscure the model’s true structure and
+parameter dependencies.
+2
+Equilibria and Learning in Competitive Market Making
+1.2. Related W ork
+This work connects to market microstructure, game theory, and learning in games; we review
+the most closely related literature.
+Price Competition.Among classical oligopoly models (Cournot, 1838; Bertrand, 1883),
+Bertrand competition is the closest benchmark to our setting: a marginal price improvement
+causes a discontinuous jump in demand, which complicates equilibrium existence. Pure-
+strategy equilibria can be recovered under additional assumptions, such as quasiconcave
+payoffs (Dasgupta and Maskin, 1986; Reny, 1999) or suitable cost and demand conditions,
+possibly with multiple equilibria (Dastidar, 1995). Neither applies here: in particular,
+quasiconcavity fails for bid–ask pairs, since averaging two profitable one-sided deviations can
+leave a maker inactive on both sides. Our existence proof instead exploits the monotonicity
+of the midpoint operator via Tarski’s theorem (Tarski, 1955), as in games with strategic
+complementarities, where extremal equilibria likewise bracket the equilibrium set (Milgrom
+and Roberts, 1990; Vives, 1990), although our game is not supermodular.
+Market Microstructure.Seminal models study how informed order flow (Glosten and
+Milgrom, 1985; Kyle, 1985; Easley and O’Hara, 1987) and inventory risk (Ho and Stoll,
+1981) shape spreads, typically assuming that dealers break even. Our zero-profit quotes
+mirror the upper-tail pricing of Glosten (1994), but arise as a Nash outcome among finitely
+many strategic makers, as in models of competing dealers (Dennert, 1993; Biais et al., 2000;
+Back and Baruch, 2013). Unlike these works, which rely on noise traders to avoid no-trade
+outcomes (Milgrom and Stokey, 1982), we consider a fully informed trader with inelastic
+demand, so that quotes determine the direction of trade rather than its occurrence. Spreads
+are also well known to widen with volatility (Copeland and Galai, 1983; Ho and Stoll, 1981);
+we show that, within location-scale families, they scale exactly linearly. Finally, our grid
+game relates to the tick-size literature (Anshuman and Kalay, 1998; Cartea et al., 2022),
+whose small-tick limit we analyze.
+Learning in Games and Market Making.Our guarantees build on online learn-
+ing (Cesa-Bianchi and Lugosi, 2006; Orabona, 2023) and on the convergence of no-internal-
+regret dynamics to correlated equilibria (Foster and Vohra, 1997; Hart and Mas-Colell,
+2000; Blum and Mansour, 2007). Unlike Stoltz and Lugosi (2007), who learn over compact
+strategy sets with continuous payoffs, we approximate our discontinuous game by grid
+games. In non-strategic environments, online learning has been used to learn market-making
+strategies (Abernethy and Kale, 2013; Cesa-Bianchi et al., 2025; Maran and Restelli, 2026),
+via reductions to first-price auctions (Achddou et al., 2021; Cesa-Bianchi et al., 2024; Han
+et al., 2024) and dynamic pricing (Cesa-Bianchi et al., 2019; Tullii et al., 2025), while
+agent-based studies train makers via reinforcement learning (Spooner et al., 2018; Ganesh
+et al., 2019); here, we characterize the equilibria that interacting learners approach.
+Algorithmic Collusion.Learning agents can sustain supra-competitive prices (Calvano
+et al., 2020; Klein, 2021; Banchio and Skrzypacz, 2022; Hansen et al., 2021), also in dealer
+markets (Cont and Xiong, 2024; Colliard et al., 2022), raising regulatory concerns (Harrington,
+2018); no-swap-regret learning rules out some of these outcomes (Arunachaleswaran et al.,
+2025), motivating our choice of learners. Hartline et al. (2024) detect collusion from prices
+3
+Onger Foscari
+alone, a test later shown to be confoundable (Hartline et al., 2025); in this vein, we identify
+one such confound: volatility-driven spread widening.
+2. Model
+In this section, we present the model of inelastic markets used throughout the paper. Let
+N≥ 2 and N := {1, . . . , N}denote the set of market makers. The fundamental value of
+the asset is modeled as a continuous, non-degenerate random variable V , governed by an
+unknown cumulative distribution function F (with density f where it exists) and bounded
+support [v, v] ⊆ [0, 1]. Crucially, market makers possess no prior knowledge of the distribution
+F and must learn its structure over repeated interactions. Conversely, the trader observes
+the realized valuevofVprior to placing an order.
+At the start of each round, each market maker i∈ Nposts a pair si := (bi, ai), consisting
+of a bid quote bi and an ask quote ai, with 0 ≤b i ≤a i ≤ 1. The strategy space for market
+makeriis thus
+Si := (b, a)∈[0,1] 2  0≤b≤a≤1 .
+Lets := ( s1, . . . , sN ) ∈ S := Qi∈N Si denote the joint strategy profile, and letb :=
+(b1, . . . , bN ) anda := (a1, . . . , aN ) denote the joint vectors of bid and ask quotes, respectively,
+so thats= (b , a). We writes −i for the profile of all makers other than i. The prevailing
+market prices are determined by the best available quotes:
+a∗(a) := min
+i∈N
+ai andb ∗(b) := maxi∈N bi,
+which together induce the market mid-price
+m∗(s) := a∗(a) +b ∗(b)2 .
+After observing the posted quotes, the trader chooses an action d∈ D:= {−1, +1}, where
+d = +1 denotes a buy order and d = −1 denotes a sell order. Specifically, upon observing
+the asset’s realized fundamental value v and comparing it with the market mid-price m∗(s),
+the trader selects an actiond∈ Daccording to the following decision rule:
+P(d= +1|v,s) :=
+
+
+
+1 ifv > m ∗(s),
+0 ifv < m ∗(s),
+1
+2 ifv=m ∗(s),
+(1)
+withP(d=−1|v,s) = 1−P(d= +1|v,s).
+To complete the model specification, we define order allocation and execution payoffs.
+Let nA(a) := |{i∈ N |ai = a∗(a)}| and nB(b) := |{i∈ N |bi = b∗(b)}| denote the number
+of market makers quoting the best ask and bid prices, respectively. If multiple market
+makers quote the same prevailing price, the incoming order is allocated equally among
+them.1 Consequently, for a given strategy profiles, the expected payoff of market maker
+1. We adopt equal-split allocation as it is equivalent in expectation to selecting a tied market maker uniformly
+at random, while eliminating tie-breaking stochasticity, thereby reducing reward variance in simulation
+and learning.
+4
+Equilibria and Learning in Competitive Market Making
+i∈ Nis ui(s) := EV,d∼P(·|V,s) [ri(s; V, d)], where the ex-post payoff ri under realization v and
+trader orderdis given by
+ri(s;v, d):=
+
+
+
+ai −v
+nA(a) ifd= +1 anda i =a ∗(a),
+v−b i
+nB(b) ifd=−1 andb i =b ∗(b),
+0 otherwise.
+(2)
+For completeness, the ex-post realized payoff of the trader is equal to ( v−a ∗(a)) I{d=+1} +
+(b∗(b) −v ) I{d=−1}, implying that the overall trade interaction between the aggregate pool
+of market makers and the trader is zero-sum.
+Strategic Scope and Game Reduction.Given the optimal decision rule in (1), the
+trader’s action is fully determined by the realized fundamental value and the posted quotes,
+leaving liquidity providers as the sole strategic players. Isolating their interactions yields a
+reduced general-sum game among the N market makers, where a buy order occurs exactly
+when V > m∗(s), and a sell order exactly when V < m∗(s).2 Each maker’s expected payoff
+accordingly decomposes asu i(s) =u aski (s) +u bidi (s), where
+uaski (s) := I{ai=a∗(a)}nA(a) P(V > m∗(s)) (a∗(a)−E[V|V > m ∗(s)])
+is maker i’s expected payoff from buy orders, and ubidi (s) is defined symmetrically for sell
+orders. This reduced N -agent formulation fully captures the competitive dynamics of the
+market, providing the exact setting analyzed in the following sections.
+3. Equilibrium Concept
+In this section, we analyze the equilibrium properties of the proposed market-making game.
+Our main goal is to prove that at least one pure-strategy Nash equilibrium always exists.
+Establishing existence is nontrivial in our setting, as the strategy space is continuous and the
+payoff functions are non-convex and discontinuous due to Bertrand-style price competition
+and tie-breaking in order allocation, precluding a direct application of standard equilibrium
+existence results.
+Definition 1 (Pure-Strategy Nash Equilibrium). A strategy profilesis apure-
+strategy Nash equilibrium(PSNE) if, for every market maker i∈ N and every feasible
+deviationesi := (ebi,eai)∈ Si, we have:
+ui(esi,s −i)≤u i(si,s −i).
+In our two-sided market setting, a deviation esi allows market maker i to unilaterally
+alter its ask quote, its bid quote or both, simultaneously. As previously mentioned, such
+a deviation can affect not only the execution price and the maker’s share of the existing
+2. Since V is a continuous random variable, the event V = m∗(s) occurs with probability zero, so this holds
+almost surely.
+5
+Onger Foscari
+order flow, but also the composition of that flow by shifting the induced mid-price and hence
+the trader’s buy–sell decision. This coupling between the two sides of the market enlarges
+the set of potentially profitable deviations and makes their analysis more complex than in
+standard Bertrand competition. Establishing that a profile is a PSNE therefore also requires
+ruling out deviations that may exploit this interdependence.
+To establish existence, we first derive the necessary conditions that a Nash equilibrium
+profile must satisfy.
+Observation 2. In any PSNE, the expected profit from each side of the book must be
+zero independently. To see this, first observe that a strategy yielding negative expected
+payoff cannot be optimal, since quoting the boundary prices, i.e., si = (0, 1), guarantees
+a non-negative payoff for every realization of V . Hence, the expected profit must be non-
+negative. On the other hand, strictly positive expected profits cannot be sustained: if a side
+of the book generated strictly positive expected profit, a competing maker could undercut the
+corresponding quote by an arbitrarily small amount and capture all of the resulting order
+flow at a slightly less favorable price. Finally, because makers can adjust their quotes on
+the two sides independently, positive profits on one side cannot compensate for losses on the
+other: a maker could withdraw from the loss-making side while retaining the profitable side.
+Observation 3. As in standard Bertrand competition, any PSNE must have at least two
+market makers quoting the best ask and bid, i.e., nA(a), nB(b) ≥ 2. The usual undercutting
+argument must account for the fact that quotes also affect the mid-price. If, for instance,
+nA(a) = 1, the sole ask maker can execute a joint deviation by raising its ask by a small
+ε >0, while improving its bid by a much smaller amount. By shifting the mid-price upward,
+this deviation increases the margin on buy orders and converts marginal buy orders into sell
+orders captured by its new bid, yielding a strictly positive expected profit.
+Building on the observations above, consider a PSNE profiles, and let a∗, b∗ and
+m∗ := (a∗ + b∗)/2 denote its best ask, best bid and induced mid-price, respectively. The
+zero-profit conditionimplies
+E[a ∗ −V|V > m ∗] = 0,E[V−b ∗ |V < m∗] = 0,
+and hence
+a∗ =E[V|V > m ∗], b ∗ =E[V|V < m ∗].
+Thus, at any PSNE, the zero-profit condition uniquely determines the best quotes for its mid-
+price m∗. More generally, for any candidate equilibrium mid-price bm, internal consistency
+requires that the midpoint induced by the correspondingzero-profit quotescoincide with bm
+itself, motivating the following definition.
+Definition 4 (Midpoint Operator).For anym∈[v , v], define the zero-profit quotes
+a(m) :=E[V|V > m], b(m) :=E[V|V < m]
+whenever the conditioning events have positive probability, and set a(v) := v and b(v) := v
+otherwise, in accordance with their one-sided limits. We then define themidpoint operator
+H: [v , v]→[v , v]as
+H(m) := a(m) +b(m)2 .
+6
+Equilibria and Learning in Competitive Market Making
+By construction, H(m) is the midpoint induced by the zero-profit quotes associated with
+m. Consequently, the mid-pricem ∗ of any PSNE must be self-consistent, satisfying
+m∗ =H(m ∗),
+i.e., any PSNE mid-price is necessarily afixed pointofH.
+We denote by F := {m∈ [v, v] |m = H(m)} the set of fixed points of H. Next, we show
+that F is nonempty and lies strictly between the lower and upper bounds of the support of
+V.
+Theorem 5 (Existence of a Zero-Profit Midpoint). The set of fixed points F of H
+is nonempty and satisfiesF ⊂(v , v).
+Proof.We first establish that H is an order-preserving self-map on the complete lattice
+[v, v]. For every m∈ [v, v], a(m) and b(m) are well defined. Moreover, both functions are
+nondecreasing in m: increasing m removes lower values from the conditioning event defining
+a(m), while adding higher values to the conditioning event defining b(m). Consequently,
+H(m) = ( a(m) + b(m))/2 is also nondecreasing, establishing that H is indeed an order-
+preserving self-map on [v , v], as claimed.
+By the Knaster–Tarski fixed-point theorem (Tarski, 1955), H admits at least one fixed
+pointbm∈[v , v] satisfyingbm=H(bm), soF ̸=∅.
+It remains to rule out boundary fixed points. At the upper boundary, we have
+H(v) = v+b( v)2 < v,
+sinceb( v) =E[V]< v. Symmetrically, at the lower boundary,
+H(v ) = a(v) +v2 > v,
+since a(v) = E[V ] > v. Consequently, neither boundary point can be a fixed point of H, so
+F ⊂(v, v).
+Although the zero-profit condition is necessary for a PSNE, it is not sufficient. For
+any bm∈ F, we denote by s( bm) := ( b( bm), a( bm)) thezero-profit strategyat bm, and by
+s( bm) := (s( bm), . . . , s( bm)) the symmetriczero-profit profilewhere all market makers play
+s( bm). Even when all competitors stick tos −i( bm), a maker i may still find a profitable
+unilateral deviationesi := (ebi,eai) that exploits the two-sided coupling of the market.
+By improving a quote on one side, e.g., undercutting the ask to eai < a( bm) paired with
+bid withdrawal (ebi < b( bm)), as illustrated in Figure 1, maker i becomes the unique recipient
+of buy orders. This deviation shifts the induced midpoint to y := (eai + b( bm))/2 <bm, yielding
+an expected ask payoff of
+uaski (esi,s −i(bm)) =P(V > y) (eai −a(y)).
+This reveals the trade-off of two-sided competition: undercutting the ask narrows the per-
+trade margin, but the leftward shift of the midpoint (from bmto y) extends execution to
+7
+Onger Foscari
+V
+v v
+Zero-Profit Profile
+b(bm)
+bm
+a(bm)
+ubidi (s(bm)) = 0 uaski (s(bm)) = 0
+Sell Flow Buy Flow
+Unilateral Deviation (esi = (ebi,eai))
+y
+eaiebi Margin LossV olume Gain
+uaski (esi,s −i(bm))?>0ubidi (esi,s −i(bm)) = 0
+Captured Buy FlowSell Flow (Competitors)
+Figure 1: Mechanism of a unilateral ask undercut paired with bid withdrawal. Lowering the
+ask to eai narrows the per-trade execution margin but shifts the induced midpoint
+toy <bm, thereby expanding the captured buy order flow across (y, v].
+buyers with lower values, raising the execution probability P(V > y). A deviation is strictly
+profitable whenever this volume gain outweighs the lower margin. Crucially, this shift in the
+mid-price also impacts the opposite side of the book. Under the newly induced midpoint
+y <bm, maintaining the original bid quote b( bm), i.e., playing (b( bm),eai), would subject maker
+ito an expected bid payoff of
+ubidi ((b(bm),eai),s −i(bm)) =1N P(V < y) (b(y)−b(bm))≤0,
+since b(y) ≤b ( bm). This exposes the maker to adverse selection on the bid side, making it
+strictly loss-making whenever b(y) < b( bm). To prevent these potential losses from reducing
+its ask profits, the deviating maker plays esi instead, actively withdrawing from the bid side,
+which ensures
+ubidi (esi,s −i(bm)) = 0.
+The next step is therefore to establish whether at least one point of F is robust against
+such deviations. The following lemmas establish the properties needed to answer this
+question (their proofs are provided in Section A.1); combining them, we then identify such a
+point, which constitutes a PSNE mid-price.
+Lemma 6. Let bm∈ F. If the associated zero-profit profiles( bm)admits a profitable
+unilateral deviation, then it admits either a profitable ask undercut with bid withdrawal or a
+profitable bid raise with ask withdrawal.
+The preceding lemma shows that, without loss of generality, it suffices to analyze these
+single-sided deviations. Hereafter, an ask undercut paired with bid withdrawal is referred to
+simply as an ask undercut (and symmetrically for bid raises).
+8
+Equilibria and Learning in Competitive Market Making
+mk
+Max fixed point< y
+y
+Hyp. undercut midpoint
+(H(y)< y)
+m−
+PSNE-candidate fixed point
+(Bid-raise-immune)
+x
+H(x)
+H(y)
+m′
+x x
+Bid-raise contagion
+Case 1: x < y
+⇓
+Contradicts
+maximality
+of mk
+Case 2:
+y < x < m−
+⇓
+Contradicts
+x > y
+Case 3:
+x > m−
+⇓
+Contradicts
+m− ∈ FB
+Figure 2: Visual breakdown of the three case contradictions in the proof of Theorem 10.
+Lemma 7.Letbm∈ F. Then:
+(i) For any x >bm, the unique bid raise inducing mid-price x is profitable if and only if
+2x−b(x)< a(bm), which impliesH(x)> x.
+(ii) For any y <bm, the unique ask undercut inducing mid-price y is profitable if and only
+if2y−a(y)> b(bm), which impliesH(y)< y.
+Lemma 8. Let mmin := minF and mmax := maxF . Then (i) no profitable ask undercut
+exists atm min, and (ii) no profitable bid raise exists atm max.
+Lemma 9.Letm 1, m2 ∈ Fwithm 1 < m2. Then:
+(i) If a profitable bid raise at m1 induces a mid-price x > m2, then the bid raise inducing
+the same midpointxatm 2 is also profitable.
+(ii) If a profitable ask undercut at m2 induces a mid-price y < m1, then the ask undercut
+inducing the same midpointyatm 1 is also profitable.
+As anticipated above, we now combine these properties to identify a fixed point that
+admits no profitable unilateral deviation and hence constitutes a PSNE mid-price.
+Theorem 10 (Existence of a Pure-Strategy Nash Equilibrium).Define
+FB :={m∈ F |no profitable bid raise exists atm}
+andm − := infF B. ThenF B ̸=∅, ands(m −)is a pure-strategy Nash equilibrium.
+Proof sketch.Since H is continuous, F is compact: it has a minimum and maximum fixed
+point, mmin and mmax, and contains the infimum and supremum of any of its nonempty
+subsets. Lemma 8 makes mmax immune to bid raises, so FB ̸= ∅ and m− = infF B ∈ F. A
+short contagion argument (Lemma 9) shows m− ∈ FB, so m− = minF B is itself immune to
+bid raises.
+9
+Onger Foscari
+It remains to show that m− is also immune to undercuts. Suppose, towards a con-
+tradiction, that a profitable undercut at m− induces y < m−. Lemmas 8 and 9 place y
+strictly between mmin and m−, and compactness gives a largest fixed point mk < y. Since
+mk < m− = minF B, mk admits a profitable bid raise to some x > mk; Lemma 7 gives
+H(x)> x, which rules outx=yandx=m −, leaving three cases forx:
+1. Case x < y: H then maps [ x, y] into itself, so Knaster–Tarski produces a fixed point
+strictly betweenxandy, contradicting the maximality ofm k.
+2. Case y < x < m−: Inequalities from Lemma 7 combine, via monotonicity of a(·), b(·),
+intox < y, contradictingy < x.
+3. Case x > m−: Lemma 9 carries the bid raise at mk forward to m−, contradicting
+m− ∈ FB.
+No case survives, so m− is also undercut-immune, and Lemma 6 concludes. The full proof is
+given in Section A.1.
+While the existence result above focuses on the minimal fixed point immune to bid raises,
+a natural dual argument applies symmetrically to undercuts.
+Theorem 11 (Dual Existence of a Pure-Strategy Nash Equilibrium).Define
+FA :={m∈ F |no profitable aks undercut exists atm}
+andm + := supF A. ThenF A ̸=∅, ands(m +)is a pure-strategy Nash equilibrium.
+Theorems 10 and 11 thus yield two, possibly coinciding, equilibrium mid-prices, m−
+and m+, obtained from dual constructions. We now show that these are not just any two
+equilibria: they bracket every other one.
+Theorem 12 (Structure of Equilibria). The equilibrium midpoints m− and m+ satisfy
+m− ≤m +, and are respectively the smallest and largest equilibrium midpoints. Hence, every
+equilibrium mid-price belongs to the interval[m −, m+].
+Proof.Any PSNE mid-price m∗ admits neither a profitable ask undercut nor a profitable
+bid raise, so m∗ ∈ FA ∩ FB and hence m− = infF B ≤m ∗ ≤supF A = m+. Since m−
+and m+ are themselves PSNE mid-prices (Theorems 10 and 11), taking m∗ = m− yields
+m− ≤m +, and the bounds show that they are the smallest and largest PSNE mid-prices,
+respectively.
+Concretely, combining all preceding results, for any equilibrium mid-price m∗ ∈ [m−, m+],
+let a(m∗) and b(m∗) be the corresponding zero-profit quotes. Then, any profiles= (b , a) in
+which
+1. at least two market makers quote the best ask a(m∗) and at least two market makers
+quote the best bidb(m ∗) (ensuringn A(a)≥2 andn B(b)≥2), and
+2. all remaining market makers k submit non-improving quotes, i.e., ak ≥a (m∗) and
+bk ≤b(m ∗),
+constitutes a pure-strategy Nash equilibrium. Thus, equilibrium is robust to any passive
+configuration of non-competitively quoting market makers.
+10
+Equilibria and Learning in Competitive Market Making
+V
+v v
+Out-of-Support Zero-Profit Profile (bm≤v )
+bm
+a(bm)
+Inactive Bid Side
+100% Buy Orders
+uaski (s(bm)) = 0
+Unilateral Deviation (esi = (ebi,eai))
+ebi eai
+y
+Midpoint Shift
+Restored Sell Flow Remaining Buy Flow
+ubidi (esi,s −i(bm))>0 uaski (esi,s −i(bm)) = 0
+Figure 3: Profitable boundary deviation at an out-of-support candidate midpoint bm≤v.
+Posting ebi = v while withdrawing the ask shifts the induced midpoint to y > v,
+reactivating sell order flow on [v , y) with a strictly positive expected margin.
+Out-of-Support Midpoints.Throughout our analysis, we restricted attention to interior
+midpoints m∈ (v, v), where both sides of the market are active with positive probability.
+Although candidate midpoints outside the support ( bm≤v or bm≥v) can exist, they are
+economically less interesting and can never sustain a PSNE. Indeed, as illustrated in Figure 3,
+if bm≤v, the bid side is completely inactive; a market maker can unilaterally quote ebi = v
+while withdrawing its ask, shifting the induced midpoint into the support and capturing sell
+orders with strictly positive expected profit, since V > valmost surely. The case bm≥v is
+symmetric, with eai = v. Therefore, we can restrict the search for PSNE mid-prices to ( v, v).
+Beyond Pure-Strategy Nash Equilibria.Extending our analysis to richer solution
+concepts, such as mixed-strategy Nash equilibria (MSNEs) and correlated equilibria (CEs),
+is a natural and interesting next step. Randomization and correlation can readily be layered
+onto our results without generating new economic outcomes:
+• Mixed Strategies:Passive makers, those quoting strictly non-competitively ( ai > a(m∗)
+and bi < b(m∗)), can randomize freely, because they remain non-executing, so the prevailing
+best quotes remain bound to the zero-profit competitive threshold.
+• Correlated Strategies:A public correlation device can synchronize agents on one of the
+(possibly multiple) PSNEs of Theorem 12, again leaving the zero-profit structure intact.
+What we cannot show in general is the converse: that these are theonlyroutes to an
+MSNE or CE. The obstacle lies specifically in randomization: against a genuinely mixing
+opponent, a deviation’s profitability becomes an expectation over its randomized quotes,
+whose sign is hard to control without further structure on F . Indeed, under the regularity
+of Section 4 and uniqueness of the PSNE mid-price, we establish an asymptotic version of
+this characterization, but achieving it without such assumptions remains a nontrivial open
+problem.
+11
+Onger Foscari
+3.1. Impact of Asset V ariance on Equilibrium Spreads
+Having established the existence and structure of pure-strategy Nash equilibria, we now
+examine how the equilibrium bid–ask spread responds to changes in the uncertainty sur-
+rounding the underlying asset value V . Intuitively, higher volatility expands the conditional
+expectations of extreme value realizations, increasing adverse selection risk and forcing
+makers to widen their quotes.
+To formalize this intuition, consider a location-scale family of asset distributions generated
+by a standardized continuous random variable X supported on a bounded interval [ x, x],
+with zero mean E[X] = 0 and unit variance Var(X) = 1. For any location parameter µ∈R
+and scale parameterσ >0, define the fundamental value as
+Vσ :=µ+σX.
+Thus, Vσ has support [ vσ, vσ] = [ µ + σx, µ+ σx], which we require to lie in [0 , 1], with
+E[Vσ] = µ and Var(Vσ) = σ2. For any mid-price m∈ (vσ, vσ), an affine change of variable
+gives the zero-profit ask and bid functions forV σ as
+aσ(m) :=E[V σ |V σ > m] =µ+σE X  X > m−µσ  ,
+bσ(m) :=E[V σ |V σ < m] =µ+σE X  X < m−µσ  .
+Hence the midpoint operatorH σ(m) := (aσ(m) +b σ(m))/2 satisfies
+Hσ(m) =µ+σH 1
+ m−µ
+σ
+
+,
+where H1(z) := (E[X|X > z] + E[X|X < z])/2 is the normalized midpoint operator for
+X, extended to [ x, x] as in Definition 4 so that H1 (hence Hσ) is a well-defined self-map of
+the closed interval.
+Proposition 13 (Scaling of the Zero-Profit Spread). Let F1 ⊂ (x, x)denote the set
+of fixed points ofH 1, and define the spread functions
+w1(z) :=E[X|X > z]−E[X|X < z],
+wσ(m) :=a σ(m)−b σ(m).
+For anyσ >0:
+(i) The set of fixed points ofH σ satisfiesF σ =µ+σF 1.
+(ii) For anybmσ ∈ Fσ, writingbmσ =µ+σzwithz∈ F 1, the spread satisfies
+wσ(bmσ) =σ·w 1(z).
+Proof.A point bmσ ∈ [vσ, vσ] is a fixed point of Hσ if and only if bmσ = Hσ( bmσ).
+Substituting the scaled expression for Hσ and setting z := ( bmσ −µ )/σ, this is equivalent to
+µ+σz=µ+σH 1(z)⇐ ⇒z=H 1(z).
+12
+Equilibria and Learning in Competitive Market Making
+Thus,bmσ ∈ Fσ if and only ifz∈ F 1, establishing part (i).
+For part (ii), evaluate the spread atbmσ =µ+σz:
+wσ(bmσ) =a σ(bmσ)−b σ(bmσ)
+= (µ+σE[X|X > z])−(µ+σE[X|X < z])
+=σ(E[X|X > z]−E[X|X < z]) =σ·w 1(z),
+which concludes the proof.
+Since every PSNE mid-price is, in particular, a fixed point of the corresponding midpoint
+operator (Section 3), Proposition 13 applies to it directly: the equilibrium bid–ask spread at
+any PSNEµ+σzof theV σ-market equalsσw 1(z), growing linearly inσ.
+To put this into perspective, while in information-based models, like Glosten and
+Milgrom (1985), the bid–ask spread widens primarily as a defense mechanism against a
+higher proportion of informed traders, here the spread widens strictly due to the amplification
+of fundamental risk σ, even in a framework where the underlying information structure
+remains fixed. Since every competing maker responds to the same volatility shock in the
+same way, this widening is synchronized across the market, producing exactly the kind of
+correlated price movement that recent tests for algorithmic collusion are designed to catch.
+Hartline et al. (2024) propose flagging collusion directly from the sequence of played prices,
+while Hartline et al. (2025) show that such price-based tests can be confounded whenever
+non-collusive forces already drive agents toward the same correlated play. Our result supplies
+exactly one such force: volatility-driven spread widening is a benign, competitive source of
+precisely the price patterns these tests are built to flag.
+4. Learning
+We ask whether adaptive makers can recover the competitive price structure without
+knowing their payoff functions. Continuous-action bandit guarantees typically require
+smooth payoffs (Cesa-Bianchi et al., 2023, 2025), whereas best-quote allocation makes ours
+discontinuous. We therefore restrict quotes to a price grid with tick size ∆, giving rise to the
+grid game G∆, and show that the market prices of its correlated equilibria, and hence the
+time-averaged market prices of no-internal-regret learners, approach the Nash price envelope
+of the continuous game as ∆→0.
+For simplicity, we focus on two makers and normalize the support of V to [0, 1], but
+neither restriction is essential. 3 As anticipated in Section 3, this analysis requires additional
+regularity.
+Assumption 14 (Regularity). The random variable V has a continuous density f >0
+on(0 , 1), and the zero-profit quotes of Definition 4 satisfy a′(m) + b′(m) ≤ 2for every
+m∈(0,1).
+3. The argument extends from two makers to any fixed number by replacing the opponent’s quote with the
+best rival quote and tracking ties, and from [0,1] to any bounded support by an affine rescaling.
+13
+Onger Foscari
+This assumption holds throughout the rest of this section. The first condition makes the
+zero-profit quotes continuously differentiable, with derivatives
+b′(m) = f(m)F(m) (m−b(m)), a ′(m) = f(m)1−F(m) (a(m)−m),
+and it also ensures b′(m), a′(m) > 0, making the zero-profit quotes strictly increasing.
+The second condition bounds how fast H can move: H ′(m) = ( a′(m) + b′(m))/2 ≤ 1, so
+G(m) :=m−H(m) hasG ′(m)≥0 and is nondecreasing.
+Proposition 15 (Structure of Equilibria under Regularity). (i) The fixed-point set
+F is a nonempty closed interval[ m−, m+]; and (ii) every m∗ ∈ Fis a PSNE mid-price,
+with market prices(b(m ∗), a(m∗)).
+Proof sketch.For (i), F is the zero set of G, which is continuous and nondecreasing; F is
+nonempty by Theorem 5, hence it is a closed interval. For (ii), at any m∗ ∈ F, the same
+monotonicity, driven by a′(m) +b′(m) ≤ 2, rules out both one-sided and two-sided deviations
+from (b(m∗), a(m∗)), som ∗ is a PSNE mid-price. The full proof is given in Section A.2.
+Define b± := b(m±) and a± := a(m±). As m∗ ranges over F = [m−, m+], the market
+prices ( b(m∗), a(m∗)) trace out the Nash price pairs, a monotone curve from ( b−, a−) to
+(b+, a+), whose axis-aligned envelope we call theNash price envelope:
+RNE := [b−, b+]×[a −, a+].
+4.1. Zero-Profit Responses
+While a(·) and b(·) tie both zero-profit quotes to a common mid-price, we now fix the market
+quote on one side and ask which quote on the other side breaks even.
+Definition 16 (Zero-Profit Responses). For any market bid B∈ [0, 1), α(B)is the
+unique solution x∈ (B, 1)of x = a((x + B)/2). Symmetrically, for any market ask A∈ (0, 1],
+β(A)is the unique solution x∈ (0, A)of x = b((A + x)/2). We extend them by α(1) := 1
+andβ(0) := 0, consistently with their limits.
+In words, α(B) is the only market ask that earns zero expected profit against the market
+bid B, given the mid-price it induces; β(A) is its bid-side counterpart. Both are well defined,
+since x7→x−a ((x + B)/2) is strictly increasing, negative at x = B and positive at x = 1,
+and symmetrically for β(A).4 By the implicit function theorem, they are C1 on [0, 1) and
+(0,1], respectively, with
+α′(B) = a′(m)2−a ′(m) andβ ′(A) = b′(m)2−b ′(m)
+at the induced mid-prices m = (B + α(B))/2 and m = (A + β(A))/2. Hence, both are
+strictly increasing and Lipschitz on every compact subinterval of these intervals.
+4. Its derivative 1−a ′((x+B)/2)/2 is positive, as a′(m) ≤ 2−b ′(m) < 2; the signs follow from m < a(m) < 1
+form∈[0,1).
+14
+Equilibria and Learning in Competitive Market Making
+At any m∗ ∈ F, since m∗ = H(m∗), the responses recover the equilibrium quotes:
+α(b(m∗)) = a(m∗) and β(a(m∗)) = b(m∗), and in particular α(b±) = a± and β(a±) = b±.
+Composing them yields the following property, proved in Section A.2.
+Lemma 17.For every market askA∈(0,1],
+α(β(A))
+
+
+
+> AifA < a −,
+=AifA∈[a −, a+],
+< AifA > a +.
+That is, if the bid side responds to an ask A with β(A), and the ask side responds in turn
+with α(β(A)), the ask stays at A when A∈ [a−, a+] and otherwise moves strictly toward
+this interval; the same holds for bids, withβ◦αand [b −, b+].
+4.2. The Grid Game
+Fix a tick size ∆ > 0 with 1 /∆ ∈N , and let Γ ∆ := {0, ∆, 2∆, . . . ,1}. The grid game G∆ is
+the market-making game of Section 2 with each maker’s strategy space restricted to
+S ∆i := (b, a)∈Γ 2∆  b≤a ⊂ Si andS ∆ := Yi∈N S ∆i ,
+so that best quotes, mid-prices and payoffs are exactly as defined there. The next two
+lemmas identify profitable deviations on the grid: a best ask more than one tick below
+α(B) is profitably raised by one tick, while a rival ask sufficiently many ticks above α(B) is
+profitably undercut by one tick; symmetrically for bids.
+Lemma 18. Lets= (b , a) ∈ S∆, A := a∗(a), and B := b∗(b). If ai = A and ai +
+∆ < α(B), then raising ai to ai + ∆strictly increases ui. Symmetrically, if bi = B and
+bi −∆> β(A), then loweringb i tob i −∆strictly increasesu i.
+Lemma 19. Fix B <1and A > 0. There exists C0 > 1, depending only on F , B and A,
+such that the following holds. Lets= (b , a) ∈ S∆, A := a∗(a), B := b∗(b), and let i be a
+maker. If B≤ B and ea∈Γ∆ satisfies a−i ≤ea≤a i and ea≥α(B) + C0∆, then lowering ai
+to ea−∆weakly increases ui, strictly if a−i ≥ea− ∆. Symmetrically, if A≥A and eb∈ Γ∆
+satisfies bi ≤ eb≤b −i and eb≤β (A) −C 0∆, then raising bi to eb + ∆weakly increases ui,
+strictly ifb −i ≤ eb+ ∆.
+4.3. Correlated Equilibria
+Since the time-averaged play of no-internal-regret learners approaches the set of correlated
+equilibria (Foster and Vohra, 1997), we study the latter.
+Definition 20 (Correlated Equilibrium). For δ≥ 0, a distribution π over S ∆ is a
+δ-correlated equilibrium( δ-CE) of G∆ if, for every maker i∈ Nand every pair si,esi ∈ S∆i ,
+X
+s−i
+π(si,s −i) (ui(esi,s −i)−u i(si,s −i))≤δ.
+A0-CE is simply called acorrelated equilibrium(CE).
+15
+Onger Foscari
+For a CEπ, let
+amin(π) := min
+s∈supp(π)
+a∗(a) anda max(π) := max
+s∈supp(π)
+a∗(a)
+denote the extremal market asks on its support, and defineb min(π) andb max(π) similarly.
+Lemma 21. There exist C0 > 1and∆ 0 > 0, depending only on F , such that, for every
+∆≤∆ 0, every CEπofG ∆ satisfies
+amin(π)≥α(b min(π))−∆, b max(π)≤β(a max(π)) + ∆,
+amax(π)≤α(b max(π)) +C 0∆, b min(π)≥β(a min(π))−C 0∆.
+In words, up to one tick below and C0 ticks above, the market asks of any CE are
+bracketed by the zero-profit responses to its extremal bids; symmetrically for bids.
+4.4. Grid Correlated Equilibria Approach Nash
+For a profiles, let Denv(s) := min(x,y)∈RNE(|b∗(b) −x| + |a∗(a) −y| ) be the ℓ1-distance
+between its market prices and the Nash price envelope, and define the grid approximation
+error
+ε∆ := sup
+π
+max
+s∈supp(π)
+Denv(s),
+whereπranges over all CEs ofG ∆.
+Theorem 22 (Convergence of Grid Correlated Equilibria).ε ∆ →0as∆→0.
+Proof sketch.Combining the bounds of Lemma 21, and using that α is Lipschitz, the
+extremal asks of any CE satisfy the two-cycle condition α(β(A)) = A up to an error of order
+∆. By Lemma 17, this forces their limit points into [ a−, a+] as ∆ → 0, and the continuity
+of β carries the conclusion over to the extremal bids and [ b−, b+]. Since every supported
+market price lies between the extremal ones, the convergence is uniform over CEs. The full
+proof is given in Section A.2.
+In particular, if F = {m∗}, then RNE collapses to the PSNE prices ( b(m∗), a(m∗)), and
+the market prices of all grid CEs converge uniformly to them.
+4.5. No-Internal-Regret Learning
+Theorem 22 extends to approximate CEs, and hence to learning dynamics.
+Lemma 23 (Approximate Correlated Equilibria). Fix∆ > 0with1 /∆ ∈N . If πn
+is aδ n-CE ofG ∆ for everyn, withδ n →0, then
+lim sup
+n
+Es∼πn[Denv(s)]≤ε ∆ .
+16
+Equilibria and Learning in Competitive Market Making
+In the repeated grid game, at each round t, the makers’ learning algorithms select a
+profileS t = (St,1, St,2) ∈ S∆, the value Vt ∼F is drawn independently ofS t and of the
+past, and each maker observes only its realized payoff ri(St; Vt, dt), where dt is the trader’s
+order. We use uppercase letters because both the profile and the value are random: the
+former through the learners’ randomization and its dependence on past feedback. Maker i
+hasvanishing internal regretif, for every pairs i,esi ∈ S∆i ,
+RT,i (si,esi) := 1T TXt=1 E h(ui(esi,S t,−i)−u i(St))I {St,i=si}i
+satisfies lim supT RT,i (si,esi) ≤ 0, as guaranteed, e.g., by regret-matching procedures (Hart
+and Mas-Colell, 2000) and swap-regret minimizers (Blum and Mansour, 2007).
+Corollary 24 (No-Internal-Regret Learning). Fix∆ > 0with1 /∆ ∈N . If both
+makers have vanishing internal regret, then
+lim sup
+T→∞
+1
+T
+TX
+t=1
+E[D env(St)]≤ε ∆,
+and hence, by Theorem 22, the left-hand side vanishes as∆→0.
+Proof.Since Vt is independent ofS t, RT,i coincides with the internal regret on realized
+payoffs. Let ¯πT be the average of the laws ofS 1, . . . ,ST . Each sum in Definition 20 for ¯πT
+equals the corresponding RT,i (si,esi), so ¯πT is a δT -CE, with δT → 0 the largest positive
+part of these regrets. By linearity, Es∼¯πT [Denv(s)] is the time average in the statement, and
+Lemma 23 concludes.
+To summarize, on fine grids every CE, and hence the time-averaged play of no-internal-
+regret learners, keeps market prices close to the envelope RNE. The envelope is only an outer
+bound: our results do not exclude that learners occasionally play price pairs away from the
+Nash curve, such as ( b−, a+), but they cannot settle on one. Indeed, if their time-averaged
+play converges to a single profile, the point mass on it is a CE of G∆, whose extremal prices
+coincide, so Lemma 21 gives a∗(a) ≈α (b∗(b)) and b∗(b) ≈β (a∗(a)), and Lemma 17 forces
+its market prices close to the Nash curve.
+5. Simulations
+We illustrate the theoretical results with two market makers running Exp3 inside the Blum–
+Mansour reduction to internal regret (Cesa-Bianchi and Lugosi, 2006; Blum and Mansour,
+2007), against a Gaussian asset value with mean 0 .5 clamped 5 to [0, 1]. Every expert uses a
+learning rateη= 0.05.
+Figure 4 (left) fixes σ = 0.1 and sweeps the tick size ∆, learning each grid for T = 100,000
+rounds and averaging over 100 runs. As ∆ shrinks, the learned market bid and ask move
+toward the Nash price envelope; the non-monotonicity is not surprising, since even the exact
+5. The clamped mass is negligible for the values ofσwe test.
+17
+Onger Foscari
+0.14 0.20 0.25 0.33 0.50
+Δ
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+/Q_uote
+0.05 0.10 0.15 0.20
+/u1D70E
+0.0
+0.2
+0.4
+0.6
+Spread
+Figure 4: Simulations of two learning market makers running swap-regret minimizers.Left:
+As ∆ shrinks, the learned market ask (orange) and bid (blue) move toward the
+continuous Nash envelope (dotted lines), see Corollary 24.Right:At a fixed
+tick size, the learned spread (purple) grows monotonically with the standard
+deviation σ of the asset value, tracking the theoretical spread (black) while sitting
+consistently above it, see Proposition 13. Error bars are the standard deviation of
+the learned quotes across independent replications.
+equilibria of the grid game need not vary smoothly in ∆ at this resolution. Figure 4 (right)
+fixes ∆ = 0.1 and sweeps σ, learning each value for T = 1,500,000 rounds and averaging over
+15 runs. The learned spread grows monotonically and close to linearly with σ, consistent
+with Proposition 13.
+6. Conclusion and Future Work
+We modeled market making as a game in which makers post bid–ask quotes and an inelastic
+trader, who knows the asset value, always trades at the best quotes, buying whenever
+the value exceeds the market mid-price and selling otherwise. In this game, pure-strategy
+Nash equilibria always exist, and all equilibrium mid-prices lie between two extremal ones.
+These equilibria also pin down how competitive spreads depend on risk: within location-
+scale families, they grow linearly with the volatility of the asset. Finally, we proved that,
+under an additional regularity condition, no-internal-regret learners recover this competitive
+benchmark, with time-averaged market prices that lie close to the Nash price envelope on a
+fine price grid.
+This benchmark clarifies what competitive pricing looks like in adaptive markets. In
+particular, when the asset becomes more volatile, the spreads of all makers widen together,
+with no coordination among them. Since algorithmic-collusion tests are designed to flag
+exactly this kind of simultaneous widening across makers, they should control for volatility,
+which is nontrivial in markets with incomplete information, where volatility itself must be
+estimated.
+Future work includes a finer analysis of learning: we only showed that time-averaged
+market prices approach the Nash price envelope, leaving open whether learners concentrate
+18
+Equilibria and Learning in Competitive Market Making
+on the Nash curve and at what rate. Other directions are to weaken the regularity required
+in Section 4, to characterize mixed-strategy and correlated equilibria in the general model,
+and to extend the model to inventory, latency, heterogeneous order flow and time-varying
+fundamentals.
+19
+Onger Foscari
+Acknowledgments
+LF acknowledges support by the MUR PRIN grant 2022EKNE5K (Learning in Markets
+and Society), by the F AIR (Future Artificial Intelligence Research) project, funded by
+the NextGenerationEU program within the PNRR-PE-AI scheme (M4C2, investment 1.3,
+line on Artificial Intelligence), and by the EU Horizon CL4-2022-HUMAN-02 research and
+innovation action under grant agreement 101120237, project ELIAS (European Lighthouse
+of AI for Sustainability).
+MO gratefully acknowledges Intesa Sanpaolo Innovation Center for partially funding
+his doctoral fellowship, as well as the financial support from the EU Horizon CL4-2022-
+HUMAN-02 research and innovation action under grant agreement 101120237, project ELIAS
+(European Lighthouse of AI for Sustainability).
+References
+Jacob Abernethy and Satyen Kale. Adaptive market making via online learning. In
+Proceedings of the 27th International Conference on Neural Information Processing Systems,
+pages 2058–2066. Curran Associates Inc., 2013.
+Juliette Achddou, Olivier Capp´ e, and Aur´ elien Garivier. Fast rate learning in stochastic
+first price bidding. InProceedings of the 13th Asian Conference on Machine Learning,
+volume 157 ofProceedings of Machine Learning Research, pages 1754–1769. PMLR, 2021.
+V. Ravi Anshuman and Avner Kalay. Market making with discrete prices.The Review of
+Financial Studies, 11(1):81–109, 1998.
+Eshwar Ram Arunachaleswaran, Natalie Collina, Sampath Kannan, Aaron Roth, and Juba
+Ziani. Algorithmic collusion without threats. InProceedings of the 16th Innovations in
+Theoretical Computer Science Conference, volume 325 ofLeibniz International Proceed-
+ings in Informatics (LIPIcs), pages 10:1–10:21. Schloss Dagstuhl – Leibniz-Zentrum f¨ ur
+Informatik, 2025.
+Kerry Back and Shmuel Baruch. Strategic liquidity provision in limit order markets.
+Econometrica, 81(1):363–392, 2013.
+Martino Banchio and Andrzej Skrzypacz. Artificial intelligence and auction design. In
+Proceedings of the 23rd ACM Conference on Economics and Computation, pages 30–31.
+Association for Computing Machinery, 2022.
+Joseph Bertrand. Review of “Theorie mathematique de la richesse sociale” and of “Recherches
+sur les principes mathematiques de la theorie des richesses”.Journal des savants, 67:499,
+1883.
+Bruno Biais, David Martimort, and Jean-Charles Rochet. Competing mechanisms in a
+common value environment.Econometrica, 68(4):799–837, 2000.
+Avrim Blum and Yishay Mansour. From external to internal regret.Journal of Machine
+Learning Research, 8(47):1307–1324, 2007.
+20
+Equilibria and Learning in Competitive Market Making
+Christian Bogmans, Andrea Pescatori, Ivan Petrella, Ervin Prifti, and Martin Stuermer.
+The power of prices: How fast do commodity markets adjust to shocks? IMF Working
+Paper 2024/077, International Monetary Fund, 2024.
+Emilio Calvano, Giacomo Calzolari, Vincenzo Denicolo, and Sergio Pastorello. Artificial
+intelligence, algorithmic pricing, and collusion.American Economic Review, 110(10):
+3267–3297, 2020.
+´Alvaro Cartea, Patrick Chang, and Jos´ e Penalva. Algorithms and supracompetitive prices
+in electronic markets: The impact of tick size. SSRN Working Paper 4105954, 2022.
+Nicol` o Cesa-Bianchi and G´ abor Lugosi.Prediction, Learning, and Games. Cambridge
+University Press, Cambridge, 2006.
+Nicol` o Cesa-Bianchi, Tommaso Cesari, and Vianney Perchet. Dynamic pricing with finitely
+many unknown valuations. InProceedings of the 30th International Conference on
+Algorithmic Learning Theory, volume 98 ofProceedings of Machine Learning Research,
+pages 247–273. PMLR, 2019.
+Nicol` o Cesa-Bianchi, Tommaso R. Cesari, Roberto Colomboni, Federico Fusco, and Stefano
+Leonardi. Repeated bilateral trade against a smoothed adversary. InProceedings of the
+36th Conference on Learning Theory, volume 195 ofProceedings of Machine Learning
+Research, pages 1095–1130. PMLR, 2023.
+Nicol` o Cesa-Bianchi, Tommaso Cesari, Roberto Colomboni, Federico Fusco, and Stefano
+Leonardi. The role of transparency in repeated first-price auctions with unknown valuations.
+InProceedings of the 56th Annual ACM Symposium on Theory of Computing, pages 225–
+236. Association for Computing Machinery, 2024.
+Nicol` o Cesa-Bianchi, Tommaso Cesari, Roberto Colomboni, Luigi Foscari, and Vinayak
+Pathak. Market making without regret. InProceedings of the 38th Conference on Learning
+Theory, volume 291 ofProceedings of Machine Learning Research, pages 799–837. PMLR,
+2025.
+Jean-Edouard Colliard, Thierry Foucault, and Stefano Lovo. Algorithmic pricing and
+liquidity in securities markets. HEC Research Papers Series 1459, HEC Paris, 2022.
+Rama Cont and Wei Xiong. Dynamics of market making algorithms in dealer markets:
+Learning and tacit collusion.Mathematical Finance, 34(2):467–521, 2024.
+Thomas E. Copeland and Dan Galai. Information effects on the bid-ask spread.The Journal
+of Finance, 38(5):1457–1469, 1983.
+Antoine Augustin Cournot.Recherches sur les principes mathematiques de la theorie des
+richesses. L. Hachette, Paris, 1838.
+Partha Dasgupta and Eric Maskin. The existence of equilibrium in discontinuous economic
+games, I: Theory.The Review of Economic Studies, 53(1):1–26, 1986.
+21
+Onger Foscari
+Krishnendu Ghosh Dastidar. On the existence of pure strategy Bertrand equilibrium.
+Economic Theory, 5(1):19–32, 1995.
+J¨ urgen Dennert. Price competition between market makers.The Review of Economic
+Studies, 60(3):735–751, 1993.
+David Easley and Maureen O’Hara. Price, trade size, and information in securities markets.
+Journal of Financial Economics, 19(1):69–90, 1987.
+Dean P. Foster and Rakesh V. Vohra. Calibrated learning and correlated equilibrium.Games
+and Economic Behavior, 21(1–2):40–55, 1997.
+Sumitra Ganesh, Nelson Vadori, Mengda Xu, Hua Zheng, Prashant Reddy, and Manuela
+Veloso. Reinforcement learning for market making in a multi-agent dealer market. arXiv
+preprint arXiv:1911.05892, 2019.
+Lawrence R. Glosten. Is the electronic open limit order book inevitable?The Journal of
+Finance, 49(4):1127–1161, 1994.
+Lawrence R. Glosten and Paul R. Milgrom. Bid, ask and transaction prices in a specialist
+market with heterogeneously informed traders.Journal of Financial Economics, 14(1):
+71–100, 1985.
+Yanjun Han, Zhengyuan Zhou, and Tsachy Weissman. Optimal no-regret learning in repeated
+first-price auctions. arXiv preprint arXiv:2003.09795, 2024.
+Karsten T. Hansen, Kanishka Misra, and Mallesh M. Pai. Frontiers: Algorithmic collusion:
+Supra-competitive prices via independent algorithms.Marketing Science, 40(1):1–12,
+2021.
+Joseph E. Harrington. Developing competition law for collusion by autonomous artificial
+agents.Journal of Competition Law & Economics, 14(3):331–363, 2018.
+Sergiu Hart and Andreu Mas-Colell. A simple adaptive procedure leading to correlated
+equilibrium.Econometrica, 68(5):1127–1150, 2000.
+Jason D. Hartline, Sheng Long, and Chenhao Zhang. Regulation of algorithmic collusion.
+InProceedings of the 2024 Symposium on Computer Science and Law, pages 98–108.
+Association for Computing Machinery, 2024.
+Jason D. Hartline, Chang Wang, and Chenhao Zhang. Regulation of algorithmic collusion,
+refined: Testing pessimistic calibrated regret. InProceedings of the 2025 Symposium on
+Computer Science and Law, pages 108–120. Association for Computing Machinery, 2025.
+Thomas Ho and Hans R. Stoll. Optimal dealer pricing under transactions and return
+uncertainty.Journal of Financial Economics, 9(1):47–73, 1981.
+Timo Klein. Autonomous algorithmic collusion: Q-learning under sequential pricing.The
+RAND Journal of Economics, 52(3):538–558, 2021.
+22
+Equilibria and Learning in Competitive Market Making
+Albert S. Kyle. Continuous auctions and insider trading.Econometrica, 53(6):1315–1335,
+1985.
+Davide Maran and Marcello Restelli. Online market making and the value of observing the
+order book. arXiv preprint arXiv:2605.19584, 2026.
+Paul Milgrom and John Roberts. Rationalizability, learning, and equilibrium in games with
+strategic complementarities.Econometrica, 58(6):1255–1277, 1990.
+Paul Milgrom and Nancy Stokey. Information, trade and common knowledge.Journal of
+Economic Theory, 26(1):17–27, 1982.
+Francesco Orabona. A modern introduction to online learning. arXiv preprint
+arXiv:1912.13213, 2023.
+Philip J. Reny. On the existence of pure and mixed strategy Nash equilibria in discontinuous
+games.Econometrica, 67(5):1029–1056, 1999.
+Thomas Spooner, John Fearnley, Rahul Savani, and Andreas Koukorinis. Market making via
+reinforcement learning. InProceedings of the 17th International Conference on Autonomous
+Agents and Multiagent Systems, pages 434–441. International Foundation for Autonomous
+Agents and Multiagent Systems, 2018.
+Gilles Stoltz and G´ abor Lugosi. Learning correlated equilibria in games with compact sets
+of strategies.Games and Economic Behavior, 59(1):187–208, 2007.
+Alfred Tarski. A lattice-theoretical fixpoint theorem and its applications.Pacific Journal of
+Mathematics, 5(2):285–309, 1955.
+Matilde Tullii, Solenne Gaucher, Nadav Merlis, and Vianney Perchet. Improved algorithms
+for contextual dynamic pricing. arXiv preprint arXiv:2406.11316, 2025.
+Xavier Vives. Nash equilibrium with strategic complementarities.Journal of Mathematical
+Economics, 19(3):305–321, 1990.
+23
+Onger Foscari
+Appendix A. Appendix: Omitted Proofs
+In this appendix, we provide the complete proofs of all technical results presented in the
+main text.
+A.1. Proofs of Section 3
+Lemma 6. Let bm∈ F. If the associated zero-profit profiles( bm)admits a profitable
+unilateral deviation, then it admits either a profitable ask undercut with bid withdrawal or a
+profitable bid raise with ask withdrawal.
+Proof.Let esi := (ebi,eai) be a profitable deviation againsts −i( bm), inducing mid-price
+z. Since total profit is the sum of ask-side and bid-side profits, at least one side must
+yield strictly positive expected profit. Suppose first that the ask side is strictly profitable.
+Then eai < a( bm): if eai > a( bm), maker i captures no buy orders, while if eai = a( bm), the
+market ask is unchanged and the market bid can only rise, so z≥bm and its ask-side payoff
+1
+N P(V > z)(a( bm) −a (z)) is non-positive. Hence, maker i alone quotes the market ask, the
+midpoint is
+z= eai + max(ebi, b(bm))2 ,
+and
+uaski (esi,s −i(bm)) =P(V > z) (eai −a(z))>0,
+so that, in particular, the margin satisfiesea i −a(z)>0.
+Now consider the ask undercut (0 ,eai), which keeps the same ask quote and withdraws
+the bid. Under this single-sided deviation, the market bid reverts to b( bm), shifting the
+induced midpoint to
+y := eai +b(bm)2 ≤z,
+sinceb(bm)≤max( ebi, b(bm)). Given thata(·) is nondecreasing,y≤zexpands the margin,
+eai −a(y)≥ea i −a(z)>0,
+as well as the execution probability,
+P(V > y)≥P(V > z).
+Since maker i has withdrawn from the bid side, its bid profit under (0 ,eai) is zero. Total
+profit under the new deviation therefore satisfies
+ui((0,eai),s −i(bm)) =P(V > y) (eai −a(y))
+≥P(V > z) (eai −a(z)) =u aski (esi,s −i(bm))>0.
+Hence, the ask undercut paired with bid withdrawal remains strictly profitable.
+Symmetrically, if the bid side is strictly profitable, then ebi > b( bm), and withdrawing the
+ask, i.e., playing (ebi,1), shifts the midpoint fromzto
+x := a(bm) +ebi
+2 ≥z,
+24
+Equilibria and Learning in Competitive Market Making
+which again enhances both margin and execution probability.
+Lemma 7.Letbm∈ F. Then:
+(i) For any x >bm, the unique bid raise inducing mid-price x is profitable if and only if
+2x−b(x)< a(bm), which impliesH(x)> x.
+(ii) For any y <bm, the unique ask undercut inducing mid-price y is profitable if and only
+if2y−a(y)> b(bm), which impliesH(y)< y.
+Proof.We first prove (i). Fix x >bm. Under a bid raise by maker i (paired with
+ask withdrawal), the prevailing market ask remains a( bm). The induced midpoint x =
+(a(bm) +ebi)/2 uniquely yields
+ebi = 2x−a(bm),
+which is strictly profitable if and only if
+b(x)− ebi >0⇐ ⇒2x−b(x)< a(bm).
+Substitutingb(x) = 2H(x)−a(x) yields
+2 (x−H(x)) +a(x)−a(bm)<0.
+Since x >bmand a(·) is nondecreasing, we have a(x) −a ( bm) ≥ 0. For the inequality to hold,
+it must be that
+2 (x−H(x))< a(bm)−a(x)≤0,
+which strictly requiresH(x)> x.
+Symmetrically, for (ii), fix y <bm. Under an ask undercut by maker i (paired with bid
+withdrawal), the prevailing market bid remainsb( bm). The induced midpoint y = (eai+b( bm))/2
+uniquely determines the required ask quote:
+eai = 2y−b(bm).
+This undercut is strictly profitable if and only if
+eai −a(y)>0⇐ ⇒2y−a(y)> b(bm).
+Substitutinga(y) = 2H(y)−b(y) rewrites this profitability condition as
+2 (y−H(y)) +b(y)−b(bm)>0.
+Since y <bmand b(·) is nondecreasing, we have b(y) −b ( bm) ≤ 0. For the inequality to hold,
+it must be that
+2 (y−H(y))> b(bm)−b(y)≥0,
+which strictly requiresH(y)< y.
+25
+Onger Foscari
+Lemma 8. Let mmin := minF and mmax := maxF . Then (i) no profitable ask undercut
+exists atm min, and (ii) no profitable bid raise exists atm max.
+Proof.By Knaster–Tarski, F is itself a complete lattice (Tarski, 1955), so mmin and
+mmax are well defined. It remains to rule out the corresponding one-sided deviation at each
+extremal point, which we do by contradiction.
+We first prove (i). Suppose, by contradiction, that a profitable ask undercut exists
+at mmin. By Lemma 7, the induced midpoint y < mmin satisfies H(y) < y. Since H is
+nondecreasing andH(v )> v, for everym∈[v , y] we have
+v < H(v)≤H(m)≤H(y)< y.
+Hence, H maps the closed interval [ v, y] into itself. Then, by the Knaster–Tarski fixed-point
+theorem, H admits a fixed point ˇm∈[v, y]. Consequently, ˇm∈ Fsatisfies ˇm≤y < mmin =
+minF, a contradiction.
+Symmetrically, for (ii), suppose a profitable bid raise exists at mmax. By Lemma 7, the
+induced midpoint x > mmax satisfies H(x) > x. Since H(v) < v, for every m∈ [x, v] we
+have
+x < H(x)≤H(m)≤H( v)< v.
+Thus, H maps the closed interval [ x, v] into itself, yielding a fixed point ˇm∈ [x, v] by
+Knaster–Tarski. Consequently, ˇm∈ Fsatisfies ˇm≥x > mmax = maxF , a contradiction.
+Lemma 9.Letm 1, m2 ∈ Fwithm 1 < m2. Then:
+(i) If a profitable bid raise at m1 ind

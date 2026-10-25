@@ -1,0 +1,1192 @@
+Implementing BBNJ across
+ﬁsheries institutions: policy
+options for interoperable
+ocean governance
+Wanwoo Nam*
+Department of Law, Jeonju University, Jeonju, Republic of Korea
+The entry into force of the Agreement under the United Nations Convention on
+the Law of the Sea on the Conservation and Sustainable Use of Marine Biological
+Diversity of Areas beyond National Jurisdiction (BBNJ Agreement) creates a
+practical implementation problem for ﬁsheries governance. Biodiversity informa-
+tion, area-based management, environmental assessment, ﬁsheries authoriza-
+tion, vessel identity, port measures, maritime safety and market controls are
+governed by institutions that were not designed as a single compliance system.
+This Policy and Practice Review uses a structured qualitative institutional appraisal
+to compare four governance architectures —autonomous implementation, cen-
+tralized integration, sectoral liaison, and federated interoperability with phased
+implementation. The method speci ﬁes a source hierarchy, four units of compar-
+ison, six pre-de ﬁned criteria, and an evidence-to- ﬁnding protocol that distin-
+guishes existing-authority ﬁt, conditional adaptation and structural constraint.
+Each ﬁnding is tied to treaty text, of ﬁcial institutional material and relevant peer-
+reviewed scholarship available through 31 August 2026. The legal foundation for
+cross-regime coexistence is anchored in BBNJ Agreement articles 5(2), 22, 29, 47
+(6)(c) and 51, which combine non-undermining, cooperation and coordination,
+respect for institutional competences, and links to existing information mecha-
+nisms. The comparison does not claim to predict governmental policy choices or
+empirically prove an optimal design. Instead, it identi ﬁes institutionally workable
+options under stated legal and administrative constraints. On that basis, federated
+interoperability is carried forward as a conditional policy proposition for staged
+testing, subject to provenance controls, veri ﬁcation and legal assessment by the
+competent authorities, cybersecurity, capacity support and review. The article
+proposes a three-stage pathway —pre-COP mapping, ﬁrst-COP institutionaliza-
+tion, and post-COP pilots and review —linking BBNJ bodies, RFMOs, FAO/PSMA
+mechanisms, IMO-related systems and national administrations.
+KEYWORDS
+BBNJ agreement, capacity building, ﬁsheries governance, institutional interoperability,
+IUU ﬁshing, marine policy, ocean governance, port state measures agreement
+Frontiers in Marine Science frontiersin.org01
+OPEN ACCESS
+EDITED BY
+Yi-Che Shih,
+National Cheng Kung University, Taiwan
+REVIEWED BY
+Wen Duan,
+Zhejiang University, China
+Shao-Hua Hsu,
+Ocean Affairs Council, Taiwan
+*CORRESPONDENCE
+Wanwoo Nam
+namwanwoo@naver.com
+RECEIVED 02 September 2026
+REVISED 07 October 2026
+ACCEPTED 08 October 2026
+PUBLISHED 22 October 2026
+CITATION
+Nam W (2026) Implementing
+BBNJ across ﬁsheries institutions:
+policy options for interoperable
+ocean governance.
+Front. Mar. Sci. 13:1986237.
+doi: 10.3389/fmars.2026.1986237
+COPYRIGHT
+©2 0 2 6N a m .T h i si sa no p e n - a c c e s s
+article distributed under the terms of the
+Creative Commons Attribution License
+(CC BY). The use, distribution or
+reproduction in other forums is
+permitted, provided the original
+author(s) and the copyright owner(s) are
+credited and that the original publication
+in this journal is cited, in accordance
+with accepted academic practice. No
+use, distribution or reproduction is
+permitted which does not comply with
+these terms.
+TYPE Policy and Practice Reviews
+PUBLISHED 22 October 2026
+DOI 10.3389/fmars.2026.1986237
+1 Introduction
+Illegal, unreported and unregulated (IUU) ﬁshing is often
+described as a problem of enforcement intensity. That description
+is incomplete. The international system already contains a dense set
+of legal and administrative tools: ﬂag-State duties under the United
+Nations Convention on the Law of the Sea (UNCLOS; United
+Nations, 1982 ), cooperation and compliance arrangements under
+the 1995 United Nations Fish Stocks Agreement (UNFSA; United
+Nations, 1995 ), regional ﬁsheries management organizations
+(RFMOs), the FAO International Plan of Action on IUU Fishing
+(Food and Agriculture Organization of the United Nations, 2001 ),
+the Agreement on Port State Measures (PSMA; Food and
+Agriculture Organizatio n of the United Nations, 2009 ), catch
+documentation and market controls, and a growing set of maritime
+safety and identity mechanisms. The persistent dif ﬁculty is that
+these tools are distributed across institutions, agencies, databases,
+and decision points. A vessel can move faster than the information
+needed to determine who it is, what it is authorized to do, whether
+its conduct con ﬂicts with a conservation measure, and which
+authority can lawfully respond. The persistence and transnational
+complexity of IUU ﬁshing, including the dif ﬁculty of converting
+fragmented information into effective control, are well documented
+in the wider literature ( Agnew et al., 2009 ; Stefanus and
+Vervaele, 2021 ).
+The BBNJ Agreement, which entered into force on 17 January
+2026, adds another consequential layer to this institutional land-
+scape. It establishes procedures and institutions for marine genetic
+resources, area-based management tools (ABMTs), environmental
+impact assessments (EIAs), capac ity-building and transfer of
+marine technology, and a Clearing-House Mechanism (CHM).
+The legal basis for institutional coexistence is explicit. Article 5
+(2) requires the Agreement to be interpreted and applied in a
+manner that does not undermine relevant legal instruments and
+frameworks or relevant global, regional, subregional and sectoral
+bodies, while promoting coherence and coordination with them.
+Article 22 applies that logic to ABMTs by requiring the Conference
+of the Parties (COP) to respect the competences of relevant bodies
+and by permitting compatible measures and recommendations
+within their respective mandates. Article 22 (4) goes further by
+allowing the COP, where required for the objectives and imple-
+mentation of Part III and subject to paragraphs 1 and 2, to consider
+and, as appropriate, decide to develop a mechanism regarding
+existing ABMTs, including marine protected areas, adopted under
+relevant legal instruments and frameworks or by relevant global,
+regional, subregional or sectoral bodies. Article 29 provides speci ﬁc
+rules for interaction with EIA processes under other relevant
+regimes, while article 51(3)(c) –(d) directs the CHM to provide
+links to relevant clearing-house mechanisms, repositories and
+databases and when establishing regional and subregional mecha-
+nisms under the global mechanism, to build on global, regional and
+subregional clearing-house institutions where applicable ( United
+Nations, 2023 ). Institutional coexistence is therefore not merely a
+policy preference; it is part of the Agreement ’sl e g a ld e s i g n
+(Bodansky, 2024 ; Langlet and Vadrot, 2023 ).
+The implementation question is therefore more speci ﬁc than
+whether international institutions should simply ‘cooperate.’ The
+practical challenge is how to connect biodiversity information,
+ﬁsheries measures, vessel identity, port action and regulatory
+feedback in a way that preserves institutional competence. Recent
+scholarship has examined BBNJ–RFMO interaction, ﬁsheries under
+the BBNJ regime, the CHM, transnational maritime environmental
+crime and implementation of the PSMA ( Qu and Liu, 2022 ;
+Sebuliba et al., 2025 ; Tian and Guo, 2025 ; Gaebel et al., 2025 ;
+Lothian, 2024; Stefanus and Vervaele, 2021 ; Wang and Xue, 2026 ).
+Within Frontiers in Marine Science, Miao (2026) develops institu-
+tional complementarity for ABMT networks, Jiang et al. (2026)
+analyze BBNJ–ISA disconnection in EIA implementation, Yuan and
+Zhang (2026) review PSMA enforcement, and Wu (2026) examines
+governance pathways for high-seas MPAs. These studies establish
+the importance of cross-institutional implementation but address
+particular instruments, sectors or conservation tools.
+The distinct question addressed here is comparative and archi-
+tectural: which institutional arrangement can most effectively con-
+nect BBNJ implementation with ﬁsheries and maritime-
+administration systems while preserving legal competence, account-
+ability, information integrity and equitable participation, and under
+what conditions? The article compares four governance architec-
+tures spanning BBNJ bodies, RFMOs, ﬂag and port States, FAO/
+PSMA mechanisms, IMO-related systems and national administra-
+tions. The research question is deliberately neutral as to centraliza-
+tion: centralized integration is treated as a genuine design option
+and evaluated on the same pre-de ﬁned criteria as the other
+three architectures.
+This article addresses that question as a marine policy problem.
+Rather than presupposing a preferred architecture, it compares four
+institutional design options and evaluates them through a trans-
+parent evidence-to-assessment protocol. The six criteria cover legal
+compatibility, ecological decision-support effectiveness, administra-
+tive feasibility, information governance, distributional equity and
+adaptability. The subsequent policy recommendation is derived
+only after the options have been assessed against those criteria
+and against a non-compensatory legal-competence threshold. In the
+federated model examined here, institutions retain their own
+mandates and legal tests while using limited interfaces —common
+identiﬁers, minimum data ﬁelds, referral protocols, provenance
+rules and feedback arrangements. The objective is not to make
+every institution see or control everything, but to determine
+whether relevant information can reach the authority legally com-
+petent to assess it in time to matter.
+The argument contributes to the Marine Affairs and Policy
+literature in three ways. First, it treats interoperability as a problem
+of ocean governance rather than a purely technical exercise in
+information sharing. Second, it distinguishes legal authority from
+informational connectivity: stronger connectivity does not require
+stronger centralization. Third, it integrates distributional equity into
+institutional design by treating capacity-building as part of system
+architecture, not as an afterthought. These points are directly
+relevant to SDG 14 on conservation and sustainable use of oceans
+and to SDG 17 on partnerships, because institutional coherence is a
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org02
+condition for turning international commitments into coordinated
+marine management.
+2 Review design and evidence-to-
+assessment protocol
+2.1 Review design and source hierarchy
+This is a Policy and Practice Review based on doctrinal legal
+analysis and structured institutional comparison rather than a
+systematic review or an empirical evaluation of enforcement out-
+comes. The documentary cutoff is 31 August 2026. Evidence was
+organized through a source hierarchy. First, treaty texts and of ﬁcial
+United Nations, FAO, IMO and institutional documents were used
+to establish legal mandates, formal procedures, treaty status and the
+existence or planned operation of information systems. Second,
+implementation materials were used to identify operational prac-
+tices, data ﬂows and administrative constraints. Third, peer-re-
+viewed scholarship was used to in terpret regime interaction,
+institutional fragmentation, ﬁsheries governance, transparency,
+distributional effects and policy feasibility. Primary sources control
+where a secondary source and an of ﬁcial text diverge. The review
+does not use publication counts as evidence of policy performance
+and does not claim exhaustive literature coverage.
+Documents and studies were included when they bore directly
+on at least one element of the comparison: allocation of legal
+competence; BBNJ –RFMO or BBNJ –sectoral interaction; ABMT
+or EIA coordination; PSMA or ﬁsheries information exchange;
+vessel identity or maritime-administration interfaces; information
+governance; capacity asymmetry; or adaptive implementation. This
+purposive inclusion rule is appropriate to a Policy and Practice
+Review, but the scope of inference is correspondingly bounded: the
+analysis evaluates institutional design plausibility and does not
+estimate causal effects on IUU ﬁshing, biodiversity outcomes or
+State behavior.
+2.2 Units of analysis and construction of
+the four options
+The unit of comparison is the governance architecture rather
+than an individual State, RFMO or enforcement event. Four ideal-
+type architectures are speci ﬁed before the criteria are applied.
+Option 1, autonomous implementation, leaves each regime to
+develop its own information and compliance processes with min-
+imal formal connection. Option 2, centralized integration, consol-
+idates cross-regime data and decision support in a common global
+platform or central coordinating authority. For clarity, Option 2
+does not refer to the Article 51 Clearing-House Mechanism (CHM)
+as such. Article 51 establishes a centralized platform for BBNJ
+functions while also providing for links to relevant global, regional,
+subregional and sectoral clearing-house mechanisms, repositories
+and databases and, where possible, the use of existing institutions.
+Option 2 instead denotes a broader cross-regime architecture that
+would consolidate external ﬁsheries, vessel, port and compliance
+information, and potentially decision-support functions, within a
+common system. Because the BBNJ Agreement does not itself create
+a general cross-regime ﬁsheries authority, Option 2 is treated as a
+hypothetical design that would require a governance allocation
+identifying who administers the platform, what decisions it may
+support, and how authority is divided between the platform and
+existing competent bodies ( United Nations, 2023 ). Option 3,
+sectoral liaison, preserves separate institutions but relies on mem-
+oranda of understanding, focal points, recurring consultation and
+bilateral or sector-speci ﬁc exchange. Option 4, federated interop-
+erability with phased implementation, preserves separate systems
+and legal mandates while introducing shared identi ﬁers, minimum
+metadata, structured referrals and staged technical standards.
+The four options are ideal types used to expose trade-offs. Real
+arrangements may combine them. In particular, a federated system
+is likely to depend on sectoral liaison agreements for its legal and
+administrative interfaces, while even a centralized platform would
+still depend on competent authorities for legally consequential
+decisions. The comparison therefore evaluates the institutional
+logic of each option rather than assuming that any architecture
+would exist in a pure form.
+2.3 Selection and operationalization of the
+six criteria
+The six criteria were selected because cross-regime interopera-
+bility must satisfy six distinct governance requirements that cannot
+be reduced to technical ef ﬁciency alone. Legal compatibility tests
+whether an architecture respects treaty-based allocations of author-
+ity and the BBNJ non-undermini ng rule. Ecological decision-
+support effectiveness asks whether biodiversity, spatial and impact
+information can reach competent management bodies in time to
+inform prioritization or management; it does not purport to
+measure ecological outcomes. Administrative feasibility addresses
+the degree of institutional change, duplication and recurring coor-
+dination burden. Information governance covers provenance,
+access control, con ﬁdentiality, correction, cybersecurity and the
+risk that information is detached from its evidentiary status.
+Distributional equity asks whet her lower-capacity States and
+small-scale ﬁsheries can participate without disproportionate tech-
+nological or compliance burdens. Adaptability addresses modular-
+ity, versioning, feedback and the ability to revise interfaces as law,
+science and institutional practice change. These dimensions re ﬂect
+concerns identi ﬁed in the ﬁsheries-governance and regulatory-
+pluralism literature, including t ransparency and accountability
+(Davis and Hanich, 2022 ), institutional complexity ( Lindley and
+Techera, 2017), distributional effects ( Song et al., 2020 ; Alonso and
+Marschke, 2023 ), and BBNJ regime interaction ( Langlet and
+Vadrot, 2023; Tian and Guo, 2025 ). Table 1 deﬁnes the observable
+basis and decision rule for each criterion.
+2.4 Evidence-to-assessment protocol and
+qualitative constrained optimization
+The appraisal uses a two-stage evidence-to-assessment protocol.
+In the ﬁrst stage, each option is examined against each criterion and
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org03
+the relevant legal or institutional basis is recorded in an option-by-
+criterion evidence matrix. A ﬁnding is not entered solely because
+the author considers an option desirable or undesirable; it must be
+connected to an observable institutional feature and to an identi-
+ﬁable source category, with primary legal or institutional material
+used whenever the proposition concerns authority, procedure or
+system design. In the second stage, each option –criterion pair is
+assigned one of three nominal ﬁndings: existing-authority ﬁt,
+conditional adaptation, or structural constraint. Table 2 reports
+the basis for those ﬁndings so that a reader can trace the inference
+from source to classi ﬁcation.
+The decision logic is non-compensatory rather than additive.
+No numerical weights are assigned and a favorable ﬁnding on one
+criterion cannot offset a structural conﬂict with legal competence or
+accountability. An architecture is carried forward for policy devel-
+opment only if it does not depend on a transfer of legal authority
+inconsistent with the Agreement ’s coexistence rules and if its
+remaining administrative, informational and distributional condi-
+tions are capable of being speci ﬁed and tested. ‘Constrained
+optimization ’ is therefore used in a qualitative policy-design
+sense: it means identifying a comparatively workable arrangement
+under binding legal and institutional constraints, not mathemati-
+cally maximizing a score or claiming a scienti ﬁcally proven opti-
+mum. An option is carried forward to the implementation-design
+stage only when three threshold conditions are met: (1) it avoids a
+structural con ﬂict with the allocation of legal competence; (2) it
+provides a routine cross-regime pathway by which relevant infor-
+mation can reach the legally competent body, rather than relying
+solely on ad hoc contacts; and (3) it permits incremental and
+reversible implementation without requiring wholesale replacement
+of existing institutional systems. This rule also distinguishes Option
+4 from Option 3. Sectoral liaison can satisfy the ﬁrst condition and
+TABLE 1 Operationalization of the six assessment criteria.
+Criterion Analytical purpose Observable/documentarybasis Decision rule
+Legal compatibility
+Preservation of treaty competence, non-
+undermining, accountability and legally
+authorized decision roles.
+Treaty provisions; institutional
+mandates; allocation of decision
+authority; need for new competence.
+Existing-authority ﬁt where the option
+can operate within current mandates;
+structural constraint where operation
+requires transfer or creation of general
+decision authority not supplied by
+existing instruments.
+Ecological decision-support effectiveness
+Ability of relevant biodiversity, spatial
+and impact information to reach
+competent management bodies in time
+to inform decisions; this criterion does
+not measure ecological outcomes.
+Existence of information pathways;
+timeliness; spatial/identity linkage;
+referral capability.
+Existing-authority ﬁt where a routine
+pathway already exists; conditional
+adaptation where interfaces/referrals are
+needed; structural constraint where the
+architecture leaves no dependable cross-
+regime pathway.
+Administrative feasibility
+Institutional change, duplication,
+recurring coordination burden and
+reuse of existing systems.
+Need for new institutions/platforms;
+reuse of CHM, GIES, RFMO or
+national systems; transaction burden.
+Existing-authority ﬁt where existing
+systems can be reused with limited
+change; conditional adaptation where
+protocols or technical work are needed;
+structural constraint where a new global
+operational authority or wholesale
+system replacement is required.
+Information governance
+Data provenance, con ﬁdentiality, access
+control, correction, cybersecurity and
+evidentiary separation.
+Source metadata; access tiers;
+correction/versioning; concentration of
+sensitive data; auditability.
+Existing-authority ﬁt where controls are
+already compatible; conditional
+adaptation where safeguards can be
+speciﬁed; structural constraint where
+concentration or data migration creates
+governance risks that cannot be
+bounded without major redesign.
+Distributional equity
+Ability of lower-capacity States and
+small-scale ﬁsheries to participate
+without exclusionary technological or
+compliance burdens.
+Infrastructure requirements; capacity
+support; data-absence effects; training/
+legal support needs.
+Existing-authority ﬁt where
+participation can occur through
+existing/shared services; conditional
+adaptation where capacity support is
+necessary; structural constraint where
+participation depends on costly
+infrastructure unavailable to many
+actors.
+Adaptability
+Ability to revise standards, interfaces
+and work ﬂows as scienti ﬁc knowledge,
+membership, technologies and legal
+rules change.
+Modularity; pilot/review mechanisms;
+version control; reversibility; feedback
+loops.
+Existing-authority ﬁt where change can
+occur modularly; conditional adaptation
+where governance procedures must be
+created; structural constraint where
+change requires comprehensive redesign
+or centralized renegotiation.
+The categories used below are nominal evidentiary ﬁndings, not ordinal scores. ‘Existing-authority ﬁt’ means the option can operate within current or expressly adaptable mandates; ‘conditional
+adaptation’ means operation is plausible only with speci ﬁed procedural, technical or capacity safeguards; ‘structural constraint’ means the option would require a new allocation of authority,
+substantial duplication, or another con ﬂict not reasonably mitigated within the present regime complex.
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org04
+TABLE 2 Source-linked evidence matrix for the four institutional architectures.
+Option Criterion Observable/documentary basis Finding category Principal basis
+Option 1: Autonomous
+implementation Legal compatibility
+Institutions retain separate
+mandates and decision rules;
+no new authority is created.
+Existing-authority ﬁt BBNJ art. 5(2); UNCLOS;UNFSA; PSMA
+Option 1 Ecological decision-supporteffectiveness
+No routine interface ensures
+that BBNJ ecological/spatial
+information reaches ﬁsheries
+or port decision points.
+Structural constraint
+BBNJ arts 22, 51; Langlet and
+Vadrot, 2023 ; Tian and Guo,
+2025
+Option 1 Administrative feasibility
+Low initial institutional
+change, but repeated manual
+translation, duplicate records
+and ad hoc contact persist.
+Conditional adaptation Auld et al., 2025 ; Lindley andTechera, 2017
+Option 1 Information governance
+Local control is preserved, but
+provenance and version
+consistency can be lost across
+manual exchanges.
+Conditional adaptation Davis and Hanich, 2022 ; Auldet al., 2025
+Option 1 Distributional equity
+Low-capacity administrations
+bear higher transaction costs
+when coordination depends on
+manual cross-system work.
+Conditional adaptation Song et al., 2020 ; Alonso andMarschke, 2023
+Option 1 Adaptability
+Each institution can revise its
+own system, but cross-system
+learning remains weak.
+Conditional adaptation Lindley and Techera, 2017 ;Auld et al., 2025
+Option 2: Centralized
+integration Legal compatibility
+A common information service
+is possible in principle, but a
+central decision authority
+would require an allocation of
+competence not supplied by
+the Agreement.
+Structural constraint BBNJ arts 5(2), 22, 29, 47(6)(c)
+Option 2 Ecological decision-supporteffectiveness
+A common platform could
+make cross-regime information
+more visible and timely, but
+the reviewed evidence does not
+establish that centralization
+itself improves ecological or
+management outcomes.
+Conditional adaptation BBNJ arts 22, 51; Miao, 2026 ;Tian and Guo, 2025
+Option 2 Administrative feasibility
+Requires a global
+administrator, governance
+rules, funding, migration/
+interfaces and continuing
+maintenance.
+Structural constraint
+BBNJ arts 47, 51; Food and
+Agriculture Organization of the
+United Nations, 2026a , 2026b;
+International Maritime
+Organization, 2026a , 2026b
+Option 2 Information governance
+Concentration magni ﬁes
+consequences of unauthorized
+access, error propagation and
+correction failures.
+Conditional adaptation
+Food and Agriculture
+Organization of the United
+Nations, 2026a , 2026b; Gaebel
+et al., 2025
+Option 2 Distributional equity
+Participation depends on
+ﬁnancing, access design and
+technical assistance; central
+standards may re ﬂect high-
+capacity practices.
+Conditional adaptation BBNJ Part V; Song et al., 2020 ;Alonso and Marschke, 2023
+Option 2 Adaptability
+Global standard changes may
+require central renegotiation
+and coordinated migration
+across many users.
+Conditional adaptation Lindley and Techera, 2017 ;Gaebel et al., 2025
+Option 3: Sectoral liaison Legal compatibility
+MoUs, focal points and
+consultations preserve separate
+mandates and can be
+concluded without creating a
+new decision authority.
+Existing-authority ﬁt BBNJ arts 8, 22(3), 47(6)(c), 50(4)(d)
+Option 3 Ecological decision-supporteffectiveness Information can be referredwhere liaison relationships are Conditional adaptation Jiang et al., 2026 ; Auld et al.,2025; Tian and Guo, 2025
+(Continued)
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org05
+TABLE 2 Continued
+Option Criterion Observable/documentary basis Finding category Principal basis
+formalized, but coverage
+remains dependent on the
+existence and quality of
+particular bilateral, regional or
+sector-speciﬁc arrangements.
+Option 3 Administrative feasibility
+Uses familiar administrative
+tools, but numerous bilateral
+arrangements can become
+complex and duplicative.
+Conditional adaptation Auld et al., 2025 ; BBNJ arts 8,47(6)(c)
+Option 3 Information governance
+Agreements can specify
+conﬁdentiality and provenance,
+but standards may vary by pair
+of institutions.
+Conditional adaptation BBNJ art. 51; Davis andHanich, 2022 ; Auld et al., 2025
+Option 3 Distributional equity
+Lower entry costs than a new
+global platform, but
+participation still depends on
+institutional capacity and
+negotiated access.
+Conditional adaptation BBNJ Part V; Song et al., 2020 ;Alonso and Marschke, 2023
+Option 3 Adaptability
+Individual liaison
+arrangements can be revised,
+but fragmented bilateral or
+sector-speciﬁc standards can
+impede routine cross-system
+scaling and coordinated
+versioning.
+Conditional adaptation Auld et al., 2025 ; Lindley andTechera, 2017
+Option 4: Federated
+interoperability Legal compatibility
+Systems and legal decisions
+remain with competent bodies;
+interfaces exchange factual/
+administrative information
+rather than legal authority.
+Existing-authority ﬁt
+BBNJ arts 5(2), 22(1) –(5),
+especially 22(4), 29, 47(6)(c),
+51(3)(c)–(d)
+Option 4 Ecological decision-supporteffectiveness
+Shared identi ﬁers, spatial
+references and referrals can
+connect ecological information
+and existing ABMT metadata
+to competent bodies; Article 22
+(4) provides a legal basis for a
+coordination mechanism
+regarding existing ABMTs, but
+effectiveness must be tested in
+pilots.
+Conditional adaptation BBNJ arts 22(4), 51; Miao,2026; Tian and Guo, 2025
+Option 4 Administrative feasibility
+Existing systems can be
+retained, while common
+metadata, referral rules and
+technical interfaces —including
+a limited Article 22(4) ABMT
+registry/linkage function —can
+be developed incrementally.
+Conditional adaptation
+BBNJ arts 22(4), 51; Food and
+Agriculture Organization of the
+United Nations, 2026a , 2026b;
+United Nations, 2026a
+Option 4 Information governance
+Distributed storage limits
+concentration, but cross-
+system provenance, access
+control, correction and
+cybersecurity rules are
+essential.
+Conditional adaptation
+BBNJ art. 51; Food and
+Agriculture Organization of the
+United Nations, 2026a , 2026b;
+Gaebel et al., 2025
+Option 4 Distributional equity
+Shared services and tiered
+participation can reduce entry
+barriers only if capacity
+support is funded and data
+absence is not treated as
+illegality.
+Conditional adaptation BBNJ Part V; Song et al., 2020 ;Alonso and Marschke, 2023
+(Continued)
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org06
+can partly satisfy the second, but bilateral or sector-speci ﬁc liaison
+arrangements do not by themselves provide a routine and scalable
+cross-regime pathway. Federated interoperability can satisfy all
+three conditions in principle, subject to the safeguards and pilot
+validation speci ﬁed below.
+The protocol is transparent and auditable in the limited sense
+appropriate to documentary policy analysis: another analyst can
+apply the same option de ﬁnitions, criteria, source hierarchy and
+classiﬁcation rules and identify the precise point at which a different
+interpretation arises.Table 2 functions as the audit trail by recording,
+for every option–criterion pair, the observable basis, ﬁnding category
+and principal source or sources. This does not convert legal and
+policy judgment into an empirical performance measure. Validation
+must instead occur prospectively through implementation evidence,
+which is why the carried-forward architecture is framed as a staged
+and revisable policy proposition rather than a prediction of success.
+Figure 1 summarizes the analytical sequence from documentary
+evidence to the conditional policy recommendation.
+3 The coordination problem after
+BBNJ entry into force
+The BBNJ Agreement alters the information environment of
+ocean governance. ABMT processes can generate spatially speci ﬁc
+conservation objectives, scienti ﬁc advice, monitoring information,
+and review material. EIAs can generate baseline and cumulative-
+impact information. The CHM is designed to facilitate access to
+information and opportunities for cooperation, while capacity-
+building and technology-transfer provisions can expand the ability
+of Parties to participate in implementation. Yet none of these
+functions automatically converts biodiversity information into a
+ﬁsheries restriction, a vessel inspection, or a sanction. Those
+decisions remain governed by other legal regimes and domestic law.
+This separation is normatively important. The BBNJ
+Agreement’s relationship with competent bodies is not a technical
+inconvenience to be engineered away; it re ﬂects negotiated bound-
+aries of authority. Article 5 (2) establishes the general rule of non-
+undermining and coherence, article 8 requires cooperation and
+encourages Parties to promote the Agreement ’s objectives in other
+relevant bodies, article 22 protects the competences of other bodies
+in ABMT decision-making, article 29 structures interaction with
+other EIA processes, and article 47 (6) (c) directs the COP to
+promote cooperation and coordination through appropriate pro-
+cesses ( United Nations, 2023 ; Scanlon, 2018 ). RFMOs possess
+ﬁsheries expertise and adopt measures for speci ﬁed stocks and
+areas. Flag States authorize and regulate vessels. Port States act
+under the PSMA and domestic law. Market States may apply catch
+documentation, import controls or due-diligence requirements.
+IMO instruments address vessel identi ﬁcation, safety, training and
+other maritime matters rather than ﬁsheries legality. Effective
+implementation must therefore distinguish between information
+that can be shared and legal conclusions that cannot simply be
+transferred from one regime to another.
+3.1 The 2026 –2027 implementation
+window
+At the documentary cutoff of 31 August 2026, the institutional
+setting was transitional. DOALOS is carrying out secretariat functions
+under the Agreement until the treaty secretariat commences its
+functions. United Nations Noti ﬁcations 2026 –001 and 2026 –002
+further conﬁrm that, until the CHM becomes operational, noti ﬁca-
+tions and information required under relevant provisions of the
+Agreement are to be transmitted to DOALOS for circulation and
+publication as appropriate ( United Nations, 2026b , 2026c). Near-
+term interoperability proposals must therefore work through interim
+procedures rather than assume the existence of a mature CHM.
+The Preparatory Commission reported that the ﬁrst meeting of
+the COP is to be convened at United Nations Headquarters from 11
+to 22 January 2027 ( United Nations, 2026a). It also prepared a draft
+decision for that meeting on arrangements to enhance cooperation
+with relevant legal instruments, frameworks and global, regional,
+subregional and sectoral bodies, explicitly recognizing such coop-
+eration as crucial to effective implementation ( United Nations,
+2026d). This creates a concrete policy window: interface mapping
+and data-inventory work can occur before the ﬁrst COP; the COP
+can establish cooperation, provenance and mandate-protection
+principles; and technical pilots can follow as the secretariat, CHM
+and subsidiary arrangements become operational.
+3.2 Fragmentation across semantics,
+institutions and time
+Three forms of fragmentation are particularly consequential.
+The ﬁrst is semantic fragmentation. Different systems use different
+TABLE 2 Continued
+Option Criterion Observable/documentary basis Finding category Principal basis
+Option 4 Adaptability
+Modular interfaces can be
+piloted, revised or discontinued
+without replacing all
+institutional systems; whether
+this ﬂexibility is realized must
+be veriﬁed through staged
+implementation.
+Existing-authority ﬁt
+BBNJ arts 47(6)(c), 51; Gaebel
+et al., 2025 ; United Nations,
+2026a
+Categories are nominal ﬁndings deﬁned in Section 2.4 and Table 1, not numerical or ordinal performance scores. The evidence column identi ﬁes the principal legal or institutional basis for the
+classiﬁcation; the surrounding text provides the interpretive explanation. ‘Existing-authority ﬁt’ does not mean empirically proven effectiveness, and ‘conditional adaptation’ identiﬁes safeguards
+or institutional work that must be validated before scaling.
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org07
+identiﬁers, classi ﬁcations, data ﬁelds, and reporting intervals. A
+biodiversity alert may refer to a geographic feature or conservation
+objective, while a ﬁsheries database is organized around vessel
+authorizations and an inspection system around port calls.
+Without stable identi ﬁers and common metadata, data can be
+technically accessible yet operationally unusable.
+The second is institutional fragmentation. Information is held
+by organizations and national agencies with different mandates and
+incentives. Fisheries administrations, maritime authorities, coast
+guards, customs agencies, envir onmental ministries, and port
+authorities may each hold relevant parts of a compliance picture.
+Auld et al. (2025) show that regional cooperation against IUU
+ﬁshing depends on coordination, transparency, and the involve-
+ment of multiple institutions. The policy challenge is to convert that
+general need for cooperation into repeatable procedures rather than
+relying on personal contacts or exceptional cases.
+The third is temporal fragmentation. Ecological risk, ﬁshing
+activity, port arrival, landing, market entry and enforcement review
+occur at different points in time. By the time veri ﬁed information
+reaches a downstream authority, the vessel or catch may have
+moved. The PSMA partially addresses this problem by requiring
+advance information and enabling port-based action. FAO ’s Global
+Information Exchange System (GIES) extends that logic by sup-
+porting the exchange of advance requests for port entry (ARPEs),
+inspection information and relevant port-State reports. Its public
+dashboard expressly presents cumulative ARPE and inspection
+submissions since operationalization, demonstrating that special-
+ized global compliance-information infrastructure already exists
+and can be reused rather than duplicated ( Food and Agriculture
+Organization of the United Nations, 2026a ). The policy question is
+how to connect such ﬁsheries information systems to wider envi-
+ronmental information generated under BBNJ without treating
+either as legally dispositive of the other.
+Maritime safety instruments create a related but distinct inter-
+face. The revised STCW-F Convention and mandatory STCW-F
+Code entered into force on 1 January 2026, and the 2012 Cape
+Town Agreement is scheduled to enter into force on 24 February
+2027 after its entry-into-force conditions were met in February 2026
+(International Maritime Organization, 2026a , 2026b). Together,
+these instruments strengthen personnel-certi ﬁcation and ﬁshing-
+vessel safety inspection frameworks and may improve the reliability
+of certi ﬁcation and inspection information. They do not, however,
+transform safety de ﬁciencies into evidence of IUU ﬁshing. A sound
+policy model should permit veri ﬁed factual information to be
+referred across agencies without collapsing the legal tests of ﬁsher-
+ies, safety, labor, customs, or environmental law.
+Capacity asymmetry cuts across all three forms of fragmenta-
+tion. High-capacity States can combine satellite data, vessel mon-
+itoring systems, electronic reporting, port inspection, corporate
+information, and specialized le gal expertise. Many developing
+States cannot. Song et al. (2020) and Alonso and Marschke
+(2023) also show that anti-IUU policies can impose collateral
+burdens on small-scale ﬁshers and workers when regulatory
+design assumes industrial-scal e data and compliance capacity.
+Interoperability that requires expensive digital infrastructure or
+universal data production can therefore widen governance
+inequality. BBNJ capacity-building provisions are relevant not
+only to scienti ﬁc participation but also to the legitimacy of any
+information architecture that links biodiversity governance with
+ﬁsheries administration.
+4 Policy options and implications
+The four options differ in how they allocate connectivity,
+administration and decision authority. The comparison below
+does not treat the ﬁnding categories as scores and does not infer
+actual policy performance from institutional design alone. Instead,
+the text explains the source-linked reasons for each ﬁnding in
+Table 2 and identi ﬁes which conditions would have to be satis ﬁed
+before an option could be implemented or scaled.
+4.1 Option 1: autonomous implementation
+Under autonomous implement ation, BBNJ institutions,
+RFMOs, PSMA mechanisms, IMO systems, and national agencies
+continue to develop largely independent information processes.
+Coordination occurs when a speci ﬁc treaty or domestic rule
+requires noti ﬁcation or when of ﬁcials make case-by-case contact.
+This option has the advantage of legal clarity. Each institution
+controls its own information and decisions, and the risk of juris-
+dictional overreach is low.
+The weakness is that autonomy reproduces the very fragmen-
+tation that reduces the value of new biodiversity information.
+Separate systems can create multiple versions of vessel identity,
+inconsistent spatial references, duplicated reporting, and delayed
+referrals. The approach also increases the burden on lower-capacity
+administrations because of ﬁcials must manually translate data
+among systems. Autonomous implementation is therefore legally
+conservative but administratively burdensome and limited in its
+capacity to connect ecological information to downstream decision
+points. It is best understood as the baseline against which more
+connected models should be assessed, not as a desirable end state.
+4.2 Option 2: centralized integration
+Centralized integration seeks to solve fragmentation by creating
+a common global platform, conso lidated database, or central
+coordinating authority that combines biodiversity, ﬁsheries,
+vessel, port and compliance information. This analytical option is
+broader than the Article 51 CHM: it concerns consolidation of
+information and potentially deci sion-support functions across
+BBNJ and external sectoral systems, whereas the CHM can also
+operate as a linking and information-access mechanism without
+absorbing the mandates or databases of competent ﬁsheries and
+maritime bodies. For analytical purposes, this option assumes that
+such a platform would require an identi ﬁed global administrator —
+potentially a new entity, a COP-authorized mechanism, or an inter-
+institutional arrangement—and a rule specifying what functions are
+merely informational and what functions, if any, can affect deci-
+sions. That governance allocation is not supplied automatically by
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org08
+the BBNJ Agreement. Technica lly, a common platform could
+standardize identi ﬁers, reduce duplication and support cross-
+regime analytics, but its institutional feasibility depends on whether
+it remains a service layer or accumulates decision authority that
+existing treaties assign elsewhere.
+The principal constraints are therefore legal and institutional
+rather than purely technical. First, centralization risks confusing
+information aggregation with legal competence. Article 5(2) and the
+more speci ﬁc competence rules in articles 22 and 29 point toward
+coordination with existing bodies rather than an implied transfer of
+their mandates ( United Nations, 2023 ). Second, data concentration
+increases con ﬁdentiality, cybersecurity and access-control conse-
+quences. The GIES itself differentiates access because ﬁsheries forms
+can contain personal, compliance and commercial information.
+Third, a central platform would require rules for administration,
+correction, liability, funding and dispute over data quality. Fourth, a
+new global data infrastructure could duplicate specialized systems
+already performing de ﬁned functions. Centralized integration is
+therefore not excluded a priori , but under the present legal archi-
+tecture it faces a structural competence problem if it is designed as a
+decision authority and signi ﬁcant conditional requirements even if
+limited to information services.
+4.3 Option 3: sectoral liaison and
+institutional agreements
+A third option is to preserve institutional separation while
+expanding coordination through memoranda of understanding,
+focal points, joint working groups, and recurring consultation.
+This approach is familiar in international administration and can
+TABLE 3 Phase-based implementation roadmap with validation and revision rules.
+Phase Timing Proposed action Validation evidence Revision/stop rule
+Phase 0: pre-COP mapping To 10 January 2027
+Map authoritative sources,
+identiﬁers, legal mandates,
+access restrictions and liaison
+points across BBNJ, RFMO,
+FAO/PSMA, IMO-related and
+national systems.
+Veriﬁed inventory of sources
+and interfaces; documented
+legal basis for each proposed
+exchange.
+Do not build an interface
+where no competent source or
+lawful exchange basis can be
+identiﬁed.
+Phase 1: ﬁrst COP 11 –22 January 2027
+Use COP cooperation powers
+to adopt principles for
+mandate protection,
+provenance, correction, access
+tiers and links to authoritative
+external systems, and to
+consider under Article 22(4) a
+mechanism regarding existing
+ABMTs built around
+authoritative-source links,
+minimum spatial metadata,
+designated contacts and
+consultation/referral
+procedures.
+COP decision/guidance that
+identiﬁes cooperation
+processes, preserves
+competence of relevant bodies,
+and de ﬁnes the initial scope
+and governance safeguards of
+any Article 22(4) mechanism
+regarding existing ABMTs.
+Revise proposals that imply
+transfer of decision authority
+or duplication inconsistent
+with arts 5, 22, 29 or 51.
+Early institutionalization 2027 –2028
+Translate COP principles into
+liaison arrangements,
+minimum metadata, referral
+taxonomy, versioning and
+correction procedures.
+Documented technical/legal
+speciﬁcations; participating
+institutions con ﬁrm
+compatibility with their
+mandates and con ﬁdentiality
+rules.
+Suspend ﬁelds or work ﬂows
+that cannot be sourced,
+corrected, secured or legally
+interpreted by the receiving
+body.
+Phase 2: pilot implementation 2028 –2030 (indicative)
+Pilot narrow interfaces for
+vessel identity, time-versioned
+spatial measures, existing-
+ABMT noti ﬁcation/
+consultation referrals,
+veriﬁcation requests and
+outcome feedback.
+Measure referral latency,
+correction rate, outdated/false
+spatial matches, duplicate
+reporting, user uptake,
+resolution of overlap questions
+and documented management
+usefulness.
+Do not scale functions with
+persistent legal-boundary
+errors, unacceptable security
+incidents or negligible
+operational value.
+Capacity and equity track Parallel
+Provide secure connectivity,
+shared services, legal drafting,
+cybersecurity, training and
+evidence-handling support;
+monitor effects on small-scale
+ﬁsheries.
+Participation by lower-capacity
+States; documented support
+use; distributional review; no
+automatic adverse inference
+from data absence.
+Redesign requirements that
+systematically exclude lower-
+capacity administrations or
+create disproportionate burdens
+without demonstrated bene ﬁt.
+Review and scaling After ﬁrst pilot cycle
+COP and cooperating bodies
+review aggregate results and
+decide which interfaces should
+be standardized, revised or
+discontinued.
+Scale only where evidence
+shows improved information
+quality/timeliness without
+competence transfer,
+unacceptable security risk or
+disproportionate distributional
+cost.
+Discontinue or narrow
+interfaces whose costs or risks
+exceed demonstrated
+institutional value.
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org09
+be implemented without treaty amendment. It is particularly useful
+where two institutions have a de ﬁned overlap —for example, BBNJ
+and an RFMO in relation to an ABMT, or FAO and IMO in relation
+to ﬁshing-vessel safety and responsible ﬁsheries. Jiang et al. (2026) ,
+in the context of BBNJ and the International Seabed Authority,
+similarly identify formalized institutional cooperation and expert
+consultation as important responses to regime interaction.
+Sectoral liaison is more feasible than global centralization and
+more connected than autonomous implementation. Its limitation is
+scalability. A network of bilateral arrangements can become com-
+plex when the same information must move across many RFMOs,
+States, and functional systems. Agreements also often state broad
+commitments to cooperate without specifying minimum data ﬁelds,
+timing, provenance, access control, or what happens after a referral.
+The model is therefore useful as a legal and political foundation, but
+it needs technical and procedural standards to become dependable
+governance infrastructure.
+4.4 Option 4: federated interoperability
+with phased implementation
+Federated interoperability combines institutional autonomy
+with standardized interfaces. Each institution retains its own
+database, mandate, access rules, and legal tests. Connectivity is
+created through a limited set of common components: persistent
+vessel identi ﬁers where available; shared geographic references;
+minimum metadata describing source, time, con ﬁdence, and legal
+status; standardized referral categories; machine-readable or other-
+wise structured exchange formats; and explicit rules identifying the
+authority responsible for veri ﬁcation and action. Under this model,
+the Article 51 CHM can function as a gateway and linking layer for
+BBNJ-related information while specialized ﬁsheries, vessel, port
+and maritime systems remain under their respective competent
+institutions. The model therefore resembles a federation of special-
+ized systems rather than a single cross-regime platform.
+The legal advantage is that the model separates ‘can be informed
+by’ from ‘is bound by. ’ BBNJ information can inform ecological
+prioritization without determiningﬁsheries illegality. RFMO compli-
+ance ﬁndings can inform port risk assessment without automatically
+dictating a domestic sanction. A maritime-safety inspection can
+conﬁrm identity or certi ﬁcation facts without becoming proof of a
+ﬁsheries violation. This architecture operationalizes the idea that facts
+can be shared while legal judgments remain regime-speciﬁc.
+The administrative advantage is incremental implementation.
+Institutions do not need to replace existing systems. They can begin
+with a small number of high-value interfaces, such as vessel identity,
+spatial boundaries, designated contacts, and port-referral metadata.
+More advanced functions —automated exchange, risk analytics, or
+cross-regime dashboards —can be added later where capacity and
+legal safeguards permit. This is particularly important because
+FIGURE 1
+Analytical sequence from documentary evidence to conditional policy recommendation.
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org10
+international information systems evolve unevenly and because the
+BBNJ institutions themselves will mature over time after entry
+into force.
+The equity advantage is that minimum interoperability can be
+designed around shared services and tiered participation. A State
+should not need its own advanced analytics platform to receive a
+validated referral or to access standardized information. Capacity-
+building can support common software modules, training, legal
+templates, cybersecurity, and inspection protocols. Federated inter-
+operability therefore offers a practical pathway for treating capacity
+as a collective design problem rather than a national precondition
+for participation.
+Operationally, Option 4 requires a thin common governance
+layer rather than a new institutional hierarchy. Subject to COP
+decisions and the mandates of existing bodies, common rules would
+deﬁne the minimum metadata, referral categories, versioning con-
+ventions and access conditions needed for systems to interoperate.
+The authoritative record would remain with the institution that
+created or legally maintains it. The CHM or another agreed
+interface could support discovery and routing, while the originating
+institution would remain responsible for source integrity and access
+status and the receiving competent body would remain responsible
+for veriﬁcation and any legal consequence. Recurring inter-institu-
+tional consultation would be used to resolve interface problems,
+correction requests and changes in technical standards. This allo-
+cation of functions is central to the federated model because it
+creates a traceable cross-regime pathway without relocating sub-
+stantive decision authority.
+Article 22(4) provides a concrete use case for this architecture.
+Article 22(4) provides that, where the achievement of the objectives
+and the implementation of Part III so requires, the COP may
+consider and, subject to Article 22(1) and (2), may decide, as
+appropriate, to develop a mechanism regarding existing ABMTs,
+including marine protected areas, adopted under relevant legal
+instruments and frameworks or by relevant global, regional, subre-
+gional or sectoral bodies. The provision does not prescribe the
+institutional form of that mechanism. Within a federated model, it
+could therefore be designed as a coordination protocol rather than a
+new regulatory authority. Illustratively, one possible design could
+perform the following functions: index an existing ABMT with a
+link to its authoritative source; record its geographic scope, objec-
+tives, legal status, effective dates and current version; identify the
+adopting body and designated contact point; establish a consulta-
+tion and referral process where an existing measure overlaps with,
+complements or creates an apparent gap in relation to a BBNJ
+measure; route scienti ﬁc or technical questions to the relevant
+competent body and, where appropriate under the Agreement, to
+BBNJ scienti ﬁc processes; and record subsequent amendments,
+reviews or withdrawals so that outdated spatial information is not
+propagated across systems. The mechanism proposed here would
+not automatically incorporate an existing ABMT into BBNJ law,
+alter its legal effect, or transfer ﬁsheries-management competence to
+the COP. Its function would be to make existing measures discov-
+erable, comparable and consultable across regimes while preserving
+the authority of the institution that adopted them.
+This Article 22(4) mechanism also illustrates why phased
+implementation is important. A ﬁrst stage could establish a limited
+registry-and-linkage function using authoritative source links, min-
+imum spatial metadata and institutional contact points. A second
+stage could pilot consultation and referral work ﬂows with a small
+number of willing RFMOs or other relevant bodies, including
+procedures for correcting outdated boundaries and clarifying the
+status of overlapping measures. A review stage could then assess
+metadata accuracy, response time, duplicate reporting, unresolved
+competence questions and user uptake before any broader stan-
+dardization. Expansion would occur only where the pilot demon-
+strates that the mechanism improves visibility and coordination
+without creating legal ambiguity, excessive reporting burdens or a
+de facto transfer of decision authority.
+Applying the decision rule in Section 2.4, centralized integration
+is not carried forward as the default architecture because a central
+decision authority would con ﬂict with the distributed allocation of
+competence, while a purely informational central platform would
+still require substantial governance and data-concentration safe-
+guards. Autonomous implementation preserves competence but
+fails to provide a dependable routine cross-regime pathway.
+Sectoral liaison remains legally useful and is retained as an enabling
+layer, but its bilateral or sector-speci ﬁc structure does not by itself
+satisfy the scalability and routine-pathway threshold. Federated
+interoperability is therefore carried forward for policy development
+not because it receives an aggregate score, but because it can satisfy
+the three threshold conditions: preservation of distributed compe-
+tence, establishment of a routine cross-regime information path-
+way, and incremental and reversible implementation. This remains
+a conditional institutional inference, not an empirical ﬁnding that
+the model will outperform alternatives in practice; the roadmap in
+Table 3 is designed to generate the implementation evidence needed
+for later validation.
+5 From information sharing to
+governance infrastructure
+The phrase ‘information sharing ’ is too broad to guide imple-
+mentation. In practice, institutions need to know what information
+is being shared, in what format, with what provenance, for what
+purpose, under whose authority, and with what consequences.
+Federated interoperability therefore requires governance rules as
+much as technical standards.
+The ﬁrst building block is reference integrity. Cross-regime
+governance depends on stable references for the objects, measures
+and institutions to which information relates. For vessels, a persis-
+tent identiﬁer—such as the IMO Ship Identi ﬁcation Number where
+applicable—can reduce fragmentation across changes of name, ﬂag
+or operator, while FAO, RFMO and national identi ﬁers remain
+necessary supplementary ﬁelds. The same principle applies to
+spatial measures: an ABMT, ﬁsheries closure or management rule
+should be linked to an authoritative source and version. The policy
+objective is not to create a universal identi ﬁer for every regulatory
+Nam 10.3389/fmars.2026.1986237
+Frontiers in Marine Science frontiersin.org11
+object, but to ensure that different institutions can determine
+whether they are referring to the same vessel, area, measure
+or decision.
+The second building block is spatial interoperability. BBNJ
+ABMTs and EIA information are spatially structured, while ﬁsher-
+ies measures may also de ﬁne closed areas, seasonal restrictions, or
+management zones. These systems need common geospatial refer-
+ences and version control. A risk alert is only useful if the receiving
+authority can determine which measure applied at the relevant time
+and whether the vessel activity occurred inside the relevant area.
+Spatial metadata should therefore identify the source, legal or policy
+status, effective dates, and version of the boundary or measure.
+The third building block is provenance. Not all data have the
+same evidentiary status. Satellite detections, AIS anomalies, ob-
+server reports, inspection ﬁndings, RFMO listings, self-reported
+catch data, and scientiﬁc model outputs differ in reliability and legal
+relevance. Interoperability should make these differences visible
+rather than ﬂatten them into a single risk score. Minimum metadata
+should identify the source, timestamp, method of collection, con-
+ﬁdence or veri ﬁcation status where appropriate, and whether the
+information is public, restricted, or legally sensitive.
+The fourth building block is a referral taxonomy. A receiving
+institution needs to know why information is being sent and what, if
+anything, is being requested of it. A limited set of categories —
+ecological priority, identity inconsistency, authorization concern,
+possible interaction with a spat ial measure, safety relevance,
+market-traceability concern or request for veri ﬁcation—can make
+handoffs repeatable across regimes. Importantly, the referral should
+distinguish a request to verify from a conclusion that a violation
+occurred. This preserves the difference between informational
+connectivity and legal authority and reduces the risk that probabi-
+listic or context-dependent information migrates across institutions
+as adjudicative fact.
+The ﬁfth building block is a feedback loop. Ocean governance
+should not end when a vessel is inspected or a port decision is made.
+Veriﬁed ﬁndings can inform future RFMO compliance review,
+BBNJ monitoring of environmental measures, national risk assess-
+ment, and capacity planning. Feedback can also reveal false posi-
+tives, gaps in spatial rules, inconsistent vessel records, or burdens on
+compliant ﬁshers. This is where interoperability supports ecosys-
+tem-based management: enforcement information becomes part of
+learning about whether conservation measures are implementable
+and effective, rather than remaining isolated within case ﬁles.
+6 Distributional and regional
+implications
+A global interoperability policy must accommodate regional
+diversity. The Asia-Paci ﬁc is used here as an illustrative stress test
+rather than as a representative case or causal comparison. The
+region was selected for analytical, not statistical, reasons: it com-
+bines large distant-water ﬂeets, archipelagic and small-island juris-
+dictions, multiple RFMO and subregional arrangements, major
+seafood markets, wide variation i n administrative and digital
+capacity, and active regional monitoring, control and surveillance
+cooperation (Fujii et al., 2021 ). These characteristics place simulta-
+neous pressure on all six criteria —especially competence, informa-
+tion exchange, feasibility and distributional equity —and therefore
+provide a demanding setting in which to examine whether an
+interoperability design remains plausible under institutional het-
+erogeneity. The region also illustrates the tension between stronger
+control and distributional effects. Regulatory reforms can improve
+transparency and reduce IUU activity, but compliance costs and
+surveillance practices can affect migrant workers, small-scale ﬁshers
+and communities whose ﬁshing practices do not ﬁt industrial
+monitoring models ( Alonso and Marschke, 2023 ). No claim is
+made that the region is globally representative or that observed
+regional outcomes validate the proposed interoperabil-
+ity architecture.
+A federated model should therefore avoid one-size- ﬁts-all data
+ob

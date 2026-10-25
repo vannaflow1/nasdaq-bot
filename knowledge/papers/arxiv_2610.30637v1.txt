@@ -1,0 +1,1100 @@
+Multiple Stopping and Exercise Boundaries
+for American Put Options
+Katsunori Ano
+October 22, 2026
+Abstract
+This article studies a finite-horizon American put option with up tomexercise rights
+under the risk-neutral Black–Scholes model, where consecutive exercises must be separated
+by a prescribed refractory periodδ >0 and unused rights may expire. For each number
+of remaining rights, we show that optimal exercise is characterized by a single exercise
+boundary and that these boundaries are ordered by the number of remaining rights. We
+prove optimality of the first boundary-hitting time and establish local Lipschitz continuity
+of the exercise boundaries within each open deadline strip. Away from the deadlines, we
+derive smooth fit, the associated quasi-variational inequality and free-boundary formulation,
+an early-exercise-premium representation, recursive Volterra-type boundary equations, and
+a verification theorem. We also extend the recursive formulation to an independent random
+termination time, thereby allowing for exogenous termination of the option contract.
+Keywords:multiple stopping; American put option; single-crossing; free-boundary problem;
+quasi-variational inequality; random termination.
+MSC 2020:60G40, 91G20, 91G80, 35R35.
+1 Introduction
+The finite-horizon American put is a classical example of an optimal stopping problem; see,
+for example, Jacka [13], Lamberton and Lapeyre [14], Merton [15], Peskir and Shiryaev [18].
+The purpose of this paper is to develop a corresponding optimal-boundary analysis for the
+multiple-exercise (multiple-stopping) setting, characterizing the optimal exercise rule when the
+holder has several exercise rights and successive exercises must be separated by a deterministic
+refractory period.
+The general multiple-stopping framework is well established. The recursive reduction of a
+multiple-stopping problem to a sequence of single-stopping problems already appears in clas-
+sical discrete-time theory; see Haggstrom [12] and the historical discussion in Bender [5]. A
+systematic account of discrete-time multiple stopping problems and their applications is given
+in the monograph by Sofronov and Szajowski [21]. For a Japanese-language introduction to op-
+timal stopping problems that also treats multiple stopping, see Ano [1]. Carmona and Touzi [8]
+proved existence and recursive construction of multiple-exercise rules in a broad Snell-envelope
+setting and, in the Black–Scholes model, gave a constructive perpetual solution together with a
+numerical approximation procedure for finite maturity. Related potential-theoretic methods for
+linear diffusions were developed by Carmona and Dayanik [7]. For finite-horizon problems with
+a deterministic refractory period, Bender [5] established a continuous-time reduction principle
+and a Doob–Meyer-type decomposition allowing for right-hand discontinuities of the multiple-
+exercise value process. For another class of finite-horizon optimal stopping problems arising in
+mathematical finance, formulated for exponential L´ evy processes, see Ano and Ivanov [2]. Our
+question is more specific: what can be proved analytically about the geometry and regularity
+1
+arXiv:2610.30637v1 [q-fin.PR] 22 Oct 2026
+of the finite-horizon exercise region for an American put when the exercise rights are optional
+and successive exercises are separated by a fixed refractory period?
+A closely related finite-horizon swing-put problem was analyzed by De Angelis and Ki-
+tapbayev [10], where all rights must be exercised before maturity. That obligation can make
+exercise optimal even when the put payoff is zero and leads, for each right except the last, to
+a stopping region bounded by two time-dependent curves. Here unused rights may expire, so
+there is no contractual reason to exercise an out-of-the-money right merely to preserve later op-
+portunities. For every finite number of rights we prove, under the standing model assumptions,
+that the stopping region is a single lower interval determined by one exercise boundary.
+This paper develops a continuous-time counterpart of the discrete-time framework in Ano
+[3], replacing the geometric random walk by the Black–Scholes diffusion while retaining the
+multiple-exercise and refractory-period structure. That companion study considers American
+put, Russian, and floating-strike geometric-average Asian contracts, as well as independent
+random maturity. Broader Japanese-language lecture notes covering the surrounding optimal
+multiple-stopping and mathematical finance framework are Ano [4]. The present article de-
+velops in English, and in research-article form, the material of Chapters 3–5 of those notes,
+reorganized around the one-right American put, the multiple-exercise American put with re-
+fractory periods, and the extension to random termination, and supplemented by several new
+proofs developed for the present article. The presentation here is self-contained.
+Finite maturity creates another important feature of the multiple-exercise problem. Because
+two successive exercises must be separated by the refractory periodδ, there are deterministic
+times at which one of the remaining exercise opportunities ceases to be usable. Define
+dj :=T−jδ, j= 0,1,2, . . . , d 0 =T.
+At timed j, there is still just enough time to accommodate one additional exercise after waiting
+for the required refractory period, whereas immediately afterd j there is not. We call these
+timesdeterministic feasibility deadlines. They divide the time horizon into strips on which only
+a certain number of exercise rights can still be used before maturity, so the original multiple-
+right problem reduces to the corresponding lower-right problem. When a deadline is crossed
+from left to right, the effective number of usable rights drops by one. As a consequence,
+the value function may have a downward right-hand jump at a deadline, and the optimal
+exercise boundary may jump as well. Right-hand discontinuities of the value process at the
+timesT−jδare already treated in the general framework of Bender [5]. Here we study their
+implications for the exercise boundaries and the associated transmission conditions. Away
+from the deadlines, the standard quasi-variational inequality (QVI) and smooth-fit relations
+are recovered below from the standing Black–Scholes assumptions. At a deadline, however, the
+usual time-continuous matching is replaced by a max-type transmission condition reflecting
+the loss of one effective exercise right.
+The main contribution of this paper is the single-crossing analysis and the resulting one-
+sided exercise boundaries, ordered by the number of remaining rights, for the optional multiple-
+exercise American put, with the feasibility-deadline structure kept explicit. We first establish
+the recursive single-stopping representation, stagewise reduction across deadline strips, and
+basic monotonicity, convexity, Lipschitz, and stripwise time-regularity properties of the value
+functions. We then combine a Bermudan approximation with themarginal-right values, which
+serve as a key comparison device in the present analysis and are also developed in the companion
+discrete-time study Ano [3]. The standard Bermudan approach restricts exercise to a finite time
+grid and studies convergence as the mesh tends to zero; see Bouchard and Warin [6, Section 2.2]
+and Pag` es [16, Chapter 11] for general accounts. For the present multiple-exercise problem,
+we instead use deadline-aligned grids withh=δ/Nthat contain maturity and every relevant
+feasibility deadline, so that the refractory period is represented exactly byNsteps. This
+2
+alignment is essential for the backward-induction argument, because an unaligned recursion
+can cross a time at which the effective number of usable rights changes.
+The aligned scheme yields a slope bound for the marginal-right valuef [m]δ , defined later for
+them-right problem, and hence asingle-crossing property: the excess valuef [m]δ (t, x)−(K−x)+
+is nondecreasing on (0, K), so its zero set is a lower interval. This single-crossing property is the
+key structural step in the boundary analysis. Together with the strict waiting-loss argument,
+which excludes optimal exercise at or above the strike, it yields a one-sided stopping region for
+every finite number of rights. Thus we obtain the threshold characterization
+V [m](t, x) =g[m]δ (t, x)⇐ ⇒f[m]δ (t, x) = (K−x)+ ⇐ ⇒x≤b[m](t),
+whereV [m] denotes the value function of them-right problem,g [m]δ is the stopping reward, and
+b[m] is the exercise boundary. The comparison of marginal-right values across exercise levels
+also yields the ordering of the exercise boundaries by the number of remaining rights, and we
+prove that the first boundary-hitting time is optimal.
+The remaining regularity issue is resolved by a localized level-set argument in log-price
+coordinates, adapted from the probabilistic method of De Angelis and Stabile [11] and combined
+with the weak Duhamel representation proved earlier in the paper. This yields local Lipschitz
+continuity of every exercise boundary on each open deadline strip and closes the classical
+delayed-value regularity recursively at every finite level. Smooth fit then follows away from
+deterministic deadlines. The classical QVI relations in the open stopping and continuation
+regions, together with the associated free-boundary formulation, consequently hold under the
+standing Black–Scholes assumptions. For the early-exercise-premium representation we use the
+weak Duhamel formula directly, rather than a local-time-space formula; no additional boundary
+monotonicity or continuation-side boundary regularity is required. This leads to a recursive
+Volterra-type integral equation for the exercise boundary in which the deadline jumps enter
+explicitly, extending the classical one-right integral-equation characterization.
+Finally, we extend the recursive architecture to an independent random termination time.
+A general conditional survival function weights future rewards, and under a multiplicative
+survival condition the survival factors combine consistently along the recursion. Exponential
+termination with intensityλis equivalent, for valuation purposes, to replacing the discount
+raterbyr+λin the stopping functional, while the risk-neutral drift of the underlying remains
+r; in this case we prove that the recursive and original formulations coincide. For a general
+survival law, a complete proof of this equivalence is not pursued here.
+The remainder of the paper is organized as follows. Section 2 recalls the Black–Scholes
+model and the one-right American put. Sections 3–5 develop the recursive multiple-stopping
+problem, the deadline structure, marginal-right values, the single-crossing property, and the
+optimal boundary. Section 6 gives the QVI and free-boundary formulations, the verification
+result, the early-exercise premium representation, and recursive Volterra equations for the exer-
+cise boundary. Section 7 treats random termination, Section 8 reports numerical illustrations.
+2 Model and American put
+Work on a filtered probability space carrying a Brownian motionB. Under the risk-neutral
+measure, the asset price is
+dXs =rX s ds+σX s dBs, X t =x >0,
+wherer >0,σ >0, the strike isK >0, and the finite maturity isT. The put payoff is
+g(x) := (K−x) +.
+3
+Foru≥0, the multiplicative representation is
+X t,xt+u =xR u, R u := exp
+
+r− 12 σ2
+
+u+σ(B t+u −B t)
+
+>0,
+with
+E[e−ruRu] = 1.(1)
+The infinitesimal generator is
+Lϕ(x) =rxϕ x(x) + 12 σ2x2ϕxx(x).
+Let (F s) denote the augmented filtration generated byB. Fort≤T,T [0,T−t] denotes the
+set of stopping times with respect to (F t+u)u≥0 taking values in [0, T−t] (relative stopping
+times), and E t,x denotes expectation givenX t =x.
+The one-right American put value is
+V [1](t, x) = sup
+τ∈T [0,T−t]
+Et,x
+
+e−rτ g(Xt+τ ).(2)
+We use the standard finite-horizon exercise-boundary results in the following form.
+Theorem 2.1(One-right American put; see [13, 18]).For everyt < Tthere is a boundary
+b[1](t)∈(0, K)such that the stopping setS [1]t :={x >0 :V [1](t, x) =g(x)}and the continua-
+tion setC [1]t := (0,∞)\ S[1]t are
+S [1]t = (0, b[1](t)],C [1]t = (b[1](t),∞).
+The boundary is nondecreasing and continuous on[0, T)and satisfieslim t↑T b[1](t) =K. The
+minimal optimal stopping time is
+τ [1]∗t := inf{u∈[0, T−t) :X t+u ≤b [1](t+u)} ∧(T−t).
+Hereinf∅= +∞, and we setb [1](T) :=Kas a terminal convention. Moreover, value matching
+and smooth fit hold:
+V [1](t, b[1](t)) =K−b [1](t), V [1]x (t, b[1](t)+) =−1.
+The value admits the familiar early-exercise-premium decomposition
+V [1](t, x) =PE(t, x) +rK
+Z T
+t
+e−r(u−t)Pt,x Xu ≤b [1](u) du,
+whereP E is the European put price. This identity will be used below to quantify the value
+lost by being unable to exercise during a refractory interval.
+3 Multiple stopping
+3.1 Multiple stopping and recursive formulations
+Letm≥1 be the number of remaining exercise rights. An admissible multiple-stopping rule
+is an ordered vectorτ (m) = (τ1, . . . , τm) of stopping timesτ i ∈ T[0,T−t] satisfying
+0≤τ 1 ≤τ 2 ≤ · · · ≤τm ≤T−t
+4
+and, whenever another exercise remains feasible,
+τi+1 −τ i ≥δon{τ i +δ≤T−t}, i= 1, . . . , m−1.
+If after some exercise less thanδtime remains, later rights are infeasible and contribute zero.
+We adopt the convenient extension
+V [m](s,·) = 0 (s > T, m= 0,1,2, . . .), V [0] ≡0.(3)
+The direct value is
+V [m]dir (t, x) = sup
+τ (m)
+Et,x
+" mX
+i=1
+e−rτig(Xt+τi)1Ai
+#
+,(4)
+where
+A1 := Ω, A i :=
+i−1\
+k=1
+{τk +δ≤T−t}, i= 2, . . . , m,
+so that abandoned or infeasible later exercises contribute zero.
+Following the classical multiple-stopping reduction of Haggstrom [12], and its continuous-
+time formulation for multiple-exercise options by Carmona and Touzi [8], we work with a
+recursive single-stopping formulation. Define thedelayed residual-right value
+Ψ[m−1]δ (t, x) := Et,x he−rδV [m−1](t+δ, Xt+δ)i (5)
+and thestopping reward(the obstacle in the associated QVI)
+g[m]δ (t, x) :=g(x) + Ψ[m−1]δ (t, x).(6)
+Define the value recursively inmby
+V [m](t, x) := sup
+τ∈T [0,T−t]
+Et,x
+h
+e−rτ g[m]δ (t+τ, Xt+τ )i .(7)
+Form= 1, Ψ [0]δ ≡0 and (7) reduces to (2). We prove in Lemma 4.6 that the recursive and
+direct values coincide,V [m] =V [m]dir . Until then,V [m] always denotes the recursive value (7).
+We write
+S [m] :={(t, x)∈[0, T)×(0,∞) :V [m](t, x) =g[m]δ (t, x)}
+for the stopping (contact) set,C [m] := ([0, T)×(0,∞))\ S[m] for the continuation set, andS [m]t ,
+C[m]t for theirt-sections.
+3.2 Exercise deadlines and stagewise reduction
+Set
+dj :=T−jδ, j= 0,1,2, . . . ,
+and let
+q(t) := 1 +
+ T−t
+δ
+
+, q m(t) := min{m, q(t)}.
+Thusq m(t) is the maximum number of rights that can still be used at timet.
+5
+Standing convention.Throughout we assume 0< δ≤T, so that at least the last deadline
+d1 =T−δlies in [0, T]. Moreover, whenever levelmis considered we assume
+(m−1)δ≤T,equivalentlyd m−1 ≥0,(8)
+so that all deadlinesd 1, . . . , dm−1 belong to [0, T] and the first strip [0, d m−1] is nonempty.
+This entails no loss of generality: if (m−1)δ > T, thenm 0 :=q(0) = 1 +⌊T /δ⌋ ≤m−1 and
+qm(t) =q(t) =q m0(t) for allt∈[0, T], so that, by Proposition 3.1 below,V [m] =V [m0] on
+[0, T]×(0,∞), andm 0 satisfies (8). In particular, in Lemma 3.4 and Corollary 4.3 all deadlines
+involved lie in [0, T].
+Proposition 3.1(Stagewise degeneration).For everym≥1,
+V [m](t, x) =V[qm(t)](t, x).(9)
+In particular, forj= 1, . . . , m−1,
+V [m](t, x) =V[j](t, x), t∈(d j, dj−1], m≥j,(10)
+V [m](dj, x) =V[j+1](dj, x), m≥j+ 1,(11)
+V [m](dj+, x) =V[j](dj, x), m≥j+ 1.(12)
+The deadline jump
+∆[j+1](x) :=V [j+1](dj, x)−V [j](dj, x)≥0
+is nonnegative by Theorem 3.2(viii) below, and it is strictly positive on a nonempty interval at
+the last feasibility deadlined 1 (the chronologically last one); see Corollary 4.3.
+Proof.We prove (10) and (11) simultaneously by induction onm. The casem= 1 is immediate.
+Assume the statements hold up to levelm−1.
+Fixu∈(d i, di−1], 1≤i≤m−1. Thenu+δ∈(d i−1, di−2], with the convention that for
+i= 1 we haveu+δ > T. By the induction hypothesis and the extension (3),
+V [m−1](u+δ,·) =V [i−1](u+δ,·).
+Consequently,
+g[m]δ (u,·) =g [i]δ (u,·), u∈(d i, di−1].(13)
+The same identity holds withmreplaced by anyj∈ {i, . . . , m−1}. Ift∈(d j, dj−1], every
+u∈[t, T] belongs to a strip with indexi≤j, henceg [m]δ (u,·) =g [j]δ (u,·) throughout the entire
+remaining horizon. Taking the supremum in (7) gives (10).
+Now sett=d j. Sincet+δ=d j−1, the induction hypothesis givesV [m−1](dj−1,·) =
+V [j](dj−1,·); forj= 1 this is simply the terminal identityV [m−1](T,·) =V [1](T,·) =g.
+Thereforeg [m]δ (dj,·) =g [j+1]δ (dj,·). Foru > d j, (13) applied to levelsmandj+ 1 gives the
+same identity. The stopping rewards therefore agree on [d j, T], proving (11).
+Equation (9) is the equivalent compact form of (10) and (11). The proof of the right-limit
+identity (12) is deferred until after Theorem 3.2; that theorem uses only (10), so no circularity
+is involved.
+3.3 Properties of the value function
+Theorem 3.2(Properties ofV [m]).For everym≥1and(t, x)∈[0, T]×(0,∞):
+(i) 0≤V [m](t, x)≤mK;
+6
+(ii)t7→V [m](t, x)is nonincreasing;
+(iii)x7→V [m](t, x)is nonincreasing;
+(iv)x7→V [m](t, x)is convex;
+(v)V [m] ism-Lipschitz inx:
+|V [m](t, x1)−V [m](t, x2)| ≤m|x1 −x 2|;
+(vi)V [m] is1/2-H¨ older continuous in time on every deadline strip, namely on[0, d m−1]and
+on each(d j, dj−1],j= 1, . . . , m−1: there is a constantCm <∞such that
+|V [m](s, x)−V [m](s′, x)| ≤Cm(1 +x)|s−s ′|1/2
+whenevers, s′ lie in the same strip; global H¨ older continuity generally fails because of the
+deadline jumps;
+(vii)V [m] is jointly continuous on[0, d m−1]×(0,∞)and on each strip(d j, dj−1]×(0,∞);
+(viii)V [m](t, x)≥V [m−1](t, x).
+Proof.We argue by induction onm, usingX t,xt+u =xR u and (1). Form= 1, assertion (viii)
+readsV [1] ≥V [0] = 0. Assume the assertions hold at levelm−1. By (viii) at levelm−1,
+Ψ[m−1]δ ≥Ψ [m−2]δ , henceg [m]δ ≥g [m−1]δ , and (7) gives (viii) at levelm. From (6),
+g[m]δ (s, y) = (K−y) + + Ehe−rδV [m−1](s+δ, yRδ)i .
+The induction hypothesis implies that this stopping reward is nonnegative, nonincreasing and
+convex iny. Moreover,
+|g[m]δ (s, y1)−g [m]δ (s, y2)| ≤ |y1 −y 2|+e −rδ(m−1)E[|y 1 −y 2|Rδ]
+=m|y 1 −y 2|.(14)
+Using (7), nonnegativity of the stopping reward givesV [m] ≥0, whileg [m]δ ≤K+e −rδ(m−
+1)K≤mKgivesV [m] ≤mK. Ift 1 < t2, then the admissible stopping set att 2 is contained
+in that att 1, and the induction hypothesis givesg [m]δ (t1 +u,·)≥g [m]δ (t2 +u,·); hence time
+monotonicity follows.
+Ifx 1 < x2, thenx 1Rτ < x2Rτ pathwise, and the spatial monotonicity of the stopping
+reward transfers toV [m]. For convexity, letx=αx 1 + (1−α)x 2. SinceR τ does not depend on
+the initial state,
+xRτ =αx 1Rτ + (1−α)x 2Rτ .
+Convexity of the stopping reward and subadditivity of the supremum yield
+V [m](t, x)≤αV [m](t, x1) + (1−α)V [m](t, x2).
+Likewise, (14) gives for every stopping timeτ
+|g[m]δ (t+τ, x1Rτ )−g [m]δ (t+τ, x2Rτ )| ≤m|x1 −x 2|Rτ .
+After discounting, taking expectations and using (1), we obtain them-Lipschitz estimate.
+7
+For stripwise time regularity, let 0≤s < s′ ≤d m−1 and puth:=s ′ −s. Time monotonicity
+givesV [m](s, x)−V [m](s′, x)≥0. By the dynamic-programming principle on [s, s′],
+V [m](s, x)≤E s,x
+h
+max
+n
+sup
+0≤u≤h
+e−rug[m]δ (s+u, Xs+u), e−rhV [m](s′, Xs′)oi.
+SinceV [m](s′, x)≥g [m]δ (s′, x) and all functions involved arem-Lipschitz in space, each branch
+minusV [m](s′, x) is bounded by
+msup
+0≤u≤h
+|Xs+u −x|+ sup
+0≤u≤h
+Ψ[m−1]δ (s+u, x)−Ψ [m−1]δ (s′, x).
+Foru∈[0, h] the timess+u+δlie in [δ, d m−2], the first strip of levelm−1 (form= 1 the
+last term vanishes), so the induction hypothesis gives
+Ψ[m−1]δ (s+u, x)−Ψ [m−1]δ (s′, x) ≤e −rδCm−1E[1 +xR δ]√h≤C m−1(1 +x) √h.
+Together with Es,x[sup0≤u≤h |Xs+u −x|]≤c x
+√
+hforh≤T, this yields
+0≤V [m](s, x)−V [m](s′, x)≤C m(1 +x) √h.
+The comparison is carried out entirely inside the first strip; the estimate is stripwise because
+crossing a deterministic deadline changes the effective level of the continuation term. On a
+later strip (dj, dj−1], Proposition 3.1 (only (10) is used) identifiesV [m] withV [j], and (dj, dj−1]
+is contained in the first strip [0, dj−1] of levelj.
+Finally, joint continuity on each strip follows from (v) and (vi), since
+|V [m](s, y)−V [m](s′, x)| ≤m|y−x|+Cm(1 +x)|s−s ′|1/2
+whenevers, s′ lie in the same strip. This completes the induction.
+Completion of the proof of Proposition 3.1.Fors∈(d j, dj−1], (10) givesV [m](s, x) =V[j](s, x).
+Leveljhas no deadline atd j, and by Theorem 3.2(vii),V [j] is jointly continuous on [0, dj−1]×
+(0,∞). Hence
+V [m](dj+, x) = lims↓dj V [j](s, x) =V[j](dj, x),
+which proves (12) and completes the proof of Proposition 3.1.
+3.4 Supermartingale bounds and deadline transmission
+Lemma 3.3(Supermartingale bounds).Letk≥1and fix(t, x). ExtendV [k](s,·)by zero for
+s > Tas in(3).
+(i)The two processes
+ 
+e−ruV [k](t+u, Xt+u)u≥0,  e−ruΨ[k]δ (t+u, Xt+u)u≥0
+satisfy the optional-sampling inequalities for all bounded stopping times and hence are
+strong supermartingales with respect to(F t+u)u≥0. In particular,
+Et,x
+
+e−rτ Ψ[k]δ (t+τ, Xt+τ ) ≤Ψ [k]δ (t, x)
+for every bounded stopping timeτ, andV [k] ≥Ψ [k]δ .
+8
+(ii)Form≥2,
+V [m] ≤V [1] + Ψ[m−1]δ ≤V [1] +V [m−1];
+consequentlyV [m] ≤mV [1].
+Proof.(i) Let
+Zu :=e −ruV [k](t+u, Xt+u), u≥0,
+with the zero extension beyond maturity. The dynamic-programming principle gives directly,
+for any bounded stopping times 0≤ρ≤τ,
+Et,x[Zτ | Ft+ρ]≤Z ρ.(15)
+Indeed, conditional onF t+ρ, waiting untilτand then continuing optimally from (t+τ, X t+τ )
+is an admissible rule from (t+ρ, X t+ρ); the zero extension handles paths for which the shifted
+time exceedsT. This is the direction of the dynamic-programming principle that requiresε-
+optimal continuation rules selected measurably in the state; it holds because on each deadline
+strip the stopping reward andV [k] are continuous (Theorem 3.2(vii) and Remark 3.5), so that
+the standard Markovian Snell-envelope theory applies strip by strip [18, Chapter I], while at
+each deterministic deadline the strips are joined by the dynamic-programming principle at that
+fixed time. ThusZis a strong supermartingale. This formulation is convenient here because
+deterministic feasibility deadlines may produce downward right-hand jumps, so right continuity
+of the value process is not assumed.
+For its discounted process, set
+Yu :=e −ruΨ[k]δ (t+u, Xt+u).
+By the strong Markov property and the definition of Ψ [k]δ , the identityY τ = E[Z τ+δ | Ft+τ ]
+holds for every bounded stopping timeτ. Hence, for boundedρ≤τ, the tower property and
+(15) applied toρ+δ≤τ+δgive
+E[Yτ | Ft+ρ] = E[Zτ+δ | Ft+ρ]≤E[Z ρ+δ | Ft+ρ] =Y ρ.
+ThusYis also a strong supermartingale, and the displayed inequality in the statement follows
+by takingρ= 0. Finally, (15) withρ= 0 andτ=δgivesV [k](t, x)≥Ψ [k]δ (t, x).
+(ii) For everyτ∈ T[0,T−t] , part (i) gives
+Et,x
+
+e−rτ g[m]δ (t+τ, Xt+τ ) ≤E t,xe−rτ (K−X t+τ )+ + Ψ[m−1]δ (t, x)
+≤V [1](t, x) + Ψ[m−1]δ (t, x).
+Taking the supremum in (7) gives the first inequality, and part (i) at levelm−1 gives the
+second. Induction onmyieldsV [m] ≤mV [1].
+At a feasibility deadline the value is determined by a max-type transmission condition.
+Lemma 3.4(Deadline transmission).Letm≥2and1≤j≤m−1. Then, for everyx >0:
+(i)V [m](dj, x) = maxg[m]δ (dj, x), V[j](dj, x) ;
+(ii) ∆ [j+1](x) =  g[j+1]δ (dj, x)−V [j](dj, x)+, and∆ [j+1](x)>0impliesx∈ S [m]dj ;
+(iii)S [j]dj ⊆ S[m]dj .
+9
+Proof.The first point is to reduce the statement at the general deadlined j to the first deadline
+of a lower-level problem. By (11) and its proof,
+V [m](dj,·) =V [j+1](dj,·), g [m]δ (dj,·) =g [j+1]δ (dj,·).
+Hence
+S [m]dj =S [j+1]dj .
+It is therefore enough to prove the assertions whenm=j+ 1. In that case
+d:=d m−1 =T−(m−1)δ
+is the first feasibility deadline for them-right problem.
+Proof of (i).At timedthe holder has two qualitatively different choices: exercise imme-
+diately, or wait for a strictly positive amount of time. Immediate exercise givesV [m](d, x)≥
+g[m]δ (d, x).Also, by Theorem 3.2(viii), having one additional right cannot decrease the value,
+soV [m](d, x)≥V [m−1](d, x).Thus
+V [m](d, x)≥max{g [m]δ (d, x), V[m−1](d, x)}.
+We now prove the reverse inequality. Starting from the deterministic state (d, x), the value is
+unchanged if we work with the filtration generated by the future Brownian increments (Bd+u −
+Bd)u≥0,because these increments are independent ofF d and determine the future asset path.
+Letτbe a stopping time for this shifted Brownian filtration. The event{τ= 0}belongs to
+the germ sigma-field at time zero. By Blumenthal’s zero–one law this sigma-field is trivial, and
+therefore
+P(τ= 0)∈ {0,1}.
+Thus eitherτ= 0 almost surely orτ >0 almost surely. Ifτ= 0 almost surely, the expected
+reward is simplyg [m]δ (d, x).Ifτ >0 almost surely, thend+τ∈(d, T] almost surely. Immediately
+to the right of the deadline onlym−1 rights remain effective, and (13) gives
+g[m]δ (s,·) =g [m−1]δ (s,·), s∈(d, T].
+Hence
+Ed,x
+h
+e−rτ g[m]δ (d+τ, Xd+τ )i = Ed,xhe−rτ g[m−1]δ (d+τ, Xd+τ )i ≤V [m−1](d, x).
+Every admissible first stopping time therefore produces a value not exceeding
+max{g[m]δ (d, x), V[m−1](d, x)}.
+Taking the supremum proves
+V [m](d, x) = max{g[m]δ (d, x), V[m−1](d, x)}.
+Returning to the general deadlined j gives (i).
+Proof of (ii).Apply (i) at levelj+ 1. From ∆ [j+1](x) =V [j+1](dj, x)−V[j](dj, x),it follows
+that
+∆[j+1](x) = max{g[j+1]δ (dj, x), V[j](dj, x)} −V[j](dj, x)
+=
+ 
+g[j+1]δ (dj, x)−V [j](dj, x)+.
+10
+If this quantity is strictly positive, the maximum is attained by the stopping-reward branch.
+ThereforeV [j+1](dj, x) =g[j+1]δ (dj, x),sox∈ S[j+1]dj =S [m]dj .
+Proof of (iii).Takex∈ S [j]dj . ThenV [j](dj, x) =g [j]δ (dj, x).The hierarchy of lower-level
+values in Theorem 3.2(viii) implies
+Ψ[j−1]δ (dj, x)≤Ψ [j]δ (dj, x),
+and hence
+g[j]δ (dj, x)≤g [j+1]δ (dj, x).
+Using (i) at levelj+ 1 therefore gives
+V [j+1](dj, x) = max{g[j+1]δ (dj, x), V[j](dj, x)}=g [j+1]δ (dj, x).
+Thusx∈ S[j+1]dj =S [m]dj , which proves the inclusion.
+Remark3.5 (Time regularity of the stopping reward).SinceV [m−1] is continuous on the right-
+closed strips of Theorem 3.2(vii) and has nonpositive right jumps at its deadlines and atT, the
+mapt7→g [m]δ (t, x) is left-continuous, with nonpositive right jumps atd 1, . . . , dm−1. Hence the
+stopping-reward processu7→e −rug[m]δ (t+u, Xt+u) is pathwise upper semicontinuous from both
+sides, which is the regularity under which the Snell-envelope arguments below (flat compensator
+before contact) are applied on each strip.
+4 Marginal-right values and the single-crossing property
+Define the marginal-right value
+f [m]δ (t, x) :=V[m](t, x)−Ψ[m−1]δ (t, x), m≥1.
+In particular,f [1]δ =V [1] because Ψ [0]δ = 0. Then the stopping decision is determined by
+comparingf [m]δ with the one-right payoff (K−x) +. Indeed, stopping occurs exactly when
+f [m]δ (t, x) = (K−x)+,while continuation corresponds tof [m]δ (t, x)>(K−x) +.
+Throughout the paper, the termmarginal-right valueis reserved forf [m]δ . It should not be
+confused with theincremental value of themth right, introduced formally in Subsection 5.2
+asD [m] :=V [m] −V [m−1]. The former removes the delayed residual-right value and therefore
+converts the stopping condition into a comparison with the one-right payoff, whereas the latter
+measures the additional value obtained by adding themth exercise right.
+Lemma 4.1(Basic properties of the marginal-right value).Form≥2:
+(i) (K−x) + ≤f [m]δ (t, x)≤V [m](t, x)≤mK, V [m](t, x)≥V [m−1](t, x)≥Ψ [m−1]δ (t, x);
+(ii)f [m]δ (t,·)is(2m−1)-Lipschitz;
+(iii)f [m]δ is jointly continuous on[0, d m−1]×(0,∞);
+(iv) (t, x)∈ S[m] ⇐ ⇒f[m]δ (t, x) = (K−x)+,(t, x)∈ C [m] ⇐ ⇒f[m]δ (t, x)>(K−x) +.
+11
+Proof.Immediate exercise in (7) gives
+V [m](t, x)≥(K−x) + + Ψ[m−1]δ (t, x),
+which proves the first lower bound. Since Ψ [m−1]δ ≥0, we also havef [m]δ ≤V [m]. The hierarchy
+V [m] ≥V [m−1] is Theorem 3.2(viii), andV [m−1] ≥Ψ [m−1]δ is Lemma 3.3(i). The Lipschitz
+bound follows by subtracting an (m−1)-Lipschitz function from anm-Lipschitz one. Joint
+continuity follows from Theorem 3.2 and bounded convergence in (5). Finally,
+V [m] −g [m]δ =f [m]δ −(K−x) +,
+which proves the contact characterization.
+4.1 Residual premium from the remaining exercise right
+The following strict positivity result will be used to show that stopping is never optimal when
+the asset price is above the strike.
+Lemma 4.2(Strict positivity of the residual premium).Fort≤T−δdefine
+Θδ(t, x) :=rKE
+Z δ
+0
+e−rw1{xRw≤b[1](t+w)} dw
+
+.
+Then
+V [1](t, x)−Ψ[1]δ (t, x) = Θδ(t, x)>0.(16)
+Consequently,
+f [2]δ (t, x)≥Θ δ(t, x)>0,
+and thereforeS [2]t ∩[K,∞) =∅fort≤T−δ.
+Proof.From the one-right early-exercise-premium martingale decomposition,
+Su =e −ruV [1](t+u, xRu) +rK
+Z u
+0
+e−rw1{xRw≤b[1](t+w)} dw
+is a square-integrable martingale. SinceSis a square-integrable martingale andδis determin-
+istic, the martingale property gives
+V [1](t, x) = E[Sδ] = Et,x
+h
+e−rδV [1](t+δ, Xt+δ)i +rKE Z δ
+0
+e−rw1{xRw≤b[1](t+w)} dw
+
+.
+By the definitions of Ψ [1]δ and Θδ, this becomes
+V [1](t, x) = Ψ[1]δ (t, x) + Θδ(t, x),
+which is exactly (16). For everyw∈(0, δ],b [1](t+w)>0 andxR w has a lognormal law with
+support (0,∞), so
+P(xRw ≤b [1](t+w))>0.
+Since the integrand in the definition of Θ δ is nonnegative, Tonelli’s theorem allows us to inter-
+change expectation and time integration without first verifying integrability. Hence
+Θδ(t, x) =rK
+Z δ
+0
+e−rwP xRw ≤b [1](t+w)  dw >0.
+SinceV [2] ≥V [1],
+f [2]δ =V [2] −Ψ [1]δ ≥V [1] −Ψ [1]δ = Θδ >0.
+Whenx≥K, the immediate put payoff is zero, hence contact is impossible.
+12
+Corollary 4.3(Strict positivity of the last deadline jump).For everym≥2and0< x <
+Ke−rδ,
+V [m](d1, x)−V [m](d1+, x)>0.(17)
+More precisely,
+V [m](d1, x)−V [m](d1+, x) = ∆[2](x)≥  Ke−rδ −x +.(18)
+Proof.SinceV [2] ≥g [2]δ , Lemma 4.2 gives
+∆[2](x) =V [2](d1, x)−V [1](d1, x)≥(K−x) + −Θ δ(d1, x).
+Moreover,
+Θδ(d1, x)≤rK
+Z δ
+0
+e−rw dw=K(1−e −rδ),
+so ∆[2](x)≥(K−x) + −K(1−e −rδ). Since also ∆ [2] ≥0 by Proposition 3.1, and (K−x) + −
+K(1−e −rδ) =Ke −rδ −xforx < K,
+∆[2](x)≥  Ke−rδ −x +.
+Hence ∆[2](x)>0 whenever 0< x < Ke−rδ. Finally, (11)–(12) imply
+V [m](d1, x)−V [m](d1+, x) = ∆[2](x), m≥2,
+which proves (17) and (18).
+4.2 Bermudan approximation
+The proof of the single-crossing property uses a Bermudan approximation, that is, an approxi-
+mation in which exercise is restricted to discrete grid times, with every deterministic deadline
+included in the grid. Only deadline-aligned Bermudan convergence is established in this pa-
+per: the time step ish=δ/N, the maturity and every relevant deadline belong to the exercise
+grid, and the one-step transition is the exact Black–Scholes transition. This discretizes exercise
+opportunities without replacing the diffusion by a binomial process. Convergence for general
+CRR grids with waiting steps⌈δ/∆t⌉is reserved for a companion paper. In particular, the
+present argument makes no general CRR convergence claim at the deadlines.
+Fixtsuch that (T−t)/δ∈Q. Choose integersN≥2 andMwithM δ=N(T−t), and set
+h:= δN , T−t=M h,
+sot n =t+nhcontains everyd j. LetR (h)1 , R(h)2 , . . .be i.i.d. multiplicative one-step factors
+withR (h)i d=R h and E[e−rhR(h)i ] = 1.
+SetV [0],hn ≡0 andV [k],hn = 0 forn > M. Fork= 1, . . . , mdefine
+Ψ[k−1],hn (x) :=e −rN hEV [k−1],hn+N (xR(h)1 . . . R(h)N ),(19)
+g[k],hn (x) := (K−x) + + Ψ[k−1],hn (x),(20)
+V [k],hM (x) := (K−x) +,
+V [k],hn (x) := max ng[k],hn (x), e−rhE[V [k],hn+1 (xR(h)1 )]o , n=M−1, . . . ,0.(21)
+Define
+f [k],hn (x) :=V [k],hn (x)−Ψ [k−1],hn (x)
+13
+and the one-step exercise premium
+e[k]n (x) :=V [k],hn (x)−e −rhE[V [k],hn+1 (xR(h)1 )] = g[k],hn (x)−e −rhE[V [k],hn+1 (xR(h)1 )]+ .(22)
+Atn=M, sete [k]M = (K−x) +, and forn > Msete [k]n = 0. We also sete [0]n ≡0, consistently
+withV [0],h ≡0.
+Lemma 4.4(Bermudan identities).For everyk= 1, . . . , mand every grid indexn:
+(i)V [k],hn is nonincreasing andk-Lipschitz, andV [k],hn ≥V [k−1],hn ;
+(ii)the correction term
+c[k−1]n (x) := Ψ[k−1],hn (x)−e −rhE[Ψ[k−1],hn+1 (xR(h)1 )] =e −rN hE[e[k−1]n+N (xR(h)1 . . . R(h)N )]≥0;
+(23)
+(iii)the marginal-right value obeys the corrected recursion
+f [k],hn (x) = max n(K−x) +, e−rhE[f [k],hn+1 (xR(h)1 )]−c [k−1]n (x)o ,(24)
+and0≤f [k],hn (x)≤K;
+(iv)forn≤M,
+e[k]n (y)≥  K(1−e −rh)−y +,(25)
+and, for everyn,
+e[k]n (x) = 0 (x≥K).(26)
+Proof.For (i), use backward induction innand induction ink. The terminal payoff is nonin-
+creasing and 1-Lipschitz. If the properties hold one step later and at the lower exercise level,
+then (20) and E[e −rhR(h)1 ] = 1 show that both the immediate-exercise branch and the con-
+tinuation branch in (21) are nonincreasing andk-Lipschitz. Their maximum preserves both
+properties. The hierarchy follows because Ψ [k−1],h ≥Ψ [k−2],h impliesg [k],h ≥g [k−1],h, and
+backward induction in (21) then yieldsV [k],h ≥V [k−1],h.
+For (ii), the tower property gives
+e−rhE[Ψ[k−1],hn+1 (xR(h)1 )] =e −r(N+1)h E[V [k−1],hn+N+1 (xR(h)1 . . . R(h)N+1 )].
+Subtracting this from (19) and conditioning on the firstNfactors gives exactly (23); nonneg-
+ativity follows from (22).
+For (iii), subtract Ψ[k−1],hn from both branches of (21), useV [k],hn+1 =f [k],hn+1 +Ψ[k−1],hn+1 , and then
+(23). The upper bound follows by backward induction: at maturityf [k],hM = (K−x) + ≤K,
+and iff [k],hn+1 ≤K, then (24) andc [k−1]n ≥0 implyf [k],hn ≤max{K, e−rhK}=K.
+For (iv), rewrite the bracket in (22) as
+(K−y) + −e −rhE[f [k],hn+1 (yR(h)1 )] +c [k−1]n (y).(27)
+Forn < M, usingf≤Kandc≥0 gives (25); forn=Mit holds becausee [k]M = (K−y) +.
+(Forn > M,e[k]n = 0, so (25) is not claimed there.) To prove (26), define
+W [k],hn (x) :=V [k],hn (x)−Ψ [k],hn (x).
+14
+By the definition of Ψ [k],hn ,
+W [k],hn (x) =V [k],hn (x)−e −rN hEhV [k],hn+N (xR(h)1 · · ·R(h)N )i .
+Adding and subtracting the intermediate discounted values gives the telescoping expansion
+W [k],hn (x) =e [k]n (x) +e −rhEhe[k]n+1(xR(h)1 )i +e −2rhEhe[k]n+2(xR(h)1 R(h)2 )i +· · ·
++e −r(N−1)h Ehe[k]n+N−1 (xR(h)1 · · ·R(h)N−1 )i .
+Equivalently,
+W [k],hn (x) =
+n+N−1X
+n′=n
+e−r(n′−n)hEhe[k]n′ (xR(h)1 · · ·R(h)n′−n)i ,
+where the product is interpreted as 1 whenn ′ =n. WhenN≥2, (25) and the full support of
+the lognormal increment implyW [k],hn (x)>0 forn < M. Ifx≥Kandk≥2, the hierarchy
+from (i) yields
+V [k],hn (x)−g [k],hn (x)≥V [k−1],hn (x)−Ψ [k−1],hn (x) =W [k−1],hn (x)>0.
+Fork= 1, the positive probability of ending in the money before maturity givesV [1],hn (x)>0 =
+g[1],hn (x). Thus immediate exercise is never optimal forx≥K, and (22) givese [k]n (x) = 0.
+Lemma 4.5(Convergence of the Bermudan approximation).Leth=δ/N↓0along grids
+satisfyingT−t=M h. Then for eachk≤mandx >0,
+V [k],h0 (x)→V [k](t, x),Ψ [k−1],h0 (x)→Ψ [k−1]δ (t, x), f [k],h0 (x)→f [k]δ (t, x).
+Proof.We prove the convergence by induction on the number of rightsk. To keep the main
+idea visible, it is useful to separate the proof into three parts:
+(1) compare the discrete and continuous stopping rewards;
+(2) prove convergence on bounded sets of initial states;
+(3) control large initial states uniformly.
+Set
+Jk(h) := sup
+0≤n≤M
+sup
+y>0
+V [k],hn (y)−V [k](tn, y).
+We showJ k(h)→0 ash↓0. The casek= 0 is immediate because both values are identically
+zero, soJ 0 ≡0. Assume thatJ k−1(h)→0.
+Step 1: the aligned grid gives the same feasibility ranges.Because
+h= δN , T−t=M h,
+every feasibility deadline is a grid point:
+dj =T−jδ=t+ (M−jN)h=t M−jN .
+Equivalently, for every grid indexn,
+tn +jδ≤T⇐ ⇒n+jN≤M⇐ ⇒t n ≤d j.
+15
+Thus the continuous-time condition “there is enough time forjfurther refractory periods” and
+its discrete-time counterpart change at exactly the same grid indices. In particular,
+tn +δ > T⇐ ⇒n+N > M.
+Hence the continuous delayed residual-right value Ψ[k−1]δ (tn,·) and the discrete delayed residual-
+right value Ψ [k−1],hn vanish on exactly the same time range. When they are nonzero, their
+definitions differ only through the lower-level value function. Therefore
+Ψ[k−1],hn (y)−Ψ [k−1]δ (tn, y) ≤e −rδJk−1(h),
+and consequently
+sup
+n,y
+g[k],hn (y)−g [k]δ (tn, y) ≤e −rδJk−1(h).(28)
+This is the basic error inherited from levelk−1.
+Step 2: comparison on bounded state sets.We first obtain an upper bound for the Bermudan
+value. A grid-valued stopping time is also an admissible stopping time in continuous time. If
+the same grid stopping time is used in the two problems, the stopping rewards differ by at most
+the quantity in (28). Taking suprema gives
+V [k],hn (y)≤V [k](tn, y) +e−rδJk−1(h).
+For the reverse inequality, fixY >0,y≤Y, andη >0. Choose anη-optimal continuous-
+time stopping timeτforV [k](tn, y), so that
+V [k](tn, y)≤E tn,y
+h
+e−rτ g[k]δ (tn +τ, Xtn+τ )i +η.
+Roundτupward to the next grid point:
+τh :=h
+l τ
+h
+m
+.
+Then
+τ≤τ h ≤τ+h.
+Moreover,τ h is a stopping time for the sampled filtration because
+{τh ≤ih}={τ≤ih}.
+Conditional on the state at a grid time, the future Brownian increments over the grid inter-
+vals are independent and identically distributed. Hence the dynamic-programming recursion
+(21) gives the same Bermudan value when the sampled Brownian filtration is used, andτ h is
+admissible forV [k],hn (y).
+The alignment of the deadlines is important at this point. Since everyd j is itself a grid
+point, rounding upward cannot jump across a deadline. Ift n +τlies below a deadline, the next
+grid point is still below or at that deadline; if it is exactly at a deadline, it is already a grid
+point and is unchanged by the rounding. Thust n +τandt n +τ h lie in the same deadline strip.
+On a fixed strip, the stopping reward isk-Lipschitz in the space variable and is 1/2-H¨ older
+in time. More precisely, Theorem 3.2(vi) at levelk−1, inserted into the definition of Ψ, gives
+g[k]δ (s, z)−g[k]δ (s′, z) ≤C k−1(1 +z)|s−s ′|1/2
+wheneversands ′ belong to the same strip. Put
+∆h :=τ h −τ,0≤∆ h ≤h.
+16
+To compare the rewards atτandτ h, separate the error into three parts: the change in the
+discount factor, the change in time, and the change in the asset state. The triangle inequality
+gives
+Ee−rτ g[k]δ (tn +τ, Xtn+τ ) −E e−rτhg[k]δ (tn +τ h, Xtn+τh)
+≤E
+h
+|e−rτ −e −rτh|g[k]δ (tn +τ, Xtn+τ )i
++ E
+h
+e−rτhg[k]δ (tn +τ, Xtn+τ )−g [k]δ (tn +τ h, Xtn+τ )i
++ E
+h
+e−rτhg[k]δ (tn +τ h, Xtn+τ )−g [k]δ (tn +τ h, Xtn+τh)i .
+The first term isO(h) because 0≤g [k]δ ≤kKand 1−e −rh ≤rh.The second term isO( √h) by
+the stripwise 1/2-H¨ older estimate. For the third term, thek-Lipschitz property and the strong
+Markov property att n +τgive
+E[|Xtn+τh −X tn+τ | | Ftn+τ ]≤X tn+τ E
+"
+sup
+0≤v≤h
+|Rv −1|
+#
+≤cX tn+τ
+√
+h.
+Finally, the discounted asset price is a martingale, and therefore
+Etn,y
+
+e−rτ Xtn+τ  =y≤Y.
+Combining the three estimates, and usingh≤
+√
+hfor sufficiently smallh, yields
+Ee−rτ g[k]δ (tn +τ, Xtn+τ ) −E e−rτhg[k]δ (tn +τ h, Xtn+τh) ≤C(1 +Y) √h=:ρ Y (h),
+whereCis independent ofn,y≤Y,η, and the particularη-optimal stopping time.
+Sinceτ h is admissible for the Bermudan problem, (28) now gives
+V [k](tn, y)≤V [k],hn (y) +e −rδJk−1(h) +ρ Y (h) +η, y≤Y.
+Becauseη >0 is arbitrary, the discrete and continuous values are uniformly close on every
+bounded state interval onceJ k−1(h) is small.
+Step 3: control of large initial states.It remains to make the estimate uniform over all
+y >0. Lemma 3.3(ii) gives
+V [k](tn, y)≤kV [1](tn, y).
+A one-right payoff can be positive only if the asset price falls belowKbefore maturity. Since
+every payoff is bounded byK,
+V [1](tn, y)≤KP
+
+inf
+0≤u≤T
+yRu ≤K
+
+.
+The Bermudan recursion is the dynamic-programming recursion of a discrete multiple-stopping
+problem. Unfolding that recursion shows that its total payoff is a sum of at mostkput payoffs,
+each bounded byK. A positive payoff is possible only if the grid process falls belowK, which
+is contained in the event that the continuous path falls belowK. Hence the same tail bound
+holds for the Bermudan value. Thus, fory≥Y,
+max{V [k](tn, y), V[k],hn (y)} ≤kKP
+
+inf
+0≤u≤T
+Ru ≤ KY  =:kKϖ(Y).
+17
+BecauseRhas continuous strictly positive paths,
+ϖ(Y)− →0 asY− → ∞.
+Combining the bounded-state estimate with the tail estimate gives
+Jk(h)≤e −rδJk−1(h) +ρ Y (h) +kKϖ(Y).
+For fixedY, leth↓0. The induction hypothesis givesJ k−1(h)→0, andρ Y (h)→0. Then let
+Y↑ ∞to obtain
+Jk(h)− →0.
+This completes the induction.
+Finally, the convergence of the delayed residual-right values follows directly from their
+definitions:
+Ψ[k−1],h0 (x)−Ψ [k−1]δ (t, x) ≤e −rδJk−1(h)− →0.
+Since
+f [k],h0 =V [k],h0 −Ψ [k−1],h0 , f [k]δ =V [k] −Ψ [k−1]δ ,
+the convergence of the marginal-right values follows by subtraction.
+The proof of Lemma 4.5 uses only the recursive formulation (7). We can now show that
+the recursive value is the value of the original multiple-stopping problem.
+Lemma 4.6(Direct and recursive formulations coincide).For everym≥1and(t, x)∈
+[0, T]×(0,∞),
+V [m]dir (t, x) =V[m](t, x).
+Proof.We prove
+V [m]dir (t, x) =V[m](t, x)
+by induction on the number of exercise rightsm. Form= 1, the two definitions are identical.
+Assume therefore that
+V [m−1]dir (s, y) =V[m−1](s, y)
+holds for every initial state (s, y). Recall also that, by (3), both sides are defined to be zero
+when the initial time is later thanT.
+Step 1: the upper boundV [m]dir ≤V [m].Fix an arbitrary admissiblem-exercise ruleτ (m) =
+(τ1, . . . , τm).After the first exercise at timeτ 1, the holder must wait for the refractory periodδ
+before another exercise is possible. We therefore putϑ:=τ 1 +δ.The eventA 2 ={ϑ≤T−t}
+is precisely the event that a second exercise can still be made before maturity. OnA 2, all later
+exercise times satisfyτ i ≥ϑ, i= 2, . . . , m.Hence the shifted timesτi −ϑ, i= 2, . . . , m,form
+an admissible (m−1)-exercise rule for the problem starting from timet+ϑand stateX t+ϑ.
+Indeed, the refractory-period constraints are unchanged by the shift. For example,τk +δ≤T−t
+is equivalent to (τk −ϑ) +δ≤T−(t+ϑ).Thus the remaining feasibility conditions are exactly
+those of the (m−1)-right problem starting at (t+ϑ, X t+ϑ). Condition now onF t+ϑ. Once the
+stateX t+ϑ is known, the strong Markov property says that the future evolution of the asset
+is governed by fresh Brownian increments, independent of the past. Therefore the conditional
+18
+value of any particular remaining (m−1)-exercise rule cannot exceed the optimal (m−1)-right
+value. Consequently,
+E
+" mX
+i=2
+e−rτig(Xt+τi)1Ai
+ Ft+ϑ# ≤1 A2e−rϑV [m−1]dir (t+ϑ, Xt+ϑ).
+By the induction hypothesis,V [m−1]dir =V [m−1] onA 2. OnA c2 we havet+ϑ > T, and the value
+is zero by (3). Hence
+E
+" mX
+i=2
+e−rτig(Xt+τi)1Ai
+ Ft+ϑ# ≤e −rϑV [m−1](t+ϑ, Xt+ϑ).
+We next condition one step earlier, at the first exercise timeτ 1. Sinceϑ=τ 1 +δ, the strong
+Markov property gives
+E
+h
+e−rϑV [m−1](t+ϑ, Xt+ϑ)  Ft+τ1i
+=e −rτ1Et+τ1,Xt+τ1
+h
+e−rδV [m−1](t+τ 1 +δ, Xt+τ1+δ)i
+=e −rτ1Ψ[m−1]δ (t+τ 1, Xt+τ1).
+Thus the expected payoff from the first exercise and all later exercises is bounded above by
+Et,x
+h
+e−rτ1
+n
+g(Xt+τ1) + Ψ[m−1]δ (t+τ 1, Xt+τ1)oi .
+By the definition of the stopping reward,g [m]δ (s, y) =g(y) + Ψ[m−1]δ (s, y),this is
+Et,x
+h
+e−rτ1g[m]δ (t+τ 1, Xt+τ1)i .
+SinceV [m] is the supremum of this quantity over all possible first stopping times,
+Et,x
+h
+e−rτ1g[m]δ (t+τ 1, Xt+τ1)i ≤V [m](t, x).
+The original ruleτ (m) was arbitrary, so taking the supremum over all admissible rules gives
+V [m]dir (t, x)≤V [m](t, x).(29)
+Step 2: the reverse inequality on an aligned Bermudan grid.We next prove
+V [m]dir (t, x)≥V [m](t, x).
+We first consider timestfor which (T−t)/δ∈Q.For such a time, choose the Bermudan grid
+introduced above,
+h= δN , T−t=M h,
+so that every feasibility deadline is a grid point. Realize the one-step factors by
+R(h)i := RihR(i−1)h ,
+so that at the grid timest n =t+nh,
+Xtn =xR (h)1 · · ·R(h)n .
+The recursion (21) is precisely the dynamic-programming recursion for the discrete-timem-
+right stopping problem on this grid. At a grid point withkrights remaining, it compares two
+alternatives:
+19
+1. exercise immediately and receiveg [k],hn ;
+2. continue for one more grid step.
+Thus, by backward induction, the following feedback rule is optimal: withkrights remaining at
+grid indexn, exercise exactly whenV [k],hn =g [k],hn .After exercising, wait exactlyNgrid steps,
+corresponding to the refractory periodN h=δ,and then continue withk−1 rights. Because
+this policy is obtained by choosing at every grid point the branch that attains the maximum
+in the dynamic-programming recursion, its expected payoff is exactlyV [m],h0 (x). Moreover, all
+its exercise times are grid-valued stopping times, and two successive exercises are separated
+by at leastN h=δ.Hence this Bermudan rule is also an admissible rule for the original
+continuous-time direct problem. Therefore
+V [m]dir (t, x)≥V [m],h0 (x).
+Now leth↓0 along the aligned grids. By Lemma 4.5,
+V [m],h0 (x)− →V[m](t, x).
+Consequently,
+V [m]dir (t, x)≥V [m](t, x) (30)
+whenever (T−t)/δ∈Q.
+Step 3: extension to an arbitrary initial time.It remains to remove the rationality restriction
+on (T−t)/δ. First observe that, for fixedx,
+t7− →V[m]dir (t, x)
+is nonincreasing. Indeed, ift 1 < t2, then the remaining horizon att1 is longer:T−t 1 > T−t2.By
+time homogeneity, we may realize every relative stopping time as a functional of the Brownian
+increments after the initial time, so that a rule for the horizonT−t 2 induces a rule with the
+same law of payoffs over the horizonT−t 1. Such a rule need not be admissible for the longer
+horizon, however: the separation constraint is imposed only on{τ i +δ≤T−t 2}, so it may fail
+on{T−t 2 < τi +δ≤T−t 1}. We therefore modify it. Letτ (m) = (τ1, . . . , τm) be admissible
+for the horizonT−t 2, with feasibility eventsA i, and define recursively
+τ ′1 :=τ 1, τ ′i+1 :=  τi+1 ∨(τ ′i +δ)  ∧(T−t 1), i= 1, . . . , m−1.
+Eachτ ′i is a stopping time with values in [0, T−t 1],τ ′1 ≤ · · · ≤τ′m, andτ ′i+1 ≥τ ′i +δon
+{τ ′i +δ≤T−t 1}; henceτ ′(m) is admissible for the horizonT−t 1. Denote its feasibility events
+byA ′i. OnA i we haveτ k +δ≤T−t 2 fork < i, henceτ k+1 ≥τ k +δ, and induction on
+kgivesτ ′k =τ k fork≤i; consequentlyA i ⊆A ′i. Thus, on eachA i, theith exercise and its
+payoff are unchanged, while all additional terms in the modified payoff are nonnegative. Taking
+expectations and then the supremum overτ (m), the value cannot decrease. Thus
+V [m]dir (t1, x)≥V [m]dir (t2, x).
+Iftitself is a feasibility deadline, then (T−t)/δis an integer, so Step 2 already applies. Suppose
+now thattis not a deadline. Thentis not the right endpoint of the deadline strip containing
+it. Choose a sequencet n ↓twithin the same strip such that (T−t n)/δ∈Qfor everyn. By
+the time monotonicity just proved,
+V [m]dir (t, x)≥V [m]dir (tn, x).
+20
+Step 2 givesV [m]dir (tn, x)≥V [m](tn, x).Finally, Theorem 3.2(vii) gives continuity ofV [m] int
+within the strip, so
+V [m](tn, x)− →V[m](t, x).
+Hence
+V [m]dir (t, x)≥V [m]dir (tn, x)≥V [m](tn, x)− →V[m](t, x),
+and thereforeV [m]dir (t, x)≥V [m](t, x).Combining this inequality with (29) provesV [m]dir (t, x) =
+V [m](t, x),as required.
+Lemma 4.7(Single-crossing property).Form≥2and fixedt, define the gap function
+G[m]t (x) :=f [m]δ (t, x)−(K−x) +.
+ThenG [m]t is nondecreasing on(0, K). Equivalently, for0< y < x < K,
+G[m]t (x)≥G [m]t (y).
+Proof.The statement will follow once we prove the slope bound
+f [m]δ (t, x)−f[m]δ (t, y)≥ −(x−y),0< y < x.(31)
+Indeed, for 0< y < x < K,
+G[m]t (x)−G [m]t (y) =f [m]δ (t, x)−f[m]δ (t, y) + (x−y),
+so (31) is exactly the assertion thatG [m]t is nondecreasing.
+We first reduce the continuous-time problem to the aligned Bermudan problem. By Propo-
+sition 3.1, iftlies in a later deadline strip, bothV [m] and its delayed residual-right term reduce
+to the corresponding lower-right level, so thatf [m]δ (t,·) =f [j]δ (t,·) fort∈(d j, dj−1]; forj= 1
+the slope bound below is immediate becausef [1]δ =V [1] is 1-Lipschitz. Arguing by induction on
+m, it is therefore enough to consider the main stript≤d m−1. On that strip the marginal-right
+value is continuous intby Lemma 4.1. Hence it suffices to prove (31) for the dense set of times
+for which the aligned Bermudan construction is available, and then pass to the limit.
+The key point in the Bermudan argument is a simultaneous induction. For each exercise
+levelkwe prove two properties:
+(SCk) :f [k],hn (x)−f [k],hn (y)≥ −(x−y),0< y < x,
+and
+(Ek) :x7− →e [k]n (x) is nonincreasing.
+The logical order of the induction is
+(Ek−1) =⇒(SC k) =⇒(E k).
+Thus there is no circularity: monotonicity of the exercise premium at levelk−1 gives the
+slope bound at levelk, and that slope bound is then used to prove monotonicity of the exercise
+premium at levelk.
+Base levelk= 1.Sincef [1],hn =V [1],hn and the one-right Bermudan value is one-Lipschitz,
+f [1],hn (x)−f [1],hn (y)≥ −(x−y),
+21
+so (SC1) holds. At maturity,e [1]M (x) = (K−x) + is nonincreasing. Forn < M, (26) gives
+e[1]n (x) = 0, x≥K.
+On (0, K), use the bracket representation (27). If 0< y < x < K, the payoff part changes by
+exactly−(x−y). The continuation value is one-Lipschitz, ande −rhE[R(h)1 ] = 1,so the absolute
+value of the corresponding continuation-value difference is at mostx−y. Therefore the bracket
+cannot increase whenxincreases. Taking the positive part preserves this monotonicity, and
+(E1) follows.
+Induction step.Assume that (SC k−1) and (E k−1) have been proved. From (23),
+c[k−1]n (x) =e −rN hEhe[k−1]n+N (xR(h)1 · · ·R(h)N )i .
+Becausee [k−1]n+N is nonincreasing by (E k−1) and the multiplicative factors are positive, the cor-
+rection termc [k−1]n is also nonincreasing inx. We next prove (SC k) by backward induction in
+the grid indexn. At maturity,
+f [k],hM (x) = (K−x) +,
+which has lower slope bound−1. Assume the slope bound holds at timen+ 1. For 0< y < x,
+the continuation branch in (24) satisfies
+e−rhEhf [k],hn+1 (xR(h)1 )−f [k],hn+1 (yR(h)1 )i −  c[k−1]n (x)−c [k−1]n (y)
+≥ −(x−y)e−rhE[R(h)1 ] + 0 =−(x−y).
+Here the first inequality uses the induction hypothesis at timen+ 1, while the second contri-
+bution is nonnegative becausec [k−1]n is nonincreasing. The immediate-payoff branch (K−x) +
+has the same lower slope bound. Finally, for any real numbersa 1, a2, b1, b2,
+max{a1, b1} −max{a2, b2} ≥min{a1 −a 2, b1 −b 2}.
+Therefore, if each branch has slope bounded below by−1, their maximum has the same prop-
+erty. This proves (SC k).
+It remains to prove (E k). Again, (26) givese [k]n (x) = 0, x≥K.Consider 0< y < x < K.
+The bracket in (27) changes fromytoxby three contributions. The payoff contributes−(x−y).
+By (SCk),
+f [k],hn+1 (xR(h)1 )−f [k],hn+1 (yR(h)1 )≥ −(x−y)R(h)1 ,
+so after multiplying by−e −rh and taking expectations, the continuation contribution is at most
+(x−y)e −rhE[R(h)1 ] =x−y.
+Finally, becausec [k−1]n is nonincreasing,
+c[k−1]n (x)−c [k−1]n (y)≤0.
+The sum of the three contributions is therefore nonpositive. Hence the bracket in (27) is
+nonincreasing on (0, K), and so is its positive part. Together withe [k]n = 0 on [K,∞), this
+proves (Ek).
+We have now established (SC m) on every aligned Bermudan grid. Lettingh↓0 and using
+Lemma 4.5 gives (31) for every aligned timet. Continuity off [m]δ intextends the inequality
+from the dense aligned set to allt≤d m−1, and Proposition 3.1 gives the result on the later
+strips. Therefore, for 0< y < x < K,
+G[m]t (x)−G [m]t (y) =f [m]δ (t, x)−f[m]δ (t, y) + (x−y)≥0,
+which is the desired single-crossing property.
+22
+5 Exercise boundaries and optimal hitting times
+5.1 Strict loss from forced waiting
+Lemma 5.1(Strict loss from forced waiting).Under the standing assumptionsr >0,σ >0,
+K >0and optional exercise rights, for everyk≥1,t < T,x >0and0< h≤T−t,
+V [k](t, x)>E t,xe−rhV [k](t+h, Xt+h).(32)
+Consequently, with the zero extension beyond maturity,
+W [k](t, x) :=V[k](t, x)−Ψ[k]δ (t, x)>0, k≥1, t < T, x >0.(33)
+Proof. Step 1: a common region of immediate exercise.Lemma 3.3(ii) and value domination
+give, fork≥2,
+0≤V [k](s, y)−g[k]δ (s, y)≤V [1](s, y)−g(y).
+Thus, for everyk≥1 and 0< y≤b [1](s),
+V [k](s, y) =g(y) + Ψ[k−1]δ (s, y),(34)
+where Ψ [0]δ = 0. This uses only the known one-right boundary, not the existence or regularity
+of a multiple-right boundary.
+Step 2: a strict local loss inside the common region.Fixs < T,ε >0 withs+ε < T, and
+0< ℓ < u < b[1](s). Fory∈(ℓ, u), set
+θ=ε∧inf{v≥0 :X s+v /∈(ℓ, u)}.
+Path continuity impliesθ >0 almost surely andX s+θ ∈[ℓ, u]. The one-right boundary is
+nondecreasing, so (34) holds both at (s, y) and at (s+θ, X s+θ). On this stopped interval
+g(X) =K−X. Itˆ o’s formula fore−rv(K−X s+v), together with the optional-sampling inequality
+for the delayed residual-right value in Lemma 3.3(i), gives
+V [k](s, y)−Es,ye−rθV [k](s+θ, Xs+θ) ≥rKE s,y
+Z θ
+0
+e−rv dv
+
+>0.(35)
+The stochastic integral has mean zero becauseXis stopped in the compact interval [ℓ, u] and
+θ≤ε. Only the linear payoff is differentiated; the delayed residual-right value is handled by
+optional sampling, including at deadlines.
+For everyy >0, define the deterministic waiting loss
+Ak(s, y;ε) :=V [k](s, y)−Es,ye−rεV [k](s+ε, Xs+ε).
+It is nonnegative by Lemma 3.3(i). Fory∈(ℓ, u), optional sampling betweenθandεand (35)
+implyA k(s, y;ε)>0.
+Step 3: propagate strictness to every initial state.Fixt < T,x >0 and 0< h≤T−t.
+Puta=h/3,ε=h/3 ands=t+a, and choose 0< ℓ < u < b [1](s). Notice thats+ε < T.
+The supermartingale inequalities fromttosand froms+εtot+h, and the Markov property,
+yield
+V [k](t, x)−Et,xe−rhV [k](t+h, Xt+h) ≥E t,xe−raAk(s, Xs;ε)  >0.(36)
+The final inequality follows because the lognormal law ofX s has a strictly positive density on
+(0,∞), whileA k is nonnegative everywhere and strictly positive on (ℓ, u). All quantities are
+bounded by constants depending onkK, so the expectations are finite. This proves (32) even
+when [t, t+h] crosses a deadline.
+Ift+δ≤T, takeh=δ. Ift+δ > T, then Ψ [k]δ (t, x) = 0 andV [k](t, x)≥V [1](t, x)>0, the
+last inequality following from the positive probability of an in-the-money payoff at maturity.
+This proves (33).
+23
+Remark5.2 (Scope of Lemma 5.1).The proof of Lemma 5.1 assumes no inequality between
+marginal-right values and uses no differentiability ofV [k] or Ψ [k−1]δ : only the linear payoff is
+differentiated, and the delayed residual-right value is handled by optional sampling.
+5.2 Incremental values of successive exercise rights
+Fork≥1, define theincremental value of thekth rightby
+D[k](t, x) :=V[k](t, x)−V [k−1](t, x), V [0] ≡0.
+ThusD [k] compares adjacent exercise-right levels directly and measures the additional value
+obtained by adding thekth exercise right. This is distinct from the marginal-right value
+f [k]δ =V [k] −Ψ [k−1]δ , which subtracts the delayed residual-right value. Although a difference
+of supermartingales need not be a supermartingale, the particular recursion of this problem
+provides the required comparison. The key is to compare the one-step exercise premiums across
+exercise levels.
+Lemma 5.3(Ordering of Bermudan exercise premiums).On every aligned Bermudan grid of
+Section 4, fork≥2,
+e[k]n ≥e [k−1]n , f [k],hn ≤f [k−1],hn .(37)
+The inequalities hold pointwise in the state variable at every grid time. WritingD [k],hn :=
+V [k],hn −V [k−1],hn andP ha(x) :=e −rhE[a(xRh)], we also have
+D[k],hn − PhD[k],hn+1 =e [k]n −e [k−1]n ≥0.(38)
+Fork= 1, the same supermartingale inequality follows frome [1]n ≥0.
+Proof.We induct onk, using a backward induction innwithin each level. Sete [0] ≡0 and
+c[0] ≡0. The base comparisone [1]n ≥e [0]n follows directly from the dynamic-programming
+recursion. Suppose thate [k−1]n ≥e [k−2]n is already known for alln. Positivity of the transition
+operator and (23) give
+c[k−1]n =P Nh e[k−1]n+N ≥ PNh e[k−2]n+N =c [k−2]n .
+At maturity,f [k],hM =f [k−1],hM =g. Iff [k],hn+1 ≤f [k−1],hn+1 , the corrected recursion gives
+f [k],hn = max{g,P hf [k],hn+1 −c [k−1]n }
+≤max{g,P hf [k−1],hn+1 −c [k−2]n }=f [k−1],hn .
+Backward induction proves this ordering at every time. Now use the bracket identity (27):
+e[k]n =  g− Phf [k],hn+1 +c [k−1]n +
+≥
+ 
+g− Phf [k−1],hn+1 +c [k−2]n + =e [k−1]n , n < M.
+Atn=Mboth premiums equalg, and beyond maturity both are zero. This completes the
+induction. Its order is
+e[k−1] ≥e [k−2] =⇒c [k−1] ≥c [k−2] =⇒f [k],h ≤f [k−1],h =⇒e [k] ≥e [k−1].
+Thus no ordering at levelkis assumed in its own proof. Subtracting the definitions ofe [k] and
+e[k−1] proves (38).
+24
+Theorem 5.4(Supermartingale property of the incremental values).Under the standing model
+assumptions, for every finitek≥1,0≤t≤s≤Tandx >0,
+D[k](t, x)≥E t,xe−r(s−t)D[k](s, Xs).(39)
+With zero extension beyondT, the discounted process associated with the incremental value of
+thekth right is a bounded strong supermartingale: for bounded stopping times0≤ρ≤η,
+Et,x
+
+e−rηD[k](t+η, Xt+η)| Ft+ρ ≤e −rρD[k](t+ρ, Xt+ρ).(40)
+Fork≥2we further have
+f [k]δ (t, x)≤f [k−1]δ (t, x),0≤t≤T, x >0,(41)
+and
+W [k](t, x)≥W [k−1](t, x),0≤t≤T, x >0.(42)
+Proof. Step 1: deterministic times from an aligned initial time.First suppose (T−t)/δ∈Q
+and choose the aligned grids of Lemma 4.5. Fixs∈[t, T], and lets h be the first grid time at
+or afters. Iterating (38) yields
+D[k],h0 (x)≥E t,xe−r(sh−t)D[k],hnh (Xsh), s h =t+n hh.
+The proof of Lemma 4.5 gives
+sup
+n,y>0
+|D[k],hn (y)−D [k](tn, y)| ≤Jk(h) +J k−1(h)− →0.
+Ifsis a deadline orT, it is a grid point ands h =s. Otherwises h eventually lies in the same open
+strip ass. Joint continuity on that strip and path continuity implyD [k](sh, Xsh)→D [k](s, Xs)
+almost surely. The bound 0≤D [k] ≤kK, together with the analogous Bermudan bound,
+allows dominated convergence. This proves (39) from every aligned initial time.
+Step 2: arbitrary initial times.Every deadline is an aligned time. Iftis not a deadline
+andt < s, choose alignedt j ↓t, witht j < sin the same strip ast. Step 1 gives, using time
+homogeneity,
+D[k](tj, x)≥Ee−r(s−tj )D[k](s, xRs−tj ).
+Stripwise continuity gives convergence on the left. On the right, spatial continuity at the fixed
+times, continuity ofR, and boundedness give convergence by dominated convergence. This
+proves (39) for allt≤s;s=tis immediate. The same limiting argument applied to (37),
+using convergence of the delayed residual-right values, proves (41). Fors > T, the deterministic
+inequality follows from the zero extension and nonnegativity.
+Step 3: bounded stopping times, including the deadlines.Fix (t, x) and write
+Yu =e −ruD[k](t+u, Xt+u).
+The Markov property and the deterministic inequalities makeYa bounded supermartingale
+at deterministic times. To justify optional sampling without assuming right continuity at a
+deadline, choose finite deterministic grids on [0, B], whereBboundsη, with mesh tending to
+zero and containing every deadline offsetd j −tin this interval, as well asT−twhen applicable.
+Roundρandηupward on these grids toρ n ≤η n. These are finite-valued stopping times. For
+every eventAinF t+ρ, which is contained inF t+ρn, finite-grid optional sampling gives
+Et,x[1AYηn]≤E t,x[1AYρn].
+25
+At a deadline the rounding leaves the time unchanged; elsewhere the value process is right-
+continuous along each path. ConsequentlyY ρn →Y ρ andY ηn →Y η almost surely. Bounded
+convergence now proves (40).
+Finally, takes=t+δin the deterministic inequality, with the zero extension when necessary.
+Linearity gives
+D[k](t, x)−Et,x[e−rδD[k](t+δ, Xt+δ)] =W [k](t, x)−W [k−1](t, x)≥0.
+This proves (42) for allx >0.
+Remark5.5 (Scope of Theorem 5.4).The proof of Theorem 5.4 uses only the aligned Bermudan
+scheme (Lemmas 4.5 and 5.3) and stripwise continuity; it uses no boundary ordering, no time
+monotonicity of a multiple-right boundary, no classical regularity of the delayed residual-right
+values, and no premium representation. This is why Theorem 5.4 can be used below to prove
+the boundary hierarchy.
+5.3 Weak regularity of the delayed residual-right values
+We next obtain time regularity without a boundary regularity hypothesis. Write
+Psϕ(x) := E[e−rsϕ(xRs)]
+for the discounted Black–Scholes semigroup. In this subsection let
+Dk :={T−jδ: 1≤j≤k−1} ∩[0, T),
+Ek :={T−jδ: 1≤j≤k} ∩[0, T), Q k :=rK
+k−1X
+j=0
+e−rjδ ≤krK.
+The setsD k andE k are the possible deadlines in [0, T) ofV [k] and Ψ [k]δ , respectively; zero is
+included when it is a deadline.
+Lemma 5.6(A small-step bound away from deadline nodes).On an aligned gridh=δ/N,
+T=t ∗ +M h, the exercise premiums of(22)satisfy, for0≤n < Mwithn /∈ {M−jN: 0≤
+j≤k−1},
+0≤e [k]n (x)≤K(1−e −rh)
+k−1X

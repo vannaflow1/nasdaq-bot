@@ -1,5 +1,50 @@
 [
 {
+"title": "Do Options-Flow Signatures of Dealer Hedging Predict Price Direction Around Earnings?",
+"learned": "The paper tests four options\u2011flow metrics (volatility smirk, delta difference, open\u2011interest ratio, option\u2011volume ratio) combined into a weighted \u201cAgg Score\u201d to see if dealer hedging around earnings predicts next\u2011day price direction. Across 30 earnings events the composite hit rate was 48.2%, no better than random or a simple momentum baseline, indicating little directional power but suggesting dealer hedging may affect volatility more.",
+"concepts": [
+"options flow",
+"dealer hedging",
+"volatility smirk",
+"delta difference",
+"earnings surprise"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://research-archive.org/index.php/rars/preprint/download/4297/5900/5450",
+"date": "2026-10-25"
+},
+{
+"title": "GROMM: Generative Risk-neutral Option Market Models",
+"learned": "GROMM is a generative, arbitrage\u2011free model that represents the whole S&P index option surface as a smooth grid of discrete local volatilities and learns their joint dynamics under both the real\u2011world (P) and risk\u2011neutral (Q) measures. It fits >95% of daily quotes (including next\u2011day expiries) inside the bid\u2011ask spread and provides an explicit risk\u2011neutral drift, allowing fully consistent simulation of future option surfaces.",
+"concepts": [
+"Arbitrage\u2011free option surface",
+"Discrete local volatility grid",
+"Risk\u2011neutral dynamics (Q)",
+"Real\u2011world dynamics (P)",
+"Static and dynamic no\u2011arbitrage tests"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://arxiv.org/abs/2610.16732v2",
+"date": "2026-10-25"
+},
+{
+"title": "LiveOption: Evaluating LLM Agents in Structured Option Trading with Nonlinear Payoffs",
+"learned": "The paper introduces LiveOption, a benchmark that tests large\u2011language\u2011model agents on realistic option\u2011trading tasks (portfolio overlays, earnings\u2011driven bets, and 0\u2011day\u2011to\u2011expiry intraday trading) with full execution, margin, and risk constraints, and shows that current LLM agents underperform.",
+"concepts": [
+"LLM trading agents",
+"structured option strategies",
+"live backtesting",
+"risk\u2011aware metrics",
+"0DTE intraday trading"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/abs/2609.33470v1",
+"date": "2026-10-25"
+},
+{
 "title": "Term Structure of Interest Rates with Short-run and Long-run Risks",
 "learned": "The paper proposes a consumption\u2011based model with long\u2011run and short\u2011run risks, showing that the variance risk premium from interest\u2011rate derivatives strongly predicts short\u2011horizon Treasury excess returns, more so than standard forward\u2011rate factors.",
 "concepts": [

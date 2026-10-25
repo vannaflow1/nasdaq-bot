@@ -34,6 +34,17 @@
   "text_file": "knowledge/papers/openalex_W7222943913.txt"
  },
  {
+  "id": "openalex:W7223137491",
+  "title": "Multi-dimensional risk profiling of BIST-100 stocks: A comparative analysis of the MEREC-AROMAN MCDM framework and the classical CAPM beta",
+  "abstract": "Our study creates a multi-dimensional risk profile for Borsa Istanbul 100 (BIST-100) stocks combining MEREC and AROMAN from multi-criteria decision-making (MCDM) techniques. For this purpose, 7 risk dimensions were calculated using daily price and volume data of 91 BIST-100 stocks for the period between January 1, 2015- April 30, 2026: market beta, downside beta, VaR, CVaR, max drawdown, lower-tail dependence, Amihud illiquidity. In the results obtained, the MEREC-AROMAN ranking was compared with the classical CAPM beta ranking. Accordingly, although the two rankings show a moderate Spearman correlation (+0.28), there is a divergence stemming theoretically from liquidity and tail-risk channels. Furthermore, in out-of-sample tests conducted during the post-2023 monetary policy normalization period, the MEREC-AROMAN ranking predicts realized volatility (Mann-Whitney p = 0.033; Holm-adjusted p = 0.065), whereas the beta ranking works in the opposite direction. In robustness tests, the robustness of findings was confirmed with sectoral fixed effects regression, behavioral regime analysis based on the Risk Appetite Index (RISE) published by the Central Securities Depository, and trapezoidal fuzzy AROMAN extension. Our study presents an important methodological contribution to advanced MCDM in finance by revealing that liquidity-adjusted multi-dimensional risk measures are superior to single-factor beta in regime-change environments.",
+  "url": "https://dergipark.org.tr/en/download/article-file/6075663",
+  "source": "OpenAlex",
+  "date": "2026-10-21",
+  "score": 12,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/openalex_W7223137491.txt"
+ },
+ {
   "id": "openalex:W7223000370",
   "title": "Neural Network Calibration of the Heston Stochastic Volatility Model",
   "abstract": "The Heston stochastic volatility model remains a standard benchmark for equity-option smiles, yet calibration is a nonlinear inverse problem shaped by pricing cost, objective design, parameter constraints and the information contained in the observed option grid. Neural approaches follow two main routes. Parameter-to-price (MtP) networks approximate the forward pricing map and retain an optimiser, whereas price-to-parameter (PtM) networks learn a direct inverse map and amortise calibration into a single inference step. This review compares both routes with differential, physics-informed and hybrid variants. PtM offers the clearest advantage in online latency, while MtP retains an explicit calibration objective and more transparent residual diagnostics. Existing studies do not establish a universal ranking in parameter stability, robustness or data efficiency, because results remain sensitive to the training domain, sampling scheme, quote representation and validation design. Both approaches can be trained on synthetic data, and neither resolves weak parameter identifiability. For practical deployment, neural acceleration should be combined with exact repricing, admissibility checks, uncertainty monitoring, distribution-shift controls and numerical fallback. The most credible architecture is therefore determined by the service requirement and the surrounding validation workflow rather than by the direction of the learned map alone.",
@@ -67,6 +78,41 @@
   "text_failed": true
  },
  {
+  "id": "openalex:W7223136003",
+  "title": "Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread Options",
+  "abstract": "We develop an arithmetic multi-factor stochastic volatility model for commodity futures and options. The arithmetic specification yields a low-dimensional Markovian representation of the futures curve and semi-closed-form pricing formulas for vanilla and basket options, including calendar spread options. These properties make the model suitable for large-scale empirical estimation. We estimate the model using an unscented Kalman filter on a panel of WTI crude oil futures, vanilla options, and calendar spread options spanning 2013-2024. We find that three stochastic volatility factors are needed to capture both the level and slope of the volatility term structure, and that hedges based on these factors remove almost all of the daily risk of a portfolio of vanilla options. Calendar spread options provide information about the dependence structure of futures prices that is not captured by futures and vanilla options alone. A model estimated without calendar spread options systematically overprices them by overstating the decorrelation between adjacent futures contracts. Including these options in the estimation brings the model's decorrelation close to the observed decorrelation, which removes the overpricing and improves their hedges, at only a small loss of accuracy in the pricing and hedging of vanilla options. Finally, we show that the arithmetic model fits futures and vanilla options better than its geometric counterpart and hedges the vanilla options slightly better.",
+  "url": "https://arxiv.org/pdf/2610.28071",
+  "source": "OpenAlex",
+  "date": "2026-10-20",
+  "score": 10,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/openalex_W7223136003.txt"
+ },
+ {
+  "id": "arxiv:2610.31141v1",
+  "title": "Intraday Forecasting Ability and Liquidity Provision of Institutional Traders",
+  "abstract": "This study uses a high-frequency dataset from a stock exchange to examine how forecasting ability and liquidity provision relate to institutional traders' proprietary intraday profitability. We discover persistent forecasting abilities among traders. Specifically, we demonstrate that hypothetical flow-following strategies based on the execution flows of these skillful traders yield annualized Sharpe ratios ranging from 16 to 63 across various trading frequencies. We match buy and sell executions into positions, linking realized profit and loss (P&L) to horizon-matched forecasting proxies and the liquidity roles of both executions. Our findings indicate a direct correlation between improved forecasting ability and profitability, where a one-standard-deviation increase in the forecasting ability proxy is associated with 1.02 -- 1.19 currency units higher P&L per matched position. Additionally, we measure liquidity-provision intensity within a matched position by its number of passive executions: zero, one, or two. In these regressions, P&L is 1.28 -- 1.31 currency units higher for one passive execution than for none, and a further 3.79 -- 3.82 higher for two than for one, underscoring the significant financial benefits of liquidity provision.",
+  "url": "https://arxiv.org/abs/2610.31141v1",
+  "pdf": "https://arxiv.org/pdf/2610.31141v1",
+  "source": "arXiv",
+  "date": "2026-10-22",
+  "score": 9,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/arxiv_2610.31141v1.txt"
+ },
+ {
+  "id": "arxiv:2610.30891v1",
+  "title": "Equilibria and Learning in Competitive Market Making",
+  "abstract": "We propose a market-making game played among $N \\ge 2$ strategic market makers and a single non-strategic representative trader. In a continuous quote space, standard finite-game arguments do not apply, while non-convex and discontinuous payoffs rule out classical continuous existence results and complicate learning. Nonetheless, we characterize pure-strategy Nash equilibria (PSNEs) and show that at least one PSNE always exists under minimal assumptions on the underlying asset value distribution, and that the equilibrium bid-ask spread widens strictly with asset value volatility. To obtain a tractable learning framework, we discretize prices and, under an additional regularity condition, show that the time-averaged play of no-internal-regret learners approaches the continuous Nash price envelope as the tick size vanishes. Finally, we empirically validate our theoretical results through numerical simulations.",
+  "url": "https://arxiv.org/abs/2610.30891v1",
+  "pdf": "https://arxiv.org/pdf/2610.30891v1",
+  "source": "arXiv",
+  "date": "2026-10-22",
+  "score": 9,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/arxiv_2610.30891v1.txt"
+ },
+ {
   "id": "arxiv:2610.25802v2",
   "title": "Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage",
   "abstract": "Statistical arbitrage trades on an estimate of the state of a residual spread, and conventional practice discards the uncertainty of that estimate. We keep the uncertainty and use it in the trading decision. A Neural Filter Estimator (NFE) is trained on simulated paths of a mean-reverting process whose innovation law is selected by testing candidates against real residuals; once trained, it returns the posterior over the latent state of every spread in a cross-section in one forward pass. Three results follow. On simulated paths with known truth, every practical estimator, ours included, falls in one narrow band of accuracy well below an estimator given full information, so the posterior gains no accuracy over a point estimate; its contribution is a correct account of its own uncertainty. On Korean equities, net of costs, the conventional point estimate forecasts about a thousand basis points per holding period more than it realizes, and the amortized methods cut that gap by a factor of roughly two to eight. Sizing positions from the posterior on the same learned factors as the end-to-end Attention Factor Model matches the Sharpe ratio of those factors under the base rule within the period's noise, at no more risk.",
@@ -77,6 +123,28 @@
   "score": 8,
   "queued": "2026-10-21",
   "text_file": "knowledge/papers/arxiv_2610.25802v2.txt"
+ },
+ {
+  "id": "openalex:W7223259246",
+  "title": "Feasibility Bounds for Option-Hedged BNPL Lending with Volatile Collateral",
+  "abstract": "This paper derives and empirically evaluates algebraic feasibility bounds for option-hedged buy-now-pay-later (BNPL) lending secured by volatile collateral. In a merchant-fee-funded lending structure, the bounds identify loan-to-value ratios consistent with option strikes, observed put premiums, loan maturities, and a specified residual-loss budget. The framework encompasses over-protective, exact, and under-protective hedges and is applied to historical Deribit ETH put transactions and ETH spot prices from January 2021 to August 2025. Feasibility increases with merchant fees and is generally stronger at shorter maturities. Although many individual option observations fail the zero-loss screen, the option chain frequently contains at least one feasible quote on an observed date. Allowing bounded residual losses expands feasibility only modestly. An execution-price sensitivity analysis quantifies how increases in protection costs narrow feasible lending intervals and eliminate feasibility for some initially admissible options, with differences across maturities. Because historical closing prices represent last recorded transactions rather than verified executable ask quotations, these results assess historical price-based feasibility, not hedge executability. The framework provides an origination-time screening tool rather than a complete model of commercial lending profitability. JEL classification numbers: G13, G23. Keywords: Collateralized Lending, BNPL, Option hedging, Loan-to-value, Feasibility bounds, Volatile collateral.",
+  "url": "https://doi.org/10.47260/jafb/1665",
+  "source": "OpenAlex",
+  "date": "2026-10-23",
+  "score": 8,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/openalex_W7223259246.txt"
+ },
+ {
+  "id": "openalex:W7223169366",
+  "title": "Implementing BBNJ across fisheries institutions: policy options for interoperable ocean governance",
+  "abstract": "The entry into force of the Agreement under the United Nations Convention on the Law of the Sea on the Conservation and Sustainable Use of Marine Biological Diversity of Areas beyond National Jurisdiction (BBNJ Agreement) creates a practical implementation problem for fisheries governance. Biodiversity information, area-based management, environmental assessment, fisheries authorization, vessel identity, port measures, maritime safety and market controls are governed by institutions that were not designed as a single compliance system. This Policy and Practice Review uses a structured qualitative institutional appraisal to compare four governance architectures\u2014autonomous implementation, centralized integration, sectoral liaison, and federated interoperability with phased implementation. The method specifies a source hierarchy, four units of comparison, six pre-defined criteria, and an evidence-to-finding protocol that distinguishes existing-authority fit, conditional adaptation and structural constraint. Each finding is tied to treaty text, official institutional material and relevant peer-reviewed scholarship available through 31 August 2026. The legal foundation for cross-regime coexistence is anchored in BBNJ Agreement articles 5(2), 22, 29, 47(6)(c) and 51, which combine non-undermining, cooperation and coordination, respect for institutional competences, and links to existing information mechanisms. The comparison does not claim to predict governmental policy choices or empirically prove an optimal design. Instead, it identifies institutionally workable options under stated legal and administrative constraints. On that basis, federated interoperability is carried forward as a conditional policy proposition for staged testing, subject to provenance controls, verification and legal assessment by the competent authorities, cybersecurity, capacity support and review. The article proposes a three-stage pathway\u2014pre-COP mapping, first-COP institutionalization, and post-COP pilots and review\u2014linking BBNJ bodies, RFMOs, FAO/PSMA mechanisms, IMO-related systems and national administrations.",
+  "url": "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2026.1986237/pdf",
+  "source": "OpenAlex",
+  "date": "2026-10-22",
+  "score": 8,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/openalex_W7223169366.txt"
  },
  {
   "id": "openalex:W7222930539",
@@ -110,6 +178,17 @@
   "score": 7,
   "queued": "2026-10-21",
   "text_file": "knowledge/papers/openalex_W7222987075.txt"
+ },
+ {
+  "id": "openalex:W7222941659",
+  "title": "Model Risk in European Union Allowance Futures and Options: From Black\u201376 to Institutionally Grounded Models\u2014A Critical Structured Review",
+  "abstract": "Pricing models for European Union Allowance (EUA) derivatives are often assessed as statistical specifications even though the EU Emissions Trading System changes the payoff boundary, supply process, and intertemporal value of the underlying compliance asset. This critical structured review examines how EUA futures and options models have developed from Black\u201376 conventions to institutionally grounded equilibrium, structural, and Market Stability Reserve (MSR) specifications; how regulatory mechanisms enter risk-neutral valuation; and what evidence supports model robustness. Fifty-three DOI- or publisher-verified academic records were coded using an Institution\u2013Model\u2013Measure\u2013Evidence (IMME) lens: 47 inform the model-level synthesis and six provide contextual triangulation. The evidence is organized into early benchmarks and deficiencies, institutionally grounded models, and MSR-era pricing and validation. Black\u201376 remains a transparent quotation benchmark, but evidence from physical-measure dynamics and phase boundaries limits its structural interpretation. Structural and equilibrium models make institutional channels explicit, yet add identification and numerical risks. Comparative studies provide some held-out pricing evidence, but the literature still lacks transaction-cost-aware hedging and regime-transport tests. The resulting model-selection principle is conditional adequacy: use the least complex model that is regime-aligned, measure-explicit, empirically identified, and validated for the intended pricing or hedging task.",
+  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1555/1493",
+  "source": "OpenAlex",
+  "date": "2026-10-19",
+  "score": 7,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/openalex_W7222941659.txt"
  },
  {
   "id": "openalex:W4390582266",
@@ -301,5 +380,17 @@
   "score": 6,
   "queued": "2026-10-21",
   "text_file": "knowledge/papers/openalex_W7222942938.txt"
+ },
+ {
+  "id": "arxiv:2610.30637v1",
+  "title": "Multiple Stopping and Exercise Boundaries for American Put Options",
+  "abstract": "This article studies a finite-horizon American put option with up to $m$ exercise rights under the risk-neutral Black--Scholes model, where consecutive exercises must be separated by a prescribed refractory period $\u03b4>0$ and unused rights may expire. For each number of remaining rights, we show that optimal exercise is characterized by a single exercise boundary and that these boundaries are ordered by the number of remaining rights. We prove optimality of the first boundary-hitting time and establish local Lipschitz continuity of the exercise boundaries within each open deadline strip. Away from the deadlines, we derive smooth fit, the associated quasi-variational inequality and free-boundary formulation, an early-exercise-premium representation, recursive Volterra-type boundary equations, and a verification theorem. We also extend the recursive formulation to an independent random termination time, thereby allowing for exogenous termination of the option contract.",
+  "url": "https://arxiv.org/abs/2610.30637v1",
+  "pdf": "https://arxiv.org/pdf/2610.30637v1",
+  "source": "arXiv",
+  "date": "2026-10-22",
+  "score": 6,
+  "queued": "2026-10-25",
+  "text_file": "knowledge/papers/arxiv_2610.30637v1.txt"
  }
 ]
