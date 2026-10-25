@@ -19,6 +19,8 @@ arbitrage‑free option surface, discrete local volatility grid, risk‑neutral 
 Use the GROMM‑generated risk‑neutral variance for the next‑day expiry as a forecast of the NQ (Nasdaq) intraday range, and go long (short) NQ futures when the model‑implied variance is significantly above (below) the historical average of l_rng.
 
 ## Test
-queued for testing
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 2230 signal days, hit 47.7% (always-long 56.5%), strategy -1.8 bps/day vs -1.7 for the same average exposure held constantly -> timing adds -0.1 bps/day, t=-0.03, positive in 5/10 years
+How: long/short on `z(iv30**2, 252)` (positive = signal on)
+Touches: [[Options nerd]]
 
 Part of [[Research engine]]

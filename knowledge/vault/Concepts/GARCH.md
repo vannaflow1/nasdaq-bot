@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # GARCH
-15 papers mention this:
+16 papers mention this:
 
 - [[An International Comparison of Implied, Realized, and GARCH Volatility Forecasts]]
 - [[Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kin]]
@@ -14,6 +14,7 @@ tags: [concept]
 - [[Historical Perspectives in Volatility Forecasting Methods with Machine Learning]]
 - [[Large Dynamic Covariance Matrices]]
 - [[Simple Technical Trading Rules and the Stochastic Properties of Stock Returns]]
+- [[Study on the Validity of Volatility Trading]]
 - [[The forecasting power of EPU for crude oil return volatility]]
 - [[The predictive capacity of GARCH-type models in measuring the volatility of crypto and wor]]
 - [[Theoretical and Empirical properties of Dynamic Conditional Correlation Multivariate GARCH]]

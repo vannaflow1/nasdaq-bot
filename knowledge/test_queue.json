@@ -1,10 +1,1 @@
-[
- {
-  "id": "arxiv:2610.16732v2",
-  "title": "GROMM: Generative Risk-neutral Option Market Models",
-  "idea": "Use the GROMM\u2011generated risk\u2011neutral variance for the next\u2011day expiry as a forecast of the NQ (Nasdaq) intraday range, and go long (short) NQ futures when the model\u2011implied variance is significantly above (below) the historical average of l_rng.",
-  "relevance": 3,
-  "added": "2026-10-25",
-  "hunt": null
- }
-]
+[]

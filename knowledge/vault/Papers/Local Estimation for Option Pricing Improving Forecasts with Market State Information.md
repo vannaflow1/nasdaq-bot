@@ -13,7 +13,7 @@ Federal Reserve researchers keep standard option-pricing models (Heston-Nandi GA
 A sound modelling idea (let the model's settings depend on the current volatility regime), but it is about pricing 2-week-to-6-month SPX options, not next-day NQ moves, and the gains mostly faded after 2019.
 
 ## Concepts
-local estimation, state-dependent parameters, heston-nandi garch, implied volatility forecasting, vix as state variable
+local estimation, state-dependent parameters, heston-nandi garch, [[implied volatility forecasting]], vix as state variable
 
 ## Idea
 Let the brain's range forecast depend on the volatility regime: add the options-priced move and the 5-day range each multiplied by how high 30d IV is versus its own past, a crude stand-in for the paper's VIX-weighted fitting.

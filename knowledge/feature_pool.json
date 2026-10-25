@@ -61,5 +61,14 @@
   "paper": "Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model",
   "id": "openalex:W2166672289",
   "added": "2026-10-21"
+ },
+ {
+  "expr": "0.5*ewm(rng,10) + 0.3*ewm(rng5,10) + 0.2*ewm(rng20,10)",
+  "template": null,
+  "gain": 0.1,
+  "years": "7/9",
+  "paper": "Range-Based Volatility Estimation and Forecasting",
+  "id": "openalex:W839538750",
+  "added": "2026-10-25"
  }
 ]

@@ -201,7 +201,12 @@
   "query": "daily range forecast position sizing volatility trading",
   "why": "I want a principled method to scale the size of a volatility‑selling trade based on the predicted daily range, which could turn my range forecasts into profit.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "searched",
+  "papers": [
+   "openalex:W839538750",
+   "openalex:W7140137826",
+   "arxiv:2605.13998v2"
+  ],
+  "searched": "2026-10-25"
  }
 ]
