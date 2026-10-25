@@ -106,5 +106,21 @@
   ],
   "calls_left_today": -3,
   "status": "error"
+ },
+ {
+  "wish": 13,
+  "title": "Intraday option chain snapshots (0‑DTE) every 5 min",
+  "outcome": "finish",
+  "summary": "Built qqq_intraday.py to fetch and log 0-DTE QQQ option chain snapshots every 5 minutes, resolving Wish #13 successfully. Verified with python test_engine.py (exits 0).",
+  "how_to_use": "python qqq_intraday.py captures real-time 0-DTE QQQ option snapshots (spot, ATM strike, straddle mid, ATM IV, and contract count) every 5 minutes and logs them to knowledge/qqq_intraday.csv.",
+  "date": "2026-10-25",
+  "steps": 28,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 24,
+  "guard": "touched files outside the research side: knowledge/qqq_intraday.csv",
+  "status": "rejected by guard"
  }
 ]
