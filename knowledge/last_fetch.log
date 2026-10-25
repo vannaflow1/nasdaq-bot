@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 34 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 2048/7000
-curiosity: unusable translator gave no JSON
-test queue empty
-testing used 177 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
+read 0, AI units today 2228/7000
+curiosity asked: Strategy: OptionFlowTilt_Exp70_Break_NQ
+tested: Strategy: OptionFlowTilt_Exp70_Break_NQ - Break above the 70 -> TRANSLATION FAILED - only > < >= <= comparisons allowed
+testing used 377 AI units
