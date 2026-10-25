@@ -117,7 +117,7 @@
   "\u2022 The impact of option hedging on the spot market volatility (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper models how the aggregate gamma exposure of option market makers (OMMs) feeds back into spot market volatility via their delta\u2011hedging trades, showing that a net short\u2011gamma position by OMMs raises volatility.",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.557% -> 0.557% (-0.0%), better in 3/8 unseen years",
-  "This week's tests: 178 run - 6 promising, 92 not confirmed, 31 don't fit my data, 49 translation failures",
+  "This week's tests: 179 run - 6 promising, 93 not confirmed, 31 don't fit my data, 49 translation failures",
   "",
   "34 papers waiting in my queue."
  ],
