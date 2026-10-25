@@ -22,5 +22,9 @@
  {
   "title": "Review: Do larger overnight gaps (k_gap) increase the probability that NQ closes above yesterday's high (y_closed_above_yday_high)?",
   "body": "CONFIRMED (fact, no new information) (Claude, 2026-10-25). True in both halves (+14.2% / +14.0%), no leak. Mechanical: a big gap up opens near or above yesterday's high, so closing above it is easier. k_open_vs_yday alone does better (+26.6%) and k_gap adds -0.04% on top (corr 0.73). A fact, not an edge."
+ },
+ {
+  "title": "Weekly reflection - 2026-10-25",
+  "body": "This week (W43) Volta added 206 papers to its library; 48 were rated 4+ stars, led by work on 0DTE gamma risk, dealer gamma and market quality, intraday momentum from hedging demand, and the GARCH/ARCH classics. The test engine ran 177 ideas: 92 not confirmed, 31 did not fit the data, 48 failed to translate, and 6 came out PROMISING after the stress test. The Sunday review found no look-ahead in any of the 6, but none is a new edge: 3 are true facts that a simpler input already explains (opening position versus yesterday's high, and the known dealer-gamma range effect the brain already uses), 1 is a mechanical inside-day rule (a wide day tends to contain the next one), and 2 are FRAGILE (the VPIN stand-in fades after 2020; SPX gamma has only 5 test years and adds almost nothing). Lesson for next week's questions: check a new predictor against the obvious one first (open versus yesterday's levels, implied move versus recent range), because most surviving 'discoveries' were rediscoveries of those. No wishes were open for Claude this week, so nothing was upgraded."
  }
 ]
