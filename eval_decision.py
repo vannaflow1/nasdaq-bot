@@ -52,20 +52,25 @@ def run_paths(pts, wst, P, size_fn, seed=0):
     rng = np.random.default_rng(seed); n = len(pts); rows = []
     for _ in range(PATHS):
         idx = np.concatenate([np.arange(s, s + BLOCK) % n for s in rng.integers(0, n, HORIZON // BLOCK + 1)])[:HORIZON]
-        a = PS.Account(P); pday = None; paid = 0.0; fpay = None; life = HORIZON
+        a = PS.Account(P); pday = None; paid = 0.0; fpay = None; life = HORIZON; cens = True
         for d, i in enumerate(idx):
             got = a.step(pts[i], wst[i], size_fn); paid += got
             if got > 0 and fpay is None: fpay = d + 1
             if getattr(a, "passed_now", False): a.passed_now = False; pday = d + 1
-            if a.end is not None: life = d + 1; break
-        rows.append((pday, paid, fpay, life))
+            if a.end is not None: life = d + 1; cens = False; break
+        rows.append((pday, paid, fpay, life, cens))
     pd_ = np.array([r[0] or np.nan for r in rows], float); paid = np.array([r[1] for r in rows]); fp = np.array([r[2] or np.nan for r in rows], float)
     return {"pass_rate": round(float(np.isfinite(pd_).mean()), 3), "pass_within_21": round(float((pd_ <= 21).mean()), 3),
             "median_days_to_pass": None if not np.isfinite(pd_).any() else int(np.nanmedian(pd_)),
             "p_payout": round(float((paid > 0).mean()), 3),
             "median_days_to_first_payout": None if not np.isfinite(fp).any() else int(np.nanmedian(fp)),
             "median_account_life_days": int(np.median([r[3] for r in rows])),
-            "ev_per_eval": round(float(paid.mean() - P["fee"]), 1), "ev_se": round(float(paid.std() / np.sqrt(len(paid))), 1)}
+            "ev_per_eval": round(float(paid.mean() - P["fee"]), 1), "ev_se": round(float(paid.std() / np.sqrt(len(paid))), 1),
+            # renewal-reward rate (sum of net cash / sum of account-life days, open lives included) - the correct long-run
+            # $ per slot; the frozen fast-track metric divides by the MEDIAN life instead (kept unchanged, reported side by side)
+            "mean_account_life_days": round(float(np.mean([r[3] for r in rows])), 1),
+            "usd_per_month_renewal": round(float((paid - P["fee"]).sum() / max(sum(r[3] for r in rows), 1) * 21), 1),
+            "censored_share": round(float(np.mean([r[4] for r in rows])), 3)}
 
 
 def curves():
