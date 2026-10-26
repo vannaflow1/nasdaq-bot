@@ -13,6 +13,10 @@ What it is (and what it is not):
     i.e. about +4 percentage points over the drift in both directions - a real but SMALL lean, not a prediction.
 Posts to the live Discord channel at the first check of the day and whenever the bias changes; logs every check to
 knowledge/bias_log.csv and grades the day after the close (running scoreboard).
+Morning outlook (outlook.py, 26 Oct 2026): each post adds the expected day size and whether the overnight move agrees;
+the agreement is logged (columns overnight/agree/day_size) so it can be judged on live data - it does not change the call.
+Morning outlook (outlook.py, 26 Oct 2026): each post adds the expected day size and whether the overnight move agrees;
+the agreement is logged (columns overnight/agree/day_size) to be judged on live data - it does not change the call.
 Run: python bias.py [--dry] [--at "2026-10-23 10:05"]   (Chicago time for --at; dry runs only)"""
 import json, os, sys, time, urllib.request
 from datetime import datetime, timedelta, timezone
@@ -66,7 +70,7 @@ def sessions(b):
 
 
 def read_log():
-    L = pd.read_csv(LOG) if os.path.exists(LOG) else pd.DataFrame(columns=["date", "check_ct", "bias", "price", "open", "band_pct", "dist_bands", "close", "result"])
+    L = pd.read_csv(LOG) if os.path.exists(LOG) else pd.DataFrame(columns=["date", "check_ct", "bias", "price", "open", "band_pct", "dist_bands", "close", "result", "overnight", "agree", "day_size"])
     L["result"] = L["result"].astype(object)                  # all-empty column reads as float -> grading crashed (23 Oct)
     return L
 
@@ -106,9 +110,16 @@ def main():
     sig = float(np.nanmean([abs(hc[t - 1] / ho - 1) for ho, hc, _ in hist])); band = MULT * sig
     dist = (c / o - 1) / sig if sig > 0 else 0.0
     bias = "LONG" if c > o * (1 + band) else "SHORT" if c < o * (1 - band) else "NONE"
+    ol = {}
+    try:
+        ol = json.load(open(os.path.join(K, "outlook_today.json")))
+        ol = ol if ol.get("date") == str(today) else {}
+    except Exception: pass
+    on_dir = ol.get("overnight_dir", ""); agree = "" if bias == "NONE" or not on_dir else ("yes" if (on_dir == "UP") == (bias == "LONG") else "no")
     prev = L[L.date.astype(str) == str(today)].sort_values("check_ct")
     L = pd.concat([L, pd.DataFrame([{"date": str(today), "check_ct": h, "bias": bias, "price": round(c, 2), "open": round(o, 2),
-                                     "band_pct": round(band * 100, 3), "dist_bands": round(dist / MULT, 2)}])], ignore_index=True)
+                                     "band_pct": round(band * 100, 3), "dist_bands": round(dist / MULT, 2),
+                                     "overnight": on_dir, "agree": agree, "day_size": ol.get("size", "")}])], ignore_index=True)
     first = not len(prev); changed = len(prev) and prev.bias.iloc[-1] != bias
     lux = datetime(now.year, now.month, now.day, h, 0, tzinfo=CT).astimezone(LUX).strftime("%H:%M")
     head = {"LONG": "🟢 LONG bias", "SHORT": "🔴 SHORT bias", "NONE": "⚪ No bias"}[bias]
@@ -116,7 +127,11 @@ def main():
             f"normal noise band now ±{band * 100:.2f}% ({len(hist)} sessions).\n"
             f"History (NQ 2014-2026): at checks like this, {ODDS[bias]}.\n"
             + ("A small lean (about 4 points over the normal drift), not a prediction - it can flip; I post again if it does."
-               if bias != "NONE" else "Price is inside its normal noise: no lean beyond the usual drift. I post again if that changes."))
+               if bias != "NONE" else "Price is inside its normal noise: no lean beyond the usual drift. I post again if that changes.")
+            + (f"\nMorning outlook: {ol['size']} day expected (~{ol['exp_range_pts']} pts high-low)"
+               + (f"; overnight was {on_dir} - {'AGREES' if agree == 'yes' else 'DISAGREES'} with this bias "
+                  "(agreeing days were ~4-5 pts better in both test periods, not proven yet - being tracked)" if agree else "")
+               + "." if ol else ""))
     print(body)
     if not dry and (first or changed):
         import qqq_gex_daily as q

@@ -1,0 +1,33 @@
+{
+ "direction_composite": {
+  "corr": 0.0432,
+  "p": 0.1578,
+  "n": 1053,
+  "base_up": 0.53,
+  "up_rate_top20": 0.545,
+  "n_top": 277,
+  "up_rate_bottom20": 0.54,
+  "n_bottom": 250,
+  "mean_ret_top_bp": 12.8,
+  "mean_ret_bottom_bp": 10.1
+ },
+ "size_on_range_z": {
+  "corr": 0.2116,
+  "p": 0.0001,
+  "median_size_by_quintile": {
+   "0": 0.68,
+   "1": 0.91,
+   "2": 0.94,
+   "3": 1.07,
+   "4": 1.26
+  }
+ },
+ "band_x_composite": {
+  "hit_agree": 0.578,
+  "n_agree": 1108,
+  "hit_disagree": 0.554,
+  "n_disagree": 1064,
+  "diff": -0.006,
+  "p": 0.8646
+ }
+}

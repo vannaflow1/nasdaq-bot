@@ -1,0 +1,32 @@
+name: outlook
+# Overnight outlook before the US open (owner request 26 Oct 2026): expected day size (tested), overnight recap, macro close,
+# today's red-folder events / megacap earnings, overnight headlines (context only). outlook.py explains the evidence.
+on:
+  schedule:
+    - cron: "25 12,13 * * 1-5"     # 07:25 Chicago in both DST states; outlook.py only runs 07:00-08:29 CT, once per day
+  workflow_dispatch:
+    inputs:
+      dry: { description: "dry run (print only)", default: "yes" }
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt
+      - run: |
+          if [ "${{ github.event.inputs.dry }}" = "yes" ]; then python outlook.py --dry --force; else python outlook.py; fi
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_LIVE: ${{ secrets.DISCORD_WEBHOOK_LIVE }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - if: always()
+        run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "outlook" && break; sleep $((RANDOM % 20 + 5)); done
