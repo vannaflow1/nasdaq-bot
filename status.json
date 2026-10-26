@@ -33,8 +33,7 @@
   "Papers read 271 | ideas & strategies tested 90 | prop strategies searched 651,533",
   "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
   "Brain upgrades: 0 | self-discovered powers: 8",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +8 papers, +17 tests, +85 validated, +2 powers"
+  "XP only for verified progress: tests passed on unseen data count far more than activity."
  ],
  "updated": "Mon 26 Oct 22:10 Lux",
  "events": [
@@ -280,9 +279,6 @@
   "Balance $25,000.00 (+0.00) | max-loss floor $24,000 | buffer $1,000",
   "Trades: 0 - waiting for a tested edge to trigger",
   "Next trade risks up to $100.",
-  "",
-  "LATEST:",
-  "- strategy: with the open's side of the overnight range at 08:31, no red-folder news: skipped: stop too wide for my risk budget (even 1 MNQ risks more than 10% of my buffer)",
   "",
   "Volta only trades edges that passed its full protocol (walk-forward, placebo, stress test, locked exam).",
   "Virtual money - this is Volta's live track record, not advice."
