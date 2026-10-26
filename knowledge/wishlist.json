@@ -246,6 +246,14 @@
   "evidence": "https://helpfutures.fundednext.com/en/articles/14298560-is-the-usage-of-automated-trading-systems-eas-and-bots-allowed-in-fundednext-futures",
   "impact": "high",
   "status": "open",
-  "votes": 1
+  "votes": 1,
+  "gemini": {
+   "status": "error",
+   "date": "2026-10-26",
+   "attempts": 1,
+   "branch": null,
+   "summary": "daily Gemini budget used up (120 calls)",
+   "guard": null
+  }
  }
 ]

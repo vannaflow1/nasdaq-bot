@@ -1,29 +1,13 @@
 {
- "wish": 15,
- "title": "Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules)",
- "outcome": "out_of_time",
- "summary": "stopped after 45 minutes (13 model turns)",
+ "wish": 16,
+ "title": "Firm rules changed: re-check prop_firms.json (FundedNext Futures: automated trading)",
+ "outcome": "error",
+ "summary": "daily Gemini budget used up (120 calls)",
  "how_to_use": "",
  "date": "2026-10-26",
- "steps": 13,
- "models": [
-  "gemini-flash-lite-latest"
- ],
+ "steps": 0,
+ "models": [],
  "calls_left_today": -3,
- "status": "out_of_time",
- "log": [
-  "0: search(pattern='tradeify') -> './tools/rules_watch.py:14:    \"Tradeify: essential trading rules\": \"https://intercom.help/tradeify/e'",
-  "1: list_dir(path='knowledge/research_out') -> 'china_credit.log  (1708 bytes)\\nchina_credit.txt  (1707 bytes)\\nchina_credit_impulse.csv  (4579 bytes)'",
-  "2: list_dir(path='knowledge/research_out/rules') -> 'FundedNext_Futures_automated_trading.txt  (1920 bytes)\\nTradeify_essential_trading_rules.txt  (8078 b'",
-  "3: search(pattern='Tradeify') -> './tools/rules_watch.py:14:    \"Tradeify: essential trading rules\": \"https://intercom.help/tradeify/e'",
-  "4: read_file(path='knowledge/research_out/rules/Tradeify_essential_trading_rule', max_lines='200', start_line='1') -> 'knowledge/research_out/rules/Tradeify_essential_trading_rules.txt (1 lines; showing 1-1)\\n1: Essentia'",
-  "5: search(pattern='Tradeify', path_glob='*.json') -> './knowledge/rules_watch.json:2: \"Tradeify: essential trading rules\": {\\n./knowledge/prop_firms.json:1'",
-  "6: read_file(path='knowledge/rules_watch.json', start_line='1', max_lines='100') -> 'knowledge/rules_watch.json (16 lines; showing 1-16)\\n1: {\\n2:  \"Tradeify: essential trading rules\": {\\n'",
-  "7: read_file(max_lines='100', start_line='150', path='knowledge/prop_firms.json') -> 'knowledge/prop_firms.json (397 lines; showing 150-249)\\n150:   \"bots\": \"allowed (help center: automat'",
-  "8: search(path_glob='*.py', pattern='prop_firms') -> './eval_decision.py:133:           \"curves_date\": C.get(\"date\"), \"note\": \"EV from published Lucid rul'",
-  "9: run(command='python tools/rules_watch.py') -> \"exit code 0\\nchanged: ['FundedNext Futures: automated trading'] | failed: []\\n\"",
-  "10: run(command='git status') -> 'REFUSED: only `python <existing script>.py [args]` and `python -m py_compile <file>` may be run'",
-  "11: run(command='python -m py_compile tools/rules_watch.py') -> 'exit code 0\\n'",
-  "12: search(pattern='rules_watch', path_glob='tools/*.py') -> 'tools/rules_watch.py:1:\"\"\"tools/rules_watch.py - weekly watcher of the prop firms\\' OFFICIAL rule pag'"
- ]
+ "status": "error",
+ "log": []
 }
