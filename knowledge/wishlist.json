@@ -230,10 +230,22 @@
   "gemini": {
    "status": "out_of_time",
    "date": "2026-10-26",
-   "attempts": 1,
+   "attempts": 2,
    "branch": null,
-   "summary": "stopped after 45 minutes (5 model turns)",
+   "summary": "stopped after 45 minutes (13 model turns)",
    "guard": null
   }
+ },
+ {
+  "id": 16,
+  "date": "2026-10-26",
+  "title": "Firm rules changed: re-check prop_firms.json (FundedNext Futures: automated trading)",
+  "for": "claude",
+  "type": "fix",
+  "why": "The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).",
+  "evidence": "https://helpfutures.fundednext.com/en/articles/14298560-is-the-usage-of-automated-trading-systems-eas-and-bots-allowed-in-fundednext-futures",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
  }
 ]

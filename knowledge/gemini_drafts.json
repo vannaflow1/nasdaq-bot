@@ -137,5 +137,19 @@
   ],
   "calls_left_today": 90,
   "status": "out_of_time"
+ },
+ {
+  "wish": 15,
+  "title": "Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules)",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (13 model turns)",
+  "how_to_use": "",
+  "date": "2026-10-26",
+  "steps": 13,
+  "models": [
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": -3,
+  "status": "out_of_time"
  }
 ]
