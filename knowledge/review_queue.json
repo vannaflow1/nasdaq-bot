@@ -1,1 +1,19 @@
-[]
+[
+ {
+  "id": "q:2026-10-26:0",
+  "title": "Volta's own question (inspired by: LiveOption: Evaluating LLM Agents in Structured Option Tradi; Do Options-Flow Signatures of Dealer Hedging Predict Price D)",
+  "idea": "On days when the market\u2019s implied overnight move (impl) is larger than the observed overnight range (k_on_range), are we more likely to see NQ trade above the overnight high (y_took_overnight_high) during the NY session?",
+  "relevance": 6,
+  "spec": {
+   "kind": "question",
+   "question": "On days when the market\u2019s implied overnight move (impl) is larger than the observed overnight range (k_on_range), are we more likely to see NQ trade above the overnight high (y_took_overnight_high) during the NY session?",
+   "target": "y_took_overnight_high",
+   "expr": "impl / k_on_range",
+   "explain": "Inspired by research on how option\u2011priced expected moves (impl) and event premiums influence breakout probabilities, this asks whether a stronger implied move relative to the actual overnight range signals a higher chance of breaking the overnight high."
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 65% of 2907 sessions (2014-19: 65%, 2020-25: 65%). Predictor: lowest-fifth days 49% vs highest-fifth 74%, skill +3.1% vs the base rate, better in 9/9 unseen years",
+  "how": "Q: On days when the market\u2019s implied overnight move (impl) is larger than the observed overnight range (k_on_range), are we more likely to see NQ trade above the overnight high (y_took_overnight_high) during the NY session? | answer = `y_took_overnight_high` | predicted by `impl / k_on_range` | stress: skill +3.10; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-10-26"
+ }
+]
