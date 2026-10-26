@@ -125,3 +125,34 @@ if __name__ == "__main__":
     print(json.dumps({k: v for k, v in res.items() if k not in ("T1_direction", "T2_size")}, indent=1))
     for f, v in res["T1_direction"].items():
         print(f"{f:13s} dir corr {v['corr']:+.4f} p {v['p']:.4f} | size corr {res['T2_size'][f]['corr']:+.4f} p {res['T2_size'][f]['p']:.4f}")
+
+
+def holdout_composite(T, Bc):
+    """frozen decision (knowledge/research_out/overnight_decision.json): z-weights from the DESIGN period only."""
+    dec = json.load(open(os.path.join(OUT, "overnight_decision.json")))["direction_candidates_design_p_lt_0.01"]
+    d = T[(T.date >= "2014-01-01") & (T.date <= "2021-12-31")]; h = T[T.date >= "2022-01-01"].copy()
+    mu = {f: d[f].mean() for f in dec}; sd = {f: d[f].std() for f in dec}
+    sc = lambda X: sum(s * (X[f] - mu[f]) / sd[f] for f, s in dec.items())
+    ds = sc(d); q20, q80 = np.nanpercentile(ds, 20), np.nanpercentile(ds, 80)
+    h["score"] = sc(h); r, p, n = day_perm_p(h.score, h.rth_ret, B=20000)
+    top, bot = h[h.score >= q80], h[h.score <= q20]
+    rs, ps, _ = day_perm_p(h.on_range_z, h.size_z, B=20000)
+    b = Bc[(Bc.date >= "2022-01-01") & (Bc.band != 0)].merge(h[["date", "score", "on_ret"]], on="date")
+    b["hit"] = (b.band == b.rest).astype(int); b["agree"] = np.sign(b.score) == b.band
+    dd = b.groupby(["date", "agree"]).hit.mean().reset_index(); a, x = dd[dd.agree].hit.to_numpy(), dd[~dd.agree].hit.to_numpy()
+    rng = np.random.default_rng(5); allv = np.r_[a, x]; k = len(a); diff = a.mean() - x.mean()
+    null = np.array([(lambda p_: p_[:k].mean() - p_[k:].mean())(rng.permutation(allv)) for _ in range(5000)])
+    hb = h.assign(zq=pd.qcut(h.on_range_z.rank(method="first"), 5, labels=False)).groupby("zq").size_z.median().round(2).to_dict()
+    return {"direction_composite": {"corr": round(r, 4), "p": round(p, 4), "n": n, "base_up": round(float((h.rth_ret > 0).mean()), 3),
+                                    "up_rate_top20": round(float((top.rth_ret > 0).mean()), 3), "n_top": int(len(top)),
+                                    "up_rate_bottom20": round(float((bot.rth_ret > 0).mean()), 3), "n_bottom": int(len(bot)),
+                                    "mean_ret_top_bp": round(float(top.rth_ret.mean() * 1e4), 1), "mean_ret_bottom_bp": round(float(bot.rth_ret.mean() * 1e4), 1)},
+            "size_on_range_z": {"corr": round(rs, 4), "p": round(ps, 4), "median_size_by_quintile": {str(k_): v for k_, v in hb.items()}},
+            "band_x_composite": {"hit_agree": round(float(b[b.agree].hit.mean()), 3), "n_agree": int(b.agree.sum()),
+                                 "hit_disagree": round(float(b[~b.agree].hit.mean()), 3), "n_disagree": int((~b.agree).sum()),
+                                 "diff": round(float(diff), 3), "p": round(float((np.abs(null) >= abs(diff)).mean() + 1 / 5000), 4)}}
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "holdout":
+    res2 = holdout_composite(T, Bc)
+    json.dump(res2, open(os.path.join(OUT, "overnight_holdout_composite.json"), "w"), indent=1); print(json.dumps(res2, indent=1))

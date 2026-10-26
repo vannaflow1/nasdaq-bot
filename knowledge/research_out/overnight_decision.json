@@ -1,0 +1,9 @@
+{
+ "written": "2026-10-26 after the design run, BEFORE the holdout was looked at",
+ "direction_candidates_design_p_lt_0.01": {"prev_ret": -1, "trend5": -1, "vix_chg": 1, "nq_vs_es": -1},
+ "direction_composite": "score = sum(sign x z) over the 4 candidates, z with design-period mean/std; holdout test = day-level permutation corr(score, rth_ret), p < 0.05 same sign; also up-rate in the top/bottom design quintile of score",
+ "size_candidates_design_p_lt_0.01": ["on_ret(abs)", "asia_ret(abs)", "london_ret(abs)", "gap_loc", "trend5", "on_range_z", "vix_chg", "vix_term", "dxy_ret(abs)"],
+ "size_composite": "on_range_z alone (strongest, simplest); holdout corr with size_z p < 0.05 same sign",
+ "band_agreement": "overnight-agreement filter on the band bias: design diff +0.043, p 0.07 -> NOT a candidate. Secondary (pre-declared now): band hit rate when the direction composite agrees vs disagrees, reported, needs holdout p < 0.05 to be used",
+ "not_used": ["on_ret direction", "asia/london direction", "gap_loc direction", "us10y", "dxy direction", "red_pre", "fomc"]
+}
