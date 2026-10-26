@@ -1,0 +1,8 @@
+{
+ "written": "2026-10-26 after the London design run, BEFORE its holdout was looked at",
+ "design_result": "continuation is WRONG more often than right: hit 44.9% (2,642 checks), i.e. London band breaks REVERSE before the NY open; one-sided continuation p 0.9997 -> two-sided p ~0.0007",
+ "deviation_from_declaration": "the declaration tested continuation one-sided. The candidate taken to the holdout is the mirror (FADE: lean against the band side), decided after seeing design, before the holdout. Same statistic, opposite sign.",
+ "holdout_contamination": "F15 (London noise-band BREAKOUT with stops/targets/costs) was already validated on 2022-now and failed (all 50 variants negative). That result leans toward a fade in 2022+, so this holdout is NOT clean evidence; live forward logging is the real test.",
+ "fade_rule": "London fade bias goes live (labelled 'unproven, being tracked') only if holdout fade hit > 50% with one-sided p < 0.05 for rest-of-London. Rest-of-day (L2) not a candidate.",
+ "size_rule": "Asia-range day-size forecast for London goes live if holdout corr > 0 with p < 0.05."
+}

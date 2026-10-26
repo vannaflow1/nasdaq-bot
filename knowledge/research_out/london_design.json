@@ -1,0 +1,53 @@
+{
+ "period": [
+  "2014-01-01",
+  "2021-12-31"
+ ],
+ "L1_rest_of_london": {
+  "checks": 2642,
+  "days": 1132,
+  "hit_rate": 0.4489,
+  "edge_score": -0.0954,
+  "p_one_sided": 0.99965,
+  "long_hit": 0.486,
+  "n_long": 1317,
+  "short_hit": 0.4121,
+  "n_short": 1325,
+  "drift_up_share_all_checks": 0.5279
+ },
+ "L2_rest_of_day": {
+  "checks": 2642,
+  "days": 1132,
+  "hit_rate": 0.4917,
+  "edge_score": -0.0144,
+  "p_one_sided": 0.67365,
+  "long_hit": 0.5543,
+  "n_long": 1317,
+  "short_hit": 0.4294,
+  "n_short": 1325,
+  "drift_up_share_all_checks": 0.5568
+ },
+ "L1_by_check": {
+  "60": 0.4824,
+  "120": 0.4382,
+  "180": 0.4183,
+  "240": 0.4564
+ },
+ "L3_size": {
+  "corr": 0.2272,
+  "p": 0.0002,
+  "median_move_pct_by_asia_quintile": {
+   "0": 0.159,
+   "1": 0.199,
+   "2": 0.205,
+   "3": 0.231,
+   "4": 0.296
+  },
+  "asia_z_cuts": [
+   0.65,
+   0.85,
+   1.11,
+   1.54
+  ]
+ }
+}
