@@ -1,0 +1,15 @@
+🌙 Overnight: NQ 29,230.50, +0.37% since yesterday's 15:00 CT close (Asia -0.13%, London +0.50%), inside yesterday's range.
+📏 Expected day size: BUSIER - overnight range 1.13% = 1.12x its normal. History says a slightly bigger day: typical open-to-close move ~213 pts, high-low range ~421 pts. (Tested 2014-2026: this part works.)
+🧭 Direction: no call before the open. 14 pre-open inputs tested over 12 years - none beats the normal drift on up/down odds. Direction comes from the hourly noise-band bias after the open (overnight was UP; I'll note in each bias post whether they agree - that part is still being watched).
+🌍 Last US close (2026-10-23): VIX 19.4 (+2.2%), VIX/VIX3M 0.95 (normal), 10y 4.99% (+3 bp), dollar +0.14%, NQ vs S&P +0.53%.
+📰 Overnight headlines (keywords-ranked, context only):
+- Dow Jones Futures: Elon Musk-Led Tesla Leads Market Higher; Amazon, Alphabet, Microsoft Earnings On Deck  [Yahoo (megacaps)]
+    MSFT, AMZN, GOOGL, TSLA, earnings
+- Nvidia RTX 20, 30, and 40-series GPUs hacked to remove a half-speed AI throttle  [Tom's Hardware]
+    NVDA, AI chips/capex
+- Tesla Isn’t a Hyperscaler. Why the AI Bears Are Misreading Its $5 Billion Capex Cut.  [Yahoo (megacaps)]
+    TSLA, AI chips/capex
+- Analysis: Why a $2 trillion deficit and 5% Treasury yields are becoming America's biggest economic challenge  [CNBC economy]
+    Fed/macro
+- Why Google might avoid an earnings 'reckoning' this week  [Yahoo (megacaps)]
+    GOOGL, earnings
