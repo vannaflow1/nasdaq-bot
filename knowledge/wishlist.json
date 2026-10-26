@@ -215,5 +215,17 @@
   "impact": "high",
   "status": "open",
   "votes": 1
+ },
+ {
+  "id": 15,
+  "date": "2026-10-26",
+  "title": "Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules)",
+  "for": "claude",
+  "type": "fix",
+  "why": "The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).",
+  "evidence": "https://intercom.help/tradeify/en/articles/12268167-essential-trading-rules-overview",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
  }
 ]
