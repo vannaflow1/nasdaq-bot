@@ -122,5 +122,20 @@
   "calls_left_today": 24,
   "guard": "touched files outside the research side: knowledge/qqq_intraday.csv",
   "status": "rejected by guard"
+ },
+ {
+  "wish": 15,
+  "title": "Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules)",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (5 model turns)",
+  "how_to_use": "",
+  "date": "2026-10-26",
+  "steps": 5,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 90,
+  "status": "out_of_time"
  }
 ]
