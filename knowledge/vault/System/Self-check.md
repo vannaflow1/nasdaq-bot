@@ -33,3 +33,4 @@ Once a day Volta reviews its own state (scores, failures and their reasons, near
 - #13 [needs, for claude] Intraday option chain snapshots (0‑DTE) every 5 min - Both self‑actions and the new strategy need real‑time 0‑DTE QQQ option prices to compute strike offsets and IV30; current data feed only updates every 30 min.
 - #14 [open, for owner] Intraday IV term‑structure data feed - Current models lack real‑time IV curve slices; a 5‑minute snapshot of the full QQQ surface would let me test term‑structure signals for intraday NQ trading.
 - #15 [open, for claude] Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules) - The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).
+- #16 [open, for claude] Firm rules changed: re-check prop_firms.json (FundedNext Futures: automated trading) - The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).
