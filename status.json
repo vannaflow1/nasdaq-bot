@@ -1,26 +1,26 @@
 {
- "for": "Mon 26 Oct",
+ "for": "Tue 27 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
-  "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size."
+  "WHAT THIS MEANS FOR YOU TOMORROW (Tue 27 Oct) - risk \u26aa NORMAL",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
   "",
-  "QQQ GEX  2026-10-23   spot 705.42",
-  "  net GEX (normalised) -106.0   rank vs last 252 days: 0.08   quintile 1",
-  "  -> LOW gamma  - next day historically WILDEST (avg realized vol ~19.6%, RV/IV 0.80)",
-  "  !! only 6 live days in history - rank still leans on stale 2025 data",
+  "QQQ GEX  2026-10-26   spot 712.59",
+  "  net GEX (normalised) -47.3   rank vs last 252 days: 0.27   quintile 2",
+  "  -> low-mid    - next day avg realized vol ~18.6%",
+  "  !! only 7 live days in history - rank still leans on stale 2025 data",
   "  no paper trade today (needs rank >= 0.80)"
  ],
  "range": [
-  "  Options price a \u00b1402 pt CLOSE-TO-CLOSE move in NQ futures (1.38%).",
-  "  Gamma-adjusted: \u00b1386 pts -> close likely between 28,823 and 29,596 (NQ futures prices)",
-  "  (options price moves about right on days like this; ~58% of such days closed inside). This is where the day ENDS, not how far it",
+  "  Options price a \u00b1255 pt CLOSE-TO-CLOSE move in NQ futures (0.86%).",
+  "  Gamma-adjusted: \u00b1270 pts -> close likely between 29,219 and 29,760 (NQ futures prices)",
+  "  (options price moves about right on days like this; ~56% of such days closed inside). This is where the day ENDS, not how far it",
   "  swings: the high-to-low range is usually ~1.5-2x wider - see /brain for the full-day range."
  ],
  "walls": [
-  "  NQ futures prices: Call wall 29,880 | Put wall 28,980 | Gamma flip 29,952",
-  "  (from QQQ + NDX options; in QQQ terms ~722 / 700 / 723)",
+  "  NQ futures prices: Call wall 29,580 | Put wall 28,980 | Gamma flip 29,924",
+  "  (from QQQ + NDX options; in QQQ terms ~715 / 700 / 723)",
   "  NQ is BELOW the flip (dealers amplify moves)",
   "  Tested 2014-25: walls are NOT support/resistance (no better than random levels).",
   "  If the put wall breaks, drops tended to run a bit further. Below the flip = bigger days."
@@ -28,21 +28,29 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": "ELEVATED",
- "updated": "Mon 26 Oct 18:55 Lux",
+ "level": [
+  "VOLTA LEVEL 15  (8,866 XP, next level at 9,000)",
+  "Papers read 271 | ideas & strategies tested 90 | prop strategies searched 651,533",
+  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
+  "Brain upgrades: 0 | self-discovered powers: 8",
+  "XP only for verified progress: tests passed on unseen data count far more than activity.",
+  "Since yesterday: +8 papers, +17 tests, +85 validated, +2 powers"
+ ],
+ "updated": "Mon 26 Oct 22:10 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  Wed 28 Oct: FOMC rate decision 19:00 Lux, Powell 19:30; GOOGL earnings after close; MSFT earnings after close",
-  "  Thu 29 Oct: AMZN earnings after close; INTC earnings after close"
+  "  Thu 29 Oct: AMZN earnings after close; INTC earnings after close",
+  "  Mon 02 Nov: AAPL earnings after close; PLTR earnings after close"
  ],
  "news": [
-  "NEWS (last 64h, ranked by keywords):",
-  "- Clustering and Load Balancing Market Report 2026: Global Size, Trends, and Forecast to 2030 | Capitalize on AI, Kubernetes, and Multicloud with AWS, Microsoft, F5, and Cloudflare  [Yahoo (megacaps)]\n    MSFT, AMZN, earnings",
-  "- Edge Caching Platform Market 2026: Global Size, Trends, and 2030 Forecast | Capitalize on 18% CAGR as AWS, Microsoft, Akamai, Cloudflare, and Fastly Scale AI-Driven Delivery  [Yahoo (megacaps)]\n    MSFT, AMZN, earnings",
-  "- Intelligent Platform Management Interface (IPMI) - Global Strategic Business Report: Capitalize on a $9.9B Market by 2032 as Cisco, Dell, HPE, Intel and Microsoft Accelerate Data Center Automation  [Yahoo (megacaps)]\n    MSFT, INTC, AI chips/capex",
-  "- Nvidia RTX 20, 30, and 40-series GPUs hacked to remove a half-speed AI throttle  [Tom's Hardware]\n    NVDA, AI chips/capex",
-  "- Nvidia discusses $2,000-per-GPU annual fee for software that 'runs agents on AI factories'  [Tom's Hardware]\n    NVDA, AI chips/capex",
-  "- Nvidia eyes converting old nuclear plants into massive AI data centers  [Tom's Hardware]\n    NVDA, AI chips/capex"
+  "NEWS (last 24h, ranked by keywords):",
+  "- Dow Jones Futures: Elon Musk-Led Tesla Leads Market Higher; Amazon, Alphabet, Microsoft Earnings On Deck  [Yahoo (megacaps)]\n    MSFT, AMZN, GOOGL, TSLA, earnings",
+  "- After threatening AI export bans, China allows DeepSeek to keep selling  [The Register]\n    export/geo, shock",
+  "- Tesla Isn\u2019t a Hyperscaler. Why the AI Bears Are Misreading Its $5 Billion Capex Cut.  [Yahoo (megacaps)]\n    TSLA, AI chips/capex",
+  "- Analysis: Why a $2 trillion deficit and 5% Treasury yields are becoming America's biggest economic challenge  [CNBC economy]\n    Fed/macro",
+  "- Why Google might avoid an earnings 'reckoning' this week  [Yahoo (megacaps)]\n    GOOGL, earnings",
+  "- Micron plans to use wafer bonding and High-NA EUV for next-gen DRAM  [Tom's Hardware]\n    MU, AI chips/capex"
  ],
  "trump": [
   "TRUMP on Truth Social (market-relevant, last 24h):",
@@ -56,27 +64,27 @@
  ],
  "recap": [
   "THIS WEEK - what the bot said vs what QQQ did next day:",
-  "  Fri 16 Oct: ELEVATED, gamma q1, priced \u00b11.39% -> moved +1.31% (inside)",
   "  Mon 19 Oct: ELEVATED, gamma q2, priced \u00b10.92% -> moved -0.00% (inside)",
   "  Tue 20 Oct: ELEVATED, gamma q1, priced \u00b10.99% -> moved +0.79% (inside)",
   "  Wed 21 Oct: NORMAL, gamma q2, priced \u00b10.97% -> moved -2.69% (OUTSIDE)",
   "  Thu 22 Oct: ELEVATED, gamma q1, priced \u00b11.43% -> moved +0.06% (inside)",
+  "  Fri 23 Oct: ELEVATED, gamma q1, priced \u00b11.38% -> moved +1.02% (inside)",
   "",
-  "LIVE TALLY since start (5 days):",
+  "LIVE TALLY since start (6 days):",
   "  need both low- and high-gamma days to compare",
-  "  stayed inside the options-priced move: 80% of days (backtest: ~55-70%)"
+  "  stayed inside the options-priced move: 83% of days (backtest: ~55-70%)"
  ],
  "brain_pred": {
-  "pred": 0.02602,
-  "nq": 29165.75,
-  "day": "Mon 26 Oct",
-  "date": "2026-10-26",
-  "gex_rank": 0.08,
-  "event_prem": 0.916,
-  "high_mid": 29498.58,
-  "high_far": 29950.02,
-  "low_mid": 28863.53,
-  "low_far": 28279.2
+  "pred": 0.0173,
+  "nq": 29467.5,
+  "day": "Tue 27 Oct",
+  "date": "2026-10-27",
+  "gex_rank": 0.27,
+  "event_prem": 0.619,
+  "high_mid": 29699.94,
+  "high_far": 30015.21,
+  "low_mid": 29255.64,
+  "low_far": 28846.01
  },
  "live": [
   "LIVE - Mon 26 Oct 20:31 Lux",
@@ -87,7 +95,7 @@
   "Far levels today: high 29,950 / low 28,279 (~90% of days stay inside each)"
  ],
  "playbook": [
-  "No FOMC, CPI or jobs report on Mon 26 Oct."
+  "No FOMC, CPI or jobs report on Tue 27 Oct."
  ],
  "learning": [
   "LEARNING: 271 papers read (42 more skipped as not relevant enough), 138 ideas tested on my memory, 2 promising.",
@@ -118,7 +126,7 @@
   "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
-  "LIVE options read - Mon 26 Oct 22:07 Lux (17:07 NY), quotes ~15 min delayed, QQQ 712.59",
+  "Read from the US close (Mon 26 Oct), made 22:09 Lux. Live refresh every 30 min once the US market opens (15:30 Lux).",
   "",
   "VOLATILITY: 30-day IV 22.7% -> higher than 75% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -128,7 +136,7 @@
   "  Tue 27 Oct (1d): \u00b10.86% (~255 NQ pts), ATM IV 20.6%",
   "  Wed 28 Oct (2d): \u00b11.50% (~442 NQ pts), ATM IV 25.3%",
   "  Thu 29 Oct (3d): \u00b11.99% (~588 NQ pts), ATM IV 27.5%",
-  "  Fri 30 Oct (4d): \u00b12.30% (~678 NQ pts), ATM IV 27.4%",
+  "  Fri 30 Oct (4d): \u00b12.30% (~679 NQ pts), ATM IV 27.4%",
   "  Mon 02 Nov (7d): \u00b12.57% (~758 NQ pts), ATM IV 23.2%",
   "  Tue 03 Nov (8d): \u00b12.79% (~822 NQ pts), ATM IV 23.5%",
   "  flat: no special near-term fear",
@@ -155,31 +163,31 @@
   "Live paper score: no closed trades yet (backtest: +8.1 bp/trade, 58% wins)."
  ],
  "brain": [
-  "\ud83e\udde0 BRAIN v1.0 - tomorrow (Mon 26 Oct) looks LIVELY",
-  "  NQ high-to-low range: ~2.60% (~760 pts)",
-  "  80% band: 1.67% to 4.11% (486-1,200 pts)",
-  "  options alone say ~2.39%",
+  "\ud83e\udde0 BRAIN v1.0 - tomorrow (Tue 27 Oct) looks NORMAL",
+  "  NQ high-to-low range: ~1.73% (~510 pts)",
+  "  80% band: 1.11% to 2.73% (327-806 pts)",
+  "  options alone say ~1.71%",
   "",
-  "HIGH / LOW (from today's NQ close 29,166):",
-  "  likely high ~29,499 | far high 29,950 (90% of days stay below)",
-  "  likely low  ~28,864 | far low  28,279 (90% of days stay above)",
+  "HIGH / LOW (from today's NQ close 29,468):",
+  "  likely high ~29,700 | far high 30,015 (90% of days stay below)",
+  "  likely low  ~29,256 | far low  28,846 (90% of days stay above)",
   "  'likely' = coin flip it gets there. Whole day inside both far levels ~80% of the time.",
   "",
-  "MEMORY - today looks like 20 similar past days (of 2,952 I remember):",
-  "  their next day averaged a 2.61% range; 40% were big (>2.5%)",
-  "  - 11 May 2021: next day range 2.94%, closed -2.53%",
-  "  - 22 Oct 2026: next day range 1.16%, closed -0.01%",
-  "  - 24 Aug 2023: next day range 2.00%, closed +0.84%",
+  "MEMORY - today looks like 20 similar past days (of 2,953 I remember):",
+  "  their next day averaged a 1.80% range; 20% were big (>2.5%)",
+  "  - 12 Jan 2015: next day range 2.90%, closed -0.12%",
+  "  - 19 Oct 2026: next day range 1.72%, closed -0.10%",
+  "  - 16 Sep 2024: next day range 1.40%, closed +0.14%",
   "  (range only - I have no edge on direction, so I don't call it)",
   "",
-  "Memories: 2,952 days",
+  "Memories: 2,953 days",
   "Backtest (2226 unseen days): brain miss 0.53% vs options-only 0.55%, 80% band held 80%",
-  "LIVE (4 days): brain miss 0.93% vs options-only 0.80% | closer on 25% of days | 80% band held 50% - early, needs 60+ days",
-  "LIVE high/low: whole day stayed inside my far levels on 75% of 4 days (backtest ~80%)"
+  "LIVE (5 days): brain miss 0.89% vs options-only 0.74% | closer on 20% of days | 80% band held 60% - early, needs 60+ days",
+  "LIVE high/low: whole day stayed inside my far levels on 80% of 5 days (backtest ~80%)"
  ],
  "brain_journal": [
-  "Fri 23 Oct: I said 2.76% (band 1.77-4.36%), NQ moved 1.16% high-to-low -> OUTSIDE \u274c, options-only was closer",
-  "   high 29,326 (my far level 29,923 \u2705), low 28,987 (my far level 28,164 \u2705)"
+  "Mon 26 Oct: I said 2.60% (band 1.67-4.11%), NQ moved 1.87% high-to-low -> inside \u2705, options-only was closer",
+  "   high 29,572 (my far level 29,950 \u2705), low 29,024 (my far level 28,279 \u2705)"
  ],
  "strategies": [
   "STRATEGY LAB - 44 strategies tested (2 designed by Volta itself), 0 locked exams taken, 0 passed.",
@@ -272,6 +280,9 @@
   "Balance $25,000.00 (+0.00) | max-loss floor $24,000 | buffer $1,000",
   "Trades: 0 - waiting for a tested edge to trigger",
   "Next trade risks up to $100.",
+  "",
+  "LATEST:",
+  "- strategy: with the open's side of the overnight range at 08:31, no red-folder news: skipped: stop too wide for my risk budget (even 1 MNQ risks more than 10% of my buffer)",
   "",
   "Volta only trades edges that passed its full protocol (walk-forward, placebo, stress test, locked exam).",
   "Virtual money - this is Volta's live track record, not advice."
