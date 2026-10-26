@@ -159,12 +159,16 @@ def main():
     if not force and os.path.exists(OUT) and json.load(open(OUT)).get("date") == str(now.date()):
         print("already posted today"); return
     o = build(now)
-    if o is None: print("no overnight data"); return
+    if o is None:
+        print("no overnight data")
+        if dry: open(os.path.join(K, "research_out", "outlook_dry.txt"), "w").write("no overnight data " + str(now))
+        return
     ev = events_lines(now.date()); head, by = headlines(); mac, _ = macro_line()
     summ = gemini_summary(head, json.dumps({k: o[k] for k in ("price", "on_ret", "asia_ret", "london_ret", "location", "size")}) + "\n" + mac
                           + "\nScheduled: " + "; ".join(ev))
     body = text(o, ev, head, by, summ, mac); print(body)
-    if dry: return
+    if dry:                                                   # Actions logs are unreadable from here -> keep the dry text
+        open(os.path.join(K, "research_out", "outlook_dry.txt"), "w").write(body); return
     json.dump(o, open(OUT, "w"), indent=1)
     pd.DataFrame([o]).to_csv(LOG, mode="a", header=not os.path.exists(LOG), index=False)
     import qqq_gex_daily as q
