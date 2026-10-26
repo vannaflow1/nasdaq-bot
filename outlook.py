@@ -14,7 +14,16 @@ results in knowledge/research_out/overnight_*.json):
   * News / events: no headline history to test, so they are CONTEXT (what is scheduled, what moved overnight), never a
     direction call. An optional Gemini summary of the headlines is labelled the same way.
 Writes knowledge/outlook_today.json (bias.py reads it) and posts to the live Discord channel once per day.
-Run: python outlook.py [--dry]"""
+LONDON (owner trades London too; tools/london_study.py, pre-declared, same design/holdout split):
+  * London SIZE: a busy Asia session (range vs its last 20) means a bigger London session (holdout corr +0.10, p 0.002;
+    weaker than the NY version).
+  * London DIRECTION: the noise-band rule moved to London (anchor = London open, checks +1h..+4h) does NOT continue -
+    breaks beyond normal noise REVERSED before the NY open more often than they continued (continuation hit 44.9% in
+    2014-21, 47.5% in 2022-26). The fade did not reach the holdout bar (p ~0.11) and that holdout was not clean (F15, a
+    London breakout strategy, had already failed on 2022+). So: no London direction call - a caution line, and every day
+    is logged (knowledge/london_log.csv) as a live forward test of the fade.
+  The London outlook posts at ~08:15 Luxembourg (London opens 09:00 Lux all year).
+Run: python outlook.py [--dry] [--london] [--force]"""
 import json, os, sys, urllib.request
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -25,6 +34,9 @@ CT, LUX = ZoneInfo("America/Chicago"), ZoneInfo("Europe/Luxembourg")
 OUT = os.path.join(K, "outlook_today.json"); LOG = os.path.join(K, "outlook_log.csv"); SEEN = os.path.join(K, "outlook_news_seen.json")
 # on_range_z quintile cuts (2014-Jan 2026) and the median RTH |open->close| move / high-low range in % per bucket (2020+)
 CUTS = [0.67, 0.87, 1.11, 1.53]
+LON_CUTS = [0.65, 0.87, 1.12, 1.54]                         # Asia-range z quintile cuts (2014-Jan 2026)
+LON_MOVE = [0.25, 0.29, 0.28, 0.29, 0.34]                   # median |London open -> 08:29 CT| move in %, 2022-Jan 2026
+LONZ = ZoneInfo("Europe/London"); LLOG = os.path.join(K, "london_log.csv"); LOUT = os.path.join(K, "london_today.json")
 SIZE = [("QUIET", 0.43, 1.09), ("CALMER", 0.58, 1.32), ("NORMAL", 0.65, 1.28), ("BUSIER", 0.73, 1.44), ("WIDE", 0.86, 1.78)]
 
 
@@ -63,6 +75,90 @@ def nights(b):
                   "on_n": len(on), "rth_hi": rth.high.max() if len(rth) else np.nan, "rth_lo": rth.low.min() if len(rth) else np.nan,
                   "rth_c": rth.close.iloc[-1] if len(rth) else np.nan, "rth_n": len(rth)}
     return out
+
+
+def lon_open_ct(d):
+    t = datetime(d.year, d.month, d.day, 8, 0, tzinfo=LONZ).astimezone(CT); return t.hour * 60 + t.minute
+
+
+def day_frame(b, d):
+    """bars of trading day d (17:00 CT d-1 .. 16:00 CT d) with minute-of-CT-clock column."""
+    lo = datetime(d.year, d.month, d.day) - timedelta(hours=7); g = b[(b.ts >= lo) & (b.ts < lo + timedelta(hours=23))].copy()
+    g["mc"] = g.ts.dt.hour * 60 + g.ts.dt.minute; return g
+
+
+def at(g, mc):
+    x = g[g.mc <= mc] if mc >= 17 * 60 else g[(g.mc <= mc) | (g.mc >= 17 * 60)]
+    x = x[x.ts.dt.date == g.ts.iloc[-1].date()] if mc < 17 * 60 else x
+    return float(x.close.iloc[-1]) if len(x) else np.nan
+
+
+def london_check(b, d, hist_days):
+    """the London band rule for day d: per check (+60..+240 min) side and whether it was faded by 08:29 CT."""
+    g = day_frame(b, d); a = lon_open_ct(d); anc = at(g, a - 1); end = at(g, 8 * 60 + 29); out = []
+    for e in (60, 120, 180, 240):
+        sig = np.nanmean([abs(at(day_frame(b, h), lon_open_ct(h) + e - 1) / at(day_frame(b, h), lon_open_ct(h) - 1) - 1) for h in hist_days])
+        c = at(g, a + e - 1); side = 1 if c > anc * (1 + 1.2 * sig) else -1 if c < anc * (1 - 1.2 * sig) else 0
+        out.append({"date": str(d), "check_lux": f"{9 + e // 60:02d}:00", "side": {1: "ABOVE", -1: "BELOW", 0: "INSIDE"}[side],
+                    "price": round(c, 2), "end_0829ct": round(end, 2),
+                    "faded": "" if side == 0 or not np.isfinite(end) else ("yes" if (end - c) * side < 0 else "no")})
+    return out
+
+
+def london(now_ct, dry):
+    now_utc = now_ct.replace(tzinfo=CT).astimezone(timezone.utc); b = bars(now_utc); N = nights(b); today = now_ct.date()
+    a = lon_open_ct(today); days = sorted(d for d in N if d < today and N[d]["rth_n"] >= 300)
+    if not days: print("no history"); return None
+    g = day_frame(b, today); asia = g[(g.mc >= 17 * 60) | (g.mc < a)]
+    if len(asia) < 300: print("no Asia data"); return None
+    hist = []
+    for d in days[-20:]:
+        h = day_frame(b, d); x = h[(h.mc >= 17 * 60) | (h.mc < lon_open_ct(d))]
+        if len(x) >= 300: hist.append((x.high.max() - x.low.min()) / x.close.iloc[-1])
+    px = float(asia.close.iloc[-1]); rng = (asia.high.max() - asia.low.min()) / px
+    z = rng / np.median(hist) if len(hist) >= 8 else np.nan; k = int(np.digitize(z, LON_CUTS)) if np.isfinite(z) else 2
+    y = N[days[-1]]
+    o = {"date": str(today), "price": round(px, 2), "asia_ret": round(px / y["rth_c"] - 1, 5), "asia_hi": round(float(asia.high.max()), 2),
+         "asia_lo": round(float(asia.low.min()), 2), "asia_range_pct": round(rng * 100, 3), "asia_z": None if not np.isfinite(z) else round(float(z), 2),
+         "size": ["QUIET", "CALMER", "NORMAL", "BUSIER", "WIDE"][k], "exp_move_pts": round(px * LON_MOVE[k] / 100),
+         "y_hi": round(y["rth_hi"], 2), "y_lo": round(y["rth_lo"], 2), "y_close": round(y["rth_c"], 2)}
+    ev = []
+    try:
+        import redfolder
+        for e in redfolder.week():
+            if e.get("country") not in ("EUR", "GBP", "USD") or str(e.get("impact")) != "High": continue
+            t = datetime.fromisoformat(e["date"]).astimezone(LUX)
+            if t.date() == today and 8 <= t.hour < 16: ev.append(f"{t:%H:%M} Lux {e['country']} {e['title']}")
+    except Exception as e: print("events", type(e).__name__)
+    # yesterday's London fade tracker (complete data now)
+    track = ""
+    if len(days) >= 15:
+        try:
+            rows = london_check(b, days[-1], days[-15:-1]); L = pd.read_csv(LLOG) if os.path.exists(LLOG) else pd.DataFrame()
+            if not len(L) or str(days[-1]) not in set(L.date.astype(str)):
+                L = pd.concat([L, pd.DataFrame(rows)], ignore_index=True)
+                if not dry: L.to_csv(LLOG, index=False)
+            f = L[L.faded.astype(str).isin(["yes", "no"])]
+            if len(f): track = f"Live tracker: London breaks faded by the NY open {int((f.faded == 'yes').sum())}/{len(f)} times so far."
+        except Exception as e: print("london tracker", type(e).__name__, e)
+    sz = {"QUIET": "a quieter London than usual", "CALMER": "a slightly quieter London", "NORMAL": "a normal London",
+          "BUSIER": "a slightly busier London", "WIDE": "a BUSIER London than usual"}[o["size"]]
+    body = "\n".join([
+        f"🌏 Asia: NQ {px:,.2f}, {o['asia_ret'] * 100:+.2f}% since yesterday's 15:00 CT close. Asia range {o['asia_lo']:,.2f} - {o['asia_hi']:,.2f} "
+        f"({o['asia_range_pct']:.2f}% = {o['asia_z']}x normal).",
+        f"📏 London size: {o['size']} - history says {sz}: typical London-open to NY-open move ~{o['exp_move_pts']} pts. (Tested, modest.)",
+        f"📍 Levels: Asia high {o['asia_hi']:,.2f} / low {o['asia_lo']:,.2f} · yesterday NY high {o['y_hi']:,.2f} / low {o['y_lo']:,.2f} / close {o['y_close']:,.2f}.",
+        "🧭 Direction: no call. 12 years of NQ: when London pushes beyond its normal noise in the first hours, it REVERSED before the "
+        "NY open more often than it continued (55% in 2014-21, 52.5% in 2022-26) - not proven, so treat London breakouts with "
+        "suspicion rather than as a bias." + (f" {track}" if track else ""),
+        ("Today in London hours: " + " · ".join(ev)) if ev else "No high-impact EUR/GBP/USD releases in London hours today."])
+    print(body)
+    if dry:
+        open(os.path.join(K, "research_out", "outlook_london_dry.txt"), "w").write(body); return o
+    json.dump(o, open(LOUT, "w"), indent=1)
+    import qqq_gex_daily as q
+    q.push("NQ London outlook - London opens 09:00 Lux", body, hook=os.environ.get("DISCORD_WEBHOOK_LIVE") or None)
+    return o
 
 
 def macro_line():
@@ -154,6 +250,11 @@ def text(o, ev, head, by, summ, mac):
 def main():
     dry = "--dry" in sys.argv; force = "--force" in sys.argv
     now = datetime.now(CT).replace(tzinfo=None)
+    if "--london" in sys.argv:
+        lx = datetime.now(LUX)
+        if not force and (lx.weekday() >= 5 or not (8 * 60 <= lx.hour * 60 + lx.minute < 9 * 60)): print("outside 08:00-08:59 Lux"); return
+        if not force and os.path.exists(LOUT) and json.load(open(LOUT)).get("date") == str(now.date()): print("already posted"); return
+        london(now, dry); return
     if not force and (now.weekday() >= 5 or not (7 * 60 <= now.hour * 60 + now.minute < 8 * 60 + 30)):
         print("outside 07:00-08:29 CT"); return
     if not force and os.path.exists(OUT) and json.load(open(OUT)).get("date") == str(now.date()):

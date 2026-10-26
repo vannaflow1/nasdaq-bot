@@ -1,8 +1,9 @@
 name: outlook
-# Overnight outlook before the US open (owner request 26 Oct 2026): expected day size (tested), overnight recap, macro close,
+# London outlook at 08:15 Lux + overnight outlook before the US open (owner request 26 Oct 2026): expected day size (tested), overnight recap, macro close,
 # today's red-folder events / megacap earnings, overnight headlines (context only). outlook.py explains the evidence.
 on:
   schedule:
+    - cron: "15 6,7 * * 1-5"       # 08:15 Luxembourg (London opens 09:00 Lux all year); --london only runs 08:00-08:59 Lux
     - cron: "25 12,13 * * 1-5"     # 07:25 Chicago in both DST states; outlook.py only runs 07:00-08:29 CT, once per day
   workflow_dispatch:
     inputs:
@@ -22,7 +23,8 @@ jobs:
         with: { python-version: "3.12", cache: pip }
       - run: pip install -q -r requirements.txt
       - run: |
-          if [ "${{ github.event.inputs.dry }}" = "yes" ]; then python outlook.py --dry --force; else python outlook.py; fi
+          if [ "${{ github.event.inputs.dry }}" = "yes" ]; then python outlook.py --london --dry --force; python outlook.py --dry --force
+          else python outlook.py --london; python outlook.py; fi
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_WEBHOOK_LIVE: ${{ secrets.DISCORD_WEBHOOK_LIVE }}
