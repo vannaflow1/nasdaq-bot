@@ -163,5 +163,17 @@
   "models": [],
   "calls_left_today": -3,
   "status": "error"
+ },
+ {
+  "wish": 16,
+  "title": "Firm rules changed: re-check prop_firms.json (FundedNext Futures: automated trading)",
+  "outcome": "error",
+  "summary": "daily Gemini budget used up (120 calls)",
+  "how_to_use": "",
+  "date": "2026-10-26",
+  "steps": 0,
+  "models": [],
+  "calls_left_today": -3,
+  "status": "error"
  }
 ]
