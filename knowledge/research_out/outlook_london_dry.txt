@@ -1,0 +1,5 @@
+🌏 Asia: NQ 29,083.50, -0.13% since yesterday's 15:00 CT close. Asia range 29,027.50 - 29,345.00 (1.09% = 1.44x normal).
+📏 London size: BUSIER - history says a slightly busier London: typical London-open to NY-open move ~84 pts. (Tested, modest.)
+📍 Levels: Asia high 29,345.00 / low 29,027.50 · yesterday NY high 29,326.00 / low 28,987.00 / close 29,122.50.
+🧭 Direction: no call. 12 years of NQ: when London pushes beyond its normal noise in the first hours, it REVERSED before the NY open more often than it continued (55% in 2014-21, 52.5% in 2022-26) - not proven, so treat London breakouts with suspicion rather than as a bias. Live tracker: London breaks faded by the NY open 0/2 times so far.
+No high-impact EUR/GBP/USD releases in London hours today.
