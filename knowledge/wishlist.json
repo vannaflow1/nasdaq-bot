@@ -267,7 +267,7 @@
   "why": "Current lack of intraday IV curves forces me to skip many option‑based ideas; a proxy built from rolling daily chain snapshots would enable testing gamma‑flip and skew‑based strategies.",
   "evidence": "Open wishes #12 and #13 still pending; without intraday IV I cannot evaluate many promising edge ideas.",
   "impact": "high",
-  "status": "open",
+  "status": "blocked",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -276,6 +276,7 @@
    "branch": null,
    "summary": "stopped after 45 minutes (12 model turns)",
    "guard": null
-  }
+  },
+  "note": "Blocked (2026-10-27, Claude): a proxy built from daily chain snapshots carries no intraday information - any 5-minute curve would be interpolation between end-of-day points (no new signal, and look-ahead if it interpolates toward the same day's close). Real intraday short-tenor IV exists only in the SPX weekly option ticks 2019-2025 (wish #1, no 30-day leg); intraday 7d/30d curves are paid-vendor data (wish #12, needs owner). Testing gamma-flip/skew strategies would also be new families, and the alpha budget (knowledge/frozen/alpha_slots.json) is the owner's call - leave the family idea for the owner/Claude chat. Duplicate of #12/#14 in substance."
  }
 ]
