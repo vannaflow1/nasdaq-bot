@@ -344,12 +344,10 @@
   "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -33$/eval (zero edge -43$), 22% pass within 21 sessions."
  ],
  "bias": [
-  "\ud83e\udded NQ BIAS - Tue 27 Oct, as of 18:26 Lux",
-  "Now: \ud83d\udfe2 LONG (check 12:00 CT = 18:00 Lux) - NQ 29,813.00, +0.84% from the 08:30 CT open, noise band \u00b10.74%.",
-  "Today: 15:00 NONE \u2192 16:00 NONE \u2192 17:00 LONG \u2192 18:00 LONG",
-  "Meaning: a small lean (~4 pts over the normal drift), not a prediction.",
+  "\ud83e\udded NQ BIAS - Tue 27 Oct, as of 19:20 Lux",
+  "Now: \u26aa NO BIAS (check 13:00 CT = 19:00 Lux) - NQ 29,788.00, +0.77% from the 08:30 CT open, noise band \u00b10.93%.",
+  "Today: 15:00 NONE \u2192 16:00 NONE \u2192 17:00 LONG \u2192 18:00 LONG \u2192 19:00 NONE",
   "NY outlook: BUSIER day expected (~426 pts high-low, ~216 pts open-to-close); overnight +0.58% (UP), ABOVE yesterday's high.",
-  "Overnight AGREES with the bias (agreeing was ~4-5 pts better in tests, not proven - tracked).",
   "London outlook: BUSIER London (~85 pts London-to-NY open); Asia range 29,288.00-29,589.50. London breakouts tended to reverse - no London call.",
   "Scoreboard: 0/6 graded checks right (0%) over 2 days; history says ~54-58%."
  ]
