@@ -1,10 +1,6 @@
-hunt 'intraday option skew predicts short term returns': 14 found, queued 1
-hunt 'gamma flip intraday price reversal study': 15 found, queued 0
-scanned 0 papers, queued 1, queue size 35 []
-read (4*): Skewness Premium for Short‐Term Exposure to Squared Market Returns
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
-read 1, AI units today 800/7000
-curiosity asked: Strategy: LowGamma_GapFill_Break70
-tested: Strategy: LowGamma_GapFill_Break70 - On low‑gamma days the m -> NOT CONFIRMED on my data: too few trades (17 in 2014-2023, need 150). in-sample 2014-2023:
-tested: Create a zero‑cost daily strategy that isolates exposure to  -> NOT CONFIRMED on my data: 873 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -
-testing used 555 AI units
+scanned 0 papers, queued 0, queue size 34 []
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
+read 0, AI units today 1358/7000
+curiosity asked: Strategy: LowGex_Break_OT_High_GapFill
+tested: Strategy: LowGex_Break_OT_High_GapFill - Break overnight hig -> NOT CONFIRMED on my data: too few trades (44 in 2014-2023, need 150). in-sample 2014-2023:
+testing used 362 AI units
