@@ -175,5 +175,20 @@
   "models": [],
   "calls_left_today": -3,
   "status": "error"
+ },
+ {
+  "wish": 17,
+  "title": "Synthetic intraday IV term‑structure proxy",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (12 model turns)",
+  "how_to_use": "",
+  "date": "2026-10-27",
+  "steps": 12,
+  "models": [
+   "gemini-flash-latest",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 39,
+  "status": "out_of_time"
  }
 ]

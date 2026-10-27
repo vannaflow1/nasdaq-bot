@@ -1,1 +1,13 @@
-wish #16: Firm rules changed: re-check prop_firms.json (FundedNext Futures: automated trading)
+wish #17: Synthetic intraday IV term‑structure proxy
+[8.1 min, gemini-flash-lite-latest] 0: search(pattern='options_trades') -> './idea_lab.py:88:    """Runs an idea as a REAL options trade on QQQ (knowledge/options_trades.csv, 2'
+[16.1 min, gemini-flash-lite-latest] 1: search(pattern='options_nerd') -> "./options_nerd.py:2:options_nerd.py - the deep options read on QQQ from today's chain: dealer greek "
+[22.4 min, gemini-flash-latest] 2: search(pattern='WISH #17|Synthetic intraday IV') -> 'no match'
+[24.5 min, gemini-flash-lite-latest] 3: search(pattern='knowledge/options_trades.csv') -> './idea_lab.py:88:    """Runs an idea as a REAL options trade on QQQ (knowledge/options_trades.csv, 2'
+[29.5 min, gemini-flash-lite-latest] 4: search(pattern='options_trades') -> './idea_lab.py:88:    """Runs an idea as a REAL options trade on QQQ (knowledge/options_trades.csv, 2'
+[31.5 min, gemini-flash-lite-latest] 5: search(pattern='options_trades.csv') -> './idea_lab.py:88:    """Runs an idea as a REAL options trade on QQQ (knowledge/options_trades.csv, 2'
+[33.6 min, gemini-flash-lite-latest] 6: search(pattern='chain') -> './news.py:5:Scoring = company weight (NDX heavyweights / AI-chip supply chain)\n./greeks.py:8:needs R'
+[35.6 min, gemini-flash-lite-latest] 7: search(pattern='options_trades\\.csv') -> './idea_lab.py:88:    """Runs an idea as a REAL options trade on QQQ (knowledge/options_trades.csv, 2'
+[40.6 min, gemini-flash-lite-latest] 8: search(pattern='.*', path_glob='knowledge/*') -> 'knowledge/strat_sessions_cl.csv:1:session,sym,open,on_high,on_low,asia_high,asia_low,london_high,lon'
+[42.7 min, gemini-flash-lite-latest] 9: search(pattern='load_chain') -> './nasdaq_bot.py:73:    orig = q.load_chain\n./nasdaq_bot.py:78:    q.load_chain = cached\n./nasdaq_bot'
+[44.7 min, gemini-flash-lite-latest] 10: search(path_glob='*.py', pattern='def ') -> './news.py:62:def _get(url, timeout=25):\n./news.py:70:def _parse_atom(root, source):\n./news.py:86:def'
+[46.7 min, gemini-flash-lite-latest] 11: search(pattern='def load_chain', path_glob='*.py') -> './qqq_gex_daily.py:106:def load_chain(path=None):'
