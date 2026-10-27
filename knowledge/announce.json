@@ -1,0 +1,6 @@
+[
+ {
+  "title": "🎁 Wish granted: Firm rules changed: re-check prop_firms.json (Tradeify)",
+  "body": "Tradeify's official rules say the trailing drawdown never locks during the evaluation; the simulator locked it at start+$100, which made Tradeify evals look easier than they are. Fixed with a per-plan eval_lock=false flag (other plans bit-identical; Tradeify results only get stricter, e.g. synthetic pass rate 0.299 -> 0.243). All other modelled Tradeify rules matched the official page. Undo: git revert $(git log --grep='^Wish #15:' --format=%h -1)."
+ }
+]

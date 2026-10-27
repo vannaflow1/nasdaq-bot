@@ -191,7 +191,8 @@
   "payouts_to_live": 3,
   "billing": "monthly ($159 list Feb 2026; ~$116 with promo Oct 2026)",
   "bots": "allowed if you are sole owner/developer and the bot is not shared across firms; no HFT; funded: >50% of trades and profit from holds >10s; flat by 16:45 ET; may require live video verification of activating the code",
-  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Eval min 3 days; funded scaling tier thresholds approximate (2 minis start, 4 max)."
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Eval min 3 days; funded scaling tier thresholds approximate (2 minis start, 4 max). Checked 2026-10-27 against the official 'Essential Trading Rules Overview' snapshot: drawdown never locks on evaluation accounts (eval_lock false; funded lock at start+$100 kept), Select eval no DLL, Select Daily funded DLL $1,000, 50K max 4 minis/40 micros, eval consistency 40%, flat by 16:45 ET, algo allowed if solely owned/not shared/not HFT, funded >50% of trades and profit from holds >10s - all as modelled. Not modelled: at least 1 trade per week (Mon-Fri) on eval and funded.",
+  "eval_lock": false
  },
  {
   "id": "tradeify_select_daily_50k",
@@ -234,8 +235,9 @@
   "payouts_to_live": 3,
   "billing": "monthly ($159 list; ~$116 promo)",
   "bots": "same as Tradeify Select Flex",
-  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Funded daily loss limit $1,000 modelled since 2026-10-21; buffer $2,100 over start = locked floor + $2,000; withdrawals up to 2x profit since last payout (approximated as 100% of profit).",
-  "fund_dll": 1000
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Funded daily loss limit $1,000 modelled since 2026-10-21; buffer $2,100 over start = locked floor + $2,000; withdrawals up to 2x profit since last payout (approximated as 100% of profit). Checked 2026-10-27 against the official 'Essential Trading Rules Overview' snapshot: drawdown never locks on evaluation accounts (eval_lock false; funded lock at start+$100 kept), Select eval no DLL, Select Daily funded DLL $1,000, 50K max 4 minis/40 micros, eval consistency 40%, flat by 16:45 ET, algo allowed if solely owned/not shared/not HFT, funded >50% of trades and profit from holds >10s - all as modelled. Not modelled: at least 1 trade per week (Mon-Fri) on eval and funded.",
+  "fund_dll": 1000,
+  "eval_lock": false
  },
  {
   "id": "fundednext_legacy_25k",

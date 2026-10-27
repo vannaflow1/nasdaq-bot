@@ -46,6 +46,12 @@ def _dll_cap(P, phase, n, worst):
     return int(min(n, lim // (-worst * MNQ)))
 
 
+def _lock(P, phase, lock):
+    """The level the trailing floor stops at. Plans with "eval_lock": false (e.g. Tradeify: "Drawdown never locks on
+    evaluation accounts", official rules page 2026-10-26) keep trailing without a lock during the evaluation."""
+    return float("inf") if phase == "eval" and P.get("eval_lock", True) is False else lock
+
+
 def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
     S0 = float(P["size"]); bal = peak = S0; floor = S0 - P["mll"]; lock = S0 + P.get("lock_over_start", 100)
     phase = "eval"; days = 0; eval_days = []; payouts = []; cycle_days = []; cycle_start = bal
@@ -60,7 +66,7 @@ def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
         if bal + worst <= floor:
             return dict(passed=phase == "funded", payouts=payouts, days=days, end="blown")
         if P.get("mll_type") == "intraday" and pnl > 0:          # intraday trailing: the day's best point raises the floor
-            floor = max(floor, min(bal + pnl - P["mll"], lock))
+            floor = max(floor, min(bal + pnl - P["mll"], _lock(P, phase, lock)))
         bal += pnl
         if phase == "eval":
             eval_days.append(pnl); tot = bal - S0
@@ -78,7 +84,7 @@ def run_account(day_pts, day_worst, start, P, size_fn, max_days=400):
                     if len(payouts) >= P["payouts_to_live"]:
                         return dict(passed=True, payouts=payouts, days=days, end="live")
         peak = max(peak, bal)
-        floor = max(floor, min(peak - P["mll"], lock))
+        floor = max(floor, min(peak - P["mll"], _lock(P, phase, lock)))
     return dict(passed=phase == "funded", payouts=payouts, days=days, end="timeout")
 
 
@@ -118,7 +124,7 @@ class Account:
         if self.bal + w <= self.floor:
             self.end = "blown"; self.last_pnl = w; return 0.0
         if P.get("mll_type") == "intraday" and pnl > 0:
-            self.floor = max(self.floor, min(self.bal + pnl - P["mll"], self.lock))
+            self.floor = max(self.floor, min(self.bal + pnl - P["mll"], _lock(P, self.phase, self.lock)))
         self.bal += pnl; paid = 0.0
         if self.phase == "eval":
             self.eval_days.append(pnl); tot = self.bal - self.S0
@@ -135,7 +141,7 @@ class Account:
                 if req >= P["min_req"]:
                     self.bal -= req; paid = P["split"] * req * P.get("payout_reliability", PAYOUT_RELIABILITY); self.payouts.append(paid); self.cycle_days = []; self.cycle_start = self.bal
                     if len(self.payouts) >= P["payouts_to_live"]: self.end = "live"
-        self.peak = max(self.peak, self.bal); self.floor = max(self.floor, min(self.peak - P["mll"], self.lock))
+        self.peak = max(self.peak, self.bal); self.floor = max(self.floor, min(self.peak - P["mll"], _lock(P, self.phase, self.lock)))
         return paid
 
 
