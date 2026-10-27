@@ -1,7 +1,7 @@
 {
  "for": "Tue 27 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Tue 27 Oct) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
@@ -28,14 +28,8 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 15  (8,866 XP, next level at 9,000)",
-  "Papers read 271 | ideas & strategies tested 90 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 8",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Tue 27 Oct 04:40 Lux",
+ "level": "NORMAL",
+ "updated": "Tue 27 Oct 14:34 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  Wed 28 Oct: FOMC rate decision 19:00 Lux, Powell 19:30; GOOGL earnings after close; MSFT earnings after close",
@@ -43,19 +37,17 @@
   "  Mon 02 Nov: AAPL earnings after close; PLTR earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Dow Jones Futures: Elon Musk-Led Tesla Leads Market Higher; Amazon, Alphabet, Microsoft Earnings On Deck  [Yahoo (megacaps)]\n    MSFT, AMZN, GOOGL, TSLA, earnings",
-  "- After threatening AI export bans, China allows DeepSeek to keep selling  [The Register]\n    export/geo, shock",
-  "- Tesla Isn\u2019t a Hyperscaler. Why the AI Bears Are Misreading Its $5 Billion Capex Cut.  [Yahoo (megacaps)]\n    TSLA, AI chips/capex",
-  "- Analysis: Why a $2 trillion deficit and 5% Treasury yields are becoming America's biggest economic challenge  [CNBC economy]\n    Fed/macro",
-  "- Why Google might avoid an earnings 'reckoning' this week  [Yahoo (megacaps)]\n    GOOGL, earnings",
-  "- Micron plans to use wafer bonding and High-NA EUV for next-gen DRAM  [Tom's Hardware]\n    MU, AI chips/capex"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Tech's relief rally extends as attention turns to tough decisions for the Fed  [CNBC tech]\n    Fed/macro",
+  "- Fed rate hikes are coming, but not this week: CNBC survey  [CNBC economy]\n    Fed/macro",
+  "- AI debt trouble could help Fed\u2019s Warsh get his way with fewer rate hikes  [MarketWatch]\n    Fed/macro",
+  "- Virtuix Expects to Report Strong Second Quarter Revenue Growth Following Meta Quest Launch; Schedules Q2 FY2027 Earnings Call  [Yahoo (megacaps)]\n    META, earnings",
+  "- Anthropic's IPO plans: 900% revenue retention, but $80 billion in first-half losses  [CNBC tech]\n    OPENAI, earnings",
+  "- Anthropic prepares for potential $2 trillion IPO valuation after reporting billions in revenue  [Tom's Hardware]\n    OPENAI, earnings"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Mon 23:10 [fiscal/policy] The Trump Administration is proud to announce a 250 MILLION DOLLAR PLUS initiative to RECRUIT and RETAIN Nurses for Nursing Homes! This Federal and State Initiative will support thousands and thousands of Nurses and Nursing Students Nationwide, including those serving rural\u2026",
-  "- Mon 21:40 [tech/chips, oil/geopolitics, fiscal/policy, economy] Congressman Abe Hamadeh is an America First Patriot who is doing a tremendous job representing Arizona\u2019s 8th Congressional District! A Brave U.S. Army Veteran, and former Criminal Prosecutor, Abe is fighting tirelessly to Grow our Economy, Keep our Border SECURE, Stop Migrant\u2026",
-  "- Mon 21:33 [oil/geopolitics] \u201c\u2018He wants you to repent for being born White,\u2019 Trump said of Adam Hamilton.\u201d Trump warns Kansans that US will 'burn' like France if Democrats win: https://www. reuters.com/world/us/trump-war ns-kansans-that-us-will-burn-like-france-if-democrats-win-2026-10-20/"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- Mon 23:10 [fiscal/policy] The Trump Administration is proud to announce a 250 MILLION DOLLAR PLUS initiative to RECRUIT and RETAIN Nurses for Nursing Homes! This Federal and State Initiative will support thousands and thousands of Nurses and Nursing Students Nationwide, including those serving rural\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
