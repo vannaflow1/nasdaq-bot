@@ -1,6 +1,6 @@
 downloading CBOE QQQ chain (can take a minute on a slow connection)...
   got 4.6 MB
-SHORT-VOL CHECK Tue 27 Oct 15:39 NY - QQQ 721.70, gamma rank 0.39 (needs > 0.7)
+SHORT-VOL CHECK Tue 27 Oct 15:45 NY - QQQ 721.62, gamma rank 0.39 (needs > 0.7)
 Not a short-vol day: no paper trade.
 (rank vs last 252 readings; 7 of them live from 2026 - it gets sharper as live history builds)
 
