@@ -272,7 +272,7 @@
   "payouts_to_live": 5,
   "billing": "one-time (as listed)",
   "bots": "EAs/bots permitted on challenge and funded; latency abuse, order flooding, grid, latency arbitrage banned; no stated VPS rule",
-  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Benchmark-day threshold assumed $200 (stated for Flex); 50% limit lifts after 30 benchmark days (not modelled); payouts_to_live is a placeholder (live = discretionary at $100k total profit)."
+  "source": "Research 2026-10-21 from third-party rule guides (Tanto, FundedTrading, TradersPost, PipBack); verify on the firm's site before buying. Benchmark-day threshold assumed $200 (stated for Flex); 50% limit lifts after 30 benchmark days (not modelled); payouts_to_live is a placeholder (live = discretionary at $100k total profit). Bots rule checked 2026-10-27 against the official FundedNext Futures help-center page (snapshot dated April 9, 2026): automated systems/EAs/bots allowed in Challenge and on FundedNext accounts, no setup support, exploiting system vulnerabilities (latency abuse, order flooding) prohibited - matches 'bots'; no sim parameter affected."
  },
  {
   "id": "fundednext_rapid_25k",
