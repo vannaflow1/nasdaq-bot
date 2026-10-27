@@ -208,5 +208,23 @@
    "arxiv:2605.13998v2"
   ],
   "searched": "2026-10-25"
+ },
+ {
+  "id": "h18",
+  "date": "2026-10-27",
+  "query": "intraday option skew predicts short term returns",
+  "why": "A possible complementary signal to low‑gamma: if skew tilts, it may improve entry timing for the breakout trade.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
+ },
+ {
+  "id": "h19",
+  "date": "2026-10-27",
+  "query": "gamma flip intraday price reversal study",
+  "why": "Literature may explain why price often reverses after a dealer‑gamma‑driven move, informing stop/target placement.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

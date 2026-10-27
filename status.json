@@ -116,7 +116,7 @@
   "\u2022 The impact of option hedging on the spot market volatility (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper models how the aggregate gamma exposure of option market makers (OMMs) feeds back into spot market volatility via their delta\u2011hedging trades, showing that a net short\u2011gamma position by OMMs raises volatility.",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.557% -> 0.557% (-0.0%), better in 3/8 unseen years",
-  "This week's tests: 8 run - 1 promising, 4 not confirmed, 1 don't fit my data, 2 translation failures",
+  "This week's tests: 11 run - 1 promising, 7 not confirmed, 1 don't fit my data, 2 translation failures",
   "",
   "34 papers waiting in my queue."
  ],
@@ -198,11 +198,14 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-10-26)",
-  "I confirmed that low\u2011dealer\u2011gamma days (gex_rank < 0.2) add a modest +0.2% edge to several near\u2011miss features, but I still haven\u2019t turned that into a profitable intraday trade. My range forecasts are decent yet rarely translate into earnings, suggesting I need a tighter link between the forecast and entry/exit rules. I also noticed that my best in\u2011sample ideas (first\u201115\u2011minute breakout, SMT at Asia high) perform best when combined with a regime filter \u2013 low\u2011gamma days might be the missing regime. Next I will directly test a low\u2011gamma\u2011filtered breakout strategy and investigate how low\u2011gamma influences realized 5\u2011minute volatility.",
+  "VOLTA'S SELF-CHECK (2026-10-27)",
+  "I confirmed that low\u2011dealer\u2011gamma days (gex_rank < 0.2) consistently add about +0.2% edge to many near\u2011miss features, yet I still have no concrete trade that harvests that edge. My best in\u2011sample breakout ideas barely break even and work on too few days. I need a simple, high\u2011frequency trade that activates only on low\u2011gamma regimes and leverages the early\u2011session price move, because that is where most of the edge resides. Next I will test whether the first\u201115\u2011minute breakout signal is amplified on low\u2011gamma days and, if so, build a tight\u2011stop breakout strategy.",
   "",
   "WISHES (what I need to get better):",
   "#14 [needs the owner] Intraday IV term\u2011structure data feed - Current models lack real\u2011time IV curve slices; a 5\u2011minute snapshot of the full QQQ surface would let me test term\u2011structure signals for intr",
+  "#15 [for Claude] Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules) - The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).",
+  "#16 [for Claude] Firm rules changed: re-check prop_firms.json (FundedNext Futures: automated trading) - The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).",
+  "#17 [for Claude] Synthetic intraday IV term\u2011structure proxy - Current lack of intraday IV curves forces me to skip many option\u2011based ideas; a proxy built from rolling daily chain snapshots would enable ",
   "",
   "Recently granted: #4 Correct the prop search for luck (multiple-testing control); #5 Market focus: weight locked-exam passes far above 2022-23 su; #6 Make the prop simulator harsher where reality is harsher"
  ],
