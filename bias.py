@@ -75,7 +75,7 @@ def read_log():
     return L
 
 
-def publish(now, L=None):
+def publish(now, L=None, early=None):
     """status.json["bias"] for the Discord /bias command: today's bias checks, the morning outlooks, the scoreboard."""
     try:
         L = read_log() if L is None else L; today = str(now.date())
@@ -90,7 +90,18 @@ def publish(now, L=None):
             out.append("Today: " + " → ".join(f"{lux(int(r.check_ct))} {r.bias}" for r in t.itertuples()))
             if last.bias != "NONE": out.append("Meaning: a small lean (~4 pts over the normal drift), not a prediction.")
         elif now.weekday() >= 5: out.append("Weekend - next checks Monday from the NY open + 30 min.")
-        else: out.append(f"No check yet today - first at {lux(9)} Lux (09:00 CT), then hourly until {lux(14)} Lux.")
+        else:
+            mins = now.hour * 60 + now.minute
+            if mins < 8 * 60 + 30:
+                out.append(f"Market not open yet (NY open {datetime(now.year, now.month, now.day, 8, 30, tzinfo=CT).astimezone(LUX):%H:%M} Lux). First bias check at {lux(9)} Lux, then hourly until {lux(14)} Lux.")
+            else:
+                out.append(f"Market open - the first real bias check is at {lux(9)} Lux (30 min in), then hourly until {lux(14)} Lux.")
+                if early:
+                    b, px, pct, band = early
+                    out.append(f"Early read (as of {datetime(now.year, now.month, now.day, now.hour, now.minute, tzinfo=CT).astimezone(LUX):%H:%M} Lux): "
+                               f"{ {'LONG': '🟢 above', 'SHORT': '🔴 below', 'NONE': '⚪ inside'}[b]} its normal noise band "
+                               f"(NQ {px:,.2f}, {pct:+.2f}% from the open, band ±{band:.2f}%). Reads this early were right only 51-58% of the "
+                               "time in 12 years (weaker before 2022) - a heads-up, not a bias.")
         for fn, nm in (("outlook_today.json", "NY outlook"), ("london_today.json", "London outlook")):
             try:
                 o = json.load(open(os.path.join(K, fn)))
@@ -108,7 +119,8 @@ def publish(now, L=None):
         a = L[L.bias.isin(["LONG", "SHORT"]) & L.result.isin(["right", "wrong"])]
         if len(a): out.append(f"Scoreboard: {(a.result == 'right').sum()}/{len(a)} graded checks right "
                               f"({(a.result == 'right').mean():.0%}) over {a.date.nunique()} days; history says ~54-58%.")
-        out.append("Day direction can't be called before the open (14 inputs tested, 12 years); day size can.")
+        if now.hour * 60 + now.minute < 8 * 60 + 30 and now.weekday() < 5:
+            out.append("Day direction can't be called before the open (14 inputs tested, 12 years); day size can.")
         sp = os.path.join(HERE, "status.json"); st = json.load(open(sp)) if os.path.exists(sp) else {}
         st["bias"] = out; json.dump(st, open(sp, "w"), indent=1)
     except Exception as e:
@@ -141,7 +153,15 @@ def main():
     # 2) today's check
     h = max([c for c in CHECKS if now.hour * 60 + now.minute >= c * 60] or [None], key=lambda x: x or -1)
     if h is None or now.hour * 60 + now.minute > 15 * 60 or today not in S:
-        (None if dry else (L.to_csv(LOG, index=False), publish(now, L))); print("no check now"); return
+        early = None
+        if h is None and today in S and 8 * 60 + 35 <= now.hour * 60 + now.minute < 9 * 60:
+            try:
+                t = now.hour * 60 + now.minute - 510; o, ct_, _ = S[today]; c = ct_[t - 1]
+                hist = [S[d] for d in sorted(S) if d < today and S[d][2] >= 300][-LOOKBACK:]
+                sig = float(np.nanmean([abs(hc[t - 1] / ho - 1) for ho, hc, _ in hist])); band = MULT * sig
+                if np.isfinite(c): early = ("LONG" if c > o * (1 + band) else "SHORT" if c < o * (1 - band) else "NONE", c, (c / o - 1) * 100, band * 100)
+            except Exception as e: print("early read", type(e).__name__)
+        (None if dry else (L.to_csv(LOG, index=False), publish(now, L, early))); print("no check now", early); return
     if ((L.date.astype(str) == str(today)) & (L.check_ct == h)).any():
         (None if dry else (L.to_csv(LOG, index=False), publish(now, L))); print("already checked", h); return
     hist = [S[d] for d in sorted(S) if d < today and S[d][2] >= 300][-LOOKBACK:]
