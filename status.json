@@ -1,49 +1,62 @@
 {
- "for": "Tue 27 Oct",
+ "for": "Wed 28 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
-  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
+  "WHAT THIS MEANS FOR YOU TOMORROW (Wed 28 Oct) - risk \ud83d\udd34 HIGH",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
+  "- FED DECISION at 19:00 Lux, then Powell speaks. Be FLAT 15 min before. The first move after the statement often reverses during the press conference - don't chase it. Many pros just skip this window.",
+  "- MSFT, GOOGL report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway).",
+  "- Rule of thumb on HIGH days: one bad trade can hit your trailing drawdown. Skipping the day costs you nothing."
  ],
  "gamma": [
   "",
-  "QQQ GEX  2026-10-26   spot 712.59",
-  "  net GEX (normalised) -47.3   rank vs last 252 days: 0.27   quintile 2",
+  "QQQ GEX  2026-10-27   spot 720.96",
+  "  net GEX (normalised) -8.9   rank vs last 252 days: 0.40   quintile 2",
   "  -> low-mid    - next day avg realized vol ~18.6%",
-  "  !! only 7 live days in history - rank still leans on stale 2025 data",
+  "  !! only 8 live days in history - rank still leans on stale 2025 data",
   "  no paper trade today (needs rank >= 0.80)"
  ],
  "range": [
-  "  Options price a \u00b1255 pt CLOSE-TO-CLOSE move in NQ futures (0.86%).",
-  "  Gamma-adjusted: \u00b1270 pts -> close likely between 29,219 and 29,760 (NQ futures prices)",
+  "  Options price a \u00b1306 pt CLOSE-TO-CLOSE move in NQ futures (1.03%).",
+  "  Gamma-adjusted: \u00b1325 pts -> close likely between 29,468 and 30,117 (NQ futures prices)",
   "  (options price moves about right on days like this; ~56% of such days closed inside). This is where the day ENDS, not how far it",
   "  swings: the high-to-low range is usually ~1.5-2x wider - see /brain for the full-day range."
  ],
  "walls": [
-  "  NQ futures prices: Call wall 29,580 | Put wall 28,980 | Gamma flip 29,924",
-  "  (from QQQ + NDX options; in QQQ terms ~715 / 700 / 723)",
+  "  NQ futures prices: Call wall 29,820 | Put wall 29,340 | Gamma flip 29,813",
+  "  (from QQQ + NDX options; in QQQ terms ~722 / 710 / 721)",
   "  NQ is BELOW the flip (dealers amplify moves)",
   "  Tested 2014-25: walls are NOT support/resistance (no better than random levels).",
   "  If the put wall breaks, drops tended to run a bit further. Below the flip = bigger days."
  ],
  "earnings": [
-  "  no megacap earnings tomorrow"
+  "  MSFT reports after close: options price a \u00b15.1% move (option covers 3 sessions, so a bit wider than the report alone)",
+  "  GOOGL reports after close: options price a \u00b16.0% move (option covers 3 sessions, so a bit wider than the report alone)"
  ],
- "level": "NORMAL",
- "updated": "Tue 27 Oct 21:57 Lux",
+ "level": [
+  "VOLTA LEVEL 15  (8,883 XP, next level at 9,000)",
+  "Papers read 272 | ideas & strategies tested 98 | prop strategies searched 651,533",
+  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
+  "Brain upgrades: 0 | self-discovered powers: 8",
+  "XP only for verified progress: tests passed on unseen data count far more than activity.",
+  "Since yesterday: +1 papers, +8 tests"
+ ],
+ "updated": "Tue 27 Oct 22:12 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
-  "  Wed 28 Oct: FOMC rate decision 19:00 Lux, Powell 19:30; GOOGL earnings after close; MSFT earnings after close",
+  "  TODAY: FOMC rate decision 19:00 Lux, Powell 19:30; MSFT earnings after close; GOOGL earnings after close",
   "  Thu 29 Oct: AMZN earnings after close; INTC earnings after close",
-  "  Mon 02 Nov: AAPL earnings after close; PLTR earnings after close"
+  "  Mon 02 Nov: AAPL earnings after close; PLTR earnings after close",
+  "  Tue 03 Nov: AMD earnings after close"
  ],
  "news": [
-  "NEWS (last 16h, ranked by keywords):",
-  "- Tech's relief rally extends as attention turns to tough decisions for the Fed  [CNBC tech]\n    Fed/macro",
-  "- Fed rate hikes are coming, but not this week: CNBC survey  [CNBC economy]\n    Fed/macro",
-  "- AI debt trouble could help Fed\u2019s Warsh get his way with fewer rate hikes  [MarketWatch]\n    Fed/macro",
-  "- Virtuix Expects to Report Strong Second Quarter Revenue Growth Following Meta Quest Launch; Schedules Q2 FY2027 Earnings Call  [Yahoo (megacaps)]\n    META, earnings",
-  "- Anthropic's IPO plans: 900% revenue retention, but $80 billion in first-half losses  [CNBC tech]\n    OPENAI, earnings",
-  "- Anthropic prepares for potential $2 trillion IPO valuation after reporting billions in revenue  [Tom's Hardware]\n    OPENAI, earnings"
+  "NEWS (last 24h, ranked by keywords):",
+  "- Global Emerging Technologies Market Report 2026: Size, Trends and Forecast to 2030 | Capitalize on 16% CAGR as AWS, Nvidia, Microsoft and OpenAI Accelerate AI, Cloud and Automation  [Yahoo (megacaps)]\n    NVDA, MSFT, AMZN, OPENAI, earnings",
+  "- Dow Jones Futures: Growth Stocks Rally, Tesla Clears Buy Point; Fed, Microsoft, Google On Tap  [Yahoo (megacaps)]\n    MSFT, GOOGL, TSLA, Fed/macro",
+  "- Global Edge Infrastructure Market Report 2026: Size, Share, Trends and Forecast to 2030 | Capitalize on 5G, AI and IoT with Microsoft, AWS, Dell, NVIDIA and Cisco  [Yahoo (megacaps)]\n    NVDA, MSFT, AMZN, earnings",
+  "- TSMC reportedly weighs 20% CoWoS price increase as Nvidia Blackwell and Rubin chips put pressure on packaging capacity  [Tom's Hardware]\n    NVDA, TSM, AI chips/capex",
+  "- If You're Worried Inflation Will Wreck Your Retirement, Here Are 3 Must-Dos  [Yahoo (megacaps)]\n    Fed/macro",
+  "- How investors can position ahead of into the Fed's next policy decision  [CNBC markets]\n    Fed/macro",
+  "- Google earnings checklist: Why YouTube, Search, & Cloud are key  [Yahoo (megacaps)]\n    GOOGL, earnings"
  ],
  "trump": [
   "TRUMP on Truth Social (market-relevant, last 24h):",
@@ -58,35 +71,27 @@
  ],
  "recap": [
   "THIS WEEK - what the bot said vs what QQQ did next day:",
-  "  Mon 19 Oct: ELEVATED, gamma q2, priced \u00b10.92% -> moved -0.00% (inside)",
   "  Tue 20 Oct: ELEVATED, gamma q1, priced \u00b10.99% -> moved +0.79% (inside)",
   "  Wed 21 Oct: NORMAL, gamma q2, priced \u00b10.97% -> moved -2.69% (OUTSIDE)",
   "  Thu 22 Oct: ELEVATED, gamma q1, priced \u00b11.43% -> moved +0.06% (inside)",
   "  Fri 23 Oct: ELEVATED, gamma q1, priced \u00b11.38% -> moved +1.02% (inside)",
+  "  Mon 26 Oct: NORMAL, gamma q2, priced \u00b10.86% -> moved +1.17% (OUTSIDE)",
   "",
-  "LIVE TALLY since start (6 days):",
+  "LIVE TALLY since start (7 days):",
   "  need both low- and high-gamma days to compare",
-  "  stayed inside the options-priced move: 83% of days (backtest: ~55-70%)"
+  "  stayed inside the options-priced move: 71% of days (backtest: ~55-70%)"
  ],
  "brain_pred": {
-  "pred": 0.01951,
-  "nq": 29467.5,
-  "day": "Tue 27 Oct",
-  "date": "2026-10-27",
-  "gex_rank": 0.27,
-  "event_prem": 0.619,
-  "high_mid": 29729.58,
-  "high_far": 30085.04,
-  "low_mid": 29228.63,
-  "low_far": 28766.77,
-  "raw": {
-   "pred": 0.0173,
-   "high_mid": 29699.94,
-   "high_far": 30015.21,
-   "low_mid": 29255.64,
-   "low_far": 28846.01
-  },
-  "spx_factor": 1.1275
+  "pred": 0.01825,
+  "nq": 29803.0,
+  "day": "Wed 28 Oct",
+  "date": "2026-10-28",
+  "gex_rank": 0.4,
+  "event_prem": 0.767,
+  "high_mid": 30049.77,
+  "high_far": 30384.49,
+  "low_mid": 29578.18,
+  "low_far": 29143.51
  },
  "live": [
   "LIVE - Tue 27 Oct 20:34 Lux",
@@ -97,7 +102,12 @@
   "Far levels today: high 30,085 / low 28,767 (~90% of days stay inside each)"
  ],
  "playbook": [
-  "No FOMC, CPI or jobs report on Tue 27 Oct."
+  "\ud83d\udccb PLAYBOOK - FOMC decision (19:00 Lux, Powell 19:30)  (based on 71 past FOMC days, 2017-2025)",
+  "  \u2022 First 15 min after the release: NQ moves 0.54% high-to-low (~161 pts) - 2.8x a normal 15 minutes. About 38% of the whole day's range happens right there.",
+  "  \u2022 Whole day: only ~9% bigger than a normal day - options already price it (the brain's range forecast is about right on these days).",
+  "  \u2022 After the first 15 min the market continued the first move 44% of the time and reversed 56% - a coin flip. No edge in chasing OR fading the first move.",
+  "  \u2022 Before the decision the session is QUIET: median 0.78% range vs 1.11% on normal days - don't expect much until the decision.",
+  "  \u2022 What to do: be flat or small into the release, wait for the first 15 minutes to print, size for a bigger candle than usual."
  ],
  "learning": [
   "LEARNING: 272 papers read (42 more skipped as not relevant enough), 139 ideas tested on my memory, 2 promising.",
@@ -128,7 +138,7 @@
   "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
-  "LIVE options read - Tue 27 Oct 21:44 Lux (16:44 NY), quotes ~15 min delayed, QQQ 720.96",
+  "Read from the US close (Tue 27 Oct), made 22:12 Lux. Live refresh every 30 min once the US market opens (15:30 Lux).",
   "",
   "VOLATILITY: 30-day IV 21.6% -> higher than 72% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -136,8 +146,8 @@
   "",
   "TERM STRUCTURE - what each expiry prices (QQQ move to expiry):",
   "  Wed 28 Oct (1d): \u00b11.03% (~306 NQ pts), ATM IV 24.5%",
-  "  Thu 29 Oct (2d): \u00b11.59% (~472 NQ pts), ATM IV 26.8%",
-  "  Fri 30 Oct (3d): \u00b11.91% (~569 NQ pts), ATM IV 26.3%",
+  "  Thu 29 Oct (2d): \u00b11.59% (~473 NQ pts), ATM IV 26.8%",
+  "  Fri 30 Oct (3d): \u00b11.91% (~570 NQ pts), ATM IV 26.3%",
   "  Mon 02 Nov (6d): \u00b12.19% (~652 NQ pts), ATM IV 21.3%",
   "  Tue 03 Nov (7d): \u00b12.42% (~720 NQ pts), ATM IV 21.8%",
   "  Wed 04 Nov (8d): \u00b12.72% (~809 NQ pts), ATM IV 22.9%",
@@ -165,31 +175,31 @@
   "Live paper score: no closed trades yet (backtest: +8.1 bp/trade, 58% wins)."
  ],
  "brain": [
-  "\ud83e\udde0 BRAIN v1.0 - tomorrow (Tue 27 Oct) looks NORMAL",
-  "  NQ high-to-low range: ~1.73% (~510 pts)",
-  "  80% band: 1.11% to 2.73% (327-806 pts)",
-  "  options alone say ~1.71%",
+  "\ud83e\udde0 BRAIN v1.0 - tomorrow (Wed 28 Oct) looks LIVELY",
+  "  NQ high-to-low range: ~1.83% (~544 pts)",
+  "  80% band: 1.17% to 2.88% (348-859 pts)",
+  "  options alone say ~2.00%",
   "",
-  "HIGH / LOW (from today's NQ close 29,468):",
-  "  likely high ~29,700 | far high 30,015 (90% of days stay below)",
-  "  likely low  ~29,256 | far low  28,846 (90% of days stay above)",
+  "HIGH / LOW (from today's NQ close 29,803):",
+  "  likely high ~30,050 | far high 30,384 (90% of days stay below)",
+  "  likely low  ~29,578 | far low  29,144 (90% of days stay above)",
   "  'likely' = coin flip it gets there. Whole day inside both far levels ~80% of the time.",
   "",
-  "MEMORY - today looks like 20 similar past days (of 2,953 I remember):",
-  "  their next day averaged a 1.80% range; 20% were big (>2.5%)",
-  "  - 12 Jan 2015: next day range 2.90%, closed -0.12%",
-  "  - 19 Oct 2026: next day range 1.72%, closed -0.10%",
-  "  - 16 Sep 2024: next day range 1.40%, closed +0.14%",
+  "MEMORY - today looks like 20 similar past days (of 2,954 I remember):",
+  "  their next day averaged a 2.17% range; 30% were big (>2.5%)",
+  "  - 21 Oct 2026: next day range 3.20%, closed -2.90%",
+  "  - 03 May 2023: next day range 1.31%, closed -0.64%",
+  "  - 15 May 2019: next day range 3.82%, closed +0.94%",
   "  (range only - I have no edge on direction, so I don't call it)",
   "",
-  "Memories: 2,953 days",
+  "Memories: 2,954 days",
   "Backtest (2226 unseen days): brain miss 0.53% vs options-only 0.55%, 80% band held 80%",
-  "LIVE (5 days): brain miss 0.89% vs options-only 0.74% | closer on 20% of days | 80% band held 60% - early, needs 60+ days",
-  "LIVE high/low: whole day stayed inside my far levels on 80% of 5 days (backtest ~80%)"
+  "LIVE (6 days): brain miss 0.79% vs options-only 0.67% | closer on 33% of days | 80% band held 67% - early, needs 60+ days",
+  "LIVE high/low: whole day stayed inside my far levels on 83% of 6 days (backtest ~80%)"
  ],
  "brain_journal": [
-  "Mon 26 Oct: I said 2.60% (band 1.67-4.11%), NQ moved 1.87% high-to-low -> inside \u2705, options-only was closer",
-  "   high 29,572 (my far level 29,950 \u2705), low 29,024 (my far level 28,279 \u2705)"
+  "Tue 27 Oct: I said 1.73% (band 1.11-2.73%), NQ moved 2.01% high-to-low -> inside \u2705, beat options-only",
+  "   high 29,881 (my far level 30,015 \u2705), low 29,288 (my far level 28,846 \u2705)"
  ],
  "strategies": [
   "STRATEGY LAB - 44 strategies tested (2 designed by Volta itself), 0 locked exams taken, 0 passed.",
