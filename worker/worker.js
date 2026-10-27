@@ -25,6 +25,7 @@ const HELP = [
   "/search - Volta's prop-strategy search: leaderboard, exams and its estimate of when it finds a real edge",
   "/level - Volta's level: XP for verified progress, what improved",
   "/strategies - the strategy lab: what Volta built and tested, what passed, live forward results",
+  "/bias - NQ bias right now: today's hourly checks, London + NY outlooks (expected size), scoreboard",
   "/powers - today's open read: odds for yesterday's high/low, gap fill, tail day, Asia/London levels",
   "/nerd - options nerd: dealer greeks, vol surface, skew, implied moves, max pain",
   "/ask <question> - ask Volta anything about today's market read",
@@ -343,6 +344,9 @@ export default {
         return reply([...(s.eta ? [...s.eta, ""] : []), ...(s.eta_levers ? [...s.eta_levers, ""] : []), ...(s.wishes || ["Volta's first self-check runs with today's learning runs."])].join("\n"));
       case "strategies":
         return reply((s.strategies || ["The strategy lab scoreboard appears after the next evening run."]).join("\n"));
+      case "bias":
+        return reply((s.bias || ["The bias appears with the London outlook (~08:15 Lux) and updates with every hourly check "
+          + "from the NY open + 30 min."]).join("\n"));
       case "powers":
         return reply((s.powers || ["The open read posts at the NY open (15:31 Lux): odds that yesterday's high/low get taken, "
           + "that the gap fills, tail-day risk, and where Asia/London stand. Tested 2017-2025, well calibrated."]).join("\n"));

@@ -158,6 +158,8 @@ def london(now_ct, dry):
     json.dump(o, open(LOUT, "w"), indent=1)
     import qqq_gex_daily as q
     q.push("NQ London outlook - London opens 09:00 Lux", body, hook=os.environ.get("DISCORD_WEBHOOK_LIVE") or None)
+    try: import bias; bias.publish(now_ct)
+    except Exception as e: print("bias publish", type(e).__name__)
     return o
 
 
@@ -275,6 +277,8 @@ def main():
     import qqq_gex_daily as q
     lux = datetime(now.year, now.month, now.day, 8, 30, tzinfo=CT).astimezone(LUX).strftime("%H:%M")
     q.push(f"NQ overnight outlook - US open {lux} Lux", body, hook=os.environ.get("DISCORD_WEBHOOK_LIVE") or None)
+    try: import bias; bias.publish(now)
+    except Exception as e: print("bias publish", type(e).__name__)
 
 
 if __name__ == "__main__":

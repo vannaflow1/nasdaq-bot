@@ -21,6 +21,7 @@ COMMANDS = [
     ("search", "Volta's nightly prop-strategy search: leaderboard and exams"),
     ("level", "Volta's level: XP for verified progress"),
     ("strategies", "Strategy lab: what Volta built and tested, what passed, live results"),
+    ("bias", "NQ bias now: hourly checks, London + NY outlooks, scoreboard"),
     ("powers", "Open read: odds for yesterday's high/low, gap fill, tail day, Asia/London"),
     ("shortvol", "Today's short-vol check: paper iron fly on high-gamma days + live score"),
 ]

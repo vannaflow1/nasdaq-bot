@@ -75,6 +75,46 @@ def read_log():
     return L
 
 
+def publish(now, L=None):
+    """status.json["bias"] for the Discord /bias command: today's bias checks, the morning outlooks, the scoreboard."""
+    try:
+        L = read_log() if L is None else L; today = str(now.date())
+        lux = lambda h: datetime(now.year, now.month, now.day, h, 0, tzinfo=CT).astimezone(LUX).strftime("%H:%M")
+        nowlux = datetime(now.year, now.month, now.day, now.hour, now.minute, tzinfo=CT).astimezone(LUX)
+        out = [f"🧭 NQ BIAS - {nowlux:%a %d %b}, as of {nowlux:%H:%M} Lux"]
+        t = L[L.date.astype(str) == today].sort_values("check_ct")
+        if len(t):
+            last = t.iloc[-1]; head = {"LONG": "🟢 LONG", "SHORT": "🔴 SHORT", "NONE": "⚪ NO BIAS"}[last.bias]
+            out.append(f"Now: {head} (check {int(last.check_ct):02d}:00 CT = {lux(int(last.check_ct))} Lux) - NQ {last.price:,.2f}, "
+                       f"{(last.price / last.open - 1) * 100:+.2f}% from the 08:30 CT open, noise band ±{last.band_pct:.2f}%.")
+            out.append("Today: " + " → ".join(f"{lux(int(r.check_ct))} {r.bias}" for r in t.itertuples()))
+            if last.bias != "NONE": out.append("Meaning: a small lean (~4 pts over the normal drift), not a prediction.")
+        elif now.weekday() >= 5: out.append("Weekend - next checks Monday from the NY open + 30 min.")
+        else: out.append(f"No check yet today - first at {lux(9)} Lux (09:00 CT), then hourly until {lux(14)} Lux.")
+        for fn, nm in (("outlook_today.json", "NY outlook"), ("london_today.json", "London outlook")):
+            try:
+                o = json.load(open(os.path.join(K, fn)))
+                if o.get("date") != today: continue
+                if nm == "NY outlook":
+                    out.append(f"{nm}: {o['size']} day expected (~{o['exp_range_pts']} pts high-low, ~{o['exp_move_pts']} pts open-to-close); "
+                               f"overnight {o['on_ret'] * 100:+.2f}% ({o['overnight_dir']}), {o['location']}.")
+                    if len(t) and t.iloc[-1].bias != "NONE":
+                        ag = (o["overnight_dir"] == "UP") == (t.iloc[-1].bias == "LONG")
+                        out.append(f"Overnight {'AGREES' if ag else 'DISAGREES'} with the bias (agreeing was ~4-5 pts better in tests, not proven - tracked).")
+                else:
+                    out.append(f"{nm}: {o['size']} London (~{o['exp_move_pts']} pts London-to-NY open); Asia range "
+                               f"{o['asia_lo']:,.2f}-{o['asia_hi']:,.2f}. London breakouts tended to reverse - no London call.")
+            except Exception: pass
+        a = L[L.bias.isin(["LONG", "SHORT"]) & L.result.isin(["right", "wrong"])]
+        if len(a): out.append(f"Scoreboard: {(a.result == 'right').sum()}/{len(a)} graded checks right "
+                              f"({(a.result == 'right').mean():.0%}) over {a.date.nunique()} days; history says ~54-58%.")
+        out.append("Day direction can't be called before the open (14 inputs tested, 12 years); day size can.")
+        sp = os.path.join(HERE, "status.json"); st = json.load(open(sp)) if os.path.exists(sp) else {}
+        st["bias"] = out; json.dump(st, open(sp, "w"), indent=1)
+    except Exception as e:
+        print("publish failed:", type(e).__name__, e)
+
+
 def main():
     dry = "--dry" in sys.argv
     now = datetime.strptime(sys.argv[sys.argv.index("--at") + 1], "%Y-%m-%d %H:%M") if "--at" in sys.argv else datetime.now(CT).replace(tzinfo=None)
@@ -96,16 +136,16 @@ def main():
                                f"{(a.result == 'right').mean():.0%} of {len(a)} (history says ~54% is the honest expectation).",
                                hook=os.environ.get("DISCORD_WEBHOOK_LIVE") or None)
     if now.weekday() >= 5:
-        if not dry: L.to_csv(LOG, index=False)
+        if not dry: L.to_csv(LOG, index=False); publish(now, L)
         print("weekend"); return
     # 2) today's check
     h = max([c for c in CHECKS if now.hour * 60 + now.minute >= c * 60] or [None], key=lambda x: x or -1)
     if h is None or now.hour * 60 + now.minute > 15 * 60 or today not in S:
-        (None if dry else L.to_csv(LOG, index=False)); print("no check now"); return
+        (None if dry else (L.to_csv(LOG, index=False), publish(now, L))); print("no check now"); return
     if ((L.date.astype(str) == str(today)) & (L.check_ct == h)).any():
-        (None if dry else L.to_csv(LOG, index=False)); print("already checked", h); return
+        (None if dry else (L.to_csv(LOG, index=False), publish(now, L))); print("already checked", h); return
     hist = [S[d] for d in sorted(S) if d < today and S[d][2] >= 300][-LOOKBACK:]
-    if len(hist) < MIN_HIST: print("not enough history:", len(hist)); (None if dry else L.to_csv(LOG, index=False)); return
+    if len(hist) < MIN_HIST: print("not enough history:", len(hist)); (None if dry else (L.to_csv(LOG, index=False), publish(now, L))); return
     t = h * 60 - 510; o, c_today, _ = S[today]; c = c_today[t - 1]
     sig = float(np.nanmean([abs(hc[t - 1] / ho - 1) for ho, hc, _ in hist])); band = MULT * sig
     dist = (c / o - 1) / sig if sig > 0 else 0.0
@@ -136,7 +176,7 @@ def main():
     if not dry and (first or changed):
         import qqq_gex_daily as q
         q.push(f"NQ bias {h:02d}:00 CT: {bias}", body, hook=os.environ.get("DISCORD_WEBHOOK_LIVE") or None)
-    if not dry: L.to_csv(LOG, index=False)
+    if not dry: L.to_csv(LOG, index=False); publish(now, L)
 
 
 if __name__ == "__main__":
