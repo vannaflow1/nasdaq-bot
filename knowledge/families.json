@@ -727,16 +727,16 @@
   "forward_variant": 43,
   "scored": "2026-10-22",
   "forward": {
-   "date": "2026-10-26",
+   "date": "2026-10-27",
    "decision": "CONTINUE",
-   "n": 2,
-   "edge": -1.0063,
-   "posterior_mean": 0.0266,
+   "n": 4,
+   "edge": -0.8745,
+   "posterior_mean": 0.0246,
    "posterior_sd": 0.0431,
-   "p_edge_pos": 0.731,
-   "cond_power": 0.184,
-   "cusum": 2.07,
-   "z": NaN,
+   "p_edge_pos": 0.716,
+   "cond_power": 0.175,
+   "cusum": 3.62,
+   "z": -21.2301,
    "look": 0
   }
  },
@@ -925,16 +925,16 @@
    "record": "knowledge/ledgers/null_v3_rescore.json"
   },
   "forward": {
-   "date": "2026-10-26",
+   "date": "2026-10-27",
    "decision": "CONTINUE",
-   "n": 2,
-   "edge": -1.0063,
-   "posterior_mean": 0.0266,
+   "n": 4,
+   "edge": -0.8745,
+   "posterior_mean": 0.0243,
    "posterior_sd": 0.0466,
-   "p_edge_pos": 0.716,
-   "cond_power": 0.181,
-   "cusum": 2.07,
-   "z": NaN,
+   "p_edge_pos": 0.699,
+   "cond_power": 0.172,
+   "cusum": 3.62,
+   "z": -21.2301,
    "look": 0
   }
  },
@@ -1026,9 +1026,17 @@
   },
   "scored": "2026-10-24",
   "forward": {
-   "date": "2026-10-26",
-   "decision": "WAITING",
-   "n": 0
+   "date": "2026-10-27",
+   "decision": "CONTINUE",
+   "n": 3,
+   "edge": 0.219,
+   "posterior_mean": 0.0283,
+   "posterior_sd": 0.0329,
+   "p_edge_pos": 0.805,
+   "cond_power": 0.173,
+   "cusum": 0.0,
+   "z": 3942927700789717.5,
+   "look": 0
   }
  },
  {

@@ -337,9 +337,9 @@
   "The edge has to clear the costs first: a no-edge world sits at the no-information level (-0.023R), not at 0."
  ],
  "eval_rule": [
-  "\ud83c\udf9f\ufe0f EVAL RULE (frozen) - NOT YET - preconditions unmet (SIM execution path >= 20 sessions, >= 60 clean forward trades (2 so far))",
-  "Belief about F10's net edge: +0.027R \u00b1 0.043 (2 clean forward trades).",
-  "Best account: lucid_flex_50k at risk 0.08 of the buffer per trade - E[EV] +196$/eval, P(EV>0) 99%; the same account with ZERO edge +109$ -> F10 adds +87$. Median 90 sessions to pass, 126 to a first payout.",
-  "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -32$/eval (zero edge -43$), 22% pass within 21 sessions."
+  "\ud83c\udf9f\ufe0f EVAL RULE (frozen) - NOT YET - preconditions unmet (SIM execution path >= 20 sessions, >= 60 clean forward trades (4 so far))",
+  "Belief about F10's net edge: +0.025R \u00b1 0.043 (4 clean forward trades).",
+  "Best account: lucid_flex_50k at risk 0.08 of the buffer per trade - E[EV] +190$/eval, P(EV>0) 98%; the same account with ZERO edge +109$ -> F10 adds +82$. Median 90 sessions to pass, 126 to a first payout.",
+  "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -33$/eval (zero edge -43$), 22% pass within 21 sessions."
  ]
 }
