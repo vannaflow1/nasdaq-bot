@@ -252,7 +252,7 @@ def main():
     now = datetime.now(CT).replace(tzinfo=None)
     if "--london" in sys.argv:
         lx = datetime.now(LUX)
-        if not force and (lx.weekday() >= 5 or not (8 * 60 <= lx.hour * 60 + lx.minute < 9 * 60)): print("outside 08:00-08:59 Lux"); return
+        if not force and (lx.weekday() >= 5 or not (7 * 60 <= lx.hour * 60 + lx.minute < 9 * 60 + 30)): print("outside 07:00-09:29 Lux"); return
         if not force and os.path.exists(LOUT) and json.load(open(LOUT)).get("date") == str(now.date()): print("already posted"); return
         london(now, dry); return
     if not force and (now.weekday() >= 5 or not (7 * 60 <= now.hour * 60 + now.minute < 8 * 60 + 30)):

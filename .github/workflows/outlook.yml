@@ -3,15 +3,15 @@ name: outlook
 # today's red-folder events / megacap earnings, overnight headlines (context only). outlook.py explains the evidence.
 on:
   schedule:
-    - cron: "15 6,7 * * 1-5"       # 08:15 Luxembourg (London opens 09:00 Lux all year); --london only runs 08:00-08:59 Lux
-    - cron: "25 12,13 * * 1-5"     # 07:25 Chicago in both DST states; outlook.py only runs 07:00-08:29 CT, once per day
+    - cron: "10,30,50 6,7 * * 1-5"  # before London opens (09:00 Lux all year); --london posts once, 07:00-09:29 Lux
+    - cron: "5,25,45 12,13 * * 1-5" # outlook.py posts once, 07:00-08:29 CT (both DST states)
   workflow_dispatch:
     inputs:
       dry: { description: "dry run (print only)", default: "yes" }
 permissions:
   contents: write
 concurrency:
-  group: state
+  group: outlook
   cancel-in-progress: false
 jobs:
   run:

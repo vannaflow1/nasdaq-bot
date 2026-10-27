@@ -3,14 +3,14 @@ name: bias
 # Discord post at the first check and on every change, graded after the close. bias.py explains the evidence.
 on:
   schedule:
-    - cron: "4 13-21 * * 1-5"      # every hour in UTC; bias.py decides from Chicago time (covers both DST states)
+    - cron: "4,24,44 13-21 * * 1-5"   # 3x an hour (GitHub drops/delays scheduled runs); bias.py checks each hour once
   workflow_dispatch:
     inputs:
       dry: { description: "dry run (print only)", default: "yes" }
 permissions:
   contents: write
 concurrency:
-  group: state
+  group: bias                      # own queue: in the shared 'state' queue the 5-minute news job cancelled pending bias runs
   cancel-in-progress: false
 jobs:
   run:
