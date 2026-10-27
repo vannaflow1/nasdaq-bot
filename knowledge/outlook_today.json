@@ -1,0 +1,17 @@
+{
+ "date": "2026-10-27",
+ "made_ct": "07:45",
+ "price": 29611.25,
+ "on_ret": 0.00583,
+ "asia_ret": -0.00397,
+ "london_ret": 0.00985,
+ "on_range_pct": 1.151,
+ "on_range_z": 1.14,
+ "size": "BUSIER",
+ "exp_move_pts": 216,
+ "exp_range_pts": 426,
+ "location": "ABOVE yesterday's high",
+ "overnight_dir": "UP",
+ "vix": 18.39,
+ "vix_term": 0.9222668004012036
+}
