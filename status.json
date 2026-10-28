@@ -101,12 +101,12 @@
   "spx_factor": 1.1275
  },
  "live": [
-  "LIVE - Tue 27 Oct 20:34 Lux",
-  "NQ 29,831 | range so far 588 pts (1.99%), high 29,876 / low 29,288 | data as of 15:24 NY (may lag a few minutes)",
-  "Brain this morning: ~575 pts for the day (1.95%) - 102% of it already used.",
-  "Updated with what happened so far: full day ~599 pts (80%: 588-683) -> typically ~11 more pts to come (80%: 0-96).",
-  "(brain + neural net, re-estimated at 14:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
-  "Far levels today: high 30,085 / low 28,767 (~90% of days stay inside each)"
+  "LIVE - Wed 28 Oct 14:34 Lux",
+  "NQ 29,907 | range so far 206 pts (0.69%), high 29,989 / low 29,784 | data as of 09:24 NY (may lag a few minutes)",
+  "Brain this morning: ~614 pts for the day (2.06%) - 33% of it already used.",
+  "Updated with what happened so far: full day ~492 pts (80%: 340-766) -> typically ~286 more pts to come (80%: 135-560).",
+  "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "Far levels today: high 30,459 / low 29,059 (~90% of days stay inside each)"
  ],
  "playbook": [
   "\ud83d\udccb PLAYBOOK - FOMC decision (19:00 Lux, Powell 19:30)  (based on 71 past FOMC days, 2017-2025)",
