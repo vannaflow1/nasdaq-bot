@@ -1,7 +1,6 @@
-hunt 'intraday gamma flip price reversal study': 15 found, queued 0
 scanned 0 papers, queued 0, queue size 34 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 740/7000
-curiosity asked: Strategy: GammaHigh_FadeExp70Up
-tested: Strategy: GammaHigh_FadeExp70Up - On high‑gamma, high‑IV day -> NOT CONFIRMED on my data: too few trades (0 in 2014-2023, need 150). in-sample: no trades 
-testing used 372 AI units
+read 0, AI units today 1115/7000
+curiosity asked: Strategy: GapDownBreak_LowGamma
+tested: Strategy: GapDownBreak_LowGamma - Break above yesterday's lo -> NOT CONFIRMED on my data: too few trades (15 in 2014-2023, need 150). in-sample 2014-2023:
+testing used 368 AI units
