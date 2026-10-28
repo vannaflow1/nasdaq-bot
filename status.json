@@ -81,16 +81,24 @@
   "  stayed inside the options-priced move: 71% of days (backtest: ~55-70%)"
  ],
  "brain_pred": {
-  "pred": 0.01825,
+  "pred": 0.02058,
   "nq": 29803.0,
   "day": "Wed 28 Oct",
   "date": "2026-10-28",
   "gex_rank": 0.4,
   "event_prem": 0.767,
-  "high_mid": 30049.77,
-  "high_far": 30384.49,
-  "low_mid": 29578.18,
-  "low_far": 29143.51
+  "high_mid": 30081.23,
+  "high_far": 30458.63,
+  "low_mid": 29549.52,
+  "low_far": 29059.43,
+  "raw": {
+   "pred": 0.01825,
+   "high_mid": 30049.77,
+   "high_far": 30384.49,
+   "low_mid": 29578.18,
+   "low_far": 29143.51
+  },
+  "spx_factor": 1.1275
  },
  "live": [
   "LIVE - Tue 27 Oct 20:34 Lux",
@@ -220,22 +228,22 @@
   "Recently granted: #6 Make the prop simulator harsher where reality is harsher; #15 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut"
  ],
  "plan": [
-  "TRADING PLAN - 2026-10-27  |  expected move \u00b1304 pts, full-day range ~575 pts, risk ['VOLTA LEVEL 15  (8,866 XP, next level at 9,000)', 'Papers read 271 | ideas & strategies tested 90 | prop strategies searched 651,533', 'Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 8', 'XP only for verified progress: tests passed on unseen data count far more than activity.']",
+  "TRADING PLAN - 2026-10-28  |  expected move \u00b1366 pts, full-day range ~613 pts, risk ['VOLTA LEVEL 15  (8,883 XP, next level at 9,000)', 'Papers read 272 | ideas & strategies tested 98 | prop strategies searched 651,533', 'Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 8', 'XP only for verified progress: tests passed on unseen data count far more than activity.']",
   "Size factor today: 100%  (normal conditions)",
-  "SPX DEALER CHECK (2026-10-27): dealer gamma -13.2 (avg +1.5), SPX walls 7675 / 7800 (3.8x their usual distance) -> today's range bigger (+12.7%)",
+  "SPX DEALER CHECK (2026-10-28): dealer gamma -2.2 (avg +1.5), SPX walls 7700 / 7800 (3.0x their usual distance) -> today's range bigger (+12.7%)",
   "",
   "STOPS on a day like this (share of level touches where price did NOT run past the stop within 30 min):",
-  "    15 pt stop -> survives ~10% of touches",
-  "    25 pt stop -> survives ~16% of touches",
-  "    40 pt stop -> survives ~26% of touches",
-  "    60 pt stop -> survives ~39% of touches",
-  "    61 pt stop -> survives ~40% of touches",
-  "    91 pt stop -> survives ~57% of touches",
-  "  Median overshoot through a level today: ~79 pts.",
+  "    15 pt stop -> survives ~8% of touches",
+  "    25 pt stop -> survives ~14% of touches",
+  "    40 pt stop -> survives ~22% of touches",
+  "    60 pt stop -> survives ~33% of touches",
+  "    73 pt stop -> survives ~40% of touches",
+  "   110 pt stop -> survives ~57% of touches",
+  "  Median overshoot through a level today: ~95 pts.",
   "",
   "SIZE PER $1,000 OF BUFFER (distance to your max-loss limit):",
   "  risk per trade $100, daily stop $200",
-  "  -> 15 pt stop: 3 MNQ  |  40 pt stop: 1 MNQ  |  61 pt stop: 0 MNQ",
+  "  -> 15 pt stop: 3 MNQ  |  40 pt stop: 1 MNQ  |  73 pt stop: 0 MNQ",
   "",
   "Lucid rules to respect: EOD trailing max loss; 40% consistency (no single day > 40% of the cycle's profit).",
   "Use /plan buffer:<$> stop:<pts> for your exact numbers. Sizing guidance, not trade signals or financial advice.",
@@ -243,12 +251,12 @@
   "VOLTA'S BOOK: $25,000 (buffer $1,000) - armed today: short-vol fly if dealer gamma rank > 0.7 at 15:20 NY; with the open's side of the overnight range at 08:31, no red"
  ],
  "plan_data": {
-  "date": "2026-10-27",
-  "move": 304,
-  "range": 575,
+  "date": "2026-10-28",
+  "move": 366,
+  "range": 613,
   "level": [
-   "VOLTA LEVEL 15  (8,866 XP, next level at 9,000)",
-   "Papers read 271 | ideas & strategies tested 90 | prop strategies searched 651,533",
+   "VOLTA LEVEL 15  (8,883 XP, next level at 9,000)",
+   "Papers read 272 | ideas & strategies tested 98 | prop strategies searched 651,533",
    "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
    "Brain upgrades: 0 | self-discovered powers: 8",
    "XP only for verified progress: tests passed on unseen data count far more than activity."
@@ -336,7 +344,7 @@
   "- F15 F15 (fast 3): noise-band breakout in the LONDON session (Nasdaq futures): FAILED (p=0.97835, median 2022-23 -0.0947R)"
  ],
  "spx_morning": [
-  "SPX DEALER CHECK (2026-10-27): dealer gamma -13.2 (avg +1.5), SPX walls 7675 / 7800 (3.8x their usual distance) -> today's range bigger (+12.7%)"
+  "SPX DEALER CHECK (2026-10-28): dealer gamma -2.2 (avg +1.5), SPX walls 7700 / 7800 (3.0x their usual distance) -> today's range bigger (+12.7%)"
  ],
  "power": [
   "\u26a1 POWER CURVE - THE SCOREBOARD (family F10 trades, null v3 with shared draws, 400 worlds): can my family test find a planted edge?",
