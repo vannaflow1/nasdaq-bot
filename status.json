@@ -138,7 +138,7 @@
   "  TODAY: FOMC rate decision 19:00 Lux, Powell 19:30; MSFT earnings after close; GOOGL earnings after close"
  ],
  "nerd": [
-  "LIVE options read - Wed 28 Oct 15:53 Lux (10:53 NY), quotes ~15 min delayed, QQQ 721.72",
+  "LIVE options read - Wed 28 Oct 15:54 Lux (10:54 NY), quotes ~15 min delayed, QQQ 721.72",
   "",
   "VOLATILITY: 30-day IV 21.2% -> higher than 72% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -146,7 +146,7 @@
   "",
   "TERM STRUCTURE - what each expiry prices (QQQ move to expiry):",
   "  Thu 29 Oct (1d): \u00b11.45% (~434 NQ pts), ATM IV 31.2%",
-  "  Fri 30 Oct (2d): \u00b11.78% (~531 NQ pts), ATM IV 28.4%",
+  "  Fri 30 Oct (2d): \u00b11.78% (~532 NQ pts), ATM IV 28.4%",
   "  Mon 02 Nov (5d): \u00b12.06% (~615 NQ pts), ATM IV 21.4%",
   "  Tue 03 Nov (6d): \u00b12.29% (~683 NQ pts), ATM IV 21.8%",
   "  Wed 04 Nov (7d): \u00b12.59% (~772 NQ pts), ATM IV 22.9%",
