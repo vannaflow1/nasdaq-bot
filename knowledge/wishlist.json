@@ -288,7 +288,7 @@
   "why": "Low‑gamma days show a modest edge, but I lack a systematic, multi‑variant strategy to capture it. A family of entry‑filter‑stop‑target combos around the open can generate many independent trades across NQ and ES, providing the statistical power needed for the prop evaluation.",
   "evidence": "Diary: low‑gamma adds +0.2% edge; near‑miss features improve on low‑gamma; only 0.03R edge seen in LowGammaFadeOnHigh (179 trades).",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -297,6 +297,7 @@
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-10-28: family registration is owner/Claude-chat only - the v2 alpha budget is nearly spent (alpha_slots.json: slot 4 = F11, then 0.0023, 0.0023, then nothing), so a new family must be chosen deliberately, not by the self-upgrade run. Evidence so far is thin (LowGammaFadeOnHigh +0.03R over 179 trades). Raise in chat if you want it to take a slot."
  }
 ]
