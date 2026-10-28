@@ -237,7 +237,8 @@
   "query": "intraday gamma flip price reversal study",
   "why": "I have a near‑miss feature (GammaFlip_PW_TakeBreak) with tiny edge; understanding documented gamma‑flip dynamics could help sharpen the mechanism.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-10-28"
  }
 ]
