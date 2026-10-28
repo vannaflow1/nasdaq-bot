@@ -1,7 +1,7 @@
 {
  "for": "Wed 28 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Wed 28 Oct) - risk \ud83d\udd34 HIGH",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udd34 HIGH",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
   "- FED DECISION at 19:00 Lux, then Powell speaks. Be FLAT 15 min before. The first move after the statement often reverses during the press conference - don't chase it. Many pros just skip this window.",
   "- MSFT, GOOGL report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway).",
@@ -32,14 +32,8 @@
   "  MSFT reports after close: options price a \u00b15.1% move (option covers 3 sessions, so a bit wider than the report alone)",
   "  GOOGL reports after close: options price a \u00b16.0% move (option covers 3 sessions, so a bit wider than the report alone)"
  ],
- "level": [
-  "VOLTA LEVEL 15  (8,883 XP, next level at 9,000)",
-  "Papers read 272 | ideas & strategies tested 98 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 8",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Wed 28 Oct 13:09 Lux",
+ "level": "HIGH",
+ "updated": "Wed 28 Oct 14:41 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  TODAY: FOMC rate decision 19:00 Lux, Powell 19:30; MSFT earnings after close; GOOGL earnings after close",
@@ -48,20 +42,17 @@
   "  Tue 03 Nov: AMD earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Global Emerging Technologies Market Report 2026: Size, Trends and Forecast to 2030 | Capitalize on 16% CAGR as AWS, Nvidia, Microsoft and OpenAI Accelerate AI, Cloud and Automation  [Yahoo (megacaps)]\n    NVDA, MSFT, AMZN, OPENAI, earnings",
-  "- Dow Jones Futures: Growth Stocks Rally, Tesla Clears Buy Point; Fed, Microsoft, Google On Tap  [Yahoo (megacaps)]\n    MSFT, GOOGL, TSLA, Fed/macro",
-  "- Global Edge Infrastructure Market Report 2026: Size, Share, Trends and Forecast to 2030 | Capitalize on 5G, AI and IoT with Microsoft, AWS, Dell, NVIDIA and Cisco  [Yahoo (megacaps)]\n    NVDA, MSFT, AMZN, earnings",
-  "- TSMC reportedly weighs 20% CoWoS price increase as Nvidia Blackwell and Rubin chips put pressure on packaging capacity  [Tom's Hardware]\n    NVDA, TSM, AI chips/capex",
-  "- If You're Worried Inflation Will Wreck Your Retirement, Here Are 3 Must-Dos  [Yahoo (megacaps)]\n    Fed/macro",
-  "- How investors can position ahead of into the Fed's next policy decision  [CNBC markets]\n    Fed/macro",
-  "- Google earnings checklist: Why YouTube, Search, & Cloud are key  [Yahoo (megacaps)]\n    GOOGL, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Four reasons to start worrying about inflation \u2014 the end of tariff refunds is one of them  [MarketWatch]\n    export/geo, Fed/macro",
+  "- Microsoft vs. Alphabet earnings: The key metrics investors will be watching  [Yahoo (megacaps)]\n    MSFT, GOOGL, earnings",
+  "- Nvidia RTX GPU vendor Palit denies its Galax factory has closed due to a shortage of chips  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Google alters its cloud playbook, enlisting partners to sell more AI chips  [CNBC tech]\n    GOOGL, AI chips/capex",
+  "- SK Hynix Jumps 7%, Micron Rises 3% on Memory Shortage Call Through 2030 While Seagate Slips Despite Upbeat Guidance  [Yahoo (megacaps)]\n    MU, shock",
+  "- Taiwan working on autonomous drone swarms to counter China\u2019s increasingly aggressive grey-zone military tactics  [Tom's Hardware]\n    export/geo"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Wed 06:25 [oil/geopolitics] RT @ jmclghln Strong Majority backs @ realDonaldTrump stopping Iran from getting Nukes https://www. newsmax.com/mclaughlin/cable-n uclear-weapons/2026/03/12/id/1249304/ @ DanScavino @ StevenCheung @ DevinNunes Reposted John McLaughlin Strong Majority backs @ realDonaldTrump\u2026",
-  "- Tue 18:08 [oil/geopolitics] Get rid of the guns, get rid of the Oil, get rid of the meat, but Transgender Mutilization of your Children and Open Borders are OK. This is what TalaFREAKO stands for, and this is where he is going to help take Texas if he wins \u2014 which he won\u2019t. Ken Paxton is the Greatest\u2026",
-  "- Tue 17:14 [tech/chips, stock market] When will The Wall Street Journal start calling Artificial Intelligence (AI), a very bad and inaccurate name, SI (Super Intelligence), the name which virtually everyone else is using, or soon will be. In short order, we will be officially BANNING the term, \u201cAI/Artificial\u2026"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- Wed 06:25 [oil/geopolitics] RT @ jmclghln Strong Majority backs @ realDonaldTrump stopping Iran from getting Nukes https://www. newsmax.com/mclaughlin/cable-n uclear-weapons/2026/03/12/id/1249304/ @ DanScavino @ StevenCheung @ DevinNunes Reposted John McLaughlin Strong Majority backs @ realDonaldTrump\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -142,7 +133,7 @@
  ],
  "today": [
   "TODAY:",
-  "  no scheduled macro events or megacap earnings"
+  "  TODAY: FOMC rate decision 19:00 Lux, Powell 19:30; MSFT earnings after close; GOOGL earnings after close"
  ],
  "nerd": [
   "LIVE options read - Wed 28 Oct 14:15 Lux (09:15 NY), quotes ~15 min delayed, QQQ 723.49",
