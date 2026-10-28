@@ -130,7 +130,7 @@
   "  TODAY: FOMC rate decision 19:00 Lux, Powell 19:30; MSFT earnings after close; GOOGL earnings after close"
  ],
  "nerd": [
-  "Read from the US close (Wed 28 Oct), made 22:16 Lux. Live refresh every 30 min once the US market opens (15:30 Lux).",
+  "LIVE options read - Wed 28 Oct 22:21 Lux (17:21 NY), quotes ~15 min delayed, QQQ 723.62",
   "",
   "VOLATILITY: 30-day IV 21.0% -> higher than 72% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -142,7 +142,7 @@
   "  Mon 02 Nov (5d): \u00b11.81% (~538 NQ pts), ATM IV 19.3%",
   "  Tue 03 Nov (6d): \u00b12.07% (~615 NQ pts), ATM IV 20.2%",
   "  Wed 04 Nov (7d): \u00b12.41% (~716 NQ pts), ATM IV 21.8%",
-  "  Thu 05 Nov (8d): \u00b12.59% (~771 NQ pts), ATM IV 21.9%",
+  "  Thu 05 Nov (8d): \u00b12.59% (~770 NQ pts), ATM IV 21.9%",
   "  normal upward slope (front 19.3% < month 21.6%): calm near term",
   "",
   "SKEW (~30d): 25-delta puts +6.1 vol pts vs calls; wings +0.5 pts vs ATM",
