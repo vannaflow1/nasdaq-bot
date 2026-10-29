@@ -130,7 +130,7 @@
   "  TODAY: AMZN earnings after close; INTC earnings after close"
  ],
  "nerd": [
-  "Read from the US close (Thu 29 Oct), made 22:18 Lux. Live refresh every 30 min once the US market opens (15:30 Lux).",
+  "LIVE options read - Thu 29 Oct 22:46 Lux (17:46 NY), quotes ~15 min delayed, QQQ 706.38",
   "",
   "VOLATILITY: 30-day IV 22.4% -> higher than 75% of days since 2011",
   "  options are EXPENSIVE vs history",
