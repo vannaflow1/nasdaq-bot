@@ -98,12 +98,12 @@
   "spx_factor": 1.026
  },
  "live": [
-  "LIVE - Wed 28 Oct 20:31 Lux",
-  "NQ 29,892 | range so far 242 pts (0.81%), high 30,009 / low 29,767 | data as of 15:21 NY (may lag a few minutes)",
-  "Brain this morning: ~614 pts for the day (2.06%) - 39% of it already used.",
-  "Updated with what happened so far: full day ~272 pts (80%: 261-311) -> typically ~30 more pts to come (80%: 19-69).",
-  "(brain + neural net, re-estimated at 14:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
-  "Far levels today: high 30,459 / low 29,059 (~90% of days stay inside each)"
+  "LIVE - Thu 29 Oct 14:30 Lux",
+  "NQ 29,689 | range so far 312 pts (1.05%), high 29,794 / low 29,482 | data as of 09:20 NY (may lag a few minutes)",
+  "Brain this morning: ~594 pts for the day (1.99%) - 52% of it already used.",
+  "Updated with what happened so far: full day ~571 pts (80%: 395-890) -> typically ~259 more pts to come (80%: 83-578).",
+  "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "Far levels today: high 30,387 / low 29,041 (~90% of days stay inside each)"
  ],
  "playbook": [
   "No FOMC, CPI or jobs report on Thu 29 Oct."
