@@ -1,7 +1,7 @@
 {
  "for": "Thu 29 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Thu 29 Oct) - risk \ud83d\udfe0 ELEVATED",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
   "- AMZN, INTC report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway)."
  ],
@@ -30,14 +30,8 @@
   "  AMZN reports after close: options price a \u00b18.0% move (option covers 2 sessions, so a bit wider than the report alone)",
   "  INTC reports after close: options price a \u00b19.1% move (option covers 2 sessions, so a bit wider than the report alone)"
  ],
- "level": [
-  "VOLTA LEVEL 15  (8,897 XP, next level at 9,000)",
-  "Papers read 272 | ideas & strategies tested 105 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 8",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Thu 29 Oct 06:51 Lux",
+ "level": "ELEVATED",
+ "updated": "Thu 29 Oct 14:43 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  TODAY: AMZN earnings after close; INTC earnings after close",
@@ -46,18 +40,16 @@
   "  Wed 04 Nov: ARM earnings after close; QCOM earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Microsoft Q1 earnings: Why capex is the big number 'worth watching'  [Yahoo (megacaps)]\n    MSFT, AI chips/capex, earnings",
-  "- Dow Jones Futures: Microsoft Rises Late, But Google, ServiceNow And Fortinet Dive On Earnings  [Yahoo (megacaps)]\n    MSFT, GOOGL, earnings",
-  "- Alphabet Third-Quarter Results Miss Estimates as Capital Spending More Than Doubles  [Yahoo (megacaps)]\n    GOOGL, AI chips/capex, earnings",
-  "- Federal Reserve issues FOMC statement  [Federal Reserve]\n    Fed/macro",
-  "- NVIDIA Sets Conference Call for Third-Quarter Financial Results  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Stock Market Today: Dow, Nasdaq Rise After No Fed Rate Hike; Labcorp Blasts Off  [Yahoo (megacaps)]\n    Fed/macro",
-  "- Microsoft stock jumps 4% as cloud growth drives earnings and revenue beat  [CNBC tech]\n    MSFT, earnings",
-  "- Alphabet sinks 9% as it holds 2026 capex unchanged, expects significant increase in 2027  [CNBC tech]\n    GOOGL, AI chips/capex"
+  "NEWS (last 16h, ranked by keywords):",
+  "- AI build-out hits snag as Google and Microsoft put off raising capex forecasts  [CNBC tech]\n    MSFT, GOOGL, AI chips/capex",
+  "- Alphabet's third-quarter results missed expectations. They led one analyst to downgrade the stock  [CNBC markets]\n    GOOGL, shock, earnings",
+  "- Wall Street looks past Fed pause to tech earnings and AI rebound  [CNBC markets]\n    Fed/macro, earnings",
+  "- Microsoft's capex proves it can continue to grow while spending big on AI  [Yahoo (megacaps)]\n    MSFT, AI chips/capex",
+  "- CoreWeave and other neocloud stocks drop after Microsoft capex comes in below expectations  [CNBC tech]\n    MSFT, AI chips/capex",
+  "- Alphabet sinks 10% as it holds 2026 capex unchanged, expects significant increase in 2027  [CNBC tech]\n    GOOGL, AI chips/capex"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- nothing market-relevant"
  ],
  "forecast": [
@@ -134,7 +126,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: FOMC rate decision 19:00 Lux, Powell 19:30; MSFT earnings after close; GOOGL earnings after close"
+  "  TODAY: AMZN earnings after close; INTC earnings after close"
  ],
  "nerd": [
   "LIVE options read - Thu 29 Oct 14:16 Lux (09:16 NY), quotes ~15 min delayed, QQQ 717.89",
