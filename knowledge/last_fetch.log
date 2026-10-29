@@ -1,6 +1,5 @@
 scanned 0 papers, queued 0, queue size 34 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 1989/7000
-curiosity asked: Strategy: LowGamma_GapFade_Tail
-tested: Strategy: LowGamma_GapFade_Tail - Fade the NY open gap on lo -> NOT CONFIRMED on my data: too few trades (57 in 2014-2023, need 150). in-sample 2014-2023:
-testing used 366 AI units
+read 0, AI units today 2359/7000
+test queue empty
+testing used 0 AI units
