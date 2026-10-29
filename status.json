@@ -342,11 +342,11 @@
   "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -33$/eval (zero edge -43$), 22% pass within 21 sessions."
  ],
  "bias": [
-  "\ud83e\udded NQ BIAS - Thu 29 Oct, as of 13:54 Lux",
-  "Market not open yet (NY open 14:30 Lux). First bias check at 15:00 Lux, then hourly until 20:00 Lux.",
+  "\ud83e\udded NQ BIAS - Thu 29 Oct, as of 14:56 Lux",
+  "Market open - the first real bias check is at 15:00 Lux (30 min in), then hourly until 20:00 Lux.",
+  "Early read (as of 14:56 Lux): \u26aa inside its normal noise band (NQ 29,535.75, -0.25% from the open, band \u00b10.31%). Reads this early were right only 51-58% of the time in 12 years (weaker before 2022) - a heads-up, not a bias.",
   "NY outlook: NORMAL day expected (~379 pts high-low, ~192 pts open-to-close); overnight -1.31% (DOWN), BELOW yesterday's low.",
   "London outlook: BUSIER London (~86 pts London-to-NY open); Asia range 29,482.50-29,794.25. London breakouts tended to reverse - no London call.",
-  "Scoreboard: 1/8 graded checks right (12%) over 3 days; history says ~54-58%.",
-  "Day direction can't be called before the open (14 inputs tested, 12 years); day size can."
+  "Scoreboard: 1/8 graded checks right (12%) over 3 days; history says ~54-58%."
  ]
 }
