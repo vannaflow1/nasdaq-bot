@@ -133,7 +133,7 @@
   "",
   "VOLATILITY: 30-day IV 21.1% -> higher than 72% of days since 2011",
   "  options are EXPENSIVE vs history",
-  "  realized vol (20d) 20.4% -> premium +0.7 pts: options priced about in line with recent movement",
+  "  realized vol (20d) 20.3% -> premium +0.7 pts: options priced about in line with recent movement",
   "",
   "TERM STRUCTURE - what each expiry prices (QQQ move to expiry):",
   "  Fri 30 Oct (1d): \u00b11.06% (~314 NQ pts), ATM IV 24.9%",
@@ -141,7 +141,7 @@
   "  Tue 03 Nov (5d): \u00b11.77% (~524 NQ pts), ATM IV 18.8%",
   "  Wed 04 Nov (6d): \u00b12.13% (~630 NQ pts), ATM IV 20.7%",
   "  Thu 05 Nov (7d): \u00b12.35% (~693 NQ pts), ATM IV 21.1%",
-  "  Fri 06 Nov (8d): \u00b12.63% (~777 NQ pts), ATM IV 22.1%",
+  "  Fri 06 Nov (8d): \u00b12.63% (~776 NQ pts), ATM IV 22.1%",
   "  normal upward slope (front 18.8% < month 21.6%): calm near term",
   "",
   "SKEW (~30d): 25-delta puts +6.3 vol pts vs calls; wings +0.5 pts vs ATM",
@@ -159,7 +159,7 @@
   "Status: gamma regime = validated. Everything else = context; tested, did NOT improve forecasts."
  ],
  "shortvol": [
-  "SHORT-VOL CHECK Thu 29 Oct 15:43 NY - QQQ 713.73, gamma rank 0.12 (needs > 0.7)",
+  "SHORT-VOL CHECK Thu 29 Oct 15:49 NY - QQQ 714.63, gamma rank 0.15 (needs > 0.7)",
   "Not a short-vol day: no paper trade.",
   "(rank vs last 252 readings; 9 of them live from 2026 - it gets sharper as live history builds)",
   "",
