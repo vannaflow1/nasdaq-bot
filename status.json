@@ -78,16 +78,24 @@
   "  stayed inside the options-priced move: 75% of days (backtest: ~55-70%)"
  ],
  "brain_pred": {
-  "pred": 0.01944,
+  "pred": 0.01994,
   "nq": 29756.25,
   "day": "Thu 29 Oct",
   "date": "2026-10-29",
   "gex_rank": 0.38,
   "event_prem": 0.862,
-  "high_mid": 30017.09,
-  "high_far": 30370.88,
-  "low_mid": 29518.76,
-  "low_far": 29059.58
+  "high_mid": 30023.86,
+  "high_far": 30386.84,
+  "low_mid": 29512.59,
+  "low_far": 29041.49,
+  "raw": {
+   "pred": 0.01944,
+   "high_mid": 30017.09,
+   "high_far": 30370.88,
+   "low_mid": 29518.76,
+   "low_far": 29059.58
+  },
+  "spx_factor": 1.026
  },
  "live": [
   "LIVE - Wed 28 Oct 20:31 Lux",
@@ -212,9 +220,9 @@
   "Recently granted: #6 Make the prop simulator harsher where reality is harsher; #15 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut"
  ],
  "plan": [
-  "TRADING PLAN - 2026-10-28  |  expected move \u00b1366 pts, full-day range ~613 pts, risk ['VOLTA LEVEL 15  (8,883 XP, next level at 9,000)', 'Papers read 272 | ideas & strategies tested 98 | prop strategies searched 651,533', 'Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 8', 'XP only for verified progress: tests passed on unseen data count far more than activity.']",
+  "TRADING PLAN - 2026-10-29  |  expected move \u00b1364 pts, full-day range ~593 pts, risk ['VOLTA LEVEL 15  (8,897 XP, next level at 9,000)', 'Papers read 272 | ideas & strategies tested 105 | prop strategies searched 651,533', 'Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 8', 'XP only for verified progress: tests passed on unseen data count far more than activity.']",
   "Size factor today: 100%  (normal conditions)",
-  "SPX DEALER CHECK (2026-10-28): dealer gamma -2.2 (avg +1.5), SPX walls 7700 / 7800 (3.0x their usual distance) -> today's range bigger (+12.7%)",
+  "SPX DEALER CHECK (2026-10-29): dealer gamma +5.4 (avg +1.5), SPX walls 7700 / 7750 (1.5x their usual distance) -> today's range bigger (+2.6%)",
   "",
   "STOPS on a day like this (share of level touches where price did NOT run past the stop within 30 min):",
   "    15 pt stop -> survives ~8% of touches",
@@ -222,7 +230,7 @@
   "    40 pt stop -> survives ~22% of touches",
   "    60 pt stop -> survives ~33% of touches",
   "    73 pt stop -> survives ~40% of touches",
-  "   110 pt stop -> survives ~57% of touches",
+  "   109 pt stop -> survives ~57% of touches",
   "  Median overshoot through a level today: ~95 pts.",
   "",
   "SIZE PER $1,000 OF BUFFER (distance to your max-loss limit):",
@@ -235,12 +243,12 @@
   "VOLTA'S BOOK: $25,000 (buffer $1,000) - armed today: short-vol fly if dealer gamma rank > 0.7 at 15:20 NY; with the open's side of the overnight range at 08:31, no red"
  ],
  "plan_data": {
-  "date": "2026-10-28",
-  "move": 366,
-  "range": 613,
+  "date": "2026-10-29",
+  "move": 364,
+  "range": 593,
   "level": [
-   "VOLTA LEVEL 15  (8,883 XP, next level at 9,000)",
-   "Papers read 272 | ideas & strategies tested 98 | prop strategies searched 651,533",
+   "VOLTA LEVEL 15  (8,897 XP, next level at 9,000)",
+   "Papers read 272 | ideas & strategies tested 105 | prop strategies searched 651,533",
    "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
    "Brain upgrades: 0 | self-discovered powers: 8",
    "XP only for verified progress: tests passed on unseen data count far more than activity."
@@ -327,7 +335,7 @@
   "- F15 F15 (fast 3): noise-band breakout in the LONDON session (Nasdaq futures): FAILED (p=0.97835, median 2022-23 -0.0947R)"
  ],
  "spx_morning": [
-  "SPX DEALER CHECK (2026-10-28): dealer gamma -2.2 (avg +1.5), SPX walls 7700 / 7800 (3.0x their usual distance) -> today's range bigger (+12.7%)"
+  "SPX DEALER CHECK (2026-10-29): dealer gamma +5.4 (avg +1.5), SPX walls 7700 / 7750 (1.5x their usual distance) -> today's range bigger (+2.6%)"
  ],
  "power": [
   "\u26a1 POWER CURVE - THE SCOREBOARD (family F10 trades, null v3 with shared draws, 400 worlds): can my family test find a planted edge?",

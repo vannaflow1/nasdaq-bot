@@ -1,0 +1,23 @@
+got 13.1 MB
+SPX DEALER CHECK (2026-10-29): dealer gamma +5.4 (avg +1.5), SPX walls 7700 / 7750 (1.5x their usual distance) -> today's range bigger (+2.6%)
+TRADING PLAN - 2026-10-29  |  expected move ±364 pts, full-day range ~593 pts, risk ['VOLTA LEVEL 15  (8,897 XP, next level at 9,000)', 'Papers read 272 | ideas & strategies tested 105 | prop strategies searched 651,533', 'Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 8', 'XP only for verified progress: tests passed on unseen data count far more than activity.']
+Size factor today: 100%  (normal conditions)
+SPX DEALER CHECK (2026-10-29): dealer gamma +5.4 (avg +1.5), SPX walls 7700 / 7750 (1.5x their usual distance) -> today's range bigger (+2.6%)
+
+STOPS on a day like this (share of level touches where price did NOT run past the stop within 30 min):
+    15 pt stop -> survives ~8% of touches
+    25 pt stop -> survives ~14% of touches
+    40 pt stop -> survives ~22% of touches
+    60 pt stop -> survives ~33% of touches
+    73 pt stop -> survives ~40% of touches
+   109 pt stop -> survives ~57% of touches
+  Median overshoot through a level today: ~95 pts.
+
+SIZE PER $1,000 OF BUFFER (distance to your max-loss limit):
+  risk per trade $100, daily stop $200
+  -> 15 pt stop: 3 MNQ  |  40 pt stop: 1 MNQ  |  73 pt stop: 0 MNQ
+
+Lucid rules to respect: EOD trailing max loss; 40% consistency (no single day > 40% of the cycle's profit).
+Use /plan buffer:<$> stop:<pts> for your exact numbers. Sizing guidance, not trade signals or financial advice.
+
+VOLTA'S BOOK: $25,000 (buffer $1,000) - armed today: short-vol fly if dealer gamma rank > 0.7 at 15:20 NY; with the open's side of the overnight range at 08:31, no red
