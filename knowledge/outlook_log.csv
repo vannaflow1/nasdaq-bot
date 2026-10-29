@@ -1,3 +1,4 @@
 date,made_ct,price,on_ret,asia_ret,london_ret,on_range_pct,on_range_z,size,exp_move_pts,exp_range_pts,location,overnight_dir,vix,vix_term
 2026-10-27,07:45,29611.25,0.00583,-0.00397,0.00985,1.151,1.14,BUSIER,216,426,ABOVE yesterday's high,UP,18.39,0.9222668004012036
 2026-10-28,07:53,29917.75,0.00349,0.00463,-0.00114,0.687,0.66,QUIET,129,326,ABOVE yesterday's high,UP,17.52,0.8952478283086356
+2026-10-29,07:54,29597.25,-0.01311,-0.01139,-0.00175,1.053,1.05,NORMAL,192,379,BELOW yesterday's low,DOWN,16.91,0.8798126951092613
