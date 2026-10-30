@@ -121,7 +121,7 @@
   "\u2022 Patterns and Determinants of the Intraday Bid-Ask Spread and Depth of CBOE Equity Options (\u2605\u2605\u2605\u2606\u2606)",
   "  Option bid\u2011ask spreads are highest at market open and drop sharply within the first 90\u202fminutes, then stay relatively stable; spread widens again near market close. Factors widening spreads include higher underlying stock",
   "  tested: not testable with my data yet",
-  "This week's tests: 37 run - 1 promising, 24 not confirmed, 1 don't fit my data, 11 translation failures",
+  "This week's tests: 38 run - 1 promising, 25 not confirmed, 1 don't fit my data, 11 translation failures",
   "",
   "34 papers waiting in my queue."
  ],
