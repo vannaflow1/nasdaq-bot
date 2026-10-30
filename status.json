@@ -1,7 +1,7 @@
 {
  "for": "Fri 30 Oct",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Fri 30 Oct) - risk \ud83d\udfe0 ELEVATED",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
   "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size.",
   "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
  ],
@@ -29,14 +29,8 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 15  (8,911 XP, next level at 9,000)",
-  "Papers read 272 | ideas & strategies tested 112 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 8",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Fri 30 Oct 12:06 Lux",
+ "level": "ELEVATED",
+ "updated": "Fri 30 Oct 14:43 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  Mon 02 Nov: AAPL earnings after close; PLTR earnings after close",
@@ -44,23 +38,19 @@
   "  Wed 04 Nov: ARM earnings after close; QCOM earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Dow Jones Futures: Amazon, Intel Lead Earnings Losers After Google, ServiceNow, Fortinet Hit Nasdaq  [Yahoo (megacaps)]\n    AMZN, GOOGL, INTC, earnings",
-  "- AI buildout hits snag as Google and Microsoft put off raising capex forecasts  [CNBC tech]\n    MSFT, GOOGL, AI chips/capex",
-  "- Stock Market Today: Nasdaq Breaks Streak On Alphabet's $500B Drop; Amazon Earnings Next  [Yahoo (megacaps)]\n    AMZN, GOOGL, earnings",
-  "- Amazon posts negative free cash flow of $42.4 billion, holds 2026 capex unchanged  [CNBC tech]\n    AMZN, AI chips/capex",
-  "- Amazon's mixed Q3 earnings raises some questions  [Yahoo (megacaps)]\n    AMZN, earnings",
-  "- Breaking Down Amazon's Third-Quarter Earnings  [Yahoo (megacaps)]\n    AMZN, earnings",
-  "- AWS Jumps 39% as Amazon's Cash Flow Sinks: Rapid Earnings Reaction  [Yahoo (megacaps)]\n    AMZN, earnings",
-  "- Amazon AWS posts 39% revenue growth as cloud rivals also accelerate  [CNBC tech]\n    AMZN, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Intel Plunges 25% as Weak Outlook and PC Slump Overshadow Earnings Beat; Dell Tumbles 13%, AMD Sinks 10%, NVIDIA Falls 3%  [Yahoo (megacaps)]\n    NVDA, AMD, INTC, shock, earnings",
+  "- Amazon Slides 7% as Earnings Miss and AI Spending Turn Free Cash Flow Negative; Meta Falls 2%, Alphabet Dips, Walmart Gains 2%  [Yahoo (megacaps)]\n    AMZN, META, GOOGL, earnings",
+  "- Amazon and Intel earnings lead to a tech sell-off, and Binance is hacked for $6.3B  [Yahoo (megacaps)]\n    AMZN, INTC, shock, earnings",
+  "- Amazon falls 4%, Intel plunges 29%, as tech stocks sell off in post-earnings rout  [CNBC tech]\n    AMZN, INTC, shock, earnings",
+  "- Google hit with criminal probe over unapproved AI data center deforestation  [Tom's Hardware]\n    GOOGL, AI chips/capex, shock",
+  "- Amazon\u2019s and Intel\u2019s stocks are set to plunge. But Wall Street\u2019s October winners may surprise you.  [MarketWatch]\n    AMZN, INTC, shock"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Fri 11:30 [Fed/rates] INFLATION IS WAY DOWN UNDER \u201cTRUMP.\u201d INCOME FOR PEOPLE & COMPANIES IS WAY UP! The Golden Age of America Is Upon Us.",
   "- Fri 10:39 [trade/tariffs, Fed/rates, fiscal/policy, economy] RT @ marklevinshow THE DEMOCRAT PARTY AND THEIR MEDIA ARE LYING ABOUT OUR ECONOMY AND MUCH MORE! CAPITALISM WORKS, SOCIALISM IS A DISASTER! Have you looked at the price of gasoline today? It is DOWN. Have you looked at the price of food today? It is flat and, in many cases,\u2026",
-  "- Fri 03:12 [oil/geopolitics] GREGG JARRETT: Trump was framed by the Russia collusion hoax. Now the whole story is exposed: https://www. foxnews.com/opinion/gregg-jarr ett-trump-framed-russia-collusion-hoax-story-exposed",
-  "- Thu 21:54 [oil/geopolitics] GREGG JARRETT: Trump was framed by the Russia collusion hoax. Now the whole story is exposed: https://www. foxnews.com/opinion/gregg-jarr ett-trump-framed-russia-collusion-hoax-story-exposed",
-  "- Thu 21:43 [oil/geopolitics] RT @ jmclghln Strong Majority backs @ realDonaldTrump stopping Iran from getting Nukes https://www. newsmax.com/mclaughlin/cable-n uclear-weapons/2026/03/12/id/1249304/ @ DanScavino @ StevenCheung @ DevinNunes Reposted John McLaughlin Strong Majority backs @ realDonaldTrump\u2026"
+  "- Fri 03:12 [oil/geopolitics] GREGG JARRETT: Trump was framed by the Russia collusion hoax. Now the whole story is exposed: https://www. foxnews.com/opinion/gregg-jarr ett-trump-framed-russia-collusion-hoax-story-exposed"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -136,7 +126,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: AMZN earnings after close; INTC earnings after close"
+  "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
   "LIVE options read - Fri 30 Oct 14:15 Lux (09:15 NY), quotes ~15 min delayed, QQQ 697.45",
