@@ -7,9 +7,9 @@
   "failed": 49
  },
  "2026-W44": {
-  "tested": 39,
+  "tested": 40,
   "promising": 1,
-  "not_confirmed": 26,
+  "not_confirmed": 27,
   "unfit": 1,
   "failed": 11
  }
