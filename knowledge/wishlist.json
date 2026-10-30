@@ -311,5 +311,17 @@
   "impact": "high",
   "status": "open",
   "votes": 1
+ },
+ {
+  "id": 20,
+  "date": "2026-10-30",
+  "title": "Accelerate Low\u2011Gamma Open Breakout family proposal",
+  "for": "owner",
+  "type": "decision",
+  "why": "Family #18 is still open; I need a go\u2011ahead to finalize the spec grid (different stop sizes, entry filters) and run the full cross\u2011validation to confirm the edge.",
+  "evidence": "Current near\u2011miss features add ~0.2% edge on low\u2011gamma days, and the LowGamma_OpenBreakout test shows promise in a quick pilot (5\u201110 trades).",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
  }
 ]
