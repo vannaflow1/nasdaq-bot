@@ -66,9 +66,7 @@ scanned 0 papers, queued 0, queue size 34 []
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 3/7000
-self-check: I kept seeing a modest +0.2% edge on low‑dealer‑gamma days (gex_rank < 0.2) across many near‑miss features, but none have materialized into a repeatable trade. My range forecasts are still missing the | queued 2 | new wishes 1
-curiosity: unusable translator gave no JSON
-tested: On days with gex_rank < 0.2, what is the average y_first15_r -> TRANSLATION FAILED - translator gave no JSON
-tested: Strategy: LowGamma_OpenBreakout -> TRANSLATION FAILED - translator JSON not closed
-testing used 788 AI units
+read 0, AI units today 794/7000
+curiosity asked: On days with a higher implied volatility skew (skew), is the intraday high more likely to be set within the first 30 minutes of the NQ session?
+tested: On days with a higher implied volatility skew (skew), is the -> TRANSLATION FAILED - IndexError: list index out of range
+testing used 129 AI units
