@@ -1,6 +1,5 @@
 scanned 0 papers, queued 0, queue size 34 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
-read 0, AI units today 1740/7000
-curiosity asked: Strategy: LowGamma_Exp70_Break_GapTilt
-tested: Strategy: LowGamma_Exp70_Break_GapTilt - On low‑gamma days,  -> TRANSLATION FAILED - formula gives too little usable data
-testing used 365 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
+read 0, AI units today 2108/7000
+test queue empty
+testing used 0 AI units
