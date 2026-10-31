@@ -333,7 +333,7 @@
   "why": "Several failed ideas need real‑time option order flow to measure net demand per strike; a public aggregated feed would enable testing dealer‑flow theories.",
   "evidence": "6 of 23 failed ideas cite missing intraday option flow data.",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -342,7 +342,8 @@
    "branch": null,
    "summary": "stopped after 45 minutes (34 model turns)",
    "guard": null
-  }
+  },
+  "note": "Needs owner (2026-10-31, Claude): historical intraday option flow by strike (trade-level OPRA prints with side/aggressor) is only sold by paid vendors (account + money); free public feeds are delayed snapshots of volume/OI, forward-only and without side, so no backtestable dealer-flow series can be built research-side. Same blocker as wishes #12/#13/#17. Closest free data already in the session table: SPX weekly option ticks 2019-2025 (k_spx_*, wish #1) and end-of-day chain gex_rank."
  },
  {
   "id": 22,
@@ -353,7 +354,8 @@
   "why": "Low‑gamma days show consistent modest edge; a systematic family of open‑breakout variants (different windows, filters, stop/target ratios) can be tested quickly and may yield a robust edge across NQ and ES.",
   "evidence": "Recent diary notes and near‑miss features (+0.2% edge on low‑gamma days).",
   "impact": "high",
-  "status": "open",
-  "votes": 1
+  "status": "needs",
+  "votes": 1,
+  "note": "Duplicate of wish #18/#20 (Low-Gamma Open Breakout family). Claude 2026-10-31: family registration is owner/Claude-chat only - the v2 alpha budget is nearly spent (alpha_slots.json: slot 4 = F11, then 0.0023, 0.0023, then nothing), so the self-upgrade run does not register families."
  }
 ]
