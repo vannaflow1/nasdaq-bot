@@ -206,5 +206,21 @@
   ],
   "calls_left_today": 0,
   "status": "error"
+ },
+ {
+  "wish": 21,
+  "title": "Intraday option flow by strike (public feeds)",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (34 model turns)",
+  "how_to_use": "",
+  "date": "2026-10-31",
+  "steps": 34,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-latest",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 9,
+  "status": "out_of_time"
  }
 ]
