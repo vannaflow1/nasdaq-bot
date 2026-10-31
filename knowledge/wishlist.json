@@ -323,5 +323,29 @@
   "impact": "high",
   "status": "open",
   "votes": 1
+ },
+ {
+  "id": 21,
+  "date": "2026-10-31",
+  "title": "Intraday option flow by strike (public feeds)",
+  "for": "claude",
+  "type": "data",
+  "why": "Several failed ideas need real\u2011time option order flow to measure net demand per strike; a public aggregated feed would enable testing dealer\u2011flow theories.",
+  "evidence": "6 of 23 failed ideas cite missing intraday option flow data.",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
+ },
+ {
+  "id": 22,
+  "date": "2026-10-31",
+  "title": "Family proposal: Low\u2011Gamma Open Breakout",
+  "for": "claude",
+  "type": "family",
+  "why": "Low\u2011gamma days show consistent modest edge; a systematic family of open\u2011breakout variants (different windows, filters, stop/target ratios) can be tested quickly and may yield a robust edge across NQ and ES.",
+  "evidence": "Recent diary notes and near\u2011miss features (+0.2% edge on low\u2011gamma days).",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
  }
 ]

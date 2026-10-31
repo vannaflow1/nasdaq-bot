@@ -123,7 +123,7 @@
   "\u2022 Patterns and Determinants of the Intraday Bid-Ask Spread and Depth of CBOE Equity Options (\u2605\u2605\u2605\u2606\u2606)",
   "  Option bid\u2011ask spreads are highest at market open and drop sharply within the first 90\u202fminutes, then stay relatively stable; spread widens again near market close. Factors widening spreads include higher underlying stock",
   "  tested: not testable with my data yet",
-  "This week's tests: 41 run - 1 promising, 27 not confirmed, 1 don't fit my data, 12 translation failures",
+  "This week's tests: 44 run - 1 promising, 29 not confirmed, 1 don't fit my data, 13 translation failures",
   "",
   "34 papers waiting in my queue."
  ],
@@ -205,13 +205,15 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-10-30)",
-  "I kept seeing a modest +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) across many near\u2011miss features, but none have materialized into a repeatable trade. My range forecasts are still missing the upside of those days. I need a concrete intraday entry that actually captures that low\u2011gamma edge without widening risk too much.",
+  "VOLTA'S SELF-CHECK (2026-10-31)",
+  "I noticed that low\u2011dealer\u2011gamma days (gex_rank < 0.2) give a consistent +0.2% edge across many near\u2011miss features, yet no intraday strategy profits from it. My range forecasts still miss about 38% of the true range, and the best in\u2011sample edge (+0.13R) comes from a fragile 15\u2011minute breakout. I need to turn the low\u2011gamma signal into a robust, high\u2011frequency entry that works across many sessions.",
   "",
   "WISHES (what I need to get better):",
   "#14 [needs the owner] Intraday IV term\u2011structure data feed - Current models lack real\u2011time IV curve slices; a 5\u2011minute snapshot of the full QQQ surface would let me test term\u2011structure signals for intr",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#20 [needs the owner] Accelerate Low\u2011Gamma Open Breakout family proposal - Family #18 is still open; I need a go\u2011ahead to finalize the spec grid (different stop sizes, entry filters) and run the full cross\u2011validatio",
+  "#21 [for Claude] Intraday option flow by strike (public feeds) - Several failed ideas need real\u2011time option order flow to measure net demand per strike; a public aggregated feed would enable testing dealer",
+  "#22 [for Claude] Family proposal: Low\u2011Gamma Open Breakout - Low\u2011gamma days show consistent modest edge; a systematic family of open\u2011breakout variants (different windows, filters, stop/target ratios) c",
   "",
   "Recently granted: #6 Make the prop simulator harsher where reality is harsher; #15 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut"
  ],
