@@ -1,5 +1,49 @@
 [
  {
+  "id": "openalex:W7224513335",
+  "title": "Stock-level volatility forecasting using machine learning: A comparative study of GARCH, Random Forest, LSTM, and GRU on US Equities",
+  "abstract": "Forecasting stock price volatility at the individual stock level is a major challenge in managing financial risks; it has widespread implications for portfolio strategies, pricing derivatives, and assessing regulatory capital adequacy. Although there have been a number of studies using market indices (e.g., VIX and associated methods) to study forecasting stock market volatility, relatively few studies have applied and evaluated a number of different types of machine learning methods to individual stock data in terms of actual (realised) volatility forecasting. This study fills that gap by presenting a comprehensive analysis of the relationship between stock price volatility and various machine learning techniques on a sample of ten well-known US stocks (across three sectors: technology, finance, and energy) based on data from January 2018 to December 2024 (1,759 trading days). We apply five modelling approaches: a classical GARCH(1,1) econometric model, a classical GJR-GARCH(1,1,1) econometric model, a Random Forest regressor, a two-layer Long Short-Term Memory (LSTM) network, and a two-layer Gated Recurrent Unit (GRU) network. For each of the four modelling techniques, we use a rolling 5-day annualised actual (realised) volatility forecast as our final outcomes. Evaluation of the prediction results of each of these models was measured using RMSE, MAE, QLIKE loss, parametric Value-at-Risk (VaR) measures, Expected Shortfall (ES), and the Kupiec backtest. We also performed an analysis of the prevailing market regime through K-Means clustering, created an ablation study using variables as features in the models to assess the importance of those variables, and developed a computational efficiency benchmark for each model. In terms of predicted errors, Random Forest was proven to yield very low predicted error (mean RMSE = 0.0892) in comparison to deep learning methods, plus Random Forest was able to be trained approximately 7 times faster than deep learning methods. GRU was ranked second and outperformed LSTM on most of the metrics used in this evaluation. GARCH models remain a viable option for estimating risk measures and calibrating VaR, especially during period of stability in the financial markets.",
+  "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0354643&type=printable",
+  "source": "OpenAlex",
+  "date": "2026-10-29",
+  "score": 22,
+  "queued": "2026-11-01",
+  "text_file": "knowledge/papers/openalex_W7224513335.txt"
+ },
+ {
+  "id": "openalex:W7223788059",
+  "title": "Role of machine learning in financial economics",
+  "abstract": "Financial markets are among the most complex systems to model. The theoretical framework developed to understand how prices form, how risk is priced, and how capital is allocated represents decades of formal work, and it rests on assumptions about how prices evolve, distributional forms, and market structure that are chosen not because they are always accurate but because they make the problem tractable. When machine learning arrived as a practical computational tool, the natural response was to treat it as an upgrade: free of those assumptions, trained directly on the data, it was expected to outperform. The evidence on that has been instructive. Models that predict well in controlled settings (see Gu, Kelly and Xiu, 2020) routinely fail in live markets (see Bartram et al., 2021), and the gap between the two has been attributed to overfitting, to regime change, to data-snooping - but rarely to the framing itself. Much of this literature evaluates ML on whether it produces better forecasts than existing models, treating predictive accuracy as the measure of its contribution. This thesis asks a different question. If the value of ML in financial economics lies not in outperforming traditional models but in addressing limitations that those models cannot resolve by design, then the architecture of the ML framework matters as much as the data it learns from. Rather than applying general-purpose models to financial data, this thesis adopts the Adaptive Markets Hypothesis (AMH) as a theoretical account of how markets behave and designs Machine learning (ML) frameworks whose structure encodes its core properties directly. Theory provides the economic logic: what relationships to look for, what quantities matter, what a result means. ML provides the estimation flexibility and the capacity to learn those relationships from data without constraints that the data does not satisfy. Used together, in either direction, they can reach parts of the problem that neither can reach alone. This thesis examines that complementarity across three studies adopting the AMH as the theoretical account of market behavior most consistent with the methods it employs. In the first study, I present a novel framework to remove market microstructure noise that is caused by the trading process itself and recover the underlying signal from high-frequency data. My framework integrates classical state-space filtering algorithms with the adaptability of machine learning networks, allowing the ",
+  "url": "https://era.ed.ac.uk/bitstreams/87e33374-5718-4f99-a414-f1005669fcf1/download",
+  "source": "OpenAlex",
+  "date": "2026-10-27",
+  "score": 22,
+  "queued": "2026-11-01",
+  "text_file": "knowledge/papers/openalex_W7223788059.txt"
+ },
+ {
+  "id": "openalex:W7223703263",
+  "title": "Evaluating Foundation Time-Series Models in Systematic Options Compounding",
+  "abstract": "A prevailing belief in quantitative finance is that deploying high-capacity foundation models inevitably generates superior predictive edge (Gu, Kelly, & Xiu, 2020). This paper presents an empirical evaluation testing whether zero-shot foundation forecasting (Google TimesFM 1.0-200M; Das, Kong, Sen, & Zhou, 2024) and kinematic derivatives physics enhance strike selection and compounding in systematic options selling across Amazon (AMZN), Alphabet (GOOG), and NVIDIA (NVDA) over a continuous 10-year cycle (October 2016 to October 2026 | 2,512 trading days), strictly partitioned into a 5-year In-Sample calibration epoch and a 5-year Out-of-Sample holdout period. We simulate mechanical options compounding under an idealized Zero-VRP invariant (pricing all contracts at zero implied-volatility premium via analytical Black-Scholes-Merton) to isolate pure directional and timing alpha from structural volatility premium capture. On this invariant benchmark, baseline rule-based mechanics achieve terminal equity of $2,349,600 on AMZN (23.50x), $821,300 on GOOG (8.21x), and $27,998,700 on NVDA (280.0x). Integrating TimesFM 10-day ahead forecasts to write defensive call overlays produces zero statistically detectable forecast edge: directional accuracy is indistinguishable from coin flips (50.8% AMZN, 51.2% GOOG, 49.8% NVDA; Diebold-Mariano p-values 0.27, 0.11, 0.42), while call truncation inflicts catastrophic opportunity cost on explosive trend legs (NVDA terminal wealth collapses from 280.0x to 10.9x). Furthermore, kinematic dip-buying rules (velocity-acceleration phase triggers) display severe parameter decay out of sample: on AMZN, out-of-sample terminal wealth sits at the 72.4th percentile of an uninformed random-put placebo (p = 0.28). Deflated Sharpe Ratios (DSR; Bailey & Lopez de Prado, 2014) across all evaluated machine learning enhancements fall to 0.00, demonstrating that the observed historical outperformance was a product of selection bias across non-stationary market regimes.",
+  "url": "https://doi.org/10.5281/zenodo.23675352",
+  "source": "OpenAlex",
+  "date": "2026-10-26",
+  "score": 19,
+  "queued": "2026-11-01",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W7224112863",
+  "title": "A Deep Learning-Driven Operator Splitting Scheme for Free Boundary Problems: An Application to American Option Pricing in Incomplete Markets",
+  "abstract": "This paper proposes a deep learning-driven operator splitting scheme for high-dimensional free-boundary problems, with American option pricing as a representative application. In a market with proportional transaction costs, a stochastic liquidity risk with an empirically validated nonlinear drift based on S&P 500 data, and two-factor stochastic volatility, the pricing problem takes the form of a five-dimensional highly nonlinear variational inequality. The proposed scheme decomposes this variational inequality at each time layer into an elliptic continuation equation approximated by a physics-informed neural network and a closed-form projection step enforcing the early-exercise constraint. A conditional $\\ell^\\infty$ stability bound is derived under stated resolvent and Lipschitz assumptions. The scheme is validated against finite-difference and least-squares Monte Carlo benchmarks, and both the option prices and the learned exercise boundary show close agreement with the reference solutions. Sensitivity analyses with respect to the key model parameters are also reported.",
+  "url": "https://arxiv.org/pdf/2610.36921",
+  "source": "OpenAlex",
+  "date": "2026-10-27",
+  "score": 18,
+  "queued": "2026-11-01",
+  "text_file": "knowledge/papers/openalex_W7224112863.txt"
+ },
+ {
   "id": "openalex:W639708223",
   "title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
   "abstract": "State-of-the-art object detection networks depend on region proposal algorithms to hypothesize object locations. Advances like SPPnet [1] and Fast R-CNN [2] have reduced the running time of these detection networks, exposing region proposal computation as a bottleneck. In this work, we introduce a Region Proposal Network (RPN) that shares full-image convolutional features with the detection network, thus enabling nearly cost-free region proposals. An RPN is a fully convolutional network that simultaneously predicts object bounds and objectness scores at each position. The RPN is trained end-to-end to generate high-quality region proposals, which are used by Fast R-CNN for detection. We further merge RPN and Fast R-CNN into a single network by sharing their convolutional features-using the recently popular terminology of neural networks with 'attention' mechanisms, the RPN component tells the unified network where to look. For the very deep VGG-16 model [3] , our detection system has a frame rate of 5 fps (including all steps) on a GPU, while achieving state-of-the-art object detection accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with only 300 proposals per image. In ILSVRC and COCO 2015 competitions, Faster R-CNN and RPN are the foundations of the 1st-place winning entries in several tracks. Code has been made publicly available.",
@@ -12,6 +56,28 @@
   "text_file": "knowledge/papers/openalex_W639708223.txt"
  },
  {
+  "id": "openalex:W7224277285",
+  "title": "A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility, and Machine Learning Methods",
+  "abstract": "Stock volatility forecasting serves as a crucial underpinning for derivatives pricing, asset allocation, and risk management. This paper examines volatility proxy variables, empirical applications, as well as forecasting evaluation metrics, and then reviews representative models and empirical evidence across three research pathways. The comparison concerns the information basis and forecasting horizon, taking into account explanatory power, stability, and economic value. A comprehensive review of the literature suggests that traditional models remain a robust benchmark in scenarios with limited data, in which emphasis is placed on interpretability and reproducibility. Implied volatility can provide incremental information beyond historical data; however, its predictive power is influenced by variance risk premiums, liquidity, and maturity matching. Machine learning offers greater flexibility in high-dimensional data environments, but its advantages depend on rigorous time-series validation and control of information leakage. Because of inconsistencies in proxy variables, loss functions, sample partitioning, and market conditions, existing evidence fails to support the universal superiority of any single method across all tasks. Future analysis should conduct cross-market tests under a unified evaluation framework and integrate statistical forecasting accuracy with economic value in risk management and investment decision-making.",
+  "url": "https://journals.zeuspress.org/index.php/FER/article/download/1605/1540",
+  "source": "OpenAlex",
+  "date": "2026-10-29",
+  "score": 16,
+  "queued": "2026-11-01",
+  "text_file": "knowledge/papers/openalex_W7224277285.txt"
+ },
+ {
+  "id": "openalex:W7223675687",
+  "title": "The Limits of Machine Learning in Daily Return Forecasting: Evidence from Volatility Regimes, Tail Risk, and Multi-Asset Markets",
+  "abstract": "The study analyzes volatility regimes, tail risk and machine learning forecastability of seven financial assets (BTC, ETH, the S&P 500, NASDAQ, Gold, Crude Oil, and US Dollar Index) from 2017 to 2026. Structural break analysis shows that financial instability is characterized by variance, not by a change in the mean. EGARCH is preferred in five out of seven assets, with significant leverage effects in the equity indices. According to EVT analysis, ETH and BTC are the highest-tail-risk assets, while Crude Oil has the heaviest tail. Kupiec and Christoffersen VaR back testing results show that Gold\u2019 s actual exceedance rate at the 95th percentile is almost twice the expected exceedance rate. XGBoost doesn\u2019 t statistically outperform Linear Regression (DM = \\(-\\)0.403, p = 0.687), and the most important predictive element is a 5-day rolling mean return. The results show that most predictive information in daily returns is contained in linear autoregressive features.",
+  "url": "https://etamaths.com/index.php/ijaa/article/download/5493/1963",
+  "source": "OpenAlex",
+  "date": "2026-10-26",
+  "score": 16,
+  "queued": "2026-11-01",
+  "text_file": "knowledge/papers/openalex_W7223675687.txt"
+ },
+ {
   "id": "openalex:W7223074122",
   "title": "The Term Structure of Implied Fee Rates in Liquidity Pools",
   "abstract": "We develop a no-arbitrage framework to recover implied fee rates from option implied information and quantify fee compensation for liquidity providers in automated market maker (AMM) pools. Expected accumulated fees equal the current pool value minus the risk-neutral value of its terminal payoff, reducing forward looking LP compensation to pricing the LP payoff. We apply the framework to Uniswap v2 and Uniswap v3 ETH-USDC pools using a stochastic-volatility jump diffusion model calibrated to Deribit options. Implied fee rates are positive, time varying, downward sloping in maturity, and highly sensitive to range design, with tighter near-the-money ranges earning larger implied returns.",
@@ -20,6 +86,17 @@
   "date": "2026-10-18",
   "score": 14,
   "queued": "2026-10-21",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W7223666279",
+  "title": "Regime-dependent bitcoin volatility forecasting under alternative information sets: evidence from econometric, deep learning, and hybrid models",
+  "abstract": "Abstract Bitcoin volatility is challenging to forecast because accuracy depends on model choice, information sets, and market regimes. Existing studies often compare models under inconsistent volatility targets, predictors, samples, or evaluation designs, leaving unclear whether forecast gains arise from model architecture, information content, or regime shifts. This study addresses this gap by proposing a unified rolling out-of-sample framework for daily Bitcoin volatility forecasting that compares GARCH-type models, standalone LSTMs, and state-augmented GARCH\u2013LSTM hybrids under the same volatility target, nested information sets, one-step-ahead forecast horizon, and evaluation design, using balanced daily data from 1 February 2018 to 19 July 2025. Predictors are organized into technical (T), technical plus sentiment (TS), and technical, sentiment, and blockchain (TSB) groups to measure the marginal value of added information. Forecast accuracy is assessed mainly with QLIKE, plus RMSE, MAE, and Diebold\u2013Mariano tests across normal and crisis regimes. Predictability is strongly regime-dependent. In normal markets, LSTM-T achieves the lowest loss, with TGARCH and Hybrid_GARCH_T statistically indistinguishable from it. In crises, hybrids minimize QLIKE, but the best specification differs: Hybrid_TGARCH_TS during COVID-19, Hybrid_EGARCH_TSB during the China mining ban, and Hybrid_APARCH_TS during the crypto winter. Hence, hybrid gains are regime-specific and depend on the interaction of volatility dynamics, information sets, and regime characteristics. For daily one-step-ahead Bitcoin forecasts, the evidence supports regime-sensitive modeling and cautions against broad claims of model superiority based on pooled samples.",
+  "url": "https://link.springer.com/content/pdf/10.1007/s42521-026-00229-9.pdf",
+  "source": "OpenAlex",
+  "date": "2026-10-26",
+  "score": 14,
+  "queued": "2026-11-01",
   "text_failed": true
  },
  {
@@ -45,6 +122,17 @@
   "text_file": "knowledge/papers/openalex_W7223137491.txt"
  },
  {
+  "id": "openalex:W7223658835",
+  "title": "Perturbation-Specific Reliability of Intrinsic and Post-Hoc Explainable Machine Learning in Volatility Forecasting",
+  "abstract": "Abstract The reliability of intrinsic and post-hoc explanations cannot be assessed independently of the perturbation under which they are evaluated. Using purged walk-forward validation, this study forecasts five-day realized volatility for 20 equities across three markets from 2016 to 2025 and evaluates five model families paired with intrinsic or post-hoc explanation methods. We admit only models that outperform step-5 persistence out of sample to the main interpretability analysis. We assess explanation reliability under three perturbations: retraining with different random seeds, temporal shift, and input jitter, using matched-stock paired inference. Integrated Gradients applied to a Long Short-Term Memory (LSTM) network and to TabNet differ by 0.52 in temporal rank agreement, showing that explanation stability depends on the model\u2013representation\u2013explainer configuration. When the same trained TabNet network is explained using its intrinsic attention mask and post-hoc Integrated Gradients, the two methods are similar under temporal shift but diverge under input perturbation and retraining. The intrinsic mask is more robust to input noise but less reproducible across retraining. Ablation-based faithfulness performs no better than random feature ordering, while fixed-depth top-k agreement is biased by feature-space size. The Heterogeneous Autoregressive model of Realized Volatility (HAR-RV) achieves the best median forecasting accuracy and is statistically indistinguishable from the spline-based Generalized Additive Model (GAM). Overall, explanation reliability is perturbation-specific and should be evaluated empirically for each model\u2013representation\u2013explainer configuration.",
+  "url": "https://www.researchsquare.com/article/rs-11158626/latest.pdf",
+  "source": "OpenAlex",
+  "date": "2026-10-26",
+  "score": 12,
+  "queued": "2026-11-01",
+  "text_file": "knowledge/papers/openalex_W7223658835.txt"
+ },
+ {
   "id": "openalex:W7223000370",
   "title": "Neural Network Calibration of the Heston Stochastic Volatility Model",
   "abstract": "The Heston stochastic volatility model remains a standard benchmark for equity-option smiles, yet calibration is a nonlinear inverse problem shaped by pricing cost, objective design, parameter constraints and the information contained in the observed option grid. Neural approaches follow two main routes. Parameter-to-price (MtP) networks approximate the forward pricing map and retain an optimiser, whereas price-to-parameter (PtM) networks learn a direct inverse map and amortise calibration into a single inference step. This review compares both routes with differential, physics-informed and hybrid variants. PtM offers the clearest advantage in online latency, while MtP retains an explicit calibration objective and more transparent residual diagnostics. Existing studies do not establish a universal ranking in parameter stability, robustness or data efficiency, because results remain sensitive to the training domain, sampling scheme, quote representation and validation design. Both approaches can be trained on synthetic data, and neither resolves weak parameter identifiability. For practical deployment, neural acceleration should be combined with exact repricing, admissibility checks, uncertainty monitoring, distribution-shift controls and numerical fallback. The most credible architecture is therefore determined by the service requirement and the surrounding validation workflow rather than by the direction of the learned map alone.",
@@ -54,6 +142,29 @@
   "score": 11,
   "queued": "2026-10-21",
   "text_file": "knowledge/papers/openalex_W7223000370.txt"
+ },
+ {
+  "id": "arxiv:2610.39636v1",
+  "title": "Information Flow and Market Risk: Transformer-Based Evidence on Sentiment and Volatility Dynamics",
+  "abstract": "This study examines whether transformer-based financial news sentiment improves equity volatility forecasts beyond conventional market-based predictors. Using data for eleven US stocks, we compare volatility persistence models with specifications incorporating the VIX, AAII investor sentiment, and news sentiment extracted using ModernFinBERT. The forecasting target is annualized volatility constructed from future averages of trailing 252-session Yang-Zhang estimates, evaluated at horizons of 1, 5, and 22 trading days. Models are assessed through walk-forward testing with expanding and rolling estimation windows, fixed initial hyperparameter selection, and statistical comparisons accounting for multiple testing and serial dependence. Results show that a naive persistence benchmark achieves the lowest average QLIKE loss at all horizons. Although HAR-VIX produces the largest number of individual forecasting wins under expanding windows, it does not achieve the lowest mean loss. Adding text-based sentiment improves HAR forecasts in only two of 33 expanding-window comparisons, and neither improvement remains statistically significant under longer HAC bandwidths. A blinded audit of 2,700 news texts further characterizes the agreement and confidence patterns of ModernFinBERT classifications. The findings do not establish a general incremental forecasting advantage from transformer-based news sentiment. They highlight the importance of strong benchmarks, temporal alignment, robust inference, and careful evaluation of text-derived predictors.",
+  "url": "https://arxiv.org/abs/2610.39636v1",
+  "pdf": "https://arxiv.org/pdf/2610.39636v1",
+  "source": "arXiv",
+  "date": "2026-10-29",
+  "score": 11,
+  "queued": "2026-11-01",
+  "text_file": "knowledge/papers/arxiv_2610.39636v1.txt"
+ },
+ {
+  "id": "openalex:W7224078659",
+  "title": "Replication package for: Arbitrage-Constrained Neural Interpolation of the Implied Volatility Surface: Evidence from NSE Index Options",
+  "abstract": "Code and derived data behind PNmix (prior-network mixture), an implied volatility surface for NIFTY 50 index options that is free of butterfly and calendar arbitrage by construction. The package builds the evaluation panel from NSE F&O bhavcopy files (2020-2026), fits PNmix and the benchmark methods (SVI, SSVI, Fengler's smoother, thin-plate and cubic splines) on 18 expanding-origin folds, and reproduces every table and figure in the paper, including the intraday backtest in Section VII.",
+  "url": "https://doi.org/10.5281/zenodo.23728871",
+  "source": "OpenAlex",
+  "date": "2026-10-28",
+  "score": 11,
+  "queued": "2026-11-01",
+  "text_failed": true
  },
  {
   "id": "openalex:W7223032026",

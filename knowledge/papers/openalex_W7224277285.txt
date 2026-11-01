@@ -1,0 +1,510 @@
+A Review of Methods for Predicting Stock Volatility: A 
+Comparison of Traditional Econometric Models, Implied 
+Volatility, and Machine Learning Methods 
+
+Jinyi Liu* 
+School of Finance, Nankai University, Tianjin 300071, China 
+*Corresponding author: Jinyi Liu. 
+
+Abstract 
+Stock volatility forecasting serves as a crucial underpinning for derivatives pricing, asset allocation, and risk 
+management. This paper examines volatility proxy variables, empirical applications, as well as forecasting 
+evaluation metrics, and then review s representative models and empirical evidence across three research 
+pathways. The comparison concerns the information basis and forecasting horizon, taking into account 
+explanatory power, stability, and economic value. A comprehensive review of the literature suggests that 
+traditional models remain a robust benchmark in scenarios with limited data, in which emphasis is placed on 
+interpretability and reproducibility. Impl ied volatility can provide incremental information beyond historical 
+data; however, its predictive power is influenced by variance risk premiums, liquidity, and maturity matching. 
+Machine learning offers greater flexibility in high -dimensional data environments, but its advantages depend 
+on rigorous time -series validation and control of information leakage. Because of inconsistencies in proxy 
+variables, loss functions, sample partitioning, and market conditions, existing evidence fails to support the 
+universal superiority of any single method across all tasks. Future analysis should conduct cross -market tests 
+under a unified evaluation framework and integrate statistical forecasting accuracy with economic value in 
+risk management and investment decision-making. 
+Keywords 
+volatility forecasting, GARCH-type models, implied volatility, machine learning, model comparison 
+
+1. Introduction 
+The extent of stock volatility is an indicator of the uncertainty that characterizes asset price changes and is 
+an important input to derivatives pricing, asset allocation, and risk management [1]. Volatility is not directly 
+observable and has clustering, persistence, long memory, and asymmetry. The factors that affect its 
+fluctuations include market conditions, economic uncertainty, and investor sentiment [2, 3, 4]. To forecast 
+volatility, it is necessary to identify its historical dynamics and determine the horizons and market conditions 
+under which different types of information provide incremental value. 
+The study of this question has been divided into three general directions. To begin with, conventional 
+econometric models extract the volatility pattern based on historical returns, the range of prices, and high -
+frequency realized measures, and make use of structures like GARCH, HAR, Realized GARCH, and CARR 
+Financial Economics Research; Vol.3, No.5; 2026
+E-ISSN: 3006-3663 P-ISSN: 3006-3655
+DOI: https://doi.org/10.70267/fer.v3n5.2129
+Published by: Zeus Press
+21
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+to identify persistence and component differences [4, 5, 6, 7, 8, 9, 10]. Second, implied volatility techniques 
+use option prices, variance risk premiums, and trading volume to infer what markets expect the future volatility 
+to be [11, 12, 13, 14]. Third, machine-learning methods combine high -frequency variables, cross -asset 
+correlations, and text sentiment into an integrated prediction model to find high -dimensional and nonlinear 
+associations [2, 15]. The three approaches focus on the historical realized information, market forward-looking 
+information, and the capability to handle multi-source information, respectively. 
+In the current literature, the key issue being contested is whether a model's predictive advantage persists 
+under a common evaluation framework. The selection of true volatility proxies and loss measures, the forecast 
+horizon, information timing, and sample partitioning influence the ranking of models [16, 17, 18]. In addition, 
+a decrease in statistical error may not be translated to economic benefit in risk management or investment 
+decision making [19]. The main topic of this paper is information sources, with an initial discussion on 
+volatility measures, their applications, and evaluation, followed by a systematic review of the three categories 
+of methods. The applicability conditions and controversies of each method are compared and contrasted in 
+order to draw comparisons between them and outline the gaps in research and future testing opportunities. 
+2. Measurement, Applications, and Evaluation of Volatility 
+The comparability of various studies is only possible if the predicted objects and assessment criteria are 
+more or less similar . In this section, the commonly used proxy variables of volatility, applications of 
+forecasting outcomes in derivatives pricing and risk management, and out-of-sample loss functions and model 
+comparison tests will be discussed in sequence. 
+2.1 Volatility Proxies and Measurement Differences 
+The most popular proxy variables are squared returns, price range, and realized volatility. Squared returns 
+depend exclusively on adjacent closing prices; they are widely available over long historical periods but are 
+highly noisy at the daily frequency. Price range involves the use of both high and low prices that strike a 
+balance between cost of the data and intraday information content [5, 20]. Realized volatility, however, 
+summarizes intraday high-frequency returns and can better characteri ze price paths, although it is vulnerable 
+to bid-ask spreads, asynchronous trading, and sampling frequency [8, 20]. The errors in measurement of these 
+three forms of proxy variables vary, and an identical prediction would be ranked differently with various loss 
+functions. Comparisons across studies thus need standardization of proxy variables or adoption of evaluation 
+procedures that are less sensitive to proxy errors [18]. 
+2.2 Empirical Applications of Volatility Forecasting 
+The value of volatility forecasting is ultimately reflected in specific financial decision -making. Firstly, in 
+the pricing of an option, projected volatility has a direct implication on theoretical prices and risk exposure 
+estimates. To illustrate, in the case of SSE 50 ETF options, model-free implied volatility combines information 
+on various strike prices, and incorporates forward -looking information, not just historical volatility. As there 
+is a variance risk premium between risk -neutral expectations and realised volatility, correcting this risk 
+premium in implied volatility is likely to decrease the forecast bias [11, 12, 14]. In this context, the difference 
+between the expected volatility and the risk compensation will also influence the forecast accuracy. 
+Secondly, in market risk management, the forecasting of volatility can be viewed as an important input in 
+the calculation of Value at Risk (VaR ) and determining capital buffers. Wu Xinyu et al. [19] included both 
+options information and high-frequency data in the VaR measures; the findings indicated that the combination 
+of forward -looking information with the recent realized volatilities would co ntribute positively to the 
+characterization of risks in extreme market situations. The applications of VaR pay attention to the 
+identification of tail losses as well as the evaluation of the appropriateness of the risk coverage, which makes 
+it possible to test how statistical accuracy can be transformed into economic and managerial value. In 
+considering the assessment of volatility models, the forecasting problem and its duration must be considered 
+in the analysis together with the decision-making loss function. 
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+22
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+2.3 Out-of-Sample Evaluation and Model Comparison Tests 
+The in-sample fitting performance cannot be used to measure a model’s predictive power out -of-sample. 
+In order to make the comparison results reliable, related research generally splits the data into training and 
+testing intervals chronologically and uses rolling or extended windows to mimic the real -life process of the 
+information being received over time [1, 15, 16 ]. Selection of evaluation metrics also affects the findings of 
+model comparisons. Mean Squared Error (MSE) emphasizes measuring absolute error, but robust loss 
+functions like QLIKE are able to decrease the effect of measurement errors of proxy variables on model 
+rankings [18]. For predictive-accuracy testing, the Diebold-Mariano test [21] is commonly used to determine 
+whether the difference between the forecast errors of two models is statistic ally significant. Giacomini and 
+White [22] extended forecast evaluation to conditional predictive ability while accounting for parameter -
+estimation uncertainty. When comparing a number of models simultaneously, Hansen et al. [17] suggested 
+using the Model Confidence Set (MCS) to determine a set of statistically indistinguishable superior models, 
+which precludes the misinterpretation of small or random model error differences as stable predictive benefits. 
+3. Traditional Econometric Models Based on Historical Information 
+The traditional econometric model has been developed over time in the direction of the introduction of 
+intraday, long-term, and state information on the basis of historical price dynamics. These types of models also 
+have a well-defined structure, simple interpretation of parameters, and are relatively easy to reproduce; they 
+can be used as the foundation of volatility prediction and as the standard to compare more advanced techniques 
+[1]. 
+3.1 ARCH and GARCH: Volatility Clustering and Persistence 
+Engle [10] suggested using the ARCH model to express conditional variance as a function of the squares 
+of previous shocks, which introduces volatility clustering to a statistically estimateable form. Bollerslev [9] 
+also added the lagged conditional variance term to the GARCH model in order to portray volatility persistence 
+with fewer parameters. Both model classes require only daily returns and can thus be used in situations with 
+low data frequency or when interpretability of the parameters is important. Nonetheless, they have mostly been 
+constrained in terms of information to historical returns, such that it is challenging to directly use intraday 
+price paths or consider option expectations and textual information. Subsequent developments have therefore 
+focused on incorporating these additional sources of information. 
+3.2 Realized GARCH and HAR: High-Frequency Information and Long Memory 
+Realized measures can be directly constructed by the use of high-frequency data and intraday information 
+may be included in conditional volatility models. Realized GARCH links daily returns, latent conditional 
+variance, and realized volatility through a measurement equation. Research on the Chinese market has show n 
+that such a framework enhances out -of-sample predictions of the CSI 300 Index [7, 23]. The HAR model is 
+based on the approximation of the long-memory properties of volatility with daily, weekly, and monthly factors; 
+it has a simple form that can be extended to include jumps and other high-frequency factors [8, 15]. According 
+to cross-market evidence, nonlinear or very complex models do not always outperform linear benchmarks over 
+all horizons [16]. Efficiency of high-frequency information is determined by sampling noise, model structure, 
+and forecast horizon. 
+3.3 CARR, Component Decomposition, and Macro Information 
+In contrast to models based on closing returns, CARR directly captures the price range created by the high 
+and low prices, thereby retaining part of the intraday information at a relatively low data cost [5, 20]. On the 
+basis of this, score-driven CARR models will reflect conditional heteroscedasticity through dynamic parameter 
+updates, whereas multiplicative CARR will incorporate long -term, short-term, and high-frequency measures 
+[5, 6]. Another group of studies breaks down volatility into direction, magnitude, long-term trends, and market 
+states. Quantile decomposition and state transitions have been found to be able to differentiate between times 
+of high and low volatility [4]. Economic uncertainty direction and cycle impact lo ng-term volatility in an 
+asymmetric way [3]. Although these models are more interpretable economically, the low frequency and 
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+23
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+publication lags of macroeconomic variables renders them more appropriate in complementing medium - to 
+long-term prediction. 
+4. Implied Volatility Methods Based on Option Information 
+Implied volatility is based on market estimates of volatility until the end of a contract and can give a 
+prediction of the future beyond past returns [1, 14]. Pricing assumptions, market frictions, and risk 
+compensation also affect the price of options. As such, although implied volatility is forward-looking, it might 
+not necessarily be an unbiased predictor of future actual volatility. 
+4.1 Additional Information Provided by Implied Volatility 
+Implied volatility based on the traditional Black -Scholes (BS) is based upon certain pricing models and 
+individual option quotes. Model -free implied volatility aggregates information across multiple strike prices, 
+thereby reducing reliance on the assumptio ns of any particular pricing model. Evidence based on the SSE 50 
+ETF options suggests that the model-free implied volatility reflects the information provided by the traditional 
+BS implied volatility and much of the historical volatility information [11]. In their research on the options of 
+the S&P 500 index, Jiang and Tian [24] discovered that model-free implied volatility contains information on 
+both Black-Scholes implied volatility and historical realized volatility, and is more efficient in forecasting 
+future volatility. Yet, its performance also depends on whether the quality of the quote, market liquidity, and 
+forecast horizon are well -fitted [24]. Implied volatility measurements can have a significant level of noise 
+when contracts are rarely traded, strike price distributions are scarce, or bid-ask spreads are large. 
+4.2 Variance Risk Premium and Forecasting Bias 
+The implied variance is made up of the expectations of future volatility and the compensation that investors 
+require to cover the volatility risk; therefore, predicted and observed volatility are not entirely consistent with 
+a risk-neutral measure [12, 14]. Studies by Bollerslev et al. [25] suggest that the variance risk premium, defined 
+as the difference between model-free implied variance and realized variance, has asset pricing information and 
+this also implies that implied measures have risk neutral estimates as well as compensating risk. Studies of the 
+Chinese options market have shown that predictive and pricing information is present in the variance risk 
+premium itself; detecting and controlling such a premium can help in eliminating the prediction bi as of the 
+implied volatility [11, 12]. The implied volatility forecast error can be due to the market expectation bias, risk 
+compensation, as well as liquidity and quotation frictions. 
+4.3 Supplementary Insights from Options Trading Volume and High-Frequency 
+Information 
+Besides the price, the volume of options trading also indicates what kind of contracts are of interest to 
+information traders. Ni et al. [26] discovered that the net demand for volatility by non -market makers within 
+the options market is a predictor of the future realized volatility of the underlying stock, meaning that trading 
+activity may give volatility information without the need for option prices. Research on the SSE 50 ETF 
+options indicates that the prediction ability of HAR-type models can be enhanced by trading volume in deeply 
+out-of-the-money options and that the direction of the effect varies across call and put trading volumes [13]. 
+Option prices are indicative of market expectations, high-frequency volatility indicates recent factual volatility, 
+and trading volume describes trading activity. The joint application of this data may increase the amount of 
+information available to risk models [11, 19]. The independent incremental value of each of the variables 
+should be determined by nested comparisons or ablation tests. 
+5. Machine Learning Methods Based on Multi-Source Data 
+The main application of machine learning is to filter and integrate high-dimensional variables and to capture 
+underlying nonlinear connections. Their predictive benefits are then dependent on the quality of data, feature 
+engineering, and validation plan. 
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+24
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+5.1 Integration of High-Dimensional Nonlinear Relationships and Har 
+Sparse variable selection can be done through lasso, random forests can do it by identifying nonlinearities 
+and variable interactions, and neural networks can do it as they can fit complex time dependencies. Current 
+studies usually integrate such methods w ith the help of the HAR structures to increase the functionality of 
+feature processing but still maintain the daily, weekly, and monthly memory features. Research on Chinese 
+high-frequency data shows that jump components, variable selection, and nonlinear fitting may enhance out-
+of-sample predictions of certain samples [15]. The GAT-TCN model suggested by Lü Chengshuang et al. [2] 
+considers both stock correlations and time dependencies at the same time. There was no systematic evidence 
+that all nonlinear models were better than other models at all time horizons when comparing global stock 
+indices [16]. Complexity of the models might imply predictive benefits only in the case that the incremental 
+information is stable and the sample size is large enough. 
+5.2 Text Sentiment and Macroeconomic Uncertainty 
+Text and macroeconomic variables increase the information edge of volatility prediction. Lü Chengshuang 
+et al. [2] used fine -tuned large language models to transform the text of the stock forum into sentiment 
+indicators that were used as inputs to a forecasting network, along with price and technical features. In their 
+ablation results, they found that sent iment information provides incremental predictive value in the specific 
+stock sample. Uncertainty in the economy is studied more extensively in relation to long -term volatility and 
+its variation in direction and cycles [3], whereas higher frequency price v ariables are mainly used to make 
+shorter term predictions [15]. This finding indicates that various information sources can be associated with 
+various time scales, but the most effective way to combine information from multiple sources remains unclear. 
+5.3 Overfitting, Information Leakage, and Reproducibility 
+The credibility of machine-learning results depends critically on the validation procedure. Financial data is 
+highly time -ordered. Randomly splitting the sample or conducting standardization, variable selection, and 
+hyperparameter selection on all samples will permit future information to creep into the training process. In -
+sample fit could also merely indicate the memory of historical noise [2, 15]. Comparisons of models must be 
+based on out -of-sample validation using chronological rolling updates and must be compared with simple 
+benchmarks under the same information set, forecast horizon, and loss function. The statistical measures like 
+MCS can also be used to check if the errors differ more than sampling variation [17, 18]. Until there are simple 
+models competing at the level of the best -performing models, it cannot be stated that complex models have a 
+steady advantage [16]. 
+6. Comparison and Synthesis of Three Classes of Volatility Forecasting Methods 
+These three methods have significant differences between them on the basis of their information foundation 
+and processing techniques. Table 1 shows the information sources and representative methods of every 
+category and compares them based on their key advantages, limitations, and areas of application. Traditional 
+econometric models perform well in terms of low data requirements and interpretability; implied volatility 
+derives its main value from the market's forward -looking information; and machine learning provides more 
+flexibility when working with multi -source and high -dimensional systems and nonlinear systems. All three 
+methods are also limited by historical information lags, risk premium, liquidity, and the risks of overfitting 
+and high reproducibility costs. 
+6.1 Information Sources, Forecast Horizon, and Market Conditions 
+The questions that a model can answer depend on its information sources. The historical returns and the 
+realized measures are well-suited to describe past dynamics in volatility. Multi -source variables might reflect 
+sentiment and correlation structures that cannot be accounted for by prices, and option pri ces reflect market 
+expectations associated with the maturity of the contract [1, 2, 14, 15]. There is also the impact of the forecast 
+horizon on the comparative strength of different approaches. Intraday price and jump terms are mostly useful 
+in predicting short-term movements, whereas macroeconomic uncertainty and long -term terms are more 
+appropriate to explain mid- to long-term movements; option data is affected by time to maturity [3, 4, 8, 13]. 
+Straightforward linear models could be competitive in quiet times because the parameters are stable, but in 
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+25
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+times of high volatility or structural change, state transitions, asymmetric shocks, and sentiment information 
+may play a more significant role. One of the reasons that generalization of the model rankings is hard to achieve 
+is because the existing research has not developed a systematic categorization of the above conditions. 
+Table 1: Comparison of Three Types of Volatility Forecasting Methods 
+Comparison 
+Dimensions 
+Traditional Econometric 
+Models 
+Implied Volatility Methods Machine Learning Methods 
+Data Sources Historical returns, price 
+ranges, and realized measures 
+Option prices, trading volume, 
+and variance risk premiums 
+High-frequency variables, 
+cross-asset correlations, and 
+text sentiment 
+Representative 
+Methods 
+GARCH, HAR, Realized 
+GARCH, CARR 
+BS Implied Volatility, Model-
+Free Implied Volatility 
+Lasso, Random Forests, 
+Neural Networks, GAT-TCN 
+Key Advantages Clear structure, easy to 
+interpret and reproduce, with 
+low data requirements 
+Forward-looking, providing 
+market expectations beyond 
+historical information 
+Capable of filtering high-
+dimensional variables and 
+fitting nonlinear relationships 
+Key Limitations Difficulty in directly 
+incorporating external 
+information such as options 
+and text 
+Susceptible to the effects of 
+risk premiums, liquidity, quote 
+noise, and maturity 
+mismatches 
+Risks of overfitting, 
+information leakage, and 
+insufficient interpretability 
+Applicable 
+Conditions 
+Limited data or a focus on 
+mechanism-based 
+explanations and robust 
+benchmarks 
+Active options markets with 
+reliable quotes and maturity 
+matching 
+Adequate multi-source data 
+and rigorous validation 
+procedures 
+6.2 The Trade-off Between Explanatory Power, Forward-Looking Nature, and Flexibility 
+Traditional econometric model parameter structures can assist in explaining the causes of volatility 
+persistence, but when structural constraints are strong, they might prevent new information from being 
+considered. Implied volatility is forward -looking but needs a disentanglement between actual expectations, 
+risk premium, and market frictions. Machine learning minimizes limitations on functional forms yet raises data 
+demands, parameter-tuning difficulties and reproducibility costs, [1, 11, 12, 15, 16]. The selection of methods 
+must be based on the goals of research. The mechanism -based explanation needs an identifiable parameter 
+structure, and the extraction of short-term market expectations depends on the quality of options data, whereas 
+high-dimensional forecasts need strict out-of-sample validation. 
+6.3 Unified Evaluation and Integrated Research 
+To achieve a proper comparison, there are at least four standardized conditions necessary, that is, the 
+volatility proxy variables, the cutoff point concerning forecast information, the forecast horizon, and the out -
+of-sample loss function [16, 17, 18]. The statistical and economic assessments need to be reported concurrently. 
+A lower error indicates that the forecast is closer to the proxy variable. The economic worth of a model needs 
+to be evaluated on the basis of observable changes in option pricing, VaR coverage, or investment decisions 
+[16, 19]. Some of the studies on integration have gone beyond the limits of these three methodological groups, 
+such as integrating machine learning into HAR models or using options and high -frequency data to measure 
+risks together [15, 19]. The future comparisons ought to aim at determining what kinds of information can give 
+steady incremental benefits depending on what conditions prevail. Following this, Table 2 presents 
+representative models in terms of their research ro le, depicting the relationship between dynamic nature of 
+volatility, extraction of information on its future behavior, and combination of various sources of information 
+with statistical analysis. 
+Table 2: Functional Chains and Representative Methods in Volatility Forecasting Research 
+Research Function Representative Models or 
+Metrics 
+Primary Information Applicable Problems 
+Daily Volatility 
+Dynamics 
+ARCH, GARCH Historical Returns and 
+Lagged Conditional 
+Variance 
+Volatility Clustering, 
+Persistence, and Benchmark 
+Forecasts 
+High-Frequency and 
+Long-Memory 
+Realized GARCH, HAR Realized Measures and 
+Daily, Weekly, and 
+Monthly Components 
+Short- and Medium-Term 
+Forecasting and High-
+Frequency Information Gains 
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+26
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+Research Function Representative Models or 
+Metrics 
+Primary Information Applicable Problems 
+Range and 
+Component 
+Decomposition 
+CARR, quasi-score-driven, 
+and multiplicative 
+component models 
+Price Range, Long-Term 
+and Short-Term 
+Components 
+Utilization of intraday 
+information under data cost 
+constraints 
+Forward-Looking 
+Expectations 
+BS Implied Volatility, 
+Model-Free Implied 
+Volatility 
+Option Price Cross-
+Sections 
+Term-Matched Expectations 
+of Future Volatility 
+Risk Compensation 
+and Trading Activity 
+Variance Risk Premium, 
+Option Trading Volume 
+Risk-Neutral Expectations, 
+Trading Volume 
+Bias Correction and 
+Identification of Incremental 
+Information 
+Multi-source 
+Nonlinear Forecasting 
+HAR Fusion, GAT-TCN High-frequency variables, 
+correlation networks, and 
+text sentiment 
+High-Dimensional Variable 
+Screening and Nonlinear 
+Fitting 
+Prediction 
+Comparison 
+Robust Loss Functions, 
+MCS 
+Out-of-sample prediction 
+loss 
+Reducing the Impact of Proxy 
+Noise and Testing Ranking 
+Stability 
+7. Conclusions and Future Directions 
+The paper presents three research directions in the field of stock volatility prediction according to the 
+information sources. According to current knowledge, traditional econometric models have relative strengths 
+in their ability to explain structures, im plied volatility provides forward -looking market information, and 
+machine learning has a comparative advantage in its ability to process high -dimensional information. The 
+constraints of these advantages include the quality of the data, forecast time scales, the state of the market, and 
+validation plans. The performance of models is highly conditional, and the discrepancies in the outcomes of 
+studies are frequently more effectively accounted for by the source of the information and the structure of the 
+assessments than by the complexity of the models. 
+There are four remaining drawbacks in the current literature. First, most empirical researches conducted 
+domestically focuses on the CSI 300 Index, the SSE 50 ETF options, or particular phases of the market. Their 
+findings are not sufficiently supported by evidence that suggests they could be applied to different markets, 
+assets, and extreme market conditions. Second, various studies use different proxies of volatilities and loss 
+functions, and information timing, forecasting windows, and division of samples differ greatly. The 
+performance of the model can be due to both methodological differences and differences in the research design. 
+Third, while many studies rely primarily on statistical for ecast errors, joint tests of economic value—such as 
+option pricing, VaR coverage, and investment decisions —remain insufficient. Fourth, there is no consensus 
+on whether machine learning can consistently outperform simple linear models. Existing research also rarely 
+systematically decomposes whether improvements stem from new information, variable selection, or nonlinear 
+structures. 
+These shortcomings may be addressed by conducting future research in three directions. Initially, proxy 
+measures, cut -off points of information, forecast horizons, and rolling out -of-sample strategies need to be 
+standardized. Based on this, comparative studies of various markets, asset types, and levels of volatility ought 
+to be carried out, and report both forecast inaccuracies as well as their uncertainty. Then, statistical precision 
+and economic worth must be considered as part of one assessment system to assess if improvement of forecasts 
+may always decrease the error in option pricing, improve the coverage of VaR, or raise the returns adjusted to 
+risks. Lastly, multi -source integration studies involve both ablation tests and time -series validation. It is 
+necessary to determine the independent incremental value of high -frequency, option, macroeconomic, and 
+text-based information that will help define the applicability limits of more complicated models in comparison 
+with simple ones. 
+References 
+[1] Poon, S. H., & Granger, C. W. J. (2003). Forecasting volatility in financial markets: A review. Journal of 
+Economic Literature, 41(2), 478–539. https://doi.org/10.1257/002205103765762743. 
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+27
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+[2] Chengshuang Lü, Tong Wang & Haoran Sun. (2025). Research on stock price volatility forecasting 
+integrating sentiment indicators: Based on fine -tuned large language model and GAT -TCN network. 
+Operations Research and Management Science, 34(10), 87–92. 
+[3] Wenxin Liao & Xiaoguang Xu. (2024). The asymmetric effect of economic uncertainty on long -term 
+volatility of stock market. Journal of Central University of Finance & Economics, (11), 89 –102. 
+https://doi.org/10.19681/j.cnki.jcufe.2024.11.009. 
+[4] Feng Ma, Xiaofeng He & Xinjie Lu. (2023). Modeling and prediction of Chinese stock market volatility: 
+Based on a new decomposition method. Systems Engineering — Theory & Practice, 43(10), 2827–2845. 
+https://doi.org/10.12011/SETP2022-3239. 
+[5] Genxiang Shen & Zefeng Zhou. (2025). Quasi score -driven conditional heteroskedastic autoregressive 
+range model and its empirical study. Chinese Journal of Management Science, 33(5), 34 –44. 
+https://doi.org/10.16381/j.cnki.issn1003-207x.2022.1331. 
+[6] Xinyu Wu, Haibin Xie & Chaoqun Ma. (2023). Score-driven multiplicative component realized CARR 
+model and its empirical study. Chinese Journal of Management Science, 31(8), 214 –225. 
+https://doi.org/10.16381/j.cnki.issn1003-207x.2020.1893. 
+[7] Tianyi Wang, Xiaojun Zhao & Zhuo Huang. (2014). Forecasting volatility of CSI 300 index with high -
+frequency data: Empirical evidence from Realized GARCH model. World Economic Papers, (5), 17–30. 
+[8] Andersen, T. G., Bollerslev, T., Diebold, F. X., & Labys, P. (2003). Modeling and forecasting realized 
+volatility. Econometrica, 71(2), 579–625. https://doi.org/10.1111/1468-0262.00418. 
+[9] Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. Journal of Econometrics, 
+31(3), 307–327. https://doi.org/10.1016/0304-4076(86)90063-1. 
+[10] Engle, R. F. (1982). Autoregressive conditional heteroscedasticity with estimates of the variance of United 
+Kingdom inflation. Econometrica, 50(4), 987–1007. https://doi.org/10.2307/1912773. 
+[11] Jinbo Huang & Tianjiao Wang. (2024). The information content and pricing power of model-free implied 
+volatility: Empirical research on SSE 50 ETF options. Statistical Research, 41(3), 115 –128. 
+https://doi.org/10.19343/j.cnki.11-1302/c.2024.03.009. 
+[12] Lingyu Zeng. (2023). Application of variance risk premium in volatility forecasting: Based on SSE 50 
+ETF options. Journal of Shaoyang University (Social Science Edition), 22(5), 65–73. 
+[13] Die Wan & Yi Tian. (2023). Can option trading volume forecast volatility? Evidence from Shanghai Stock 
+Exchange 50 ETF options. Systems Engineering — Theory & Practice, 43(3), 755 –771. 
+https://doi.org/10.12011/SETP2022-1341. 
+[14] Christensen, B. J., & Prabhala, N. R. (1998). The relation between implied and realized volatility. Journal 
+of Financial Economics, 50(2), 125–150. https://doi.org/10.1016/S0304-405X(98)00034-8. 
+[15] Ke Yang, Zhoushen Zhang & Fengping Tian. (2023). The volatility forecasting of Chinese stock market 
+under high-frequency data environment: Fusion research based on machine learning and HAR model. 
+China Journal of Econometrics, 3(3), 886–904. https://doi.org/10.12012/CJoE2022-0067. 
+[16] Branco, R. R., Rubesam , A., & Zevallos, M. (2024). Forecasting realized volatility: Does anything beat 
+linear models? Journal of Empirical Finance, 78, 101524. https://doi.org/10.1016/j.jempfin.2024.101524. 
+[17] Hansen, P. R., Lunde, A., & Nason, J. M. (2011). The model confidence set. Econometrica, 79(2), 453–
+497. https://doi.org/10.3982/ECTA5771. 
+[18] Patton, A. J. (2011). Volatility forecast comparison using imperfect volatility proxies. Journal of 
+Econometrics, 160(1), 246–256. https://doi.org/10.1016/j.jeconom.2010.03.034. 
+[19] Xinyu Wu, Xindan Li & Chaoqun Ma. (2021). Measuring VaR based on the information content of option 
+and high -frequency data. Chinese Journal of Management Science, 29(8), 13 –23. 
+https://doi.org/10.16381/j.cnki.issn1003-207x.2019.1189. 
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+28
+© 2026 The Author(s). Authors retain copyright in their articles.
+
+[20] Tianyi Wang & Zhuo Huang. (2012). A review of high -frequency data-based volatility modeling and its 
+applications. Economic Perspectives, (3), 141–146. 
+[21] Diebold, F. X., & Mariano, R. S. (1995). Comparing predictive accuracy. Journal of Business & Economic 
+Statistics, 13(3), 253–263. https://doi.org/10.1080/07350015.1995.10524599. 
+[22] Giacomini, R., & White, H. (2006). Tests of conditional predictive ability. Econometrica, 74(6), 1545–
+1578. https://doi.org/10.1111/j.1468-0262.2006.00718.x. 
+[23] Leifu Gao & Weimei Li. (2022). Volatility forecasting based on Expectile and Realized GARCH model. 
+Operations Research and Management Science, 31(2), 99–103. 
+[24] Jiang, G. J., & Tian, Y. S. (2005). The model -free implied volatility and its information content. The 
+Review of Financial Studies, 18(4), 1305–1342. https://doi.org/10.1093/rfs/hhi027. 
+[25] Bollerslev, T., Tauchen, G., & Zhou, H. (2009). Expected stock returns and variance risk premia . The 
+Review of Financial Studies, 22(11), 4463–4492. https://doi.org/10.1093/rfs/hhp008. 
+[26] Ni, S. X., Pan, J., & Poteshman, A. M. (2008). Volatility information trading in the option market. The 
+Journal of Finance, 63(3), 1059–1091. https://doi.org/10.1111/j.1540-6261.2008.01352.x. 
+Funding 
+This research received no external funding. 
+Conflicts of Interest 
+The authors declare no conflict of interest. 
+Acknowledgment 
+This paper is an output of the science project. 
+Copyrights 
+Copyright for this article is retained by the author (s), with first publication rights granted to the journal. This 
+is an open -access article distributed under the terms and conditions of the Creative Commons Attribution 
+license (http://creativecommons.org/licenses/by/4.0/). 
+
+https://journals.zeuspress.org/index.php/FER/index; Financial Economics Research; Volume 3 · Issue 5 · 2026
+29
+© 2026 The Author(s). Authors retain copyright in their articles.

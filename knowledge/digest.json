@@ -1,5 +1,50 @@
 [
 {
+"title": "The Allocation of Talent: Implications for Growth",
+"learned": "Talent allocation affects growth: when high\u2011ability people run or organize firms they generate scalable returns, but when they become rent\u2011seekers they earn high rents without creating value. The sector mix (e.g., engineering vs. law) predicts growth rates.",
+"concepts": [
+"talent allocation",
+"entrepreneurial vs. rent\u2011seeking returns",
+"scale economies",
+"sectoral talent distribution",
+"growth correlation"
+],
+"relevance": 2,
+"verdict": "prop mission - feeds my strategy designer and self-check",
+"url": "https://dash.harvard.edu/bitstreams/7312037d-e049-6bd4-e053-0100007fdf3b/download",
+"date": "2026-11-01"
+},
+{
+"title": "Latent Continuum of Regimes in Limit Order Book Dynamics",
+"learned": "The paper finds that high-frequency limit order book dynamics are better described by a continuous low\u2011dimensional manifold (effective dimension ~1.4) rather than a few discrete regimes, with a single latent coordinate explaining >83% of the variation and tracking market stress.",
+"concepts": [
+"continuous regime space",
+"latent stress coordinate",
+"Riemannian covariance geometry",
+"low\u2011dimensional market stress",
+"walk\u2011forward forecasting"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/abs/2610.05740v2",
+"date": "2026-11-01"
+},
+{
+"title": "FOMO: FLEX Options and Market Outcomes",
+"learned": "FLEX options are custom exchange\u2011traded contracts that spike in volume. The paper finds that FLEX events are followed by higher open interest in standard options, tend to occur in high\u2011IV stocks (especially midsized price levels), and that the IV\u2011minus\u2011realized\u2011vol spread on the event day predicts the return of a short\u2011straddle trade.",
+"concepts": [
+"FLEX options",
+"open\u2011interest spillover",
+"IV\u2011realized\u2011vol spread",
+"volatility\u2011carry",
+"event\u2011study DiD"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/abs/2610.13044v1",
+"date": "2026-11-01"
+},
+{
 "title": "Skewness Premium for Short\u2010Term Exposure to Squared Market Returns",
 "learned": "The paper isolates the premium for exposure to the square of the S&P 500 daily return using a pure options strategy, finding a negative skewness premium of about 5% per year (puts outperform calls). The effect is strong at daily horizons but fades over longer periods.",
 "concepts": [

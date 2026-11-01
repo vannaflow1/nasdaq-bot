@@ -1,0 +1,1234 @@
+Perturbation-Speciﬁc Reliability of Intrinsic and
+Post-Hoc Explainable Machine Learning in Volatility
+Forecasting
+Haikal Djauhari 
+Universitas Ahmad Dahlan
+Anton Yudhana 
+Universitas Ahmad Dahlan
+- Sunardi 
+Universitas Ahmad Dahlan
+Research Article
+Keywords: Intrinsic interpretability, post-hoc explainability, volatility forecasting, explanation stability
+Posted Date: October 26th, 2026
+DOI: https://doi.org/10.21203/rs.3.rs-11158626/v1
+License:   This work is licensed under a Creative Commons Attribution 4.0 International License.  
+Read Full License
+Additional Declarations: No competing interests reported.
+1 
+
+Perturbation-Specific Reliability of Intrinsic and Post-Hoc 
+Explainable Machine Learning in V olatility Forecasting 
+Haikal Djauhari1*, Anton Yudhana2, Sunardi3 
+1Doctoral Program in Informatics, Universitas Ahmad Dahlan, Yogyakarta, Indonesia 55191 
+2Doctoral Program in Informatics, Universitas Ahmad Dahlan, Yogyakarta, Indonesia 55191 
+3Doctoral Program in Informatics, Universitas Ahmad Dahlan, Yogyakarta, Indonesia 55191 
+*haikal@infiga.net 
+Abstract 
+
+The reliability of intrinsic and post-hoc explanations cannot be assessed independently of the perturbation under 
+which they are evaluated. Using purged walk-forward validation, this study forecasts five-day realized volatility 
+for 20 equities across three markets from 2016 to 2025 and evaluates five model families paired with intrinsic 
+or post-hoc explanation methods. We admit only models that outperform step-5 persistence out of sample to the 
+main interpretability analysis. We assess explanation reliability under three perturbations: retraining with 
+different random seeds, temporal shift, and input jitter, using matched-stock paired inference. Integrated 
+Gradients applied to a Long Short-Term Memory (LSTM) network and to TabNet differ by 0.52 in temporal 
+rank agreement, showing that explanation stability depends on the model –representation–explainer 
+configuration. When the same trained TabNet network is explained using its intrinsic attention mask and post-
+hoc Integrated Gradients, the two methods are similar under temporal shift but diverge under input perturbation 
+and retraining. The intrinsic mask is more robust to input noise but less reproducible across retraining. Ablation-
+based faithfulness performs no better than random feature ordering, while fixed-depth top-k agreement is biased 
+by feature-space size. The Heterogeneous Autoregressive model of Realized Volatility (HAR-RV) achieves the 
+best median forecasting accuracy and is statistically indistinguishable from the spline-based Generalized 
+Additive Model (GAM). Overall, explanation reliability is perturbation-specific and should be evaluated 
+empirically for each model–representation–explainer configuration. 
+
+Keywords: Intrinsic interpretability; post-hoc explainability; volatility forecasting; explanation stability.
+
+1 Introduction 
+Financial time-series volatility is often considered 
+easier to forecast than returns. However, this remains 
+difficult because of volatility clustering, heavy tails in 
+return distributions, non-stationarity across market 
+regimes, and asymmetric responses to positive and 
+negative shocks [1 –3]. Although machine learning 
+(ML) models are able to deal more effectively than 
+traditional methods such as GARCH or HAR with 
+nonlinear relationships, high-dimensional 
+interactions, and dynamics that depend on the market 
+regime, they are not always better [2, 4]. The need for 
+large amounts of data hinders their performance, 
+increases the risk of overfitting, raises the 
+computational costs linked to the repeated re-
+estimation using rolling windows, and results in 
+inconsistent improvements out of sample when 
+compared to simpler benchmark models [1, 5]. The 
+accuracy of the forecasts also relies heavily on how 
+the features are constructed, particularly in terms of 
+choosing the predictors, representing the different 
+market regimes, and regarding the level of 
+redundancy or collinearity among the variables [6 –
+10]. Another limitation is interpretability: whereas the 
+coefficients of classical linear models have fairly 
+clear statistical and economic interpretations, many 
+machine learning models function as opaque "black 
+boxes", which hampers their acceptance by 
+regulators, their use in risk management, and the 
+ability to identify model failures during periods of 
+extreme market conditions [11–13]. This issue has led 
+to the adoption of explainable artificial intelligence 
+(XAI), which includes both intrinsic and post hoc 
+methods. Intrinsic methods build interpretability into 
+the model itself, examples being generalized additive 
+models (GAMs) [14], Explainable Boosting 
+Machines (EBMs) [15], and TabNet [16]. On the 
+other hand, post-hoc methods provide explanations 
+after training and can be used with more complex 
+architectures. Common techniques include SHAP and 
+TreeSHAP [17, 18], counterfactual explanations [19], 
+and Integrated Gradients [20]. Together, these 
+methods offer complementary ways to increase 
+transparency while maintaining the predictive 
+flexibility of current machine learning models. 
+In fact, the vast majority of the explainability tools 
+employed in both industry and academic research are 
+of a post-hoc nature: SHAP, LIME, and 
+counterfactual explanations can be used with any 
+model that has already been trained without 
+necessitating any modifications to the model, and it is 
+for this reason that they are so attractive since they do 
+2 
+
+not place any extra demands on the model selection 
+process [21 –25]. Rudin [26] argues that this 
+convenience is also the source of the problem: a post-
+hoc explainer approximates a model which it has not 
+taken part in constructing, and such an approximation 
+might misrepresent the very reasoning that it claims 
+to describe — a risk which she regards as 
+unacceptable in the case of important decisions, such 
+as those involving finance. Laugel et al. [27] provided 
+direct empirical evidence of this problem in 
+counterfactual explanations, showing that many 
+classifier predictions lie in regions of the input space 
+that are not continuously connected to real training 
+data of the same class. The authors term these regions 
+“unjustified” because explanations generated there 
+may reflect artifacts of the model’s decision 
+boundary—such as isolated pockets from an unstable 
+ensemble or extrapolated regions from an overly 
+flexible classifier —rather than patterns genuinely 
+supported by the data. Even though their study is 
+focused on counterfactual explanations rather than the 
+feature-attribution methods that are the subject of this 
+paper, the fundamental concern is directly applicable: 
+the output of a post-hoc explainer can be affected by 
+the idiosyncrasies of the trained model rather than by 
+real structures in the data, and there is nothing in the 
+post-hoc method itself that guarantees this will not 
+occur. 
+Yet the debate remains unresolved, even though 
+Rudin [26] and Laugel et al. [27] have drawn a 
+distinction. Wiratsin et al. [28] and Haque et al. [29] 
+claim that neither intrinsic nor post-hoc explanations 
+have consistently shown faithfulness, that is, that an 
+explanation truly matches the model’s real reasoning. 
+Regarding intrinsic methods, genuinely interpretable 
+architectures remain rare in practice, and many 
+models that are supposed to be interpretable still 
+include black-box components. For instance, 
+attention weights can be obtained from 
+representations already transformed by uninterpreted 
+encoders and thus may not indicate the true 
+importance of the input. More generally, assertions 
+about intrinsic interpretability are often accepted 
+without adequate validation, attention being a clear 
+case of potentially unfaithful explanations as 
+discussed by Jacovi & Goldberg [30]. Post-hoc 
+methods also suffer from similar issues. Feature-
+attribution techniques can differ greatly, and their 
+faithfulness usually depends on the particular task and 
+model rather than being generally applicable. Recent 
+theoretical research has even indicated that it may be 
+impossible to guarantee generally faithful post-hoc 
+importance measures, as shown by Bilodeau et 
+al.[31]. Likewise, similar limitations have been found 
+in relation to neuron-level visualizations and probing 
+methods, since explanations that appear convincing 
+do not necessarily correspond to the model’s actual 
+internal mechanisms. Some literature therefore 
+questions whether the distinction between intrinsic 
+and post-hoc approaches should remain the main 
+framework for explainability. Rather than assuming 
+one paradigm is inherently trustworthy, this study 
+treats faithfulness, stability, and consistency as 
+empirical properties to assess for each model –
+representation–explainer configuration. 
+
+The idea put forward by Rudin [26] that intrinsically 
+interpretable models should be given preference over 
+post hoc explanations of black-box models remains 
+disputed. She maintains that the supposed trade-off 
+between accuracy and interpretability is generally 
+misleading, noting that interpretable models can 
+achieve predictive performance competitive with 
+other models. Yet in many practical situations, post 
+hoc explanations are still needed, since high-
+performing models may already be in use, may be 
+proprietary, or may be too expensive to replace with 
+intrinsically interpretable ones. In these 
+circumstances, post hoc methods might be the only 
+reasonable way to achieve transparency. However, 
+their reliability is not guaranteed. Intrinsic models 
+share a similar drawback: their explanations are 
+trustworthy only if the public model structure truly 
+reflects the reasoning behind the predictions. Rather 
+than taking this property for granted, the present study 
+assesses it empirically. 
+The existing XAI benchmarks generally do not tackle 
+the question of whether explanations are intrinsic or 
+post-hoc and instead evaluate different kinds of 
+explainers (for instance, SHAP with XGBoost rather 
+than attention in a transformer) — in this way they 
+determine which model is more interpretable rather 
+than which explanation method is more reliable, since 
+the differences between the base models interfere 
+with any differences that are observed. To properly 
+assess Rudin’s recommendation, we need both an 
+intrinsic explanation and a post-hoc explanation for 
+the same trained model, so any discrepancy between 
+the two can be attributed to the explanation method 
+rather than to one model being easier to interpret than 
+the other. To our knowledge, no previous study has 
+carried out such a comparison in the context of a 
+financial forecasting task, nor has it examined it under 
+conditions that are realistic for that domain — 
+specifically, non-stationary markets, walk-forward 
+evaluation, and a skill gate that makes sure the model 
+being explained actually has predictive ability from 
+the beginning. 
+The paper addresses that gap directly. The paper 
+compares intrinsic and post-hoc explanations on the 
+same model under controlled conditions: TabNet 
+produces an intrinsic explanation via its attention 
+masks, and the same trained TabNet model is then 
+given a post-hoc explanation using Integrated 
+3 
+
+Gradients. Therefore, any difference between the two 
+methods must come from the explanation technique, 
+not the model. This comparison is part of a more 
+comprehensive cross-model benchmark that includes 
+five different model families — XGBoost, an LSTM, 
+TabNet, a spline-based GAM, and an EBM — each 
+being paired with the explainer appropriate to its 
+architecture and each being evaluated in the context 
+of 5-day-ahead realized volatility forecasting for 20 
+equities from the US, European, and Japanese 
+markets, using a leakage-safe walk-forward 
+procedure. Rather than relying on a single 
+interpretability criterion, we assess each model –
+representation–explainer configuration using three 
+complementary metrics: faithfulness, stability (with 
+respect to input noise and over time), and consistency 
+across independent explainers for the same model. 
+Accordingly, this study makes three methodological 
+contributions. First, it isolates explanation effects 
+through a same-model comparison in which intrinsic 
+TabNet masks and post-hoc Integrated Gradients 
+explain the same fitted network. Second, it decomposes 
+explanation stability into input-noise, temporal, and re-
+estimation perturbations under leakage-safe walk-
+forward evaluation. Third, it evaluates explanation 
+quality with randomized faithfulness controls and size-
+corrected agreement measures so that apparent 
+reliability is not inferred from metric artifacts. 
+
+2 Related Work 
+2.1 Explainable Artificial Intelligence in Financial 
+Time Series 
+Arsenault [32] examined the use of XAI over a five-
+year period in financial time series forecasting and 
+developed a comprehensive taxonomy, distinguishing 
+explainability from interpretability —two notions 
+often conflated but used differently in practice. This 
+distinction underpins the current study’s comparison 
+between intrinsic interpretability, which applies to 
+models designed to be interpretable (e.g., GAMs and 
+EBMs), and post-hoc explainability, which refers to 
+techniques applied after training to explain black-box 
+models (e.g., TreeSHAP and Integrated Gradients). 
+Gunnarson et al. [12] carried out a systematic review 
+of AI and ML methods for predicting realized and 
+implied volatility indices. They concluded that these 
+methods are highly promising and often achieve 
+results equal to or better than those of traditional 
+econometric models, with neural networks that use 
+memory mechanisms such as LSTM and GRU among 
+the best performers. Nevertheless, even with these 
+findings, very few studies use XAI to support their 
+empirical results, pointing to a major gap: as more 
+complex models become increasingly common in 
+volatility forecasting, their decision-making 
+processes remain largely unexplained. 
+Černevičienė and Kabašinskas [33] divided the 
+FinXAI methodological landscape into three 
+dimensions: the time at which the explanation is given 
+(with inherently interpretable models such as 
+LassoNet and decision trees being contrasted against 
+post-hoc methods like SHAP, LIME, and Grad-CAM, 
+which are used with pre-trained models), the scope of 
+the explanation (this being either global, which shows 
+the overall decision logic, or local, which explains a 
+single prediction), and the applicability (with methods 
+that are specific to the model and depend on its 
+internal architecture, for example those based on 
+attention mechanisms, versus model-agnostic 
+methods that can be used with any black-box model). 
+In financial time series, feature selection helps 
+identify relevant market indicators, lagged returns, 
+volatility measures, macroeconomic variables, or 
+technical indicators that contribute to forecasting 
+price movement, risk, or market regimes. Industry 
+portfolio indices thus gain intrinsic interpretability 
+without sacrificing the ability to model non-linear 
+relationships. Giudici et al. [38] emphasized that 
+time-series XAI must account for temporal 
+dependence, since feature importance changes over 
+time and static explanation methods can lead to 
+incorrect conclusions. Mohamed et al. [34] went 
+beyond applying XAI to regression-based forecasting 
+and used it for pattern-recognition tasks, predicting 
+five different kinds of market trends. Sharbati et al. 
+[35] combined LSTM (to capture temporal 
+dependencies), XGBoost (for non-linear regression), 
+and SHAP (for explanation) using Transformer-style 
+encoders in a hybrid framework that balances 
+predictive accuracy and transparency. Suprihadi et al. 
+[36] applied a similar LSTM-SHAP approach to the 
+forecasting of REIT returns. Ranjan et al. [22] found 
+that a simpler 1D-CNN architecture achieved both 
+interpretability and competitive predictive 
+performance compared with ARIMA and LSTM in 
+tests on S&P 500 data, showing that the trade-off 
+between complexity and interpretability is not 
+necessarily irreducible. Freeborough and van Zyl [37] 
+showed that existing XAI methods do not transfer 
+easily to RNN-based financial forecasting and that 
+temporal dependencies require special handling. 
+Taken together, the literature indicates that the 
+challenges encountered in XAI for financial time 
+series differ from those in tabular or image-based 
+applications. Because of autocorrelation and temporal 
+dependence, explanations must capture dynamic 
+patterns rather than static feature-output relationships, 
+and because the data are non-stationary, predictor 
+importance can vary across market regimes. The low 
+4 
+
+signal-to-noise ratio also raises the possibility that 
+explanation techniques will assign importance to 
+noise, and mixed-frequency data —such as daily 
+market prices alongside monthly macroeconomic 
+indicators—make it difficult to build a consistent 
+explanatory framework. Furthermore, most XAI 
+methods offer only correlational rather than causal 
+explanations, which limits their value for financial 
+decision-making. Current approaches include 
+intrinsically interpretable models like LassoNet, post-
+hoc methods such as SHAP, and hybrid architectures 
+such as LSTM-XGBoost, all aiming to balance 
+predictive accuracy and transparency. Nevertheless, 
+temporal dependence, regime shifts, and high noise 
+remain major challenges. XAI therefore needs to 
+develop explanation methods specifically designed 
+for time-dependent data and extend evaluation across 
+a wider range of financial contexts, market regimes, 
+and asset classes before it can be considered a reliable 
+part of financial decision-making. 
+2.2 Intrinsic Interpretability vs. Post-Hoc 
+Explainability: An Ongoing Debate 
+Within the area of Explainable Artificial Intelligence 
+(XAI) there exists a basic division concerning the way 
+in which interpretability should be achieved. On one 
+side, there is the view that intrinsically interpretable 
+models should be used —meaning models in which 
+interpretability is built right from the start—while on the 
+other side it is argued that post-hoc explanation methods 
+should be employed, involving the initial training of a 
+high-performance "black-box" model and then the 
+application of various tools to explain the decisions of 
+that model. Madsen et al. [38] describe these as two 
+distinct approaches: the intrinsic approach, which holds 
+that only models intentionally designed to be 
+interpretable can be interpreted, and the post-hoc 
+approach, which asserts that black-box models can also 
+be explained. This section examines the main 
+arguments, empirical evidence, and the developing 
+consensus, focusing on their relevance to significant 
+financial decisions. It concludes by examining methods 
+that go beyond this simple dichotomy. 
+The idea of intrinsic interpretability is to build 
+interpretability directly into the model from the start, 
+rather than adding it on afterwards. Zschech et al. [39] 
+refer to this as "inherently interpretable machine 
+learning", meaning that the decision logic can be 
+understood on the basis of the architecture itself and 
+not with the aid of any external tools. Models in this 
+category include linear and logistic regression, 
+decision trees, rule lists, Generalized Additive 
+Models, and LassoNet. Shu et al. [40] demonstrate 
+that an intrinsically interpretable model for predicting 
+the shear strength of reinforced concrete beams can 
+achieve accuracy comparable to black-box methods. 
+The main benefit of intrinsic models is their 
+faithfulness. Because the decision logic is built 
+directly into the model’s structure, there is no need to 
+translate or approximate the model’s behavior, and the 
+explanation is complete rather than only local. Yet 
+this disadvantage shows itself when models are 
+employed for complicated tasks such as forecasting 
+financial time series, since simple models generally 
+fail to capture non-linear patterns and long-range 
+dependencies, resulting in the usual compromise 
+between accuracy and interpretability. However, 
+Rudin [26] challenges this view, arguing that the 
+accuracy-interpretability trade-off is often a false 
+dilemma; in many high-stakes situations, carefully 
+designed interpretable models can match the accuracy 
+of black-box models. Her main point is that 
+researchers should develop inherently interpretable 
+models rather than generating explanations afterward, 
+especially since unreliable post hoc explanations in 
+fields such as medical diagnosis, criminal justice, or 
+financial risk management can have serious 
+consequences. 
+Post-hoc explainability is based on the idea of 
+"predict first, then explain": once a high-performance 
+black-box model has been used, a variety of 
+explanation techniques can show how the model 
+reaches its conclusions. This includes methods like 
+feature attribution (for example, SHAP, LIME, and 
+Integrated Gradients), gradient- and propagation-
+based techniques such as Saliency Maps [41] and 
+Grad-CAM [42], surrogate models [43] which either 
+locally or globally approximate the black box, 
+counterfactual explanations, and rule extraction. The 
+main benefit of these methods is their flexibility: they 
+can be combined with any black-box model, allowing 
+researchers to use deep learning representational 
+power for tasks such as financial forecasting without 
+sacrificing accuracy at the design stage, at least in 
+theory. 
+Another limitation is that feature attribution should 
+not be taken as implying causation. Fu et al. [44] show 
+this difference by combining explainable AI with 
+causal inference techniques in an investigation of 
+environmental drivers, demonstrating the advantage 
+of supplementing attribution-based explanations with 
+approaches that examine causal relationships. This 
+point is especially important in high-stakes 
+applications, since a predictor that has a significant 
+influence and is identified by an XAI method does not 
+have to be seen as one whose change would alter the 
+predicted outcome. 
+The second point is instability, since minor alterations 
+to the input can result in large changes to the 
+explanation output. Thirdly, it is possible to generate 
+spurious or unjustified explanations [27], which 
+5 
+
+demonstrate that counterfactual explanations can be 
+disconnected from the true data distribution and 
+cannot be derived from the actual data points by a 
+continuous path; the authors regard this risk as 
+’substantial’ in a number of datasets and stress that it 
+actually leads to the creation of mathematically 
+plausible but meaningless ’phantom explanations’. 
+Fourthly, evaluation is difficult: although Munoz et 
+al. [45] have suggested six explainer-independent 
+metrics for measuring explainability, the need to 
+propose them shows that the community has not yet 
+reached consensus on evaluation standards. 
+The situation is especially serious when the stakes are 
+high. Laugel et al. [27] argue that black-box models, 
+even with post-hoc explanations, should be avoided 
+when decisions affect people’s lives, freedom, or 
+financial security, since such explanations might not 
+accurately reflect how the model behaves, could fail 
+to show how it goes wrong, or might reveal spurious 
+correlations. As a result, auditability and 
+accountability weaken in such sensitive applications. 
+Mersha et al. [46] make the same point, emphasizing 
+that XAI should promote transparency, 
+accountability, and fairness rather than simply serving 
+as a technical add-on. Yet empirical evidence shows 
+that neither intrinsic nor post-hoc methods are always 
+the better option. Ai and Ramasamy [47] find that 
+intrinsic explanations are generally more informative 
+and reliable for product search. In contrast, Madathil 
+et al. [48] think intrinsic methods are better for 
+assessing process robustness in smart manufacturing, 
+while post hoc methods better explain complex 
+nonlinear relationships. Chakraborty et al. [49] come 
+to the same conclusion, saying the right approach 
+depends on the specific task and context. 
+They also discuss the alleged trade-off between 
+predictive accuracy and interpretability. Laugel et al. 
+[27] argue that this compromise is generally 
+overemphasized and mainly stems from researchers’ 
+preference for black-box models rather than from any 
+inherent flaw in interpretable models. Meanwhile, 
+critics note that areas such as financial time series 
+involve nonlinear dynamics, temporal dependence, 
+and long-range interactions that simpler models may 
+struggle to handle. In such cases, performance gains 
+from architectures like LSTMs and Transformers 
+could be real. The key point is not whether 
+interpretability or accuracy should always take 
+priority, but how to balance them given the 
+application’s specific requirements. In fields that are 
+regulated, such as credit scoring, transparency may be 
+essential, while in quantitative trading, even small 
+improvements in predictive performance can have 
+significant economic value [23, 25, 50]. 
+As a result, the debate between intrinsic and post-hoc 
+interpretability should not be seen as a simple choice 
+between transparency and accuracy. A more useful 
+question is whether the extra predictive power of a 
+more complex model warrants the associated loss of 
+direct interpretability and the extra uncertainty 
+introduced by post hoc explanations. This matters 
+especially in credit risk assessment, where 
+transparency, justification, and auditability are 
+essential to the decision-making process, even though 
+more sophisticated nonlinear models can still provide 
+predictive benefits. The growing body of evidence 
+thus supports a comparative approach rather than 
+making a priori assumptions: intrinsically 
+interpretable and post-hoc explainable models should 
+be compared not only on the basis of their predictive 
+performance but also with regard to the nature, 
+complexity, and reliability of the explanations they 
+offer [23, 25, 33, 50, 51]. This kind of approach goes 
+beyond the idea that greater model complexity 
+automatically means either better predictive 
+performance or worse practical interpretability and 
+instead treats the relationship between predictive 
+ability and interpretability as an empirical issue. 
+2.3 Benchmarking and Metrics for Explanation 
+Quality 
+A major gap in the explainable AI (XAI) literature is 
+the lack of standardized benchmarks for comparing 
+explanation techniques. To address this gap, several 
+recent efforts have emerged. Chakraborty et al. [49] 
+developed a comprehensive benchmarking 
+framework used to study both intrinsic and post hoc 
+XAI methods on three typical 3D datasets. They 
+evaluate explanations quantitatively using the 
+Correctness (AOPC), Completeness (AUPC), and 
+Compactness criteria, applying them consistently 
+across datasets. Most importantly, the results indicate 
+that explanation quality varies greatly across methods 
+and domains, with no single approach performing 
+best across all domains, underscoring the need for 
+multi-metric evaluation. Statistical tests (Kruskal –
+Wallis and Mann –Whitney U) show significant 
+differences in method performance. This aligns with 
+the approach adopted in the present study, which 
+assesses the explainers using three complementary 
+metrics—faithfulness, stability, and consistency —
+rather than relying on a single criterion. 
+Metsch and Hauschild [52] have developed 
+BenchXAI, a new package for benchmarking XAI 
+methods that enables detailed evaluation of 15 
+different XAI techniques on biomedical tasks. Their 
+evaluation found that Integrated Gradients, DeepLift, 
+DeepLiftShap, and GradientShap performed well on 
+all three tasks, while methods like Deconvolution and 
+Guided Backpropagation did not. This again shows 
+6 
+
+that XAI performance varies by task and that 
+systematic benchmarking is essential. 
+Bodria et al. [53] apply this benchmarking approach 
+to tabular, image, and text data and express the 
+quantitative comparisons in terms of faithfulness, 
+stability, robustness, and computational time. Their 
+experiments with tabular data are especially pertinent 
+to assessing feature-attribution methods. Although 
+the local surrogate methods generally achieved high 
+fidelity in approximating the underlying black-box 
+models, the findings on faithfulness and stability 
+differed considerably. SHAP showed greater 
+faithfulness than LIME, and none of the methods 
+examined was consistently stable when inputs 
+changed slightly. The authors note that no existing 
+objective metric can identify a single best explainer, 
+since different metrics reflect different desirable 
+characteristics. This difference matters because an 
+explanation can accurately approximate the model’s 
+outputs yet remain unstable under small 
+perturbations, showing that fidelity and stability 
+measure related but not equivalent aspects of 
+explanation quality. 
+Belaid et al. [54] have proposed Compare-xAI, a 
+benchmark that combines a variety of functional 
+testing approaches for post hoc XAI algorithms. This 
+benchmark illustrates the difficulty of evaluating XAI 
+methods through a hierarchical scoring system 
+designed for three groups of end users: researchers, 
+practitioners, and the general public. The tests are 
+divided into five categories —fidelity, fragility, 
+stability, simplicity, and stress tests —with an overall 
+comprehensibility score at the top level. This multi-
+dimensional evaluation method aligns with the 
+present study’s use of complementary metrics. 
+Bragança and Souto [55] have introduced the Unified 
+Time Series Classification Framework for 
+Explainable Artificial Intelligence (UTS-XAI), which 
+combines a traditional classification pipeline with 
+comprehensive, time-aware XAI evaluation metrics 
+such as faithfulness, robustness, sensitivity, stability, 
+and localization. The framework supports several 
+explanation methods —specifically SHAP, LIME, 
+and Saliency Maps —and offers a way to 
+systematically compare them using adapted versions 
+of well-established XAI metrics reinterpreted for 
+temporal data. 
+Consequently, explanation evaluation has gradually 
+shifted from focusing on specifying individual 
+desirable properties to developing systematic 
+benchmarking procedures. The faithfulness criterion 
+used in this study follows the approach of Samek et 
+al. [56] which assesses whether the model’s output 
+deteriorates as expected when important features are 
+removed. The stability criterion is based on the 
+principle put forward by Alvarez-Melis and Jaakkola 
+[57] that similar inputs should yield similar 
+explanations; their analysis shows that many 
+commonly used interpretability methods violate this 
+requirement. Lastly, consistency assesses whether 
+independently generated explanations provide 
+compatible descriptions of the same model behavior, 
+drawing on the disagreement framework introduced 
+by Krishna et al. [58] and further supported by 
+empirical work by Brughmans et al. [59]. 
+Building on this foundation, explanation quality is 
+defined by measurable criteria for faithfulness, 
+stability, and consistency, and by specific acceptance 
+thresholds based on empirical research on the latest 
+methods. The suggested framework combines 
+quantitative assessments with user-centered criteria, 
+enabling both researchers and practitioners to judge 
+whether an explanation meets the established 
+standards. This formalization is particularly relevant 
+to the present study, which takes faithfulness, 
+stability, and consistency as its three main evaluation 
+dimensions. 
+
+3 Data and Methodology 
+Fig. 1 summarizes the study design. Two features 
+distinguish this work from existing explainer 
+benchmarks: the same-model contrast in stage 3, 
+which holds the trained network fixed while varying 
+the explanation, and the decomposition of stability 
+into three perturbations in stage 5, which holds the 
+explanation fixed while varying what it must 
+withstand. 
+Five-day realized volatility is forecast for 20 equities 
+across three markets (stage 1) from two feature 
+representations chosen to contrast correlation 
+structure rather than width — the nominally narrower 
+panel spans more effective dimensions (stage 2). We 
+estimate five model families under a purged rolling 
+walk-forward split, each paired with the explainer 
+appropriate to its architecture (stage 3). One arm is 
+treated differently: we evaluate a single trained 
+TabNet network using both its intrinsic attention 
+mask and post hoc Integrated Gradients. Hence, any 
+divergence between the two is attributable to the 
+explanation method rather than to the model, a 
+premise verified by checking that no attribution call 
+alters the network’s state. A cell enters the 
+interpretability analysis only if it improves on step-5 
+persistence out-of-sample (stage 4). We then evaluate 
+admitted explanations for faithfulness against a 
+random-order control, stability under three 
+perturbations that differ in what each fixes, and 
+agreement between two explainers of the same 
+network, with all comparisons made using matched-
+stock paired inference (stage 5). 
+7 
+
+Fig. 1 Study design
+
+3.1 Task and Data 
+We forecast 5-day-ahead realized volatility for 20 
+equities spanning three markets: 10 US large-caps 
+(AAPL, MSFT, JPM, XOM, PG, JNJ, WMT, NVDA, 
+KO, CAT), 5 European blue-chips (SAP.DE, MC.PA, 
+SIE.DE, NESN.SW, ASML.AS), and 5 Japanese large-
+caps (7203.T, 6758.T, 9984.T, 8306.T, 6861.T), using 
+adjusted daily close prices from 2016-01-01 to 2025-12-
+31. Each market’s own trading calendar is used as-is — 
+we do not force a common calendar or forward-fill one 
+market’s holidays using another’s. Because the universe 
+spans three markets with different trading calendars, 
+liquidity profiles, and volatility regimes, we also report 
+every primary interpretability metric by region as a 
+robustness check (Section 5.7) to verify that pooled-
+sample findings are not driven by a single market’s 
+idiosyncrasies. 
+Let rt denote the daily log return. The forecast target 
+at time t is the realized volatility over the following h 
+= 5 trading days, 
+𝑟௧ = ln (
+௉೟
+௉೟−1
+) (1) 
+ݕ௧ = (݀ݐݏ 𝑟௧+1, … , 𝑟௧+ℎ) (2) 
+computed by forward shifting so that ݕ௧ never uses 
+information available only after t; rows with an 
+incomplete forward window are dropped. We chose 
+volatility over raw returns as the target because daily 
+returns are close to unpredictable under the efficient-
+market hypothesis, which would leave every model 
+failing the skill gate and the interpretability 
+comparison vacuous — realized volatility has 
+genuine short-horizon persistence and is a standard 
+target in the risk-management literature. 
+3.2 Feature Sets 
+Every feature at time t uses information only through 
+t−1; the target is never observable during feature 
+construction. We compare two feature 
+representations, evaluated as separate experimental 
+arms, so we can attribute shifts in explainer behavior 
+to the input representation rather than conflating them 
+with changes in the target or model: six price lags and 
+thirteen technical indicators. Table 1 gives the exact 
+formula for every feature as implemented, where p = 
+adjusted close shifted 1 day; r = log return shifted 1 
+day; v = trading volume shifted 1 day; h, l = high/low 
+shifted 1 day — all enforcing the t−1 information rule.
+
+8 
+
+Table 1: List of price lags and technical indicators 
+Feature Group Formula 
+r_lag{1,2,3,5,10,21} price_lags r_(t−L) for L ∈ {1,2,3,5,10,21} 
+sma_5 / sma_10 / 
+sma_21 
+Trend pₜ₋₁ / mean_N(p) − 1 (price relative to its N-day mean) 
+ema_12 / ema_26 Trend pₜ₋₁ / EMA_N(p) − 1 (price relative to its N-day exponential mean) 
+rsi_14 Momentum 100 × avg_gain_14 / (avg_gain_14 + avg_loss_14), Wilder-smoothed (α = 
+1/14) gain/loss of r 
+macd Momentum [EMA_12(p) − EMA_26(p)] / pₜ₋₁ 
+roc_10 Momentum p_(t−1) / p_(t−11) − 1 
+atr_14 Volatility Wilder-smoothed 14-day average of max(h−l, ∣h−p_prev∣, ∣l−p_prev∣), 
+divided by pₜ₋₁ 
+bb_width Volatility 4σ_21(p) / mean_21(p) (standard k=2 Bollinger bands) 
+ret_std_21 Volatility σ_21(r) 
+obv Volume 252-day z-score of the 21-day mean of sign(r) • v (signed volume 
+flow) 
+vol_z Volume (v − mean_21(v)) / σ_21(v) 
+The technical indicator (technical) panel is presented 
+on a scale-free basis; the moving averages are shown 
+as the ratio of price to the average rather than the 
+average itself. The MACD and ATR are adjusted to 
+the price at the same time, and signed volume flow is 
+used as a rolling standardized score rather than a 
+cumulative total over the whole sample. This method 
+matters because it standardizes features within each 
+training window. Such representations are well 
+established in the literature on return and volatility 
+prediction and are not arbitrary choices. In large-scale 
+cross-sectional studies —for example, those carried 
+out by Krauss et al. [60] —lagged-return panels are 
+used as the only predictor set, and in the LSTM 
+sequence models of Fischer and Krauss [61] as well, 
+both trained on the entire S&P 500 cross-section. 
+Technical indicator panels are among the main 
+features in broader machine-learning asset-pricing 
+studies, such as those of Gu et al. [62]. In the present 
+study, Christensen et al. [1] use machine learning to 
+forecast realized volatility using lagged 
+autoregressive predictors, similar to those used in the 
+price-lags representation described here. 
+A precedent alone is not enough to explain why the 
+two panels differ by about a factor of two in nominal 
+width. This decision is deliberate and departs from the 
+goal of maximizing forecasting accuracy. The main 
+aim is to examine explainer behavior rather than attain 
+state-of-the-art predictive performance. To this end, 
+the two panels contrast a narrow, nearly orthogonal 
+representation with a nominally wider but highly 
+collinear one. 
+
+The following three limitations of this framework 
+must be made clear. Firstly, the two panels vary not 
+only in width and correlation structure but also in the 
+types of features used: raw autoregressive lags versus 
+engineered, mutually correlated indicators. Since 
+these different aspects are mixed, none of the results 
+below can be attributed solely to the number of 
+features. Given that effective dimensionality is 
+inversely related to nominal width, the comparison is 
+always made in terms of the correlation structure 
+rather than dimensionality. Second, the two panels are 
+fed into separately trained models, so cross-panel 
+comparisons reflect differences between two model –
+representation combinations rather than a single 
+model assessed under two different data views. Only 
+in the within-panel comparisons, where two 
+explainers are applied to a single trained network, is 
+the model fixed. Thirdly, the price-lag panel contains 
+only signed return lags and excludes absolute returns, 
+squared returns, or lagged realized variances. This 
+omission is necessary because lagged realized 
+variances are highly autocorrelated and would 
+introduce the collinearity this part of the study is 
+intended to avoid. As a result, the panel provides only 
+limited direct information on volatility. As shown in 
+Section 5, an HAR-RV benchmark based on the 
+excluded lagged realized variances attains the highest 
+median accuracy in the study. The design therefore 
+sacrifices some predictive information to enable a 
+controlled comparison of correlation structures, and it 
+makes no assertion about state-of-the-art accuracy. 
+9 
+
+3.3 Models and Explanation Methods 
+We evaluate five model families and two post-hoc 
+explainers, pairing each model with the explainer or 
+explainers appropriate to its architecture. Three of the 
+five—the GAM, the EBM, and TabNet —have 
+intrinsic explanations, and only TabNet is 
+additionally paired with a post-hoc explainer, making 
+it the only architecture on which we can compare an 
+intrinsic and a post-hoc account of an identical trained 
+network. This is a deliberate scope restriction, not a 
+claim that the additive models admit no post-hoc 
+explanation: both the GAM and the EBM could be 
+explained by kernel-based Shapley attribution of the 
+fitted object, which would yield three same-model 
+contrasts instead of one. We record the omission as a 
+limitation in Section 6.7 and as an immediate 
+extension in the future directions in Section 6.7. 
+3.3.1 Extreme Gradient Boosting (XGBoost) 
+XGBoost is a gradient-boosted decision-tree 
+algorithm that sequentially constructs trees to 
+minimize prediction error while controlling model 
+complexity through regularization. In this study, 
+XGBoost was configured with 300 trees, a learning 
+rate of 0.03, subsampling of 0.8 for observations and 
+features, L2 regularization, and a minimum child 
+weight of 5. Histogram-based tree construction was 
+used to improve computational efficiency. 
+3.3.2 Long Short-Term Memory (LSTM) 
+Long Short-Term Memory (LSTM) is a recurrent 
+neural-network architecture designed to capture 
+temporal dependencies through gated memory 
+mechanisms. The model used in this study consisted 
+of a single LSTM layer with 32 hidden units followed 
+by a linear regression output layer. Models were 
+trained for 100 epochs using Adam optimization with 
+a learning rate of ૚૙−૜and a batch size of 256. Input 
+sequences were constructed using rolling 20-day 
+windows from the standardized feature data. 
+3.3.3 Generalized Additive Model (GAM) 
+GAM is an intrinsic model of the form ݕ(݃ ̂) = ߚ0 +
+݂1(ݔ1) + ݂2(ݔ2) + ⋯ + ݂௣(ݔ௣), where each is a 
+smooth, learnable shape function, often splines or 
+regression trees, and is a link function. Because the 
+model simply adds separate contributions from each 
+feature, we can plot and inspect each feature’s learned 
+curve directly, with no additional explanation needed. 
+This transparency is the hallmark of intrinsic 
+explainability, but it doesn’t automatically capture 
+feature interactions. We built a regression model that 
+draws a smooth, slightly flexible curve for every 
+single input feature. We restricted the curves so they 
+can bend a little bit (6 basis splines) but applied a 
+mathematical penalty (λ = 0.6) to keep th em from 
+getting too jagged. Because the model simply adds up 
+these individual curves, we can look at a graph of any 
+single feature and see exactly how it drives the 
+prediction. 
+3.3.4 TabNet 
+TabNet is a neural-network architecture for tabular 
+data that uses sequential attention to perform 
+instance-specific feature selection. The model was 
+configured with decision and attention dimensions of 
+࢔ࢊ࢔= ࢇ= ૡ , three decision steps, and a relaxation 
+parameter of =ࢽ ૚. ૜ and was trained for 50 epochs. 
+We standardized the regression target during training 
+and transformed it back to its original scale for 
+prediction. TabNet serves as the primary same-model 
+comparison in this study: we explained each trained 
+network using both its intrinsic attention mask and 
+post-hoc Integrated Gradients, enabling us to assess 
+differences in explanation behavior while holding the 
+predictive model fixed. 
+3.3.5 Explainable Boosting Machine (EBM) 
+EBM extends the GAM by using gradient boosting to 
+learn each univariate shape function, and in its general 
+form can also learn a small number of automatically 
+selected pairwise interaction terms, giving g(ŷ) = β₀ 
++ Σ fᵢ(xᵢ) + Σ fᵢⱼ (xᵢ, xⱼ) . In this study, interactions are 
+disabled (‘interactions = 0‘), so the fitted model is 
+purely additive: g(ŷ) = β₀ + Σ fᵢ(xᵢ). Each component 
+is directly visualizable as a curve, so the model 
+remains intrinsically interpretable while often 
+achieving accuracy competitive with black-box 
+learners. We use a single outer bag to keep training 
+time comparable across arms. Because it’s purely 
+additive, we can examine the trees for any single 
+feature to see its global effect, and we can also break 
+down any individual prediction to see exactly how 
+much each feature contributed to that result. 
+3.3.6 TreeSHAP 
+TreeSHAP is a model-specific implementation of 
+SHAP for tree-based models that computes feature 
+contributions using the internal structure of the fitted 
+tree ensemble. Based on Shapley values, it attributes 
+each prediction to individual input features relative to 
+a reference value. In this study, TreeSHAP was 
+applied to the fitted XGBoost models to obtain 
+feature-attribution vectors for subsequent faithfulness 
+and stability analyses 
+3.3.7 Integrated Gradients (IG) 
+Integrated Gradients (IG) is a gradient-based post-hoc 
+attribution method for differentiable models. It 
+estimates feature contributions by integrating the 
+gradient of the model output along a path from a 
+reference baseline to the observed input. In this study, 
+IG was applied to both the LSTM and TabNet models. 
+10 
+
+For the LSTM, absolute attributions were aggregated 
+across samples and timesteps to obtain feature-level 
+importance scores, whereas for TabNet, IG was 
+computed directly on the tabular input features 
+3.4 Experimental Arms and Reference Forecasts 
+Table 2 summarizes the 12 explained experimental arms 
+(E1-E12). Three unexplained reference forecasts 
+accompany these arms and are assessed only for 
+predictive accuracy; they are never assigned an 
+explainer and are excluded from the interpretability 
+analysis: B0, the training-window mean; B1, step-5 
+persistence, which is the denominator of the skill gate 
+and therefore has a relative error of exactly one by 
+construction; and B2, HAR-RV, based on daily, weekly, 
+and monthly realized-variance components. The fixed 
+B1 value provides an end-to-end check that the skill gate 
+numerator and denominator are calculated on identical 
+test rows. Although we implement a GARCH(1,1) 
+benchmark, we do not report it because it models 
+conditional return variance rather than the h-day 
+realized-volatility target and would require an explicit 
+aggregation step to make the targets comparable.
+Table 2. List of experiments for each model-explainer 
+Exp. Feature set Model Explainer Type 
+E1 price_lags XGBoost TreeSHAP Post-hoc 
+E2 tech_ind XGBoost TreeSHAP Post-hoc 
+E3 price_lags LSTM IG Post-hoc 
+E4 tech_ind LSTM IG Post-hoc 
+E5 price_lags GAM - Intrinsic 
+E6 tech_ind GAM - Intrinsic 
+E7 price_lags TabNet Mask Intrinsic 
+E8 tech_ind TabNet Mask Intrinsic 
+E9 price_lags TabNet IG Post-hoc 
+E10 tech_ind TabNet IG Post-hoc 
+E11 price_lags EBM - Intrinsic 
+E12 tech_ind EBM - Intrinsic 
+4 Experimental Design 
+4.1 Walk-Forward Evaluation Protocol 
+Accuracy and interpretability are evaluated using a 
+purged rolling walk-forward split to prevent look-
+ahead leakage (Fig. 2 Each fold uses a fixed 756-
+trading-day training block (approximately three 
+years), of which 746 rows are fitted after purging, a 
+63-day test window (approximately one quarter), and 
+advances by 126 trading days. Because the target at 
+time (t) depends on returns from (t+1) to (t+h), we 
+remove the final (h+5=10) observations from each 
+training block before fitting to ensure training labels 
+do not extend into the test period. Without purging, 
+five rows per fold, or approximately 0.7% of the 756-
+row block, would be contaminated. We estimate 
+feature-standardization parameters (μ and σ) only 
+from the purged training window and apply them to 
+both training and test data. This procedure yields 14 
+folds per ticker for the price-lag and HAR feature sets 
+and 12 for the technical-indicator set for US and 
+European firms. For Japanese firms, the 
+corresponding numbers are 13 and 11 because of the 
+shorter Tokyo trading calendar. We therefore report fold 
+counts separately for each cell. 
+4.2 Accuracy Metrics and the Skill Gate 
+We evaluate predictive accuracy using RMSE, 
+sMAPE, and relative mean absolute error (RelMAE) 
+against a naive baseline computed on the same test 
+observations. For the five-day volatility horizon, the 
+baseline is step-(h)persistence, 
+ŷ௧ = ݕ௧−ℎ, rather than day-to-day persistence. 
+Because adjacent five-day rolling volatility targets 
+overlap substantially, a one-day persistence 
+benchmark would have artificially low error. 
+Matching the baseline lag to the forecast horizon 
+therefore provides a more appropriate comparison. 
+RelMAE is defined as the model’s out -of-sample 
+MAE divided by the step-(h) persistence MAE on the 
+same rows; thus, RelMAE < 1 indicates out-of-
+sample improvement over persistence. RelMAE is 
+preferred to MASE because MASE scales out-of-
+sample error by an in-sample naive error, which does 
+not directly establish whether the model beats the 
+baseline out of sample and may yield different 
+conclusions across volatility regimes. 
+11 
+
+Fig. 2 Purged rolling walk-forward split
+
+4.3 Explanation-Quality Metrics 
+We compute interpretability metrics for every cell, 
+regardless of skill- gate admission, using each fold’s 
+trained model and corresponding attribution vector. 
+This lets us measure the skill gate’s influence on 
+interpretability rankings directly. We calculate 
+metrics at the fold level before averaging because 
+using a single attribution vector averaged across folds 
+would systematically disadvantage models whose 
+explanations change over time. 
+4.3.1 Faithfulness 
+We measure faithfulness using area over the 
+perturbation curve (AOPC) with most-relevant-first 
+(MoRF) sequential ablation. We rank features by 
+importance and cumulatively set them to zero, using 
+the standardized training mean, starting with the most 
+important feature. For the technical-indicator panel, 
+we ablate entire collinear groups—trend, momentum, 
+volatility, and volume—by group importance to avoid 
+arbitrary rankings among near-duplicate indicators. 
+RMSE is recalculated after each step. AOPC is the 
+average RMSE increase over the top eight ablation 
+steps, or over all six features for the price-lag panel; 
+we also report a matched-depth result at (k=5). We 
+additionally compare MoRF with reverse-order 
+ablation and with a random-order control using the 
+same model. Because a near-zero AOPC may indicate 
+either an uninformative ranking or general model 
+insensitivity to ablation, we interpret faithfulness 
+relative to the random-order AOPC. We consider an 
+explanation more faithful only when its AOPC 
+exceeds this control. 
+4.3.2 Stability 
+Three perturbation settings are evaluated. Input-noise 
+stability keeps the fitted model fixed while adding 
+Gaussian noise to the test data at σ = 8% of each 
+feature’s standard deviation, repeated 20 times. We 
+generate independent, reproducible random streams 
+deterministically from the ticker, experiment 
+identifier, and fold using a cryptographic hash. 
+Temporal stability compares importance rankings 
+across adjacent walk-forward folds after refitting the 
+model, capturing changes caused by regime shifts 
+and/or estimation noise. Seed stability refits the same 
+model on identical data and folds using different 
+random seeds, isolating variability attributable to the 
+optimization path. We assess agreement under all 
+three settings using Spearman rank correlation, rank-
+biased overlap (RBO), and top-(k) Jaccard overlap at 
+both fixed and feature-scaled depths, interpreting 
+results relative to expected agreement under 
+independent random rankings. 
+4.3.3 Consistency 
+For TabNet, we compare intrinsic masks (E7, E8) 
+with post-hoc Integrated Gradients (E9, E10) using 
+the same trained model and the same agreement 
+metrics applied to mean per-fold importance vectors 
+for each ticker. Because E7/E9 and E8/E10 share 
+identical fitted models, and attribution does not alter 
+model parameters, observed disagreement reflects the 
+explanation method rather than differences in 
+predictive architecture. 
+
+12 
+
+4.3.4 Size-Corrected Agreement 
+Fixed-depth top-(k) overlap is not directly 
+comparable across panels with different numbers of 
+features. For example, with (n=6) and (k=5), the 
+Jaccard index has a minimum of 0.667 and an 
+expected random value of 0.7222, whereas for the 13-
+feature panel the expected value is 0.2537. To remove 
+this panel-width effect, we additionally report Jaccard 
+overlap at a feature-scaled depth, an excess-over-null 
+normalization, (observed - expected)/(1 - expected), 
+and RBO, which evaluates the full ranking with 
+greater weight on top positions. Expected Jaccard 
+values are derived analytically, whereas expected 
+RBO is estimated by Monte Carlo simulation. Cross-
+panel conclusions are based on these size-invariant 
+measures; raw fixed-depth values are retained only 
+for comparison. 
+4.4 Statistical Testing 
+The main analysis uses a matched-ticker paired 
+design in which each ticker contributes one value for 
+each arm within a given metric and feature panel. For 
+each pairwise comparison, we include only tickers 
+with results for both arms, and we evaluate paired 
+differences using the Wilcoxon signed-rank test and a 
+two-sided sign-flip permutation test on the mean 
+difference. We include the permutation test because it 
+can be more reliable than the signed-rank test with 
+small sample sizes. We report effect size using a 
+matched-pairs rank-biserial correlation, which 
+summarizes the balance of wins and losses across 
+tickers. Pairing is essential because substantial ticker-
+specific variation could otherwise obscure differences 
+attributable to the explainers, particularly when 
+comparing intrinsic and post-hoc explanations 
+derived from the same fitted network. Two secondary 
+analyses assess robustness to incomplete overlap 
+among admitted tickers. First, because different 
+explainers may qualify on different ticker sets, we 
+apply a Mann–Whitney U test to all admitted cells as 
+an unpaired sensitivity analysis. Second, where 
+sufficient complete blocks are available —that is, 
+tickers for which all arms in a comparison group are 
+simultaneously admitted —we use a Friedman test 
+followed by Nemenyi post-hoc comparisons as an 
+additional robustness check. We report the number of 
+matched pairs for every comparison, and we classify 
+analyses with fewer than five pairs as underpowered 
+and do not interpret them as evidence of no difference. 
+For pairwise explanation comparisons, we Holm-
+adjust p-values within each metric-feature-set family, 
+then apply a second Holm correction across all 
+families. 
+5 Results 
+5.1 Sample, splits, and the skill gate 
+The study contains 12 explained arms (E1-E12) plus 
+three unexplained reference forecasts (B0-B2). 
+Because E7/E9 and E8/E10 reuse the same fitted 
+TabNet predictions for two different explainers, these 
+correspond to 13 unique predictive configurations, or 
+260 stock-level fitted configurations across 20 
+equities, but 15 arm/reference result series, or 300 
+stock-level result rows. All predictive configurations 
+trained without error. Walk-forward validation 
+produced 14 folds per stock for the price-lag and HAR 
+feature sets and 12 for the technical-indicator set on 
+the US and European names, and 13 and 11 
+respectively on the five Japanese names, reflecting the 
+shorter Tokyo trading calendar over 2016-2025. The 
+technical-indicator arms lose two folds relative to 
+their price-lag counterparts because the volume-flow 
+normalization requires a 252-day warm-up; fold 
+counts are therefore reported for each cell. Each 
+training block is purged of the h + embargo = 10 
+terminal rows whose labels depend on returns inside 
+the subsequent test window. Without the purge, five 
+training rows per fold, approximately 0.7% of a 756-
+row block, would carry contaminated labels. 
+The skill gate admits a cell if its out-of-sample 
+relative MAE against step-5 persistence, computed on 
+identical test rows, falls below one. The gate admitted 
+165 of 240 eligible cells (68.8%) (Table 3). We report 
+the significance of the per-cell skill advantage rather 
+than require it: the gate is a screening step separating 
+models with forecasting skill from those without, not 
+a confirmatory test, and both the raw and Benjamini–
+Hochberg-adjusted one-sided fold-paired p-values 
+accompany every cell. Requiring per-cell adjusted 
+significance at q ≤ 0.05 would admit only 6% of cells 
+and would eliminate both same-model comparisons 
+entirely; results under a stricter q ≤ 0.10 tier are 
+reported as a sensitivity analysis in 5.7. The 
+persistence reference (B1) returns a relative MAE of 
+exactly 1.000 on all 20 stocks by construction, serving 
+as an end-to-end check that the gate’s numerator and 
+denominator align on the same rows. 
+Two patterns are visible. Every technical-indicator 
+arm is admitted less often than its price-lag twin. The 
+recurrent arm is the weakest in the study: IG/LSTM 
+on technical indicators admits no stock at all. The gate 
+admits US cells at roughly half the rate of the other 
+two markets (Table 4). Because of where the gate is 
+defined, the admitted sample is close to balanced 
+across markets —59 US, 52 European, and 54 
+Japanese cells —whereas the universe was designed 
+with ten US names against five in each of the other 
+two regions. 
+13 
+
+Table 3. Cells admitted by the skill gate, 20 per arm. 
+Arm Explainer / model Features Admitted 
+E5 GAM (intrinsic) price lags 20 
+E1 TreeSHAP / XGBoost price lags 18 
+E11 EBM (intrinsic) price lags 16 
+E7 TabNet attention mask price lags 16 
+E9 Integrated Gradients / TabNet price lags 16 
+E2 TreeSHAP / XGBoost technical 16 
+E12 EBM (intrinsic) technical 14 
+E8 TabNet attention mask technical 13 
+E10 Integrated Gradients / TabNet technical 13 
+E3 Integrated Gradients / LSTM price lags 12 
+E6 GAM (intrinsic) technical 11 
+E4 Integrated Gradients / LSTM technical 0 
+
+Table 4 Gate rate by market 
+Market Names Eligible cells Admitted Rate 
+Japan 5 60 54 90.0% 
+Europe 5 60 52 86.7% 
+United States 10 120 59 49.2% 
+All 20 240 165 68.8% 
+
+Fig. 3 shows relative mean absolute error against step-
+5 persistence for every stock and model –explainer 
+arm, computed on identical test rows. Values below 
+1.00 improve on persistence; a heavy outline marks 
+the 165 of 240 eligible cells admitted to the 
+interpretability analysis. Stocks are grouped by 
+market, and arms sharing one trained network appear 
+once. 
+5.2 Forecast accuracy 
+Table 5 orders every arm and reference by median 
+relative MAE. Values below one indicate an out-of-
+sample improvement in persistence. Three 
+observations bear directly on interpreting the results. 
+First, the HAR-RV benchmark achieves the best 
+median accuracy in the study, but it separates only 
+from some of the explained arms. In matched-stock 
+paired comparisons across the 20 stocks (Table 6), 
+HAR-RV significantly outperforms the EBM, both 
+XGBoost arms, and TabNet, beating them on all 20 
+stocks. Against the GAM on price lags, it is 
+statistically indistinguishable: HAR-RV has a median 
+paired difference of 0.004 in its favor, winning on 11 
+of 20 stocks, rank-biserial 0.12, p = 0.648. A three-
+parameter regression on realized-variance lags 
+therefore matches the best-performing learned model 
+in this study while decisively beating the neural and 
+tree-based arms. 
+Fig. 4 shows the distribution of relative errors across 
+the 20 stocks, one point per stock. The dashed line is 
+the HAR-RV median and the dotted line the training-
+window mean; only the spline GAM on price lags is 
+statistically indistinguishable from HAR-RV under 
+matched-stock paired testing. Filled points are 
+admitted by the skill gate. Table 6 shows HAR-RV 
+against every explained arm, matched by stock (n = 
+20). Positive differences favor HAR-RV. We show 
+arms sharing one trained network once, since their 
+accuracy is identical by construction. p-values are 
+Holm-adjusted across the ten comparisons. The 
+median difference is the median of the paired 
+differences and need not equal the difference of the 
+two median columns.
+14 
+
+Fig. 3 Skill-gate heatmap
+
+Table 5 Forecast accuracy, relative MAE against step-5 persistence on identical t

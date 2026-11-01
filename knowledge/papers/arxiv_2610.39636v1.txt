@@ -1,0 +1,848 @@
+Information Flow and Market Risk: Transformer-Based
+Evidence on Sentiment and Volatility Dynamics
+Szymon Lis
+Robert Ślepaczuk
+Paweł Sakowski
+University of Warsaw, Faculty of Economic Sciences, Department of Quantitative Finance
+sm.lis@student.uw.edu.pl
+Abstract
+This paper evaluates whether market-wide ModernFinBERT news variables improve volatility
+forecasts for an ex-post selected panel of eleven U.S.-listed stocks using source data from 2000–
+2022. Atℎ= 1,5,22, the target is the annualized square root of an average of future trailing 252-
+session Yang–Zhang variance estimates. Sentiment, directionality, posterior entropy, intensity,
+and news volume are compared with persistence, VIX, and AAII through matched HAR-X
+models and additional regularized, tree-based, naive, and stacking specifications.
+Hyperparameters are selected once on the first 252 complete observations. Five chronological
+blocks support expanding and rolling comparisons. The primary expanding family contains 792
+BH-adjusted tests, with joint-window and dependence sensitivities. Naive has the lowest mean
+QLIKE at each horizon. HAR-VIX is the most frequent expanding cell winner, but not the
+model with the lowest mean loss. HAR-Text improves on HAR in two of 33 expanding cells;
+neither favorable QLIKE rejection survives longer HAC. High-state comparisons are relatively
+less adverse to text but do not establish generally positive gains.
+Stacking contributes 66 tests (33 cells×two losses) to this fixed family. Because its near-
+constant forecasts generate very small p-values in many adverse comparisons, those tests can
+affect the BH rank thresholds applied to the remaining models. They are retained only to
+preserve the ex-ante model universe; no substantive evidence claim is based on Stacking perfor-
+mance.
+ModernFinBERT is a fixed ex-post measurement instrument with an undocumented training-
+data cutoff. The existing 2,700-text agreement audit is not expert ground truth and is not
+regenerated here. SHAP explains fitted forecasts, not causal effects or incremental accuracy.
+Conclusions are conditional on the long-window target, initial-only selection, sparse refits, cali-
+bration, and numerical safeguards.
+Keywords:realized volatility, financial news, ModernFinBERT, HAR-X, VIX, AAII, machine
+214
+learning
+1 Introduction
+Forecasting financial-market volatility is central to derivatives valuation, portfolio allocation,
+risk management, margin setting, and systemic-risk monitoring. In contrast to expected re-
+turns, volatility displays persistence, clustering, long-memory-like behavior, leverage effects,
+and pronounced state dependence, which make it comparatively more forecastable and eco-
+nomically relevant (Andersen et al., 2001, 2003; Bollerslev, 1986; Christoffersen, 2012; Engle,
+1982; McNeil et al., 2015). The development of realized-volatility measures further strength-
+ened this forecasting literature by providing observable proxies for latent integrated variance
+(Andersen et al., 2001; Barndorff-Nielsen & Shephard, 2002). Within this class of models,
+the heterogeneous autoregressive model of realized volatility (HAR-RV) has become a particu-
+larly demanding benchmark because it captures persistence across daily, weekly, and monthly
+horizons in a parsimonious specification (Andersen et al., 2007; Bollerslev et al., 2016; Corsi,
+2009).
+The strength of HAR-type benchmarks raises a substantive question for information-rich fore-
+casting systems: do additional predictors contain genuinely incremental information, or do they
+mainly increase model complexity without improving out-of-sample accuracy? This question
+is especially important for textual data. Financial news is economically plausible as a source
+of volatility information because news arrivals, uncertainty, disagreement, and heterogeneous
+interpretation can affect trading activity and risk perceptions (Bekaert & Harvey, 2000; French
+et al., 1987; O. Kim & Verrecchia, 1994; Ross, 1989). Textual measures may therefore capture
+dimensions of the information environment that are not fully represented by lagged realized
+volatility.
+The preceding empirical phases sharpen this motivation. Article 2 (Section 5) shows that VIX-
+based market uncertainty is more consistently related to subsequent trading dynamics than the
+examined optimism indicators are to abnormal returns. Article 3 (Section 8) finds that text-
+derived emotions do not provide robust short-horizon directional signals, while market-state
+and drawdown information is more useful for exposure management. These findings motivate a
+distinct question for the present study: whether market-wide text adds more reliably to forecasts
+of risk and volatility than it does to directional return prediction.
+The empirical literature provides reasons both for optimism and for caution. Media pessimism,
+news-based uncertainty, and disagreement have been associated with returns, trading activity,
+and volatility (Audrino et al., 2020; García, 2013; Tetlock, 2007). At the same time, evidence
+on machine-learning volatility forecasts is model- and design-dependent. Neural-network and
+broader machine-learning approaches can improve realized-volatility forecasts in some settings,
+but their gains are not uniform across models, horizons, and evaluation designs (Bucci, 2020).
+Separately, nonlinear HAR extensions and explicit treatment of realized-volatility measurement
+error can improve on the canonical HAR benchmark (Buccheri & Corsi, 2021). These results
+motivate direct out-of-sample comparison rather than a presumption that a modern language
+215
+model will improve forecasts relative to a strong persistence benchmark.
+This paper therefore asks a deliberately narrow question:does market-wide financial news pro-
+cessed with a modern transformer provide incremental out-of-sample information for forecasting
+individual-stock realized volatility?The emphasis is on the predictive value of the textual signal
+rather than on the predictive capacity of machine learning in general. To make that distinction
+explicit, the transformer-based news variables are evaluated alongside two simpler market-wide
+information channels: VIX-based implied volatility and AAII survey sentiment. VIX summa-
+rizes forward-looking option-market expectations (Busch et al., 2011; Christensen & Prabhala,
+1998; Whaley, 2000), whereas AAII provides a direct survey-based measure of investor sentiment
+(M. Baker & Wurgler, 2007; Brown & Cliff, 2004). Comparing these channels helps determine
+whether any observed gains are specific to transformer-derived text or instead arise from more
+conventional information sources.
+1.1 Research hypotheses
+The empirical analysis evaluates four hypotheses. The hypotheses distinguish incremental tex-
+tual information from the predictive value of conventional market-wide indicators, model flexi-
+bility, and forecast combination.
+H4.1: Incremental textual forecasting value.Model specifications that augment
+volatility-persistence predictors with ModernFinBERT-derived news variables should achieve
+lower out-of-sample forecast losses than the corresponding available non-text benchmarks.
+H4.2: Comparative information-channel performance.If transformer-derived news
+contains economically distinct information, its forecasting contribution should be at least as
+recurrent as the contribution of survey-based AAII sentiment and VIX-based market-implied
+volatility across assets and forecast horizons.
+H4.3: Stability across forecasting environments.Any forecasting gain associated with
+textual information should remain visible across securities, one-, five-, and twenty-two-day hori-
+zons, and rolling and expanding walk-forward estimation schemes rather than being confined
+to an isolated ticker–horizon–model configuration.
+H4.4: State-dependent textual value.If textual sentiment, directionality, and posterior
+uncertainty become particularly informative during changes in market risk, text-augmented
+specifications should exhibit relatively stronger forecast performance in the ex-post high-
+volatility regime than in the low-volatility regime.
+The hypotheses are assessed using out-of-sample forecast losses and formal forecast comparisons;
+the interpretive role and limitations of SHAP are defined in Section 3.12.
+The textual signal is market-wide rather than firm-specific. Daily New York Times financial
+news is processed with ModernFinBERT to construct directional sentiment, directionality, pos-
+terior entropy, sentiment intensity, and news-volume variables. The same daily information-flow
+216
+measures are then used to forecast Yang–Zhang realized volatility for a panel of large U.S. equi-
+ties. This design imposes a demanding test. A broad news signal must add information beyond
+each stock’s own volatility persistence and must remain useful despite being common across
+firms with different sectoral exposures and information environments.
+The forecasting exercise compares the baseline HAR model with matched HAR-X specifica-
+tions, Elastic Net, Random Forest, XGBoost, a naive benchmark, and forecast-combination
+models over one-day, five-day, and twenty-two-day horizons. Rolling and expanding walk-
+forward schemes are considered because the usefulness of historical information may depend
+on the trade-off between parameter stability and adaptation to structural change (Pesaran &
+Timmermann, 2007). Forecast performance is evaluated primarily with QLIKE. Squared-error
+losses enter the secondary DM comparisons and winner counts, while RMSE and MAE are re-
+tained as archived diagnostics. Formal forecast-comparison procedures are used to distinguish
+economically small numerical differences from more persistent forecasting gains (Clark & West,
+2007; Diebold & Mariano, 1995; Giacomini & White, 2006; Patton, 2011). All estimated fore-
+casting specifications are evaluated under the same horizon-specific, fully purged walk-forward
+protocol. Both model selection and final out-of-sample evaluation preserve chronological or-
+dering and impose a gap corresponding to the forecast horizon. Statistical conclusions are
+additionally based on multiplicity-adjusted forecast-comparison procedures rather than on raw
+minimum-loss rankings alone.
+We also examine whether forecast performance and predictor attribution vary across low- and
+high-volatility states. Volatility dynamics differ substantially between tranquil and stressed pe-
+riods, and the relevance of news, sentiment, and nonlinear interactions may be state-dependent
+(Ang & Bekaert, 2002; Guidolin, 2011; Hamilton, 1989; Marcucci, 2005). The regime analysis is
+used as an ex-post diagnostic rather than as a real-time forecasting input. It therefore describes
+where forecast errors and feature attributions differ, without treating full-sample regime labels
+as implementable trading signals.
+This paper contributes to the volatility-forecasting literature in five respects.
+First, it evaluates the out-of-sample forecasting performance of market-wide transformer-based
+news signals relative to a strong HAR benchmark and matched linear HAR-X specifications for
+the VIX, AAII, text, and full information blocks. These linear comparisons isolate the incre-
+mental contribution of each information channel without simultaneously changing the functional
+form of the benchmark. The text-augmented and full information sets are also evaluated with
+tree-based models. VIX-only and AAII-only extensions are compared within the matched linear
+family; no RF-VIX specification is added.
+Second, itseparatesthreeconceptuallydifferentinformationchannels: transformer-derivednews
+variables, AAII survey sentiment, and VIX-based market-implied volatility. This separation
+prevents forecasting gains generated by survey data, option-market information, or forecast
+combinations from being attributed to textual sentiment.
+217
+Third, itevaluatestheseinformationchannelswithinacommonmulti-stock, multi-horizonwalk-
+forward framework. The comparison covers one-day, five-day, and twenty-two-day Yang–Zhang
+volatility targets, multiple model classes, and both rolling and expanding estimation schemes.
+This permits an assessment of whether any incremental value is stable across assets, horizons,
+and estimation environments rather than confined to an isolated configuration.
+Fourth, it complements aggregate forecast losses with ex-post regime-stratified diagnostics. This
+analysis examines whether the relative performance of HAR, text-based models, survey-based
+models, VIX specifications, and forecast combinations differs between tranquil and stressed
+volatility states, while maintaining a clear distinction between descriptive regime analysis and
+implementable real-time forecasting.
+Fifth, it combines predictive evaluation with SHAP-based model interpretation (Lundberg &
+Lee, 2017). The analysis distinguishes between two questions that are often conflated: whether
+a variable receives substantial attribution inside a nonlinear model, and whether adding that
+information produces a robust out-of-sample forecasting gain.
+Taken together, the design separates within-model attribution from incremental forecasting per-
+formance and makes the dependence on the long-window target and initial parameter-selection
+rule explicit. The empirical assessment below concerns that fully stated procedure. Neither
+model sophistication nor feature importance alone establishes the forecasting value of an infor-
+mation channel.
+The remainder of the paper is organized as follows. Section 2 describes the equity, VIX, AAII,
+and New York Times data and the construction of the transformer-based textual variables.
+Section 3 presents the forecasting targets, feature sets, models, walk-forward evaluation design,
+forecast-comparison procedures, regime diagnostics, and SHAP analysis. Section 4 reports
+the full-sample and regime-stratified forecasting evidence and interprets the feature-attribution
+results. Section 5 concludes.
+2 Dataset
+2.1 Data Sources, Dataset Construction, and Corpus Diagnostics
+Our empirical design requires a dataset capable of supporting a multi-horizon volatility fore-
+casting task in which stock-specific realized volatility is predicted using three complementary
+information channels: historical volatility dynamics, market-wide risk expectations, and tex-
+tual news-based sentiment. Existing volatility datasets typically provide rich market variables
+but limited textual information, while existing financial text datasets often lack direct align-
+ment with daily asset-level forecasting targets. This motivates the construction of a daily panel
+dataset that links equity prices, implied volatility, investor sentiment, and large-scale news
+sentiment over a common sample period.
+The final dataset is constructed at the daily frequency for AAPL, ABBV, ABT, AMZN, JNJ,
+JPM, LLY, MA, UNH, WMT, and XOM. Each equity is evaluated at forecast horizonsℎ= 1,
+218
+ℎ= 5, andℎ= 22, yielding a complete empirical panel of11×3 = 33observed ticker–horizon
+cells. No ticker–horizon cell is imputed.
+The equity universe is a purposively selected ex-post panel of 11 currently large U.S.-listed
+firms. It is not a point-in-time reconstruction of the historical large-cap universe. Accordingly,
+the empirical conclusions are restricted to the firms included in this panel and should not be
+generalized to all firms that qualified as large U.S. equities at different points during 2000–2022.
+Thesource-dataperiodspans1January2000through31December2022. Theeffectivemodeling
+sample begins only after the construction of the 252-session Yang–Zhang initialization and
+subsequent lag construction. Parameter selection and stacking calibration further precede the
+common out-of-sample period. Consequently, effective model samples generally begin in 2001
+for the long-history securities and later for ABBV and MA. The distinction between the source-
+data period and the effective estimation period is maintained throughout the analysis.
+Daily open, high, low, close, adjusted close, and volume data are obtained from Yahoo Finance.
+The sample begins in January 2000 and ends in December 2022, subject to security-level data
+availability.
+To capture market-wide uncertainty, we include the CBOE Volatility Index (VIX), which serves
+as a forward-looking proxy for aggregate option-implied volatility. In addition, we incorporate
+survey-based investor sentiment from the American Association of Individual Investors (AAII),
+including bullish, bearish, and neutral sentiment shares, as well as the bull–bear spread. All
+market-wide variables are transformed into lagged and smoothed predictors over one-day, five-
+day, and twenty-two-day windows, matching the forecasting horizons considered in the study.
+The textual component is based on a large-scale New York Times article corpus obtained from
+the Kaggle dataset “NYT Articles 2.1M 2000–Present”. The raw corpus contains article-level
+metadata, including publication timestamp, source URL, headline, abstract, snippet, news desk,
+section, subsection, and lead paragraph.
+To ensure data quality and financial relevance, the textual corpus is processed in one ordered
+sequence before the forecasting features are formed. First, we retain observations with a valid
+article URL, a parseable publication timestamp, and non-empty textual content in at least
+one of the headline, abstract, snippet, or lead-paragraph fields; when available, articles are
+additionally required to contain at least 80 words and to belong to standard editorial formats
+(articles or blog posts). Second, we apply a finance-relevance screen based jointly on editorial
+metadata and textual content: an article is retained if it originates from a business-oriented
+desk or section (e.g.,Business,DealBook,Finance, orMarkets) or if its textual fields contain
+terms from the predefined financial lexicon covering accounting, macroeconomic, and capital-
+market terminology. Third, headline, abstract, lead paragraph, and snippet are normalized and
+concatenated with explicit delimiter tokens; boilerplate and formatting artifacts are removed
+and the sequence is truncated to the fixed model input length. Fourth, duplicate URLs and
+exact duplicate texts are checked separately and malformed or empty records are excluded.
+Fifth, a language diagnostic is performed on a sample of documents to assess non-English
+219
+contamination. Sixth, each retained article is mapped to an eligible U.S. equity trading session
+using the timestamp rule defined once in Section 3.4; article-level measures are then aggregated
+at that assigned-session level. Finally, the daily textual predictors are lagged and transformed
+into the prespecified rolling features using only information available before the forecast origin.
+The textual variables are constructed as market-wide information-flow measures rather than
+firm-specific news signals. The same daily textual signal is merged into each stock-level forecast-
+ing dataset. This design is intentional: the objective is to measure whether broad financial-news
+sentiment, directionality, posterior uncertainty, and news intensity contain incremental informa-
+tion for individual equity volatility beyond stock-specific volatility persistence and market-wide
+implied volatility. The resulting document-level corpus is therefore aggregated into market-wide
+predictors; the forecasting design does not construct firm-specific news features.
+The sentiment classifier produces posterior probabilities for three classes: bullish, bearish, and
+neutral. These probabilities are used to construct five textual information measures. Direc-
+tional sentiment is defined as the difference between bullish and bearish posterior probabilities.
+Directionality is defined as the posterior mass assigned to either directional class, irrespective
+of sign. Posterior uncertainty is measured separately using the normalized Shannon entropy of
+the three-class probability distribution. Sentiment intensity is the absolute value of directional
+sentiment, while news volume is the number of valid articles assigned to a trading session.
+For article𝑎, these quantities are defined as
+𝑠𝑒𝑛𝑡𝑖𝑚𝑒𝑛𝑡𝑎 =𝑝 +𝑎−𝑝−𝑎 ,
+𝑑𝑖𝑟𝑒𝑐𝑡𝑖𝑜𝑛𝑎𝑙𝑖𝑡𝑦𝑎 = 1−𝑝 0𝑎,
+𝑡𝑒𝑥𝑡_𝑒𝑛𝑡𝑟𝑜𝑝𝑦𝑎 =− 𝑝+𝑎 ln𝑝 +𝑎 +𝑝−𝑎 ln𝑝−𝑎 +𝑝 0𝑎 ln𝑝 0𝑎ln 3 ,
+and
+𝑖𝑛𝑡𝑒𝑛𝑠𝑖𝑡𝑦𝑎 =|𝑠𝑒𝑛𝑡𝑖𝑚𝑒𝑛𝑡 𝑎|.
+The normalized entropy lies in the interval[0,1]. Values close to zero indicate a concentrated
+classifier posterior, whereas values close to one indicate high posterior uncertainty across the
+three sentiment classes. News volume is the number of valid articles assigned to each trading
+session. The detailed UTC-to-Eastern-Time conversion and session-assignment rule is specified
+in Section 3.4; here, the relevant point is that daily textual variables are aggregated by assigned
+trading session rather than by raw calendar publication date.
+Directionalityandposteriorentropymeasureconceptuallydistinctproperties. Astronglybullish
+or strongly bearish article can have high directionality but low posterior entropy, whereas an
+article for which the classifier assigns similar probabilities to all three classes has high posterior
+entropy.
+The raw analyzed corpus contains 363,030 documents and 31 metadata fields. As reported in
+Table 4.1, the corpus contains approximately 18.18 million tokens and a vocabulary of 185,573
+220
+unique tokens. The average document length is 50.08 tokens, while the median length is 27
+tokens, indicating a strongly right-skewed distribution. The 99th percentile of document length
+is 272 tokens, while the maximum observed length is 88,822 tokens. Approximately 7,291
+documents, or 2.01%, are empty after preprocessing, and 3,622 observations, or 1.00%, lie
+above the 99th percentile of the length distribution.
+Table 4.1: Summary statistics of the textual corpus
+Metric Value
+Number of documents 363,030
+Number of tokens 18,180,668
+Vocabulary size 185,573
+Number of sentiment classes 3
+Label-distribution entropy (bits) 1.264
+Lexical diversity (TTR) 0.0103
+Average document length 50.08
+Median document length 27
+99th percentile document length 272
+Maximum document length 88,822
+Empty documents 7,291
+Empty documents (%) 2.01
+Outliers above p99 3,622
+The document-length distribution is highly skewed and exhibits a heavy right tail, which is
+characteristic of heterogeneous news corpora combining short news briefs with substantially
+longer feature articles. Figure 4.1 shows that most observations are concentrated between 10
+and 50 tokens, while extremely long documents constitute a small but non-negligible subset of
+the sample. To improve robustness and reduce the influence of extreme outliers, subsequent
+diagnostics are reported both on the full sample and on distributions truncated at the 99th
+percentile. Figure 4.2 further confirms that the extreme right tail is sparse but very long.
+Figure 4.1: Document length distribution clipped at the 99th percentile and boxplot excluding
+values above the 99th percentile.
+The sentiment-label distribution is imbalanced but economically plausible for general financial
+news. As shown in Table 4.2 and Figure 4.3, neutral articles dominate the corpus, accounting for
+234,173 observations, or 64.51%. Bearish articles account for 86,012 observations, or 23.69%,
+221
+Figure 4.2: Outlier tail above the 99th percentile and full document length distribution on a
+logarithmic scale.
+while bullish articles account for 42,845 observations, or 11.80%. The class imbalance ratio
+is 5.47, and the entropy of the corpus-level label distribution is 1.264 bits. This corpus-level
+descriptive statistic is distinct from the normalized article-level posterior entropy used as a
+forecasting predictor.
+Table 4.2: Distribution of sentiment labels
+Sentiment class Documents Percentage (%)
+Neutral 234,173 64.51
+Bearish 86,012 23.69
+Bullish 42,845 11.80
+Total 363,030 100.00
+Documentlengthalsovariesacrosssentimentclasses. Table4.3reportslengthstatisticsbylabel,
+while Figure 4.4 visualizes the corresponding distributions truncated at the 99th percentile.
+Bearish articles have an average length of 42.83 tokens and a median length of 28 tokens.
+Bullish articles are slightly shorter, with an average length of 37.03 tokens and a median of 26
+tokens. Neutral articles are substantially longer on average, with a mean of 55.13 tokens and
+a considerably heavier right tail. This pattern suggests that neutral articles are more likely to
+include descriptive or explanatory reporting, whereas strongly directional sentiment tends to
+appear in shorter and more event-focused news items.
+The domain distribution confirms that the dataset is primarily sourced from New York Times
+domains. Figure 4.5 shows that the dominant source iswww.nytimes.com, followed by NYT-
+affiliated subdomains such asdealbook.nytimes.com. This source concentration is intentional
+because the study focuses on professionally curated financial and economic news rather than
+heterogeneous user-generated content.
+222
+Figure 4.3: Distribution of sentiment labels in the analyzed textual corpus.
+Table 4.3: Document length statistics by sentiment class
+Class Mean Std Min Median P90 P95 P99 Max
+Bearish 42.83 104.93 0 28 81 107 182 16,034
+Bullish 37.03 80.48 0 26 68 93 141 10,037
+Neutral 55.13 424.42 0 26 83 112 366 88,822
+Figure 4.4: Document length by sentiment class, with values clipped at the 99th percentile.
+223
+Figure 4.5: Top 20 source domains in the analyzed corpus.
+For corpus-diagnostic purposes only, the documents were also divided into fixed 80/10/10 parti-
+tions. These partitions are not training, validation, and test sets in the usual supervised-learning
+sense: they are not used to train, fine-tune, select, or validate ModernFinBERT, and they do not
+enter the walk-forward volatility forecasts. The associated counts describe ModernFinBERT-
+predicted classes rather than manually verified labels. Partition-level class frequencies, duplicate
+diagnostics, vocabulary overlap, and out-of-vocabulary counts are reported in Appendix A.1.
+Leakage prevention constitutes a central component. Exact duplicate diagnostics identify 15,333
+duplicated texts, corresponding to 4.22% of the corpus, while duplicate URLs are not observed.
+Near-duplicate analysis using a similarity threshold of 0.90 detects only two highly similar
+document pairs within a diagnostic sample. Furthermore, overlap diagnostics based on Jaccard
+similarity indicate only moderate vocabulary overlap between splits. These diagnostics are
+summarized in Table 4.4.
+Several metadata fields contain missing values, although these do not directly compromise the
+sentiment extraction task because the lead paragraph serves as the analyzed textual variable.
+Table 4.5 reports that missingness is highest for subsection name, print page, and print section,
+while the lead paragraph field exhibits only limited missingness.
+For the downstream volatility forecasting exercise, random document splits are not used. In-
+stead, all forecasting models are evaluated using walk-forward expanding and rolling temporal
+windows. This design ensures that each prediction is generated exclusively using information
+available prior to the forecast origin and prevents look-ahead bias. In addition, all lagged and
+rolling textual features are constructed strictly from past observations, eliminating temporal
+leakage between predictors and future volatility targets.
+224
+Table 4.4: Dataset overlap and deduplication diagnostics
+Metric Value
+Exact duplicate texts 15,333
+Exact duplicate texts (%) 4.22
+Exact duplicate URLs 0
+Near-duplicate pairs (sample) 2
+Near-duplicate threshold 0.90
+80%–Partition A Jaccard overlap 0.310
+80%–Partition B Jaccard overlap 0.297
+Partition A–Partition B Jaccard overlap 0.444
+Partition A OOV tokens vs. 80% partition 11,869
+Partition B OOV tokens vs. 80% partition 8,168
+Table 4.5: Missing-value statistics for selected metadata fields
+Variable Missing count Missing percentage (%)
+Subsection name 272,701 75.12
+Print page 131,743 36.29
+Print section 131,509 36.23
+Snippet 44,708 12.32
+News desk 43,448 11.97
+Material type 21,781 6.00
+Lead paragraph 8,111 2.23
+Section name 2 0.00
+225
+Overall, the resulting dataset is appropriate for the research question for three reasons. First,
+it aligns daily realized-volatility targets with information available before the forecast origin,
+enabling a realistic out-of-sample forecasting framework. Second, it combines classical volatility
+predictors with market-implied uncertainty, survey sentiment, and large-scale textual sentiment,
+thereby allowing us to compare the out-of-sample performance of models using news-based
+information with the available non-text benchmarks. Third, the long sample period spans
+multiple macroeconomic and financial regimes, enabling regime-aware analysis and improving
+the external validity of the empirical findings.
+2.2 Blinded agreement audit of ModernFinBERT classifications
+A blinded agreement audit was conducted on a simple random sample without replacement
+comprising𝑁= 2,700records. The purpose of this exercise was not to establish absolute
+classification accuracy against expert-annotated ground truth. Instead, it assessed the extent
+to which ModernFinBERT classifications agreed with an independently applied, automated
+semantic reference procedure that was blinded to the model outputs. Each record received
+exactly one reference label: bearish, neutral, or bullish.
+The validation procedure was blinded to the ModernFinBERT outputs. During label assign-
+ment, only the content of the text field was visible. The model-generated bearish, neutral, and
+bullish probabilities and the model-assigned sentiment label were masked from the reference-
+label procedure.
+The reference labels were generated using ChatGPT 5.6 Sol, accessed in August 2026. Because
+the interface did not expose a reproducibility seed or decoding parameters, exact deterministic
+reproduction of individual reference labels is not claimed. The annotation procedure received
+only the textual content of each sampled record. The ModernFinBERT probabilities, Mod-
+ernFinBERT class label, publication date, subsequent market outcomes, and all remaining
+metadata were excluded from the annotation input.
+The following instruction was used to assign the blinded validation labels:
+Assign exactly one label to the following financial text: bearish, neutral, or bullish.
+Use only the information contained in the text. Do not use probability scores, existing
+sentiment labels, dates, subsequent market outcomes, or any other metadata.
+Apply the following definitions:
+Bearish:deterioration in financial performance or economic conditions, losses, liquidity
+problems, declining activity, adverse legal or regulatory decisions, increasing risk, or other
+predominantly negative economic implications.
+Bullish:improvement in financial performance or economic conditions, growth, favorable
+transactions, stronger demand, value creation, or other predominantly positive economic
+implications.
+Neutral:descriptive content, materially mixed implications, or insufficiently clear direc-
+tional economic implications.
+226
+Return exactly one label and a short validation note explaining the dominant economic
+implication.
+The procedure should nevertheless not be interpreted as a substitute for independent expert
+annotation. Its role is to provide a controlled consistency check and error-profile diagnostic
+rather than a definitive estimate of classification validity.
+ModernFinBERT produced three class probabilities for each observation:𝑝bearish,𝑝 neutral, and
+𝑝bullish. The predicted sentiment class was defined as the class associated with the highest of
+these three probabilities:
+̂︀𝑦𝑖 = arg max
+𝑐∈{bearish,neutral,bullish}
+𝑝𝑖,𝑐,(4.1)
+where𝑝 𝑖,𝑐 denotes the probability assigned by ModernFinBERT to class𝑐for observation𝑖.
+No minimum probability or confidence threshold was imposed. Consequently, every observa-
+tion received exactly one ModernFinBERT prediction, irrespective of the absolute value of the
+highest class probability.
+A consistency check confirmed that the recorded ModernFinBERT label corresponded to the
+class with the highest predicted probability for all 2,700 observations. No probability ties were
+observed.
+TheModernFinBERTpredictionswerecomparedwiththeblindedvalidationlabelsusingoverall
+accuracy, balanced accuracy, class-specific precision, recall, and𝐹1 score, macro-averaged𝐹 1,
+weighted𝐹 1, Cohen’s𝜅, the multiclass Brier score, and multiclass log loss.
+Overall accuracy was calculated as the proportion of observations for which the ModernFin-
+BERT prediction matched the validation label. Balanced accuracy was calculated as the un-
+weighted mean of the class-specific recall values. Macro-averaged𝐹 1 was calculated as the
+unweighted mean of the three class-specific𝐹1 scores.
+Cohen’s𝜅was used to quantify agreement beyond the level expected from the marginal class
+distributions. The multiclass log loss was calculated as
+LogLoss =− 1𝑁 𝑁∑︁𝑖=1 𝐶∑︁𝑐=1 𝑦𝑖,𝑐 log (𝑝𝑖,𝑐).(4.2)
+For the supplementary confidence analysis, confidence was defined as the largest class probabil-
+ity:
+Confidence𝑖 = max (𝑝𝑖,bearish, 𝑝𝑖,neutral, 𝑝𝑖,bullish).(4.3)
+Confidence was used only as a diagnostic variable. It was not used to exclude observations or
+modify the predicted class.
+227
+The largest class in the blinded validation sample was neutral, with 1698 observations, corre-
+sponding to 62.9% of the sample. The bearish class contained 578 observations, or 21.4%, while
+the bullish class contained 424 observations, or 15.7%.
+ModernFinBERT predicted 1661 neutral observations, corresponding to 61.5% of the sample,
+691 bearish observations, corresponding to 25.6%, and 348 bullish observations, corresponding
+to 12.9%.
+Relative to the blinded validation labels, ModernFinBERT therefore assigned the bearish class
+more frequently and the bullish class less frequently. Table 4.6 reports the complete class counts
+and shares.
+Table 4.6: Distribution of blinded validation labels and ModernFinBERT predictions.
+Blinded validation ModernFinBERT
+Class𝑁Share𝑁Share
+Bearish 578 21.4% 691 25.6%
+Neutral 1698 62.9% 1661 61.5%
+Bullish 424 15.7% 348 12.9%
+Total 2,700 100.0% 2,700 100.0%
+ModernFinBERT assigned the same class as the blinded semantic reference procedure in 1558
+of the 2,700 observations. The resulting overall agreement rate was 0.577.
+Balanced accuracy was 0.484, indicating that classification performance was not uniform across
+the three classes. Macro F1 was 0.481, whereas weighted F1 was 0.577. The difference between
+these two measures reflects the class imbalance and the substantially stronger performance of
+the model for the dominant neutral class.
+Cohen’s coefficient of agreement was𝜅= 0.214, indicating limited agreement beyond the level
+expected from the marginal class distributions. This low level of agreement constitutes weak
+corroborative evidence for the semantic validity of the generated labels and should not be
+interpreted as strong validation of the classifier for the analyzed corpus.
+The multiclass Brier score was 0.656, while multiclass log loss was 1.331. These probability-
+based measures indicate that classification errors were accompanied by imperfect probability
+estimates. Table 4.7 summarizes the overall agreement and probability-based metrics.
+The strongest performance was observed for the neutral class. Precision for neutral predictions
+was 0.697, recall was 0.682, and F1 was 0.689.
+Performance was weaker for the bearish class. Bearish precision was 0.402, recall was 0.481,
+and F1 was 0.438.
+The weakest results were obtained for the bullish class. Bullish precision was 0.351, recall was
+0.288, and F1 was 0.316. Thus, ModernFinBERT correctly identified fewer than one third of
+the observations classified as bullish by the blinded validation procedure. Table 4.8 reports all
+228
+Table 4.7: Overall ModernFinBERT classification performance relative to the blinded validation
+labels.
+Metric Value
+Number of observations 2,700
+Correct classifications 1558
+Accuracy 0.577
+Balanced accuracy 0.484
+Macro𝐹 1 0.481
+Weighted𝐹 1 0.577
+Cohen’s𝜅0.214
+Multiclass Brier score 0.656
+Multiclass log loss 1.331
+class-specific metrics.
+Table 4.8: Class-specific ModernFinBERT classification metrics.
+Class Precision Recall𝐹 1 Support
+Bearish 0.402 0.481 0.438 578
+Neutral 0.697 0.682 0.689 1698
+Bullish 0.351 0.288 0.316 424
+Macro average 0.484 0.484 0.481 2,700
+Weighted average 0.578 0.577 0.577 2,700
+The confusion matrix shows that most classification errors occurred between a directional sen-
+timent class and the neutral class.
+Among the 578 observations classified as bearish in the blinded validation procedure, Mod-
+ernFinBERT correctly classified 278 as bearish, classified 265 as neutral, and classified 35 as
+bullish.
+Among the 1698 validation-neutral observations, the model correctly classified 1158 as neutral,
+while 349 were classified as bearish and 191 as bullish.
+Among the 424 observations classified as bullish in the blinded validation procedure, Modern-
+FinBERT correctly classified 122 as bullish, classified 238 as neutral, and classified 64 as bearish.
+The complete confusion matrix is reported in Table 4.9.
+Table 4.9: Confusion matrix for ModernFinBERT relative to the blinded validation labels.
+Rows represent validation labels and columns represent ModernFinBERT predictions.
+ModernFinBERT prediction
+Validation label Bearish Neutral Bullish
+Bearish 278 265 35
+Neutral 349 1158 191
+Bullish 64 238 122
+229
+The most frequent error for both directional classes was classification as neutral. This pattern
+suggests that ModernFinBERT frequently reduced the strength of directional economic signals
+by assigning them to the neutral category.
+Direct confusion between the two opposing sentiment classes was less frequent. Thirty-five
+bearish observations were classified as bullish, while 64 bullish observations were classified as
+bearish. Together, these opposite-direction errors accounted for 99 observations, corresponding
+to 3.7% of the validation sample.
+These results do not establish strong absolute classification validity. Instead, they reveal mate-
+rial disagreement between the transformer-based classifier and the independent semantic refer-
+ence procedure, particularly for directional classes. The audit therefore performs a diagnostic
+rather than a confirmatory function: it identifies where the text-derived measurements are most
+and least reliable and constrains the interpretation of the subsequent forecasting results.
+The weak identification of bullish observations is especially important because it implies that the
+positive-sentiment component may be measured with greater error than the neutral or bearish
+components. Any weak forecasting performance of directional sentiment variables may therefore
+reflect both a genuine absence of predictive content and attenuation caused by classification
+noise.
+2.3 Performance by Model Confidence
+Classification performance improved as the maximum predicted probability increased. Accuracy
+was 0.449 for observations with confidence below 0.60 and increased to 0.655 for observations
+with confidence of at least 0.90.
+Balanced accuracy increased from 0.412 in the lowest-confidence group to 0.536 in the highest-
+confidence group. Macro F1 similarly increased from 0.383 to 0.536.
+The highest-confidence interval contained 1387 observations, corresponding to 51.4% of the
+sample. Despite the stronger relative performance in this subgroup, approximately 34.5% of
+predictions with confidence of at least 0.90 remained inconsistent with the blinded validation
+labels.
+High confidence should therefore not be interpreted as a guarantee of correct classification.
+Nevertheless, the monotonic relationship between confidence and performance indicates that the
+maximum class probability contains useful information about prediction reliability. Table 4.10
+reports the confidence-bin results.
+The results indicate that ModernFinBERT was substantially more effective at identifying neu-
+tral content than directional financial sentiment. The difference between overall accuracy and
+balanced accuracy demonstrates that aggregate performance was strongly influenced by the
+dominant neutral class.
+The relatively low recall values for the bearish and bullish classes suggest that ModernFinBERT
+frequently classified directional economic information as neutral. This effect was particularly
+230
+Table 4.10: ModernFinBERT classification performance by maximum predicted class probabil-
+ity.
+Confidence𝑁Share Mean confidence Accuracy Balanced accuracy Macro𝐹 1
+<0.60354 13.1% 0.537 0.449 0.412 0.383
+0.60–0.75389 14.4% 0.678 0.470 0.417 0.405
+0.75–0.90570 21.1% 0.835 0.540 0.445 0.452
+≥0.901387 51.4% 0.967 0.655 0.536 0.536
+pronounced for the bullish class, for which only 28.8% of the blinded validation observations
+were correctly identified.
+The model also displayed an asymmetry between positive and negative sentiment. Relative to
+the blinded validation labels, ModernFinBERT generated more bearish predictions and fewer
+bullish predictions. This pattern may reflect a comparatively conservative tendency toward
+negative classification or a greater sensitivity to negative financial language.
+The low bullish F1 score is especially relevant for empirical applications in which positive and
+negative financial information is expected to produce distinct effects. In such applications, the
+use of the unadjusted three-class prediction may lead to an underrepresentation of positive
+economic signals.
+The difference between macro F1 and weighted F1 further demonstrates that overall perfor-
+mance measures may overstate model quality for the minority classes. Accuracy and weighted
+F1 should therefore be interpreted together with balanced accuracy and class-specific precision,
+recall, and F1 scores.
+The confidence analysis indicates that the maximum predicted probability may be used as a
+diagnostic measure of prediction reliability. However, because every class was assigned using the
+maximum-probability rule, observations with similar class probabilities still received a definitive
+label. Low-confidence predictions may therefore represent ambiguous cases rather than strongly
+directional sentiment signals.
+For empirical applications, ModernFinBERT predictions should be interpreted as model-based
+sentiment indicators rather than error-free labels. The findings support the use of robustness
+checks, particularly when bearish and bullish observations are analyzed separately.
+Possible robustness procedures include estimating models on higher-confidence subsets, using
+the continuous class probabilities instead of only the discrete label, combining directional classes
+in alternative specifications, calibrating the probability outputs on an independent sample, or
+validating an additional subsample through expert human annotation.
+Because the predicted class was selected using the maximum-probability rule, no observations
+were removed from the primary analysis. The confidence analysis should therefore be treated
+as supplementary evidence concerning reliability rather than as a sample-selection procedure.
+The interpretation of the results is subject to several limitations. First, the validation sample
+231
+was imbalanced, with neutral observations accounting for almost two thirds of the records. This
+imbalance affected the aggregate measures and increased the contribution of the neutral class
+to weighted performance metrics.
+Second, the neutral class was internally heterogeneous. It included purely descriptive texts,
+texts with materially mixed positive and negative implications, and texts for which the economic
+direction was insufficiently clear. This heterogeneity may have increased disagreement at the
+boundary between neutral and directional sentiment.
+Third, the reference labels were produced using the automated annotation procedure docu-
+mented in Section 2.2. Because this procedure does not constitute independent expert anno-
+tation, the reported metrics measure agreement with that specified reference procedure rather
+than absolute accuracy relative to an undisputed ground truth.
+Fourth, the Brier score and log loss depend not only on classification accuracy but also on
+the calibration of the ModernFinBERT probability estimates. Further evaluation using an
+independent sample, multiple human annotators, and formal probability-calibration methods
+would be necessary to assess absolute classification validity and calibration quality.
+In the blinded validation sample of 2,700 observations, ModernFinBERT achieved an accuracy
+of 0.577, balanced accuracy of 0.484, and macro F1 of 0.481. Performance was strongest for
+neutral observations and weakest for bullish observations.
+The model frequently classified directional financial content as neutral and produced more bear-
+ishandfewerbullishpredictionsthantheblindedvalidationprocedure. Highermodelconfidence
+was associated with improved classification performance, although substantial disagreement re-
+mained even among the highest-confidence predictions.
+Overall, thefindingsindicatethatModernFinBERTprovidesinformativebutimperfectfinancial
+sentiment classifications. Its outputs appear most reliable for neutral content and should be
+interpretedcautiouslywhendistinguishingbetweenpositiveandnegativeeconomicimplications.
+Data provenance and analytical scope.Forecasting uses the reconciled market exports
+and the session-level text aggregates available in the study archive. The ModernFinBERT
+measurement layer, document-retrieval history, and corpus-diagnostic quantities are treated
+as fixed inputs and are not independently regenerated. Corpus summaries therefore describe
+their stated source populations, whereas the common-case modeling and OOS samples are
+reported separately in Appendix A.1. The computational claims of this chapter are limited to
+the forecasting and evaluation stages that can be reproduced from these retained inputs.
+3 Methodology
+The analysis implements the target and lagged information sets defined below, with one initial
+hyperparameter search followed by frozen-setting refits. All reported results use this single
+YZ-252 level-target protocol.
+232
+3.1 Empirical evaluation of the hypotheses
+H4.1 is evaluated first through the architecture-matched HAR-Text versus HAR comparison.
+H4.2 compares the recurrence of gains from text, VIX, and AAII under the same linear estimator
+and evaluation dates. Regularized and tree-based models provide additional functional-form
+comparisons that enter the fixed 792-test family but do not by themselves define any hypothesis
+verdict; Elastic Net is linear, not nonlinear. H4.3 concerns heterogeneity across stocks, horizons,
+folds, and the separately reported rolling-window arm. H4.4 concerns ex-post low- and high-
+volatility strata and cannot establish a real-time regime-timing result. QLIKE is the primary
+criterion throughout; the statistical comparison hierarchy is specified in Section 3.10.
+3.2 Forecasting target
+The volatility target is constructed from daily open, high, low, and close prices using the
+standard multi-period Yang–Zhang volatility estimator. For stock𝑖on trading day𝑠, let𝑂𝑖,𝑠,
+𝐻𝑖,𝑠,𝐿 𝑖,𝑠, and𝐶 𝑖,𝑠 denote the open, high, low, and close prices, respectively. The overnight and
+open-to-close log-return components are defined as
+𝑜𝑖,𝑠 = log
+(︃
+𝑂𝑖,𝑠
+𝐶𝑖,𝑠−1
+)︃
+, 𝑐 𝑖,𝑠 = log
+(︃
+𝐶𝑖,𝑠
+𝑂𝑖,𝑠
+)︃
+.(4.4)
+The corresponding high-to-open and low-to-open log-price ranges are
+𝑢𝑖,𝑠 = log
+(︃
+𝐻𝑖,𝑠
+𝑂𝑖,𝑠
+)︃
+, 𝑑 𝑖,𝑠 = log
+(︃
+𝐿𝑖,𝑠
+𝑂𝑖,𝑠
+)︃
+.(4.5)
+At each date𝑡, the Yang–Zhang estimator is calculated over a trailing window of𝑁trading
+sessions, indexed by𝑠=𝑡−𝑁+ 1, . . . , 𝑡. The window-specific means of the overnight and
+open-to-close returns are
+¯𝑜(𝑁)𝑖,𝑡 = 1𝑁 𝑡∑︁𝑠=𝑡−𝑁+1 𝑜𝑖,𝑠,¯𝑐 (𝑁)𝑖,𝑡 = 1𝑁 𝑡∑︁𝑠=𝑡−𝑁+1 𝑐𝑖,𝑠.(4.6)
+The overnight variance component is
+𝜎2(𝑁)𝑜,𝑖,𝑡 = 1𝑁−1 𝑡∑︁𝑠=𝑡−𝑁+1 (︁𝑜𝑖,𝑠−¯𝑜(𝑁)𝑖,𝑡 )︁2 ,(4.7)
+and the open-to-close variance component is
+𝜎2(𝑁)𝑐,𝑖,𝑡 = 1𝑁−1 𝑡∑︁𝑠=𝑡−𝑁+1 (︁𝑐𝑖,𝑠−¯𝑐(𝑁)𝑖,𝑡 )︁2 .(4.8)
+233
+The Rogers–Satchell component is calculated as
+𝜎2(𝑁)𝑅𝑆,𝑖,𝑡 = 1𝑁 𝑡∑︁𝑠=𝑡−𝑁+1 [𝑢𝑖,𝑠 (𝑢𝑖,𝑠−𝑐 𝑖,𝑠) +𝑑 𝑖,𝑠 (𝑑𝑖,𝑠−𝑐 𝑖,𝑠)].(4.9)
+The Yang–Zhang variance estimate is then
+𝑟𝑣𝑌 𝑍𝑖,𝑡 =𝜎 2(𝑁)𝑜,𝑖,𝑡 +𝑘 𝑁 𝜎2(𝑁)𝑐,𝑖,𝑡 + (1−𝑘 𝑁)𝜎 2(𝑁)𝑅𝑆,𝑖,𝑡,(4.10)
+where
+𝑘𝑁 = 0.341.34 + 𝑁+1𝑁−1 .(4.11)
+In the empirical implementation, the estimator is calculated using a trailing window of
+𝑁= 252(4.12)
+trading sessions. This choice corresponds to approximately one trading year. The Yang–Zhang
+measure is therefore a multi-period OHLC estimator rather than a single-day quadratic de-
+composition. At each date, its overnight, open-to-close, and Rogers–Satchell components are
+re-estimated using only the observations contained in the corresponding trailing window.
+For each forecasting horizonℎ∈{1,5,22}, the forward-looking volatility target is defined as
+the annualized square root of the average future Yang–Zhang variance:
+𝑦(ℎ)𝑖,𝑡 =
+⎯⎸⎸⎸⎷252· 1ℎ ℎ∑︁𝑗=1 𝑟𝑣𝑌 𝑍𝑖,𝑡+𝑗.(4.13)
+The forecasting targets are the annualized one-day, five-day, and twenty-two-day forward Yang–
+Zhang volatility measures, respectively. The five- and twenty-two-day targets are averages of
+overlapping future variance estimates. This overlap induces serial dependence in forecast errors
+and loss differentials and is taken into account in the purging and statistical inference procedures
+described below.
+A target is retained only when allℎfuture variance estimates are available. No terminal missing
+value is silently omitted from the mean. The target is a forward average of trailing 252-session
+estimates, not the variance of only the nextℎreturns. The known historical part of these
+overlapping estimates makes this a highly persistent, smoothed forecast object. All models fit
+its annualized-volatility level.
+The original indexing convention is retained: the average runs from𝑡+1through𝑡+ℎ, whereas
+predictors end at𝑡−1. Thus, atℎ= 1, the target estimator is dated two sessions after the
+latest volatility input. The nominal horizon is measured from origin𝑡, not from the date of that
+lagged input.
+Predictors are lagged before rolling transformations and use observations through𝑡−1. Training
+234
+labels must end before the next evaluation origin. Purging enforces that availability condition
+but does not remove shared historical observations from the 252-session target windows. This
+distinction motivates the longer-bandwidth inference sensitivity analysis.
+3.3 Textual sentiment aggregation
+We use ModernFinBERT as an external pre-trained financial sentiment classifier and do not
+fine-tune it within the volatility forecasting pipeline. The model is based on ModernBERT and
+is designed for financial sentiment classification across heterogeneous financial text domains,
+including news, social media, crypto-related text, stock-market commentary, and macroeco-
+nomic content. We therefore treat its outputs as externally generated, model-based sentiment
+measurements rather than as labels estimated within the present forecasting exercise. They
+are not regarded as historically point-in-time measurements or as semantically validated labels
+for the New York Times corpus. This limitation is upstream of the downstream forecasting
+design. Chronological splits, lagged predictors, horizon-specific purging, and training-window-
+only preprocessing prevent the forecasting models from using future observations contained in
+the analytical panel. They cannot, however, rule out the possibility that the fixed ModernFin-
+BERT weights encode linguistic or economic information originating after a historical forecast
+date or from documents overlapping the 2000–2022 evaluation corpus.
+Consequently, the text-based results should be interpreted as an ex-post measurement experi-
+ment: they assess whether features produced today by a fixed language model are associated
+with subsequent historical volatility outcomes. They do not establish the performance of a text-
+classification system that was historically available and trained only on information preceding
+each forecast origin. Their semantic validity is assessed only through the limited agreement au-
+dit described above and should not be regarded as established against expert-annotated ground
+truth.
+ModernFinBERT model provenance and temporal boundary.The textual variables
+were constructed using the publicly availabletabularisai/ModernFinBERTmodel distributed
+through the Hugging Face model repository. ModernFinBERT is a three-class financial senti-
+ment classifier based on the ModernBERT architecture and fine-tuned using a combination of
+real and synthetic financial data. According to the model card, the training material covers
+several financial domains, including financial news, social-media content, cryptocurrencies, and
+macroeconomic text.
+The exact temporal coverage of the pre-training and fine-tuning corpora is not disclosed by the
+model developers. In particular, the model card does not report a verified training-data cutoff
+date or provide a complete inventory of the documents included in the training corpus. The
+earliest independently verifiable date associated with the exact model weights used in this study
+is July 4, 2025.
+Consequently, July4, 2025shouldbeinterpretedastheconfirmedmodelreleasedateratherthan
+as the training-data cutoff. It cannot be established from the available model documentation
+that the model was trained exclusively on information predating the end of the empirical news
+235
+sample. The model is therefore used in this study as a fixed ex-post textual measurement
+instrument rather than as a language model that would have been available to an investor in
+real time during 2000–2022.
+Table 4.11 reports the benchmark performance disclosed in the public ModernFinBERT model
+card. The reported results indicate that ModernFinBERT performs strongly across standard
+financial-sentiment benchmarks, with an average ROC-AUC of 0.91 across the three datasets
+reported by the model provider. These metrics provide external validation for using the model
+as a sentiment-extraction layer in the subsequent volatility forecasting pipeline.
+Table 4.11: External benchmark performance of ModernFinBERT
+Dataset Accuracy F1-score Precision Recall ROC-AUC
+FIQA 0.80 0.61 0.64 0.88 0.96
+Twitter 0.71 0.70 0.68 0.81 0.94
+JeanBaptiste 0.74 0.58 0.71 0.56 0.84
+Average 0.75 0.63 0.68 0.75 0.91
+Notes: The table reports benchmark metrics from the public ModernFinBERT
+model card. ModernFinBERT is used in this study as a pre-trained financial
+sentiment classifier. The model is not fine-tuned on the New York Times corpus
+within the volatility forecasting pipeline. Source: https://huggingface.co/tabul
+arisai/ModernFinBERT.
+The study does not observe the complete pre-training corpus or a verified training-data cut-
+off for the external classifier. It therefore does not claim that every document used to train
+ModernFinBERT predates every observation in the volatility-forecasting sample. The empiri-
+cal exercise evaluates the usefulness of the supplied classifier outputs rather than the historical
+purity of the upstream language-model training process.
+The textual information set is obtained from a large-scale New York Times corpus processed
+with ModernFinBERT. ModernFinBERT produces article-level probabilities for three sentiment
+classes: bullish, bearish, and neutral. The volatility forecasting treats these probabilities as
+external, precomputed sentiment signals and does not retrain the sentiment classifier as part of
+the volatility forecasting exercise.
+For article𝑎, let𝑝 +𝑎,𝑝−𝑎, and𝑝 0𝑎 denote the ModernFinBERT posterior probabilities of bullish,
+bearish, and neutral sentiment, respectively. The article-level directional sentiment, direction-
+ality, posterior entropy, and sentiment intensity measures are defined as:
+𝑠𝑒𝑛𝑡𝑖𝑚𝑒𝑛𝑡𝑎 =𝑝 +𝑎−𝑝−𝑎 ,(4.14)
+𝑑𝑖𝑟𝑒𝑐𝑡𝑖𝑜𝑛𝑎𝑙𝑖𝑡𝑦𝑎 = 1−𝑝 0𝑎,(4.15)
+𝑡𝑒𝑥𝑡_𝑒𝑛𝑡𝑟𝑜𝑝𝑦𝑎 =− 𝑝+𝑎 ln𝑝 +𝑎 +𝑝−𝑎 ln𝑝−𝑎 +𝑝 0𝑎 ln𝑝 0𝑎ln 3 ,(4.16)
+236
+𝑖𝑛𝑡𝑒𝑛𝑠𝑖𝑡𝑦𝑎 =|𝑠𝑒𝑛𝑡𝑖𝑚𝑒𝑛𝑡 𝑎|.(4.17)
+The directionality measure captures the posterior probability assigned to the two directional
+classes jointly and should not be interpreted as uncertainty. Posterior uncertainty is instead
+represented by𝑡𝑒𝑥𝑡_𝑒𝑛𝑡𝑟𝑜𝑝𝑦 𝑎, which is normalized byln 3and therefore ranges from zero to
+one.
+Article-level textual measures are aggregated by assigned trading session rather than by raw
+publication date. Let𝒜 𝑡 denote the set of articles assigned to trading session𝑡under the
+timestamp-to-session rule defined in Section 3.4.
+𝑑𝑖𝑟𝑒𝑐𝑡𝑖𝑜𝑛𝑎𝑙𝑖𝑡𝑦𝑡 = 1𝑁𝑡 ∑︁𝑎∈𝒜𝑡 𝑑𝑖𝑟𝑒𝑐𝑡𝑖𝑜𝑛𝑎𝑙𝑖𝑡𝑦𝑎,(4.18)
+𝑡𝑒𝑥𝑡_𝑒𝑛𝑡𝑟𝑜𝑝𝑦𝑡 = 1𝑁𝑡 ∑︁𝑎∈𝒜𝑡 𝑡𝑒𝑥𝑡_𝑒𝑛𝑡𝑟𝑜𝑝𝑦𝑎.(4.19)
+𝑖𝑛𝑡𝑒𝑛𝑠𝑖𝑡𝑦𝑡 = 1𝑁𝑡 ∑︁𝑎∈𝒜𝑡 𝑖𝑛𝑡𝑒𝑛𝑠𝑖𝑡𝑦𝑎,(4.20)
+where𝒜 𝑡 denotes the set of articles assigned to trading session𝑡after timestamp conversion
+and session mapping, and𝑁𝑡 =|𝒜 𝑡|. Daily news volume is defined as
+𝑛𝑒𝑤𝑠_𝑣𝑜𝑙𝑢𝑚𝑒 𝑡 =𝑁 𝑡.(4.21)
+Trading sessions without valid assigned articles are assigned zero values for sentiment, direction-
+ality, posterior entropy, intensity, and news volume. Because𝑛𝑒𝑤𝑠_𝑣𝑜𝑙𝑢𝑚𝑒𝑡 = 0identifies such
+sessions, a zero value of𝑡𝑒𝑥𝑡_𝑒𝑛𝑡𝑟𝑜𝑝𝑦𝑡 on a no-news day should be interpreted as the absence of
+textual observations rather than as evidence of classifier certainty. The resulting daily textual
+variables are merged into the stock-level trading-day dataset.
+The NYT-based textual features are interpreted as market-wide information proxies rather than
+firm-specific news measures. The same daily textual signal is therefore merged into each stock-
+level dataset. This design captures broad news sentiment, directionality, posterior uncertainty,
+and attention conditions that may affect equity volatility through market-wide information
+channels.
+3.4 Anti-leakage protocol and temporal alignment
+The pipeline is designed to prevent look-ahead bias in the construction of forecasting features.
+Stock-level volatility, trading volume, VIX, AAII variables, and text-based variables are trans-
+formed into lagged and rolling predictors using only past information. For a series𝑧 𝑡, the
+available lag operators are
+𝑧𝑡−1, 𝑧 𝑡−5, 𝑧 𝑡−22,(4.22)
+237
+and
+𝑧𝑡,5 = 15 5∑︁𝑗=1 𝑧𝑡−𝑗, 𝑧𝑡,22 = 122 22∑︁𝑗=1 𝑧𝑡−𝑗.(4.23)
+The BASE block uses all five transformations above. The VIX, AAII, and TEXT blocks use only
+lag one and the two rolling means, as specified in Section 3.5. Thus, the generic operators do not
+imply that every block contains five features per series. In the implementation, each predictor
+series is first lagged by one trading day before rolling averages are computed. Hence, the five-day
+and twenty-two-day rolling features at time𝑡exclude contemporaneous and future values. Daily
+VIX observations are treated as end-of-day variables and are shifted by one trading day before
+entering any forecast. Thus, even if the recorded VIX close reflects information through 16:15
+Eastern Time, whereas the regular equity session closes at 16:00, the day-𝑡VIX value is first
+used for a forecast formed on day𝑡+ 1. No same-day equity forecast uses the contemporaneous
+VIX close.
+The session assignment determines the date on which information first enters the daily textual
+series; it does not imply contemporaneous use in the forecasting equation. As described above,
+the forecasting predictors are subsequently lagged before model estimation. Thus, the assigned-
+session textual signal enters a forecast only through the prespecified lagged or trailing features,
+preventing information published during session𝑡from being used retrospectively to forecast
+an outcome already realized within that session.
+To preserve the chronological availability of textual information without discarding off-session
+news, each article is mapped explicitly from its publication timestamp to a U.S. equity trad-
+ing session. Publication timestamps are converted from UTC toAmerica/New_Yorktime and
+matched to the U.S. trading calendar. An article published on a trading day at or before 16:00
+ET is assigned to that same trading session. This rule includes overnight and pre-open pub-
+lications on a valid trading day because the information is available before the close of th

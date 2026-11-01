@@ -250,5 +250,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-10-31"
+ },
+ {
+  "id": "h22",
+  "date": "2026-11-01",
+  "query": "low dealer gamma intraday breakout study",
+  "why": "I see an edge on low‑gamma days but have no proven breakout mechanism; need academic evidence or similar analyses.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

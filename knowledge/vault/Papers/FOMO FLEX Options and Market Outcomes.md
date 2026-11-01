@@ -1,26 +1,24 @@
 ---
 tags: [paper]
-relevance: 4
-read: 2026-10-19
+relevance: 2
+read: 2026-11-01
 ---
 # FOMO: FLEX Options and Market Outcomes
-★★★★☆  ·  OpenAlex (classic)  ·  [source](https://arxiv.org/pdf/2610.13044)
+★★☆☆☆  ·  Frontier (arXiv, last 45 days)  ·  [source](https://arxiv.org/abs/2610.13044v1)
 
 ## What Volta learned
-The paper studies the impact of FLEX options, customized exchange-traded contracts, on regular listed-option markets and underlying equities. It finds that FLEX activity is associated with increased listed-option open interest, particularly in high implied-volatility environments, and predicts execution-stressed short-straddle returns.
+FLEX options are custom exchange‑traded contracts that spike in volume. The paper finds that FLEX events are followed by higher open interest in standard options, tend to occur in high‑IV stocks (especially midsized price levels), and that the IV‑minus‑realized‑vol spread on the event day predicts the return of a short‑straddle trade.
 
 ## Why it matters (or not)
-The paper provides useful insights for traders and quants, particularly those interested in volatility trading and institutional market activity.
+The study links FLEX activity to listed‑option open interest and IV spreads, but does not provide directly usable signals for Nasdaq futures/options.
 
 ## Concepts
-flex options, [[implied volatility]], listed-option open interest, volatility carry
+[[flex options]], open‑interest spillover, iv‑realized‑vol spread, volatility‑carry, event‑study did
 
 ## Idea
-Can we develop a trading strategy that uses FLEX activity as a signal to predict increased listed-option open interest and volatility in specific underlyings?
+When a FLEX consolidation occurs for a single‑name equity, compute the day‑of‑event IV‑minus‑realized‑vol spread using our IV and realized‑vol columns; if the spread is positive, go short a 1‑day ATM straddle (sell one call and one put) and hedge with delta‑neutral position, targeting the expected positive return reported (beta ≈ 0.0366).
 
 ## Test
-[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 926 signal days, hit 56.0% (always-long 56.0%), strategy +2.5 bps/day vs +3.1 for the same average exposure held constantly -> timing adds -0.6 bps/day, t=-0.39, positive in 5/9 years
-How: long/flat on `z(oi_conc5, 252)` (positive = signal on)
-Touches: [[Options nerd]]
+not testable with my data yet
 
 Part of [[Research engine]]
