@@ -1,0 +1,24 @@
+name: chain-snap
+# Wish #23: intraday 0-DTE option chain snapshots (QQQ + NDX, CBOE delayed) every ~5 min through the US cash session,
+# so short-vol / gamma-flip ideas can be tested on real intraday option prices later. tools/chain_snap.py checks the NY clock.
+on:
+  schedule:
+    - cron: "*/5 13-21 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: chain-snap        # own group: never displaces the queued 'state' runs; new files only, so pushes rebase cleanly
+  cancel-in-progress: false
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q pandas numpy tzdata
+      - run: python tools/chain_snap.py
+      - if: always()
+        run: bash .github/actions_common.sh "chain snap"
