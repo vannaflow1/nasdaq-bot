@@ -1,5 +1,20 @@
 [
 {
+"title": "A Deep Learning-Driven Operator Splitting Scheme for Free Boundary Problems: An Application to American Option Pricing in Incomplete Markets",
+"learned": "The paper builds a deep\u2011learning (physics\u2011informed neural net) method to price high\u2011dimensional American options when you have transaction costs, stochastic liquidity and two\u2011factor stochastic volatility, turning the problem into a 5\u2011D variational inequality and solving it by splitting each time step into a PDE solved by a PINN and a projection enforcing early\u2011exercise.",
+"concepts": [
+"American option free\u2011boundary",
+"physics\u2011informed neural networks",
+"operator splitting",
+"transaction\u2011cost pricing",
+"stochastic liquidity risk"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/pdf/2610.36921",
+"date": "2026-11-01"
+},
+{
 "title": "Evaluating Foundation Time-Series Models in Systematic Options Compounding",
 "learned": "The paper finds that zero\u2011shot large language time\u2011series models (TimesFM) and physics\u2011inspired kinematic rules add no meaningful edge to systematic options\u2011selling strategies on AMZN, GOOG, and NVDA when volatility premium is stripped out, and can even hurt performance out\u2011of\u2011sample.",
 "concepts": [

@@ -1,16 +1,5 @@
 [
  {
-  "id": "openalex:W7224112863",
-  "title": "A Deep Learning-Driven Operator Splitting Scheme for Free Boundary Problems: An Application to American Option Pricing in Incomplete Markets",
-  "abstract": "This paper proposes a deep learning-driven operator splitting scheme for high-dimensional free-boundary problems, with American option pricing as a representative application. In a market with proportional transaction costs, a stochastic liquidity risk with an empirically validated nonlinear drift based on S&P 500 data, and two-factor stochastic volatility, the pricing problem takes the form of a five-dimensional highly nonlinear variational inequality. The proposed scheme decomposes this variational inequality at each time layer into an elliptic continuation equation approximated by a physics-informed neural network and a closed-form projection step enforcing the early-exercise constraint. A conditional $\\ell^\\infty$ stability bound is derived under stated resolvent and Lipschitz assumptions. The scheme is validated against finite-difference and least-squares Monte Carlo benchmarks, and both the option prices and the learned exercise boundary show close agreement with the reference solutions. Sensitivity analyses with respect to the key model parameters are also reported.",
-  "url": "https://arxiv.org/pdf/2610.36921",
-  "source": "OpenAlex",
-  "date": "2026-10-27",
-  "score": 18,
-  "queued": "2026-11-01",
-  "text_file": "knowledge/papers/openalex_W7224112863.txt"
- },
- {
   "id": "openalex:W639708223",
   "title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
   "abstract": "State-of-the-art object detection networks depend on region proposal algorithms to hypothesize object locations. Advances like SPPnet [1] and Fast R-CNN [2] have reduced the running time of these detection networks, exposing region proposal computation as a bottleneck. In this work, we introduce a Region Proposal Network (RPN) that shares full-image convolutional features with the detection network, thus enabling nearly cost-free region proposals. An RPN is a fully convolutional network that simultaneously predicts object bounds and objectness scores at each position. The RPN is trained end-to-end to generate high-quality region proposals, which are used by Fast R-CNN for detection. We further merge RPN and Fast R-CNN into a single network by sharing their convolutional features-using the recently popular terminology of neural networks with 'attention' mechanisms, the RPN component tells the unified network where to look. For the very deep VGG-16 model [3] , our detection system has a frame rate of 5 fps (including all steps) on a GPU, while achieving state-of-the-art object detection accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with only 300 proposals per image. In ILSVRC and COCO 2015 competitions, Faster R-CNN and RPN are the foundations of the 1st-place winning entries in several tracks. Code has been made publicly available.",
