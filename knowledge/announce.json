@@ -1,0 +1,6 @@
+[
+ {
+  "title": "🎁 Wish granted: Intraday option chain snapshots (0-DTE) every 5 min",
+  "body": "New workflow chain-snap records QQQ + NDX 0-DTE/next-expiry chains (strikes ±4% of spot, CBOE delayed ~15 min) every ~5 min through the US session into knowledge/data/chains/. Builds the intraday option history short-vol/gamma-flip ideas need; usable after a few months. Verified on a synthetic chain; first live run Monday. Undo: git revert 7e160d7"
+ }
+]

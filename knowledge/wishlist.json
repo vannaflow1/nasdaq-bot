@@ -367,7 +367,7 @@
   "why": "Many promising ideas (e.g., short‑vol straddles, gamma flip) require real‑time option prices; without them they cannot be tested or executed.",
   "evidence": "Current failures: 1x needs intraday option quotes and trades; 1x needs intraday otm call/put prices.",
   "impact": "high",
-  "status": "open",
+  "status": "done",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -376,6 +376,7 @@
    "branch": null,
    "summary": "stopped after 45 minutes (26 model turns)",
    "guard": null
-  }
+  },
+  "note": "Done (2026-11-01, Claude): new collector tools/chain_snap.py + workflow chain-snap.yml (own concurrency group). Every ~5 min, 09:25-16:05 NY weekdays, it saves the CBOE delayed chain for QQQ and NDX (nearest 2 expirations = 0-DTE + next, strikes within +-4% of spot; bid/ask/last/iv/greeks/volume/OI + CBOE quote timestamp) to knowledge/data/chains/<SYM>/<date>/<HHMM>.csv.gz, one file per snapshot, never overwritten; daily log in knowledge/data/chains/log/. Quotes are ~15 min delayed - align research on quote_ts. No history exists, so tests become possible after a few months of collection. Parsing/saving verified on a synthetic chain; the first live fetch runs Monday in GitHub Actions. Research side only."
  }
 ]
