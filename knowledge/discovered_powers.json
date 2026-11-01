@@ -73,6 +73,7 @@
   "target": "y_took_overnight_high",
   "expr": "impl / k_on_range",
   "verdict": "PROMISING (stress test: survived) : FACT: happens on 65% of 2907 sessions (2014-19: 65%, 2020-25: 65%). Predictor: lowest-fifth days 49% vs highest-fifth 74%, skill +3.1% vs the base rate, better in 9/9 unseen years",
-  "active": true
+  "active": true,
+  "review": "CONFIRMED (Claude, 2026-11-01): no look-ahead - session_table row d is the NEXT session (column 'session'), so impl (priced at close d) and the overnight range (known at the open) are both available before NY opens. Re-run gives the same +3.1% skill, 9/9 unseen years, 65% base rate in both halves. Economic sense: a small overnight range relative to the options-implied move means the overnight high sits close in expected-move units. Crucially it adds beyond the obvious 'where did we open in the overnight range' (k_on_pos, skill +19%): a walk-forward logistic on k_on_pos + log(impl/k_on_range) beats k_on_pos alone on Brier 0.1781 vs 0.1843 (-3.4%), better in 8/9 years 2017-25. Use it as a modifier on top of open position, not on its own."
  }
 ]

@@ -1,0 +1,6 @@
+[
+ {
+  "title": "Review: overnight range vs implied move -> takes the overnight high",
+  "body": "CONFIRMED. No data leak (the implied move is priced at the previous close, the overnight range is known at the open). When the overnight range is small compared with what options price for the day, NY takes the overnight high 74% of the time vs 49% when it is large (base 65%), and this holds in 9/9 unseen years. It also adds real information on top of where the open sits in the overnight range: combining the two improves the forecast in 8 of 9 years. Use it as a tilt on top of the open position, not alone."
+ }
+]
