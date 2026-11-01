@@ -1,5 +1,49 @@
 [
 {
+"title": "Evaluating Foundation Time-Series Models in Systematic Options Compounding",
+"learned": "The paper finds that zero\u2011shot large language time\u2011series models (TimesFM) and physics\u2011inspired kinematic rules add no meaningful edge to systematic options\u2011selling strategies on AMZN, GOOG, and NVDA when volatility premium is stripped out, and can even hurt performance out\u2011of\u2011sample.",
+"concepts": [
+"zero\u2011shot foundation model forecasts",
+"options selling compounding",
+"Diebold\u2011Mariano test",
+"deflated Sharpe ratio",
+"parameter decay"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.5281/zenodo.23675352",
+"date": "2026-11-01"
+},
+{
+"title": "Role of machine learning in financial economics",
+"learned": "The thesis argues that machine learning should be integrated with economic theory, using the Adaptive Markets Hypothesis to guide model design rather than just chasing predictive accuracy.",
+"concepts": [
+"adaptive markets hypothesis",
+"machine learning integration",
+"high\u2011frequency noise filtering",
+"reinforcement learning for portfolio allocation"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://era.ed.ac.uk/bitstreams/87e33374-5718-4f99-a414-f1005669fcf1/download",
+"date": "2026-11-01"
+},
+{
+"title": "Stock-level volatility forecasting using machine learning: A comparative study of GARCH, Random Forest, LSTM, and GRU on US Equities",
+"learned": "Random Forest gave the lowest forecasting error (mean RMSE 0.0892) for 5\u2011day realized volatility of individual US stocks, beating LSTM, GRU and classic GARCH models, and it trains about seven times faster than deep\u2011learning nets.",
+"concepts": [
+"Realized volatility forecast",
+"Random Forest",
+"GARCH vs ML",
+"Model training speed",
+"Rolling 5\u2011day window"
+],
+"relevance": 3,
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.557% -> 0.557% (+0.0%), better in 3/8 unseen years",
+"url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0354643&type=printable",
+"date": "2026-11-01"
+},
+{
 "title": "The Allocation of Talent: Implications for Growth",
 "learned": "Talent allocation affects growth: when high\u2011ability people run or organize firms they generate scalable returns, but when they become rent\u2011seekers they earn high rents without creating value. The sector mix (e.g., engineering vs. law) predicts growth rates.",
 "concepts": [

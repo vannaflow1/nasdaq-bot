@@ -13,7 +13,7 @@ The Adaptive Markets Hypothesis (AMH) reconciles the Efficient Markets Hypothesi
 The abstract provides a theoretical framework that might influence a trader's understanding of market behavior, but concrete trading strategies or testable ideas are not provided.
 
 ## Concepts
-adaptive markets hypothesis, efficient markets hypothesis, behavioral finance, evolutionary dynamics
+[[adaptive markets hypothesis]], efficient markets hypothesis, behavioral finance, evolutionary dynamics
 
 
 Part of [[Research engine]]
