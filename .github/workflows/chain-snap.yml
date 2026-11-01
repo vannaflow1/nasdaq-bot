@@ -1,5 +1,5 @@
 name: chain-snap
-# Wish #23: intraday 0-DTE option chain snapshots (QQQ + NDX, CBOE delayed) every ~5 min through the US cash session,
+# Wish #23: intraday 0-DTE option chain snapshots + wish #14: IV term-structure rows (QQQ + NDX, CBOE delayed) every ~5 min in session,
 # so short-vol / gamma-flip ideas can be tested on real intraday option prices later. tools/chain_snap.py checks the NY clock.
 on:
   schedule:
