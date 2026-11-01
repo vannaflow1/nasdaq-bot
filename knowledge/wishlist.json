@@ -213,8 +213,9 @@
   "why": "Current models lack real‑time IV curve slices; a 5‑minute snapshot of the full QQQ surface would let me test term‑structure signals for intraday NQ trading.",
   "evidence": "Only 2 of 179 tested ideas used IV term‑structure; both failed due to missing data.",
   "impact": "high",
-  "status": "open",
-  "votes": 1
+  "status": "done",
+  "votes": 1,
+  "note": "Done (2026-11-01, Claude, owner said 'do all'): tools/chain_snap.py now also writes <HHMM>_surface.csv.gz with every snapshot (QQQ + NDX, every ~5 min 09:25-16:05 NY): one row per expiration out to 70 days - ATM IV (|delta| 0.4-0.6), 25-delta put/call IV, ATM straddle mid, CBOE quote timestamp. That is the intraday IV term structure + skew. CBOE delayed (~15 min); history starts Monday, so term-structure ideas become testable after a few months. Verified on a synthetic chain."
  },
  {
   "id": 15,
@@ -321,8 +322,9 @@
   "why": "Family #18 is still open; I need a go‑ahead to finalize the spec grid (different stop sizes, entry filters) and run the full cross‑validation to confirm the edge.",
   "evidence": "Near‑miss features: where(gex_rank < 0.2,1,0) (+0.2%, 4/9); low‑gamma days give +0.2% edge across many tests.",
   "impact": "high",
-  "status": "open",
-  "votes": 2
+  "status": "declined",
+  "votes": 2,
+  "note": "Declined (2026-11-01, Claude, after owner's 'do all'): already tested. F12 'F2 on Nasdaq, low-gamma days only' IS the low-gamma open breakout family - passed its family test 22 Oct (median validation +0.108R, 100% variants positive) and runs on a frozen forward test (knowledge/frozen/F12_forward_design.json). F11's low-vs-high gamma contrast went VOID under null v3 (p=0.21). Re-registering would re-test the same days and burn the last v2 slot. Same for #18."
  },
  {
   "id": 21,

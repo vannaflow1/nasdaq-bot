@@ -1,0 +1,6 @@
+[
+ {
+  "title": "🎁 Wish granted: Intraday IV term-structure data feed",
+  "body": "chain-snap now also saves the QQQ + NDX IV term structure every ~5 min in session (per expiry to 70 days: ATM IV, 25-delta put/call IV, ATM straddle) in knowledge/data/chains/<SYM>/<date>/<HHMM>_surface.csv.gz. History starts Monday. Undo: git revert 2998350"
+ }
+]
