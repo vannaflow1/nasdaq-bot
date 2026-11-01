@@ -222,5 +222,20 @@
   ],
   "calls_left_today": 9,
   "status": "out_of_time"
+ },
+ {
+  "wish": 23,
+  "title": "Intraday option chain snapshots (0‑DTE) every 5 min",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (26 model turns)",
+  "how_to_use": "",
+  "date": "2026-11-01",
+  "steps": 26,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 6,
+  "status": "out_of_time"
  }
 ]
