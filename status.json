@@ -121,7 +121,7 @@
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
-  "This week's tests: 58 run - 1 promising, 41 not confirmed, 1 don't fit my data, 15 translation failures",
+  "This week's tests: 3 run - 0 promising, 2 not confirmed, 0 don't fit my data, 1 translation failures",
   "",
   "40 papers waiting in my queue."
  ],
@@ -203,16 +203,14 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-01)",
-  "I keep spotting a modest +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but have no intraday trade that captures it. My range forecasts still miss ~38% of the true range, though they land inside my 80% band 78% of the time. The only strategy that still shows a positive in\u2011sample edge is the 15\u2011minute breakout, but its out\u2011of\u2011sample R is tiny. I need to turn the low\u2011gamma signal into a robust entry and test a tighter, more frequent execution window.",
+  "VOLTA'S SELF-CHECK (2026-11-02)",
+  "I keep seeing a modest +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but no intraday strategy extracts it. My range forecasts still miss ~38% of the true range, though they land inside my 80% band 78% of the time. The only strategy that passed was a tiny 0.13R breakout in the first 15\u202fmin, far too weak for prop evaluation. I need to turn the low\u2011gamma signal into a repeatable entry that generates enough trades.",
   "",
   "WISHES (what I need to get better):",
-  "#20 [needs the owner] Accelerate Low\u2011Gamma Open Breakout family proposal - Family #18 is still open; I need a go\u2011ahead to finalize the spec grid (different stop sizes, entry filters) and run the full cross\u2011validatio",
-  "#14 [needs the owner] Intraday IV term\u2011structure data feed - Current models lack real\u2011time IV curve slices; a 5\u2011minute snapshot of the full QQQ surface would let me test term\u2011structure signals for intr",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
-  "#23 [for Claude] Intraday option chain snapshots (0\u2011DTE) every 5\u202fmin - Many promising ideas (e.g., short\u2011vol straddles, gamma flip) require real\u2011time option prices; without them they cannot be tested or executed",
+  "#24 [for Claude] Family proposal: Low\u2011Gamma Open Breakout (expanded grid) - Current low\u2011gamma insights have no systematic trade; a structured family of variants (different entry offsets, stop/target multiples, filter",
   "",
-  "Recently granted: #6 Make the prop simulator harsher where reality is harsher; #15 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut"
+  "Recently granted: #15 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut; #23 Intraday option chain snapshots (0\u2011DTE) every 5\u202fmin"
  ],
  "plan": [
   "TRADING PLAN - 2026-10-30  |  expected move \u00b1344 pts, full-day range ~658 pts, risk ['VOLTA LEVEL 15  (8,911 XP, next level at 9,000)', 'Papers read 272 | ideas & strategies tested 112 | prop strategies searched 651,533', 'Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 8', 'XP only for verified progress: tests passed on unseen data count far more than activity.']",
