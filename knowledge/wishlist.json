@@ -390,7 +390,7 @@
   "why": "Current low‑gamma insights have no systematic trade; a structured family of variants (different entry offsets, stop/target multiples, filter thresholds) could uncover a robust edge.",
   "evidence": "Near‑miss +0.2% edge on gex_rank<0.2 across 9/10 features; 179 low‑gamma trades historically gave +0.03R but not statistically significant.",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "give_up",
@@ -399,6 +399,7 @@
    "branch": null,
    "summary": "Wish #24 (Family proposal: Low-Gamma Open Breakout (expanded grid)) is already implemented by family F12 ('F2 on Nasdaq, low-gamma days only'), which passed its family test on 22 Oct 2026 and runs on forward test. Registering a new family requires owner/Claude-chat approval and an available v2 alpha slot per protocol rules.",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-02: not granted by the upgrade session - new families may only be registered by the owner/Claude chat (alpha budget nearly spent: alpha_slots.json slot 4 = F11, then 0.0023, 0.0023, then nothing). Also largely a duplicate: F12 (F2 on Nasdaq, low-gamma days, gex rank < 0.5) is already on forward test; an expanded grid of variants would be a post-hoc search on the same low-gamma signal and would need its own slot."
  }
 ]
