@@ -75,5 +75,14 @@
   "verdict": "PROMISING (stress test: survived) : FACT: happens on 65% of 2907 sessions (2014-19: 65%, 2020-25: 65%). Predictor: lowest-fifth days 49% vs highest-fifth 74%, skill +3.1% vs the base rate, better in 9/9 unseen years",
   "active": true,
   "review": "CONFIRMED (Claude, 2026-11-01): no look-ahead - session_table row d is the NEXT session (column 'session'), so impl (priced at close d) and the overnight range (known at the open) are both available before NY opens. Re-run gives the same +3.1% skill, 9/9 unseen years, 65% base rate in both halves. Economic sense: a small overnight range relative to the options-implied move means the overnight high sits close in expected-move units. Crucially it adds beyond the obvious 'where did we open in the overnight range' (k_on_pos, skill +19%): a walk-forward logistic on k_on_pos + log(impl/k_on_range) beats k_on_pos alone on Brier 0.1781 vs 0.1843 (-3.4%), better in 8/9 years 2017-25. Use it as a modifier on top of open position, not on its own."
+ },
+ {
+  "id": 9,
+  "date": "2026-11-02",
+  "question": "When the overnight gap as a proportion of the 20\u2011day average NY range (k_gap / k_range20) is large, are we more likely to close the NQ session above yesterday's high (y_closed_above_yday_high)?",
+  "target": "y_closed_above_yday_high",
+  "expr": "k_gap / k_range20",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 35% of 2808 sessions (2014-19: 35%, 2020-25: 35%). Predictor: lowest-fifth days 10% vs highest-fifth 64%, skill +15.4% vs the base rate, better in 9/9 unseen years",
+  "active": true
  }
 ]
