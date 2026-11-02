@@ -1,9 +1,9 @@
 {
  "day": "2026-11-02",
- "calls": 73,
+ "calls": 124,
  "by_model": {
-  "gemini-3.8-flash": 45,
-  "gemini-flash-latest": 22,
-  "gemini-flash-lite-latest": 6
+  "gemini-3.8-flash": 67,
+  "gemini-flash-latest": 43,
+  "gemini-flash-lite-latest": 14
  }
 }
