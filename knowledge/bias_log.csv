@@ -38,3 +38,4 @@ date,check_ct,bias,price,open,band_pct,dist_bands,close,result,overnight,agree,d
 2026-11-02,11,NONE,28656.0,28721.25,0.767,-0.3,,,UP,,CALMER
 2026-11-02,12,NONE,28558.75,28721.75,0.756,-0.75,,,UP,,CALMER
 2026-11-02,13,NONE,28441.5,28721.75,0.985,-0.99,,,UP,,CALMER
+2026-11-02,14,SHORT,28289.5,28721.25,1.009,-1.49,,,UP,no,CALMER
