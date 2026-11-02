@@ -5,21 +5,9 @@
  "summary": "daily Gemini budget used up (120 calls)",
  "how_to_use": "",
  "date": "2026-11-02",
- "steps": 8,
- "models": [
-  "gemini-3.8-flash",
-  "gemini-flash-lite-latest"
- ],
+ "steps": 0,
+ "models": [],
  "calls_left_today": -4,
  "status": "error",
- "log": [
-  "0: search(pattern='Tradeify') -> './tools/rules_watch.py:14:    \"Tradeify: essential trading rules\": \"https://intercom.help/tradeify/e'",
-  "1: search(pattern='FundedNext') -> './tools/rules_watch.py:15:    \"FundedNext Futures: automated trading\": \"https://helpfutures.fundedne'",
-  "2: list_dir(path='knowledge/research_out') -> 'china_credit.log  (1708 bytes)\\nchina_credit.txt  (1707 bytes)\\nchina_credit_impulse.csv  (4579 bytes)'",
-  "3: list_dir(path='knowledge/research_out/rules') -> 'FundedNext_Futures_automated_trading.txt  (1921 bytes)\\nTradeify_essential_trading_rules.txt  (8054 b'",
-  "4: read_file(path='knowledge/research_out/rules/Tradeify_essential_trading_rule', start_line='1', max_lines='100') -> 'knowledge/research_out/rules/Tradeify_essential_trading_rules.txt (1 lines; showing 1-1)\\n1: Essentia'",
-  "5: read_file(path='knowledge/research_out/rules/Tradeify_essential_trading_rule', max_lines='200', start_line='1') -> 'knowledge/research_out/rules/Tradeify_essential_trading_rules.txt (1 lines; showing 1-1)\\n1: Essentia'",
-  "6: search(pattern='Tradeify', path_glob='*.txt') -> './knowledge/research_out/rules/Tradeify_essential_trading_rules.txt:1:Essential Trading Rules Overvi'",
-  "7: read_file(start_line='1', max_lines='500', path='knowledge/research_out/rules/Tradeify_essential_trading_rule') -> 'knowledge/research_out/rules/Tradeify_essential_trading_rules.txt (1 lines; showing 1-1)\\n1: Essentia'"
- ]
+ "log": []
 }
