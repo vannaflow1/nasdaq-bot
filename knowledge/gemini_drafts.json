@@ -237,5 +237,21 @@
   ],
   "calls_left_today": 6,
   "status": "out_of_time"
+ },
+ {
+  "wish": 24,
+  "title": "Family proposal: Low‑Gamma Open Breakout (expanded grid)",
+  "outcome": "give_up",
+  "summary": "Wish #24 (Family proposal: Low-Gamma Open Breakout (expanded grid)) is already implemented by family F12 ('F2 on Nasdaq, low-gamma days only'), which passed its family test on 22 Oct 2026 and runs on forward test. Registering a new family requires owner/Claude-chat approval and an available v2 alpha slot per protocol rules.",
+  "how_to_use": "",
+  "date": "2026-11-02",
+  "steps": 26,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-latest",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 47,
+  "status": "give_up"
  }
 ]
