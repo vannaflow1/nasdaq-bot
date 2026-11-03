@@ -267,7 +267,10 @@
   "query": "gamma flip price reversal intraday",
   "why": "My family proposal GammaFlip_15min_Reversal lacks empirical backing; a paper could clarify the expected reversal magnitude and timing.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "searched",
+  "papers": [
+   "openalex:W7213462723"
+  ],
+  "searched": "2026-11-03"
  }
 ]
