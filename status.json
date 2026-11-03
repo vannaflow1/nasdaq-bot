@@ -128,7 +128,7 @@
   "  TODAY: AMD earnings after close"
  ],
  "nerd": [
-  "LIVE options read - Tue 03 Nov 23:06 Lux (17:06 NY), quotes ~15 min delayed, QQQ 685.69",
+  "LIVE options read - Tue 03 Nov 23:36 Lux (17:36 NY), quotes ~15 min delayed, QQQ 685.69",
   "",
   "VOLATILITY: 30-day IV 27.3% -> higher than 88% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -137,7 +137,7 @@
   "TERM STRUCTURE - what each expiry prices (QQQ move to expiry):",
   "  Wed 04 Nov (1d): \u00b12.01% (~571 NQ pts), ATM IV 48.1%",
   "  Thu 05 Nov (2d): \u00b12.50% (~712 NQ pts), ATM IV 42.3%",
-  "  Fri 06 Nov (3d): \u00b13.03% (~862 NQ pts), ATM IV 41.7%",
+  "  Fri 06 Nov (3d): \u00b13.03% (~861 NQ pts), ATM IV 41.7%",
   "  Mon 09 Nov (6d): \u00b13.33% (~946 NQ pts), ATM IV 33.3%",
   "  Tue 10 Nov (7d): \u00b13.66% (~1,042 NQ pts), ATM IV 33.1%",
   "  Wed 11 Nov (8d): \u00b13.87% (~1,101 NQ pts), ATM IV 32.7%",
