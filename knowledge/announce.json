@@ -1,6 +1,0 @@
-[
- {
-  "title": "🎁 Wish granted: Firm rules changed: re-check prop_firms.json (Tradeify, FundedNext)",
-  "body": "Diffed the 2 Nov rule-page snapshots against the previous ones: only the help-center 'Related Articles' links changed on both pages - no rule text changed, prop_firms.json stays as checked 27 Oct. tools/rules_watch.py now hashes only the article body (footer churn no longer files false wishes; a changed rule number is still caught - tested). Wish #26 (Low-Gamma Open Breakout family) marked 'needs': it needs an alpha slot, owner's call. Undo: git revert 4383b25"
- }
-]
