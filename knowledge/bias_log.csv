@@ -44,3 +44,4 @@ date,check_ct,bias,price,open,band_pct,dist_bands,close,result,overnight,agree,d
 2026-11-03,11,NONE,28360.75,28266.0,0.763,0.44,,,UP,,BUSIER
 2026-11-03,12,NONE,28373.5,28266.0,0.77,0.49,,,UP,,BUSIER
 2026-11-03,13,NONE,28389.25,28266.0,1.04,0.42,,,UP,,BUSIER
+2026-11-03,14,NONE,28261.5,28266.0,1.095,-0.01,,,UP,,BUSIER
