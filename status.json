@@ -1,9 +1,10 @@
 {
  "for": "Tue 03 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Tue 03 Nov) - risk \ud83d\udfe0 ELEVATED",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
   "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size.",
-  "- AMD report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway)."
+  "- AMD report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway).",
+  "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
  ],
  "gamma": [
   "",
@@ -29,14 +30,8 @@
  "earnings": [
   "  AMD reports after close: options price a \u00b19.1% move (option covers 2 sessions, so a bit wider than the report alone)"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,020 XP, next level at 10,240)",
-  "Papers read 279 | ideas & strategies tested 138 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 9",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Tue 03 Nov 14:39 Lux",
+ "level": "ELEVATED",
+ "updated": "Tue 03 Nov 14:53 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  TODAY: AMD earnings after close",
@@ -44,18 +39,16 @@
   "  Fri 06 Nov: Jobs report (NFP) 14:30 Lux"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Intel foundry push faces critical test after stock's 45% plunge in October  [CNBC tech]\n    INTC, AI chips/capex, shock",
-  "- Apple Stock Closes In the Red. Earnings Are Up Next.  [Yahoo (megacaps)]\n    AAPL, earnings",
-  "- Is Amazon Stock a Buy as Cloud Revenue Continues to Surge?  [Yahoo (megacaps)]\n    AMZN, earnings",
-  "- Feeling isolated? Half of in-office workers describe their jobs as 'remote,' NY Fed survey finds  [CNBC tech]\n    Fed/macro",
-  "- Apple earnings live updates: New CEO John Ternus faces first Wall Street test  [CNBC tech]\n    AAPL, earnings",
-  "- Google data center wins approval in Minnesota after protests delay council vote twice  [Tom's Hardware]\n    GOOGL, AI chips/capex",
-  "- Well That Was Fast: Scott Galloway Calls Alphabet \u201ca Buying Opportunity\u201d at 15x Earnings  [Yahoo (megacaps)]\n    GOOGL, earnings",
-  "- OpenAI considers rebranding data centers to 'AI compute campuses\" as data center backlash intensifies  [Tom's Hardware]\n    OPENAI, AI chips/capex"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Apple Retreats 4% Despite Earnings Beat as Memory Costs Squeeze Margin Outlook; Microsoft Dips, Meta Holds Steady  [Yahoo (megacaps)]\n    MSFT, AAPL, META, earnings",
+  "- AI chip smugglers exploit trade control loophole to bring banned HBM from South Korea into China \u2014 expensive memory chips packaged with cheap, unsanctioned processors to become legal exports  [Tom's Hardware]\n    AI chips/capex, export/geo, shock",
+  "- Nvidia tells data center operators to limit business from Chinese customers with new global restrictions, report claims \u2014 allegedly restricted to 49% of the total, ensuring 51% are non-Chinese outfits  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Stock Market Today: Dow Slides 300 Points On Election Day; Apple, Palantir Dive On Earnings (Live Coverage)  [Yahoo (megacaps)]\n    AAPL, PLTR, earnings",
+  "- Apple shares slide after weak margin outlook; Palantir slumps 6% after earnings  [CNBC tech]\n    AAPL, PLTR, earnings",
+  "- Feeling isolated? Half of in-office workers describe their desk jobs as 'remote,' NY Fed survey finds  [CNBC tech]\n    Fed/macro"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Tue 13:24 [tech/chips, oil/geopolitics, fiscal/policy, economy] Congressman Abe Hamadeh is an America First Patriot who is doing a tremendous job representing Arizona\u2019s 8th Congressional District! A Brave U.S. Army Veteran, and former Criminal Prosecutor, Abe is fighting tirelessly to Grow our Economy, Keep our Border SECURE, Stop Migrant\u2026",
   "- Tue 02:08 [fiscal/policy] RT @ realDonaldTrump I am pleased to inform you that I will be doing the Great Sean Hannity Show tonight at 9 PM ET. This is the Golden Age of America with 25 Trillion Dollars of Growth and Wealth being created just since my Election \u2014 A very short period of time. There has\u2026",
   "- Tue 02:08 [oil/geopolitics] RT @ realDonaldTrump Oil Prices are DROPPING LIKE A ROCK, down almost $10 a Barrel, A RECORD, because people feel that there will not be a War with Iran. Iran wants a settlement, as soon as possible. It could happen! President DONALD J. TRUMP Reposted Donald J. Trump Oil Prices\u2026",
@@ -128,7 +121,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: AAPL earnings after close; PLTR earnings after close"
+  "  TODAY: AMD earnings after close"
  ],
  "nerd": [
   "LIVE options read - Tue 03 Nov 14:24 Lux (08:24 NY), quotes ~15 min delayed, QQQ 683.21",
