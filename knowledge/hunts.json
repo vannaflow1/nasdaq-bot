@@ -260,5 +260,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-01"
+ },
+ {
+  "id": "h23",
+  "date": "2026-11-03",
+  "query": "gamma flip price reversal intraday",
+  "why": "My family proposal GammaFlip_15min_Reversal lacks empirical backing; a paper could clarify the expected reversal magnitude and timing.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

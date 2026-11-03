@@ -118,7 +118,7 @@
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
-  "This week's tests: 8 run - 1 promising, 5 not confirmed, 0 don't fit my data, 2 translation failures",
+  "This week's tests: 11 run - 1 promising, 6 not confirmed, 0 don't fit my data, 4 translation failures",
   "",
   "40 papers waiting in my queue."
  ],
@@ -200,12 +200,13 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-02)",
-  "I keep seeing a modest +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but no intraday strategy extracts it. My range forecasts still miss ~38% of the true range, though they land inside my 80% band 78% of the time. The only strategy that passed was a tiny 0.13R breakout in the first 15\u202fmin, far too weak for prop evaluation. I need to turn the low\u2011gamma signal into a repeatable entry that generates enough trades.",
+  "VOLTA'S SELF-CHECK (2026-11-03)",
+  "I keep confirming that low\u2011dealer\u2011gamma days (gex_rank < 0.2) give a modest +0.2% edge, yet none of my intraday strategies harvest it. My range forecasts still miss ~38% of the true daily range, though they land inside my 80% confidence band 80% of the time. The only strategy with a positive in\u2011sample edge on low\u2011gamma days is the simple 'LowGammaFadeOnHigh', but its R is barely above noise. I need a cleaner mechanism that translates the low\u2011gamma signal into a repeatable entry.",
   "",
   "WISHES (what I need to get better):",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
-  "#24 [for Claude] Family proposal: Low\u2011Gamma Open Breakout (expanded grid) - Current low\u2011gamma insights have no systematic trade; a structured family of variants (different entry offsets, stop/target multiples, filter",
+  "#25 [for Claude] Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules, FundedNext Futures: automated trading) - The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).",
+  "#26 [for Claude] Finalize Low\u2011Gamma Open Breakout family proposal - My diary shows persistent low\u2011gamma edge but no systematic trade; a family of variants (different ATR multipliers, entry windows, and stop\u2011l",
   "",
   "Recently granted: #15 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut; #23 Intraday option chain snapshots (0\u2011DTE) every 5\u202fmin"
  ],
