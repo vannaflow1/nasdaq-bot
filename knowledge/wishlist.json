@@ -411,7 +411,7 @@
   "why": "The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).",
   "evidence": "https://intercom.help/tradeify/en/articles/12268167-essential-trading-rules-overview; https://helpfutures.fundednext.com/en/articles/14298560-is-the-usage-of-automated-trading-systems-eas-and-bots-allowed-in-fundednext-futures",
   "impact": "high",
-  "status": "open",
+  "status": "done",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -420,7 +420,8 @@
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-03: diffed the 2 Nov snapshots against the previous ones (commit b17bceb): only the help-center 'Related Articles' link list changed on both pages (Tradeify dropped 'SELECT vs Growth', added 'Rules: Daily Loss Limit'; FundedNext renamed the Legacy Challenge link). No rule text changed, so knowledge/prop_firms.json stays as checked on 2026-10-27. tools/rules_watch.py now hashes only the article body (NORM=2; first run re-baselines silently) so footer-link churn no longer files false wishes; a real rule edit is still detected."
  },
  {
   "id": 26,
@@ -431,7 +432,7 @@
   "why": "My diary shows persistent low‑gamma edge but no systematic trade; a family of variants (different ATR multipliers, entry windows, and stop‑loss rules) would let us test the mechanism with enough volume to power‑curve.",
   "evidence": "Low‑gamma days (gex_rank < 0.2) appear in ~20% of sessions and correlate with +0.2% edge; current best low‑gamma intraday strategy yields only +0.03R over 179 trades.",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -440,6 +441,7 @@
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-03: a new mechanism family needs an alpha slot (knowledge/frozen/alpha_slots.json: slot 4 = F11, then two 0.0023 slots, then none). Scheduled sessions must not register families; owner/Claude chat decides whether this low-gamma open breakout earns one of the remaining slots."
  }
 ]

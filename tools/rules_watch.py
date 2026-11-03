@@ -25,6 +25,14 @@ def text_of(url):
     return t
 
 
+NORM = 2   # hash version: v2 hashes only the article body (sidebar 'Related Articles' / feedback footer churn is not a rule change)
+
+
+def core(t):
+    """The rule text without the help-center footer (related-article links, 'Did this answer your question?')."""
+    return re.split(r"\s(?:Related Articles|Did this answer your question\?)\s", t, maxsplit=1)[0].strip()
+
+
 def main():
     os.makedirs(SNAP, exist_ok=True)
     st = json.load(open(STATE)) if os.path.exists(STATE) else {}
@@ -34,11 +42,11 @@ def main():
             t = text_of(url)
         except Exception as e:
             failed.append(f"{name}: {type(e).__name__}"); continue
-        h = hashlib.sha1(t.encode()).hexdigest()[:16]; fn = os.path.join(SNAP, re.sub(r"[^A-Za-z0-9]+", "_", name)[:60] + ".txt")
+        h = hashlib.sha1(core(t).encode()).hexdigest()[:16]; fn = os.path.join(SNAP, re.sub(r"[^A-Za-z0-9]+", "_", name)[:60] + ".txt")
         old = st.get(name, {})
-        if old.get("hash") and old["hash"] != h: changed.append(name)
+        if old.get("hash") and old.get("norm") == NORM and old["hash"] != h: changed.append(name)   # first v2 run: re-baseline
         open(fn, "w").write(t[:200000])
-        st[name] = {"url": url, "hash": h, "checked": datetime.now(timezone.utc).strftime("%Y-%m-%d"), "chars": len(t),
+        st[name] = {"url": url, "hash": h, "norm": NORM, "checked": datetime.now(timezone.utc).strftime("%Y-%m-%d"), "chars": len(t),
                     "changed_on": datetime.now(timezone.utc).strftime("%Y-%m-%d") if name in changed else old.get("changed_on")}
     json.dump(st, open(STATE, "w"), indent=1)
     print("changed:", changed, "| failed:", failed)
