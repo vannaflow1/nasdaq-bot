@@ -296,5 +296,20 @@
   ],
   "calls_left_today": -6,
   "status": "error"
+ },
+ {
+  "wish": 27,
+  "title": "Implement temperature scaling for ensemble forecasts",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (14 model turns)",
+  "how_to_use": "",
+  "date": "2026-11-04",
+  "steps": 14,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 39,
+  "status": "out_of_time"
  }
 ]
