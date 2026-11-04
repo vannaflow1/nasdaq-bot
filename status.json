@@ -1,7 +1,7 @@
 {
  "for": "Wed 04 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Wed 04 Nov) - risk \ud83d\udfe0 ELEVATED",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
   "- ARM, QCOM report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway)."
  ],
@@ -30,14 +30,8 @@
   "  ARM reports after close: options price a \u00b111.2% move (option covers 3 sessions, so a bit wider than the report alone)",
   "  QCOM reports after close: options price a \u00b19.0% move (option covers 3 sessions, so a bit wider than the report alone)"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,030 XP, next level at 10,240)",
-  "Papers read 279 | ideas & strategies tested 143 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 9",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Wed 04 Nov 04:12 Lux",
+ "level": "ELEVATED",
+ "updated": "Wed 04 Nov 14:53 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  TODAY: ARM earnings after close; QCOM earnings after close",
@@ -45,19 +39,17 @@
   "  Tue 10 Nov: CPI inflation 14:30 Lux"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Nvidia\u2019s new 51% rule could shut China\u2019s backdoor to AI chips  [Yahoo (megacaps)]\n    NVDA, AI chips/capex, export/geo",
-  "- Nvidia tells data center operators to limit business from Chinese customers with new global restrictions, report claims  [Tom's Hardware]\n    NVDA, AI chips/capex",
-  "- AMD stock jumps 7% on earnings as data center revenue nearly doubles  [CNBC tech]\n    AMD, AI chips/capex, earnings",
-  "- Apple warns of risks related to AI agents behaving in 'unintended or unpredictable' ways  [CNBC tech]\n    AAPL, shock",
-  "- Apple's stock drops on weak margin forecast in Ternus\u2019 first earnings report  [CNBC tech]\n    AAPL, earnings",
-  "- Job openings posted big September gain in positive sign for labor market ahead of payrolls report  [CNBC economy]\n    Fed/macro",
-  "- Australia hikes rates to 18-year high to fight inflation  [CNBC economy]\n    Fed/macro",
-  "- OpenAI introduces program to reduce AI data center energy demand during peak hours  [Tom's Hardware]\n    OPENAI, AI chips/capex"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Nvidia can only fulfill 1% of China\u2019s massive $70 billion GPU order for AI chips, report claims \u2014 supply constraints choke export-friendly RTX Pro 5500 deliveries despite huge demand  [Tom's Hardware]\n    NVDA, AI chips/capex, export/geo",
+  "- AMD stock jumps 8% on earnings as data center revenue nearly doubles  [CNBC tech]\n    AMD, AI chips/capex, earnings",
+  "- SpaceX, Tesla stocks sink as analyst warns Democrats' victory 'will be a big hurdle' for AI build-out  [Yahoo (megacaps)]\n    TSLA, shock",
+  "- Google responds to political backlash over removing search from schools that ban AI  [CNBC tech]\n    GOOGL, shock",
+  "- Euro zone inflation hits 4% for first time in three years as interest rate hike looms  [CNBC economy]\n    Fed/macro",
+  "- Think the Fed will be done after two more rate hikes? How Friday\u2019s jobs report may trigger a major market repricing.  [MarketWatch]\n    Fed/macro"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Tue 14:40 [Fed/rates] TO THE GREAT PEOPLE OF INDIANA, GET OUT AND VOTE FOR: \u2013 Max Engling for Secretary of State \u2013 Barb Regnitz for U.S. Congress (IN-01) \u2013 Rudy Yakym for U.S. Congress (IN-02) \u2013 Marlin Stutzman for U.S. Congress (IN-03) \u2013 Jim Baird for U.S. Congress (IN-04) \u2013 Victoria Spartz for U.S.\u2026"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- nothing market-relevant"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -125,7 +117,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: AMD earnings after close"
+  "  TODAY: ARM earnings after close; QCOM earnings after close"
  ],
  "nerd": [
   "LIVE options read - Wed 04 Nov 14:25 Lux (08:25 NY), quotes ~15 min delayed, QQQ 685.83",
