@@ -14,10 +14,10 @@
   "failed": 15
  },
  "2026-W45": {
-  "tested": 16,
+  "tested": 19,
   "promising": 1,
   "not_confirmed": 9,
-  "unfit": 0,
-  "failed": 6
+  "unfit": 1,
+  "failed": 8
  }
 }
