@@ -1,10 +1,19 @@
 downloading CBOE QQQ chain (can take a minute on a slow connection)...
-  got 4.6 MB
-LIVE options read - Wed 04 Nov 00:04 Lux (18:04 NY), quotes ~15 min delayed, QQQ 685.69
-
-VOLATILITY: 30-day IV 27.3% -> higher than 88% of days since 2011
-  options are EXPENSIVE vs history
-  realized vol (20d) 22.7% -> premium +4.7 pts: options price MORE movement than the market is delivering (sellers' edge, usual state)
-
-TERM STRUCTURE - what each expiry prices (QQQ move to expiry):
-  Wed 04 Nov (1d): ±2.01% (~571 NQ pts), ATM IV 48.1%
+  got 4.7 MB
+Traceback (most recent call last):
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/nasdaq_bot.py", line 564, in <module>
+    S = q.spot_by_parity(d)
+        ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/qqq_gex_daily.py", line 148, in spot_by_parity
+    k = (cp.c - cp.p).abs().idxmin()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/series.py", line 2801, in idxmin
+    iloc = self.argmin(axis, skipna, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/base.py", line 943, in argmin
+    result = nanops.nanargmin(  # type: ignore[assignment]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/nanops.py", line 1636, in nanargmin
+    result = values.argmin(axis)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: attempt to get argmin of an empty sequence
