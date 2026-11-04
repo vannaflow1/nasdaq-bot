@@ -1,10 +1,6 @@
-hunt 'gex rank intraday volatility breakout': 11 found, queued 0
-hunt 'temperature scaling ensemble forecast calibration finance': 29 found, queued 3
-scanned 0 papers, queued 3, queue size 43 []
-skip (1*): Statistical post‐processing of heat index ensemble forecasts: Is there
-skip (1*): Ensemble Graph Neural Networks for Probabilistic Sea Surface Temperatu
-skip (1*): Ensemble Graph Neural Networks for Probabilistic Sea Surface Temperatu
-read 3, AI units today 750/7000
-curiosity asked: Strategy: LowGex_Exp50_Break_GapFillPW
-tested: Strategy: LowGex_Exp50_Break_GapFillPW - Break above the 50% -> TRANSLATION FAILED - only > < >= <= comparisons allowed
-testing used 355 AI units
+scanned 0 papers, queued 0, queue size 40 []
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
+read 0, AI units today 1108/7000
+curiosity: unusable translator JSON not closed
+test queue empty
+testing used 168 AI units
