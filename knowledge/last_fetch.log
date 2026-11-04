@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 40 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
-read 0, AI units today 1108/7000
-curiosity: unusable translator JSON not closed
-test queue empty
-testing used 168 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
+read 0, AI units today 1279/7000
+curiosity asked: Strategy: LowGex_MidRevert_Exp50_Break
+tested: Strategy: LowGex_MidRevert_Exp50_Break - Break above the 50% -> NOT CONFIRMED on my data: too few trades (26 in 2014-2023, need 150). in-sample 2014-2023:
+testing used 363 AI units
