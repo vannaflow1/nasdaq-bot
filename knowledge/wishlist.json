@@ -453,7 +453,7 @@
   "why": "My ridge+neural ensemble still over‑/under‑confident on range forecasts; a calibrated output could raise the 80% band hit‑rate, directly boosting edge.",
   "evidence": "Current 80% band capture = 73% (needs improvement).",
   "impact": "medium",
-  "status": "open",
+  "status": "frozen",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -462,7 +462,8 @@
    "branch": null,
    "summary": "stopped after 45 minutes (14 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-04: not granted. The brain's range forecast is live-briefing side (frozen), and its evening forecast exp(l_bot) sizes F10's frozen forward-test stops (frozen/F10_forward_inputs.json) - recalibrating it would change the forward route. Evidence is also thin: 73% = 8 of 11 graded live days inside the 80% band, consistent with 80% (binomial, not significant); the 2019-2025 walk-forward held 80%. Revisit only after a strategy is confirmed, as a new frozen-rule candidate."
  },
  {
   "id": 28,
