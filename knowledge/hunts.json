@@ -279,8 +279,9 @@
   "query": "gex rank intraday volatility breakout",
   "why": "I see a repeatable +0.2% edge on low‑gex days but lack a study linking gex_rank to short‑term breakout probability.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-11-04"
  },
  {
   "id": "h25",
@@ -288,7 +289,12 @@
   "query": "temperature scaling ensemble forecast calibration finance",
   "why": "Recent papers suggest simple post‑hoc temperature scaling can tighten probabilistic forecasts; I need to see if it helps my ridge+neural ensemble.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "searched",
+  "papers": [
+   "openalex:W3002392759",
+   "openalex:W7153221372",
+   "arxiv:2603.06153v1"
+  ],
+  "searched": "2026-11-04"
  }
 ]
