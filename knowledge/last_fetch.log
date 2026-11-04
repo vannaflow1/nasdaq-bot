@@ -1,6 +1,5 @@
 scanned 0 papers, queued 0, queue size 40 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 1950/7000
-curiosity asked: Strategy: LowGex_Exp50_Break_GapFill_PWBlend
-tested: Strategy: LowGex_Exp50_Break_GapFill_PWBlend - Break above t -> TRANSLATION FAILED - only > < >= <= comparisons allowed
-testing used 353 AI units
+read 0, AI units today 2306/7000
+test queue empty
+testing used 0 AI units
