@@ -1,7 +1,7 @@
 {
  "for": "Thu 05 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Thu 05 Nov) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
@@ -28,29 +28,25 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,038 XP, next level at 10,240)",
-  "Papers read 279 | ideas & strategies tested 147 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 9",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Wed 04 Nov 22:28 Lux",
+ "level": "NORMAL",
+ "updated": "Thu 05 Nov 14:58 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  Fri 06 Nov: Jobs report (NFP) 14:30 Lux",
   "  Tue 10 Nov: CPI inflation 14:30 Lux"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Hyperscalers and Apple surge after election results remove investor uncertainty  [CNBC tech]\n    AAPL, AI chips/capex, earnings",
-  "- Hive lines up $129 million to buy Nvidia AI chips  [Yahoo (megacaps)]\n    NVDA, AI chips/capex",
-  "- AMD's data center revenue nearly doubles in Q3 and CEO Su expects growth to accelerate  [CNBC tech]\n    AMD, AI chips/capex, earnings",
-  "- AMD earnings beat the Street. Here's what analysts are saying  [CNBC markets]\n    AMD, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Bank of England hikes interest rate for the first time since Iran war, warns inflation will near 5%  [CNBC economy]\n    Fed/macro, shock",
+  "- Chinese AI lab Moonshot turned to Europe for Nvidia Blackwell access amid U.S. China curbs, sources tell CNBC  [CNBC tech]\n    NVDA, AI chips/capex",
+  "- OpenAI pledges to halt NDAs in new data center policy proposal after election rebuke  [CNBC tech]\n    OPENAI, AI chips/capex, shock",
+  "- Qualcomm Sinks 11% as Soft Profit Guidance and Handset Slump Overshadow Beat; Arm Holdings Drops 7%, Skyworks Slides 2%  [Yahoo (megacaps)]\n    ARM, shock, earnings",
+  "- SpaceX's plan to build more data center compute than Google's entire lifetime capacity in just 1.5 years is possible, say analysts  [Tom's Hardware]\n    GOOGL, AI chips/capex",
+  "- When datacenters lose power, generators should kick in. That didn\u2019t happen for Google in London  [The Register]\n    GOOGL, AI chips/capex"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Wed 18:27 [stock market] Stock Market just hit another Record High \u2014 91 Days in just a short period of time \u2014 Less than two years. Your 401(k)s are through the roof. Record Setting All! President DONALD J. TRUMP"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- nothing market-relevant"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -118,7 +114,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: ARM earnings after close; QCOM earnings after close"
+  "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
   "LIVE options read - Thu 05 Nov 14:29 Lux (08:29 NY), quotes ~15 min delayed, QQQ 685.78",
