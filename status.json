@@ -86,12 +86,12 @@
   "spx_factor": 1.06
  },
  "live": [
-  "LIVE - Wed 04 Nov 21:34 Lux",
-  "NQ 28,606 | range so far 1,353 pts (4.76%), high 28,969 / low 27,616 | data as of 15:24 NY (may lag a few minutes)",
-  "Brain this morning: ~1,148 pts for the day (4.04%) - 118% of it already used.",
-  "Updated with what happened so far: full day ~1,353 pts (80%: 1,353-1,498) -> typically ~0 more pts to come (80%: 0-145).",
-  "(brain + neural net, re-estimated at 14:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
-  "Far levels today: high 29,458 / low 27,018 (~90% of days stay inside each)"
+  "LIVE - Thu 05 Nov 15:34 Lux",
+  "NQ 28,228 | range so far 453 pts (1.58%), high 28,621 / low 28,168 | data as of 09:24 NY (may lag a few minutes)",
+  "Brain this morning: ~629 pts for the day (2.20%) - 72% of it already used.",
+  "Updated with what happened so far: full day ~713 pts (80%: 493-1,110) -> typically ~260 more pts to come (80%: 40-657).",
+  "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "Far levels today: high 29,282 / low 27,866 (~90% of days stay inside each)"
  ],
  "playbook": [
   "No FOMC, CPI or jobs report on Thu 05 Nov."
