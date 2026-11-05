@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 40 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 572/7000
-curiosity asked: Strategy: SMT_LowGex_FadeHigh_GapFill_Exp50
-tested: Strategy: SMT_LowGex_FadeHigh_GapFill_Exp50 - Fade yesterday -> NOT CONFIRMED on my data: too few trades (0 in 2014-2023, need 150). in-sample: no trades 
-testing used 372 AI units
+read 0, AI units today 946/7000
+curiosity asked: Strategy: RFVol_Forecast_BreakExp50
+tested: Strategy: RFVol_Forecast_BreakExp50 - Break above the 50% ex -> TRANSLATION FAILED - SyntaxError: invalid syntax (<unknown>, line 1)
+testing used 156 AI units
