@@ -15,5 +15,22 @@
   "verdict": "PROMISING (stress test: survived) : FACT: happens on 35% of 2808 sessions (2014-19: 35%, 2020-25: 35%). Predictor: lowest-fifth days 10% vs highest-fifth 64%, skill +15.4% vs the base rate, better in 9/9 unseen years",
   "how": "Q: When the overnight gap as a proportion of the 20\u2011day average NY range (k_gap / k_range20) is large, are we more likely to close the NQ session above yesterday's high (y_closed_above_yday_high)? | answer = `y_closed_above_yday_high` | predicted by `k_gap / k_range20` | stress: skill +15.40; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
   "date": "2026-11-02"
+ },
+ {
+  "id": "q:2026-11-05:0",
+  "title": "Volta's own question (inspired by: The Allocation of Talent: Implications for Growth; Role of machine learning in financial economics)",
+  "idea": "On days when the London session range is unusually large relative to its 20\u2011day average, are first\u2011hour NQ ranges disproportionately larger than the typical 20\u2011day average range?",
+  "relevance": 6,
+  "spec": {
+   "kind": "question",
+   "question": "On days when the London session range is unusually large relative to its 20\u2011day average, are first\u2011hour NQ ranges disproportionately larger than the typical 20\u2011day average range?",
+   "target": "y_first_hour_range / k_range20",
+   "expr": "k_london_range / k_range20",
+   "explain": "Inspired by research on how regional session activity can influence U.S. market dynamics, this question tests whether a strong London move (a proxy for European trader positioning) amplifies early\u2011session volatility in NQ."
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: average 0.58, median 0.518 over 2906 sessions (2014-19: 0.584, 2020-25: 0.577). Predictor: lowest-fifth days 0.455 vs highest-fifth 0.756, skill +20.3% vs the base rate, better in 9/9 unseen years",
+  "how": "Q: On days when the London session range is unusually large relative to its 20\u2011day average, are first\u2011hour NQ ranges disproportionately larger than the typical 20\u2011day average range? | answer = `y_first_hour_range / k_range20` | predicted by `k_london_range / k_range20` | stress: skill +20.30; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-11-05"
  }
 ]
