@@ -486,7 +486,7 @@
   "why": "Current gex_rank is only daily; a higher‑frequency series would let me test intra‑session low‑gamma breakouts more precisely.",
   "evidence": "Low‑gamma edge (+0.2% R) is observed but cannot be timed intraday; 5‑min GEX could increase signal‑to‑noise.",
   "impact": "high",
-  "status": "open",
+  "status": "blocked",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -495,6 +495,7 @@
    "branch": null,
    "summary": "stopped after 45 minutes (17 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-05: blocked - no free historical intraday GEX exists. Open interest updates once per day, and the repo only keeps a daily scalar (gex_history.csv 'gexn', no per-strike chains), so a 5-min series cannot be rebuilt for past years. An intraday profile would need per-strike OI snapshots (sum OI*gamma(S_t)) collected forward from the CBOE delayed chain; that is months of collection before any test and its use would be a new family, which needs an alpha slot (owner/Claude chat). See also wish #28 (owner)."
  }
 ]
