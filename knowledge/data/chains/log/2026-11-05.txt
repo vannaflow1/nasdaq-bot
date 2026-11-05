@@ -1,2 +1,4 @@
 2026-11-05 10:20 QQQ rows=180 raw=10456 expiries=19 quote_ts=2026-11-05 15:19:12 chain saved, surface saved
 2026-11-05 10:20 NDX rows=668 raw=16218 expiries=28 quote_ts=2026-11-05 15:20:08 chain saved, surface saved
+2026-11-05 11:28 QQQ rows=152 raw=10456 expiries=19 quote_ts=2026-11-05 16:28:15 chain saved, surface saved
+2026-11-05 11:28 NDX rows=516 raw=16218 expiries=28 quote_ts=2026-11-05 16:28:11 chain saved, surface saved
