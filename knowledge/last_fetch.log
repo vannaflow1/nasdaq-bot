@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 40 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 775/7000
-curiosity asked: Strategy: LowGex_Exp70Break_PWGapFill_FadeMid
-tested: Strategy: LowGex_Exp70Break_PWGapFill_FadeMid - Break above  -> TRANSLATION FAILED - only > < >= <= comparisons allowed
-testing used 353 AI units
+read 0, AI units today 1131/7000
+curiosity asked: Strategy: LowGex_Exp70Break_MidMorning
+tested: Strategy: LowGex_Exp70Break_MidMorning - On low‑gamma days t -> NOT CONFIRMED on my data: too few trades (6 in 2014-2023, need 150). in-sample 2014-2023: 
+testing used 374 AI units
