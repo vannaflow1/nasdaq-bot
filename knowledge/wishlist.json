@@ -507,7 +507,7 @@
   "why": "Current intraday strategies lack a high‑resolution dealer gamma signal; a 5‑minute GEX rank series would let me test breakout ideas with finer granularity.",
   "evidence": "No intraday GEX data; paper hunts indicate missing granularity; failures often cite 'needs intraday option quotes' which GEX rank approximates.",
   "impact": "high",
-  "status": "open",
+  "status": "blocked",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -516,6 +516,7 @@
    "branch": null,
    "summary": "stopped after 45 minutes (19 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-06: blocked - duplicate of wish #29 (same 5-min GEX rank request, blocked 2026-11-05). No free historical intraday GEX exists: open interest updates once per day and the repo keeps only a daily scalar (gex_history.csv), so a 5-min series cannot be rebuilt for past years; a forward-collected per-strike profile would take months and its use would be a new family needing an alpha slot (owner/Claude chat). See #28/#29."
  }
 ]
