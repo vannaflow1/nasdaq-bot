@@ -90,12 +90,12 @@
   "spx_factor": 1.1275
  },
  "live": [
-  "LIVE - Thu 05 Nov 21:34 Lux",
-  "NQ 26,936 | range so far 1,889 pts (6.60%), high 28,621 / low 26,732 | data as of 15:24 NY (may lag a few minutes)",
-  "Brain this morning: ~629 pts for the day (2.20%) - 300% of it already used.",
-  "Updated with what happened so far: full day ~1,889 pts (80%: 1,889-2,154) -> typically ~0 more pts to come (80%: 0-265).",
-  "(brain + neural net, re-estimated at 14:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
-  "Far levels today: high 29,282 / low 27,866 (~90% of days stay inside each)"
+  "LIVE - Fri 06 Nov 15:34 Lux",
+  "NQ 27,152 | range so far 885 pts (3.32%), high 27,252 / low 26,366 | data as of 09:24 NY (may lag a few minutes)",
+  "Brain this morning: ~1,441 pts for the day (5.41%) - 61% of it already used.",
+  "Updated with what happened so far: full day ~1,378 pts (80%: 954-2,147) -> typically ~493 more pts to come (80%: 69-1,262).",
+  "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "Far levels today: high 28,116 / low 25,123 (~90% of days stay inside each)"
  ],
  "playbook": [
   "\ud83d\udccb PLAYBOOK - Jobs report (14:30 Lux)  (based on 102 past NFP days, 2017-2025)",
