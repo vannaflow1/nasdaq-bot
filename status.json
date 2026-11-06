@@ -1,7 +1,7 @@
 {
  "for": "Fri 06 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Fri 06 Nov) - risk \ud83d\udd34 HIGH",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udd34 HIGH",
   "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size.",
   "- Jobs report at 14:30 Lux, before the US open. NQ can gap 40-150 points at the release. Don't hold a position through it, and let the first 15-30 min after the 15:30 open settle before trading.",
   "- Rule of thumb on HIGH days: one bad trade can hit your trailing drawdown. Skipping the day costs you nothing."
@@ -30,32 +30,24 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,100 XP, next level at 10,240)",
-  "Papers read 279 | ideas & strategies tested 153 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 10",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Fri 06 Nov 13:21 Lux",
+ "level": "HIGH",
+ "updated": "Fri 06 Nov 14:54 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  TODAY: Jobs report (NFP) 14:30 Lux",
   "  Tue 10 Nov: CPI inflation 14:30 Lux"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Chinese AI lab Moonshot reportedly looked at European data centers to access Nvidia chips, report claims  [Tom's Hardware]\n    NVDA, AI chips/capex",
-  "- Apple Reportedly Set To Raise $7.5B From Bond Offering Amid Market Selloff  [Yahoo (megacaps)]\n    AAPL, shock",
-  "- Is AMD Stock a Buy as AI Revenue Soars?  [Yahoo (megacaps)]\n    AMD, shock, earnings",
-  "- Tesla, SpaceX Continue Postelection Plunge. Dems Pledge Investigations Into Trump.  [Yahoo (megacaps)]\n    TSLA, shock",
-  "- SpaceX and Tesla Stock Plunges Have Wiped About $450 Billion in Value Since the Midterms. Is It Time to Buy?  [Yahoo (megacaps)]\n    TSLA, shock",
-  "- After tech-stock rout, October jobs report could bring relief \u2014 or more pain  [MarketWatch]\n    Fed/macro",
-  "- The \u2018Musk selloff\u2019 deepens as Tesla and SpaceX combine for $450 billion two-day wipeout  [MarketWatch]\n    TSLA, shock",
-  "- Micron's $4.5 billion Taoyuan plant construction halted amidst labor dispute  [Tom's Hardware]\n    MU, shock"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Nvidia, AMD, and Micron stocks lead chip sector higher following worst sell-off since 2020  [Yahoo (megacaps)]\n    NVDA, AMD, MU, shock",
+  "- Nvidia tightens tracking of AI GPUs in Southeast Asia as Chinese chip smuggling draws scrutiny, report claims  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Six pallets of Nvidia GPUs worth $11.4 million stolen in California cargo heist  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Nvidia wants to repurpose over 130 old telco buildings as tiny data centers, report claims  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Nasdaq sell-off batters Asian chip stocks as SK Hynix, Samsung, Softbank, TSMC tumble  [CNBC tech]\n    TSM, shock",
+  "- U.S. economy added 165,000 jobs in October, way more than expected; unemployment rate at 4.1%  [CNBC economy]\n    Fed/macro"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Fri 12:48 [oil/geopolitics] NEWSMAX: \u201cTrump is a Winner, and he\u2019s right on Iran!\u201d",
   "- Fri 01:02 [stock market] The Stock Market crashed today because the Dumocrats had a big Tuesday \u2014 So sad to see, you only have yourselves to blame! President DONALD J. TRUMP",
   "- Fri 00:18 [stock market] The Stock Market suffered one of the Worst Days in History based on the results of the Election. Such a sad thing to watch! It took so much work to get us to a level that no one has ever seen before, and then this. Your 401(k)s have, therefore, dropped. Remember, it wasn\u2019t\u2026"
@@ -130,7 +122,7 @@
  ],
  "today": [
   "TODAY:",
-  "  no scheduled macro events or megacap earnings"
+  "  TODAY: Jobs report (NFP) 14:30 Lux"
  ],
  "nerd": [
   "LIVE options read - Fri 06 Nov 14:25 Lux (08:25 NY), quotes ~15 min delayed, QQQ 656.74",
