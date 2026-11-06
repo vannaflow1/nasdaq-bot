@@ -30,7 +30,14 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": "HIGH",
+ "level": [
+  "VOLTA LEVEL 16  (9,110 XP, next level at 10,240)",
+  "Papers read 279 | ideas & strategies tested 158 | prop strategies searched 651,533",
+  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
+  "Brain upgrades: 0 | self-discovered powers: 10",
+  "XP only for verified progress: tests passed on unseen data count far more than activity.",
+  "Since yesterday: +5 tests"
+ ],
  "updated": "Fri 06 Nov 19:27 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
