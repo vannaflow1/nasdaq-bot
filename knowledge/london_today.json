@@ -1,14 +1,14 @@
 {
- "date": "2026-11-05",
- "price": 28344.25,
- "asia_ret": -0.00781,
- "asia_hi": 28668.5,
- "asia_lo": 28167.75,
- "asia_range_pct": 1.767,
- "asia_z": 2.0,
+ "date": "2026-11-06",
+ "price": 26925.25,
+ "asia_ret": 0.00669,
+ "asia_hi": 27159.25,
+ "asia_lo": 26366.5,
+ "asia_range_pct": 2.944,
+ "asia_z": 3.0,
  "size": "WIDE",
- "exp_move_pts": 96,
- "y_hi": 28969.0,
- "y_lo": 28405.0,
- "y_close": 28567.25
+ "exp_move_pts": 92,
+ "y_hi": 28228.25,
+ "y_lo": 26718.0,
+ "y_close": 26746.25
 }

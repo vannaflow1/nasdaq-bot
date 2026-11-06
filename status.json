@@ -342,13 +342,10 @@
   "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -34$/eval (zero edge -43$), 22% pass within 21 sessions."
  ],
  "bias": [
-  "\ud83e\udded NQ BIAS - Thu 05 Nov, as of 23:07 Lux",
-  "Now: \ud83d\udd34 SHORT (check 14:00 CT = 21:00 Lux) - NQ 27,116.75, -3.85% from the 08:30 CT open, noise band \u00b10.94%.",
-  "Today: 16:00 SHORT \u2192 17:00 SHORT \u2192 18:00 SHORT \u2192 19:00 SHORT \u2192 20:00 SHORT \u2192 21:00 SHORT",
-  "Meaning: a small lean (~4 pts over the normal drift), not a prediction.",
-  "NY outlook: WIDE day expected (~504 pts high-low, ~244 pts open-to-close); overnight -0.85% (DOWN), BELOW yesterday's low.",
-  "Overnight AGREES with the bias (agreeing was ~4-5 pts better in tests, not proven - tracked).",
-  "London outlook: WIDE London (~96 pts London-to-NY open); Asia range 28,167.75-28,668.50. London breakouts tended to reverse - no London call.",
-  "Scoreboard: 8/22 graded checks right (36%) over 7 days; history says ~54-58%."
+  "\ud83e\udded NQ BIAS - Fri 06 Nov, as of 08:14 Lux",
+  "Market not open yet (NY open 15:30 Lux). First bias check at 16:00 Lux, then hourly until 21:00 Lux.",
+  "London outlook: WIDE London (~92 pts London-to-NY open); Asia range 26,366.50-27,159.25. London breakouts tended to reverse - no London call.",
+  "Scoreboard: 8/22 graded checks right (36%) over 7 days; history says ~54-58%.",
+  "Day direction can't be called before the open (14 inputs tested, 12 years); day size can."
  ]
 }
