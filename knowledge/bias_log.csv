@@ -59,3 +59,4 @@ date,check_ct,bias,price,open,band_pct,dist_bands,close,result,overnight,agree,d
 2026-11-05,14,SHORT,27116.75,28203.0,0.944,-4.08,26744.5,right,DOWN,yes,WIDE
 2026-11-06,9,LONG,27336.75,27167.0,0.476,1.31,,,UP,yes,WIDE
 2026-11-06,10,NONE,27232.5,27169.25,0.924,0.25,,,UP,,WIDE
+2026-11-06,11,NONE,27265.5,27169.25,0.967,0.37,,,UP,,WIDE
