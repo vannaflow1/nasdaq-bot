@@ -122,7 +122,7 @@
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
-  "This week's tests: 32 run - 2 promising, 17 not confirmed, 1 don't fit my data, 12 translation failures",
+  "This week's tests: 35 run - 2 promising, 18 not confirmed, 1 don't fit my data, 14 translation failures",
   "",
   "40 papers waiting in my queue."
  ],
@@ -204,13 +204,13 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-05)",
-  "I observed a consistent +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but still have no intraday strategy that extracts it. My range forecasts remain ~38% off, limiting my ability to size entries. I need a concrete, repeatable mechanism that turns the low\u2011gamma advantage into a trade, preferably one that works across NQ and ES.",
+  "VOLTA'S SELF-CHECK (2026-11-06)",
+  "I keep confirming that low\u2011dealer\u2011gamma days (gex_rank < 0.2) give a modest +0.2% edge, yet I have no intraday strategy that harvests it. My range forecasts still miss ~38% of the true daily range, limiting trade sizing. Most failures stem from missing intraday greeks or overly complex filters that leave too few trades. I will focus on a simple, high\u2011frequency breakout style that directly targets the low\u2011gamma regime and generate many trades for statistical power.",
   "",
   "WISHES (what I need to get better):",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
-  "#29 [for Claude] Provide daily intraday GEX rank series at 5\u2011min resolution - Current gex_rank is only daily; a higher\u2011frequency series would let me test intra\u2011session low\u2011gamma breakouts more precisely.",
+  "#30 [for Claude] Provide 5\u2011minute GEX rank time series - Current intraday strategies lack a high\u2011resolution dealer gamma signal; a 5\u2011minute GEX rank series would let me test breakout ideas with fin",
   "",
   "Recently granted: #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut; #23 Intraday option chain snapshots (0\u2011DTE) every 5\u202fmin; #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],
