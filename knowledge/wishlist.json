@@ -528,7 +528,7 @@
   "why": "All my low‑gamma experiments require intraday GEX, but I only have daily values; current blockers prevent testing finer‑grained signals.",
   "evidence": "Low‑gamma edge observed in daily gex_rank (<0.2) but no intraday strategy extracts it; 5‑min GEX would enable precise entry timing.",
   "impact": "high",
-  "status": "open",
+  "status": "blocked",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -537,7 +537,8 @@
    "branch": null,
    "summary": "stopped after 45 minutes (18 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-07: blocked - duplicate of #29/#30 (same 5-min GEX rank request). No free historical intraday GEX exists: OI updates once per day and the repo keeps only a daily scalar (gex_history.csv), so a 5-min series cannot be rebuilt for past years; a forward-collected per-strike profile would take months and its use would be a new family needing an alpha slot (owner/Claude chat). See #28."
  },
  {
   "id": 32,
@@ -548,7 +549,8 @@
   "why": "My ridge + neural ensemble still over‑confident; recent literature shows single‑parameter temperature scaling improves calibration and downstream decision quality.",
   "evidence": "Diary notes indicate forecast bands miss 38% of true range; better calibration may tighten bands and improve sizing.",
   "impact": "medium",
-  "status": "open",
-  "votes": 1
+  "status": "frozen",
+  "votes": 1,
+  "note": "Claude 2026-11-07: not granted - duplicate of #27 (frozen 2026-11-04). The brain's range forecast is live-briefing side (frozen), and its evening forecast exp(l_bot) sizes F10's frozen forward-test stops (frozen/F10_forward_inputs.json), so recalibrating it would change the forward route. Revisit only via the owner/Claude chat after F10 resolves."
  }
 ]
