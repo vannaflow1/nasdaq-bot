@@ -303,7 +303,8 @@
   "query": "intraday gex rank volatility breakout",
   "why": "My current GEX rank series is daily; I suspect intraday GEX shifts may signal short‑term breakouts.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-11-07"
  }
 ]

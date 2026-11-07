@@ -1,3 +1,4 @@
+hunt 'intraday gex rank volatility breakout': 12 found, queued 0
 scanned 0 papers, queued 0, queue size 40 []
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
@@ -66,9 +67,7 @@ scanned 0 papers, queued 0, queue size 40 []
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
-read 0, AI units today 3/7000
-self-check: I keep seeing a modest +0.2% edge on low‑dealer‑gamma days (gex_rank < 0.2) but none of my intraday strategies tap it. My range forecasts are still ~38% off, limiting position sizing. I need a cheap,  | queued 2 | new wishes 2
-curiosity: unusable translator JSON not closed
-tested: Strategy: LowGammaOpenBreakout_Short -> NOT CONFIRMED on my data: too few trades (0 in 2014-2023, need 150). in-sample: no trades 
-tested: What is the average and volatility of NQ returns in the firs -> NOT CONFIRMED on my data: FACT: average 0.00915, median 0.0259 over 2907 sessions (2014-19
-testing used 596 AI units
+read 0, AI units today 601/7000
+curiosity asked: On days with a higher implied volatility skew (skew), does the NQ daily price move concentrate more in the body of the range (i.e., is the body‑to‑range ratio larger)?
+tested: On days with a higher implied volatility skew (skew), does t -> NOT CONFIRMED on my data: FACT: average 0.386, median 0.346 over 2906 sessions (2014-19: 0
+testing used 138 AI units
