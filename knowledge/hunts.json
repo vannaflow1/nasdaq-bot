@@ -296,5 +296,14 @@
    "arxiv:2603.06153v1"
   ],
   "searched": "2026-11-04"
+ },
+ {
+  "id": "h26",
+  "date": "2026-11-07",
+  "query": "intraday gex rank volatility breakout",
+  "why": "My current GEX rank series is daily; I suspect intraday GEX shifts may signal short‑term breakouts.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
