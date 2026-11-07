@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 40 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
-read 0, AI units today 742/7000
-curiosity asked: Strategy: LowGamma_Exp90Break_GapFillFade
-tested: Strategy: LowGamma_Exp90Break_GapFillFade - On low‑gamma day -> TRANSLATION FAILED - only > < >= <= comparisons allowed
-testing used 357 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
+read 0, AI units today 1103/7000
+curiosity asked: Strategy: LowGamma_RF_FadeYHigh_GapFill
+tested: Strategy: LowGamma_RF_FadeYHigh_GapFill - Fade yesterday's h -> NOT CONFIRMED on my data: too few trades (6 in 2014-2023, need 150). in-sample 2014-2023: 
+testing used 154 AI units
