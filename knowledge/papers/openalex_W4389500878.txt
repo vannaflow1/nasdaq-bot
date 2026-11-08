@@ -1,0 +1,844 @@
+AL TERNA TIVE MODELS FOR FX, ARBITRAGE OPPOR TUNITIES AND
+EFFICIENT PRICING OF DOUBLE BARRIER OPTIONS IN L ´EVY
+MODELS
+SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI˘I
+Abstract. We analyze the qualitative differences between prices of double barrier no-touch
+options in the Heston model and pure jump KoBoL model calibrated to the same set of the
+empirical data, and discuss the potential for arbitrage opportunities if the correct model is a
+pure jump model. We explain and demonstrate with numerical examples that accurate and
+fast calculations of prices of double barrier options in jump models are extremely difficult using
+the numerical methods available in the literature. We develop a new efficient method (GWR-
+SINH method) based of the Gaver-Wynn-Rho acceleration applied to the Bromwich integral;
+the SINH-acceleration and simplified trapezoid rule are used to evaluate perpetual double
+barrier options for each value of the spectral parameter in GWR-algorithm. The program in
+Matlab running on a Mac with moderate characteristics achieves the precision of the order
+of E-5 and better in several several dozen of milliseconds; the precision E-07 is achievable in
+about 0.1 sec. We outline the extension of GWR-SINH method to regime-switching models
+and models with stochastic parameters and stochastic interest rates.
+Key words: Heston model, L´ evy processes KoBoL, double barrier options, Wiener-Hopf fac-
+torization, Fourier transform, Laplace transform, Gaver-Wynn Rho algorithm, sinh-acceleration,
+double spiral method
+MSC2020 codes: 60-08,42A38,42B10,44A10,65R10,65G51,91G20,91G60
+Contents
+1. Introduction 2
+2. Auxilliary results 3
+2.1. Wiener-Hopf factorization 4
+2.2. General classes of L´ evy processes amenable to efficient calculations 5
+3. Double barrier options: calculations in the state space 6
+3.1. Laplace transform and its inversion 6
+3.2. Evaluation of the perpetual double barrier options 7
+4. GWR-SINH method 8
+4.1. Calculation of the Wiener-Hopf factors for q >0. The case µ >0 and ν ∈ (0, 1) 8
+4.2. General scheme for a fixed q >0 9
+4.3. Efficient numerical evaluation of the series (4.6) 11
+4.4. Algorithm of GWR-SINH method for DNT options 12
+4.5. A numerical example: Table 1 13
+S.B.: Department of Economics, The University of Texas at Austin, 2225 Speedway Stop C3100, Austin,
+TX 78712–0301, sboyarch@utexas.edu
+S.L.: Calico Science Consulting. Austin, TX. Email address: levendorskii@gmail.com.
+1
+arXiv:2312.03915v1 [q-fin.CP] 6 Dec 2023
+2 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+5. Pricing barrier options in L´ evy models: general discussion and examples 13
+5.1. A short review of the literature 13
+5.2. Analysis of errors of different methods and an example 15
+6. Conclusion 17
+References 17
+Appendix A. Calibration results and prices of DNT options in the Heston and KoBoL
+models 20
+Appendix B. Pricing barrier options in regime-switching models 22
+B.1. The general scheme 22
+B.2. Solution of the systems in the dual space 26
+1. Introduction
+There exists a large body of literature devoted to calculation of the expectation of a func-
+tion of a L´ evy process and its running extremum, and related optimal stopping problems,
+standard examples being barrier and American options, and lookback options with barrier
+and/or American features. However, sufficiently accurate and fast algorithms are difficult to
+develop unless a process is of a rather simple nature. The errors can be especially large for
+prices of double barrier options in L´ evy and regime-switching L´ evy models. The importance
+of a reliable and fast pricing procedure for barrier options in regime-switching L´ evy models is
+apparent in the following situation. Typically, the best fit to empirically observed vanilla prices
+(or implied volatilities) is achieved with jump-diffusion models, and, among models with small
+number of parameters, with purely jump models. In fact, in many cases, finite variation L´ evy
+processes are calibrated better than the processes of infinite variation (see, e.g., examples in
+[29, 30, 55, 51]). However, as an extensive empirical study in [32] demonstrates, the prices of
+barrier options provided by Markit agree better with prices in diffusion models. If the latter
+prices are the real prices, the market prices vanillas and barrier options using non-equivalent
+probability measures, hence, there may exist arbitrage opportunities. Using the well-known
+criterion of the equivalency of L´ evy measures (see., e.g., [62, Thm. 33.1]) one can easily prove
+that in several empirical examples documented in [29], the historic and risk-neutral measures
+inferred from the prices of a stock and vanillas are not equivalent. The differences among prices
+of vanillas in many models being small, the apparent violations of the no-arbitrage condition
+can be explained by the transaction cost.
+In the case of barrier options, the differences in prices can be quite substantial due to
+boundary effects. The asymptotic analysis in [12, 54, 6, 49] for single barrier options shows
+that, in many cases, close to the barrier, the prices in purely jump models are much larger
+than the prices in models with a sizable diffusion component. The numerical examples in [6]
+demonstrate that the difference is sizable at the distance of several percent from the barrier.
+Using the fairly complicated but exact analytical formula for prices of the double barrier options
+in terms of the inverse Laplace-Fourier transform (this formula is implicitly used in the method
+of the paper), one can derive similar but less explicit asymptotic formulas for double barrier
+options and conclude that, in the case of the double barrier options, the differences between
+prices in purely jump models and models with sizable diffusion components must be rather
+large, especially if the distance between the barriers is fairly small, e.g., 10%. Even if a high
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 3
+transaction cost is taken into account, the difference between the prices in the models used
+by the counterparties to price double barrier options may create arbitrage opportunities. The
+simplest way to realize the arbitrage opportunity in this setting is to buy a double-no-touch
+options (DNT) from a bank and keep it until maturity. If the discounted probability of the
+underlying remaining in the corridor between the two barriers until maturity, calculated in a
+jump model, is larger than the ask price, possibly, calculated at the bank using the Heston
+model, then one has an apparent arbitrage opportunity. The first aim of the paper is to
+analyze this opportunity using a small set of the real data; the second aim of the paper is
+to analyze analytical difficulties for accurate pricing double barrier options in jump models,
+and develop an efficient method for evaluation of double barrier options in one factor L´ evy
+models. The algorithm developed in the present paper is much more accurate and dozens of
+times faster than the one in [8]; the main block of the algorithm is the realization in the dual
+space of the main block in [8], where the calculations are in the state space. We apply the
+Gaver-Wynn-Rho algorithm (GWR algorithm) and, for each value of the (positive) spectral
+parameter, apply the same algorithm as in [8] for perpetual double barrier options but do
+the calculations in the dual space. The conformal deformation technique (sinh-acceleration)
+developed in [21, 22, 24, 23] allows one to evaluate the prices of the perpetual options with
+the accuracy E-09 and better using arrays of the length of a hundred and shorter. The error
+tolerance of the order of E-14 requires arrays several hundreds long. We call the method in the
+paper the GWR-SINH method. Since the analytic properties of the characteristic exponent of
+L´ evy processes considered in the present paper are significantly worse that the properties of
+L´ evy processes considered in [23], the Laplace transform of the price of barrier options does
+not admit analytic continuation to the complex plane with the cut of the form ( −∞, a] as in
+[23]. In the result, the error of the GWR method in this paper is 1-2 orders of magnitude larger
+than that in [23], which agrees with the general characterization of the accuracy of the Gaver
+method in [1, 63].
+The rest of the paper is organized as follows. In Sect. 2, we collect the definitions of classes
+of L´ evy processes used in the paper and necessary basic facts of the Wiener-Hopf factorization.
+In Sect. 3, we recall the scheme of evaluation of the Laplace transform [8] using the calculations
+in the state space. GWR-SINH method and the explicit algorithm are in Sect. 4. In Sect. 5,
+we discuss several popular approaches to pricing barrier options and analyze common sources
+of errors of various groups of methods. In Sect. 6, we summarize the results of the paper and
+outline the extension of the GWR-SINH method to regime-switching models and models with
+the stochastic volatility and interest rates. Calibration results and prices of DNT options in
+the Heston and KoBoL models are in Section A. The GWR-SINH method for regime-switching
+L´ evy models is in Section B.
+2. Auxilliary results
+Let X be a one-dimensional L´ evy process on the filtered probability space (Ω, F , {Ft}t≥0, Q)
+satisfying the usual conditions; the riskless rate is constant and Q is an equivalent martingale
+measure. We denote the expectation operator under Q by E. The underlying is modeled as
+St = eXt, the barriers are H− < H+, and the maturity date is denoted T . We set h± = ln H±
+and x = ln S. The infimum process and supremum process ¯Xt = sup 0≤s≤t Xs and X t =
+inf 0≤s≤t Xs are defined pathwise, a.s. For h ∈ R, τ + h and τ − h denote the first entrance time
+4 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+of X into [h, +∞) and ( −∞, h], respectively. For q >0, Tq ∼ Exp q denotes an exponentially
+distributed random variable with mean q−1, independent of X. QGW Rdenotes the set of nodes
+in the GWR algorithm used in Sections 3 and 4.
+2.1. Wiener-Hopf factorization. This subsection contains basic formulas and results sys-
+tematically used in a number of publications, e.g., [12, 11, 50, 25, 23]. In probability, the
+Wiener-Hopf factors are defined as
+(2.1) ϕ+ q (ξ) = E[eiξ ¯XTq ], ϕ − q (ξ) = E[eiξX Tq ].
+Functions ϕ± q (ξ) appear in the Wiener-Hopf factorization formula
+(2.2) q q + ψ(ξ) = ϕ+ q (ξ)ϕ− q (ξ), ξ ∈ R.
+Define the expected present value operators (EPV-operators) underX, ¯X and X (all three start
+at 0) by Equ(x) = E
+
+u(x + XTq )
+
+, E + q u(x) = E  u(x + ¯XTq )  and E − q u(x) = E h u(x + X Tq ) i .
+The EPV operators are bounded operators in L∞(R). In the case of L´ evy processes with
+exponentially decaying L´ evy densities, the EPV operators are bounded operators in spaces
+with exponential weights. The operator version of (2.2)
+(2.3) Eq = E + q E − q = E − q E + q
+is a special case of the operator form of the Wiener-Hopf factorization in the theory of boundary
+problems for differential and pseudo-differential operators (pdo). Indeed, E ± q eixξ = ϕ± q (ξ)eixξ.
+This means that E ± q are pdo with symbols ϕ± q , and E ± q u(x) = F −1 ξ→xϕ± q (ξ)Fx→ξu(x) for suffi-
+ciently regular functions u. See e.g., [35, 12]. The Wiener-Hopf factor ϕ+ q (ξ) (resp., ϕ− q (ξ))
+admits analytic continuation to the half-plane {Im ξ >0} (resp., {Im ξ <0}).
+The characteristic exponents of all popular classes of L´ evy processes bar stable L´ evy processes
+admit analytic continuation to a strip around the real axis. See [12, 11, 13], where the general
+class of Regular L´ evy processes of exponential type (RLPE) is introduced. Let X be a L´ evy
+process with the characteristic exponent admitting analytic continuation to a strip {Im ξ ∈
+(µ−, µ+)} around the real axis, and let q > 0. Then (see., e.g., [12, 11, 50]) the following
+statements hold.
+I. There exist σ−(q) < 0 < σ+(q) such that
+(2.4) q + ψ(η) ̸∈ (−∞, 0], Im η ∈ (σ−(q), σ+(q)).
+II. The Wiener-Hopf factor ϕ+ q (ξ) admits analytic continuation to the half-plane {Im ξ >
+σ−(q)}, and can be calculated as follows: for any ω− ∈ (σ−(q), Im ξ),
+ϕ+ q (ξ) = exp
+ 1
+2πi
+Z
+Im η=ω−
+ξ ln(1 + ψ(η)/q)
+η(ξ − η) dη
+
+.(2.5)
+III. The Wiener-Hopf factor ϕ− q (ξ) admits analytic continuation to the half-plane {Im ξ <
+σ+(q)}, and can be calculated as follows: for any ω+ ∈ (Im ξ, σ+(q)),
+ϕ− q (ξ) = exp
+
+− 1 2πi Z Im η=ω+ ξ ln(1 + ψ(η)/q) η(ξ − η) dη  .(2.6)
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 5
+We can (and will) use (2.2) and (2.5) to calculate ϕ− q (ξ) on {Im ξ ∈ (0, σ+ q )}, and (2.2) and
+(2.6) to calculate ϕ+ q (ξ) on {Im ξ ∈ (σ− q , 0)}.
+The explicit algorithm formulated and used in [23] for processes of infinite variation and
+finite variation processes without drift uses the representations (2.5)-(2.6). In the case of finite
+variation processes with positive drift, which we consider in the paper, the following set of
+formulas derived in [12, 50] is more efficient:
+ϕ+,0 q (ξ) = exp
+
+− 1 2πi Z Im η=ω− ξ ln(1 + ψ0(η)/(q − iµη)) η(η − ξ) dη  ,(2.7)
+ϕ+ q (ξ) = q q − iµξ ϕ+,0 q (ξ),(2.8)
+ϕ− q (ξ) = exp
+ 1
+2πi
+Z
+Im η=ω+
+ξ ln(1 + ψ0(η)/(q − iµη))
+η(η − ξ) dη
+
+.(2.9)
+The formulas for the case of finite variation processes with negative drift are by symmetry.
+2.2. General classes of L´ evy processes amenable to efficient calculations.Essentially
+all popular classes of L´ evy processes processes enjoy additional properties formalized in [21, 26]
+as follows. For ν = 0+ (resp., ν = 1+), set |ξ|ν = ln |ξ| (resp., |ξ|ν = |ξ| ln |ξ|), and introduce
+the following complete ordering in the set {0+, 1+} ∪(0, 2]: the usual ordering in (0 , 2]; ∀ ν >
+0, 0+ < ν; ∀ ν >1, 1 < 1+ < ν. For γ ∈ (0, π], γ+ ∈ (0, π/2], γ− ∈ [−π/2, 0) and µ− < µ+,
+define Cγ−,γ+ = {eiφρ | ρ >0, φ∈ (γ−, γ+) ∪ (π − γ+, π− γ−)}, Cγ = {eiφρ | ρ >0, φ∈ (−γ, γ)},
+S(µ−,µ+) = {ξ | Im ξ ∈ (µ−, µ+)}.
+Definition 2.1. ([26, Defin 2.1] ) We say that X is a SINH-regular L´ evy process (on R) of
+order ν and type ((µ−, µ+); C; C+) iff the following conditions are satisfied:
+(i) ν ∈ {0+, 1+} ∪(0, 2] and either µ− < 0 ≤ µ+ or µ− ≤ 0 < µ+;
+(ii) C = Cγ−,γ+, C+ = Cγ′ −,γ′ + , where γ− < 0 < γ+, γ− ≤ γ′ − ≤ 0 ≤ γ′ + ≤ γ+, and |γ′ −|+γ′ + > 0;
+(iii) the characteristic exponent ψ of X can be represented in the form
+(2.10) ψ(ξ) = −iµξ + ψ0(ξ),
+where µ ∈ R, and ψ0 admits analytic continuation to i(µ−, µ+) + (C ∪ {0});
+(iv) for any φ ∈ (γ−, γ+), there exists c∞(φ) ∈ C \ (−∞, 0] s.t.
+(2.11) ψ0(ρeiφ) ∼ c∞(φ)ρν, ρ → +∞;
+(v) the function (γ−, γ+) ∋ φ 7→ c∞(φ) ∈ C is continuous;
+(vi) for any φ ∈ (γ′ −, γ′ +), Re c∞(φ) > 0.
+To simplify the constructions in the paper, we assume that µ− < 0 < µ+ and γ′ − < 0 < γ′ +.
+Example 2.2. In [9, 10], we constructed a family of pure jump processes generalizing the class
+of [41], with the L´ evy measure
+(2.12) F (dx) = c+eλ−xx−ν+−11(0,+∞)(x)dx + c−eλ+x|x|−ν−−11(−∞,0)(x)dx,
+where c± > 0, ν± ∈ [0, 2), λ− < 0 < λ+. Starting with [12], we use the name KoBoL processes.
+If ν± ∈ (0, 2), ν± ̸= 1,
+(2.13) ψ0(ξ) = c+Γ(−ν+)((−λ−)ν+ − (−λ− − iξ)ν+) + c−Γ(−ν−)(λν− + − (λ+ + iξ)ν−).
+6 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+A specialization ν± = ν ̸= 1, c = c± > 0, of KoBoL used in a series of numerical examples in
+[9] was named CGMY model in [29] (and the labels were changed: letters C, G, M, Yreplace
+the parameters c, ν, λ−, λ+ of KoBoL):
+(2.14) ψ0(ξ) = cΓ(−ν)[(−λ−)ν − (−λ− − iξ)ν + λν + − (λ+ + iξ)ν].
+Evidently, ψ0 given by (2.14) is analytic in C \ i((−∞, λ−] ∪ [λ+, +∞)), and ∀ φ ∈ (−π/2, π/2),
+(2.11) holds with
+(2.15) c∞(φ) = −2cΓ(−ν) cos(νπ/2)eiνφ.
+In [26], we defined a class of Stieltjes-L´ evy processes (SL-processes). Essentially,X is called
+a (signed) SL-process if ψ is of the form
+(2.16) ψ(ξ) = (a+ 2 ξ2 − ia+ 1 ξ)ST (G0 +)(−iξ) + (a− 2 ξ2 + ia− 1 ξ)ST (G0 −)(iξ) + (σ2/2)ξ2 − iµξ,
+where ST (G) is the Stieltjes transform of the (signed) Stieltjes measure G, a± j ≥ 0, and σ2 ≥ 0,
+µ ∈ R. A (signed) SL-process is called regular if it is SINH-regular. We proved in [26] that
+the characteristic exponent ψ of a (signed) SL-process admits analytic continuation to the
+complex plane with two cuts along the imaginary axis. If X is an SL-process, then, for any
+q > 0, equation q + ψ(ξ) = 0 has no solution on C \ iR. We proved that all popular classes
+of L´ evy processes bar the Merton model and Meixner processes are regular SL-processes, with
+γ± = ±π/2; the Merton model and Meixner processes are regular signed SL-processes, and
+γ± = ±π/4. In [26], the reader can find a list of SINH-processes and SL-processes, with
+calculations of the order and type.
+3. Double barrier options: calculations in the state space
+3.1. Laplace transform and its inversion. Let r ∈ R, T > 0, h− < x < h+, and G ∈
+L∞((h−, h+)). To evaluate
+(3.1) V (G; r; h−, h+; T, x) = Ex[e−rT 1τ − h+ ∧τ + h+ >T G(XT )],
+we take r0 ∈ R and represent V (G; r; h−, h+; T, x) in the form V (G; h−, h+; T, x) = erT V (G; r+
+r0; h−, h+; T, x). First, we apply the Laplace transform w.r.t. T to V (G; r + r0; h−, h+; T, x).
+Then, assuming that r + r0 > 0 is sufficiently large so that ˜V (G; r + r0; h−, h+; q′, x) can be
+efficiently calculated for q′ in the right half-palne, we evaluate the Bromwich integral
+(3.2) V (G; r + r0; h−, h+; T, x) = 1 2πi Z Re q′=σ eq′T ˜V (G; r + r0; h−, h+; q′, x),
+where σ > 0 is arbitrary, using an appropriate numerical method. Finally, we multiply the
+result by er0T . In the case ν ∈ (0, 1) and µ ̸= 0, the most efficient method of the Laplace
+inversion of complicated functions, namely, the sinh-acceleration used in [23], is not applicable.
+Therefore, we use the GWR algorithm. Let QGS be the set of spectral parameters used in
+the GWR algorithm. We need to calculate the prices of perpetual options ˜V (G; h−, h+; q, x)
+for q ∈ r + r0 + QGS. The first advantage of using r0 is that we can ensure that q + ψ(ξ) ̸∈
+(−∞, 0] for all q, ξof interest, which simplifies the verification of several important technical
+conditions in the paper, starting with conditions for an efficient evaluation of the Wiener-
+Hopf factors. The second advantage is that the condition q + ψ(ξ) ̸∈ (−∞, 0] allows for
+deformations of the contours of integration in the formulas for the Wiener-Hopf factors and
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 7
+˜V (G; h−, h+; q′ + r + r0, x) that make it possible to evaluate the prices of the perpetual options
+with the precision E-10 and better. The third advantage stemming from the second one is
+that if the differences between prices of the option with the finite time horizon calculated for
+different r0’s are of the order of E-05, then E-05 is the order of the error of the GWR method
+itself. The disadvantage is that if T is large, and the calculations are with double precision,
+then the factors e−r0T and er0T may introduce large errors. This difficulty can be resolved
+using an additional trick in [50]. However, in the case of double barrier options with small
+distances between barriers, the price of options of long maturity is negligible, hence, we may
+assume that T is not large.
+3.2. Evaluation of the perpetual double barrier options. The notation and scheme in
+this Section are borrowed from [8, 23]; we need the scheme as the starting point for the scheme
+where the calculations are in the dual space. Let q ∈ r + r0 + QGS and x ∈ (h−, h+). We have
+(3.3) ˜V (G; h−, h+; q, x) = q−1Ex[1τ − h+ ∧τ + h+ >Tq G(XTq )].
+Let lG be a bounded measurable extension of G to R. Set ˜V 0(lG; q, ·) = q−1EqlG, and calculate
+˜V 1(lG; h−, h+; q, x) := ˜V (G; h−, h+; q, x) − ˜V 0(lG; q, x) as the sum of a series exponentially
+converging in L∞-norm. The terms of the series depend on the choice of the extension but
+˜V (G; h−, h+; q, x) is independent of the choice. Define
+˜V + 1 (lG; h−, h+; q, x) = Ex[e −qτ + h+ ˜V 0(lG; q, Xτ + h+ )],(3.4)
+˜V − 1 (lG; h−, h+; q, x) = Ex[e −qτ − h− ˜V 0(lG; q, Xτ − h− )],(3.5)
+and note that ˜V + 1 (resp., ˜V − 1 ) is the EPV of the stream G(Xt) which starts to accrue the first
+time Xt crosses h+ from below (resp., h− from above). Inductively, for j = 2, 3, . . . ,define
+˜V + j (lG; h−, h+; q, x) = Ex[e −qτ + h+ ˜V − j−1(lG; h−, h+; q, Xτ + h+ )],(3.6)
+˜V − j (lG; h−, h+; q; x) = Ex[e −qτ − h− ˜V + j−1(lG; h−, h+; q, Xτ − h− )].(3.7)
+In [8], the following key theorem is derived from the stochastic continuity of X.
+Theorem 3.1. For any σ > 0 and h− < h+, there exist δ± = δ±(σ, h+ − h−) ∈ (0, 1) such
+that for all q ≥ σ, lG ∈ L∞(R) and j = 2, 3, . . .,
+sup
+x≥h+
+| ˜V + j (lG; h−, h+; q; x)| ≤ δ+ sup x≤h− | ˜V − j−1(lG; h−, h+; q, x)|,(3.8)
+sup
+x≤h−
+| ˜V − j (lG; h−, h+; q; x)| ≤ δ− sup x≥h+ | ˜V + j−1(lG; h−, h+; q, x)|,(3.9)
+and
+˜V 1(lG; h−, h+; q, x) =
++∞X
+j=1
+(−1)j( ˜V + j (lG; h−, h+; q, x) + ˜V − j (lG; h−, h+; q, x)).(3.10)
+The series on the RHS of (3.10) exponentially converges in L∞-norm.
+8 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+Under additional weak conditions on X, Theorems 11.4.4 and 11.4.5 in [15] state that
+˜V − 1 (lG; h−, h+; q, x) = q−1(E − q 1(−∞,h−]E + q )lG)(x),(3.11)
+˜V + 1 (lG; h−, h+; q, x) = q−1(E + q 1[h+,+∞)E − q )lG)(x); (3.12)
+in [7], (3.11)-(3.12) are proved for any L´ evy process. Similar representations for ˜V ∓ j , j =
+2, 3, . . .:
+˜V + j (lG; h−, h+; q, x) = ( E + q 1[h+,+∞)(E + q )−1) ˜V − j−1(lG; h−, h+; q, x),(3.13)
+˜V − j (lG; h−, h+; q, x) = ( E − q 1(−∞,h−](E − q )−1 ˜V + j−1)(lG; h−, h+; q, x),(3.14)
+follow from Theorems 11.4.6 and 11.4.7 in [15]. See [23] for details.
+Remark 3.1. (a) For a numerical realization, the series on the RHS of (3.10) are truncated,
+and P∞ j=1 replaced with PM0 j=1; given the error tolerance, M0 can be chosen using the
+bounds in Theorem 3.1.
+(b) If G is bounded on [h−, h+] but given by an analytical expression that defines an unbounded
+function on R, we can use the scheme above replacing G with a function lG of class L∞(R),
+which coincides with G on [ h−, h+]. This simple consideration suffices for a numerical
+realization in the state space. If the numerical realization is in the dual space, complex-
+analytical properties of the Fourier transform ˆG are crucial. If ˆG has good properties as in
+the case of the call option, then a good replacement of G with a bounded function requires
+additional work. Instead, we will not replace G but assume that the strip of analyticity of
+ψ is sufficiently wide, and q >0 is sufficiently large so that the series (3.10) converges in a
+space with an appropriate exponential weight.
+(c) Alternatively, in the case of a call option, one can make an appropriate Esscher transform
+and reduce to the case of a bounded G.
+(d) The inverse Laplace transform of ˜V 0(q, x) = q−1EqG(x) is the price Veuro(G; T, x) of the
+European option with the payoff G(x + XT ) at maturity date T . An explicit procedure for
+an efficient numerical evaluation of Veuro(G; T, x) can be found in [21]. In the paper,
+we design an efficient numerical procedure for the evaluation of V 1(G; h−, h+; T, x) =
+V (G; h−, h+; T, x) − Veuro(G; T, x). Note that V 1(G; h−, h+; T, x) is the inverse Laplace
+transform of the series on the RHS of (3.10).
+(e) To shorten the notation, we suppress the dependence of ˜V 0, ˜V 1 and ˜V ± j on lG.
+4. GWR-SINH method
+4.1. Calculation of the Wiener-Hopf factors for q >0. The case µ >0 and ν ∈ (0, 1).
+Set q0 = min QGW R. First, we construct the curves L+ ω1,+,b+,ω+ and L− ω1,−,b−,ω− in the upper
+and lower half-planes, respectively, such that
+(1) the curve L+ ω1,+,b+,ω+ intersects the imaginary axis at a point ia+, where a+ ∈ (0, λ+), and
+q0 + ψ(ia+) > 0;
+(2) the curve L− ω1,−,b−,ω− intersects the imaginary axis at a point ia−, where a− ∈ (λ−, 0), and
+q0 + ψ(ia−) > 0 and q0 + a−µ >0;
+(3) for all η ∈ L+ ω1,+,b+,ω+ ∪ L− ω1,−,b−,ω−, q0 + ψ(η) ̸∈ (−∞, 0].
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 9
+We deform the contours of integration in (2.7) and (2.9) and calculate
+ϕ+,0 q (ξ) = exp
+
+− 1 2πi Z L− ω1,−,b−,ω− ξ ln(1 + ψ0(η)/(q − iµη)) , ξ ∈ η(η − ξ)dη   , L+ ω1,+,b+,ω+,
+ϕ+ q (ξ) = (1 − iµξ/q)−1ϕ+,0 q (ξ), L+ ω1,+,b+,ω+,
+ϕ− q (ξ) = exp
+
+ 1
+2πi
+Z
+L+ ω1,+,b+,ω+
+ξ ln(1 + ψ0(η)/(q − iµη))
+η(η − ξ) dη
+
+ , ξ ∈ L− ω1,−,b−,ω−.
+To calculate ϕ+ q (ξ), ξ ∈ L− ω1,−,b−,ω−, and ϕ− q (ξ), ξ ∈ L+ ω1,+,b+,ω+, we use (2.2).
+Remark 4.1. In typical cases, µ and cΓ(−ν) are of the order of 1 or even 0.1, and λ+ and
+−λ− are greater than 3. Therefore, it is possible to satisfy (1) with a+ > 2 and (2) using
+a− < −1. Typically, the choice of large a± (in absolute value) is not optimal, and, in this
+paper, we choose a± = ±1, ω1,± = 0, ω± = ±π/4, d± = π/4, and set b± = 1/ sin(ω+ + d+) = 1
+(or smaller multiplying by, e.g. 0 .9). In the program, we first check that, with this choice, the
+conditions (1) and (2) are satisfied, and then check condition (3).
+4.2. General scheme for a fixed q >0. The numerical scheme in this section has small but
+crucial differences from the scheme in [23]. Writing the program, the reader can check that
+the scheme formulated in [23] blows up for processes of finite variation with positive drift. We
+indicate the changes when they appear. For the same of brevity, we formulate the scheme for
+the case of DNT options. (The reader can easily adjust the schemes for call and put options
+and digitals using the first step of the scheme in [23].) With the exception of the last step,
+when the inverse Fourier transform is applied, the calculations are in the dual space. The
+Fourier transforms ˆ˜V ± j (h−, h+; q, ξ) of functions ˜V ± j (h−, h+; q, x) are evaluated on the curves
+L∓ := L∓ ω∓,b∓,ω1,∓ used to evaluate the Wiener-Hopf factors; changing the curves, we can
+double-check the accuracy of calculations. In the case of DNT, ˜V 0(q, x) = 1/q, hence,
+(4.1) ˆ˜V ± 1 (h−, h+; q, ξ) = ±e−ih±ξ ϕ± q (ξ) iξq , ξ ∈ L∓.
+For j = 1, 2, . . . ,define
+(4.2) ˆW ± j (h−, h+; q, ξ) = qeih±ξϕ± q (ξ)−1 ˆ˜V ± j (h−, h+; q, ξ), ξ ∈ L∓.
+Evidently,
+(4.3) ˆ˜V ± j (h−, h+; q, ξ) = q−1e−ih±ξϕ± q (ξ) ˆW ± j (h−, h+; q, ξ), ξ ∈ L∓,
+10 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+and ˆW ± 1 (h−, h+, q, ξ) = ±1/(iξ) = ∓i/ξ, ξ ∈ L∓. For j = 2 , 3, . . . ,ˆW ± j are calculated
+inductively. We rewrite (3.13)-(3.14) in terms of ˆW ± j as follows. For ξ ∈ L−, we have
+ˆW + j (h−, h+; q, ξ) = qeih+ξFx→ξ1[h+,+∞)(E + q )−1 ˜V − j−1(h−, h+; q, x)
+= eih+ξ
+Z +∞
+h+
+dy e−iyξ 1 2π Z L+ ei(y−h−)η ϕ− q (η) ϕ+q (η) ˆW − j−1(h−, h+; q, η)dη
+= − eih+ξ
+2πi
+Z
+L+
+e−ih+(ξ−η)−ih−η
+η − ξ
+ϕ− q (η)
+ϕ+q (η) ˆW − j−1(h−, h+; q, η)dη
+(we can apply Fubini’s theorem because there exists c >0 such that Im(η −ξ) > c|η| for η ∈ L+
+and ξ ∈ L−). Simplifying,
+(4.4) ˆW + j (h−, h+; q, ξ) = − 1 2πi Z L+ ei(h+−h−)η η − ξ ϕ− q (η) ϕ+q (η) ˆW − j−1(h−, h+; q, η)dη, ξ ∈ L−.
+Similarly, for ξ ∈ L+, we calculate
+ˆW − j (h−, h+; q, ξ) = eih−ξ
+Z h−
+−∞
+dy e−iyξ 1 2π Z L− ei(y−h+)η ϕ+ q (η) ϕ−q (η) ˆW + j−1(h−, h+; q, η)dη
+= eih−ξ
+2πi
+Z
+L−
+e−ih−(ξ−η)−ih+η
+η − ξ
+ϕ+ q (η)
+ϕ−q (η) ˆW + j−1(h−, h+; q, η)dη.
+Simplifying,
+(4.5) ˆW − j (h−, h+; q, ξ) = 1 2πi Z L− e−i(h+−h−)η η − ξ ϕ+ q (η) ϕ−q (η) ˆW + j−1(h−, h+; q, η)dη, ξ ∈ L+.
+In the cycle j = 2, 3 . . . ,we calculate ˆW ± j (h−, h+; q, ξ) and partials sums of the series
+(4.6) ˆW ±(h−, h+; q, ξ) =
+∞X
+j=1
+(−1)j ˆW ± j (h−, h+; q, ξ), ξ ∈ L∓.
+Finally, for x ∈ (h−, h+), we calculate
+(4.7) ˜V 1 ±(lG; h−, h+; T, x) = 1 2π Z L∓ ei(x−h±)ξϕ± q (ξ) ˆW ±(h−, h+; q, ξ)dξ,
+then
+(4.8) V 1(lG; h−, h+; T, x) = 1 2πi Z Re q=σ dq eqT q ( ˜V 1 +(lG; h−, h+; T, x) + ˜V 1 −(lG; h−, h+; T, x)),
+and
+(4.9) V (G; h−, h+; T, x) = Veuro(lG; T, x) + V 1(lG; h−, h+; T, x).
+Remark 4.2. Theorem 3.1 implies that if the Gaver-Stehfest method or GWR algorithm is
+used to numerically evaluate the Bromwich integral, then the inverse Fourier transform of the
+series on the RHS of (4.8) converges for any h− < x < h+ and any q >0 used in the algorithm.
+It can be proved that the infinite sums of the Fourier transforms converge as well.
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 11
+4.3. Efficient numerical evaluation of the series (4.6). Define operators
+K−+(= K−+(q; L+; h−, h+)) and K+−(= K+−(q; L−; h−, h+)) by
+K−+ ˆu(ξ) = 1 2π Z L+ ei(h+−h−)η(1 − iµη/q) η − ξ ϕ− q (η) ϕ+,0 q (η) ˆu(η)dη, ξ ∈ L−,(4.10)
+K+− ˆu(ξ) = 1 2π Z L− e−i(h+−h−)η η − ξ ϕ+ q (η) ϕ−q (η) ˆu(η)dη, ξ ∈ L+.(4.11)
+Remark 4.3. In [23], the formula for K−+ is of the same form as the one for K+−: just change
+the signs. However, in the case ν <1 and µ >0, the ratio ϕ− q (η)/ϕ+ q (η) increases as η → ∞
+very fast, and the algorithm (as in [23]) which explicitly uses this ratio becomes unstable. The
+factor ei(h+−h−)η(1 − iµη/q) is uniformly bounded and decays fast at infinity, and the factor
+ϕ− q (η)/ϕ+,0 q (η) is bounded.
+We write (4.4) and (4.5) as
+(4.12) ˆW + j+1 = iK−+ ˆW − j , ˆW − j+1 = −iK+− ˆW + j , j= 1, 2, . . .
+and calculate ˆW ± j+1 and the partial sums in the cycle in j = 1 , 2, . . . , M0. For the choice of
+the truncation parameter M0 given the error tolerance, see Remark 3.1. This choice is made
+assuming that the total error of calculation of the individual terms is sufficiently small and can
+be disregarded.
+We calculate ˆW ± j+1 at points of sinh-deformed uniform grids ξ∓ k = iω1,∓ + b∓ sinh(iω∓ + y∓ k ),
+y∓ k = ζ ∓k, k ∈ Z, on L∓, truncate the grids, and approximate the operators K−+, K+−
+with the corresponding matrix operators. The parameters of the conformal deformations and
+corresponding changes of variables and steps ζ ± are chosen as in [22, 24, 23]. The truncation
+parameters N ± are chosen taking into account the exponential rate of decay of the kernels of
+the integral operators K−+ and K+− w.r.t. the second argument, and exponential decay of
+ei(x−h−)ξ as ξ → ∞along L+, and ei(x−h+)ξ as ξ → ∞along L−. In the y±-coordinates, the
+rate of decay is double-exponential, hence, the truncation parameters Λ ± = N ±ζ ± sufficient to
+satisfy a small error tolerance ϵ are moderately large. As a simple rule of thumb, we suggest
+to choose Λ ± so that exp[ b−(x − h+)κ− sin |ω−|eΛ− ] < ϵ, exp[b+(h− − x)κ+ sin(ω+)eΛ+] < ϵ,
+where κ± ∈ (0, 0.5), e.g., κ± = 0.4. Note that a choice of a smaller κ±, e.g., κ± = 0.3, does
+not increase N± significantly but makes the prescription more reliable. Keeping the notation
+K−+ and K+− for the matrices, we calculate the matrix elements as follows:
+K−+ = ζ +b+ 2π " ei(h+−h−)ξ+ k (1 − iµξ+ k /q) ξ+ k − ξ− j · ϕ− q (ξ+ k ) ϕ+,0 q (ξ+ k ) cosh(iω+ + y+ k ) # |j|≤N −,|k|≤N + ,
+K+− = ζ −b− 2π " e−i(h+−h−)ξ− k ξ− k − ξ+ j · ϕ+ q (ξ− k ) ϕ−q (ξ− k ) cosh(iω− + y− k ) # |j|≤N +,|k|≤N − .
+Remark 4.4. If the sizes of matrices K−+ and K+−, hence, the sizes of matrices K+ :=
+K−+K+−, K− := K+−K−+ are moderate so that the inverse matrices ( I − K±)−1 can be effi-
+ciently calculated, one can calculate infinite sums using standard matrix tools. See [23].
+12 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+4.4. Algorithm of GWR-SINH method for DNT options. Steps I-V are preliminary
+ones; Steps VI-IX are performed for each q ∈ r + r0 + QGW Rused in the GWR method; the
+calculations can be easily parallelized.
+Step I. Choose r0 and the order of the GWR algorithm, and calculate the set of nodesQGW R
+and weights of the GWR algorithm.
+Step II. Grids for the approximations of ˆW ± m and operators K−+, K+−, K±. Choose the sinh-
+deformations and grids for the simplified trapezoid rule on L±: ⃗y± := ζ ± ∗ (−N ± :
+1 : N ±), ⃗ξ± := i ∗ ω± 1 + b± ∗ sinh(i ∗ ω± + i ⃗y±). Calculate ψ± := ψ( ⃗ξ±) and
+⃗der± := b± ∗ cosh(i ∗ ω± + ⃗y±).
+Step III. Grids for evaluation of the Wiener-Hopf factors ϕ± q (ξ). Choose longer and finer grids
+for the simplified trapezoid rule on L± 1 : ⃗y± 1 = ζ ± 1 ∗ (−N ± 1 : 1 : N ± 1 ), ⃗ξ± 1 := i ∗ ω± 1 +
+b± 1 ∗ sinh(i ∗ ω± 1 + i ⃗y± 1 ). Calculate ψ0,± 1 := ψ0( ⃗ξ± 1 ) and ⃗der± 1 := b± 1 ∗ cosh(i ∗ ω± 1 + ⃗y± 1 ).
+Step IV. Calculate 2D arrays
+D+− 1 := 1 ./(conj( ⃗ξ− 1 )′ ∗ ones(1, 2 ∗ N + + 1) − ones(2 ∗ N − 1 + 1, 1) ∗ ⃗ξ+)),
+D−+ 1 := 1 ./(conj( ⃗ξ+ 1 )′ ∗ ones(1, 2 ∗ N − + 1) − ones(2 ∗ N + 1 + 1, 1) ∗ ⃗ξ−)),
+D+− := 1 ./(conj( ⃗ξ−)′ ∗ ones(1, 2 ∗ N + + 1) − ones(2 ∗ N − + 1, 1) ∗ ⃗ξ+)),
+D−+ := 1 ./(conj( ⃗ξ+)′ ∗ ones(1, 2 ∗ N − + 1) − ones(2 ∗ N + + 1, 1) ∗ ⃗ξ−)).
+Step V. Calculate ˆW + 1 = −i./ ⃗ξ−, ˆW − 1 = i./ ⃗ξ+.
+Step VI. Calculate ⃗ϕ+,0 q = ϕ0,+ q ( ⃗ξ+) and ⃗ϕ−q = ϕ− q ( ⃗ξ−):
+Φ± = 1 + ψ0,± 1 ./(q − i ∗ µ ∗ ⃗ξ± 1 ),
+⃗ϕ0,+ q := exp(( ζ − 1 ∗ i/(2 ∗ π)) ∗ ⃗ξ+ 1 ./. ∗ ((log(Φ−). ∗ ⃗ξ− 1 . ∗ ⃗der− 1 ) ∗ D−+ 1 )),
+⃗ϕ−q := exp( −(ζ + 1 ∗ i/(2 ∗ π)) ∗ ⃗ξ− 1 . ∗ ((log(Φ+) ∗ ⃗ξ− 1 . ∗ ⃗der+ 1 . ∗ D+− 1 )),
+and then ϕ− q ( ⃗ξ+) := 1./Φ+./ ⃗ϕ+q , ϕ+,0 q ( ⃗ξ−) := 1./Φ−./ ⃗ϕ−q ,
+ϕ+ q ( ⃗ξ−) = ϕ+,0 q ( ⃗ξ−)./(1 + ψ0,−./(1 − i ∗ (µ/q) ∗ ⃗ξ−)).
+Step VII. Calculate matrices K+−, K+−:
+K−+ := ( ζ +/(2 ∗ π)) ∗ diag( ⃗der+. ∗ (ϕ− q ( ⃗ξ+)./ϕ+,0 q ( ⃗ξ+))...
+. ∗ (exp(i ∗ (h+ − h−) ∗ ⃗ξ+). ∗ (1 − i ∗ (µ/q) ∗ ⃗ξ+)) ∗ D−+;
+K+− := ( ζ −/(2 ∗ π)) ∗ diag( ⃗der−. ∗ (ϕ+ q ( ⃗ξ−)./ϕ− q ( ⃗ξ−)). ∗ exp(−i ∗ (h+ − h−) ∗ ⃗ξ−)) ∗ D+−.
+Step VIII. Use one of the following three blocks. Calculations using Block (1) and either Block
+(2) or Block (3) can be used to check the accuracy of the result.
+(1) • Assign ˆU ± 1 = − ˆW ± 1 , ˆW ± := ˆU ± 1 .
+• In the cycle j = 1, 2, . . . , M0, calculate ˆU + 2 := −i ∗ ˆU − 1 ∗ K−+, ˆU − 2 := i ∗ ˆU + 1 ∗ K+−, ˆU ± := ˆW ± + ˆU ± 2 , ˆU ± 1 := ˆU ± 2 .
+• Assign ˆW ± = ˆU ±.
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 13
+(2) Calculate
+• K− := K−+ ∗ K+−, K+ := K+− ∗ K−+;
+• ˆW + 2 := i ∗ ˆW − 1 ∗ K−+, ˆW − 2 := −i ∗ ˆW + 1 ∗ K+−;
+• ˆW ±,0 := ˆW ± 2 − ˆW ± 1 ;
+• inverse matrices (I − K±)−1;
+• ˆW ± = ˆW ±,0 ∗ (I − K∓)−1.
+(3) Replace the last two steps of Block (2) with
+ˆW ± = conj(linsolv(diag(ones(2 ∗ N ∓ + 1)) − conj(K∓)′, conj( ˆW ±,0)′))′.
+Typically, the program with Block (1) achieves precision of the order of E-15
+with M0 = 9 or even M0 = 8. The CPU time is several times smaller than with
+Block (2). Program with Block (2) is faster if the digitals or vanillas for many
+strikes need to be calculated. Block (3) is twice faster than Block (2) if applied
+only once.
+Step IX. For x ∈ (h−, h+), calculate
+V + = ( ζ −/(2 ∗ π)) ∗ X ( ˆW +. ∗ exp(i ∗ (x − h+) ∗ ⃗ξ−). ∗ ϕ+ q ( ⃗ξ−). ∗ ⃗der−),
+V − = ( ζ +/(2 ∗ π)) ∗ X ( ˆW −. ∗ exp(i ∗ (x − h−) ∗ ⃗ξ+). ∗ ϕ− q ( ⃗ξ+). ∗ ⃗der+);
+this step can be easily parallelized for a given array {xj}.
+Step X. Use the GWR algorithm to evaluate V 1.
+Step XI. Final step. Set V = er0T (1 + V 1).
+4.5. A numerical example: T able 1. The calculations were performed in MATLAB 2017b-
+academic use, on a MacPro Chip Apple M1 Max Pro chip with 10-core CPU, 24-core GPU,
+16-core Neural Engine 32GB unified memory, 1TB SSD storage. The CPU times shown can be
+significantly improved using parallelized calculations of the Wiener-Hopf factors and the main
+block, for each q used in the Laplace inversion procedure. The parallelization w.r.t. H±, Sis
+also possible.
+5. Pricing barrier options in L ´evy models: general discussion and examples
+5.1. A short review of the literature. The general formulas for single barrier options with
+continuous monitoring were derived in [10, 11, 12] using the operator form of the Wiener-Hopf
+factorziation [35], under certain regularity conditions on the characteristic exponent. In [7], the
+same formulas were proved for any L´ evy process. The pricing formulas are in terms of Laplace-
+Fourier inversion in dimensions 2 (first touch digitals and no-touch options), 3 (barrier puts
+and calls, and joint probability distributions of a L´ evy process and its extremum), and 4 (more
+general options with lookback and barrier features). Even marginally accurate realizations
+of these formulas are far from trivial unless the characteristic exponent ψ of the process is a
+rational function, hence, the Wiener-Hopf factors are rational functions as well. The factors
+are especially simple in the Double exponential jump-diffusion model (DEJD model) used
+in [42, 43] and its generalization: Hyper-exponential jump-diffusion model (HEJD model)
+constructed independently in [59, 58] (see also [60]) and [47, 48]. In [59, 58], an explicit pricing
+formula for the joint distribution of the L´ evy process and its extremum was derived using
+the Gaver-Stehfest algorithm (GS algorithm); the formula can be used to price options with
+14 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+Table 1. Prices of the double no-touch options, and errors (rounded) of Carr’s ran-
+domization algorithm [8] and GWR-SINH method. Dependence on the spot. Barriers:
+H− = 0.95, H+ = 1.95, time to maturity T = 0.25. KoBoL model with the parameters
+in Table 3, MB: ν = 0.445, c= 1.125, λ+ = 27.93, λ− = −51.66, µ= 0.0940.
+S 0.96 0.98 1 1.02 1.04 Time
+BB 0.4325056 0.6497429 0.6801758 0.5289720 0.224546 812
+ϵ0 -1.07E-08 1.82E-10 -9.46E-09 3.68E-09 -3.10E-09 767.2
+ϵ1 4.84E-06 -7.86E-06 -5.83E-06 -4.09E-05 9.98E-05 615
+ϵ2 5.34E-06 -3.82E-06 -1.82E-05 -6.20E-06 -6.43E-05 70.1
+ϵ3 5.62E-06 -5.68E-06 -2.01E-05 -9.23E-06 -3.44E-05 69.6
+ϵ4 1.66E-04 -4.30E-06 -4.66E-05 -7.44E-05 -3.77E-05 29.5
+ϵC1 -0.0015 -0.0017 -0.0027 -0.0045 -0.0074 1,564
+ϵC2 -0.0024 -0.0029 -0.00492 -0.0084 -0.013 546.3.3
+ϵC3 -0.010 -0.0080 -0.01 -0.027 -0.0103 865.3
+ϵRich -0.00058 -0.00050 -0.00043 -0.00063 -0.0015 2,156.2
+Time: CPU time in msec, average of 100 runs
+BB: GWR-SINH(0;276,502): r0 = 0, 276 points on L± in the main cycle and 502 points to evaluate the Wiener-Hopf factors
+ϵ0: differences with GWR-SINH(0;306,557) with different omegas
+ϵ1, ϵ2, ϵ3, ϵ4: differences with GWR-SINH(5;276,502), GWR-SINH(0;108,188), GWR-SINH(0.5;88,155), GWR-SINH(-0.5;55,100)
+ϵC1, ϵC2, ϵC3: errors of Carr randomization method [8] with ( NT , ∆x) = (600, 1/8000), = (300, 1/4000), = (150, 1/2000).
+ϵRich: errors of Richardson’s extrapolation of C1 and C2 prices.
+barrier-lookback features. Later, a variation of the same technique was used in structural
+default models [61]. In [47, 48], American options with finite time horizon are priced using the
+maturity randomization technique (Carr’s randomization). The Wiener-Hopf factors in HEJD
+model are represented as weighted sums of exponential functions, therefore, the calculations
+in the state space are reducible to application of convolution operators with exponentially
+decaying kernels. A straightforward numerical realization of the convolution operators with
+exponential kernels is very fast: see [47, 48, 16, 17] for an explicit algorithm. An evident
+simplification of Carr’s randomization can be applied to barrier options (see [5], where double-
+barrier options in regime-switching models are priced): the early exercise boundary is fixed and
+it is unnecessary to fund an approximation to the boundary at each step of backward induction.
+In both cases (GS-algorithm and Carr’s randomization), the main block is the evaluation of
+the perpetual options. If the GS-algorithm is used, it may be necessary to use high precision
+arithmetic because the weights are very large (see, e.g., examples in [19]). The performance
+of the GS-algorithm can be improved using Wynn-Rho acceleration (GWR algorithm) - see
+[1] and, for examples in the context of pricing options of long maturity, [50]. If the GWR-
+algorithm can be used with double precision arithmetic, then, typically, the CPU time is smaller
+than if Carr’s randomization is applied. In the case of more general L´ evy processes, efficient
+calculations are much more difficult because the option price is very irregular at the barrier and
+maturity. See Section 5.2 for details and examples. The irregular behavior makes it difficult to
+evaluate the prices of perpetual options sufficiently accurately so that the GWR-algorithm or
+Carr’s randomization used in [19, 50, 52] can produce reasonably accurate results in regime-
+switchning models. The latter remark concerns other methods available in the literature - see,
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 15
+e.g., [38, 3, 4, 31, 46, 44, 45, 6, 39, 37, 40, 57, 36, 56] and the bibliographies therein. The
+fundamental reasons for serious difficulties are as follows.
+5.2. Analysis of errors of different methods and an example. The asymptotic analysis
+in [12, 54, 6, 49, 2] demonstrates that if the characteristic exponent ψ of a L´ evy processX of
+any popular class is not a rational function, the price of a single barrier option is irregular at
+the boundary. 1 If X is of finite variation and the drift points to (from) the boundary, then
+the option price is of class C1 up to the boundary (is discontinuous at the boundary); option’s
+gamma is unbounded in all cases. If X is of infinite variation or the drift is 0, option’s delta
+tend to infinity as the spot tends to the barrier. The representation of the Laplace transform
+of the double barrier options as a sum of the Laplace transform of an European option and
+two perpetual single barrier options derived in [5, 8] and, in the dual form, used in the present
+paper, implies that in all cases, the price of the double barrier option is irregular at one of
+the barriers, at least. See Fig. 1 for an example. In particular, in the vicinity of at least
+one barrier, the option price in a model with an irrational ψ is larger than in a model with a
+rational characteristic exponent and in any model with non-negligible diffusion component.
+If a numerical method uses the time discretization (and Carr’s randomization can be inter-
+preted as the time discretization), and the “true” process is replaced by a more convenient
+one so that the option price is of class C1 up to the boundary, then the errors in the vicinity
+of a boundary accumulate and propagate. If, at the same time, the number of time steps is
+large, then the resulting error is quite large. See examples in [7] which demonstrate sizable
+errors of the approximation of KoBoL with HEJD: certainly, such an approximation will pro-
+duces extremely large errors if applied in regime-switching models. An example in Table 1
+demonstrate, if Carr’s randomization is used, it is difficult and time consuming to satisfy the
+moderate error tolerance of the order of 1% unless the time step is very small. Fig. 1 clearly
+demonstrates that if the time step is small, then the grid in the state space must be very fine,
+and the interpolation of order greater than 2 cannot be applied. Note the following important
+fact evident from Fig. 1 (the fact can be rigorously proved using the asymptotic analysis tools):
+the linear interpolation decreases the option price at each step of backward induction, which
+explains why the Carr’s randomization prices in Table 1 are smaller than the true prices. This
+effect dominates the well-known theoretical effect of the time discretization: if, at each time
+step, the price is calculated perfectly or very accurately, the resulting price must be larger than
+the true price. Depending on the ratio of the time step and step in the state space, either
+effect can dominate, and one can choose a sequence of refinements of the grids in on the time
+line and state space which produce a sequence of results converging to any “desirable” price -
+whether the latter is correct or not.
+Errors of approximations of the continuous time model with the discrete time model are larger
+than the errors of Carr’s randomization, and accurate numerical realization of the transition
+operators for small time steps is very difficult because their kernels have a very high peak
+or even discontinuous at 0 (see [12]). Convenient approximations of the kernels using cosine
+functions (COS method) or B-spline approximations (BPROJ method) lead to serious errors.
+See [34] for examples of very large errors of COS method used to price single barrier options,
+and discussion in [27] on the range of applicability of BPROJ method: since the error of
+1The asymptotic formulas are derived using a couple of general properties of ψ; in [26] we verify these
+properties for all popular classes of processes.
+16 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+0.95 0.96 0.97 0.98 0.99 1 1.01 1.02 1.03 1.04 1.05
+S
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+V
+(a) T = 0.004
+0.95 0.96 0.97 0.98 0.99 1 1.01 1.02 1.03 1.04 1.05
+S
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+V (b) T = 0.01
+Figure 1. Prices of the double barrier option in KoBoL model. Parameters in
+Table 3 (AA). Barriers: H− = 0.95, H+ = 1.05.
+the approximation is in H 2-norm, the approximation cannot work for options of very short
+maturity, for processes close to Variance Gamma especially.
+Calculations in the dual space [21, 22, 24] allows one to control errors efficiently, and satisfy
+a small error tolerance using arrays of a moderate size. See Table 1, where
+• the number of nodes in the GWR algorithm is 16;
+• GWR-SINH(r0, a,b) means that the grids on the curves L± in the dual space are of
+length a in the main cycle, and length b for the evaluation of the Wiener-Hopf factors;
+• N is the number of time steps in Carr’s randomization algorithm, and ∆ is the step of
+the grid in the x = ln S space.
+Note that, in the presence of jumps, the lengths of the grids in the state space needed for
+accurate calculations are larger than ln( H+/H−)/∆. If the steepness parameters λ+, λ− are
+not as large as in the examples (AA), (AB), (MA), (MB) in the paper, then one has to use
+the grids several times longer and then the CPU time can be much larger than in the example
+shown in Table 1. The justification of the Richardson extrapolation for single barrier options
+in [49] admits a straightforward modification to the case of double barrier options 2 but as the
+last line in Table 1 shows, the improvement in the accuracy is not large.
+2The Richardson extrapolation is not applicable to American options although widely used.
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 17
+6. Conclusion
+In the paper, we constructed a new efficient method to price double barrier options in L´ evy
+models of finite variation and non-zero drift. The method is a variation of the method in [23]
+for L´ evy processes of either infinite variation or finite variation and zero drift. We explained
+why the method in [23] required a modification. In the operator language, the infinitesimal
+generator L of a process in [23] is a sectorial operator, and in the setting of the present paper L
+is not sectorial, which makes it impossible to use efficient conformal deformations of all contours
+of integration in the pricing formula. We use the Gaver-Wynn-Rho algorithm to evaluate the
+Bromwich integral, and, for each value of the spectral parameter, calculate the price of the
+corresponding perpetual double barrier options making the calculations in the dual space.
+We calculate the resulting integrals using the sinh-acceleration technique [21, 22, 24, 23]. The
+resulting GWR-SINH method is fast but less accurate than the method in [23] because the errors
+of the GWR algorithm for non-sectorial operators are larger. We discuss the sources of errors
+of popular groups of methods, which make it very difficult to price barrier options sufficiently
+accurately and fast so that arbitrage opportunity can be exploited, and present empirical
+examples, where arbitrage opportunities may present themselves and efficient methods for
+pricing double barrier options are necessary. A modification of the algorithm formulated in
+the paper can be used instead of the corresponding block in [5] to price double barrier options
+in the regime-switching models and approximations of stochastic volatility models and models
+with stochastic interest rates by regime-switching models that we developed earlier [16, 17, 18,
+14, 28, 20].
+References
+[1] J. Abate and P.P. Valko. Multi-precision Laplace inversion. International Journal of Numerical Methods in
+Engineering, 60:979–993, 2004.
+[2] L.B. Andersen and A. Lipton. Asymptotics for exponential L´ evy processes and their volatility smile: Survey
+and new results. International Journal of Theoretical and Applied Finance , 16, February 2013. Available at
+SSRN: http://ssrn.com/abstract=2095654.
+[3] S. Asmussen, F. Avram, and M.R. Pistorius. Russian and American put options under exponential phase-
+type L´ evy models.Stochastic Processes and their Applications , 109(1):79–111, 2004.
+[4] F. Avram, A. Kyprianou, and M.R. Pistorius. Exit problems for spectrally negative L´ evy processes and
+applications to (Canadized) Russian options. Annals of Applied Probability , 14(2):215–238, 2004.
+[5] M. Boyarchenko and S. Boyarchenko. Double barrier options in regime-switching hyper-exponential jump-
+diffusion models. International Journal of Theoretical and Applied Finance , 14(7):1005–1044, 2011.
+[6] M. Boyarchenko, M. de Innocentis, and S. Levendorski ˘i. Prices of barrier and first-touch digital options in
+L´ evy-driven models, near barrier.International Journal of Theoretical and Applied Finance , 14(7):1045–
+1090, 2011. Available at SSRN: http://papers.ssrn.com/abstract=1514025.
+[7] M. Boyarchenko and S. Levendorski ˘i. Prices and sensitivities of barrier and first-touch digital options in
+L´ evy-driven models.International Journal of Theoretical and Applied Finance , 12(8):1125–1170, December
+2009.
+[8] M. Boyarchenko and S. Levendorski˘i. Valuation of continuously monitored double barrier options and related
+securities. Mathematical Finance, 22(3):419–444, July 2012.
+[9] S. Boyarchenko and S. Levendorski ˘i. Generalizations of the Black-Scholes equation for truncated L´ evy
+processes. Working Paper, University of Pennsylvania, April 1999.
+[10] S. Boyarchenko and S. Levendorski ˘i. Option pricing for truncated L´ evy processes.International Journal of
+Theoretical and Applied Finance, 3(3):549–552, July 2000.
+[11] S. Boyarchenko and S. Levendorski˘i. Barrier options and touch-and-out options under regular L´ evy processes
+of exponential type. Annals of Applied Probability , 12(4):1261–1298, 2002.
+18 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+[12] S. Boyarchenko and S. Levendorski ˘i. Non-Gaussian Merton-Black-Scholes Theory , volume 9 of Adv. Ser.
+Stat. Sci. Appl. Probab. World Scientific Publishing Co., River Edge, NJ, 2002.
+[13] S. Boyarchenko and S. Levendorski ˘i. Perpetual American options under L´ evy processes.SIAM Journal on
+Control and Optimization , 40(6):1663–1696, 2002.
+[14] S. Boyarchenko and S. Levendorski ˘i. American options in L´ evy models with stochastic volatility, 2007.
+Available at SSRN: http://ssrn.com/abstract=1031280.
+[15] S. Boyarchenko and S. Levendorski ˘i. Irreversible Decisions Under Uncertainty (Optimal Stopping Made
+Easy). Springer, Berlin, 2007.
+[16] S. Boyarchenko and S. Levendorski ˘i. Exit problems in regime-switching models. Journ. of Mathematical
+Economics, 44(2):180–206, 2008.
+[17] S. Boyarchenko and S. Levendorski˘i. American options in L´ evy models with stochastic interest rates.Journal
+of Computational Finance , 12(4):1–30, Summer 2009.
+[18] S. Boyarchenko and S. Levendorski˘i. American options in regime-switching models. SIAM Journal on Con-
+trol and Optimization , 48(3):1353–1376, 2009.
+[19] S. Boyarchenko and S. Levendorski˘i. Efficient Laplace inversion, Wiener-Hopf factorization and pricing look-
+backs. International Journal of Theoretical and Applied Finance , 16(3):1350011 (40 pages), 2013. Available
+at SSRN: http://ssrn.com/abstract=1979227.
+[20] S. Boyarchenko and S. Levendorski˘i. Efficient pricing barrier options and CDS in L´ evy models with stochastic
+interest rate. Mathematical Finance, 27(4):1089–1123, 2017. DOI: 10.1111/mafi.12121.
+[21] S. Boyarchenko and S. Levendorski ˘i. Sinh-acceleration: Efficient evaluation of probability distri-
+butions, option pricing, and Monte-Carlo simulations. International Journal of Theoretical and
+Applied Finance , 22(3):1950–011, 2019. DOI: 10.1142/S0219024919500110. Available at SSRN:
+https://ssrn.com/abstract=3129881 or http://dx.doi.org/10.2139/ssrn.3129881.
+[22] S. Boyarchenko and S. Levendorski ˘i. Static and semi-static hedging as contrarian or conformist bets.
+Mathematical Finance , 3(30):921–960, 2020. Available at SSRN: https://ssrn.com/abstract=3329694 or
+http://arxiv.org/abs/1902.02854.
+[23] S. Boyarchenko and S. Levendorski ˘i. Efficient evaluation of double barrier options and joint cpdf
+of a L´ evy process and its two extrema. Working paper, October 2022. Available at SSRN:
+http://ssrn.com/abstract=4262396 or http://arxiv.org/abs/2211.07765.
+[24] S. Boyarchenko and S. Levendorski ˘i. Efficient evaluation of expectations of functions of a L´ evy process
+and its extremum. Working paper, June 2022. Available at SSRN: https://ssrn.com/abstract=4140462 or
+http://arXiv.org/abs/4362928.
+[25] S. Boyarchenko and S. Levendorski ˘i. Efficient inverse z-transform and pricing barrier and
+lookback options with discrete monitoring. Working paper, July 2022. Available at SSRN:
+https://ssrn.com/abstract=4155587 or https://doi.org/10.48550/arXiv.2207.02858.
+[26] S. Boyarchenko and S. Levendorski ˘i. L´ evy models amenable to efficient calculations. Working paper, June
+2022. Available at SSRN: https://ssrn.com/abstract=4116959 or http://arXiv.org/abs/4339862.
+[27] S. Boyarchenko, S. Levendorski ˘i, J.L. Kirkby, and Z. Cui. SINH-acceleration for B-spline projection with
+option pricing applications. International Journal of Theoretical and Applied Finance, 08(24):2150042, 2021.
+Available at SSRN: https://ssrn.com/abstract=3921840 or arXiv:2109.08738.
+[28] S. Boyarchenko and S.Levendorski˘i. American options in the Heston model with stochastic interest rate and
+its generalizations. Appl. Mathem. Finance , 20(1):26–49, 2013.
+[29] P. Carr, H. Geman, D.B. Madan, and M. Yor. The fine structure of asset returns: an empirical investigation.
+Journal of Business , 75:305–332, 2002.
+[30] Z. Chen, L. Feng, and X. Lin. Simulation of L´ evy processes from their characteristic functions and fi-
+nancial applications. ACM Transactions on Modeling and Computer Simulation , 22(3), 2011. Available at:
+http://ssrn.com/abstract=1983134.
+[31] R. Cont and E. Voltchkova. A finite difference scheme for option pricing in jump diffusion and exponential
+L´ evy models.SIAM Journal on Numerical Analysis , 43(4):1596–1626, October 2005.
+[32] A. Dahlbokum. Empirischer Vergleich von Optionspreismodellen auf Basis zeitdeformierter L´ evy-prozesse:
+Kalibrierung, Hedging, Modellrisiko., 2007.
+ALTERNATIVE MODELS FOR FX AND DOUBLE BARRIER OPTIONS IN L ´EVY MODELS 19
+[33] M. de Innocentis and S. Levendorski ˘i. A novel modelling of stochastic skewness with applications to fitting
+and hedging. SIAM Conference on Financial Mathematics and Engineering, November 2010.
+[34] M. de Innocentis and S. Levendorski ˘i. Pricing discrete barrier options and credit default swaps under L´ evy
+processes. Quantitative Finance, 14(8):1337–1365, 2014. Available at: DOI:10.1080/14697688.2013.826814.
+[35] G.I. Eskin. Boundary Value Problems for Elliptic Pseudodifferential Equations , volume 9 of Transl. Math.
+Monogr. American Mathematical Society, Providence, RI, 1981.
+[36] L. Feng and V. Linetsky. Computing exponential moments of the discrete maximum of a L´ evy process and
+lookback options. Finance and Stochastics , 13(4):501–529, 2009.
+[37] G. Fusai, G. Germano, and D. Marazzina. Spitzer identity, Wiener-Hopf factorization and pricing of
+discretely monitored exotic options. European Journal of Operational Research , 251(1):124–134, 2016.
+DOI:10.1016/j.ejor.2015.11.027.
+[38] X. Guo and L.A. Shepp. Some optimal stopping problems with nontrivial boundaries for pricing exotic
+options. J.Appl. Probability, 38(3):647–658, 2001.
+[39] G.G. Haislip and V.K. Kaishev. Lookback option pricing using the Fourier transform B-spline method.
+Quantitative Finance, 14(5):789–803, 2014.
+[40] J.L. Kirkby. American and Exotic Option Pricing with Jump Diffusions and other L´ evy processes. Journ.
+Comp. Fin. , 22(3):13–47, 2018.
+[41] I. Koponen. Analytic approach to the problem of convergence of truncated L´ evy flights towards the Gaussian
+stochastic process. Physics Review E , 52:1197–1199, 1995.
+[42] S.G. Kou. A jump-diffusion model for option pricing. Management Science, 48(8):1086–1101, August 2002.
+[43] S.G. Kou and H. Wang. First passage times of a jump diffusion process. Adv. Appl. Prob. , 35(2):504–531,
+2003.
+[44] O. Kudryavtsev and S.Z. Levendorski ˘i. Fast and accurate pricing of barrier options under L´ evy processes.
+Finance and Stochastics , 13(4):531–562, 2009.
+[45] O. Kudryavtsev and S.Z. Levendorski ˘i. Efficient pricing options with barrier and lookback features under
+L´ evy processes. Working paper, June 2011. Available at SSRN: http://ssrn.com/abstract=1857943.
+[46] A. Kuznetsov. Wiener-Hopf factorization and distribution of extrema for a family of L´ evy processes.
+Ann.Appl.Prob., 20(5):1801–1830, 2010.
+[47] S. Levendorski ˘i. Pricing of the American put under L´ evy processes. Research Report Ma-
+PhySto, Aarhus, 2002. Available at http://www.maphysto.dk/publications/MPS-RR/2002/44.pdf,
+http://www.maphysto.dk/cgi-bin/gp.cgi?publ=441.
+[48] S. Levendorski ˘i. Pricing of the American put under L´ evy processes. International Journal of Theoretical
+and Applied Finance , 7(3):303–335, May 2004.
+[49] S. Levendorski ˘i. Convergence of Carr’s Randomization Approximation Near Barrier. SIAM FM , 2(1):79–
+111, 2011.
+[50] S. Levendorski ˘i. Method of paired contours and pricing barrier options and CDS of long maturities. Inter-
+national Journal of Theoretical and Applied Finance , 17(5):1–58, 2014. 1450033 (58 pages).
+[51] S. Levendorski ˘i. Double Spiral method, Gamma Transform and pricing Arithmetic Asian options. Working
+paper, August 2016. Available at SSRN: http://ssrn.com/abstract=2827138.
+[52] S. Levendorski ˘i. Ultra-Fast Pricing Barrier Options and CDSs. International Journal of Theoretical and
+Applied Finance, 20(5), 2017. 1750033 (27 pages).
+[53] S. Levendorski ˘i. Pricing arithmetic Asian options under L´ evy models by backward induc-
+tion in the dual space. SIAM FM , 9(1):1–27, 2018. Preliminary version available at SSRN:
+http://papers.ssrn.com/abstract=2827138.
+[54] S.Z. Levendorski˘i. Early exercise boundary and option pricing in L´ evy driven models.Quantitative Finance,
+4(5):525–547, October 2004.
+[55] S.Z. Levendorski ˘i and J. Xie. Pricing of Discretely Sampled Asian Options Under L´ evy Processes. Working
+paper, June 2012. Available at SSRN: http://papers.ssrn.com/abstract=2088214.
+[56] L. Li and V. Linetsky. Discretely monitored first passage problems and barrier options: an eigenfunction
+expansion approach. Finance and Stochastics , 19(3):941–977, 2015.
+[57] V. Linetsky. Spectral methods in derivatives pricing. In J.R. Birge and V. Linetsky, editors, Handbooks in
+OR & MS, Vol. 15 , pages 223–300. Elsevier, New York, 2008.
+20 SVETLANA BOYARCHENKO AND SERGEI LEVENDORSKI ˘I
+[58] A. Lipton. Assets with jumps. Risk, pages 149–153, September 2002.
+[59] A. Lipton. Path-dependent options on assets with jumps. 5 th Columbia-Jaffe Conference, April 2002. Avail-
+able at http://www.math.columbia.edu/∼lrb/columbia2002.pdf.
+[60] A. Lipton. Financial Engineering. Selected Works of Alexander Lipton . World Scientific, Singapore, 2018.
+[61] A. Lipton and A. Sepp. Credit value adjustment for credit default swaps via the structural default model.
+Journal of Credit Risk , 5(2):123–146, Summer 2009.
+[62] K. Sato. L´ evy processes and infinitely divisible distributions , volume 68 of Cambridge Stud. Adv. Math.
+Cambridge University Press, Cambridge, 1999.
+[63] P.P. Valko and J. Abate. Comparison of sequence accelerators for the Gaver Method of Numerical Laplace
+Transform inversion. Computers and Mathematics with Applications , 48:629–636, 2004.
+[64] Uwe Wystup. FX Options and Structured Products (The Wiley Finance Series) . John Wiley & Sons, Chich-
+ester, West Sussex, UK, 2017. 2d edition.
+Appendix A. Calibration results and prices of DNT options in the Heston and
+KoBoL models
+The empirical part of the present paper is the starting point of a project that we did several
+years ago. In [33], a regime switching pure jump L´ evy model (KoBoL model modulated by
+a 2-3 state Markov chain) was suggested to account for jumps and stochastic volatility and
+skewness. Several years ago, we applied the model to FX and studied the di

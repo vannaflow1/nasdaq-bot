@@ -1,0 +1,1168 @@
+CALL OPTION PRICE USING PEARSON DIFFUSION
+PROCESSES
+TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+Abstract. Following the foundational work of the Black–Scholes model,
+extensive research has been developed to price the option by addressing
+its underlying assumptions and associated pricing biases. This study
+introduces a novel framework for pricing European call options by mod-
+eling the underlying asset’s return dynamics using Pearson diffusion pro-
+cesses, characterized by a linear drift and a quadratic squared diffusion
+coefficient. This class of diffusion processes offers a key advantage in
+its ability to capture the skewness and excess kurtosis of the return dis-
+tribution, well-documented empirical features of financial returns. We
+also establish the validity of the risk-neutral measure by verifying the
+Novikov condition, thereby ensuring that the model does not admit arbi-
+trage opportunities. Further, we study the existence of a unique strong
+solution of stock prices under the risk-neutral measure. We apply the
+proposed method to Nifty 50 index option data and conduct a compar-
+ative analysis against the classical Black–Scholes and Heston stochastic
+volatility models. Results indicate that our method shows superior per-
+formance compared to the other two benchmark models. These results
+carry practical implications for market participants, including market
+makers, hedge funds, and derivative traders.
+1. Introduction
+Black and Scholes [6] and Merton [23] developed option pricing models
+based on the assumption that the underlying asset price follows a geometric
+Brownian motion, implying that its log returns are normally distributed.
+2020 Mathematics Subject Classification. 91B25, 91G20, 60H10, 60H30.
+Key words and phrases. Call option, Pearson diffusion, Pearson type IV distribution,
+Novikov condition.
+1
+arXiv:2508.14577v1 [q-fin.MF] 20 Aug 2025
+2 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+However, empirical evidence shows that log returns deviate from normality,
+displaying skewness and excess kurtosis. Consequently, the option prices
+estimated by these models often deviate from observed market prices.
+Researchers have proposed various alternative option pricing models to
+address the limitations of the Black-Scholes framework. An alternative to
+the Black-Scholes model is the constant elasticity of variance (CEV) ap-
+proach, which generalizes geometric Brownian motion by allowing the diffu-
+sion coefficient to follow a power-law relationship with the stock price. This
+approach has been adopted by several researchers, including Cox [11, 12],
+Cox and Ross [13], and Beckers [4], among others. Merton [24] extended the
+Black-Scholes model by introducing a jump-diffusion framework incorporat-
+ing a jump component into the asset price dynamics. Heston [17] introduced
+the stochastic volatility model in which volatility itself is governed by a sep-
+arate stochastic process. Madan et al. [22] proposed the Variance Gamma
+option pricing model, driven by a stochastic process known as the Variance
+Gamma process, which is constructed by evaluating Brownian motion with
+drift at a random time given by a Gamma process. Cervellera and Tucci [8]
+discussed challenges associated with parameter estimation for the Variance
+Gamma process. Borland [7] proposed an option pricing model based on a
+diffusion process described by a stochastic differential equation whose noise
+was driven by a non-Gaussian distribution, and the resulting distribution
+of log return process over time can be explicitly characterized by the Tsal-
+lis distribution [28]. However, Vellekoop and Nieuwenhuis [29] later argued
+that Borland’s model does not satisfy the Novikov condition, a key require-
+ment for risk-neutral pricing, thereby allowing the possibility of arbitrage.
+Additionally, Karagozoglu [20] provided a good literature review on option
+pricing models.
+In option pricing, researchers aim to model log returns using distributions
+that can capture the excess kurtosis and skewness of the return process. The
+Pearson Type IV distribution is well-suited for this task, as it accommodates
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 3
+a broad range of kurtosis and skewness depending on its shape parameter
+values. Nagahara [25] provided a comprehensive analysis of this distribution,
+deriving its normalizing constant, the first four moments, and illustrating
+its applicability to modeling stock return distributions. Bhattacharyya et
+al. [5] employed the Pearson Type IV distribution to forecast Value at Risk
+for leptokurtic equity index returns. Further, Forman and Sørensen [16]
+investigated the statistical properties of Pearson diffusion processes, a class
+of diffusion characterized by linear drift and a quadratic squared diffusion
+coefficient and showed that under specific conditions on the diffusion co-
+efficient, the process follows Pearson Type IV distribution as its invariant
+distribution.
+The main contribution of this paper is introducing a novel method for es-
+timating call option prices by modeling log returns using Pearson diffusion
+processes, henceforth we refer to this method as the PIV model. In addition,
+we establish the validity of the Novikov condition within this framework,
+crucial for risk-neutral pricing, and study the existence of a unique strong
+solution for the stock price process under the risk-neutral measure. We ap-
+ply the proposed method to Nifty 50 index option data and perform a com-
+parative analysis against the classical Black–Scholes and Heston stochastic
+volatility models. The results demonstrate that our approach outperforms
+both benchmark models.
+The rest of the paper is organized in the following way. Section 2 describes
+the Pearson Type IV distribution. Section 3 presents the Pearson diffusion
+processes. Section 4 outlines the modeling of log return processes. In Section
+5, we derive the risk-neutral measure and present the proposed option pricing
+model. Section 6 provides empirical evidence, and Section 7 concludes the
+paper.
+4 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+2. Pearson Type IV distribution
+Karl Pearson [27] was the first to develop a generalized family of frequency
+curves designed to accommodate a wide range of empirical distributions
+encountered in practice. This comprehensive framework is now recognized
+as the Pearson system of curves. The Pearson system of curves satisfy the
+differential equation defined as:
+(1) 1 f (x) d f(x) dx = x − α c0 + c1x + c2x2
+A general solution of the above differential equation is given by
+(2) f (x) = k exp
+Z x − α
+c0 + c1x + c2x2 dx
+
+,
+where k is a constant.
+The explicit form of the function f (x) is governed by the integral in the
+exponent of (2). The evaluation of this integral, in turn, depends on the
+nature of the roots of the equation c0 + c1x + c2x2 = 0. The Pearson Type
+IV curve is obtained when the roots are imaginary, or when c2 1 < 4c0c2.
+The probability density function (PDF) of Pearson’s Type IV distribution
+is given by
+(3) f (x) = k
+"
+1 +
+ x − λ
+a
+2#−m
+exp
+
+ν tan−1
+ x − λ
+a
+
+− ∞< x <∞,
+where m >1 2 , a >0, and m, a, ν and λ are real-valued parameters (functions
+of α, c0, c1, and c2) and k is a normalization constant that depends on m, a,
+and ν. Nagahara [25] derived a closed-form expression of the normalization
+constant k.
+The parameters ν and m control skewness and kurtosis, respectively. Ac-
+cordingly, the distribution is positively (negatively) skewed as ν is negative
+(positive). Increasing m reduces the kurtosis. The scale parameter is a, and
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 5
+the location parameter is λ. The Pearson Type IV distribution can capture
+a wide range of shapes depending on its parameter values.
+3. Pearson Diffusion Processes
+Forman and Sørensen [16] studied the statistical properties of the Pearson
+diffusion processes, which are defined by having a linear drift and a quadratic
+squared diffusion coefficient.
+Let P be a probability measure on a sample space Ω. Pearson diffusion is
+a stationary solution to the following stochastic differential equation (SDE):
+(4) dRt = −θ(Rt − µ) dt +
+q
+2θ(aR2 t + bRt + c) dBt
+where θ > 0 and a, b, and c are such that the square root term is well
+defined. Here Bt, t≥ 0 is a Brownian motion and µ denotes the mean of the
+invariant distribution.
+As a particular case, when a >0, b = 0, and a = c, the SDE (4) simplifies
+to the form:
+(5) dRt = −θ(Rt − µ) dt +
+q
+2θa(1 + R2 t ) dBt
+Forman and Sørensen [16] stated that when µ = 0, the invariant distribu-
+tion of the SDE (5) is a scaled t-distribution with m1 = 1 + a−1 degrees of
+freedom and a scale parameter m−1/2 1 . In the case where µ ̸= 0, the invari-
+ant distribution corresponds to the Pearson Type IV distribution, with µ
+controlling the skewness and the tails decaying at the same rate as those of
+a t-distribution with 1 +a−1 degrees of freedom. In both cases, the invariant
+distribution has moments of order k1 for k1 < 1 + a−1.
+4. Model of returns: Existence and uniqueness of solution for
+the log return process
+Let the stock price dynamics be given by,
+St := S0eRt, ∀t ≥ 0,
+6 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+with S0 being the initial stock price and Rt, t≥ 0 be the log return process.
+Note that Rt = ln St S0 and R0 = 0.
+Let Rt, t≥ 0 follow Pearson diffusion process:
+(6) dRt = −θ(Rt − µ) dt + σ
+q
+2θa(1 + R2 t ) dBt, t≥ 0
+where σ denotes the volatility of log returns. We use the parameter σ for
+scaling the invariant distribution.
+Next, we study the existence of strong global solution of (6). For that we
+have to show the drift and diffusion coefficients are globally Lipschitz [26,
+Theorem 5.2.1]. The drift and diffusion coefficients are given by
+u(x) := −θ(x − µ), v (x) := σ
+p
+2θa(1 + x2), ∀x ∈ R,
+respectively. Note that,
+|u(x) − u(y)| = θ|x − y|, ∀x, y∈ R.
+Again,
+|v(x) − v(y)| = σ
+√
+2θa
+ p 1 + x2 − p 1 + y2 
+= σ
+√
+2θa |x2 − y2| √ 1 + x2 + p 1 + y2 
+≤ σ
+√
+2θa |x + y|√
+1 + x2 + p 1 + y2 |x − y|
+≤ σ
+√
+2θa |x − y|, ∀x, y∈ R.
+The last inequality follows from the estimate
+|x + y| ≤ |x| + |y| ≤
+p
+1 + x2 + p 1 + y2.
+Therefore there exists an unique strong solution of (6). In particular by [26,
+Theorem 5.2.1],
+(7) P
+Z T
+0
+R2 t dt <∞
+
+= 1.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 7
+We now derive the SDE governing the stock price using the Itˆ o’s formula.
+Consider the function f (x) = ex, x∈ R. Then, we have, a.s.,
+dSt = S0d
+ 
+eRt 
+= St
+
+−θ(Rt − µ) + σ2θa   1 + R2 t  dt + Stσ q 2θa(1 + R2 t ) dBt.
+5. Equivalent local martingale measure
+Consider a European-style call option with strike price K, time to ma-
+turity T , written on an underlying asset St, 0 ≤ t ≤ T . The payoff from
+the European call option at maturity is max( ST − K, 0). At a time t < T,
+using the information It available up to time t (more precisely, a filtration
+{It}t≤T ) the fair market price of the call option denoted by C(t) is equal to
+the discounted (under the risk-free interest rate r) expected payoff, and is
+given as:
+(8) C(t) = e−r(T −t)EQ[max(ST − K, 0) | It],
+where EQ denotes expectation under the risk-neutral probability measure Q.
+The market completeness ensures the uniqueness of the risk-neutral measure
+(see [10]). The equality stated in (8) holds provided that the discounted
+asset price process e−rtSt, t ≤ T is a martingale under Q. In this case, Q
+is called an equivalent martingale measure. The probability measure Q is
+called an equivalent local martingale measure if e−rtSt, t ≤ T becomes a
+local martingale under Q (see [26, Remark, page 165]).
+According to the asset pricing theory, to compute the expectation under
+the risk-neutral measure, we first convert e−rtSt, t ≤ T into a local mar-
+tingale under the risk-neutral probability measure Q. To identify Q, we use
+the celebrated Girsanov’s Theorem.
+8 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+Theorem 5.1 (Girsanov’s Theorem). [26, Theorem 8.6.6] Let Yt, t≤ T be
+a real valued Itˆ o process of the form
+dYt = β(t) dt + θ(t) dBt; t ≤ T.
+Suppose there exist processes ut, t≤ T and αt, t≤ T such that
+θtut = βt − αt
+and assume that ut, t≤ T satisfies the Novikov’s condition
+E
+
+exp
+ 1
+2
+Z T
+0
+u2 s ds
+
+< ∞.
+Put
+Mt := exp
+
+−
+Z t
+0
+us dBs − 1 2 Z t 0 u2 s ds  , t≤ T
+and dQ(ω) = MT (ω) dP(ω) on FT . Then,
+bBt :=
+Z t
+0
+us ds + Bt, t≤ T
+is a Brownian motion with respect to Q and in terms of bBt, t≤ T , the
+process Yt, t≤ T has the stochastic integral representation
+dYt = α(t) dt + θ(t) d bBt; t ≤ T.
+Remark 5.2. In Theorem 5.1, we require Mt, t≤ T to be a P martingale,
+specifically an exponential martingale, see [19, Chapter III, Theorem 5.3] .
+We now derive the SDE for the discounted price process e−rtSt, t≤ T
+under the original probability measure P. Consider the function f (t, x) :=
+e−rtx, t≥ 0, x∈ R. Then,
+∂f
+∂t (t, x) = −re−rtx, ∂f ∂x (t, x) = e−rt, ∂2f ∂x2 (t, x) = 0, ∀t, x.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 9
+Therefore,
+d
+ 
+e−rtSt  = −re−rtSt dt + e−rtSt  −θ(Rt − µ) + σ2θa   1 + R2 t  dt
++ e−rtStσ
+q
+2θa(1 + R2 t ) dBt
+(9)
+Girsanov’s Theorem 5.1 proposed a new Brownian motion bBt, t≤ T under
+Q is of the form
+dcBt = ut dt + dBt, t≤ T.
+Therefore, (9) can be written as:
+d
+ 
+e−rtSt  = −re−rtSt dt + e−rtSt  −θ(Rt − µ) + σ2θa   1 + R2 t  dt
++ e−rtStσ
+q
+2θa(1 + R2 t ) dBt
+= −re−rtSt dt + e−rtSt  −θ(Rt − µ) + σ2θa   1 + R2 t  dt
++ e−rtStσ
+q
+2θa(1 + R2 t )  dcBt − ut dt  (10)
+To ensure that the discounted price process e−rtSt, t ≤ T becomes a local
+martingale under Q, we set the drift term of (10) to zero and obtain:
+(11) ut = −r − θ(Rt − µ) + σ2θa   1 + R2 t  σ p 2θa(1 + R2 t ) .
+Theorem 5.3. There exists a equivalent local martingale measure Q such
+that such that under Q, the discounted price process e−rtSt, t≤ T becomes
+a local martingale.
+Proof. For the proof, see Appendix A. □
+5.1. Black-Scholes type PDE.Let F : [0, ∞) × R → R be C1,2 regular.
+Here, C1,2 denotes the space of two variable functions, once continuously
+differentiable in the first variable and twice continuously differentiable in
+the second variable. For any derivative price at time t given by F (t, St), by
+Itˆ o’s formula,
+dF (t, St)
+10 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+= ∂F ∂t (t, St) dt + ∂F ∂S (t, St) dSt + 1 2 ∂2F ∂S 2 (t, St) d[S, S]t
+= ∂F ∂t (t, St) dt
++ ∂F ∂S (t, St)  St  −θ(Rt − µ) + σ2θa   1 + R2 t  dt + Stσ q 2θa(1 + R2 t ) dBt 
++ 1 2 ∂2F ∂S 2 (t, St) σ2S2 t   2θa(1 + R2 t )  dt
+=
+ ∂F
+∂t (t, St) + ∂F ∂S (t, St)  St  −θ(Rt − µ) + σ2θa   1 + R2 t   + 1 2 ∂2F ∂S 2 (t, St) σ2S2 t   2θa(1 + R2 t )  dt
++ ∂F ∂S (t, St) Stσ q 2θa(1 + R2 t ) dBt
+For the discounted derivative price, usingdcBt from Theorem 5.1 and ut from
+(11), we obtain
+d
+ 
+e−rtF (t, St) 
+= −re−rtF (t, St) dt + e−rtdF (t, St)
+= e−rt
+n
+− rF (t, St) + ∂F ∂t (t, St) + ∂F ∂S (t, St)  St  −θ(Rt − µ) + σ2θa   1 + R2 t  
++ 1 2 ∂2F ∂S 2 (t, St) σ2S2 t   2θa(1 + R2 t )  o dt
++ e−rt ∂F ∂S (t, St) Stσ q 2θa(1 + R2 t ) dBt
+= e−rt
+n
+− rF (t, St) + ∂F ∂t (t, St) + ∂F ∂S (t, St)  St  −θ(Rt − µ) + σ2θa   1 + R2 t  
++ 1 2 ∂2F ∂S 2 (t, St) σ2S2 t   2θa(1 + R2 t )  o dt
++ e−rt ∂F ∂S (t, St) Stσ q 2θa(1 + R2 t ) dcBt − e−rt ∂F ∂S (t, St) Stσ q 2θa(1 + R2 t ) ut dt,
+= e−rt
+n
+− rF (t, St) + ∂F ∂t (t, St) + ∂F ∂S (t, St)  St  −θ(Rt − µ) + σ2θa   1 + R2 t  
++ 1 2 ∂2F ∂S 2 (t, St) σ2S2 t   2θa(1 + R2 t )  o dt
++ e−rt ∂F ∂S (t, St) Stσ q 2θa(1 + R2 t ) dcBt
+− e−rt ∂F ∂S (t, St) Stσ q 2θa(1 + R2 t ) −r − θ(Rt − µ) + σ2θa   1 + R2 t  σ p 2θa(1 + R2 t ) ! dt
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 11
+= e−rt
+n
+− rF (t, St) + ∂F ∂t (t, St) + rSt ∂F ∂S (t, St) + ∂2F ∂S 2 (t, St) σ2S2 t   θa(1 + R2 t )  o dt
++ e−rt ∂F ∂S (t, St) Stσ q 2θa(1 + R2 t ) dcBt.
+Equating the drift term to be zero and converting it to the deterministic
+condition, we end up with a Black-Scholes type PDE
+(12)
+∂F
+∂t (t, x) + rx ∂F ∂x (t, x) + σ2x2
+
+θa
+
+1 +
+
+ln x S0
+2!! ∂2F
+∂x2 (t, x) = rF (t, x).
+The above discussion is formulated in the following proposition.
+Proposition 5.4. Assume that the log return follows Pearson diffusion pro-
+cess (6). Then, the Black-Scholes type PDE for derivative pricing is (12).
+5.2. Existence and Uniqueness of stock price underQ. Under Q, the
+log return process satisfies
+dRt = −θ(Rt − µ) dt + σ
+q
+2θa(1 + R2 t ) dBt
+= −θ(Rt − µ) dt + σ
+q
+2θa(1 + R2 t )  dcBt − ut dt 
+= −θ(Rt − µ) dt + σ
+q
+2θa(1 + R2 t ) dcBt
+− σ
+q
+2θa(1 + R2 t )
+
+−r − θ(Rt − µ) + σ2θa   1 + R2 t 
+σ
+p
+2θa(1 + R2 t )
+!
+dt
+=
+ 
+r − σ2θa   1 + R2 t  dt + σ q 2θa(1 + R2 t ) dcBt,
+(13)
+Let Π( x) be the probability density function corresponding to the steady
+state distribution of (13) under the probability measure Q. Then Π( x)
+satisfies the Fokker-Planck equation defined as:
+∂2
+∂x2
+ 1
+2 σ22θa   1 + x2 Π(x)  = ∂ ∂x   r − σ2θa   1 + x2 Π(x) ,
+simplifying which we get,
+(14)
+ 
+1 + x2 Π′′(x) + n 4x − r σ2θa +   1 + x2o Π′(x) + 2(1 +x)Π(x) = 0.
+12 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+One can get the steady state distribution of (13) by solving the above differ-
+ential equation (14). Here, we are unable to obtain any closed form solution
+of (14).
+Next we discuss the stock price dynamics under Q,
+dSt
+= St
+
+−θ(Rt − µ) + σ2θa   1 + R2 t  dt + Stσ q 2θa(1 + R2 t ) dBt
+= St
+
+−θ(Rt − µ) + σ2θa   1 + R2 t  dt + Stσ q 2θa(1 + R2 t )  dcBt − ut dt 
+= St
+
+−θ(Rt − µ) + σ2θa   1 + R2 t  dt + Stσ q 2θa(1 + R2 t ) dcBt
+− Stσ
+q
+2θa(1 + R2 t )
+
+−r − θ(Rt − µ) + σ2θa   1 + R2 t 
+σ
+p
+2θa(1 + R2 t )
+!
+dt
+= rSt dt + Stσ
+q
+2θa(1 + R2 t ) dcBt
+= rSt dt + Stσ
+vuut2θa 1 +  ln St
+S0
+2!
+dcBt.
+(15)
+By Girsanov’s Theorem, the SDE (15) under Q has a weak solution. In the
+next theorem, we establish the existence and uniqueness of strong solution
+of this equation.
+Theorem 5.5. The SDE (15) has a unique strong solution.
+Proof. Consider the diffusion coefficient -
+ˆσ(x) := xσ
+vuut2θa 1 +  ln x S0 2! , ∀x ∈ R.
+Then,
+ˆσ′(x) = σ
+vuut2θa 1 +  ln x S0 2! + x σ1 2 1s
+2θa
+
+1 +
+
+ln x S0
+2 2
+
+ln x S0
+ 1
+x
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 13
+= σ
+vuut2θa 1 +  ln x S0 2! + σ ln x S0s
+2θa
+
+1 +
+
+ln x S0
+2 ,
+and consequently,
+ˆσ′(x)  ≤ σ
+vuut2θa 1 +  ln x S0 2! + σ√ 2θa .
+Now, for any large L >0, with |x|, |y| ≤L, by the Mean Value Theorem,
+we have
+|ˆσ(x) − ˆσ(y)|
+=
+ˆσ′(z)  |x − y|, [for z ∈ (x, y) ⇒ |z| ≤L]
+≤
+
+σ
+vuut2θa 1 +  ln L S0 2! + σ√ 2θa   |x − y|.
+Therefore, the diffusion coefficient is locally Lipschitz and the drift coeffi-
+cient ˆb(x) := rx, x∈ R is clearly globally Lipschitz. Therefore, from [21,
+Chapter 5, Theorem 2.5], we have the local existence and uniqueness for
+strong solution of St.
+Now, we verify condition (3.13) of [9]. For x2 > e,
+rˆb(x) − 1 2 ˆσ2(x)
+= rx2 − 1 2 x2σ22θa
+
+1 +
+
+ln x S0
+2!
+= (r − σ2θa) x2 − x2σ2θa
+
+ln x S0
+2
+≤
+r − σ2θa  x2
+≤
+r − σ2θa  x2 ln(x2),
+where we use the fact that ln( x2) > 1. Therefore, we conclude that the
+solution is always regular i.e. non-explosive. This completes the proof. □
+14 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+Remark 5.6. By the existence and uniqueness of the strong solution dis-
+cussed above, we have the global solution of St, t ≤ T . However, in our
+approach we have not been able to establish the integrability of St under Q.
+As a result, e−rtSt, t≤ T becomes a local martingale under Q and we have
+not been able to establish the martingale property.
+5.3. Estimation of Call option price.In what follows, we assume that
+e−rtSt, t≤ T is a Q martingale. The price of a call option at time t, with
+maturity at T (t < T), strike price K, and risk-free interest rate r can be
+estimated as:
+(16) C(t) = EQ
+h
+e−r(T −t) max{ST − K, 0}|It
+i
+.
+In this study, we are not able to get any closed-form solution for the call
+option price. Therefore, we estimate the option price through a simulation
+approach. We first simulate the stock price processes St, t≤ T using the
+stochastic differential equation (15), and then compute the call option price
+using (16).
+Remark 5.7. From Girsanov Theorem 5.1, the call option price at t = 0,
+C(0) =
+Z
+Ω
+e−rT max{ST − K, 0} dQ(ω)
+=
+Z
+Ω
+e−rT max{ST − K, 0} MT (ω) dP(ω)
+=
+Z
+Ω
+e−rT max{ST − K, 0} exp
+
+−
+Z T
+0
+us dBs − 1 2 Z T 0 u2 s ds  dP.
+6. Empirical evidence
+To empirically assess the effectiveness of the proposed method, we use
+daily data of European call options on Nifty 50 index. We select the Nifty
+50 index because it is India’s most actively traded derivative instrument on
+the National Stock Exchange (NSE). Our study covers April 11, 2022, to
+August 30, 2024, focusing on recent historical data. The data is sourced from
+the publicly available NSE website. The dataset has information about trade
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 15
+date, time to maturity, underlying asset price, strike price, trading volume,
+total turnover, and the open, high, low, and close prices for all the option
+contracts for the sample period. In our sample, we restrict the maturity
+time of options to a maximum of three months. More than three-month
+maturity option contracts on the NSE are less frequently traded and tend
+to exhibit lower liquidity.
+A significant portion of the option contracts in our sample display low or
+negligible liquidity. To address this, we use turnover as a proxy for liquidity.
+Turnover is calculated as the product of contracts traded, lot size, and the
+underlying price, and is measured in lakhs of Indian rupees. We exclude
+contracts falling below the seventh decile of the turnover. After applying
+this filter, the final dataset consists of 62442 observations, with the minimum
+turnover value of 28282.52. We use the yield on 91-day Treasury bills as the
+risk-free interest rate. We collect the interest rate data from Reserve Bank
+of India (RBI) website. The data and the R-codes are available on request.
+We group the option data based on moneyness and time to maturity
+categories. Let St be the underlying asset price at time t and K be the strike
+price. A call option is classified as at-the-money (ATM) if St K ∈ (0.97, 1.03),
+out-of-the-money (OTM) if St K ≤ 0.97, and in-the-money (ITM) if St K ≥ 1.03
+(see: Bakshi et al. [1]).
+Based on time to maturity, option contracts are classified into five cat-
+egories: A (0 day < Time to maturity ≤ 7 days); B (7 days < Time to
+maturity ≤ 15 days); C (15 days < Time to; maturity ≤ 30 days; D (30
+days < Time to maturity ≤ 60 days); and E (60 days < Time to maturity
+≤ 90 days).
+Tables 1 and 2 report the time-to-maturity distribution and the money-
+ness distribution of the traded option contracts, respectively.
+16 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+T able 1.Time to maturity distribution of the option con-
+tracts.
+A B C D E
+Number of contracts 32142 17507 9548 2965 280
+Percentage of contracts (%) 51.4750 28.0372 15.2910 4.7484 0.4484
+T able 2.Moneyness distribution of the option contracts.
+ATM ITM OTM
+Number of contracts 31617 1131 29694
+Percentage of contracts (%) 50.6342 1.8113 47.5545
+As shown in Table 1, the majority of the traded options (94 .8032%) have
+a time to maturity within categories A to C, while category E contains the
+smallest proportion of contracts.
+Table 2 indicates that trading activity is more concentrated in at-the-
+money (ATM) and out-of-the-money (OTM) call options compared to in-
+the-money (ITM) call options.
+6.1. Model comparison using the historical approach.We evaluate
+our model’s performance against the classical Black–Scholes and Heston
+models. Under the Pearson diffusion framework, the statistical dynam-
+ics of log returns Rt is governed by (6), an SDE having four parameters:
+(θ, a, µ, σ). Our first step is to estimate these parameters. In the histor-
+ical approach, model parameters are estimated from historical log return
+data and then used to estimate the model option price. For the historical
+approach, we need to select an appropriate window size. As mentioned in
+Hull and Basu [18], the estimation window for historical volatility in the
+Black–Scholes model ranges from 30 to 180 trading days in practice. In this
+study, we select two rolling window lengths of 90 and 180 trading days. In
+other words, to estimate the model option price on a given day, we first
+collect the daily closing prices from the preceding 90 or 180 trading days,
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 17
+compute the corresponding log returns, estimate the model parameters, and
+then use these parameters to calculate the model option price. In the sim-
+ulation study, call option prices are computed using 200000 Monte Carlo
+replications under the proposed PIV method.
+For all three models - PIV, Black–Scholes (BS), and Heston (HS) - param-
+eters are estimated via the maximum likelihood method. In the estimation
+procedure, we set dt = 1 252 , reflecting the use of daily data assuming that
+the NSE operates 252 trading days per calendar year.
+6.2. Out-of-sample performance of historical approach.The out-of-
+sample dataset consists of 53310 and 44680 observations corresponding to
+the rolling window sizes of 90 and 180 days, respectively. The pricing error
+of an option is defined as the difference between the model price and the
+market price. We consider the closing price of a traded option to be the
+market price. To evaluate model performance, we employ two error metrics:
+mean absolute error (MAE) and mean squared error (MSE). Tables 3 and 4
+display the performance of all models using rolling window sizes of 90 and
+180 days, respectively, categorized by moneyness. Tables 5 and 6 show the
+corresponding results for the same window sizes, for the time to maturity
+category.
+18 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+T able 3.Model Performance under moneyness category by
+rolling window approach with size 90.
+PIV BS HS
+MAE
+ITM 36.9693 54.6638 44.7100
+OTM 11.4605 34.4065 14.9941
+ATM 36.2825 81.1552 40.6405
+ALL 24.8806 59.1877 28.9196
+MSE
+ITM 3109.4387 7791.0597 4982.0560
+OTM 819.6919 6542.1246 2399.6011
+ATM 4018.4329 15329.0959 6137.0253
+ALL 2531.3807 11154.6008 4397.8962
+Note: This table reports the mean absolute error (MAE) and mean squared
+error (MSE) for all models. PIV, BS, and HS denote the Pearson diffusion,
+Black–Scholes, and Heston models, respectively. ITM, OTM, and ATM refer
+to in-the-money, out-of-the-money, and at-the-money options. ALL represents
+the entire out-of-sample dataset. Across the entire out-of-sample dataset, the
+proportions of ITM, OTM, and ATM options are 1 .78%, 45 .98%, and 52 .24%,
+respectively. Bold values indicate the lowest MAE and MSE in each row.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 19
+T able 4.Model Performance under moneyness category by
+rolling window approach with size 180.
+PIV BS HS
+MAE
+ITM 38.6962 48.9129 47.8571
+OTM 12.0293 29.5032 16.0753
+ATM 38.2951 75.2467 43.0964
+ALL 26.4330 54.0835 30.9744
+MSE
+ITM 3367.1278 5055.1497 5630.3482
+OTM 854.5360 4231.0854 2685.0795
+ATM 3972.1454 10881.1451 6967.7207
+ALL 2551.9969 7767.2186 5007.4213
+Note: This table reports the mean absolute error (MAE) and mean squared
+error (MSE) for all models. PIV, BS, and HS denote the Pearson diffusion,
+Black–Scholes, and Heston models, respectively. ITM, OTM, and ATM refer
+to in-the-money, out-of-the-money, and at-the-money options. ALL represents
+the entire out-of-sample dataset. Across the entire out-of-sample dataset, the
+proportions of ITM, OTM, and ATM options are 1 .87%, 45 .19%, and 52 .94%,
+respectively. Bold values indicate the lowest MAE and MSE in each row.
+20 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+T able 5.Model Performance under time-to-maturity cate-
+gory by rolling window approach with size 90.
+PIV BS HS
+MAE
+A 11.2749 32.0895 13.7173
+B 28.5835 72.2835 35.5088
+C 47.5368 97.9993 52.2150
+D 61.6959 131.1378 60.4702
+E 128.1301 158.6207 160.7986
+MSE
+A 689.8709 3466.8727 1180.3141
+B 2464.4858 11985.3773 4908.5419
+C 5872.2965 23112.1791 9431.0848
+D 8866.9861 40282.0234 13405.8085
+E 26497.2694 86574.5441 55562.8110
+Note: This table presents the mean absolute error (MAE) and mean squared
+error (MSE) for all models. PIV, BS, and HS represent the Pearson diffusion,
+Black–Scholes, and Heston models, respectively. Categories A through E classify
+options based on time to expiry as follows: A (7 days or less), B (more than 7 to
+15 days), C (more than 15 to 30 days), D (more than 30 to 60 days), and E (more
+than 60 to 90 days). Across the entire out-of-sample dataset, the proportions of
+option contracts corresponding to time-to-maturity categories A, B, C, D, and
+E are 50 .78%, 28 .18%, 15 .72%, 4 .79%, and 0 .52%, respectively. Bold values
+highlight the lowest MAE and MSE for each row.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 21
+T able 6.Model Performance under time-to maturity cate-
+gory by rolling window approach with size 180.
+PIV BS HS
+MAE
+A 12.0051 28.1144 14.7708
+B 30.6041 65.0758 38.5824
+C 49.5831 90.8299 54.6517
+D 65.4378 127.3506 62.6735
+E 114.3168 148.2005 155.4543
+MSE
+A 729.9839 2429.8010 1371.3447
+B 2468.0535 8254.1154 5687.6544
+C 5686.9298 15902.2269 10627.6116
+D 9194.8577 28308.5065 14623.8995
+E 23047.8746 50836.7810 53501.0383
+Note: This table presents the mean absolute error (MAE) and mean squared
+error (MSE) for all models. PIV, BS, and HS represent the Pearson diffusion,
+Black–Scholes, and Heston models, respectively. Categories A through E classify
+options based on time to expiry as follows: A (7 days or less), B (more than 7 to
+15 days), C (more than 15 to 30 days), D (more than 30 to 60 days), and E (more
+than 60 to 90 days). Across the entire out-of-sample dataset, the proportions of
+option contracts corresponding to time-to-maturity categories A, B, C, D, and
+E are 50 .43%, 28 .25%, 15 .75%, 5 .01%, and 0 .57%, respectively. Bold values
+highlight the lowest MAE and MSE for each row.
+Tables 3 and 4 show that the proposed method consistently outperforms
+the classical Black–Scholes model and the Heston stochastic volatility model
+across all moneyness categories, for both two error metrics and rolling win-
+dow sizes. Likewise, Tables 5 and 6 indicate that the PIV method delivers
+superior performance across all time-to-maturity categories, under both er-
+ror functions and window sizes, except for Category D (options with matu-
+rities between 30 and 60 days) under the MAE criterion.
+Next, we apply the Diebold and Mariano [14] test to evaluate whether
+the differences in predictive accuracy between the competing models are
+statistically significant. The test is conducted using both absolute error
+(AE) and squared error (SE) as loss functions. The null hypothesis of the
+test states that the forecasts from the PIV and HS (or BS) models have the
+same predictive accuracy, while the alternative hypothesis states that the
+22 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+PIV model forecasts are more accurate than the HS (or BS) model. Tables
+7 and 8 report the p-values of the Diebold and Mariano test comparing the
+predictive performance of the PIV model with the HS and BS models, using
+rolling window sizes of 90 and 180 days, respectively.
+Tables 7 and 8 indicate that the null hypothesis is rejected at the 1%
+significance level across all moneyness categories, for both error functions
+and all rolling window sizes, providing statistical evidence that the forecasts
+produced by the proposed model are more accurate than those of the HS
+and BS models at 1% significance level.
+T able 7.p-values of the Diebold-Mariano Test for rolling
+window size 90.
+PIV vs HS
+AE SE
+ITM 4.30E −10 6.46E−08
+OTM 2.20E −16 2.20E−16
+ATM 2.20E −16 2.20E−16
+ALL 2.20E −16 2.20E−16
+PIV vs BS
+AE SE
+ITM 2.20E −16 1.76E−11
+OTM 2.20E −16 2.20E−16
+ATM 2.20E −16 2.20E−16
+ALL 2.20E −16 2.20E−16
+Note: This table presents the p-values from the Diebold and Mariano test, used
+to assess the predictive accuracy of the PIV model relative to the HS (PIV vs
+HS) and BS (PIV vs BS) models. ITM, OTM, and ATM refer to in-the-money,
+out-of-the-money, and at-the-money options. ALL represents the entire out-of-
+sample dataset. The AE and SE columns report the p-values of the test based
+on the Absolute Error and Squared Error loss functions, respectively.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 23
+T able 8.p-values of the Diebold-Mariano Test for rolling
+window size 180.
+PIV vs HS
+AE SE
+ITM 6.77E −10 1.07E−07
+OTM 2.20E −16 2.20E−16
+ATM 2.20E −16 2.20E−16
+ALL 2.20E −16 2.20E−16
+PIV vs BS
+AE SE
+ITM 6.88E −11 4.68E−06
+OTM 2.20E −16 2.20E−16
+ATM 2.20E −16 2.20E−16
+ALL 2.20E −16 2.20E−16
+Note: This table presents the p-values from the Diebold and Mariano test, used
+to assess the predictive accuracy of the PIV model relative to the HS (PIV vs
+HS) and BS (PIV vs BS) models. ITM, OTM, and ATM refer to in-the-money,
+out-of-the-money, and at-the-money options, respectively. ALL represents the
+entire out-of-sample dataset. The AE and SE columns report the p-values of the
+test based on the Absolute Error and Squared Error loss functions, respectively.
+6.3. Out-of-sample performance using Implied approach.The his-
+torical approach requires selecting a window size to estimate option model
+parameters, which can have practical challenges due to its stringent require-
+ments on historical data (Bakshi et al. [1]). To address this limitation,
+practitioners have traditionally opted to use the implied approach, where
+model parameters are estimated by inverting the option pricing model using
+recent market option prices. The implied parameters may be interpreted as
+the instant market estimate of the future price movement of the underlying
+asset. This method not only significantly reduces data requirements but has
+also been shown to improve performance (see: Bates [2, 3]).
+For the case of the implied approach, we follow Bakshi et al. to estimate
+the model parameters. [1]. To estimate the call option price for the day t, we
+first collect all options traded on the preceding day. Let Cmarket,t−1 denote
+the observed market price and Cmodel,t−1 be model option price both at time
+24 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+t − 1. Let Θ be the vector of model parameters. The implied parameters of
+each model for day t − 1 are estimated by minimizing the sum of squared
+pricing errors:
+ˆΘ = min
+Θ
+X
+(Cmarket,t−1 − Cmodel,t−1)2
+where the summation is taken over all options traded on day t − 1. Next
+we utilize those estimated implied parameters to estimate the option price
+of day t. Under the implied approach, the out-of-sample dataset comprises
+a total of 62103 observations.
+Tables 9 and 10 report the out-of-sample forecast performance of all three
+models across moneyness and time-to-maturity categories, respectively. Ta-
+ble 11 presents the p-values of the Diebold and Mariano test, assessing
+whether the differences in predictive accuracy among the models are statis-
+tically significant.
+Table 9 demonstrates that the PIV model outperforms the other models
+for at-the-money (ATM) options as well as across the entire out-of-sample
+dataset under both error metrics. In contrast, the HS model delivers bet-
+ter forecasts for in-the-money (ITM) and out-of-the-money (OTM) options.
+Given that over 50% of the options in both the full sample (Table 2) and the
+out-of-sample dataset (Table 9) fall within the ATM category, the superior
+performance of the proposed model in this segment is particularly signifi-
+cant. Table 11 presents statistical evidence confirming that the PIV model’s
+forecasts for ATM options are more accurate than those of the HS and BS
+models at 1% significance level.
+For data grouped by time-to-maturity (Table 10), the PIV method outper-
+forms others in categories A and B under the MAE metric, which together
+account for over 79% of traded options in both the full sample (Table 1)
+and the out-of-sample (Table 10) dataset. The proposed PIV model de-
+livers superior performance in the groups with the highest trading activity,
+highlighting its effectiveness within the implied approach framework as well.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 25
+However, under the MSE metric, the proposed method does not exhibit su-
+perior performance, the BS model performs better in categories B and C,
+while the HS model outperforms in the remaining three categories.
+T able 9.Model Performance under moneyness category by
+implied approach.
+PIV BS HS
+MAE
+ITM 27.5377 26.9758 26.1722
+OTM 5.6576 5.4501 4.9065
+ATM 15.0136 16.9099 15.8467
+ALL 10.7919 11.6430 10.8316
+MSE
+ITM 1628.9130 1565.7580 1517.8892
+OTM 189.8867 174.3626 131.9044
+ATM 583.6524 634.4850 623.1860
+ALL 415.4041 432.6046 405.8215
+Note: This table reports the mean absolute error (MAE) and mean squared error
+(MSE) for all models. To compute the option price on a given day for all models,
+we first estimate the implied parameters using all options traded on the previous
+day, and then use these parameters to calculate the option price. PIV, BS, and
+HS denote the Pearson diffusion, Black–Scholes, and Heston models, respectively.
+ITM, OTM, and ATM refer to in-the-money, out-of-the-money, and at-the-money
+options. ALL represents the entire out-of-sample dataset. Across the entire out-
+of-sample dataset, the proportions of ITM, OTM, and ATM options are 1 .82%,
+47.56%, and 50.62%, respectively. Bold values indicate the lowest MAE and MSE
+in each row.
+26 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+T able 10.Model Performance under time-to-maturity cat-
+egory by implied approach.
+PIV BS HS
+MAE
+A 6.6631 8.3303 6.9006
+B 12.1654 12.3763 13.4534
+C 17.1369 16.8262 16.0479
+D 23.0805 22.4659 18.8199
+E 50.3616 53.0035 34.0092
+MSE
+A 204.2751 246.4082 196.3507
+B 420.3412 404.1864 480.5811
+C 681.9721 675.7133 735.1835
+D 1248.3535 1257.3568 936.6570
+E 6308.4326 6443.3622 2822.3595
+Note: This table presents the mean absolute error (MAE) and mean squared
+error (MSE) for all models by implied approach. To compute the option price
+on a given day for all models, we first estimate the implied parameters using all
+options traded on the previous day, and then use these parameters to calculate
+the option price. PIV, BS, and HS represent the Pearson diffusion, Black–Scholes,
+and Heston models, respectively. Categories A through E classify options based
+on time to expiry as follows: A (7 days or less), B (more than 7 to 15 days), C
+(more than 15 to 30 days), D (more than 30 to 60 days), and E (more than 60
+to 90 days). Across the entire out-of-sample dataset, the proportions of option
+contracts corresponding to time-to-maturity categories A, B, C, D, and E are
+51.40%, 28 .06%, 15 .33%, 4 .76%, and 0 .45%, respectively. Bold values highlight
+the lowest MAE and MSE for each row.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 27
+T able 11.p-values of the Diebold-Mariano Test for implied
+approach.
+PIV vs HS
+AE SE
+ITM 0.9993 0.9607
+OTM 1.0000 1.0000
+ATM 2.20E −16 0.0002
+ALL 0.2003 0.8884
+PIV vs BS
+AE SE
+ITM 0.9988 0.9990
+OTM 1.0000 1.0000
+ATM 2.20E −16 2.20E−16
+ALL 2.20E −16 3.88E−14
+Note: This table presents the p-values from the Diebold and Mariano test, used
+to assess the predictive accuracy of the PIV model relative to the HS (PIV vs
+HS) and BS (PIV vs BS) models. ITM, OTM, and ATM refer to in-the-money,
+out-of-the-money, and at-the-money options, respectively. ALL represents the
+entire out-of-sample dataset. The AE and SE columns report the p-values of the
+test based on the Absolute Error and Squared Error loss functions, respectively.
+7. Conclusion
+We propose a novel method for estimating call option prices by modeling
+the log return dynamics using Pearson diffusion processes, characterized by
+a linear drift and a quadratic squared diffusion coefficient. The advantage of
+this class of diffusion is its ability to capture the excess kurtosis and skewness
+observed in the return distribution. We also verify the Novikov condition,
+a key requirement for risk-neutral pricing, thereby ensuring that the model
+does not admit arbitrage opportunities. Further, we establish the existence
+of a unique strong solution for the stock price process under the risk-neutral
+measure. We apply our method to Nifty 50 index options and compare the
+results to the classical Black-Scholes and Heston stochastic volatility models
+using historical and implied approaches.
+Under the historical approach, the proposed method consistently out-
+performs competing models across all rolling window sizes and evaluation
+28 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+metrics. These results hold across option categories defined by moneyness
+and time-to-maturity (except 30 to 60 days maturity options).
+Under the implied approach, the PIV method demonstrates superior per-
+formance for at-the-money options, which account for over 50% of the ob-
+servations, as well as across the entire out-of-sample dataset. For the time-
+to-maturity category, the PIV method outperforms other methods for short-
+term maturity options (one-week and two-weeks maturity options), which
+together constitute more than 79% of the dataset. The Heston model ex-
+hibits better performance for long-term maturity options.
+The findings based on historical and implied approaches show the prac-
+tical relevance of our approach and suggest that it offers a more effective
+alternative for option pricing.
+Acknowledgment: We gratefully acknowledge Professor Malay Bhat-
+tacharyya for introducing us to the Pearson diffusion processes. Barun
+Sarkar would like to acknowledge the seed grant of Indian Institute of Tech-
+nology Madras. Suprio Bhar acknowledges the support of the Matrics grant
+MTR/2021/000517 from the Science and Engineering Research Board (De-
+partment of Science & Technology, Government of India).
+Appendix A. Appendix
+Proof of Theorem 5.3. Girsanov’s Theorem 5.1 proposed a new Brownian
+motion bBt, t≤ T under Q of the form
+dcBt = ut dt + dBt, t≤ T.
+From (10),
+d
+ 
+e−rtSt  = −re−rtSt dt + e−rtSt  −θ(Rt − µ) + σ2θa   1 + R2 t  dt
++ e−rtStσ
+q
+2θa(1 + R2 t )  dcBt − ut dt  ,
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 29
+and from (11)
+ut = −r − θ(Rt − µ) + σ2θa   1 + R2 t  σ p 2θa(1 + R2 t ) .
+The proposed probability measure Q is given by
+(17) dQ = MT dP,
+where
+(18) MT := exp
+
+−
+Z T
+0
+us dBs − 1 2 Z T 0 u2 s ds  .
+If we can show that Mt, t≤ T is a P-martingale, then Q becomes a proba-
+bility measure. Under Q,
+(19) d
+ 
+e−rtSt  = e−rtStσ q 2θa(1 + R2 t ) dcBt
+is a local martingale. This achieves our target provided we show thatMt, t≤
+T is a P-martingale. Observe that from (11)
+u2 t =
+ −r − θ(Rt − µ) + σ2θa   1 + R2 t  σ p 2θa(1 + R2 t )  2
+=
+ −r + µθ − θRt + σ2θa   1 + R2 t  σ p 2θa(1 + R2 t )  2
+≤ 3
+
+
+
+ µθ − r σ p 2θa(1 + R2 t )  2 +  θRt σ p 2θa(1 + R2 t )  2 + σ r aθ 2 q 1 + R2 t  2   
+≤ 3
+ (µθ − r)2
+2σ2θa + θ2 2σ2θa + σ2aθ 2   1 + R2 t 
+≤ K(µ, θ, r, σ, a)
+ 
+1 + R2 t  ,
+(20)
+where K(µ, θ, r, σ, a) > 0 is a constant depending only on µ, θ, r, σand a.
+Therefore for Novikov’s condition, using (20),
+E
+
+exp
+ 1
+2
+Z T
+0
+u2 t dt
+
+30 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+= E
+
+exp
+
+ 1
+2
+Z T
+0
+ −r − θ(Rt − µ) + σ2θa   1 + R2 t  σ p 2θa(1 + R2 t )  2 dt    
+≤ E
+
+exp
+ 1
+2 K(µ, θ, r, σ, a)
+Z T
+0
+ 
+1 + R2 t  dt  .
+From (7) and (20), we know that
+P
+Z T
+0
+ 
+1 + R2 t  dt <∞  = 1.
+Therefore,
+(21) P
+Z T
+0
+u2 t dt <∞
+
+= 1.
+Following [15, Theorem 2.1], define
+χN (t) :=
+
+
+
+1, if
+R t
+0 u2 sds ≤ N
+0, otherwise.
+Therefore, from (21)
+lim
+N →∞
+P
+Z T
+0
+u2 t dt ≤ N
+
+= 1.
+Then, from definition of χN
+Z T
+0
+(χN (t)ut)2 dt ≤ N, P -a.s.
+Now, define
+M N t := exp
+
+−
+Z t
+0
+χN (s)us dBs − 1 2 Z t 0 (χN (s)us)2 ds  .
+Here, the Novikov condition is satisfied
+E
+
+exp
+ 1
+2
+Z T
+0
+(χN (s)us)2 ds
+
+< ∞,
+and consequently, {M N t }t∈[0,T ], is an L2 exponential martingale [19, Chapter
+III., Theorem 5.3]. Here, L2 denotes the space of square integrable random
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 31
+variables. Define
+dQN := M N T dP
+and note that E
+ 
+M N T  = 1. Hence,
+1 = E
+ 
+M N T 
+= E
+ 
+χN (T )M N T  + E   (1 − χN (T ))M N T 
+= E (χN (T )MT ) + P (χN (T ) = 0)
+Now, by the Monotone Convergence Theorem, lim N →∞ E (χN (T )MT ) =
+E (MT ) and by (21),
+lim
+N →∞
+P (χN (T ) = 0) = lim N →∞ P
+Z T
+0
+u2 t dt > N
+
+= 0.
+Therefore, we conclude
+lim
+N →∞
+E
+ 
+M N T  = E (MT ) = 1.
+Thus, Mt, t≤ T is a P-martingale. □
+References
+[1] Gurdip Bakshi, Charles Cao, and Zhiwu Chen. Empirical performance of alternative
+option pricing models. The Journal of finance , 52(5):2003–2049, 1997.
+[2] David S Bates. Jumps and stochastic volatility: Exchange rate processes implicit in
+deutsche mark options. The Review of Financial Studies , 9(1):69–107, 1996.
+[3] DS Bates. Testing option pricing models. chapter 20 in handbook of statistics and
+finance 14: Statistical methods in finance, 1996.
+[4] Stan Beckers. The constant elasticity of variance model and its implications for option
+pricing. the Journal of Finance , 35(3):661–673, 1980.
+[5] Malay Bhattacharyya, Nityanand Misra, and Bharat Kodase. Maxvar for non-normal
+and heteroskedastic returns. Quantitative Finance, 9(8):925–935, 2009.
+[6] Fischer Black and Myron Scholes. The pricing of options and corporate liabilities. J.
+Polit. Econ., 81(3):637–654, 1973.
+[7] Lisa Borland. A theory of non-gaussian option pricing. Quantitative Finance ,
+2(6):415, 2002.
+32 TAPAN KAR, SUPRIO BHAR, BARUN SARKAR, AND SESHA MEKA
+[8] Gian P Cervellera and Marco P Tucci. A note on the estimation of a gamma-variance
+process: Learning from a failure. Computational Economics, 49(3):363–385, 2017.
+[9] Pao-Liu Chow and Rafail Khasminskii. Almost sure explosion of solutions to stochas-
+tic differential equations. Stochastic Process. Appl., 124(1):639–645, 2014.
+[10] George M Constantinides, Jens Carsten Jackwerth, and Stylianos Perrakis. Option
+pricing: real and risk-neutral distributions. Handbooks in Operations Research and
+Management Science, 15:565–591, 2007.
+[11] John Cox. Notes on option pricing i: Constant elasticity of variance diffusions. Un-
+published note, Stanford University, Graduate School of Business , 1975.
+[12] John C Cox. The constant elasticity of variance option pricing model. Journal of
+Portfolio Management , page 15, 1996.
+[13] John C Cox and Stephen A Ross. The valuation of options for alternative stochastic
+processes. Journal of financial economics , 3(1-2):145–166, 1976.
+[14] Francis X Diebold and Robert S Mariano. Comparing predictive accuracy. Journal of
+Business & economic statistics , 20(1):134–144, 2002.
+[15] Benedetta Ferrario. Absolute continuity of laws for semilinear stochastic equations
+with additive noise. Commun. Stoch. Anal. , 2(2):209–227, 2008.
+[16] Julie Lyng Forman and Michael Sø rensen. The Pearson diffusions: a class of statis-
+tically tractable diffusion processes. Scand. J. Statist. , 35(3):438–465, 2008.
+[17] Steven L. Heston. A closed-form solution for options with stochastic volatility with
+applications to bond and currency options. Rev. Financ. Stud. , 6(2):327–343, 1993.
+[18] John C Hull and Sankarshan Basu. Options, futures, and other derivatives . Pearson
+Education India, 2016.
+[19] Nobuyuki Ikeda and Shinzo Watanabe. Stochastic differential equations and diffusion
+processes, volume 24 of North-Holland Mathematical Library. North-Holland Publish-
+ing Co., Amsterdam; Kodansha, Ltd., Tokyo, second edition, 1989.
+[20] Ahmet K Karagozoglu. Option pricing models: From black-scholes-merton to present.
+Journal of Derivatives , 29(4), 2022.
+[21] Ioannis Karatzas and Steven E. Shreve. Brownian motion and stochastic calculus ,
+volume 113 of Graduate Texts in Mathematics . Springer-Verlag, New York, second
+edition, 1991.
+[22] Dilip B Madan, Peter P Carr, and Eric C Chang. The variance gamma process and
+option pricing. Review of Finance , 2(1):79–105, 1998.
+[23] Robert C. Merton. Theory of rational option pricing. Bell J. Econom. and Manage-
+ment Sci. , 4:141–183, 1973.
+CALL OPTION PRICE USING PEARSON DIFFUSION PROCESSES 33
+[24] Robert C Merton. Option pricing when underlying stock returns are discontinuous.
+Journal of financial economics , 3(1-2):125–144, 1976.
+[25] Yuichi Nagahara. The PDF and CF of Pearson type IV distributions and the ML
+estimation of the parameters. Statist. Probab. Lett., 43(3):251–264, 1999.
+[26] Bernt Ø ksendal. Stochastic differential equations . Universitext. Springer-Verlag,
+Berlin, sixth edition, 2003. An introduction with applications.
+[27] Karl Pearson. Contributions to the mathematical theory of evolution ii. skew variation
+in homogeneous material. Philosophical Transactions of the Royal Society of London.
+Series A , 186:343–414, 1895.
+[28] Constantino Tsallis and Dirk Jan Bukman. Anomalous diffusion in the presence of
+external forces: Exact time-dependent solutions and their thermostatistical basis.
+Physical Review E , 54(3):R2197, 1996.
+[29] Michel Vellekoop and Hans Nieuwenhuis. On option pricing models in the presence
+of heavy tails. Quantitative finance, 7(5):563–573, 2007.
+Tapan Kar, Institute for Financial Management and Research - Graduate
+School of Business, Krea University, Sri City, Andhra Pradesh 524401, India.
+Email address : tapan.kar@krea.edu.in
+Suprio Bhar, Department of Mathematics and Statistics, Indian Institute
+of Technology Kanpur, Kalyanpur, Kanpur - 208016, India.
+Email address : suprio@iitk.ac.in
+Barun Sarkar, Department of Mathematics, Indian Institute of Technol-
+ogy Madras, Chennai - 600036, India.
+Email address : barun@iitm.ac.in
+Sesha Meka, Institute for Financial Management and Research - Graduate
+School of Business, Krea University, Sri City, Andhra Pradesh 524401, India.
+Email address : sesha.meka@krea.edu.in

@@ -34,6 +34,29 @@
   "text_file": "knowledge/papers/openalex_W7223675687.txt"
  },
  {
+  "id": "arxiv:2611.07287v1",
+  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
+  "abstract": "High-frequency volatility forecasting typically separates measurement from prediction: intraday observations are first compressed into a daily realized measure using a fixed aggregation rule, and the resulting statistic is then passed to a forecasting model. This conventional pipeline therefore treats measure construction as forecast-agnostic preprocessing. We ask whether the aggregation stage itself can instead be learned from the downstream forecasting objective while preserving the statistical structure of established realized measures. We propose Neural Realized Measures (NRM), a primitive-preserving, forecast-supervised aggregation framework that retains the original measure-specific intraday contributions but replaces uniform aggregation with positive, mean-normalized context-dependent weights. Uniform weights exactly recover the corresponding raw realized measure (RRM), so the classical construction is nested as a special case. Because NRM remains an explicit weighted sum of established primitive contributions, it also retains direct bar-level attribution. Across SF, HAR, and MIDAS forecasting specifications, NRM is evaluated against corresponding RRM specifications under controlled comparisons. In Heston simulations, NRM reduces RMSE for both contemporaneous and next-day latent integrated variance across all evaluated primitive--regime combinations. On six cryptocurrencies using five-minute data, NRM improves QLIKE in all 54 paired out-of-sample comparisons, with mean gains of 7.23\\%, 8.15\\%, and 9.22\\% under SF, HAR, and MIDAS, respectively. Validation-selected NRM specifications also achieve the lowest mean QLIKE across the six assets among the evaluated approaches. Ablation and SHAP analyses reveal systematic time-of-day and nonlinear local-context effects in the learned allocation.",
+  "url": "https://arxiv.org/abs/2611.07287v1",
+  "pdf": "https://arxiv.org/pdf/2611.07287v1",
+  "source": "arXiv",
+  "date": "2026-11-05",
+  "score": 16,
+  "queued": "2026-11-08",
+  "text_file": "knowledge/papers/arxiv_2611.07287v1.txt"
+ },
+ {
+  "id": "openalex:W7225092638",
+  "title": "The Variance Risk Premium in NIFTY Index Options: Smaller than It Looks, Priced in the Wings, and Paid for Tail Risk",
+  "abstract": "This research measures the variance risk premium in NIFTY 50 index options using two horizon-matched measures. India VIX exceeds the realised volatility of the following 30 calendar days by 3.26 volatility points on average over 2008\u20132026, and on 82% of days. For weekly options over 2020\u20132026, at-the-money implied volatility exceeds the volatility realised until expiry by 2.22 points. This is less than half the gap obtained when the overnight returns in the same windows are ignored, because overnight moves carry 42% of realised variance. Model-free implied volatility exceeds at-the-money implied volatility by 2.16 points, so much of the premium sits in out-of-the-money options. Implied volatility is a biased forecast of realised volatility. Selling weekly volatility earned positive average returns net of costs, but only a short strangle cleared zero after correction for multiple testing. Five weeks erased 64% of a short straddle's cumulative gain. The premium is real, smaller than a naive measure suggests, and largely compensation for tail risk. JEL codes: G12, G13, G14. This is research, not investment advice.",
+  "url": "https://doi.org/10.5281/zenodo.23880589",
+  "source": "OpenAlex",
+  "date": "2026-11-02",
+  "score": 15,
+  "queued": "2026-11-08",
+  "text_failed": true
+ },
+ {
   "id": "openalex:W7223074122",
   "title": "The Term Structure of Implied Fee Rates in Liquidity Pools",
   "abstract": "We develop a no-arbitrage framework to recover implied fee rates from option implied information and quantify fee compensation for liquidity providers in automated market maker (AMM) pools. Expected accumulated fees equal the current pool value minus the risk-neutral value of its terminal payoff, reducing forward looking LP compensation to pricing the LP payoff. We apply the framework to Uniswap v2 and Uniswap v3 ETH-USDC pools using a stochastic-volatility jump diffusion model calibrated to Deribit options. Implied fee rates are positive, time varying, downward sloping in maturity, and highly sensitive to range design, with tighter near-the-money ranges earning larger implied returns.",
@@ -89,6 +112,17 @@
   "text_file": "knowledge/papers/openalex_W7223658835.txt"
  },
  {
+  "id": "openalex:W7225333912",
+  "title": "Mathematical Framework for Dynamic Downside-Minimizing Portfolio with Exotic Option Overlay",
+  "abstract": "Abstract This study develops and evaluates a dynamic downside-minimizing portfolio through five stages. Starting with a 4-asset universe of equity, bonds, gold, and a volatility instrument, the portfolio is expanded to 13 and then 21 assets while incorporating mean-semivariance optimization, Asian arithmetic-average puts, American puts valued with Longstaff\u2013Schwartz Least-Squares Monte Carlo, covered calls, momentum tilts, and regime-aware rebalancing. The final stage targets a 15% expected return. Portfolio performance is evaluated using correlated Geometric Brownian Motion with 20,000 Monte Carlo paths over a one-year horizon. The four-asset semivariance-optimized portfolio has a Sortino ratio of 2.04 and a maximum simulated loss of \u221223.7%, compared with 1.20 and \u221245.9% for SPY. Adding Asian and American puts increases the Sortino ratio to 2.26 and reduces maximum simulated loss to \u22128.8%. The 13-asset buy-and-hold portfolio reaches a mean Sortino ratio of 5.81. Among the rebalancing strategies tested, calendar rebalancing produced the highest mean Sortino ratio of 9.62. The 21-asset portfolio with a 15% return target has a Sortino ratio of 4.06 and maximum simulated loss of \u221228.8%; the full option overlay reduces the latter to \u22129.1%. These results characterize the tradeoffs among diversification, downside protection, return targets, and adaptive rebalancing within the simulated framework.",
+  "url": "https://www.researchsquare.com/article/rs-11613518/latest.pdf",
+  "source": "OpenAlex",
+  "date": "2026-11-05",
+  "score": 12,
+  "queued": "2026-11-08",
+  "text_file": "knowledge/papers/openalex_W7225333912.txt"
+ },
+ {
   "id": "openalex:W7223000370",
   "title": "Neural Network Calibration of the Heston Stochastic Volatility Model",
   "abstract": "The Heston stochastic volatility model remains a standard benchmark for equity-option smiles, yet calibration is a nonlinear inverse problem shaped by pricing cost, objective design, parameter constraints and the information contained in the observed option grid. Neural approaches follow two main routes. Parameter-to-price (MtP) networks approximate the forward pricing map and retain an optimiser, whereas price-to-parameter (PtM) networks learn a direct inverse map and amortise calibration into a single inference step. This review compares both routes with differential, physics-informed and hybrid variants. PtM offers the clearest advantage in online latency, while MtP retains an explicit calibration objective and more transparent residual diagnostics. Existing studies do not establish a universal ranking in parameter stability, robustness or data efficiency, because results remain sensitive to the training domain, sampling scheme, quote representation and validation design. Both approaches can be trained on synthetic data, and neither resolves weak parameter identifiability. For practical deployment, neural acceleration should be combined with exact repricing, admissibility checks, uncertainty monitoring, distribution-shift controls and numerical fallback. The most credible architecture is therefore determined by the service requirement and the surrounding validation workflow rather than by the direction of the learned map alone.",
@@ -123,6 +157,50 @@
   "text_failed": true
  },
  {
+  "id": "openalex:W7225121562",
+  "title": "Dynamic h(L)GJMM: conditional volatility surfaces, martingale couplings, and filtration-dependent option pricing",
+  "abstract": "A joint mixture model calibrated to a vanilla surface by one linear programme, Kienitz (2026a)defines a price martingale with exactly the fitted marginals whose augmented state \u2014 price and latentcell \u2014 is Markov, and run forward from any state it generates a whole conditional implied-volatilitysurface in closed form. We ask whether such a perfectly arbitrage-consistent martingale producesplausible conditional surfaces, how its coupling \u2014 which the vanilla surface leaves free \u2014 should beselected, and how the information available to the holder of an early-exercise claim enters its price.The conditional surfaces studied are conditional on the augmented state, the price together with thelatent mixture cell observed at the quoted dates. Conditioning on prices alone averages them over theposterior of the cell, which the prices do not reveal.We consider volatility surfaces fitted by the above method. Then, the conditional surfaces are finitemixtures, free of arbitrage with forward equal to the current price. The calibrated vertex producesdownward-opening (concave) conditional smiles to a non-negligible extend of the states, especiallyon short maturities. They are not arbitrage, and three proved facts explain these shapes. First, thelevel-variance of a period is fixed by the marginals. Second, the jump window caps the kurtosis of alevel jump, and, third, vertices of the programme are sparse.Recalibrating with a wider jump window and then selecting the coupling at the new fitted weightsby a Kullback\u2013Leibler projection reduces the concave smiles from about 30% to below 5% in ourexperiments. The method raises the long-horizon rates slightly. Only the final fixed-weight selectionstep leaves every vanilla price of the re-calibrated model unchanged. A laziness constraint on thecoupling, linear and imposed in the calibration, brings the six-month and one-year frown probabilitiesof a reduced set-up to below 2% at a cost of a fraction of a basis point for the fit. Replacing the linearcalibration programme by an entropic calibration of the whole joint law, a strictly convex programmewith a unique solution, avoids vertices in the weights and in the coupling, and fits better. It bringsthe frown probabilities to about 1% without further constraints. Against Heston and Bates surfaces,whose conditional smiles never open downwards, the orignially calibrated vertex frowns in up to 40%of the states, the entropic calibration with a Laplace reference in below 3% , and a lattice imag",
+  "url": "https://doi.org/10.5281/zenodo.23885551",
+  "source": "OpenAlex",
+  "date": "2026-11-02",
+  "score": 11,
+  "queued": "2026-11-08",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W7225181963",
+  "title": "A Comparative Analysis of Volatility Predictions via EGARCH, Transformer and Hybrid EGARCH-Transformer Models: Changes in Forecasting Ability after Introducing Sentiment Factors",
+  "abstract": "The application of cryptocurrency asset volatility forecasting is relevant for real\u2011world risk\u2011management procedures and derivatives pricing in the digital\u2011asset market. This paper assesses out-of-sample forecast performance for three model families: standalone EGARCH, vanilla Transformer, and an EGARCH\u2011Transformer combined hybrid architecture for forecasting Bitcoin volatility. Another goal is to measure whether there is any actual marginal forecasting benefit from investor sentiment obtained from the Reddit posts. We use information from Reddit with the subreddit r/Bitcoin from 25th March 2021 to 30th December 2024. We collaborate with the open-source ProsusAI/finbert language model that has been trained for financial text tasks to construct a daily sentiment score based on the number of upvotes given to the post\u2011comment. In the hybrid model we constructed, the one-step-ahead conditional-variance values produced by EGARCH are used as other features as input to the Transformer network. The results from controlled feature-ablation tests show that, in general, using structured volatility inputs (volatility realized from volatility inputs) and EGARCH conditional volatility outputs yield better forecasts. Social media sentiment data of investors, by comparison, has mixed results. Under specific combinations of features, sentiment boosts the accuracy of predictions, but in other experimental settings, it hinders the accuracy of predictions. We have problems consistently filtering subjective signals from forum text by retail investors with our hybrid EGARCH\u2011Transformer implementation. Results indicate that the performance of hybrid models is much more influenced by the composition of the input features and quality of the raw data than by adding additional predictor variables to the network.",
+  "url": "https://aemps.ewapub.com/article/view/38470.pdf",
+  "source": "OpenAlex",
+  "date": "2026-11-03",
+  "score": 11,
+  "queued": "2026-11-08",
+  "text_file": "knowledge/papers/openalex_W7225181963.txt"
+ },
+ {
+  "id": "openalex:W4389500878",
+  "title": "Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-switching L\u00e9vy models",
+  "abstract": "We analyze the qualitative differences between prices of double barrier no-touch options in the Heston model and pure jump KoBoL model calibrated to the same set of the empirical data, and discuss the potential for arbitrage opportunities if a jump process fits the joint dynamics of the underlying and exotic option of interest well but the counterparty uses a diffusion model for pricing, which fits vanilla prices equally well or even marginally better. We explain fundamental difficulties for pricing barrier options under L\u00e9vy processes of infinite activity and locally finite variation, with drift, using the numerical methods available in the literature, and develop a new efficient method based on the Gaver-Wynn-Rho acceleration applied to the Bromwich integral. The SINH-acceleration and simplified trapezoid rule are used to evaluate perpetual double barrier options for each value of the spectral parameter in the GWR-algorithm. The program in Matlab running on a Mac with moderate characteristics achieves the precision of the order of E-5 and better in several dozens of milliseconds; the precision E-07 is achievable in about 0.1 s. We extend the GWR-SINH method to regime-switching models and regime-switching models with memory. We outline approximations of models with stochastic volatility and interest rate and lifted Heston model by regime-switching models and the fractional Heston model by a regime-switching model with memory.",
+  "url": "https://arxiv.org/pdf/2312.03915",
+  "source": "OpenAlex",
+  "date": "2026-11-04",
+  "score": 11,
+  "queued": "2026-11-08",
+  "text_file": "knowledge/papers/openalex_W4389500878.txt"
+ },
+ {
+  "id": "openalex:W7225268591",
+  "title": "Cross validation protocol sensitivity in small sample financial deep learning for gold price classification",
+  "abstract": "This study develops a pretrained visual representation pipeline for financial time series classification, applied to gold futures (GC = F) direction prediction, under a chronologically purged and embargoed cross validation protocol that avoids residual leakage a randomly assigned protocol can permit between non overlapping windows. Gold futures closing prices (2000\u20132025) are segmented into 207 non overlapping 30 day windows, rendered as three encodings (line, candlestick, Gramian Angular Field), and processed by pretrained visual encoders (DINOv2, ConvNeXt Tiny, CLIP) with balanced three class labels (SELL/HOLD/BUY). An exploratory encoder selection stage identifies the dual fusion of ConvNeXt Tiny and CLIP as the best of seven combinations (single split accuracy 73.8%; cross validated accuracy 64.0% \u00b1 6.0%); DINOv2 is evaluated only at this stage. This study\u2019s primary, confirmatory result comes from a single pass, five fold, purged and embargoed cross validation applied to six model and fusion variants: a raw OHLC baseline and three sequence native baselines (LSTM, GRU, a lightweight Transformer) remain indistinguishable from the 33.3% chance level, while the two pretrained visual representations retain a smaller but positive signal (ConvNeXt+CLIP: 44.0% accuracy, MCC = 0.158; Multi Encoding Fusion: 42.0% accuracy, MCC = 0.129). The 44.0% figure, not the exploratory 64.0% estimate, is this study\u2019s headline finding; a transaction cost backtest of the four non visual representations shows flat to mildly positive returns despite near chance accuracy. Pretrained visual representations retain a modest, above chance signal under a conservative protocol, underscoring that reporting cross validation protocol alongside headline accuracy is essential at this sample size.",
+  "url": "https://www.nature.com/articles/s41598-026-77141-0_reference.pdf",
+  "source": "OpenAlex",
+  "date": "2026-11-04",
+  "score": 11,
+  "queued": "2026-11-08",
+  "text_failed": true
+ },
+ {
   "id": "openalex:W7223032026",
   "title": "Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales",
   "abstract": "This work focuses on reconstructing a continuous implied volatility (IV) surface from a small number of option quotes, a fundamental task for option pricing and risk management. We propose Additive Martingale (AddMart), a few-shot IV surface reconstruction framework that satisfies static no-arbitrage conditions by construction. Rather than predicting IVs directly, AddMart maps sparse quotes to non-negative increment densities of an exponential additive martingale, from which valid risk-neutral marginals and IVs are recovered. By incorporating the no-arbitrage structure directly into its architecture, rather than enforcing it through regularization in the learning objective, AddMart produces IV surfaces that satisfy static no-arbitrage conditions throughout the domain. Extensive experiments on ten real-option datasets demonstrate that AddMart achieves competitive reconstruction accuracy with no material static arbitrage violations, while directly enabling the estimation of VaR, CVaR, and crash probabilities.",
@@ -154,6 +232,28 @@
   "score": 10,
   "queued": "2026-10-25",
   "text_file": "knowledge/papers/openalex_W7223136003.txt"
+ },
+ {
+  "id": "openalex:W7225177789",
+  "title": "DerivFlow Finance: option pricing and risk in Python",
+  "abstract": "A Python library for European and American option pricing, Greeks, implied volatility, Monte Carlo with variance reduction, barrier and Asian options, the Heston model, volatility surfaces and portfolio VaR, with results cross-checked against QuantLib, py_vollib and published reference values.",
+  "url": "https://doi.org/10.5281/zenodo.23932347",
+  "source": "OpenAlex",
+  "date": "2026-11-03",
+  "score": 10,
+  "queued": "2026-11-08",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W4415239971",
+  "title": "Call Option Price using Pearson Diffusion Processes",
+  "abstract": "This study introduces a framework for pricing European call options using Pearson diffusion processes with linear drift and quadratic squared diffusion. This class of diffusion processes follows Pearson type IV distribution as its invariant distribution which can effectively capture skewness and excess kurtosis, key empirical features of financial returns. We verify the Novikov condition for risk-neutral measure, and establish the existence of a unique strong solution of stock prices under this measure. We apply the method to Nifty 50 index options and find encouraging results compared to the Black-Scholes and Heston models.",
+  "url": "https://arxiv.org/pdf/2508.14577",
+  "source": "OpenAlex",
+  "date": "2026-11-06",
+  "score": 10,
+  "queued": "2026-11-08",
+  "text_file": "knowledge/papers/openalex_W4415239971.txt"
  },
  {
   "id": "arxiv:2610.31141v1",

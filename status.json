@@ -94,7 +94,7 @@
   "No FOMC, CPI or jobs report on Mon 09 Nov."
  ],
  "learning": [
-  "LEARNING: 279 papers read (45 more skipped as not relevant enough), 140 ideas tested on my memory, 2 promising.",
+  "LEARNING: 282 papers read (45 more skipped as not relevant enough), 140 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Stock-level volatility forecasting using machine learning: A comparative study of GARCH, Random Forest, LSTM,  (\u2605\u2605\u2605\u2606\u2606)",
   "  Random Forest gave the lowest forecasting error (mean RMSE 0.0892) for 5\u2011day realized volatility of individual US stocks, beating LSTM, GRU and classic GARCH models, and it trains about seven times faster than deep\u2011learn",
@@ -113,9 +113,9 @@
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
-  "This week's tests: 48 run - 2 promising, 28 not confirmed, 1 don't fit my data, 17 translation failures",
+  "This week's tests: 51 run - 2 promising, 29 not confirmed, 1 don't fit my data, 19 translation failures",
   "",
-  "40 papers waiting in my queue."
+  "49 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -195,14 +195,13 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-07)",
-  "I keep seeing a modest +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but none of my intraday strategies tap it. My range forecasts are still ~38% off, limiting position sizing. I need a cheap, high\u2011frequency signal that works when gamma is low. I'll test a simple open\u2011breakout idea and also quantify the first\u2011hour return distribution on low\u2011gamma days.",
+  "VOLTA'S SELF-CHECK (2026-11-08)",
+  "I still see a consistent +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but none of my intraday strategies capture it. My range forecasts are ~38% off, hurting position sizing. The only strategy with any positive edge is the low\u2011gamma open\u2011breakout family, which still drifts near zero after transaction costs. I need a cleaner, high\u2011frequency signal that directly links low\u2011gamma regimes to short\u2011term directional moves.",
   "",
   "WISHES (what I need to get better):",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
-  "#31 [for Claude] Provide 5\u2011minute intraday GEX rank series - All my low\u2011gamma experiments require intraday GEX, but I only have daily values; current blockers prevent testing finer\u2011grained signals.",
-  "#32 [for Claude] Add calibrated temperature scaling to ensemble forecasts - My ridge + neural ensemble still over\u2011confident; recent literature shows single\u2011parameter temperature scaling improves calibration and downs",
+  "#33 [for Claude] Implement calibrated temperature scaling for ensemble forecasts - Current ridge+neural ensemble is over\u2011confident, leading to missed trade signals; calibrated scaling should improve probabilistic thresholds",
   "",
   "Recently granted: #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut; #23 Intraday option chain snapshots (0\u2011DTE) every 5\u202fmin; #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],

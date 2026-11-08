@@ -1,0 +1,890 @@
+Mathematical Framework for Dynamic Downside-
+Minimizing Portfolio with Exotic Option Overlay
+Antarik Bansal 
+BASIS Chandler https://orcid.org/0009-0007-0664-4025
+Research Article
+Keywords: Downside risk, semivariance optimization, portfolio optimization, exotic options, Monte Carlo
+simulation, dynamic rebalancing
+Posted Date: November 5th, 2026
+DOI: https://doi.org/10.21203/rs.3.rs-11613518/v1
+License:   This work is licensed under a Creative Commons Attribution 4.0 International License.  
+Read Full License
+Additional Declarations: The authors declare no competing interests.
+Mathematical Framework for Dynamic
+Downside-Minimizing Portfolio with Exotic
+Option Overlay
+Antarik Bansal 1*
+1*Independent Researcher, BASIS Chandler, 4825 S Arizona Ave,
+Chandler, 85286, AZ, USA.
+Corresponding author(s). E-mail(s): rikbansal02@gmail.com;
+Abstract
+This study develops and evaluates a dynamic downside-minim izing portfolio
+through ﬁve stages. Starting with a 4-asset universe of equity, bonds, gold, and
+a volatility instrument, the portfolio is expanded to 13 and the n 21 assets while
+incorporating mean-semivariance optimization, Asian arithme tic-average puts,
+American puts valued with Longstaﬀ–Schwartz Least-Squares Mo nte Carlo, cov-
+ered calls, momentum tilts, and regime-aware rebalancing. The ﬁ nal stage targets
+a 15% expected return. Portfolio performance is evaluated using corre lated Geo-
+metric Brownian Motion with 20,000 Monte Carlo paths over a one- year horizon.
+The four-asset semivariance-optimized portfolio has a Sortino rat io of 2.04 and
+a maximum simulated loss of −23.7%, compared with 1.20 and −45.9% for
+SPY. Adding Asian and American puts increases the Sortino ratio t o 2.26 and
+reduces maximum simulated loss to −8.8%. The 13-asset buy-and-hold port-
+folio reaches a mean Sortino ratio of 5.81. Among the rebalancing s trategies
+tested, calendar rebalancing produced the highest mean Sortin o ratio of 9.62.
+The 21-asset portfolio with a 15% return target has a Sortino ratio of 4.06 and
+maximum simulated loss of −28.8%; the full option overlay reduces the latter
+to −9.1%. These results characterize the tradeoﬀs among diversiﬁcation, down-
+side protection, return targets, and adaptive rebalancing withi n the simulated
+framework.
+Keywords: Downside risk, semivariance optimization, portfolio opti mization, exotic
+options, Monte Carlo simulation, dynamic rebalancing
+1
+1 Introduction
+The critical balance in a portfolio is between two conﬂicting goals: max imize expected
+return and minimize risk on the downside. The Markowitz mean-vari ance framework
+Markowitz (1952) tackles this dilemma by assuming that upside and downside volatil -
+ity are symmetrical, which is odd in light of the observed behavior of investors and
+odd in light of a concave utility function and expected-utility th eory Kahneman and
+Tversky (1979). Sortino and Price Sortino and Price (1994) suggest that downside
+semivariance is a better measure of risk, as it is zero when returns exceed a minimum
+acceptable return τ but is only penalized when returns fall below that threshold.
+The full development of one such portfolio, featuring an overlay of exot ic options
+and progressively expanded to attain a higher return level through dow nside semi-
+variance minimization, is followed. To provide insight into each de sign decision, we
+document the decision as it was made, its mathematical justiﬁcation, an d the simula-
+tion results that validated or challenged it. This lineage-based approach is motivated
+by two considerations: ﬁrst, portfolio construction is an iterative p rocess in which each
+step constrains the next; second, this approach keeps a clean account of what is proved
+versus assumed in the model.
+A summary of the development of the portfolio:
+• Stage 1 — 4-asset baseline: Equity + bonds + gold + vol-instrument,
+buy and hold, no options. Sets up the diversiﬁcation baseline and semi variance
+optimization framework.
+• Stage 2 — Asian and American put overlay: Overlays an exotic option
+program on top of the 4-asset base. Demonstrates analytically that, under the
+stated payoﬀ and exercise assumptions, the American put overlay est ablishes
+a lower bound on terminal portfolio value after accounting for the option p re-
+mium, and introduces the path-averaging variance-reduction proper ty of the
+Asian option Kemna and Vorst (1990).
+• Stage 3 — 13-asset optimized portfolio: Adds 10 large-cap proxies to the
+equity sleeve. The larger asset set provides a greater number of ret urn sources
+that are not highly correlated, resulting in a signiﬁcant increase in t he optimizer’s
+Sortino ratio at the same return level.
+• Stage 4 — Enhanced EV strategies: Four strategies are tested against
+the buy-and-hold base: covered calls (premium income); momentum f actor tilts
+(21-day trigger, dynamic trailing-return weights); calendar rebalanci ng (21-
+day trigger, ﬁxed optimizer weights — identical trigger to momentum t ilt,
+diﬀering only in target weights); and regime-aware rebalancing (Frobe nius-
+norm-triggered, ﬁxed optimizer weights). The 13-asset buy-and-hold b ase is the
+benchmark for each comparison.
+• Stage 5 — 21-asset 15% return target: Expands to growth asset classes
+(SmallCap, EM, TechGrowth, Biotech, MicroCap, REIT, Commodities, HiYield)
+to gain access to higher expected returns, drawing on documented s ize and factor
+premia Fama and French (1993). The numerical frontier analysis indicates that
+a 15% expected return carries a minimum reported semiDD of 3.70% under the
+model constraints, illustrating the risk-return tradeoﬀ implie d by the model.
+2
+2 Mathematical Foundations
+2.1 Geometric Brownian Motion
+Asset prices are modeled with the classic continuous-time equity price process, Geo-
+metric Brownian Motion (GBM) Black and Scholes (1973). The SDE and its exact
+closed-form solution, obtained via Itˆ o’s lemma, are:
+dSi,t = µiSi,t dt + σiSi,t dWi,t (1)
+Si,t = Si,0 · exp
+[(
+µi − 1 2 σ2 i ) t + σiWi,t ] (2)
+The variance drag, − 1 2 σ2 i , forms a wedge between the actual compound growth
+rate, µi − 1 2 σ2 i , and the arithmetic mean return µi. This means a stock with µ = 10%
+and σ = 20% compounds at 10% − 2% = 8%, a diﬀerence that can materially aﬀect
+portfolio return targets. For N correlated assets, we perform a Cholesky decomposition
+L = chol(Σ) and obtain correlated Brownian increments dW = LZ
+√
+dt, where Z ∼
+N (0, I). Because we do not use Euler–Maruyama discretization, there is no s tep-size
+bias. We review two additional risk metrics below.
+2.2 Downside Semivariance and the Sortino Ratio
+The downside semivariance of a portfolio with return R(w) and minimum acceptable
+return τ is (following the downside-risk framework of Sortino and Price Sortino and
+Price (1994)):
+σ2 d(w) = E [ min(R(w) − τ, 0)2] (3)
+Downside semivariance quantiﬁes shortfall below the target. The Sor tino ratio
+Sortino and Price (1994) is used to quantify the quality of a given portfolio, trading
+oﬀ low downside deviation against expected return:
+Sortino = E[R] − τ σd(w) (4)
+where E[R] is the expected portfolio return, τ is the minimum acceptable return
+(MAR), and σd(w) is the downside deviation (the square root of the downside
+semivariance).
+A note on notation: τ in Eq. 3–4 (the MAR used to compute downside deviation
+and the Sortino ratio) and the “target return” in the optimizer’s constr aint (Eq. 5,
+Sec. 4.2 Eq. 10) are two distinct quantities, both of which this paper u nfortunately
+denotes with language that can look interchangeable. In every reported re sult in this
+paper, τ = 0% is the value actually used for the Sortino/semivariance calculation —
+this can be conﬁrmed by back-solving τ = E[R] − Sortino × σd from the mean return,
+downside deviation, and Sortino ratio reported in any row of Tables 3, 5, 6, 7, 8, or
+13, all of which are consistent with τ ≈ 0% to within rounding. The “target return”
+(6.76% in Stages 1–4; 7–15% in the Stage 5 frontier of Table 10) is a separate return-
+ﬂoor constraint on the optimization itself (Eq. 5) and does not enter the Sortino ratio’s
+denominator or numerator threshold.
+3
+2.3 The Constrained Optimization Problem
+At each stage, portfolio weights are found by solving the mean-semivarian ce program
+following the formulation discussed by Estrada and related semivari ance optimization
+work Estrada (2008); Ben Salah et al. (2018); Rigamonti and Luˇ civjansk´ a(2024).
+Recent work by Ferrari et al. further addresses the numerical challenges of semivariance
+estimation and optimization, particularly for portfolios with many assets Ferrari et al.
+(2026):
+min
+w
+1
+M
+∑
+m
+[
+min
+(
+R(m)(w) − τ, 0 )]2 s.t. E[R(w)] ≥ target return , 1⊤w = 1, w ≥ 0
+(5)
+The problem is solved using Sequential Least Squares Programming (SLSQ P)
+with N = 10 random restarts, to avoid stopping at a local rather than global
+optimum. Because the benchmark is feasible, a true global minimizer would satisfy
+σ2 d(w∗) ≤ σ2 d(wbench). The numerical procedure used here seeks such a solution through
+SLSQP with multiple random restarts; convergence should therefore b e interpreted as
+numerical evidence rather than a formal global-optimality proof.
+4
+3 Methods
+The option pricing methodology includes Asian puts, American puts, and covered calls.
+3.1 Asian Arithmetic-Average Puts
+The Asian option payoﬀ is max( K − ¯A, 0) where ¯A = 1 n ∑ i Si. The key property,
+established by Kemna and Vorst Kemna and Vorst (1990), is variance reduction via
+averaging:
+Var
+(
+1
+n
+∑
+i
+Xi
+)
+= 1 n2 ∑ i ∑ j Cov(Xi, Xj) < Var(Xi) when ρij < 1 (6)
+When the observations are imperfectly correlated, averaging can redu ce the vari-
+ability of the average relative to that of an individual observation, depe nding on
+the underlying covariance structure. This is the same averaging e ﬀect that underlies
+portfolio diversiﬁcation, applied along the time axis rather than across assets. Conse-
+quently, an arithmetic-average Asian option can exhibit lower payoﬀ var iability than
+an otherwise comparable option based on a single terminal observation. In t he reported
+simulation, the arithmetic-average Asian option is priced below the c orresponding
+European option under the assumed parameterization.
+Pricing is performed via Monte Carlo with a geometric control variate Kemna and
+Vorst (1990). The geometric-average Asian option has a closed-form solution, with
+the corresponding eﬀective parameters represented by σG and µG, and its payoﬀ is
+highly correlated with that of the arithmetic-average Asian option. The c ontrol-variate
+adjustment reduces the Monte Carlo standard error by roughly 40 ×.
+3.2 American Puts — Longstaﬀ–Schwartz LSM
+Pricing an American put is an optimal-stopping problem:
+V0 = sup
+τ ∈T
+EQ[ e−rτ h(Sτ ) ] (7)
+with no closed-form solution. The Longstaﬀ–Schwartz LSM algorithm Longstaﬀ and
+Schwartz (2001) solves this via backward induction with regression: for in-the-mon ey
+paths, the discounted future cash ﬂow Y is regressed against a polynomial basis of St,
+estimating the continuation value
+ˆC(St) = β0 + β1St + β2S2 t (8)
+at each step t; the option is exercised whenever h(St) > ˆC(St). Benchmarked
+against the Black–Scholes European put Black and Scholes (1973): American = 4 .23,
+European = 4 .03, early-exercise premium = +0 .20, consistent with the standard early-
+exercise framework; see also Merton Merton (1973) and Vivas-Redondo et al. Vivas-
+Redondo et al. (2025).
+Early exercise ﬁnding: 6.9% of paths exercise early, with mean exerci se date at
+day 188/252 for the American put at K = 92% on the 4-asset portfolio. This matches
+expectation: with rf = 4%, a non-dividend-paying underlying, and a strike 10% OTM,
+5
+the incentive to exercise early (locking in the strike and earni ng interest) does not
+generally exceed the remaining optionality. The LSM regression correc tly reveals this
+in each path.
+3.3 Covered Calls — Black–Scholes
+The payoﬀ of a covered call (long the portfolio, short a call at strike Kcc) is:
+min(VT , Kcc) + Cprem · erT − 1 (9)
+By put–call parity Black and Scholes (1973); Merton (1973), this strategy (i)
+increases the mean return by the call premium, (ii) truncates the right tail at Kcc,
+and (iii) provides no direct downside protection. Because the pr emium is received
+regardless of the terminal portfolio value, it can modestly improve d ownside outcomes
+while the short call limits gains above Kcc. The Sortino ratio improves the more that
+premium income outweighs the tail-truncation cost.
+6
+4 Results
+4.1 Stage 1: The 4-Asset Baseline Portfolio
+4.1.1 Asset Universe and Parameter Assumptions
+The initial asset universe consists of four assets, chosen to span the major cross-asset
+diversiﬁcation axes. This asset universe and corresponding paramete r assumptions are
+summarized in Table 1
+T able 1 Stage 1 asset universe and parameter assumptions
+Asset Proxy µ
+(assumed)
+σ
+(assumed)
+Key cor-
+relation
+Role
+Equity SPY-like 9% 18% 1.00
+(anchor)
+Growth
+engine
+Bonds AGG-like 3% 6% −0.20 to
+equity
+Stabilizer
+Gold GLD-like 4% 15% +0 .10 to
+equity
+Mild
+diversiﬁer
+Vol-
+instrument
+VIX-like −5% 80% −0.70 to
+equity
+Crash
+insurance
+The vol-instrument has a correlation of −0.70 with equity, making it useful during
+market crashes because it tends to rise when equities decline. T his negative correlation
+provides a potential hedge against equity losses, although its negative e xpected return
+represents a cost. The optimizer determines whether this crash protection justiﬁes the
+associated return trade-oﬀ.
+4.1.2 Optimization Results and W eight Rationale
+To optimize the weightings of the four assets, we use the SLSQP algorithm discussed
+previously. To determine the best solution, the optimizer ranks w eightings using the
+Sortino calculation. The target return is set using:
+target return = rf +0.5×(µequity,simulated−rf ) = 4%+0 .5×(9.53%−4%) = 4%+2 .76% = 6 .76%
+(10)
+where rf is the risk-free rate and µequity,simulated is the equity asset’s realized
+mean return across the 20,000 simulated paths (9.53%, close to but not identi cal to
+the 9% input assumption, since simulated paths carry sampling variati on around the
+theoretical mean). Note this uses the empirically simulated equity mean, not the raw
+9% input parameter, this is what the implementation actually computes , and it is the
+target reused unchanged in every later stage for comparability. Table 2 presents the
+optimized weights
+7
+T able 2 Stage 1 optimized weights
+Asset Optimized
+W eight
+Intuition
+Equity 61.7% Primary return source; still the
+dominant allocation
+Bonds 30.3% −0.20 correlation oﬀsets equity downside
+at low vol cost
+Gold 4.0% Small; modest second-order diversiﬁer
+Vol-instrument 3.9% Despite −5% return, −0.70 correlation
+earns its place
+Why is bonds 30.3% when optimized? Adding bonds has two eﬀects:
+• It decreases portfolio semivariance via the negative cross-term 2 wewbρebσeσb <
+0.
+• It lowers expected return by six percentage points per dollar move d from equity
+to bonds.
+The marginal reduction in semivariance from an additional dollar of bonds equ als the
+marginal cost of the return constraint at the optimum (the Lagrangian condition ).
+These two eﬀects balance at 30.3%. Why 3.9% vol-instrument despite negative
+expected return? The optimizer allocates 3.9% to the vol-instrument because its
+extreme negative correlation with equities during crashes outweigh s the expected-
+return drag, lowering overall portfolio semivariance. This weight r epresents the point
+where the marginal diversiﬁcation beneﬁt is exactly countered by th e marginal drag
+on returns.
+4.1.3 Stage 1 Results: Before Options
+The Stage 1 results before option overlay are shown in Table 3
+T able 3 Stage 1 results before option overlay.
+Metric SPY (100% equity) Equal-weight 4-asset Optimized 4-a sset
+Mean return 9.5% 2.8% 6.8%
+Downside deviation 7.97% 7.31% 3.31%
+Sortino ratio 1.20 0.38 2.04
+95% VaR −20.1% −15.7% −8.5%
+Max simulated loss −45.9% −30.3% −23.7%
+Prob. of loss 34% 58% 28%
+The equal-weight portfolio underperforms SPY on a Sortino-ratio basis (0.38 vs.
+1.20) because a ﬂat 25% allocation to the vol-instrument, with its −5% return, pays
+8
+heavily for diversiﬁcation the optimizer would otherwise obtain more cheaply. Addi-
+tionally, an improvement is evident between simply buying a SPY- like stock and the
+optimized weightings. Fig 1a depicts the full return distribution and Fig 1b highlights
+left tail zoom comparing SPY benchmark with Stage 1 optimized portfolio.
+Fig. 1 Stage 1 portfolio return distributions. (a) Full return dis tribution comparing the SPY bench-
+mark with the Stage 1 optimized portfolio. (b) Left-tail zoo m highlighting downside diﬀerences
+4.2 Stage 2: Asian and American Put Overlay on the 4-Asset
+Portfolio
+4.2.1 Option Contract Speciﬁcations
+Table 4 below presents Stage 2 Option Contract Speciﬁcation
+T able 4 Stage 2 option contract speciﬁcations.
+Option Type Strike Notional Premium Role
+American put LSM-priced, 92% of
+starting value
+100% of portfolio 0.45% Tail protection —
+hard ﬂoor on
+terminal loss
+Asian put MC + control
+variate, 96% of
+average value
+100% of portfolio 0.36% Path-average
+protection —
+guards against
+sustained drawdown
+4.2.2 The Provable Left-T ail Floor
+For any realized portfolio terminal value VT and American put with strike K and
+grown premium pT = p · erT :
+9
+Hedged(VT ) = VT + max(K − VT , 0) − pT (11)
+When VT < K : Hedged = VT + (K − VT ) − pT = K − pT . The ﬂoor is K − pT
+regardless of how low VT falls. This holds path-by-path, not merely on average, it is a
+deterministic consequence of the put payoﬀ function, not a statist ical result.
+4.2.3 Stage 2 Results: After Option Overlay
+Stage 2 results after option overlay is shown in Table 5.
+T able 5 Stage 2 results after the Asian and American put overlay.
+Metric Optimized (no
+hedge)
++ American
+put only
++ Asian put
+only
++ both puts
+(ﬁnal)
+Mean return 6.8% 6.5% 6.6% 6.3%
+Downside deviation 3.31% 2.94% 3.04% 2.76%
+Sortino ratio 2.04 2.20 2.16 2.26
+Max simulated loss −23.7% −8.5% −18.5% −8.8%
+95% VaR −8.5% −8.5% −7.8% −7.3%
+The put overlay reduces the maximum loss from −23.7% to −8.8%, roughly a 63%
+reduction in worst-case loss, for an expected-return cost of 0.5 perce ntage points — an
+exact, measurable insurance cost of 0.81% of portfolio value per year (0.45% Amer ican
++ 0.36% Asian premium) in exchange for a hard cap on the left tail. Sizing each put
+leg independently shows the American put alone already produces a h ard ﬂoor near
+−8.5% (its max loss and 95% VaR converge, since the strike creates a literal ﬂo or on
+outcomes), while the Asian put alone is materially cheaper protection wi th a softer,
+path-averaged ﬂoor — its max loss ( −18.5%) is well above the unhedged portfolio’s
+(−23.7%) but nowhere near as tight as the American put’s hard ﬂoor, since a sin gle
+bad terminal price can still occur even if the path average stayed re asonable. The
+results are shown in Fig 2a and Fig 2b
+4.3 Stage 3: The 13-Asset Optimized Portfolio
+4.3.1 Expanding the Equity Sleeve
+The single equity asset from Stage 1 is replaced by 10 large-cap equity pr oxies with
+µ = 9–12% and σ = 17–25%. These stocks are not perfectly correlated with each
+other (loadings of only 0.55–0.75 on the common market factor), leaving idiosyncr atic
+volatility in every stock. A three-factor model (market, rates, vol atility) is used to
+construct the correlation matrix, ensuring positive semi-deﬁnit eness.
+The key idea behind the expansion is that the optimizer gains more ind ependent
+“handles” with which to build low-semivariance combinations, rathe r than choosing
+only among equity, bonds, gold, and the vol-instrument.
+10
+Fig. 2 Stage 2 return distribution and left-tail comparison of the unhedged and hedged portfolios
+4.3.2 Stage 3 Optimization Output
+Target return: reused unchanged from Stage 1, 6.76% (same target as every prior stage,
+so the Sortino comparison below isolates the eﬀect of a wider asset uni verse rather
+than a change in the return bar). Table 6 shows the stage 3 optimization output.
+T able 6 Stage 3 optimization output.
+Metric SPY proxy Equal-weight 13-asset 13-asset optimized
+Mean return 9.5% 8.3% 6.8%
+Downside deviation 7.97% 3.18% 1.16%
+Sortino ratio 1.20 2.63 5.85
+Max simulated loss −45.9% −19.5% −13.1%
+The Sortino ratio of 5.85 is well above the Stage 1 optimum of 2.04. The improv e-
+ment arises from the expanded opportunity set and the associated redu ction in
+downside covariance under the model’s correlation assumptions, rat her than from a
+change in the target return. Fig 3a depicts Stage 3 Return distribution and Fig 3b
+depicts left-tail zoom for single stock benchmark and the Stage 3 optim ized portfolio.
+4.4 Stage 4: Enhanced EV Strategies on the 13-Asset Portfolio
+The 13-asset optimized portfolio is the base for three EV-boosting strat egies, tested
+independently to isolate each eﬀect.
+4.4.1 Strategy A: Covered Call Overlay
+A covered call is sold at Kcc = 110% (10% OTM) on total portfolio notional. Premium
+is collected at t = 0 and invested at the risk-free rate. The call is exercised only on
+paths with returns above 10%, capping upside but also reducing down side deviation.
+Shown in Table 7 is the covered call overlay result.
+11
+Fig. 3 Stage 3 return distribution and left-tail comparison of the single-stock benchmark and the
+Stage 3 optimized portfolio
+T able 7 Stage 4a: covered call overlay results.
+Metric 13-asset base + Covered calls
+Mean return 6.8% 5.9%
+Downside deviation 1.16% 0.91%
+Sortino ratio 5.85 6.48
+Max loss −13.1% −12.2%
+The Sortino improvement conﬁrms the covered call strategy’s bene ﬁt. The call
+premium (0.85% of notional) is a ﬁxed addition to return, but capping the right tail
+also removes the often-large upside paths beyond the strike. In thi s simulation that
+capping eﬀect outweighs the premium, so mean return falls even as do wnside deviation
+falls further still, and the Sortino ratio improves overall. Fig 4a depicts the return
+distribution showing the eﬀect of capped upside and Fig 4b depicts the left tail zoom
+with limited change.
+4.4.2 Strategy B: Momentum F actor Tilt
+Every 21 trading days, portfolio weights are tilted toward assets wit h the strongest
+trailing 63-day (3-month) simulated returns, blending a 30% momentum tilt with the
+70% base weights:
+wﬁnal = 0.70 × wbase + 0.30 × wmomentum (12)
+where wmomentum is proportional to trailing returns (long-only, re normalized).
+Across 1,000 independent simulation trials, the momentum tilt produc ed a mean
+Sortino ratio of 4.29, underperforming buy-and-hold (mean 5.81) in 98.6% of tri als.
+The momentum tilt shares the same 21-day calendar trigger as the calendar r ebal-
+ancing strategy and diﬀers only in using dynamic trailing-return-bas ed weights rather
+12
+Fig. 4 Covered-call strategy. (a) Return distribution showing th e eﬀect of the capped upside. (b)
+Left-tail zoom shows limited change in downside outcomes re sulting from the covered-call premium
+than ﬁxed optimizer weights. The performance decline relative to b uy-and-hold there-
+fore isolates the cost of dynamic versus ﬁxed target weights: because GB M carries no
+return autocorrelation, the dynamic weights contribute only addition al concentration
+risk rather than genuine predictive signal. In real markets where em pirical momentum
+eﬀects exist, results may diﬀer. Fig 5a depicts the return distribution comparing the
+baseline and momentum-tilted portfolios and Fig 5 depicts the Left-tail zoom showing
+the widening of downside outcomes under the momentum tilt.
+Fig. 5 Momentum tilt and portfolio return distributions. (a) Retu rn distribution comparing the
+baseline and momentum-tilted portfolios. (b) Left-tail zo om showing the widening of downside out-
+comes under the momentum tilt
+4.4.3 Strategy C: Calendar Rebalancing
+As a natural complement to the momentum tilt, a standalone calendar rebal ancing
+strategy is evaluated using the same 21-day trigger but always restoring the ﬁxed
+13
+optimizer weights w* rather than a dynamic trailing-return-based tar get:
+wﬁnal = w∗ every 21 trading days. (13)
+This isolates the eﬀect of the rebalancing trigger itself, holding th e target weights
+constant. Across 1,000 independent simulation trials (500 paths each), cale ndar rebal-
+ancing produced a mean Sortino ratio of 9.62, outperforming buy-and-hold (mean
+5.81) in 100% of trials. The results are presented in Table 8.
+T able 8 Strategy C: calendar rebalancing results.
+Metric 13-asset base + Calendar rebalancing
+Mean return 6.8% 5.9%
+Downside deviation 1.16% 0.91%
+Sortino ratio 5.81 † 9.62†
+Max loss -13.1% -12.2%
+Rebalances per year 0 12 (ﬁxed)
+†Mean across 1,000 independent simulation trials (500 paths each).
+The improvement over buy-and-hold arises because periodic rebal ancing prevents
+the portfolio from drifting away from the semivariance-minimizin g weights w*. If equi-
+ties run up strongly, the unmanaged portfolio becomes over-concentrat ed in equity and
+its downside risk proﬁle changes; restoring w* every 21 days maintai ns the optimizer’s
+intended risk structure throughout the year.
+Comparing this result directly to the momentum tilt (mean Sortino 4.29,
+Section 4.4.2) isolates the cost of dynamic versus ﬁxed target weights: both strategie s
+rebalance on the same 21-day schedule, but the momentum tilt’s traili ng-return-based
+weights shift allocation away from the semivariance-minimizing sol ution for no infor-
+mational gain in a GBM setting that carries no return autocorrelation. Fi g 7a depicts
+the return distribution comparing the buy-and-hold base and the cale ndar-rebalanced
+portfolio; Fig 7b depicts the left-tail zoom.
+4.4.4 Strategy D: Regime-Aware Rebalancing
+This strategy monitors the rolling realized correlation matrix every 21 days and
+rebalances only when the Frobenius norm of change exceeds a threshold θ:
+∥Σt − Σt−lag∥F > θ ⇒ rebalance (14)
+Across 1,000 independent simulation trials, regime-aware rebalancing p roduced a
+mean Sortino ratio of 8.58, averaging 6.7 ”+-” 1.2 rebalances per year (range 3–10).
+This outperforms buy-and-hold (mean 5.81) in 100% of trials and the momentum t ilt
+(mean 4.29) in 100% of trials, but is outperformed by calendar rebalancing (me an 9.62,
+Section 4.4.3) in 91.9% of trials. The portfolio avoids rebalancing while the correlati on
+regime is unchanged, reducing unnecessary tracking error and transac tion costs, but
+responds promptly when correlations shift (e.g., a simulated ﬂight- to-quality event).
+This is a rule-based reaction to observed changes in correlation struc ture, not a forecast
+14
+of regime change. Because GBM generates stationary correlations by constru ction,
+the Frobenius norm trigger responds to sampling noise rather than genui ne regime
+shifts, which explains why calendar rebalancing outperforms it wit hin this simulation
+framework. Regime-aware rebalancing may oﬀer advantages in real markets w here
+correlations genuinely shift across economic regimes, but that hypothe sis is not testable
+within the present GBM design.
+Fig 6a depicts Regime-aware rebalancing eﬀect and Fig 6b depicts left-tail zoom.
+Fig. 6 Regime-aware rebalancing and portfolio return distributi ons. (a) Return distribution compar-
+ing the baseline and regime-aware portfolios. (b) Left-tai l zoom highlighting diﬀerences in downside
+outcomes under regime-aware rebalancing
+Table 9 below presents the summary across all EV-boosting strategies
+T able 9 Stage 4 summary across all EV-boosting strategies.
+Strategy Sortino Mean Return Max Loss Rebalances
+13-asset base (no overlay) 5.81 † 6.8% -13.1% 0 (buy-and-hold)
++ Covered calls 6.48 5.9% -12.2% 0
++ Momentum tilt (30%) 4.29 † 7.5% -18.0% 12 (monthly, dynamic weights)
++ Calendar rebalancing 9.62 † 5.9% -12.2% 12 (monthly, ﬁxed weights)
++ Regime-aware rebalancing 8.58 † 6.6% -10.3% 6.7 1.2 (signal-driven)
+†Mean Sortino across 1,000 independent simulation trials (5 00 paths each).
+Calendar rebalancing outperformed regime-aware in 91.9% o f trials; momentum tilt
+underperformed buy-and-hold in 98.6% of trials.
+Momentum tilt and calendar rebalancing share the same 21-da y trigger; they diﬀer
+only in target weights (dynamic vs. ﬁxed).
+Across 1,000 independent simulation trials, the rebalancing strategies ranked as
+follows by mean Sortino ratio: calendar rebalancing (9.62) >regime-aware rebalanc-
+ing (8.58) >buy-and-hold base (5.81) >momentum tilt (4.29). Calendar rebalancing
+outperformed regime-aware in 91.9% of trials; the momentum tilt underp erformed
+15
+Fig. 7 Calendar rebalancing and portfolio return distributions. (a) Return distribution comparing
+the buy-and-hold base with the calendar-rebalanced portfo lio. (b) Left-tail zoom highlighting diﬀer-
+ences in downside outcomes under calendar rebalancing.
+buy-and-hold in 98.6% of trials. Within a GBM framework where correlation s are sta-
+tionary by construction, calendar rebalancing to ﬁxed optimizer weigh ts is the most
+robust strategy. Regime-aware rebalancing may oﬀer advantages in real mark ets where
+correlation structure genuinely shifts, and the momentum tilt may add value where
+return autocorrelation exists, but neither hypothesis is testabl e within the present
+simulation design.
+16
+4.5 Stage 5: The 21-Asset 15% Return Target
+4.5.1 The Return Ceiling Problem
+Comparing Stage 3 and Stage 5 reveals a critical diagnostic: the highest assu med µ
+in the 13-asset universe (12% for LgCap E) sets a hard ceiling on achievable p ortfolio
+return. Because the set of feasible long-only portfolios is a convex comb ination of
+individual asset returns (Theorem (vi), Sec. 10.1: E[R] ≤ maxi µi), no such portfolio
+can exceed this ceiling — and the ceiling itself is set by LgCap E’s simulated realized
+mean across the 20,000 paths, not its 12% input assumption, which is why it lan ds near
+12.75% rather than exactly 12% (the same simulated-vs-assumed sampling var iation
+documented for equity in Section 4.2, where the 9% assumption realize d as 9.53%; the
+same ≈ 6% relative uplift applied to 12% lands at ≈ 12.7%). Reaching 15% requires
+assets with µ > 12% — a structural feature of the feasible set, not a modeling choice.
+4.5.2 The 8 New Growth Assets
+Stage 5 growth asset universe is shown in Table 10.
+T able 10 Stage 5 growth asset universe. Size and value premia are cons istent with the factor
+evidence of Fama and French (1993).
+Asset µ Assumed σ Assumed Rationale for µ Assumption
+SmallCap 16% 28% Small-cap premium, +3–4% over
+large-cap(80-yr US history)( Fama
+and French (1993))
+EmergMkt 17% 30% MSCI EM historical premium,
++4–5% over US large-cap
+TechGrowth 18% 32% Sector concentration; historical
+20-yr outperformance vs. S&P 500
+Biotech 20% 40% High idiosyncratic return;
+compensates for binary event risk
+HiYield 14% 22% Credit spread income + equity-like
+upside; Sortino-friendly moderate
+vol
+MicroCap 22% 45% Highest documented size premium;
+extreme vol limits position size
+REIT 13% 20% Income + inﬂation hedge;
+moderate vol, low equity
+correlation
+Commodities 15% 25% Inﬂation hedge; 0.40 market factor
+loading, independent growth factor
+Higher-µ assets carry proportionally higher volatility: each additional percent
+of expected return arrives with roughly an additional percent of volatil ity. Higher
+assumed expected returns in the growth assets are accompanied by high er assumed
+17
+volatility, creating a more demanding downside-risk optimization p roblem. The opti-
+mizer’s task is to make the best use of the high- µ/high-σ assets while hedging as much
+downside variance as possible with bonds and the vol-instrument.
+4.5.3 The Eﬃcient F rontier: Numerical Cost of Higher Returns
+Stage 5 maps the eﬃcient frontier — the minimum achievable downside semiDD at
+each return level across the full 21-asset universe, as shown in Table 11
+T able 11 Eﬃcient frontier across the 21-asset universe.
+Return
+T arget Min. Achievable
+SemiDD
+Sortino at
+F rontier Max Loss Interpretation
+7% 1.22% 5.76 −13.3% Original 13-asset
+optimum
+9% 1.45% 5.13 −15.1% Moderate
+growth tilt
+11% 2.04% 3.89 −19.8% Signiﬁcant
+growth
+allocation
+13% 2.24% 3.91 −24.2% Primarily
+growth assets
+15% 3.70% 4.06 −28.8% Near-maximum
+feasible return
+Note: This table reports the numerically minimized semiDD for each return target under
+the stated long-only constraints and simulated return distribu tions. The optimization
+procedure uses multiple random restarts; the reported values shou ld therefore be inter-
+preted as numerical solutions rather than formal proofs of global op timality.
+4.5.4 Optimized Weights at the 15% T arget
+Optimized weight at 15% return target is presented in Table 12.
+The vol-instrument still shows 9.5%: the optimizer concentrates h eavily in high-
+vol growth assets (HiYield, REIT, Biotech, MicroCap) at the 15% return le vel, which
+are highly correlated in a crash. The vol-instrument’s negative mode led correlation
+with the growth assets provides diversiﬁcation when those assets e xperience negative
+returns, and the resulting semivariance reduction exceeds the n egative carry cost, more
+than justifying its retention relative to the less aggressive 7% targe t portfolio.
+4.5.5 F ull Option Overlay on the 15% Portfolio
+The same overlay logic from Stage 2 is applied, using deeper strikes t o reﬂect the higher
+portfolio volatility ( σport ≈ 15.7% vs. ≈ 8.7% in Stage 1). Because the 15% portfolio
+18
+T able 12 Optimized portfolio weights at the 15% return target.
+Asset W eight µ σ Optimizer’s Rationale
+HiYield 36.6% 14% 22% Best return/risk among
+growth assets; manageable σ
+REIT 30.6% 13% 20% Income + low vol;
+concentrated here for
+stability
+Biotech 10.6% 20% 40% High µ; capped position
+controls marginal
+semivariance
+MicroCap 9.9% 22% 45% Highest µ available; tiny
+allocation limits semiDD
+Vol-
+instrument
+9.5% −5% 80% −0.70 correlation to growth
+assets; crash insurance
+retained
+TechGrowth 2.8% 18% 32% Marginal diversiﬁcation
+beyond larger growth
+positions
+is materially more volatile than the Stage 1 base, its option premiums are c orrespond-
+ingly larger than Stage 2’s — they are not the same 0.45%/0.36% American/Asian
+premiums quoted in Table 4:
+Table 13 presents Full option overlay on the 15% target portfolio.
+T able 13 Full option overlay on the 15% target portfolio.
+Option Strike Premium Net Eﬀect
+American put 90% (10% OTM) 1.47% Hard ﬂoor on
+terminal loss at
+approx. −10.5%
+Asian put 95% (5% OTM on
+average)
+1.06% Path-average
+protection; cheaper
+than European put
+Covered call
+(sold)
+112% (12% OTM) −3.39% (income) Raises mean
+return; caps upside
+above +12%
+Net option cost — −0.87% (net
+income)
+Call income
+exceeds put cost;
+positive-carry book
+Puts-Only Variant (No Covered Call)
+19
+Table 14 reports the Base and full-overlay (both puts + covered call) endpoi nts
+for Stage 5. The table below adds the puts without the covered call, and e ach put in
+isolation, so the covered call’s own contribution can be seen on its ow n.
+T able 14 Stage 5 option overlay results, including a puts-only (no co vered call) variant.
+Metric Base (no
+hedge)
++ Amer-
+ican put
+only
++ Asian
+put only
++ both
+puts (no
+covered
+call)
++ both
+puts +
+covered
+call (full)
+Mean return 15.0% 13.3% 13.8% 12.1% 7.4%
+Downside
+deviation
+(semiDD)
+3.70% 3.69% 3.59% 3.73% 2.29%
+Sortino ratio 4.06 3.59 3.86 3.24 3.23
+Max simulated
+loss
+−28.8% −11.5% −24.6% −12.6% −9.1%
+Removing the covered call changes the picture materially. With bot h puts alone,
+the portfolio keeps most of its return (12.1% vs. 7.4% with the call sold) an d the hard
+ﬂoor from the American put still caps the worst case near −12.6%, well short of the
+unhedged −28.8%. What the covered call adds on top is upside-capping: without it,
+Sortino stays lower (3.24) because the puts alone don’t shrink the ups ide variance
+that also feeds into overall dispersion, whereas the mean-return c ost the covered call
+imposes (giving up roughly 4.7 points of mean return) buys the additional protection
+that caps the worst outcome a further ∼ 3.5 points tighter. In other words, the puts
+alone provide the primary tail-risk trade (protection funded by givi ng up a small,
+known premium), while the covered call adds premium income but al so sacriﬁces at the
+explicit cost of giving up the 15% return objective. The full overla y therefore represents
+a tradeoﬀ between additional downside-risk reduction and a materiall y lower mean
+return.
+20
+4.6 Full Portfolio Progression: Results Across All Stages
+Results across all stages in shown in Table 15
+T able 15 Full progression of results across all portfolio stages.
+Portfolio Stage Mean
+Return
+SemiDD Sortino Max Loss Key Addition
+SPY (single stock
+benchmark)
+9.5% 7.97% 1.20 −45.9% Baseline
+Stage 1: 4-asset
+optimized
+6.8% 3.31% 2.04 −23.7% Semivar
+optimization
+Stage 2: 4-asset +
+puts
+6.3% 2.76% 2.26 −8.8% Asian + American
+puts
+Stage 3: 13-asset
+optimized
+6.8% 1.16% 5.85 −13.1% Wider equity
+universe
+Stage 4a: 13-asset
++ covered calls
+5.9% 0.91% 6.48 −12.2% Covered call
+premium
+Stage 4b: 13-asset
++ momentum
+7.5% 1.77% 4.21 −18.0% Momentum tilt
+(under GBM)
+Stage 4c: 13-asset
++ regime rebal.
+6.6% 0.78% 8.49 −10.3% Signal-driven
+rebalancing
+Stage 4d: 13-asset
++ regime rebal.
+6.6% 0.78% 8.58 −10.3% Signal-driven
+rebalancing
+Stage 5: 21-asset
+(15% target)
+15.0% 3.70% 4.06 −28.8% Growth asset
+classes
+Stage 5 + full
+option overlay
+7.4% 2.29% 3.23 −9.1% CC + Asian +
+American puts
+†Mean Sortino across 1,000 independent trials. Ranking: calendar rebalanci ng
+(9.62) >regime-aware (8.58) >buy-and-hold (5.81) >momentum tilt (4.29).
+Three patterns emerge in this study. First, expanding the portfol io from 4 to
+13 equity assets produced the largest increase in the observed Sorti no ratio among
+the portfolio modiﬁcations evaluated in this study, increasing it f rom 2.04 to 5.85
+without adding option overlays or active strategies. Second, Second, am ong the rebal-
+ancing strategies tested, calendar rebalancing (every 21 days, ﬁxed optimizer weights)
+produced the highest mean Sortino ratio of 9.62 across 1,000 independent t rials, out-
+performing regime-aware rebalancing (mean 8.58) in 91.9% of trials. The mome ntum
+tilt, which shares the same 21-day trigger as calendar rebalancing but us es dynamic
+trailing-return-based weights, produced a mean Sortino ratio of 4.29, u nderperforming
+even buy-and-hold (mean 5.81) in 98.6% of trials, isolating the cost of dynami c versus
+ﬁxed target weights in a setting with no return autocorrelation. Thi rd, the higher the
+targeted return, the proportionately higher the downside risk: the 15% target portfolio
+carries a much higher semiDD (3.70%) than the 7% target (1.22%, from the Stage 5
+frontier in Table 11), consistent with the eﬃcient-frontier result obtained numeri cally
+in this model.
+21
+5 Discussion
+The following subsections distinguish results that follow from th e model assumptions
+from claims that are not established by the present analysis.
+5.1 Results Conditional on Model Assumptions
+(i) Optimizer dominance: σ2 d(w∗) ≤ σ2 d(wbench) for any feasible benchmark
+wbench. A true global minimizer would satisfy this inequality because the b ench-
+mark is feasible; the numerical procedure used here provides ev idence toward that
+minimum but does not by itself prove global optimality.
+(ii) Hedged portfolio ﬂoor: K − pT path-by-path. Proof: max( K − VT , 0) − pT ≥
+K − VT − pT when VT < K .
+(iii) Asian option variance eﬀect: averaging can reduce the variance of the underly-
+ing average when correlations are below one Kemna and Vorst (1990); the relative
+option price remains model-dependent.
+(iv) American ≥ European: Pamer ≥ Peuro Longstaﬀ and Schwartz (2001). Proof:
+every European exercise strategy is a feasible American exercise st rategy.
+(v) Covered call eﬀect: adds the call premium to the portfolio return and caps the
+portfolio payoﬀ at Kcc, thereby truncating the right tail. It provides no direct
+downside protection, although the premium can modestly improve do wnside
+outcomes; see Black and Scholes (1973); Merton (1973).
+(vi) E[R] ≤ maxi µi for any long-only portfolio. Proof: the feasible return set is the
+convex hull of individual asset returns.
+(vii) Eﬃcient frontier lower bound: for return target t, σ2 d(w∗(t)) is the minimum
+achievable semivariance, identiﬁed by the numerical optimization p rocedure using
+SLSQP with multiple random restarts; this is a numerical result r ather than a for-
+mal proof of global optimality. Rebalancing strategy ranking under GBM:
+across 1,000 independent simulation trials, the strategies ranked by me an Sortino
+ratio as: calendar rebalancing with ﬁxed optimizer weights (9.62) >regime-aware
+rebalancing (8.58) >buy-and-hold base (5.81) >momentum tilt with dynamic
+weights (4.29). Calendar rebalancing outperformed regime-aware in 91.9% of t ri-
+als; the momentum tilt underperformed buy-and-hold in 98.6% of trials . Because
+GBM generates stationary correlations, the Frobenius norm trigger respon ds only
+to sampling noise, explaining calendar rebalancing’s advantage over regi me-aware.
+The momentum tilt’s underperformance relative to calendar rebalanc ing and buy-
+and-hold isolates the cost of dynamic versus ﬁxed target weights in a set ting with
+no return autocorrelation.
+5.2 Not Proven
+(i) F orward-looking alpha: whether any version of this portfolio would beat a real
+ETF going forward. All µ, σ, and correlation inputs are historical estimates, not
+predictions.
+22
+(ii) F actor premium persistence: the small-cap, EM, and growth premia (16–22%)
+are not guaranteed to persist Fama and French (1993); these premia have shown
+multi-year periods of underperformance despite a positive long-ru n average.
+(iii) Momentum in real markets: under the GBM speciﬁcation used here, the
+momentum strategy did not improve performance because the model cont ains
+no return autocorrelation; whether momentum adds value in real market s is not
+explored here.
+(iv) GBM adequacy: real markets exhibit volatility clustering, fat tails, and jumps
+(cf. stochastic-volatility modeling in Heston Heston (1993)); GBM understates
+tail risk relative to the true downside distribution.
+(v) Option executability: Asian options are non-trivial, OTC instruments with
+minimum trade sizes; all prices here are frictionless fair-value M onte Carlo prices.
+6 Conclusion
+This study developed and evaluated a dynamic downside-minimizin g portfolio through
+a ﬁve-stage progression that combined mean-semivariance optimization, d iversiﬁca-
+tion, exotic option overlays, covered calls, factor tilts, and regime -aware rebalancing.
+The simulation results demonstrate that portfolio downside risk can be substantially
+reduced through systematic portfolio construction while maintainin g explicit control
+over the desired return target. Expanding the portfolio from four to thirteen assets
+produced a substantial improvement in downside-adjusted perf ormance, increasing the
+Sortino ratio from 2.04 to 5.85 while reducing downside deviation from 3. 31% to 1.16%.
+The addition of Asian and American put overlays further demonstrated th e value of
+explicit tail-risk protection, reducing the maximum simulated l oss of the four-asset
+portfolio from −23.7% to −8.8%. Among the rebalancing strategies evaluated, calen-
+dar rebalancing (every 21 days, ﬁxed optimizer weights) produced t he highest mean
+Sortino ratio of 9.62 across 1,000 independent simulation trials, outperfor ming regime-
+aware rebalancing (mean 8.58) in 91.9% of trials and the momentum tilt (mean 4.29)
+in 100% of trials. The momentum tilt, which uses the same 21-day trigger as c alen-
+dar rebalancing but with dynamic trailing-return-based weights, un derperformed even
+buy-and-hold (mean 5.81) in 98.6% of trials, isolating the cost of dynamic vers us ﬁxed
+target weights in a setting with no return autocorrelation. Within a GBM framework
+where correlations are stationary by construction, calendar rebalancing to ﬁxed opti-
+mizer weights is the most robust strategy. Regime-aware rebalancing an d momentum
+tilts may oﬀer advantages in real markets where correlation structure an d return auto-
+correlation genuinely exist, but those hypotheses require validati on on real market data
+beyond the scope of this study. Finally, the 21-asset eﬃcient-fronti er analysis showed
+that achieving higher expected returns necessarily required acc epting greater down-
+side risk within the model, with the 15% target associated with a min imum semiDD
+of 3.70%. The principal added value of this work is therefore not a single opt imal
+portfolio, but a systematic framework that links portfolio diversiﬁc ation, downside-
+risk optimization, option-based protection, and adaptive rebalancing wi thin a uniﬁed
+design process. The framework provides a quantitative basis for und erstanding how
+23
+diﬀerent portfolio mechanisms aﬀect downside risk and return obje ctives, while also
+making explicit the tradeoﬀs involved in pursuing higher returns .
+Statements and Declarations
+Funding
+Not applicable.
+Competing interests
+The author declares no competing interests.
+Ethics approval and consent to participate
+Not applicable.
+Consent for publication
+Not applicable.
+Data availability
+The data inputs, simulation assumptions, optimization formulation, and reported
+results used in this study are described in the manuscript.
+Materials availability
+Not applicable.
+Code availability
+Not applicable.
+Author contribution
+Antarik Bansal conceived the study, developed the portfolio methodol ogy, performed
+the simulations and optimization, analyzed the results, and prepared t he manuscript.
+References
+Ben Salah, H., De Gooijer, J.G., Gannoun, A., Ribatet, M.: Mean–variance
+and mean–semivariance portfolio selection: A multivariate nonparametri c
+approach. Financial Markets and Portfolio Management 32, 419–436 (2018).
+https://doi.org/10.1007/s11408-018-0317-4
+Black, F., Scholes, M.: The pricing of options and corporate liabilitie s. Journal of
+Political Economy 81(3), 637–654 (1973). https://doi.org/10.1086/260062
+24
+Estrada, J.: Mean-semivariance optimization: A heuristic approach. Journal of Applied
+Finance 18(1), 57–72 (2008).
+Fama, E.F., French, K.R.: Common risk factors in the returns on stock s and bonds.
+Journal of Financial Economics 33(1), 3–56 (1993). https://doi.org/10.1016/0304-
+405X(93)90023-5
+Ferrari, D., Paterlini, S., Rigamonti, A., Weissensteiner, A.: Smo othed semicovari-
+ance estimation for portfolio selection. Annals of Operations Research 357, 565–604
+(2026). https://doi.org/10.1007/s10479-024-06043-z
+Heston, S.L.: A closed-form solution for options with stochastic volatili ty with appli-
+cations to bond and currency options. Review of Financial Studies 6(2), 327–343
+(1993). https://doi.org/10.1093/rfs/6.2.327
+Kahneman, D., Tversky, A.: Prospect theory: An analysis of decision und er risk.
+Econometrica 47(2), 263–291 (1979).
+Kemna, A.G.Z., Vorst, A.C.F.: A pricing method for options based on ave r-
+age asset values. Journal of Banking & Finance 14(1), 113–129 (1990).
+https://doi.org/10.1016/0378-4266(90)90039-5
+Longstaﬀ, F.A., Schwartz, E.S.: Valuing American options by simulation: A sim-
+ple least-squares approach. Review of Financial Studies 14(1), 113–147 (2001).
+https://doi.org/10.1093/rfs/14.1.113
+Markowitz, H.: Portfolio selection. Journal of Finance 7(1), 77–91 (1952).
+https://doi.org/10.1111/j.1540-6261.1952.tb01525.x
+Merton, R.C.: Theory of rational option pricing. Bell Journal of Economics and
+Management Science 4(1), 141–183 (1973).
+Rigamonti, A., Luˇ civjansk´ a, K.: Mean-semivariance portfolio optimization using min-
+imum average partial. Annals of Operations Research 334(1), 185–203 (2024).
+https://doi.org/10.1007/s10479-022-04736-x
+Sortino, F.A., Price, L.N.: Performance measurement in a downside ri sk framework.
+Journal of Investing 3(3), 59–64 (1994). https://doi.org/10.3905/joi.3.3.59
+Vivas-Redondo, M., Coronado-Vaca, M., Vaquero-Lafuente, E.: Valuation of Amer-
+ican options using machine learning: Beyond Longstaﬀ–Schwartz and hybrid
+models. Journal of Derivatives and Quantitative Studies 33(3), 170–188 (2025).
+https://doi.org/10.1108/JDQS-11-2024-0044
+25

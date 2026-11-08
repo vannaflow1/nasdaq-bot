@@ -1,0 +1,947 @@
+Neural Realized Measures: Forecast-Supervised Intraday
+Aggregation for Volatility Forecasting
+Brian Sing Fan Chan
+School of Mathematics and Statistics
+The University of Sydney
+Sydney, NSW, Australia
+brian.chan1@sydney.edu.au
+Jennifer So Kuen Chan
+School of Mathematics and Statistics
+The University of Sydney
+Sydney, NSW, Australia
+jennifer.chan@sydney.edu.au
+Abstract
+High-frequency volatility forecasting typically separates measure-
+ment from prediction: intraday observations are first compressed
+into a daily realized measure using a fixed aggregation rule, and
+the resulting statistic is then passed to a forecasting model. This
+conventional pipeline therefore treats measure construction as
+forecast-agnostic preprocessing. We ask whether the aggregation
+stage itself can instead be learned from the downstream forecasting
+objective while preserving the statistical structure of established
+realized measures. We propose Neural Realized Measures (NRM), a
+primitive-preserving, forecast-supervised aggregation framework
+that retains the original measure-specific intraday contributions
+but replaces uniform aggregation with positive, mean-normalized
+context-dependent weights. Uniform weights exactly recover the
+corresponding raw realized measure (RRM), so the classical con-
+struction is nested as a special case. Because NRM remains an
+explicit weighted sum of established primitive contributions, it also
+retains direct bar-level attribution.
+Across SF, HAR, and MIDAS forecasting specifications, NRM
+is evaluated against corresponding RRM specifications under con-
+trolled comparisons. In Heston simulations, NRM reduces RMSE
+for both contemporaneous and next-day latent integrated variance
+across all evaluated primitive–regime combinations. On six cryp-
+tocurrencies using five-minute data, NRM improves QLIKE in all 54
+paired out-of-sample comparisons, with mean gains of 7.23%, 8.15%,
+and 9.22% under SF, HAR, and MIDAS, respectively. Validation-
+selected NRM specifications also achieve the lowest mean QLIKE
+across the six assets among the evaluated approaches. Ablation
+and SHAP analyses reveal systematic time-of-day and nonlinear
+local-context effects in the learned allocation.
+Keywords
+realized volatility, volatility forecasting, neural aggregation, high-
+frequency finance, cryptocurrency
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee. Request permissions from permissions@acm.org.
+ICAIF ’26, Milan, Italy
+©2026 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+ACM Reference Format:
+Brian Sing Fan Chan and Jennifer So Kuen Chan. 2026. Neural Realized
+Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecast-
+ing. InACM International Conference on AI in Finance (ICAIF ’26), November
+14–17, 2026, Milan, Italy.ACM, New York, NY, USA, 9 pages.
+1 Introduction
+Volatility forecasting commonly begins by compressing high-frequency
+observations into a daily realized measure. For measure family𝑚
+(Eq. (3)-(5)), a classical construction is
+𝑅𝑚 𝑡 =
+𝐾∑︁
+𝑘=1
+𝑥𝑚 𝑡,𝑘,(1)
+where𝑥 𝑚 𝑡,𝑘 denotes the measure-specific bar-level contribution, re-
+ferred to below as the primitive. Equivalently, the classical con-
+struction can be viewed as a weighted aggregation with𝑤𝑚 𝑡,𝑘 = 1
+for every intraday contribution. For example, realized variance uses
+𝑥RV 𝑡,𝑘 =𝑟 2 𝑡,𝑘 , whereas bipower variation uses 𝑥BV 𝑡,𝑘 = 𝜋 2|𝑟𝑡,𝑘||𝑟𝑡,𝑘−1|.
+These primitive constructions are not arbitrary summaries of intra-
+day price variation. Realized and range-based measures have been
+developed through a substantial statistical literature, with foun-
+dations in stochastic-process and estimator theory and a strong
+empirical track record in volatility measurement and forecasting
+[1, 4, 13, 21]. Their statistical structure also remains useful in mod-
+ern neural forecasting: HARNet explicitly bridges the HAR model
+and a convolutional neural architecture [24], while Zhang et al. [28]
+use past intraday realized volatilities as predictors in neural fore-
+casting models. This evidence motivates building neural learning
+on established realized-measure structure rather than making end-
+to-end representation learning a prerequisite.
+The conventional pipeline nevertheless contains a hidden restric-
+tion: the measurement stage is fixed before the forecasting objective
+is specified. The primitive determines what each bar contributes,
+but the aggregation rule determines how those contributions are
+compressed into the daily statistic, and this rule remains forecast-
+agnostic. In the classical construction, every primitive contribution
+receives unit weight regardless of candlestick geometry, intraday
+position, or magnitude relative to nearby bars. We refer to this
+fixed-aggregation construction as the raw realized measure (RRM).
+This motivates the central question of the paper: can the aggrega-
+tion rule be made task-adaptive without discarding the statistical
+primitive that defines the realized measure?
+We address this question with Neural Realized Measures (NRM),
+a primitive-preserving, forecast-supervised aggregation framework.
+arXiv:2611.07287v1 [q-fin.ST] 5 Nov 2026
+ICAIF ’26, November 14–17, 2026, Milan, Italy Brian Sing Fan Chan and Jennifer So Kuen Chan
+For measure family𝑚,
+𝑋𝑚 𝑡 =
+𝐾∑︁
+𝑘=1
+𝑤𝑚 𝑡,𝑘𝑥𝑚 𝑡,𝑘, 1 𝐾 𝐾∑︁ 𝑘=1 𝑤𝑚 𝑡,𝑘 =1.(2)
+The primitive𝑥𝑚 𝑡,𝑘 remains fixed; learning operates only through the
+aggregation weights𝑤𝑚 𝑡,𝑘 . These weights are positive and estimated
+from the downstream forecasting objective using the intraday con-
+text of each primitive contribution. Setting𝑤𝑚 𝑡,𝑘 = 1for all 𝑘 exactly
+recovers the corresponding RRM. NRM therefore changes where
+learning enters the forecasting pipeline. Rather than replacing the
+realized measure with an unrestricted latent representation, it re-
+tains the statistically defined primitive and makes only its aggrega-
+tion task-adaptive. In this sense, NRM occupies a structured middle
+ground between fixed econometric measurement and end-to-end
+neural representation learning.
+The constraint also gives the learned measure a direct interpreta-
+tion. Because𝑋𝑚 𝑡 remains an explicit weighted sum of the original
+primitive contributions,𝑤𝑚 𝑡,𝑘𝑥𝑚 𝑡,𝑘 identifies the contribution assigned
+to bar𝑘, while𝑤𝑚 𝑡,𝑘 = 1provides a natural classical benchmark. The
+fixed eight-variable STLG representation in Eq. (7) instantiates the
+context used by the weighting function through range-normalized
+candlestick geometry, cyclical clock time, a local log contrast, and
+completed-day summaries. Global variables use only day-𝑡 informa-
+tion to forecast day𝑡+ 1. Each NRM specification is compared with
+its RRM counterpart under the same forecasting setup, isolating
+the effect of learned aggregation. HARNet, DeepVol, and XGBoost
+provide flexible direct benchmarks.
+The paper makes four main contributions:
+• Learned aggregation.Conventional realized measures use fixed
+within-day aggregation rules. We instead treat the aggregation
+step as part of the forecasting problem, allowing the importance
+of intraday observations to be learned directly from the forecast-
+ing objective.
+• Primitive preservation.We introduce NRM as a general ag-
+gregation framework for realized measures with primitive-level
+additive representations. NRM reweights the underlying primi-
+tive contributions using positive, mean-normalized, and context-
+dependent weights. Uniform weighting recovers the correspond-
+ing conventional realized measure exactly, so the original mea-
+sure is nested as a special case of the proposed framework.
+• Controlled evaluation.We compare each NRM directly with
+its RRM counterpart while keeping the underlying primitive
+and forecasting model unchanged. Across several primitive fam-
+ilies and SF, HAR, and MIDAS specifications, simulations and
+cryptocurrency data show that learned aggregation generally im-
+proves both latent-volatility estimation and out-of-sample volatil-
+ity forecasts.
+• Interpretable allocation.Because NRM remains an explicit
+weighted sum of the original primitive contributions, the learned
+weights can be inspected directly. Ablation and SHAP analyses
+show that the model systematically reallocates volatility infor-
+mation according to time of day and nonlinear local market
+conditions.
+2 Related Literature and Positioning
+NRM builds on realized-measure research that aggregates intra-
+day returns, ranges, and OHLC information into daily variation
+[1, 3, 4, 13, 21, 25]. Recent work also develops alternative high-
+frequency volatility primitives and measurement rules that exploit
+persistent return distortions [2], candlestick geometry [19], or, more
+recently, the occupation structure of the intraday price path [ 6],
+introducing a distinct path-based characterization of intraday vari-
+ation. These approaches expand the information encoded in the
+primitive itself. NRM studies a complementary design dimension:
+it keeps a given primitive fixed and learns how its intraday contri-
+butions are aggregated for forecasting.
+HAR and MIDAS capture persistent volatility through hetero-
+geneous or parameterized historical lags [8, 14]. In this paper they
+serve as downstream forecasting heads: MIDAS aggregates informa-
+tion across days, whereas NRM reallocates primitive contributions
+within a day. Paired RRM–NRM comparisons therefore isolate the
+effect of learned aggregation while holding the downstream fore-
+casting specification fixed.
+Neural volatility forecasting spans both structured extensions
+of realized-volatility models and more direct mappings from high-
+frequency inputs to forecasts. HARNet bridges the HAR structure
+and dilated convolutional networks [24]; Zhang et al. [28] use past
+intraday realized volatilities as neural predictors; and DeepVol maps
+high-frequency information through a dilated causal-convolution
+architecture [22]. NRM takes a complementary route by placing
+neural learning at the realized-measure construction stage. It as-
+signs context-dependent positive weights to predefined primitive
+contributions while preserving an explicit daily realized measure.
+NRM is also conceptually related to supervised dimension re-
+duction and learned aggregation. Sufficient forecasting uses infor-
+mation from the prediction target to construct low-dimensional
+predictive indices [ 12], while attention-based multiple-instance
+learning learns task-dependent weights for aggregating collections
+of instances [17]. NRM shares the principle that aggregation can be
+informed by the downstream task, but imposes a stronger structural
+restriction: rather than pooling unrestricted learned embeddings, it
+aggregates predefined, statistically interpretable realized-measure
+primitives. Learning changes their relative allocation but not the
+primitive being aggregated, and uniform weights exactly recover
+the corresponding classical realized measure. NRM is therefore best
+viewed as forecast-supervised statistical aggregation rather than a
+generic attention architecture.
+Recent time-series research emphasizes task-specific inductive
+bias over architectural scale alone [11, 18, 26, 27]. NRM follows this
+principle by placing model flexibility at a narrowly defined stage
+of the pipeline: the aggregation of statistically grounded intraday
+contributions. The objective is not to replace domain structure with
+a larger architecture, but to identify which part of that structure
+benefits from task-adaptive learning.
+3 Neural Realized Measures
+NRM preserves the measure-specific primitive and learns its forecast-
+supervised within-day allocation through positive, mean-normalized
+weights.
+Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting ICAIF ’26, November 14–17, 2026, Milan, Italy
+3.1 Classical intraday contributions
+For day𝑡 and intraday bar𝑘, let𝑂𝑡,𝑘 ,𝐻𝑡,𝑘 ,𝐿𝑡,𝑘 , and𝐶𝑡,𝑘 denote log
+open, high, low, and close prices. Define
+𝑟𝑡,𝑘 =𝐶𝑡,𝑘−𝑂𝑡,𝑘, 𝜌 𝑡,𝑘 =𝐻𝑡,𝑘−𝐿𝑡,𝑘.
+We deliberately use within-bar open-to-close returns so all primi-
+tives align with the same OHLC interval and no return crosses the
+UTC-day boundary. The measure family𝑚∈{RV,BV,GK} refers
+to the following 3 measures. The return-based realized-variance
+contribution is
+𝑥RV 𝑡,𝑘 =𝑟 2 𝑡,𝑘.(3)
+For𝑘≥2, the bipower-variation contribution is
+𝑥BV 𝑡,𝑘 = 𝜋 2|𝑟𝑡,𝑘||𝑟𝑡,𝑘−1|,(4)
+We set𝑥BV 𝑡,1 = 0, so the adjacent-return product does not cross the
+UTC-day boundary. The Garman–Klass contribution is
+𝑥GK 𝑡,𝑘 = 1 2𝜌2 𝑡,𝑘−(2 log 2−1)𝑟 2 𝑡,𝑘.(5)
+RRM and NRM are both constructed from these original measure-
+specific contributions, with𝑅𝑚 𝑡 = ˝ 𝑘𝑥𝑚 𝑡,𝑘 . Both the controlled sim-
+ulation and the empirical comparison use RV, BV, and GK.
+3.2 Shape–Time–Local–Global state
+representation
+The Shape component is motivated by recent candlestick-based
+volatility research, which shows that the decomposition of an OHLC
+bar into its open–close body and wick components contains infor-
+mation about the nature of within-bar price variation [19]. Strongly
+directional movements tend to produce relatively long bodies and
+short wicks, whereas intrabar reversals produce larger wick com-
+ponents. NRM retains the original RV, BV, or GK primitive and uses
+candlestick geometry as conditioning information for its aggrega-
+tion weights.
+Define the body, upper wick, and lower wick by
+𝐵𝑡,𝑘 =|𝐶 𝑡,𝑘−𝑂𝑡,𝑘|,𝑈𝑡,𝑘 =𝐻𝑡,𝑘−max{𝑂𝑡,𝑘,𝐶𝑡,𝑘},𝐷𝑡,𝑘 =min{𝑂 𝑡,𝑘,𝐶𝑡,𝑘}−𝐿𝑡,𝑘.
+To keep the range ratios and logarithmic features below well de-
+fined, we fix 𝜖= 10−12 and use it only as an additive numerical
+stabilizer in the STLG feature construction. Their range-normalized
+Shapevariables are
+𝐵𝑅𝑡,𝑘 = 𝐵𝑡,𝑘 𝜌𝑡,𝑘+𝜖 , 𝑈𝑅 𝑡,𝑘 = 𝑈𝑡,𝑘 𝜌𝑡,𝑘+𝜖 , 𝐿𝑅 𝑡,𝑘 = 𝐷𝑡,𝑘 𝜌𝑡,𝑘+𝜖 .
+Normalizing by the high–low range removes the absolute price scale
+and yields an interpretable decomposition of bar geometry. The
+body ratio captures directional open–close movement, while the
+upper- and lower-wick ratios distinguish upward and downward
+intrabar excursions. These variables are conditioning features rather
+than separate volatility measures.
+IntradayTimeposition is represented by
+𝑇𝑡,𝑘 =[sin(2𝜋𝑘/𝐾),cos(2𝜋𝑘/𝐾) ].
+For a centered same-day neighborhoodN𝑘,𝑞 excluding bar𝑘, define
+¯𝑥𝑚,(−𝑘,𝑞) 𝑡,𝑘 = 1 |N𝑘,𝑞| ∑︁ ℓ∈N𝑘,𝑞 𝑥𝑚 𝑡,ℓ,
+and theLocalvolatility contrast
+𝑑𝑚 𝑡,𝑘 =log  𝑥𝑚 𝑡,𝑘+𝜖  −log  ¯𝑥𝑚,(−𝑘,𝑞) 𝑡,𝑘 +𝜖  .(6)
+Here,𝑞 denotes the nominal total width of a centered rolling win-
+dow before the current bar is excluded. Thus, an interior window
+contains up to 𝑞− 1neighboring contributions, split as evenly
+as possible before and after bar𝑘. Near the UTC-day boundaries,
+the window is truncated and uses only the available same-day
+neighbors; it never wraps across days. The validation grid uses
+𝑞∈{ 12, 48, 72, 144} five-minute bars, corresponding to nominal
+spans of 1, 4, 6, and 12 hours. The value of 𝑞 is selected on the
+validation sample as part of the NRM configuration. TheGlobal
+component summarizes the completed same-day distribution of
+primitive contributions. Let
+𝑔𝑚,med 𝑡 =log  median𝑥𝑚 𝑡,1:𝐾+𝜖  ,
+𝑔𝑚,sd 𝑡 =log '›
+«
+vut
+1
+𝐾
+𝐾∑︁
+𝑗=1
+
+𝑥𝑚 𝑡,𝑗− ¯𝑥𝑚 𝑡
+2
++𝜖 “ﬁ
+‹
+,
+where ¯𝑥𝑚 𝑡 =𝐾−1 ˝𝐾 𝑗=1𝑥𝑚 𝑡,𝑗 . The fixed aggregation input is
+𝑢𝑚,𝑆𝑇𝐿𝐺 𝑡,𝑘 =
+
+𝐵𝑅𝑡,𝑘,𝑈𝑅𝑡,𝑘,𝐿𝑅𝑡,𝑘,sin
+ 2𝜋𝑘
+𝐾
+
+,cos
+ 2𝜋𝑘
+𝐾
+
+,𝑑𝑚 𝑡,𝑘,𝑔𝑚,med 𝑡 ,𝑔𝑚,sd 𝑡
+
+.
+(7)
+The primitive𝑥𝑚 𝑡,𝑘 determines what is aggregated, while𝑢𝑚,𝑆𝑇𝐿𝐺 𝑡,𝑘
+determines its relative weight. The Local component distinguishes
+an isolated contribution from a generally volatile neighborhood,
+and the Global variables condition the shared scorer on the day’s
+primitive level and dispersion. Although volume and cross-market
+turnover may contain additional volatility information [5], STLG
+deliberately uses only OHLC- and primitive-derived inputs so that
+RRM–NRM gains can be attributed to learned aggregation rather
+than an expanded information set.
+The Global summaries use all intraday contributions from day𝑡,
+as does the classical daily realized measure itself. They therefore
+introduce no look-ahead information for forecasting day 𝑡+ 1:
+the complete day-𝑡 record is available when the daily measure is
+constructed, and the summaries are repeated across bars solely
+to condition the shared score function. In the contemporaneous
+simulation exercise, the complete day-𝑡 record is likewise available
+when the constructed measure is compared with oracle𝐼𝑉𝑡 .
+3.3 Normalized neural aggregation
+Figure 1 contrasts the classical and NRM pipelines. NRM specif-
+ically modifies the within-day aggregation stage; both pipelines
+subsequently feed a daily measure into the same class of forecast
+models.
+The STLG-conditioned score network produces
+𝑠𝑚 𝑡,𝑘 =𝑔𝜃𝑚(𝑢𝑚,𝑆𝑇𝐿𝐺 𝑡,𝑘 ).(8)
+The scores are converted into mean-one relative aggregation weights,
+𝑤𝑚 𝑡,𝑘 =𝐾 exp(𝑠𝑚 𝑡,𝑘/𝜏) ˝𝐾
+𝑗=1 exp(𝑠𝑚 𝑡,𝑗/𝜏) , 1 𝐾 𝐾∑︁ 𝑘=1 𝑤𝑚 𝑡,𝑘 =1,(9)
+ICAIF ’26, November 14–17, 2026, Milan, Italy Brian Sing Fan Chan and Jennifer So Kuen Chan
+Figure 1: Classical realized-measure and NRM pipelines. The classical construction sums fixed primitive contributions. NRM
+retains the same primitive sequence but forms normalized aggregation weights from the fixed STLG representation and a
+same-day local benchmark. Its output remains a daily realized measure before entering a downstream forecast model.
+where𝜏> 0controls weight concentration. We fix𝜏= 1so that con-
+centration is governed by the learned score scale, while validation-
+selected KL-to-uniform regularization penalizes deviations from
+classical uniform aggregation. The neural realized measure is
+𝑋𝑚 𝑡 =
+𝐾∑︁
+𝑘=1
+𝑤𝑚 𝑡,𝑘𝑥𝑚 𝑡,𝑘.(10)
+Thus𝑤𝑚 𝑡,𝑘 = 1is the classical benchmark and values above (below)
+one up(down)-weight a bar contribution. A complementary local
+characterization follows from the softmax parameterization:
+𝜕𝑋𝑚 𝑡
+𝜕𝑠𝑚 𝑡,𝑗 =
+𝑤𝑚 𝑡,𝑗
+𝜏
+
+𝑥𝑚 𝑡,𝑗− 𝑋𝑚 𝑡 𝐾  .(11)
+Hence increasing a bar’s score raises the daily NRM exactly when
+its primitive contribution exceeds the current NRM-weighted av-
+erage𝑋𝑚 𝑡 /𝐾. The normalization therefore reallocates a fixed total
+weight mass rather than introducing an unrestricted scale multi-
+plier. Because the primitive remains explicit, the contribution of
+bar𝑘remains𝑤 𝑚 𝑡,𝑘𝑥𝑚 𝑡,𝑘 , preserving primitive-level attribution.
+3.4 Estimation and paired-comparison protocol
+Network structures.Neural networks estimate both the aggre-
+gation weight𝑤𝑚 𝑡,𝑘 in Eq. (9) for NRM in Eq. (10) and the forecast
+model parameters. To quantify departure from equal-weight ag-
+gregation, define the implied simplex weights 𝛼𝑚 𝑡,𝑘 =𝑤 𝑚 𝑡,𝑘/𝐾, the
+uniform allocation𝑢𝑘 =1/𝐾, and the daily divergence
+𝐷𝑚 𝑡 :=𝐷 KL(𝛼𝑚 𝑡 ∥𝑢)= 1 𝐾 𝐾∑︁ 𝑘=1 𝑤𝑚 𝑡,𝑘 log𝑤𝑚 𝑡,𝑘.(12)
+For a mini-batchB of daily observations, the network loss penalizes
+the average daily divergence:
+Loss=QLIKE+𝜆L 𝑚 KL,L 𝑚 KL = 1 |B| ∑︁ 𝑡∈B 𝐷𝑚 𝑡 .(13)
+Proposition 1 (KL-controlled departure from classical
+aggregation).For a fixed day 𝑡 and measure family𝑚, let Δ𝑚 𝑡 =
+max𝑘𝑥𝑚 𝑡,𝑘−min𝑘𝑥𝑚 𝑡,𝑘 and let𝐷 𝑚 𝑡 be defined by Eq.(12). Then
+𝑋𝑚 𝑡 −𝑅𝑚 𝑡 
+𝐾 ≤Δ 𝑚 𝑡
+√︂
+1
+2𝐷𝑚 𝑡 .(14)
+Equivalently,
+𝑋𝑚 𝑡 −𝑅𝑚 𝑡 ≤𝐾Δ 𝑚 𝑡 √︁ 𝐷𝑚 𝑡/2. In particular, 𝐷𝑚 𝑡 = 0if
+and only if 𝑤𝑚 𝑡,𝑘 = 1for all 𝑘, in which case 𝑋𝑚 𝑡 =𝑅 𝑚 𝑡 . If Δ𝑚 𝑡 = 0,
+then𝑋 𝑚 𝑡 =𝑅𝑚 𝑡 for any admissible allocation.
+Proof. By Eq. (9),𝑤𝑚 𝑡,𝑘 > 0and ˝𝐾 𝑘=1𝑤𝑚 𝑡,𝑘 =𝐾 . Hence 𝛼𝑚 𝑡,𝑘 =
+𝑤𝑚 𝑡,𝑘/𝐾is a probability vector, as is𝑢 𝑘 =1/𝐾. Moreover,
+𝑋𝑚 𝑡
+𝐾 =
+𝐾∑︁
+𝑘=1
+𝛼𝑚 𝑡,𝑘𝑥𝑚 𝑡,𝑘, 𝑅𝑚 𝑡 𝐾 = 𝐾∑︁ 𝑘=1 𝑢𝑘𝑥𝑚 𝑡,𝑘.
+Let𝑐𝑚 𝑡 =(max 𝑘𝑥𝑚 𝑡,𝑘+min𝑘𝑥𝑚 𝑡,𝑘)/2. Since ˝ 𝑘(𝛼𝑚 𝑡,𝑘−𝑢𝑘)= 0, sub-
+tracting the common center𝑐𝑚 𝑡 does not change the difference:
+|𝑋𝑚 𝑡 −𝑅𝑚 𝑡|
+𝐾 =
+ 𝐾∑︁ 𝑘=1 (𝛼𝑚 𝑡,𝑘−𝑢𝑘)(𝑥𝑚 𝑡,𝑘−𝑐𝑚 𝑡) 
+≤ Δ𝑚 𝑡
+2
+𝐾∑︁
+𝑘=1
+|𝛼𝑚 𝑡,𝑘−𝑢𝑘|
+=Δ𝑚 𝑡 TV(𝛼𝑚 𝑡 ,𝑢),
+Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting ICAIF ’26, November 14–17, 2026, Milan, Italy
+whereTV(𝛼 𝑚 𝑡 ,𝑢)= 1 2∥𝛼𝑚 𝑡 −𝑢∥ 1. Pinsker’s inequality gives
+TV(𝛼𝑚 𝑡 ,𝑢)≤
+√︂
+1
+2𝐷KL(𝛼𝑚 𝑡 ∥𝑢)=
+√︂
+1
+2𝐷𝑚 𝑡 ,
+which proves Eq. (14).
+For completeness, the identity in Eq. (12) follows directly from
+𝛼𝑚 𝑡,𝑘 =𝑤𝑚 𝑡,𝑘/𝐾:
+𝐷KL(𝛼𝑚 𝑡 ∥𝑢)=
+𝐾∑︁
+𝑘=1
+𝑤𝑚 𝑡,𝑘
+𝐾 log
+ 𝑤𝑚 𝑡,𝑘/𝐾
+1/𝐾
+!
+= 1 𝐾 𝐾∑︁ 𝑘=1 𝑤𝑚 𝑡,𝑘 log𝑤𝑚 𝑡,𝑘.
+KL divergence is zero if and only if its two probability vectors
+coincide, so𝐷𝑚 𝑡 = 0exactly when 𝛼𝑚 𝑡 =𝑢 , equivalently𝑤𝑚 𝑡,𝑘 = 1
+for every𝑘; Eq. (10) then gives𝑋𝑚 𝑡 =𝑅 𝑚 𝑡 . Finally, if Δ𝑚 𝑡 = 0, all
+primitive contributions are equal, and the mean-one constraint˝
+𝑘𝑤𝑚 𝑡,𝑘 =𝐾gives𝑋 𝑚 𝑡 =𝑅𝑚 𝑡 for any admissible allocation.□
+The bound shows that departure from the corresponding RRM
+is jointly governed by within-day primitive dispersion and diver-
+gence from uniform allocation. The KL penalty therefore regularizes
+the same allocation divergence that appears in Proposition 1. The
+tuning parameter 𝜆 is selected together with the other network
+hyperparameters. QLIKE is given by
+QLIKE(𝑉𝑡, b𝑉𝑡)= 𝑉𝑡 b𝑉𝑡 −log 𝑉𝑡 b𝑉𝑡  −1,(15)
+The network outputs the log-variance forecast b𝑦𝑡 =log b𝑉𝑡 , while
+𝑦𝑡 =log𝑉 𝑡 denotes the corresponding target.
+The score network in Eq. (8) generates the aggregation weights
+in Eq. (9) and is estimated separately for each asset, measure family
+𝑚, and downstream forecasting specification in{SF,HAR,MIDAS}
+(Section 4.3). The forecasting-specification index is suppressed in
+𝑋𝑚 𝑡 for notational simplicity, even though the NRM aggregation
+weights and downstream forecasting parameters are jointly esti-
+mated under Eq. (13). Accordingly,𝑋𝑚 𝑡 is forecasting-specification-
+specific: its learned allocation adapts directly to the corresponding
+forecasting objective rather than requiring one fixed NRM series to
+serve all downstream specifications. When the equal-weight RRM
+𝑅𝑚 𝑡 in Eq. (1) is used, the NRM aggregation layer is omitted.
+The protocol.
+(1) fit each neural candidate on the training sample using QLIKE
+and the KL-to-uniform penalty;
+(2) early-stop each candidate using validation log-MSE; for each
+candidate NRM representation, the corresponding forecasting-
+head coefficients are re-estimated using training observations
+only;
+(3) select one common specification using mean validation MSE
+on the variance scale across seeds 11, 22, and 33;
+(4) retain the three independently trained fits of that selected spec-
+ification, evaluate each once on the held-out test period, and
+report test losses averaged across the seeds. No test observation
+is used for fitting, specification selection, or seed selection.
+The corresponding RRM specification uses the same forecasting and
+evaluation setup but retains uniform intraday weights. This paired
+design evaluates the incremental value of learned aggregation while
+holding the downstream forecasting specification fixed; a separate
+NRM is estimated for each forecasting specification.
+Implementation and computational details.The aggregation weight
+layer for NRM score in Eq (8) uses GELU activation, dropout 0.1,
+and hidden dimensions selected from[8, 4] and[16, 8]. The valida-
+tion grid considers 1-, 4-, 6-, and 12-hour centered same-day local
+windows, corresponding to 12, 48, 72, and 144 five-minute bars. We
+fix softmax temperature at𝜏= 1and select 𝜆 for the KL-to-uniform
+strength from{3×10−4, 10−3, 3×10−3, 10−2, 3×10−2}; this regularizer
+directly governs how strongly the fitted weights may depart from
+the classical uniform allocation. Neural candidates are trained with
+AdamW, batch size 16, a maximum of 200 epochs, and validation-
+based early stopping with patience 20; and the learning rate3×10−3.
+Experiments were executed on an Ubuntu 22.04 CPU server with
+Intel Xeon Platinum 8480C processors and approximately 2 TiB of
+system memory.
+4 Study Design
+4.1 Controlled simulation
+The simulation follows a Heston stochastic-volatility design [16]
+with the event stresses of Li et al. [19], but draws event locations uni-
+formly to prevent the time-aware NRM from learning deterministic
+timing. Continuous diffusion provides a baseline, an isolated jump
+tests sparse contamination, and a gradual jump tests a multi-bar
+directional disturbance. No separate conventional microstructure-
+noise process is added. The efficient log price satisfies
+𝑑𝑋𝑡 =𝜇𝑑𝑡+𝜎 𝑡𝑑𝑊1,𝑡+𝑑𝐽 𝑡,
+𝑑𝜎 2 𝑡 =𝜅(𝜃−𝜎 2 𝑡)𝑑𝑡+𝜂𝜎 𝑡𝑑𝑊2,𝑡,Corr(𝑑𝑊 1,𝑡,𝑑𝑊 2,𝑡)=𝜌,
+where 𝐽𝑡 is a compound-Poisson price-jump process. Observed
+prices additionally include a short-lived persistent component,
+𝑋 obs 𝑡 =𝑋𝑡+𝐻𝑡,
+which generates the persistent displacement used in the gradual-
+jump stress regime. The reported regimes are:
+(1) Continuous: stochastic volatility without price jumps or per-
+sistent noise;
+(2) Jump: stochastic volatility with compound-Poisson price jumps;
+(3) Gradual jump: a temporary persistent displacement following
+a fundamental-price shift;
+The annualized parameterization is𝑋0 =log( 1200),𝜇= 0.05,𝜅= 5,
+𝜃= 0.0225,𝜂= 0.4, 𝜌=− 1/
+√
+2, jump intensity 𝜆= 1/5, and
+jump-size standard deviation0.9%. The Euler step is Δ𝑡= 5/(252×
+24× 60), yielding 288 five-minute bars per simulated day. Each
+regime contains 2,373 simulated days and is split chronologically
+into 60% training, 20% validation, and 20% test samples. The gradual-
+jump regime imposes one event per simulated day as a conditional
+stress. Both exercises use the same SF specification and validation
+criterion; NRM is selected from the aggregation grid, whereas RRM
+uses uniform intraday weights. Results are aggregated across ten
+Monte Carlo seeds, varying both the simulated path and neural
+initialization.
+Both simulation targets measure continuous integrated variance;
+jumps and temporary displacements enter observed OHLC bars but
+not the oracle. The contemporaneous target is
+IVoracle 𝑑 =
+∫ 𝑑+1
+𝑑
+𝜎2 𝑠𝑑𝑠,(16)
+ICAIF ’26, November 14–17, 2026, Milan, Italy Brian Sing Fan Chan and Jennifer So Kuen Chan
+which evaluates how closely the constructed daily measure aligns
+with same-day latent integrated variance. The next-day forecasting
+target is IVoracle 𝑑+1 which evaluates next-day predictive information.
+For each target, the same output specification uses either the RRM
+measure𝑅𝑚 𝑑 or its corresponding NRM measure𝑋𝑚 𝑑 , constructed
+from the fixed STLG specification; the two exercises assess contem-
+poraneous measurement and forecasting content, respectively.
+4.2 Cryptocurrency data and sample splits
+The empirical analysis uses five-minute OHLC bars from Binance
+spot price indices for BNB, BTC, DOGE, ETH, SOL, and XRP. These
+indices aggregate prices from major centralized exchanges, pro-
+viding a cross-venue reference price that reduces sensitivity to
+individual-venue liquidity, dislocations, and bid–ask spreads, al-
+though it does not eliminate all microstructure noise. Continuous
+trading permits a common UTC-day definition without overnight
+or session conventions, but limits external validity for traditional
+markets. A complete day contains𝐾= 288bars; incomplete days
+are excluded. Samples begin from each asset’s first complete day
+after January 1, 2020 and end on May 31, 2026. Validation covers
+June 2023–May 2024 and testing June 2024–May 2026, with splits
+defined by target date.
+Latent integrated variance is not observed in market data. The
+empirical targetfor all modelsis the next-day log realized variance,
+𝑦𝑡+1 =log𝑅 RV 𝑡+1 , where𝑉𝑡 =𝑅 RV 𝑡+1 in Eq. (1) uses the next day’s five-
+minute returns. Models forecast log realized variance, and variance
+predictions are b𝑉𝑡+1 =exp(b𝑦𝑡+1) without smearing or clipping.
+RMSE, MAE, and QLIKE are evaluated on the original scale without
+log transformation.
+4.3 Forecasting specifications and flexible
+benchmarks
+We consider three downstream forecasting specifications SF, HAR
+and MIDAS. In the joint architecture, each specification serves as
+the forecasting head applied after construction of the daily measure.
+For each specification, the daily variance input is𝑄𝑡 =𝑅𝑚 𝑡 for RRM
+and𝑄𝑡 =𝑋 𝑚 𝑡 for NRM,𝑚∈{RV,BV,GK} . The three specifications
+are
+SF:𝑦𝑡+1 =𝛽 0+𝛽 1 log𝑄𝑡+𝜀𝑡+1.
+HAR:𝑦𝑡+1 =𝛽 0+𝛽𝑑𝐷𝑡(𝑄)+𝛽 𝑤𝑊𝑡(𝑄)+𝛽 𝑚𝑀𝑡(𝑄)+𝜀 𝑡+1,
+MIDAS:𝑦𝑡+1 =𝛽 0+𝛽 1
+𝐽−1∑︁
+𝑗=0
+𝑏𝑗(𝜗)log𝑄 𝑡−𝑗 +𝜀𝑡+1,
+where
+𝐷𝑡(𝑄)=log𝑄 𝑡, 𝑊𝑡(𝑄)= 1 5 4∑︁ 𝑗=0 log𝑄𝑡−𝑗, 𝑀𝑡(𝑄)= 1 22 21∑︁ 𝑗=0 log𝑄𝑡−𝑗 .
+and the MIDAS specification [ 14] replaces the fixed weekly and
+monthly averages with a normalized distributed-lag function, where
+𝐽is the lag length and the weights satisfy ˝𝐽−1 𝑗=0 𝑏𝑗(𝜗)=1.
+Three flexible benchmarksare added to the 18 specifications: 3
+forecasting specifications× RRM/NRM× 3 measures (Table 4).
+HARNet learns nonlinear hierarchical transformations of realized-
+volatility histories. The DeepVol benchmark follows the dilated
+causal-convolution design of [22] with a capacity-controlled spec-
+ification for the available daily forecasting sample. XGBoost [ 7]
+uses daily, weekly, and monthly HAR volatility factors together
+with lagged signed and absolute daily returns as inputs, providing
+a non-neural nonlinear benchmark. Forecasts are daily, and each
+daily realized measure is constructed from 288 five-minute bars.
+These benchmarks provide flexible direct-forecasting references
+outside the SF, HAR, and MIDAS specifications.
+4.4 Model selection and evaluation
+For every reported specification, the hyperparameter configuration
+is selected by mean validation MSE averaged across repeats using
+seeds 11, 22, and 33. This common criterion provides a consistent
+selection rule and avoids using QLIKE for both parameter optimiza-
+tion and configuration selection. For each selected configuration,
+three independently trained fits are obtained using the same three
+seeds. Each fitted model forecasts the full test sample, and test
+RMSE, MAE, and QLIKE are averaged across the three repeats and
+reported in Table 4, with performance summaries in Tables 2 and 3.
+The primary comparison pairs each NRM specification with its
+corresponding RRM specification while holding the downstream
+forecasting specification fixed. This design evaluates the incremen-
+tal value of learned aggregation; parameter counts need not be equal
+because the NRM aggregation layer is omitted for RRM. QLIKE is
+included in the comparison because it supports robust volatility-
+forecast comparison when latent variance is evaluated using a noisy
+proxy [23]. RMSE and MAE are also reported on the variance scale.
+Simulation tables report relative RMSE and MAE,
+𝑟𝑅𝑀𝑆𝐸= 𝑅𝑀𝑆𝐸(NRM-𝑚) 𝑅𝑀𝑆𝐸(RRM-𝑚) , 𝑟𝑀𝐴𝐸= 𝑀𝐴𝐸(NRM-𝑚) 𝑀𝐴𝐸(RRM-𝑚) .(17)
+Values below one indicate improvement from neural aggregation.
+Forecast-comparison inference is conducted only after validation
+selection. For each asset–primitive–forecasting-specification com-
+parison, the selected RRM and NRM specifications generate date-
+aligned seed-level forecasts, and losses are first averaged across
+seeds by date. Following the pooled forecast-comparison construc-
+tion in [9], we then average the RRM-minus-NRM loss differentials
+across the available asset–primitive pairs within each forecasting-
+specification–metric family on every test date. The pooled Diebold–
+Mariano test [10] is applied to the resulting time series of cross-
+sectional mean differentials. Long-run variance is estimated using
+a Bartlett HAC estimator with automatic lag selection, and the
+Harvey–Leybourne–Newbold finite-sample correction [15] is ap-
+plied. Positive statistics favor NRM. Table 2 reports the pooled
+statistics and one-sided unadjusted𝑝-values. Statistical testing is
+conducted only after validation-based specification selection: can-
+didate configurations are not individually tested on the test sample,
+and no model choice is based on test-set performance.
+5 Results
+5.1 Controlled simulation evidence
+Table 1 reports absolute and relative RMSE for contemporaneous
+IV𝑡 and next-day IV𝑡+1 . Jump and gradual-jump movements enter
+observed OHLC contributions but not the continuous-IV oracle.
+Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting ICAIF ’26, November 14–17, 2026, Milan, Italy
+Table 1: Simulation absolute and relative RMSE
+Target Measure Continuous Jump Gradual jump
+RRM NRM𝑟RMSE RRM NRM𝑟RMSE RRM NRM𝑟RMSE
+IV𝑡
+RV 0.981 0.607 0.619 4.820 0.665 0.138 7.658 1.433 0.187
+BV 1.118 0.857 0.767 1.171 0.841 0.718 3.800 2.601 0.685
+GK 0.400 0.391 0.976 1.266 0.362 0.286 1.624 0.376 0.232
+IV𝑡+1
+RV 1.606 1.476 0.919 4.784 1.386 0.290 7.245 1.687 0.233
+BV 1.675 1.644 0.981 1.664 1.504 0.904 3.741 2.476 0.662
+GK 1.372 1.294 0.943 1.754 1.164 0.663 1.926 1.137 0.590
+Notes: RRM and NRM columns report absolute RMSE in units of10−5.𝑟RMSE is defined in Eq.(17).
+Values below one favor NRM. RMSE are averaged across simulations (by seeds) before ratios rRMSE
+are formed. Reporting RMSEs distinguishes improvement in NRM from inflation of the RRM in the
+denominator.
+Table 2: Out-of-Sample Performance of NRM over RRM by
+Forecasting Specification and Metric across 18 Specifications
+(6 Assets×3 Measure Families)
+Specification Metric Mean gain (%) Median gain (%) NRM wins DM𝑝
+SF QLIKE 7.23 6.99 18/18 4.06<0.001
+RMSE 3.35 3.41 17/18 1.81 0.035
+MAE 5.13 4.40 18/18 2.05 0.020
+HAR QLIKE 8.15 8.08 18/18 3.08 0.001
+RMSE 1.30 1.20 17/18 2.70 0.003
+MAE 1.39 1.33 15/18 1.69 0.046
+MIDAS QLIKE 9.22 10.22 18/18 3.20<0.001
+RMSE 1.54 1.60 17/18 2.83 0.002
+MAE 1.37 1.40 16/18 1.54 0.062
+Notes: Gains are percentages averaged over 18 specifications. DM and𝑝are the
+pooled Diebold–Mariano statistic and one-sided unadjusted𝑝-value; positive DM
+values favor NRM.
+Table 3: Out-of-Sample QLIKE Performance after Validation-
+MSE Selection across Assets
+Asset Selected RRM Selected NRM HARNet DeepVol XGB
+BTC 0.3010.2780.326 0.335 0.294
+ETH 0.2720.2600.293 0.328 0.265
+SOL 0.253 0.2460.272 0.272 0.256
+BNB 0.348 0.3420.360 0.381 0.375
+XRP 0.560 0.5410.648 0.632 0.698
+DOGE 0.648 0.5790.751 0.689 0.666
+Mean 0.397 0.3740.442 0.439 0.426
+Notes: Lower values are better; bold indicates the lowest value and underline
+indicates the second-lowest value in each row.
+Reporting absolute errors beside ratios separates lower NRM error
+from inflation of the RRM denominator.
+NRM lowers RMSE in every primitive–regime combination. Gains
+are modest under continuous diffusion and larger under event stress,
+where OHLC contributions contain movements excluded from the
+oracle. The small RV and GK ratios reflect both lower NRM error
+and larger RRM error under estimand mismatch, not near-perfect
+latent-variance recovery. Next-day gains are smaller but broad. The
+simulation diagnoses finite-sample measurement and forecasting
+content, not unbiasedness or consistency.
+5.2 Empirical forecasting performance
+Paired RRM–NRM comparisons.Table 2 shows broad improve-
+ments across all three forecasting specifications. NRM wins all 54
+QLIKE comparisons, with mean gains of 7.23%, 8.15%, and 9.22%
+under SF, HAR, and MIDAS, respectively, and all pooled QLIKE tests
+are significant. RMSE improvements occur in 17 of 18 pairs under
+each forecasting specification. MAE gains are also broad, although
+the pooled MIDAS test is not significant at 5% (𝑝= 0.062). Because
+each pair holds the downstream forecasting specification and data
+setup fixed, these results support improved predictive content from
+learned aggregation rather than gains produced by changing the
+downstream forecasting structure.
+Flexible benchmark comparison.Table 3 compares validation-
+selected RRM and NRM specifications with HARNet, the DeepVol
+model, and XGBoost. NRM has the lowest mean QLIKE and im-
+proves on the validation-selected RRM specification for all six assets.
+The magnitude of the gain is smallest for BNB and larger for BTC
+and DOGE.
+Performance remains heterogeneous across assets and metrics,
+and the strongest competing benchmark differs across markets.
+Across the six assets, however, the validation-selected NRM speci-
+fications attain the lowest mean QLIKE among the compared ap-
+proaches. The analysis does not identify which market characteris-
+tics explain the remaining cross-asset differences.
+Table 4 reports the full asset-by-specification losses underlying
+the compact comparison. It is retained in the main text to show
+heterogeneity across assets, forecasting specifications, and realized-
+measure primitives. The table reports test performance for specifi-
+cations selected on the validation set, rather than the best test-set
+performance among candidate specifications.
+5.3 Feature-group ablation
+Table 5 reports controlled leave-one-group-out ablations of the
+HAR–NRM specifications. Removing Time and Local produces the
+largest average deterioration, increasing QLIKE by 4.54% and 4.01%,
+respectively, followed by Global at 2.54%. Shape has the smallest
+and most measure-dependent effect. The main gains therefore arise
+from intraday timing and local context, with additional information
+from the completed-day distribution.
+6 Mechanism and Interpretation
+Because NRM retains explicit weights on established primitive
+contributions, its learned allocation can be examined directly rather
+than only through a latent representation. The mechanism analysis
+therefore examines the validation-selected SF–NRM score networks
+for BTC–RV, ETH–RV, and SOL–RV as representative liquid-asset
+cases. The diagnostics use the seed-11 fitted model of each selected
+specification. Because all mechanism diagnostics in this section
+concern RV, the measure superscript is suppressed throughout
+Section 6.
+6.1 Intraday weight profiles
+The learned aggregation outcome is summarized by Figure 2. For
+a complete five-minute day, the displayed normalized weight is
+𝑤𝑡,𝑘 . Thus 𝑤𝑡,𝑘 = 1denotes uniform aggregation, values above
+one indicate relative up-weighting, and values below one indicate
+relative down-weighting. Five-minute weights are averaged within
+non-overlapping 15-minute intervals; the lines show cross-date
+medians and the bands show 10th–90th percentile ranges.
+The three assets place relatively less weight on much of the
+intermediate UTC day and more weight near the beginning and es-
+pecially the end of the day. The common direction is consistent with
+a shared intraday component, while differences in level, late-day
+amplitude, and dispersion indicate that the learned reallocation is
+ICAIF ’26, November 14–17, 2026, Milan, Italy Brian Sing Fan Chan and Jennifer So Kuen Chan
+Table 4: Out-of-Sample Forecasting Performance across Forecasting Specifications and Realized Measures
+Ticker Metric SF SF-NRM HAR HAR-NRM MIDAS MIDAS-NRM HARNet DeepVol XGB
+RV BV GK RV BV GK RV BV GK RV BV GK RV BV GK RV BV GK
+BTC
+QLIKE 0.316 0.315 0.343 0.292 0.295 0.300 0.311 0.301 0.346 0.284 0.2780.291 0.323 0.312 0.337 0.286 0.291 0.293 0.326 0.335 0.294
+RMSE 0.782 0.788 0.775 0.751 0.759 0.751 0.750 0.747 0.752 0.729 0.729 0.727 0.750 0.746 0.751 0.7260.728 0.732 0.781 0.763 0.745
+MAE 0.353 0.360 0.345 0.337 0.340 0.337 0.321 0.326 0.323 0.3190.3160.319 0.321 0.326 0.323 0.318 0.319 0.322 0.327 0.327 0.321
+ETH
+QLIKE 0.281 0.277 0.275 0.262 0.260 0.268 0.280 0.272 0.271 0.258 0.260 0.259 0.297 0.289 0.285 0.265 0.2730.250 0.293 0.328 0.265
+RMSE 1.509 1.505 1.534 1.472 1.462 1.496 1.465 1.460 1.457 1.439 1.442 1.438 1.475 1.469 1.468 1.431 1.4421.415 1.524 1.480 1.448
+MAE 0.674 0.678 0.687 0.649 0.653 0.677 0.624 0.630 0.641 0.615 0.621 0.640 0.624 0.627 0.639 0.6140.624 0.624 0.643 0.629 0.619
+SOL
+QLIKE 0.265 0.262 0.258 0.246 0.253 0.247 0.263 0.258 0.253 0.2420.249 0.243 0.263 0.258 0.256 0.245 0.253 0.242 0.272 0.272 0.256
+RMSE 3.009 3.013 2.925 2.860 3.049 2.820 2.866 2.867 2.847 2.798 2.838 2.784 2.848 2.842 2.839 2.792 2.7992.777 3.053 2.897 2.918
+MAE 1.125 1.141 1.118 1.081 1.125 1.061 1.014 1.030 1.036 1.001 1.012 1.006 1.012 1.024 1.027 1.008 1.0050.997 1.029 1.053 1.050
+BNB
+QLIKE 0.336 0.339 0.372 0.3180.326 0.355 0.350 0.348 0.393 0.334 0.342 0.361 0.357 0.354 0.397 0.326 0.343 0.358 0.360 0.381 0.375
+RMSE 5.478 5.615 5.191 5.163 5.188 5.160 5.189 5.205 5.169 5.172 5.223 5.165 5.164 5.169 5.160 5.1495.169 5.156 5.764 5.163 5.166
+MAE 0.707 0.720 0.632 0.616 0.627 0.586 0.615 0.621 0.595 0.589 0.6130.579 0.614 0.617 0.596 0.586 0.602 0.584 0.734 0.603 0.600
+XRP
+QLIKE 0.622 0.610 0.545 0.541 0.5410.497 0.651 0.628 0.560 0.549 0.552 0.502 0.650 0.629 0.579 0.536 0.560 0.513 0.648 0.632 0.698
+RMSE 5.999 5.936 6.098 5.715 5.733 5.769 5.786 5.777 5.790 5.720 5.7295.703 5.803 5.796 5.796 5.705 5.730 5.713 6.173 5.787 5.784
+MAE 1.444 1.445 1.477 1.381 1.397 1.435 1.349 1.355 1.381 1.355 1.356 1.396 1.352 1.356 1.367 1.345 1.365 1.380 1.447 1.370 1.335
+DOGE
+QLIKE 0.634 0.631 0.675 0.5790.580 0.610 0.660 0.648 0.704 0.598 0.593 0.623 0.674 0.655 0.721 0.589 0.611 0.644 0.751 0.689 0.666
+RMSE 16.710 16.478 16.204 16.140 16.065 16.018 16.147 16.124 16.093 16.075 16.048 16.019 16.085 16.072 16.068 16.033 16.04116.009 18.033 16.051 16.041
+MAE 1.972 1.931 1.839 1.836 1.821 1.757 1.809 1.809 1.765 1.786 1.789 1.728 1.806 1.801 1.769 1.786 1.7981.727 2.099 1.788 1.747
+Notes: The table reports ticker-level out-of-sample losses after selecting each model specification by validation MSE. RMSE and MAE entries are reported in units of10−3; QLIKE is
+reported on its original scale. Lower values are better. For SF, HAR, and MIDAS, each subcolumn uses the corresponding daily RRM family. Their NRM counterparts use the
+corresponding validation-selected NRM daily series constructed from the same primitive family. HARNet, DeepVol, and XGB are direct benchmark models and therefore do not have
+realized-measure-family subcolumns. Bold entries indicate the best model within each cryptocurrency-loss row, and underlined entries indicate the second-best model.
+Table 5: Controlled HAR–NRM Leave-One-Feature-Group-
+Out Ablation
+ΔQLIKEΔRMSE
+Measure Drop S Drop T Drop L Drop G Drop S Drop T Drop L Drop G
+RV +1.97% +3.32% +1.59% +3.16% +0.24% +1.04% +0.46% +0.24%
+BV -0.48% +3.76% +2.87% +0.62% -0.24% +0.79% +0.73% -0.23%
+GK +1.84% +6.54% +7.56% +3.84% +0.88% +1.36% +0.49% +0.60%
+Overall +1.11% +4.54% +4.01% +2.54% +0.29% +1.06% +0.56% +0.20%
+Notes:For each asset–measure pair, the full STLG specification is selected by mean validation MSE
+across the main-experiment seeds. Each ablated model inherits that complete hyperparameter
+configuration and is retrained after changing only the included feature groups. Entries are mean
+seed-paired percentage changes in test loss, first averaged across matched seeds within each asset–
+measure pair and then across assets. Positive values indicate worse performance after removing a
+feature group.
+0 5 10 15 20
+Intraday time (UTC)
+0.5
+1.0
+1.5
+2.0
+2.5
+Relative aggregation weight wt, k
+BTC RV
+ ETH RV
+ SOL RV
+Figure 2: Intraday SF–NRM weights for BTC–, ETH–, and
+SOL–RV. Lines show medians, bands show 10th–90th per-
+centiles, and one denotes uniform aggregation.
+adapted to each asset rather than imposed as a common profile. The
+late-day pattern may partly reflect the UTC boundary or forecast
+origin and should not be read as a universal session effect.
+6.2 Local-context and time effects
+The targeted SHAP display [ 20] focuses on the Time and Local
+groups, which have the largest and most directly interpretable bar-
+level effects. The smaller and more measure-dependent Shape and
+Global contributions are summarized through the ablation evidence.
+Figure 3 examines how the Local and Time inputs affect the
+fitted pre-normalization scores. It reports mean SHAP contributions
+within common bins for representative liquid-asset cases. Panel (a)
+displays the local volatility ratio on its RRM scale, although the
+network receives its logarithm. Positive (negative) values indicate
+inputs that raise (lower) the score relative to its baseline.
+Panel (a) shows broadly similar nonlinear local-context effects
+across the three assets. Locally small realized-variance contribu-
+tions receive positive score adjustments, whereas locally elevated
+contributions generally receive negative adjustments. The common
+direction suggests that the reallocation mechanism is not specific
+to one cryptocurrency, although differences in magnitude indicate
+asset-level heterogeneity.
+Panel (b) identifies a similar but non-identical intraday compo-
+nent in the three representative assets. The score networks produce
+more positive SHAP contributions near parts of the beginning and
+end of the UTC day and lower score contributions through much of
+the intermediate period. Differences in the timing and amplitude of
+extrema show that this common structure is adapted to each asset
+rather than imposed deterministically.
+7 Conclusion
+This paper studies whether forecast-supervised intraday realloca-
+tion can improve volatility prediction while retaining the primitive-
+level structure of conventional realized measures. The design treats
+established realized-measure primitives as statistically grounded
+building blocks and applies neural learning to the aggregation rule
+rather than replacing those primitives. NRM preserves the chosen
+Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting ICAIF ’26, November 14–17, 2026, Milan, Italy
+0 1 2 3 4 5
+Local volatility ratio xi/xN(i)
+2
+1
+0
+1
+2
+Mean SHAP contribution
+BTC RV
+ ETH RV
+ SOL RV
+00:00 04:00 08:00 12:00 16:00 20:00 24:00
+Intraday time (UTC)
+2
+1
+0
+1
+2
+Mean SHAP contribution
+Figure 3: SHAP effects of Local and Time inputs on SF–NRM
+scores. Lines show bin means and bands show interquartile
+ranges.
+intraday primitive, uses mean-normalized positive weights, and
+exactly recovers the corresponding RRM under uniform allocation.
+Because the output remains an explicit weighted sum of the original
+contributions, the daily measure also retains direct primitive-level
+attribution. NRM therefore provides a structured alternative to both
+fixed realized-measure aggregation and unrestricted end-to-end
+neural forecasting.
+Controlled simulations show lower reported losses for contem-
+poraneous and next-day latent integrated variance across the eval-
+uated continuous, jump, and conditional event-stress regimes. In
+cryptocurrency data, paired RRM–NRM comparisons show broad
+gains under SF, HAR, and MIDAS forecasting specifications, with
+particularly consistent improvements under QLIKE. Validation-
+selected NRM specifications attain the lowest mean QLIKE across
+the six assets among the evaluated approaches. For representa-
+tive BTC, ETH, and SOL specifications, the fitted score functions
+combine day-level distributional conditioning, recurring intraday
+timing, and nonlinear local-context adjustments.
+The evidence has several boundaries. NRM is forecasting-specification-
+specific and should be interpreted as a task-specific representa-
+tion rather than a reusable universal measure. The cryptocurrency
+setting provides consistent 24/7 UTC days but does not establish
+generalization to markets with sessions and overnight gaps. The
+empirical target is a noisy realized proxy, the simulation regimes
+are controlled stresses rather than fully calibrated microstructure
+models, and STLG excludes richer volume and order-book informa-
+tion. Future work can examine transferable aggregation, alternative
+day boundaries, traditional asset classes, and economic-value appli-
+cations.
+References
+[1] T. G. Andersen, T. Bollerslev, F. X. Diebold, and P. Labys. 2003. Modeling and
+Forecasting Realized Volatility.Econometrica71, 2 (2003), 579–625.
+[2] T. G. Andersen, Y. Li, V. Todorov, and B. Zhou. 2023. Volatility Measurement with
+Pockets of Extreme Return Persistence.Journal of Econometrics237, 2 (2023),
+105439.
+[3] O. E. Barndorff-Nielsen, P. R. Hansen, A. Lunde, and N. Shephard. 2008. Designing
+Realized Kernels to Measure the Ex Post Variation of Equity Prices in the Presence
+of Noise.Econometrica76, 6 (2008), 1481–1536.
+[4] O. E. Barndorff-Nielsen and N. Shephard. 2004. Power and Bipower Variation
+with Stochastic Volatility and Jumps.Journal of Financial Econometrics2, 1 (2004),
+1–37.
+[5] B. S. F. Chan, A. C. H. Cheng, and A. K. C. Ma. 2018. Stock Market Volatility and
+Trading Volume: A Special Case in Hong Kong with Stock Connect Turnover.
+Journal of Risk and Financial Management11, 4 (2018), 76.
+[6] B. S. F. Chan, K.-F. Cheung, N. Chen, and J. S.-K. Chan. 2026. Time-Occupation
+Information for Realized Volatility Forecasting. SSRN working paper.
+[7] T. Chen and C. Guestrin. 2016. XGBoost: A Scalable Tree Boosting System. In
+Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge
+Discovery and Data Mining. 785–794.
+[8] F. Corsi. 2009. A Simple Approximate Long-Memory Model of Realized Volatility.
+Journal of Financial Econometrics7, 2 (2009), 174–196.
+[9] P. Cotturo, F. Liu, and R. Proner. 2026. Multifactor Timing with Deep Learning.
+Journal of Financial Econometrics24, 3 (2026), nbag006.
+[10] F. X. Diebold and R. S. Mariano. 1995. Comparing Predictive Accuracy.Journal
+of Business & Economic Statistics13, 3 (1995), 253–263.
+[11] E. Eldele, M. Ragab, Z. Chen, M. Wu, and X. Li. 2024. TSLANet: Rethinking
+Transformers for Time Series Representation Learning. InProceedings of the 41st
+International Conference on Machine Learning (Proceedings of Machine Learning
+Research, Vol. 235). 12409–12428.
+[12] J. Fan, L. Xue, and J. Yao. 2017. Sufficient Forecasting Using Factor Models.
+Journal of Econometrics201, 2 (2017), 292–306. doi:10.1016/j.jeconom.2017.08.009
+[13] M. B. Garman and M. J. Klass. 1980. On the Estimation of Security Price Volatilities
+from Historical Data.Journal of Business53, 1 (1980), 67–78.
+[14] E. Ghysels, P. Santa-Clara, and R. Valkanov. 2006. Predicting Volatility: Getting
+the Most Out of Return Data Sampled at Different Frequencies.Journal of
+Econometrics131, 1–2 (2006), 59–95.
+[15] D. Harvey, S. Leybourne, and P. Newbold. 1997. Testing the Equality of Prediction
+Mean Squared Errors.International Journal of Forecasting13, 2 (1997), 281–291.
+[16] S. L. Heston. 1993. A Closed-Form Solution for Options with Stochastic Volatility
+with Applications to Bond and Currency Options.The Review of Financial Studies
+6, 2 (1993), 327–343.
+[17] M. Ilse, J. Tomczak, and M. Welling. 2018. Attention-based Deep Multiple Instance
+Learning. InProceedings of the 35th International Conference on Machine Learning
+(Proceedings of Machine Learning Research, Vol. 80). PMLR, 2127–2136.
+[18] D. Kim, J. Park, J. Lee, and H. Kim. 2024. Are Self-Attentions Effective for Time
+Series Forecasting?. InAdvances in Neural Information Processing Systems, Vol. 37.
+[19] Y. Li, I. Nolte, S. Nolte, and S. Yu. 2025. Realized Candlestick Wicks.Journal of
+Econometrics250 (2025), 106014.
+[20] S. M. Lundberg and S.-I. Lee. 2017. A Unified Approach to Interpreting Model
+Predictions. InAdvances in Neural Information Processing Systems, Vol. 30.
+[21] M. Martens and D. van Dijk. 2007. Measuring Volatility with the Realized Range.
+Journal of Econometrics138, 1 (2007), 181–207.
+[22] F. Moreno-Pino and S. Zohren. 2024. DeepVol: Volatility Forecasting from High-
+Frequency Data with Dilated Causal Convolutions.Quantitative Finance24, 8
+(2024), 1105–1127.
+[23] A. J. Patton. 2011. Volatility Forecast Comparison Using Imperfect Volatility
+Proxies.Journal of Econometrics160, 1 (2011), 246–256.
+[24] R. Reisenhofer, X. Bayer, and N. Hautsch. 2022. HARNet: A Convolutional Neural
+Network for Realized Volatility Forecasting. arXiv:2205.07719.
+[25] L. C. G. Rogers and S. E. Satchell. 1991. Estimating Variance from High, Low and
+Closing Prices.Annals of Applied Probability1, 4 (1991), 504–512.
+[26] M. Tan, M. A. Merrill, V. Gupta, T. Althoff, and T. Hartvigsen. 2024. Are Language
+Models Actually Useful for Time Series Forecasting?. InAdvances in Neural
+Information Processing Systems, Vol. 37.
+[27] H. Wu. 2025. Revisiting Attention for Multivariate Time Series Forecasting.
+Proceedings of the AAAI Conference on Artificial Intelligence39, 20 (2025), 21528–
+21535.
+[28] C. Zhang, Y. Zhang, M. Cucuringu, and Z. Qian. 2024. Volatility Forecasting with
+Machine Learning and Intraday Commonality.Journal of Financial Econometrics
+22, 2 (2024), 492–530.
