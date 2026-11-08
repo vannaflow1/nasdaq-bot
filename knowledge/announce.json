@@ -1,0 +1,10 @@
+[
+ {
+  "title": "Review: gap vs 20-day range -> close above yesterday's high",
+  "body": "CONFIRMED, but no new information. No look-ahead; same pattern in both halves (10% of days in the smallest-gap fifth close above yesterday's high vs 64% in the biggest-gap fifth). It is mechanical (a big gap up opens near yesterday's high) and a near-copy of power #7; where the open sits inside yesterday's range predicts the same thing better (walk-forward log-loss 0.507 vs 0.568) and this ratio adds nothing to it."
+ },
+ {
+  "title": "Review: big London range -> bigger first NY hour",
+  "body": "CONFIRMED. No look-ahead; identical in 2014-19 and 2020-25 (first-hour range 0.46x of the normal day range in the quietest-London fifth vs 0.76x in the busiest). This is volatility clustering: the whole overnight range already predicts it as well; London adds about 1% on top of overnight + yesterday's range. Good for expecting a wide first hour, says nothing about direction."
+ }
+]

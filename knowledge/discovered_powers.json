@@ -83,7 +83,8 @@
   "target": "y_closed_above_yday_high",
   "expr": "k_gap / k_range20",
   "verdict": "PROMISING (stress test: survived) : FACT: happens on 35% of 2808 sessions (2014-19: 35%, 2020-25: 35%). Predictor: lowest-fifth days 10% vs highest-fifth 64%, skill +15.4% vs the base rate, better in 9/9 unseen years",
-  "active": true
+  "active": true,
+  "review": "CONFIRMED (fact, no new information) (Claude, 2026-11-08): no leak - k_range20 is the average of the 20 PREVIOUS sessions (median difference to a past-only rebuild 0.00003%). Fifths 10%/21%/36%/43%/64% overall, same shape in 2014-19 and 2020-25. Mechanical: a big gap up puts the open near or above yesterday's high. It is a near-copy of power #7 (k_gap alone, 11%->63%), and k_open_vs_yday (where the open sits vs yesterday's range) is clearly better (5.7%->73%; walk-forward 2017-25 log-loss 0.507 vs 0.568), adding k_gap/k_range20 to it does not help (0.508). Base-rate fact, not an edge."
  },
  {
   "id": 10,
@@ -92,6 +93,7 @@
   "target": "y_first_hour_range / k_range20",
   "expr": "k_london_range / k_range20",
   "verdict": "PROMISING (stress test: survived) : FACT: average 0.58, median 0.518 over 2906 sessions (2014-19: 0.584, 2020-25: 0.577). Predictor: lowest-fifth days 0.455 vs highest-fifth 0.756, skill +20.3% vs the base rate, better in 9/9 unseen years",
-  "active": true
+  "active": true,
+  "review": "CONFIRMED (Claude, 2026-11-08): no leak (k_range20 past-only, London closes before the NY open). Fifths 0.456->0.755 in 2014-19 and 0.463->0.755 in 2020-25. Textbook volatility clustering: the overnight range vs normal (k_on_vs_normal, power #2's input) predicts the first hour as well or better (walk-forward 2017-25 MSE on log ratio: overnight 0.140, London 0.145; overnight + yesterday's range 0.129, + London 0.128 = ~1% extra). Note: the question says 'London range vs ITS 20-day average' but the formula divides by the NY 20-day range. Useful context for sizing stops early in the session, not a directional edge."
  }
 ]
