@@ -1,6 +1,5 @@
 scanned 0 papers, queued 0, queue size 49 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 2797/7000
-curiosity asked: Strategy: LowGex_ConvexBreak_Exp50_pwBlend
-tested: Strategy: LowGex_ConvexBreak_Exp50_pwBlend - Break above 50% -> TRANSLATION FAILED - formula gives too little usable data
-testing used 351 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
+read 0, AI units today 3151/7000
+test queue empty
+testing used 0 AI units
