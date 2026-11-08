@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 49 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 2118/7000
-curiosity: unusable translator JSON not closed
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
+read 0, AI units today 2270/7000
+curiosity: unusable translator JSON unreadable (SyntaxError)
 test queue empty
-testing used 149 AI units
+testing used 147 AI units
