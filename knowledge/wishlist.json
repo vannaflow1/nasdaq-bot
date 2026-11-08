@@ -562,7 +562,7 @@
   "why": "Current ridge+neural ensemble is over‑confident, leading to missed trade signals; calibrated scaling should improve probabilistic thresholds and potentially increase edge.",
   "evidence": "Diary notes indicate forecast confidence mismatches; recent paper on temperature scaling shows consistent gains in finance.",
   "impact": "high",
-  "status": "open",
+  "status": "frozen",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -571,6 +571,7 @@
    "branch": null,
    "summary": "stopped after 45 minutes (25 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-08: live-side, frozen. The ridge+neural-net blend is live_tracker.py / brain.py (live briefing), which is frozen. No evidence of over-confidence either: it is a range regression, not a classifier (temperature scaling does not apply directly); its 80% band held 80% in walk-forward 2017-2025, and brain_preds.csv shows 10/14 forward days inside the band (71%, n too small to differ from 80%). Brain forecasts drive no trade signals, so there is no 'missed signals' mechanism. Revisit only if the live side is unfrozen and >=100 forward days show band coverage outside ~70-90%."
  }
 ]
