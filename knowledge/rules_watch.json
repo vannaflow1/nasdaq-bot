@@ -1,16 +1,18 @@
 {
  "Tradeify: essential trading rules": {
   "url": "https://intercom.help/tradeify/en/articles/12268167-essential-trading-rules-overview",
-  "hash": "a4afb9ff364f684f",
-  "checked": "2026-11-02",
+  "hash": "5d2913723c2524e8",
+  "norm": 2,
+  "checked": "2026-11-09",
   "chars": 8032,
   "changed_on": "2026-11-02"
  },
  "FundedNext Futures: automated trading": {
   "url": "https://helpfutures.fundednext.com/en/articles/14298560-is-the-usage-of-automated-trading-systems-eas-and-bots-allowed-in-fundednext-futures",
-  "hash": "340e8013676ef001",
-  "checked": "2026-11-02",
-  "chars": 1898,
+  "hash": "ac7b5ed4b1496a7f",
+  "norm": 2,
+  "checked": "2026-11-09",
+  "chars": 1908,
   "changed_on": "2026-11-02"
  }
 }
