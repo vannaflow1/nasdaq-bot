@@ -1,8 +1,9 @@
 {
  "for": "Mon 09 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Mon 09 Nov) - risk \u26aa NORMAL",
-  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
+  "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
  ],
  "gamma": [
   "",
@@ -28,29 +29,23 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,110 XP, next level at 10,240)",
-  "Papers read 279 | ideas & strategies tested 158 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 10",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Mon 09 Nov 01:59 Lux",
+ "level": "ELEVATED",
+ "updated": "Mon 09 Nov 14:57 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  Tue 10 Nov: CPI inflation 14:30 Lux"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Nvidia, AMD and other chip stocks rebound \u2014 but is relief from the \u2018violent\u2019 selloff only temporary?  [MarketWatch]\n    NVDA, AMD, shock",
-  "- Nvidia Stock, Other AI Names Rebound After Sell-Off  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- OpenAI will keep investing in AI data centers despite election results, CFO tells CNBC  [CNBC tech]\n    OPENAI, AI chips/capex, earnings",
-  "- Protesters storm Microsoft AI data center construction site  [Tom's Hardware]\n    MSFT, AI chips/capex",
-  "- U.S. economy added 165,000 jobs in October, way more than expected; unemployment rate slips to 4.1%  [CNBC economy]\n    Fed/macro",
-  "- OpenAI, Arm and Qualcomm executives react to post-midterm AI sell-off  [CNBC tech]\n    OPENAI, shock"
+  "NEWS (last 64h, ranked by keywords):",
+  "- Two Chinese companies cleared to buy banned Nvidia AI chips have empty offices and unknown addresses  [Tom's Hardware]\n    NVDA, AI chips/capex, shock",
+  "- Cramer\u2019s week ahead: AI data center stocks face another hurdle and so does the Fed  [CNBC tech]\n    AI chips/capex, Fed/macro",
+  "- Nvidia sinks on spy probe as Trump backs Jensen Huang: 'He's an honorable guy'  [Yahoo (megacaps)]\n    NVDA, shock",
+  "- Nvidia Stock Falls on Report of CEO Probe Over Alleged Spy Effort  [Yahoo (megacaps)]\n    NVDA, shock",
+  "- Prediction: Nvidia Stock Is Going to Soar After Nov. 17  [Yahoo (megacaps)]\n    NVDA, shock",
+  "- Nasdaq defies Nvidia impact as Huang faces espionage affair probe  [CNBC tech]\n    NVDA, shock"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 64h):",
   "- Mon 01:05 [China/Taiwan, economy] I am urging all Senators to vote for The American Affordability and Jobs Act (S. 5653)! This Bill is a BIG WIN for U.S. ENERGY INDEPENDENCE and DOMINANCE. This Landmark Permitting Reform Legislation will codify our America First Energy Agenda, and ensure that we can build\u2026",
   "- Sun 21:46 [oil/geopolitics] Task Force Iron Gate is in full force and effect in the Islamic Republic of Iran. Coupled with history\u2019s greatest Naval Blockade, very little gets into, or out of, Iran! President DJT",
   "- Sun 14:49 [stock market, fiscal/policy] America took a giant step back in History with the results of the last Election \u2014 Even the Stock Market, which has been a \u201cROCKETSHIP\u201d under \u201cTRUMP,\u201d took a one day, 3 Trillion Dollar loss. But have no fear, we will be back, BIGGER AND STRONGER THAN EVER BEFORE! President DONALD\u2026"
@@ -121,7 +116,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: Jobs report (NFP) 14:30 Lux"
+  "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
   "LIVE options read - Fri 06 Nov 23:52 Lux (17:52 NY), quotes ~15 min delayed, QQQ 656.61",
