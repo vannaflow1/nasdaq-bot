@@ -306,5 +306,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-07"
+ },
+ {
+  "id": "h27",
+  "date": "2026-11-09",
+  "query": "asian session high breakout low gamma",
+  "why": "The SMT‑at‑Asian‑high idea appears promising but lacks published validation; a paper could confirm the mechanism and suggest parameter ranges.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

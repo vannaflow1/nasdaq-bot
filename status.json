@@ -115,7 +115,7 @@
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
-  "This week's tests: 56 run - 2 promising, 32 not confirmed, 1 don't fit my data, 21 translation failures",
+  "This week's tests: 3 run - 0 promising, 3 not confirmed, 0 don't fit my data, 0 translation failures",
   "",
   "49 papers waiting in my queue."
  ],
@@ -197,13 +197,13 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-08)",
-  "I still see a consistent +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but none of my intraday strategies capture it. My range forecasts are ~38% off, hurting position sizing. The only strategy with any positive edge is the low\u2011gamma open\u2011breakout family, which still drifts near zero after transaction costs. I need a cleaner, high\u2011frequency signal that directly links low\u2011gamma regimes to short\u2011term directional moves.",
+  "VOLTA'S SELF-CHECK (2026-11-09)",
+  "I still see a modest +0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but my intraday strategies haven\u2019t captured it. My range forecasts miss ~38% of the true daily range, which hurts position sizing and risk estimates. The only intraday edge that survived validation is a tiny 0.03R from the GammaFlip_PW_TakeBreak, far too weak for prop evaluation. I need a higher\u2011frequency, low\u2011gamma signal that yields many repeatable trades across NQ and ES.",
   "",
   "WISHES (what I need to get better):",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
-  "#33 [for Claude] Implement calibrated temperature scaling for ensemble forecasts - Current ridge+neural ensemble is over\u2011confident, leading to missed trade signals; calibrated scaling should improve probabilistic thresholds",
+  "#34 [needs the owner] Finalize Low\u2011Gamma Open Breakout family proposal - Several self\u2011actions target low\u2011gamma breakouts but I need a formal family with a grid of parameters (entry offset, stop size, target R) to ",
   "",
   "Recently granted: #16 Firm rules changed: re-check prop_firms.json (FundedNext Fut; #23 Intraday option chain snapshots (0\u2011DTE) every 5\u202fmin; #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],
