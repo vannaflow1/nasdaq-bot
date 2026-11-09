@@ -1,5 +1,20 @@
 [
 {
+"title": "MODEL ADOPTION #4465: REJECT \u2014 LEDGER BENCH: Apply filter: Session = OFF_SESSION \u2014 improves win rate from 31.5% to 41.9% \u2014 E8 Intelligence Research",
+"learned": "The abstract argues that adding an OFF_SESSION filter to the Ledger Bench model only artificially inflates win rate in a short backtest and likely harms overall performance.",
+"concepts": [
+"overfitting",
+"session filtering",
+"win rate vs profit",
+"walk\u2011forward validation",
+"model geometry"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.5281/zenodo.23526013",
+"date": "2026-11-09"
+},
+{
 "title": "Statistical Modelling of Stock-Market Volatility Forecasting with Investor Sentiment",
 "learned": "The paper shows how to improve daily volatility forecasts by adding a retail\u2011investor sentiment index (built from search volume and market\u2011behavior proxies) into GARCH\u2011type models, especially using a mixed\u2011frequency GARCH\u2011MIDAS framework, and compares it to an LSTM benchmark.",
 "concepts": [
