@@ -1,3 +1,3 @@
-got 14.0 MB
-{'date': '2026-11-06', 'spx_spot': 7382.8, 'spx_gexn': -51.4445, 'spx_0dte_share': 0.0382, 'spx_atm_iv': 0.1772, 'spx_skew': 0.4562, 'spx_oi_total': 25181773, 'spx_contracts': 31306}
-15 days collected
+got 14.1 MB
+{'date': '2026-11-09', 'spx_spot': 7554.5, 'spx_gexn': -5.0077, 'spx_0dte_share': 0.0246, 'spx_atm_iv': 0.1907, 'spx_skew': 0.3829, 'spx_oi_total': 25060997, 'spx_contracts': 31016}
+16 days collected
