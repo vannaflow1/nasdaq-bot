@@ -585,5 +585,29 @@
   "impact": "high",
   "status": "open",
   "votes": 1
+ },
+ {
+  "id": 35,
+  "date": "2026-11-10",
+  "title": "Provide 5\u2011minute intraday GEX rank series",
+  "for": "claude",
+  "type": "data",
+  "why": "My self\u2011actions and strategy tests need a high\u2011frequency GEX rank signal; currently only daily values exist, limiting the granularity of low\u2011gamma filters.",
+  "evidence": "All failed ideas list 'needs intraday GEX rank' and my current power curve shows zero edge from low\u2011gamma days.",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
+ },
+ {
+  "id": 36,
+  "date": "2026-11-10",
+  "title": "Add calibrated temperature scaling to ensemble forecasts",
+  "for": "claude",
+  "type": "code",
+  "why": "Ensemble forecast calibration has been shown to improve probability calibration; better\u2011calibrated range forecasts would allow more reliable position sizing and risk control.",
+  "evidence": "Recent papers suggest temperature scaling beats raw ensembles, and my range forecasts are still 38% off.",
+  "impact": "medium",
+  "status": "open",
+  "votes": 1
  }
 ]
