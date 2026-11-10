@@ -595,7 +595,7 @@
   "why": "My self‑actions and strategy tests need a high‑frequency GEX rank signal; currently only daily values exist, limiting the granularity of low‑gamma filters.",
   "evidence": "All failed ideas list 'needs intraday GEX rank' and my current power curve shows zero edge from low‑gamma days.",
   "impact": "high",
-  "status": "open",
+  "status": "blocked",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -604,7 +604,8 @@
    "branch": null,
    "summary": "stopped after 45 minutes (8 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-10: blocked - no data. GEX needs the option chain (OI + gamma per strike); the repo has only a DAILY net-GEX series (gex_history.csv, from end-of-day chains) and no free historical intraday chains exist, so a 5-min rank can't be backtested. Collecting 5-min CBOE snapshots forward is live-side (frozen) and would take months before any test; OI itself updates only daily. Owner-side data question, same as wish #28."
  },
  {
   "id": 36,
@@ -615,7 +616,8 @@
   "why": "Ensemble forecast calibration has been shown to improve probability calibration; better‑calibrated range forecasts would allow more reliable position sizing and risk control.",
   "evidence": "Recent papers suggest temperature scaling beats raw ensembles, and my range forecasts are still 38% off.",
   "impact": "medium",
-  "status": "open",
-  "votes": 1
+  "status": "blocked",
+  "votes": 1,
+  "note": "Claude 2026-11-10: blocked - the range forecast is brain.py, a single ridge model (not an ensemble), live-side (frozen), and its l_bot is F10's frozen forward stop input (frozen/F10_forward_inputs.json), so it must not change during the forward test. Temperature scaling rescales probabilities/band width; it cannot shrink the point miss. Checked brain_preds.csv: 15 graded live days, 80% band held 11/15 (73%, consistent with 80%), mean |log error| 0.39 (the '~38% off'). Walk-forward 2017-25 band coverage was 80%. Revisit after F10's forward test."
  }
 ]
