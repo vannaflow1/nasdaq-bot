@@ -87,12 +87,12 @@
   "spx_factor": 1.0
  },
  "live": [
-  "LIVE - Mon 09 Nov 21:31 Lux",
-  "NQ 28,102 | range so far 1,368 pts (5.05%), high 28,120 / low 26,751 | data as of 15:21 NY (may lag a few minutes)",
-  "Brain this morning: ~1,045 pts for the day (3.86%) - 131% of it already used.",
-  "Updated with what happened so far: full day ~1,392 pts (80%: 1,368-1,588) -> typically ~23 more pts to come (80%: 0-219).",
-  "(brain + neural net, re-estimated at 14:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
-  "Far levels today: high 28,155 / low 25,926 (~90% of days stay inside each)"
+  "LIVE - Tue 10 Nov 15:31 Lux",
+  "NQ 27,722 | range so far 519 pts (1.85%), high 28,109 / low 27,590 | data as of 09:21 NY (may lag a few minutes)",
+  "Brain this morning: ~660 pts for the day (2.35%) - 79% of it already used.",
+  "Updated with what happened so far: full day ~751 pts (80%: 520-1,170) -> typically ~232 more pts to come (80%: 1-651).",
+  "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "Far levels today: high 28,698 / low 27,234 (~90% of days stay inside each)"
  ],
  "playbook": [
   "\ud83d\udccb PLAYBOOK - CPI inflation (14:30 Lux)  (based on 104 past CPI days, 2017-2025)",
