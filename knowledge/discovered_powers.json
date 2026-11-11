@@ -95,5 +95,14 @@
   "verdict": "PROMISING (stress test: survived) : FACT: average 0.58, median 0.518 over 2906 sessions (2014-19: 0.584, 2020-25: 0.577). Predictor: lowest-fifth days 0.455 vs highest-fifth 0.756, skill +20.3% vs the base rate, better in 9/9 unseen years",
   "active": true,
   "review": "CONFIRMED (Claude, 2026-11-08): no leak (k_range20 past-only, London closes before the NY open). Fifths 0.456->0.755 in 2014-19 and 0.463->0.755 in 2020-25. Textbook volatility clustering: the overnight range vs normal (k_on_vs_normal, power #2's input) predicts the first hour as well or better (walk-forward 2017-25 MSE on log ratio: overnight 0.140, London 0.145; overnight + yesterday's range 0.129, + London 0.128 = ~1% extra). Note: the question says 'London range vs ITS 20-day average' but the formula divides by the NY 20-day range. Useful context for sizing stops early in the session, not a directional edge."
+ },
+ {
+  "id": 11,
+  "date": "2026-11-11",
+  "question": "On days when the overnight range is unusually large relative to its 20\u2011day average (k_on_vs_normal), are we more likely to see NQ trade above the Asia high during the NY session (y_took_asia_high)?",
+  "target": "y_took_asia_high",
+  "expr": "k_on_vs_normal",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 76% of 2907 sessions (2014-19: 76%, 2020-25: 75%). Predictor: lowest-fifth days 64% vs highest-fifth 82%, skill +2.1% vs the base rate, better in 8/9 unseen years",
+  "active": true
  }
 ]

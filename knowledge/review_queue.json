@@ -1,1 +1,19 @@
-[]
+[
+ {
+  "id": "q:2026-11-11:3",
+  "title": "Volta's own question (inspired by: MODEL ADOPTION #4465: REJECT \u2014 LEDGER BENCH: Apply filter: S; A Deep Learning-Driven Operator Splitting Scheme for Free Bo)",
+  "idea": "On days when the overnight range is unusually large relative to its 20\u2011day average (k_on_vs_normal), are we more likely to see NQ trade above the Asia high during the NY session (y_took_asia_high)?",
+  "relevance": 6,
+  "spec": {
+   "kind": "question",
+   "question": "On days when the overnight range is unusually large relative to its 20\u2011day average (k_on_vs_normal), are we more likely to see NQ trade above the Asia high during the NY session (y_took_asia_high)?",
+   "target": "y_took_asia_high",
+   "expr": "k_on_vs_normal",
+   "explain": "Inspired by research linking larger overnight moves to intraday breakout behavior, this asks whether an above\u2011average overnight range predicts the market breaking the prior Asia high."
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 76% of 2907 sessions (2014-19: 76%, 2020-25: 75%). Predictor: lowest-fifth days 64% vs highest-fifth 82%, skill +2.1% vs the base rate, better in 8/9 unseen years",
+  "how": "Q: On days when the overnight range is unusually large relative to its 20\u2011day average (k_on_vs_normal), are we more likely to see NQ trade above the Asia high during the NY session (y_took_asia_high)? | answer = `y_took_asia_high` | predicted by `k_on_vs_normal` | stress: skill +2.10; nudged formulas kept >= half the skill in n/a (no numbers); stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-11-11"
+ }
+]
