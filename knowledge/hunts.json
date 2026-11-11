@@ -318,5 +318,14 @@
    "openalex:W7223096128"
   ],
   "searched": "2026-11-09"
+ },
+ {
+  "id": "h28",
+  "date": "2026-11-11",
+  "query": "gex rank early session price impact",
+  "why": "Understanding the link between GEX rank and the first 30‑minute return will guide filter thresholds for the new strategy.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
