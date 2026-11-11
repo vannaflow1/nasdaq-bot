@@ -1,7 +1,7 @@
 {
  "for": "Wed 11 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Wed 11 Nov) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
@@ -28,31 +28,23 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,162 XP, next level at 10,240)",
-  "Papers read 283 | ideas & strategies tested 182 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 10",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Wed 11 Nov 03:04 Lux",
+ "level": "NORMAL",
+ "updated": "Wed 11 Nov 14:56 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Dow Jones Futures: Stock Market Falls On Surging Treasury Yields, Nvidia Sell-Off; CoreWeave Rises Late  [Yahoo (megacaps)]\n    NVDA, Fed/macro, shock",
-  "- Stock Market Today: Dow Dips As Yields Soar; Nvidia Dives; Anthropic Seeks This IPO Price  [Yahoo (megacaps)]\n    NVDA, OPENAI, shock",
-  "- Microsoft lobbies against potential ban on Chinese optical networking gear for AI data centers as FCC mulls restricting imports  [Tom's Hardware]\n    MSFT, AI chips/capex, shock",
-  "- A closer look at Verano, AMD's first step toward a Zen-based superchip to rival Nvidia's Vera Rubin  [The Register]\n    NVDA, AMD, AI chips/capex",
-  "- Update: Equities Fall as Nvidia Leads Tech Sell-Off  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- Nvidia hires law firm Wachtell Lipton to lead Jensen Huang affair probe  [CNBC tech]\n    NVDA, shock",
-  "- Nvidia board member Stephen Neal could play big role in probe of CEO Jensen Huang  [CNBC tech]\n    NVDA, shock",
-  "- Alice Huang reportedly instrumental in securing over $7.5 billion of Nvidia AI GPU imports during three-year relationship with Jensen Huang  [Tom's Hardware]\n    NVDA, AI chips/capex"
+  "NEWS (last 16h, ranked by keywords):",
+  "- 'Icarus' rise and fall': Analyst downgrades Nvidia stock amid Jensen Huang woes, highlights risks  [Yahoo (megacaps)]\n    NVDA, shock",
+  "- Baird downgrades Nvidia on CEO Huang worries, AI uncertainty  [CNBC markets]\n    NVDA, shock",
+  "- Nvidia stock rebounds, chip stocks surge as CoreWeave earnings boost AI trade  [Yahoo (megacaps)]\n    NVDA, earnings",
+  "- MU, AMD, AVGO, Other Chip Stocks Surge As CoreWeave Earnings Reignite AI Trade \u2014 Nasdaq-100 Futures Jump  [Yahoo (megacaps)]\n    AVGO, AMD, earnings",
+  "- Goldman Sees Anthropic Revenue at \u201c$685B by 2030.\u201d Broadcom Is Tied to $161 Billion in Lease Deals  [Yahoo (megacaps)]\n    AVGO, OPENAI, earnings",
+  "- Nvidia shares rebound 4% as Huang faces scrutiny ahead of earnings  [CNBC tech]\n    NVDA, earnings"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Wed 00:24 [oil/geopolitics] The Democrats\u2019 attempt to impeach Secretary of War Pete Hegseth has miserably FAILED! Every single Republican, except Thomas Massie, a major LOSER, voted in favor of Pete. Again, Victories in Venezuela and Iran, the Best Recruitment Numbers in the History of the Military (Long\u2026"
  ],
  "forecast": [
@@ -121,7 +113,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: CPI inflation 14:30 Lux"
+  "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
   "LIVE options read - Wed 11 Nov 14:28 Lux (08:28 NY), quotes ~15 min delayed, QQQ 687.49",
