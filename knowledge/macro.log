@@ -1,29 +1,29 @@
-vix    ^VIX      4242 days from 2010-01-04
-vix9d  ^VIX9D    3987 days from 2011-01-04
-vix3m  ^VIX3M    4240 days from 2010-01-04
-vvix   ^VVIX     4231 days from 2010-01-04
-vix1d  ^VIX1D    892 days from 2023-04-24
-es     ES=F      4241 days from 2010-01-04
-nq     NQ=F      4241 days from 2010-01-04
-spx    ^GSPC     4240 days from 2010-01-04
-tnx    ^TNX      4238 days from 2010-01-04
-dxy    DX-Y.NYB  4241 days from 2010-01-04
-(4240, 17) 2010-01-04 -> 2026-11-10
-date          2026-11-09  2026-11-10
-vix               19.920      19.460
-vix9d             19.880      18.540
-vix3m             20.850      20.640
-vvix              98.430      96.630
-vix1d             17.310      13.950
-vix_term           0.998       0.953
-vix_curve          0.955       0.943
-vix_chg          -22.309      -2.309
-vvix_vix           4.941       4.966
-es_ret             2.327      -0.254
-es_ret5           -0.003      -0.550
-nq_vs_es           1.104      -0.152
-nq_vs_es5         -0.398      -0.881
-spx_ret            2.346      -0.384
-us10y              4.864       4.983
-us10y_chg_bp       0.500      11.900
-dxy_ret           -0.635       0.571
+vix    ^VIX      4243 days from 2010-01-04
+vix9d  ^VIX9D    3988 days from 2011-01-04
+vix3m  ^VIX3M    4241 days from 2010-01-04
+vvix   ^VVIX     4232 days from 2010-01-04
+vix1d  ^VIX1D    893 days from 2023-04-24
+es     ES=F      4242 days from 2010-01-04
+nq     NQ=F      4242 days from 2010-01-04
+spx    ^GSPC     4241 days from 2010-01-04
+tnx    ^TNX      4239 days from 2010-01-04
+dxy    DX-Y.NYB  4242 days from 2010-01-04
+(4241, 17) 2010-01-04 -> 2026-11-11
+date          2026-11-10  2026-11-11
+vix               19.460      17.490
+vix9d             18.540      16.040
+vix3m             20.640      19.240
+vvix              96.630      90.470
+vix1d             13.950      12.640
+vix_term           0.953       0.917
+vix_curve          0.943       0.909
+vix_chg           -2.309     -10.123
+vvix_vix           4.966       5.173
+es_ret            -0.396       1.299
+es_ret5           -0.691      -1.014
+nq_vs_es          -0.244       0.889
+nq_vs_es5         -0.971       0.585
+spx_ret           -0.384       1.309
+us10y              4.983       4.998
+us10y_chg_bp      11.900       1.500
+dxy_ret            0.571       0.661
