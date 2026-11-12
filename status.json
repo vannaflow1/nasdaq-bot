@@ -1,8 +1,9 @@
 {
- "for": "Wed 11 Nov",
+ "for": "Thu 12 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
-  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
+  "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
  ],
  "gamma": [
   "",
@@ -28,23 +29,20 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": "NORMAL",
- "updated": "Thu 12 Nov 13:40 Lux",
+ "level": "ELEVATED",
+ "updated": "Thu 12 Nov 14:57 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
   "NEWS (last 16h, ranked by keywords):",
-  "- 'Icarus' rise and fall': Analyst downgrades Nvidia stock amid Jensen Huang woes, highlights risks  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- Baird downgrades Nvidia on CEO Huang worries, AI uncertainty  [CNBC markets]\n    NVDA, shock",
-  "- Nvidia stock rebounds, chip stocks surge as CoreWeave earnings boost AI trade  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- MU, AMD, AVGO, Other Chip Stocks Surge As CoreWeave Earnings Reignite AI Trade \u2014 Nasdaq-100 Futures Jump  [Yahoo (megacaps)]\n    AVGO, AMD, earnings",
-  "- Goldman Sees Anthropic Revenue at \u201c$685B by 2030.\u201d Broadcom Is Tied to $161 Billion in Lease Deals  [Yahoo (megacaps)]\n    AVGO, OPENAI, earnings",
-  "- Nvidia shares rebound 4% as Huang faces scrutiny ahead of earnings  [CNBC tech]\n    NVDA, earnings"
+  "- Stock Market Today: Futures Fall On Trump Oil Remarks; Nvidia Plunges On New CEO Reports (Live Coverage)  [Yahoo (megacaps)]\n    NVDA, shock",
+  "- Techie uses voltage glitching hack to turn $2,500 Nvidia 8GB cryptomining GPU into a full-fat $20,000 A100 with 80GB of VRAM  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Jensen Huang's affair with alleged spy revives push to tighten China chip curbs ahead of Trump-Xi summit  [CNBC tech]\n    export/geo"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Thu 13:04 [trade/tariffs] Here we go again! With the perceived loss by the Republicans in the Midterms - I WAS NOT ON THE BALLOT- the INVASION of our Country is taking place again. Huge CARAVANS are forming and beginning their illegal march through Mexico. Many of the people in these Caravans are those\u2026",
   "- Thu 12:28 [fiscal/policy] Does anybody remember, in my First Term, the relentless effort by the anti-American Dumocrats to get my personal Tax Returns, something that has always been off limits for anyone other than Donald J. Trump. Shockingly, they won this unprecedented right in the U.S. Supreme Court,\u2026"
  ],
