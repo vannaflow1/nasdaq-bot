@@ -87,8 +87,8 @@
   "spx_factor": 1.1275
  },
  "live": [
-  "LIVE - Thu 12 Nov 21:02 Lux",
-  "NQ 28,388 | range so far 638 pts (2.26%), high 28,652 / low 28,014 | data as of 14:52 NY (may lag a few minutes)",
+  "LIVE - Thu 12 Nov 21:32 Lux",
+  "NQ 28,378 | range so far 638 pts (2.26%), high 28,652 / low 28,014 | data as of 15:22 NY (may lag a few minutes)",
   "(no brain forecast for this session)"
  ],
  "playbook": [
@@ -153,7 +153,7 @@
   "Status: gamma regime = validated. Everything else = context; tested, did NOT improve forecasts."
  ],
  "shortvol": [
-  "SHORT-VOL CHECK Thu 12 Nov 15:27 NY - QQQ 687.51, gamma rank 0.33 (needs > 0.7)",
+  "SHORT-VOL CHECK Thu 12 Nov 15:32 NY - QQQ 687.24, gamma rank 0.33 (needs > 0.7)",
   "Not a short-vol day: no paper trade.",
   "(rank vs last 252 readings; 18 of them live from 2026 - it gets sharper as live history builds)",
   "",
