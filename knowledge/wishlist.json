@@ -627,9 +627,9 @@
   "for": "owner",
   "type": "data",
   "why": "All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intraday.",
-  "evidence": "Current failures list\u202f\u2014\u202f5\u2011minute GEX rank missing blocks 6 of 20 near\u2011miss ideas.",
+  "evidence": "No intraday GEX rank series available; my #27\u2011#37 wishes remain blocked, preventing edge extraction.",
   "impact": "high",
   "status": "open",
-  "votes": 1
+  "votes": 2
  }
 ]

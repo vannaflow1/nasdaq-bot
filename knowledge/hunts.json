@@ -328,5 +328,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-11"
+ },
+ {
+  "id": "h29",
+  "date": "2026-11-12",
+  "query": "early session price impact low dealer gamma",
+  "why": "Understanding how low dealer gamma influences price moves in the first 30 minutes could explain why my current strategies miss the edge.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
