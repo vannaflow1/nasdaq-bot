@@ -386,5 +386,19 @@
   ],
   "calls_left_today": 67,
   "status": "out_of_time"
+ },
+ {
+  "wish": 38,
+  "title": "Add calibrated temperature scaling to ensemble range forecasts",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (16 model turns)",
+  "how_to_use": "",
+  "date": "2026-11-13",
+  "steps": 16,
+  "models": [
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 8,
+  "status": "out_of_time"
  }
 ]

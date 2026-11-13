@@ -1,25 +1,32 @@
 {
- "wish": 35,
- "title": "Provide 5‑minute intraday GEX rank series",
+ "wish": 38,
+ "title": "Add calibrated temperature scaling to ensemble range forecasts",
  "outcome": "out_of_time",
- "summary": "stopped after 45 minutes (8 model turns)",
+ "summary": "stopped after 45 minutes (16 model turns)",
  "how_to_use": "",
- "date": "2026-11-10",
- "steps": 8,
+ "date": "2026-11-13",
+ "steps": 16,
  "models": [
-  "gemini-flash-latest",
   "gemini-flash-lite-latest"
  ],
- "calls_left_today": 67,
+ "calls_left_today": 8,
  "status": "out_of_time",
  "log": [
-  "0: search(pattern='gex') -> './discovered_read.py:96:        import qqq_gex_daily as qg\\n./tools/spx_features.py:67:        def ge'",
-  "1: search(pattern='5.minute|5min|5m|M5', path_glob='*.py') -> './tools/chain_snap.py:4:NDX - the nearest two expirations (0-DTE + next), strikes within +-STRIKE_BA'",
-  "2: search(pattern='chain_snap|tick|snapshot|snap', path_glob='*.py') -> './tools/volta_spx_extract.py:20:FILES = {\"tq\": (\"quote trade tick\", \"SPXW_trade_quote_tick_maxdte7_\"'",
-  "3: read_file(max_lines='100', start_line='1', path='qqq_gex_daily.py') -> 'qqq_gex_daily.py (291 lines; showing 1-100)\\n1: \"\"\"\\n2: qqq_gex_daily.py  -  daily QQQ dealer-gamma (G'",
-  "4: search(pattern='gex_rank') -> './ai_test.py:11:       \"\\\\\"relevance\\\\\": <0-5>, \\\\\"idea\\\\\": {\\\\\"text\\\\\": \\\\\"<one testable idea using daily '",
-  "5: read_file(max_lines='120', start_line='130', path='qqq_gex_daily.py') -> 'qqq_gex_daily.py (291 lines; showing 130-249)\\n130:     d[\"expiration\"] = pd.to_datetime(sym[1], form'",
-  "6: search(pattern='gex_history') -> './qqq_gex_daily.py:23:  gex_history.csv   - date, gexn (seeded with 2011-2025 history; appends daily'",
-  "7: run(command='python qqq_gex_daily.py') -> 'exit code 0\\ndownloading CBOE QQQ chain (can take a minute on a slow connection)...\\n  got 5.2 MB\\n\\nQQQ'"
+  "0: search(pattern='temperature') -> './outlook.py:206:        t = gemini.ask(p, temperature=0.1, max_tokens=300).strip()\\n./gemini.py:64:d'",
+  "1: search(pattern='ensemble') -> './learn_fetch.py:108:SELF_TOPICS = [\"probability of backtest overfitting\", \"concept drift adaptation'",
+  "2: search(pattern='range') -> './discovered_read.py:28:    extra = {\"k_asia_range\": (ah - al) / o * 100, \"k_open_vs_asia\": (o - al)'",
+  "3: search(pattern='brain') -> './pool_review.py:4:switched into the live brain automatically.\"\"\"\\n./atlas/build.py:51:          f\"Re'",
+  "4: read_file(path='brain.py', max_lines='200', start_line='1') -> 'brain.py (243 lines; showing 1-200)\\n1: \"\"\"\\n2: brain.py - Volta\\'s brain (v1): forecasts tomorrow\\'s NQ'",
+  "5: search(pattern='band80') -> './brain.py:90:    lo, hi = m[\"band80\"]'",
+  "6: search(pattern='brain_model.json') -> './brain.py:15:MODEL = os.path.join(HERE, \"brain_model.json\")\\n./gemini_agent.py:28:LIVE = [\"nasdaq_bo'",
+  "7: search(pattern='test_range') -> './test_engine.py:254:            return idea_lab.test_range(pd.DataFrame({\"garch\": f})), (f\"{t.upper'",
+  "8: read_file(path='idea_lab.py', start_line='30', max_lines='120') -> 'idea_lab.py (217 lines; showing 30-149)\\n30:                      \"0DTE share, and a daily Heston fit'",
+  "9: search(pattern='prop_sim') -> './tools/prop_eval.py:2:import prop_sim as P\\n./tools/streak_check.py:8:It changes nothing: no family,'",
+  "10: read_file(max_lines='150', path='prop_sim.py', start_line='1') -> 'prop_sim.py (195 lines; showing 1-150)\\n1: \"\"\"prop_sim.py - prop-firm simulator. Volta\\'s objective si'",
+  "11: run(command='python test_engine.py') -> \"exit code 0\\n# yesterday's outcome = known today\\n/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.\"",
+  "12: search(pattern='band80') -> './brain.py:90:    lo, hi = m[\"band80\"]'",
+  "13: search(pattern='band') -> './tools/london_study.py:3:PRE-DECLARED before any number was looked at (committed first). Background'",
+  "14: search(pattern='band80') -> './brain.py:90:    lo, hi = m[\"band80\"]'",
+  "15: read_file(max_lines='120', path='brain_retrain.py', start_line='1') -> 'brain_retrain.py (51 lines; showing 1-51)\\n1: \"\"\"\\n2: brain_retrain.py - monthly self-improvement. Ref'"
  ]
 }
