@@ -1,9 +1,8 @@
 {
  "for": "Fri 13 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Fri 13 Nov) - risk \ud83d\udfe0 ELEVATED",
-  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
-  "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
   "",
@@ -29,31 +28,24 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,236 XP, next level at 10,240)",
-  "Papers read 283 | ideas & strategies tested 194 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 11",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Fri 13 Nov 14:42 Lux",
+ "level": "NORMAL",
+ "updated": "Fri 13 Nov 14:55 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- The S&P 500 is shrugging off Nvidia\u2019s selloff this week. Here\u2019s what\u2019s keeping the rest of the market afloat.  [MarketWatch]\n    NVDA, shock",
-  "- Nvidia\u2019s stock selloff may be just beginning, even after shedding 30% from its peak  [MarketWatch]\n    NVDA, shock",
-  "- Apple (AAPL): A CIBC Pick Riding Record Results and a New iPhone Lineup  [Yahoo (megacaps)]\n    AAPL, earnings",
-  "- U.S. inflation is already bad enough. It might get worse.  [MarketWatch]\n    Fed/macro",
-  "- Trump trade chief Greer speaks with 'Squawk Box' as tariff threats rise  [CNBC tech]\n    export/geo",
-  "- AMD\u2019s Venice-X maxes out family at 5.3 GHz, returning 3D V-Cache to data center after four years  [Tom's Hardware]\n    AMD, AI chips/capex"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Taiwan Semiconductor Just Became Even More of an AI Anchor On Nvidia\u2019s -25% Plummet  [Yahoo (megacaps)]\n    NVDA, TSM, export/geo",
+  "- Nvidia scandal draws in Commerce Secretary Lutnick, who reportedly agrees to testify about China chip sales  [CNBC tech]\n    NVDA, export/geo",
+  "- Mass smuggling of up to 1.5 million Nvidia AI GPUs could be the underlying cause of Jensen Huang's departure, analysts claim  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- How Shanghai fund manager Kang Wei introduced his wife Alice Huang to Jensen and built $7.5 billion Nvidia AI GPU smuggling operation  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Cerebras surges 17% after beating on quarterly revenue and announcing Microsoft deal  [CNBC tech]\n    MSFT, earnings",
+  "- AMD\u2019s Path to $700 Just Got Much Easier as Enterprise and Hyperscaler Diversification Tailwinds Rise  [Yahoo (megacaps)]\n    AMD, AI chips/capex"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Thu 18:24 [oil/geopolitics, fiscal/policy] I rebuilt our Military in my First Term, and we\u2019re doing it AGAIN, bigger and better than ever before! The Radical Democrat Majority in the next Congress has already made it clear that their Number One Agenda is to BLOCK and RESIST this historic investment in our National\u2026",
-  "- Thu 16:29 [tech/chips] NOW THAT Nvidia CEO JENSEN HUANG, who has done a fantastic job, has resigned, there is only one man to take his place - TIM COOK of Apple. A Legend replaces a Legend! President DONALD J. TRUMP"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- nothing market-relevant"
  ],
  "forecast": [
   "No forecasts yet.",
