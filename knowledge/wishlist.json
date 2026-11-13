@@ -627,9 +627,21 @@
   "for": "owner",
   "type": "data",
   "why": "All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intraday.",
-  "evidence": "No intraday GEX rank series available; my #27\u2011#37 wishes remain blocked, preventing edge extraction.",
+  "evidence": "No intraday GEX data available; many failed ideas cite missing GEX time\u2011series.",
   "impact": "high",
   "status": "open",
-  "votes": 2
+  "votes": 3
+ },
+ {
+  "id": 38,
+  "date": "2026-11-13",
+  "title": "Add calibrated temperature scaling to ensemble range forecasts",
+  "for": "claude",
+  "type": "code",
+  "why": "My ridge + neural ensemble outputs are not well\u2011calibrated, leading to overly wide 80% bands and reduced sizing efficiency.",
+  "evidence": "Range forecasts: 76% inside 80% band but avg miss 38% of true range.",
+  "impact": "medium",
+  "status": "open",
+  "votes": 1
  }
 ]

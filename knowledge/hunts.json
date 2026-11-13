@@ -338,5 +338,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-12"
+ },
+ {
+  "id": "h30",
+  "date": "2026-11-13",
+  "query": "improving daily range forecasts with gamma and volatility features",
+  "why": "My range forecasts are still 38% off; research may reveal additional features (e.g., iv30 rank, term structure) that tighten the prediction bands.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
