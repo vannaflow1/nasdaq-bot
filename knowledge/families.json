@@ -727,7 +727,7 @@
   "forward_variant": 43,
   "scored": "2026-10-22",
   "forward": {
-   "date": "2026-11-12",
+   "date": "2026-11-13",
    "decision": "CONTINUE",
    "n": 15,
    "edge": -0.1257,
@@ -925,7 +925,7 @@
    "record": "knowledge/ledgers/null_v3_rescore.json"
   },
   "forward": {
-   "date": "2026-11-12",
+   "date": "2026-11-13",
    "decision": "CONTINUE",
    "n": 15,
    "edge": -0.1257,
@@ -1026,7 +1026,7 @@
   },
   "scored": "2026-10-24",
   "forward": {
-   "date": "2026-11-12",
+   "date": "2026-11-13",
    "decision": "CONTINUE",
    "n": 25,
    "edge": 0.2176,
