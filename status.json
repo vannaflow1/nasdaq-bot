@@ -336,9 +336,9 @@
   "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -32$/eval (zero edge -43$), 22% pass within 21 sessions."
  ],
  "bias": [
-  "\ud83e\udded NQ BIAS - Fri 13 Nov, as of 19:08 Lux",
-  "Now: \ud83d\udd34 SHORT (check 12:00 CT = 19:00 Lux) - NQ 27,923.75, -1.64% from the 08:30 CT open, noise band \u00b11.28%.",
-  "Today: 16:00 SHORT \u2192 17:00 SHORT \u2192 18:00 SHORT \u2192 19:00 SHORT",
+  "\ud83e\udded NQ BIAS - Fri 13 Nov, as of 20:20 Lux",
+  "Now: \ud83d\udd34 SHORT (check 13:00 CT = 20:00 Lux) - NQ 28,007.25, -1.35% from the 08:30 CT open, noise band \u00b11.32%.",
+  "Today: 16:00 SHORT \u2192 17:00 SHORT \u2192 18:00 SHORT \u2192 19:00 SHORT \u2192 20:00 SHORT",
   "Meaning: a small lean (~4 pts over the normal drift), not a prediction.",
   "NY outlook: NORMAL day expected (~363 pts high-low, ~184 pts open-to-close); overnight -0.07% (DOWN), inside yesterday's range.",
   "Overnight AGREES with the bias (agreeing was ~4-5 pts better in tests, not proven - tracked).",
