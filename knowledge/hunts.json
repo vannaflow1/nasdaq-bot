@@ -345,7 +345,10 @@
   "query": "improving daily range forecasts with gamma and volatility features",
   "why": "My range forecasts are still 38% off; research may reveal additional features (e.g., iv30 rank, term structure) that tighten the prediction bands.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "searched",
+  "papers": [
+   "arxiv:2205.13067v1"
+  ],
+  "searched": "2026-11-13"
  }
 ]
