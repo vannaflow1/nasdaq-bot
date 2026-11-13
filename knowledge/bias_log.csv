@@ -88,3 +88,4 @@ date,check_ct,bias,price,open,band_pct,dist_bands,close,result,overnight,agree,d
 2026-11-13,9,SHORT,28088.5,28390.5,0.78,-1.36,,,DOWN,yes,NORMAL
 2026-11-13,10,SHORT,27827.5,28390.5,1.102,-1.8,,,DOWN,yes,NORMAL
 2026-11-13,11,SHORT,27824.75,28390.5,1.159,-1.72,,,DOWN,yes,NORMAL
+2026-11-13,12,SHORT,27923.75,28390.5,1.278,-1.29,,,DOWN,yes,NORMAL
