@@ -1,7 +1,6 @@
-hunt 'improving daily range forecasts with gamma and volatility features': 30 found, queued 1
 scanned 0 papers, queued 0, queue size 49 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
-read 0, AI units today 571/7000
-curiosity asked: Strategy: GexLow_PWBlend_Exp50Break_09_15
-tested: Strategy: GexLow_PWBlend_Exp50Break_09_15 - Break through th -> TRANSLATION FAILED - only > < >= <= comparisons allowed
-testing used 348 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
+read 0, AI units today 923/7000
+curiosity asked: Strategy: HighGex_GapTake_FadeMid
+tested: Strategy: HighGex_GapTake_FadeMid - On high‑gamma days (gex_ -> NOT CONFIRMED on my data: too few trades (20 in 2014-2023, need 150). in-sample 2014-2023:
+testing used 153 AI units
