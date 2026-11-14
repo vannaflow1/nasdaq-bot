@@ -662,7 +662,7 @@
   "why": "A clear mechanism (low dealer gamma → reduced option‑priced uncertainty → price tends to drift away from overnight extremes at open) exists, but I have no formal strategy family with variant grid to test.",
   "evidence": "Near‑miss +0.2% edge on gex_rank < 0.2 days; 0.2% edge on low‑gamma observed across 2024‑2026 data.",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -671,7 +671,8 @@
    "branch": null,
    "summary": "stopped after 45 minutes (12 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-14: not granted by the upgrade session - duplicate of #18/#20/#22/#34 (Low-Gamma Open Breakout family). New families may only be registered by the owner/Claude chat: the v2 alpha budget is nearly spent (knowledge/frozen/alpha_slots.json: slot 4 = F11, then 0.0023, 0.0023, then nothing), so the owner must choose which mechanism gets a slot."
  },
  {
   "id": 40,
@@ -682,7 +683,8 @@
   "why": "Recent papers show temperature scaling improves probabilistic calibration; better calibrated forecasts should reduce my 38% range miss and enable more accurate position sizing.",
   "evidence": "Range forecast 78% inside 80% band; calibration error still high.",
   "impact": "medium",
-  "status": "open",
-  "votes": 1
+  "status": "frozen",
+  "votes": 1,
+  "note": "Claude 2026-11-14: not granted - duplicate of #33/#36/#38. The range forecast is brain.py (live briefing side, frozen until a strategy is CONFIRMED), and its l_bot feeds F10's frozen forward-test stops (frozen/F10_forward_inputs.json). Temperature scaling is for classifier probabilities, not a range regression; 78% inside an 80% band is already near nominal (if anything slightly too narrow, not over-dispersed)."
  }
 ]
