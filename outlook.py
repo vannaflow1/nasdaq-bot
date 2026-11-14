@@ -174,6 +174,18 @@ def macro_line():
         return f"Macro close data unavailable ({type(e).__name__}).", {}
 
 
+def capped(fn, secs, default, *a):
+    """run fn in a daemon thread; give up after secs (a hanging feed or LLM call must not kill the post)."""
+    import threading
+    box = {"v": default}
+    def run():
+        try: box["v"] = fn(*a)
+        except Exception as e: print("capped", fn.__name__, type(e).__name__)
+    t = threading.Thread(target=run, daemon=True); t.start(); t.join(secs)
+    if t.is_alive(): print(f"capped {fn.__name__}: gave up after {secs}s")
+    return box["v"]
+
+
 def events_lines(today):
     L = []
     try:
@@ -266,8 +278,8 @@ def main():
         print("no overnight data")
         if dry: open(os.path.join(K, "research_out", "outlook_dry.txt"), "w").write("no overnight data " + str(now))
         return
-    ev = events_lines(now.date()); head, by = headlines(); mac, _ = macro_line()
-    summ = gemini_summary(head, json.dumps({k: o[k] for k in ("price", "on_ret", "asia_ret", "london_ret", "location", "size")}) + "\n" + mac
+    ev = capped(events_lines, 45, [], now.date()); head, by = capped(headlines, 90, ([], "none")); mac, _ = macro_line()
+    summ = capped(gemini_summary, 60, None, head, json.dumps({k: o[k] for k in ("price", "on_ret", "asia_ret", "london_ret", "location", "size")}) + "\n" + mac
                           + "\nScheduled: " + "; ".join(ev))
     body = text(o, ev, head, by, summ, mac); print(body)
     if dry:                                                   # Actions logs are unreadable from here -> keep the dry text

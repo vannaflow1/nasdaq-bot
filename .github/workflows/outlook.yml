@@ -5,6 +5,7 @@ on:
   schedule:
     - cron: "10,30,50 6,7 * * 1-5"  # before London opens (09:00 Lux all year); --london posts once, 07:00-09:29 Lux
     - cron: "5,25,45 12,13 * * 1-5" # outlook.py posts once, 07:00-08:29 CT (both DST states)
+    - cron: "5 14 * * 1-5"           # extra try 08:05 CT in winter (GitHub drops scheduled runs)
   workflow_dispatch:
     inputs:
       dry: { description: "dry run (print only)", default: "yes" }
@@ -16,7 +17,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
