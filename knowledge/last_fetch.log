@@ -1,8 +1,6 @@
-hunt 'low dealer gamma early session breakout nasdaq': 15 found, queued 0
-hunt 'improving intraday range forecasts with dealer gamma and implied volatility': 19 found, queued 0
 scanned 0 papers, queued 0, queue size 49 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 762/7000
-curiosity asked: Strategy: LowGex_TailBreak_YdayHigh_Exp70Confluence
-tested: Strategy: LowGex_TailBreak_YdayHigh_Exp70Confluence - Break  -> NOT CONFIRMED on my data: too few trades (3 in 2014-2023, need 150). in-sample 2014-2023: 
-testing used 155 AI units
+read 0, AI units today 920/7000
+curiosity: unusable translator gave no JSON
+test queue empty
+testing used 169 AI units
