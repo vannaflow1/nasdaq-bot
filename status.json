@@ -112,7 +112,7 @@
   "\u2022 SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper introduces SOTA, an RL\u2011trained language\u2011model agent that picks among nine option\u2011strategy families (directional, vol, skew, curvature) instead of individual contracts, achieving 18.3% return and a 1.6 Sharpe ov",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 872 buy-vol trades on real QQQ option prices, avg -6.1 bp of QQQ per trade (placebo avg -5.5, p=0.597), halves -13.2/+1.0",
-  "This week's tests: 44 run - 1 promising, 33 not confirmed, 0 don't fit my data, 10 translation failures",
+  "This week's tests: 45 run - 1 promising, 34 not confirmed, 0 don't fit my data, 10 translation failures",
   "",
   "49 papers waiting in my queue."
  ],

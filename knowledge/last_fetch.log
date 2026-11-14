@@ -1,6 +1,6 @@
 scanned 0 papers, queued 0, queue size 49 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 920/7000
-curiosity: unusable translator gave no JSON
-test queue empty
-testing used 169 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
+read 0, AI units today 1092/7000
+curiosity asked: Strategy: LowGex_VWAPPullback_Break
+tested: Strategy: LowGex_VWAPPullback_Break - Break above VWAP up‑ba -> NOT CONFIRMED on my data: too few trades (53 in 2014-2023, need 150). in-sample 2014-2023:
+testing used 369 AI units
