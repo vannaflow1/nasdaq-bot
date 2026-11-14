@@ -350,5 +350,23 @@
    "arxiv:2205.13067v1"
   ],
   "searched": "2026-11-13"
+ },
+ {
+  "id": "h31",
+  "date": "2026-11-14",
+  "query": "low dealer gamma early session breakout nasdaq",
+  "why": "I need academic or industry evidence that low‑gamma regimes produce exploitable early‑session price moves, which could validate the LowGex_OpenBreakout family.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
+ },
+ {
+  "id": "h32",
+  "date": "2026-11-14",
+  "query": "improving intraday range forecasts with dealer gamma and implied volatility",
+  "why": "My range forecasts miss ~38% of the true range; literature may show how to blend gex_rank and iv30 to tighten forecast bands.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
