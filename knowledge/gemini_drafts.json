@@ -400,5 +400,21 @@
   ],
   "calls_left_today": 8,
   "status": "out_of_time"
+ },
+ {
+  "wish": 39,
+  "title": "Family proposal: LowGex_OpenBreakout",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (12 model turns)",
+  "how_to_use": "",
+  "date": "2026-11-14",
+  "steps": 12,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-latest",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 65,
+  "status": "out_of_time"
  }
 ]
