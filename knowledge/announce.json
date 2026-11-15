@@ -1,6 +1,0 @@
-[
- {
-  "title": "🎁 Wish granted: Intraday QQQ option mid-price series (#41)",
-  "body": "tools/chain_series.py builds intraday option mid-price series from the chain snapshots tools/chain_snap.py already collects (QQQ + NDX). Evidence (2-13 Nov): QQQ 67 snapshots / 14,074 contract quotes over 10 days, 95% valid mids; atm_series() gives 0-DTE ATM straddle mids per snapshot (13 Nov: 6.04 at 09:59 NY -> 1.79 at 15:28). Caveat: real cadence is ~hourly (median gap 50-66 min, GitHub throttles the 5-min cron) - coverage() reports it. Research side only; test_engine.py passes. Undo: git revert $(git log --format=%h --grep='Wish #41:' -1)"
- }
-]
