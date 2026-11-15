@@ -25,6 +25,8 @@ jobs:
           DISCORD_WEBHOOK_BRAIN: ${{ secrets.DISCORD_WEBHOOK_BRAIN }}
           DISCORD_WEBHOOK_NERD: ${{ secrets.DISCORD_WEBHOOK_NERD }}
           PYTHONUNBUFFERED: "1"
+      - run: python tools/sim_inputs.py                  # publish tomorrow's stop input for the SIM execution script (ninjatrader/)
+        continue-on-error: true
       - run: python strategy_forward.py || true         # forward-test strategies that passed the exam + /strategies status
         env:
           DISCORD_WEBHOOK_LEARN: ${{ secrets.DISCORD_WEBHOOK_LEARN }}
