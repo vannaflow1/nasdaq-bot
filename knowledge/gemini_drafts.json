@@ -416,5 +416,19 @@
   ],
   "calls_left_today": 65,
   "status": "out_of_time"
+ },
+ {
+  "wish": 41,
+  "title": "Intraday QQQ option mid‑price 5‑minute series",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (7 model turns)",
+  "how_to_use": "",
+  "date": "2026-11-15",
+  "steps": 7,
+  "models": [
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 71,
+  "status": "out_of_time"
  }
 ]
