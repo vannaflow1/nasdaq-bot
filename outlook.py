@@ -40,6 +40,15 @@ LONZ = ZoneInfo("Europe/London"); LLOG = os.path.join(K, "london_log.csv"); LOUT
 SIZE = [("QUIET", 0.43, 1.09), ("CALMER", 0.58, 1.32), ("NORMAL", 0.65, 1.28), ("BUSIER", 0.73, 1.44), ("WIDE", 0.86, 1.78)]
 
 
+def _bias_paused():
+    """True while bias.py is switched off (owner decision 15 Nov 2026) - the outlook then must not promise bias posts."""
+    try:
+        import bias
+        return bool(getattr(bias, "PAUSED", False))
+    except Exception:
+        return False
+
+
 def yahoo(sym, start, end):
     u = (f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?interval=1m&period1={int(start.timestamp())}"
          f"&period2={int(end.timestamp())}&includePrePost=true")
@@ -252,8 +261,10 @@ def text(o, ev, head, by, summ, mac):
              f"History says {sz}: typical open-to-close move ~{o['exp_move_pts']} pts, high-low range ~{o['exp_range_pts']} pts. "
              f"(Tested 2014-2026: this part works.)",
              "🧭 Direction: no call before the open. 14 pre-open inputs tested over 12 years - none beats the normal drift "
-             "on up/down odds. Direction comes from the hourly noise-band bias after the open "
-             f"(overnight was {o['overnight_dir']}; I'll note in each bias post whether they agree - that part is still being watched).",
+             "on up/down odds. " + (f"The hourly noise-band bias is PAUSED (35% right live, see /bias); overnight was {o['overnight_dir']}."
+                                    if _bias_paused() else
+                                    "Direction comes from the hourly noise-band bias after the open "
+                                    f"(overnight was {o['overnight_dir']}; I'll note in each bias post whether they agree - that part is still being watched)."),
              f"🌍 {mac}"]
     if ev: lines.append("Today: " + " · ".join(ev))
     if summ: lines.append(f"📰 {summ}\n(Summary of headlines by Gemini - context, not a signal.)")

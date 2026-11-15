@@ -17,7 +17,17 @@ Morning outlook (outlook.py, 26 Oct 2026): each post adds the expected day size 
 the agreement is logged (columns overnight/agree/day_size) so it can be judged on live data - it does not change the call.
 Morning outlook (outlook.py, 26 Oct 2026): each post adds the expected day size and whether the overnight move agrees;
 the agreement is logged (columns overnight/agree/day_size) to be judged on live data - it does not change the call.
-Run: python bias.py [--dry] [--at "2026-10-23 10:05"]   (Chicago time for --at; dry runs only)"""
+Run: python bias.py [--dry] [--at "2026-10-23 10:05"]   (Chicago time for --at; dry runs only)
+
+PAUSED since 15 Nov 2026 (owner decision). Live score: 14 of 40 graded checks right (35%) over 12 days. The same rule was
+right 48-63% of the time in each year 2014-2025 and 28% in January 2026: it leans the right way in trending markets and
+the wrong way in choppy ones, and Volta has no tested way yet to tell the two apart. While PAUSED is True:
+  * nothing is posted to Discord (no bias posts, no daily bias scoreboard post),
+  * /bias shows the pause notice, the score so far and the day-size outlooks (those keep matching) - no LONG/SHORT,
+  * every hourly check is still logged and graded silently in knowledge/bias_log.csv, so a future trend/chop filter
+    can be judged on live data that nobody acted on.
+To switch it back on: set PAUSED = False below. Do that only after a filter passed a pre-registered test
+(knowledge/proposals/regime_filter_draft.md). Do not invert the signal - that would be chasing the last three weeks."""
 import json, os, sys, time, urllib.request
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -27,6 +37,8 @@ HERE = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(HERE, "knowl
 CT, LUX = ZoneInfo("America/Chicago"), ZoneInfo("Europe/Luxembourg")
 LOG = os.path.join(K, "bias_log.csv")
 MULT, LOOKBACK, MIN_HIST = 1.2, 14, 5
+PAUSED = True                                                 # owner decision 15 Nov 2026 - see the note at the top of this file
+PAUSE_SINCE = "15 Nov 2026"
 CHECKS = [9, 10, 11, 12, 13, 14]                              # Chicago hours
 ODDS = {"LONG": "the rest of the day closed HIGHER 58% of the time", "SHORT": "the rest of the day closed LOWER 50% of the time "
         "(vs 46% on an average check - the market drifts up)", "NONE": "it closed higher 54% of the time - just the normal upward drift"}
@@ -83,14 +95,21 @@ def publish(now, L=None, early=None):
         nowlux = datetime(now.year, now.month, now.day, now.hour, now.minute, tzinfo=CT).astimezone(LUX)
         out = [f"🧭 NQ BIAS - {nowlux:%a %d %b}, as of {nowlux:%H:%M} Lux"]
         t = L[L.date.astype(str) == today].sort_values("check_ct")
-        if len(t):
+        if PAUSED:
+            out = [f"⏸️ NQ BIAS - PAUSED since {PAUSE_SINCE} (as of {nowlux:%a %d %b %H:%M} Lux)",
+                   "No LONG/SHORT call. The hourly noise-band lean only works in trending markets and has been wrong most of "
+                   "the time lately; there is no tested way yet to tell trending from choppy days. It comes back only if a "
+                   "trend/chop filter passes a pre-registered test.",
+                   "The checks still run and are graded silently (nothing is posted), so that test can use live data."]
+            t = t.iloc[0:0]                                   # hide today's checks from the view below
+        elif len(t):
             last = t.iloc[-1]; head = {"LONG": "🟢 LONG", "SHORT": "🔴 SHORT", "NONE": "⚪ NO BIAS"}[last.bias]
             out.append(f"Now: {head} (check {int(last.check_ct):02d}:00 CT = {lux(int(last.check_ct))} Lux) - NQ {last.price:,.2f}, "
                        f"{(last.price / last.open - 1) * 100:+.2f}% from the 08:30 CT open, noise band ±{last.band_pct:.2f}%.")
             out.append("Today: " + " → ".join(f"{lux(int(r.check_ct))} {r.bias}" for r in t.itertuples()))
             if last.bias != "NONE": out.append("Meaning: a small lean (~4 pts over the normal drift), not a prediction.")
         elif now.weekday() >= 5: out.append("Weekend - next checks Monday from the NY open + 30 min.")
-        else:
+        elif not PAUSED:
             mins = now.hour * 60 + now.minute
             if mins < 8 * 60 + 30:
                 out.append(f"Market not open yet (NY open {datetime(now.year, now.month, now.day, 8, 30, tzinfo=CT).astimezone(LUX):%H:%M} Lux). First bias check at {lux(9)} Lux, then hourly until {lux(14)} Lux.")
@@ -118,8 +137,9 @@ def publish(now, L=None, early=None):
             except Exception: pass
         a = L[L.bias.isin(["LONG", "SHORT"]) & L.result.isin(["right", "wrong"])]
         if len(a): out.append(f"Scoreboard: {(a.result == 'right').sum()}/{len(a)} graded checks right "
-                              f"({(a.result == 'right').mean():.0%}) over {a.date.nunique()} days; history says ~54-58%.")
-        if now.hour * 60 + now.minute < 8 * 60 + 30 and now.weekday() < 5:
+                              f"({(a.result == 'right').mean():.0%}) over {a.date.nunique()} days; history says ~54-58%."
+                              + (" (Still counted while paused.)" if PAUSED else ""))
+        if now.hour * 60 + now.minute < 8 * 60 + 30 and now.weekday() < 5 and not PAUSED:
             out.append("Day direction can't be called before the open (14 inputs tested, 12 years); day size can.")
         sp = os.path.join(HERE, "status.json"); st = json.load(open(sp)) if os.path.exists(sp) else {}
         st["bias"] = out; json.dump(st, open(sp, "w"), indent=1)
@@ -140,7 +160,7 @@ def main():
                 L.loc[m, "close"] = close
                 L.loc[m, "result"] = np.where(L.loc[m, "bias"] == "NONE", "n/a",
                                               np.where((close - L.loc[m, "price"]) * np.where(L.loc[m, "bias"] == "LONG", 1, -1) > 0, "right", "wrong"))
-                if not dry:                                   # scoreboard for every newly graded day
+                if not dry and not PAUSED:                    # scoreboard for every newly graded day (silent while paused)
                     g = L[(L.date.astype(str) == d) & L.bias.isin(["LONG", "SHORT"])]; a = L[L.bias.isin(["LONG", "SHORT"]) & L.result.isin(["right", "wrong"])]
                     if len(g):
                         import qqq_gex_daily as q
@@ -193,7 +213,7 @@ def main():
                   "(agreeing days were ~4-5 pts better in both test periods, not proven yet - being tracked)" if agree else "")
                + "." if ol else ""))
     print(body)
-    if not dry and (first or changed):
+    if not dry and (first or changed) and not PAUSED:
         import qqq_gex_daily as q
         q.push(f"NQ bias {h:02d}:00 CT: {bias}", body, hook=os.environ.get("DISCORD_WEBHOOK_LIVE") or None)
     if not dry: L.to_csv(LOG, index=False); publish(now, L)
