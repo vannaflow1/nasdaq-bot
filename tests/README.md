@@ -16,5 +16,6 @@ Run them all:  `python -m unittest discover -s tests -v`   (about a minute)
 | `test_prop_sim.py` | the prop-account simulator: a losing strategy never gets paid, a blown account stops, fees are charged |
 | `test_core_math.py` | p-values, sequential-test boundaries, the F10/F13 timer agreeing with the official forward numbers, London-open clock |
 | `test_prop_search.py` | result files are parked before they reach GitHub's 100 MB limit |
+| `test_sim_inputs.py` | the stop input published for the SIM script is the same number the forward test uses |
 
 If a test fails after a change, the change broke something: undo it or fix it before trusting Volta's output.
