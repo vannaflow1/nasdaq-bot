@@ -19,6 +19,6 @@ rl market making, loss function design, inventory penalty, cash penalty, [[bid�
 Train an actor‑critic market‑making agent on NQ futures using a reward = profit – λ₁·max(0, inventory‑imax) – λ₂·max(0, cmin‑cash), where imax and cmin are set from historical inventory and cash‑flow limits; then compare its daily P&L and spread to a profit‑only baseline.
 
 ## Test
-queued for testing
+[[DOESN'T FIT]] - DOESN'T FIT MY DATA - The idea requires simulated market‑making agent behavior, inventory paths, and custom reward calculations not present in the available historical columns. Volta's dataset lacks the necessary per‑trade inventory and cash‑flow details to evaluate the RL reward function.
 
 Part of [[Research engine]]

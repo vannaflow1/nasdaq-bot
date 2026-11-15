@@ -1,18 +1,1 @@
-[
- {
-  "id": "arxiv:2611.10956v1",
-  "title": "Risk-Sensitive Reinforcement Learning for an Options Market Maker: An Empirical Study with Real S&P 500 Options",
-  "idea": "When the 20\u2011day QQQ return (r20) is negative and 30\u2011day ATM IV (l_iv30) is above its 20\u2011day average, reduce the hedge ratio to 0.8\u20110.9 (i.e., under\u2011hedge) instead of full delta; otherwise stick to delta hedging.",
-  "relevance": 3,
-  "added": "2026-11-15",
-  "hunt": null
- },
- {
-  "id": "arxiv:2611.09012v1",
-  "title": "Towards Robust Reinforcement Learning Market Making: Lessons from Loss Function Experimentation",
-  "idea": "Train an actor\u2011critic market\u2011making agent on NQ futures using a reward = profit \u2013 \u03bb\u2081\u00b7max(0, inventory\u2011imax) \u2013 \u03bb\u2082\u00b7max(0, cmin\u2011cash), where imax and cmin are set from historical inventory and cash\u2011flow limits; then compare its daily P&L and spread to a profit\u2011only baseline.",
-  "relevance": 3,
-  "added": "2026-11-15",
-  "hunt": null
- }
-]
+[]

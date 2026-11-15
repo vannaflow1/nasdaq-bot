@@ -1,5 +1,35 @@
 [
  {
+  "id": "arxiv:2402.00555v1",
+  "title": "Time Series based Ensemble Model Output Statistics for Temperature Forecasts Postprocessing",
+  "abstract": "Nowadays, weather prediction is based on numerical weather prediction (NWP) models to produce an ensemble of forecasts. Despite of large improvements over the last few decades, they still tend to exhibit systematic bias and dispersion errors. Consequently, these forecasts may be improved by statistical postprocessing. This work proposes an extension of the ensemble model output statistics (EMOS) method in a time series framework. Besides of taking account of seasonality and trend in the location and scale parameter of the predictive distribution, the autoregressive process in the mean forecast errors or the standardized forecast errors is considered. The models can be further extended by allowing generalized autoregressive conditional heteroscedasticity (GARCH). Last but not least, it is outlined how to use these models for arbitrary forecast horizons. To illustrate the performance of the suggested EMOS models in time series fashion, we present a case study for the postprocessing of 2 m surface temperature forecasts using five different lead times and a set of observation stations in Germany. The results indicate that the time series EMOS extensions are able to significantly outperform the benchmark EMOS and autoregressive adjusted EMOS (AR-EMOS) in most of the lead time-station cases. To complement this article, our method is accompanied by an R-package called tsEMOS.",
+  "url": "https://arxiv.org/abs/2402.00555v1",
+  "pdf": "https://arxiv.org/pdf/2402.00555v1",
+  "date": "2024-02-01",
+  "score": 61.9,
+  "track": "hunt",
+  "hunt": "h33",
+  "topic": "hunt: temperature scaling ensemble forecasts financial time series",
+  "source": "Hunt: temperature scaling ensemble forecasts financial time series",
+  "queued": "2026-11-15",
+  "text_file": "knowledge/papers/arxiv_2402.00555v1.txt"
+ },
+ {
+  "id": "openalex:W7160319740",
+  "title": "A hybrid fuzzy\u2013ensemble method for time series forecasting",
+  "abstract": "This study proposes a rule-free hybrid forecasting framework that integrates type-1 fuzzy function modeling with ensemble regression via random forests. The proposed hybrid fuzzy-ensemble model first constructs lagged representations of a univariate time series and applies fuzzy c-means clustering to obtain soft partitions of the input space. For each cluster, a dedicated random forest regressor is trained, and final forecasts are produced through membership-weighted aggregation of cluster-level predictions. This architecture eliminates the need for expert-defined fuzzy rules while enabling the model to capture both local (regime-dependent) and global temporal dynamics. Key hyperparameters, including lag order, number of clusters, membership thresholds, and random forest settings, are jointly optimized using random search on the training data. The framework is evaluated on thirteen real-world time series from financial, industrial, and environmental domains. Experimental results demonstrate competitive and, in several cases, improved forecasting accuracy compared to classical statistical methods, fuzzy regression models, and plain random forest baselines. The findings suggest that combining soft fuzzy partitioning with cluster-specific ensemble learning provides a flexible and data-driven mechanism for modeling nonlinear structures and gradual regime-like behaviors within univariate time series.",
+  "url": "https://doi.org/10.1038/s41598-026-51585-w",
+  "date": "2026-05-05",
+  "cites": 0,
+  "score": 57.6,
+  "track": "hunt",
+  "hunt": "h33",
+  "topic": "hunt: temperature scaling ensemble forecasts financial time series",
+  "source": "Hunt: temperature scaling ensemble forecasts financial time series",
+  "queued": "2026-11-15",
+  "text_failed": true
+ },
+ {
   "id": "openalex:W639708223",
   "title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
   "abstract": "State-of-the-art object detection networks depend on region proposal algorithms to hypothesize object locations. Advances like SPPnet [1] and Fast R-CNN [2] have reduced the running time of these detection networks, exposing region proposal computation as a bottleneck. In this work, we introduce a Region Proposal Network (RPN) that shares full-image convolutional features with the detection network, thus enabling nearly cost-free region proposals. An RPN is a fully convolutional network that simultaneously predicts object bounds and objectness scores at each position. The RPN is trained end-to-end to generate high-quality region proposals, which are used by Fast R-CNN for detection. We further merge RPN and Fast R-CNN into a single network by sharing their convolutional features-using the recently popular terminology of neural networks with 'attention' mechanisms, the RPN component tells the unified network where to look. For the very deep VGG-16 model [3] , our detection system has a frame rate of 5 fps (including all steps) on a GPU, while achieving state-of-the-art object detection accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with only 300 proposals per image. In ILSVRC and COCO 2015 competitions, Faster R-CNN and RPN are the foundations of the 1st-place winning entries in several tracks. Code has been made publicly available.",

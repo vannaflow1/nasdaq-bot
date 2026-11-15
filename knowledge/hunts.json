@@ -377,7 +377,12 @@
   "query": "temperature scaling ensemble forecasts financial time series",
   "why": "Need academic support for whether temperature scaling can improve calibration of my range forecast ensemble.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "searched",
+  "papers": [
+   "openalex:W4402346847",
+   "arxiv:2402.00555v1",
+   "openalex:W7160319740"
+  ],
+  "searched": "2026-11-15"
  }
 ]

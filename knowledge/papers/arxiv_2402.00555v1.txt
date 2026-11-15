@@ -1,0 +1,1205 @@
+Time Series based
+Ensemble Model Output Statistics
+for Temperature Forecasts
+Postprocessing
+David Jobst ∗, Annette Möller † Jürgen Groß ‡
+February 2, 2024
+Abstract
+Nowadays, weather prediction is based on numerical weather prediction
+(NWP) models to produce an ensemble of forecasts. Despite of large improve-
+ments over the last few decades, they still tend to exhibit systematic bias and
+dispersion errors. Consequently, these forecasts may be improved by statisti-
+cal postprocessing. This work proposes an extension of the ensemble model
+output statistics (EMOS) method in a time series framework. Besides of tak-
+ing account of seasonality and trend in the location and scale parameter of the
+predictive distribution, the autoregressive process in the mean forecast errors
+or the standardized forecast errors is considered. The models can be further
+extended by allowing generalized autoregressive conditional heteroscedastic-
+ity (GARCH). Last but not least, it is outlined how to use these models for
+arbitrary forecast horizons. To illustrate the performance of the suggested
+EMOS models in time series fashion, we present a case study for the postpro-
+cessing of 2 m surface temperature forecasts using five different lead times and
+a set of observation stations in Germany. The results indicate that the time
+series EMOS extensions are able to significantly outperform the benchmark
+EMOS and autoregressive adjusted EMOS (AR-EMOS) in most of the lead
+time-station cases. To complement this article, our method is accompanied
+by an R-package called tsEMOS.
+Keywords: time series models; autoregressive process; generalized autoregressive con-
+ditional heteroscedasticity; ensemble postprocessing; ensemble model output statistics;
+probabilistic forecasting; temperature.
+∗Corresponding author, University of Hildesheim, Institute of Mathematics and Applied Informatics,
+Samelsonplatz 1, 31141 Hildesheim, Germany, jobstd@uni-hildesheim.de
+†Bielefeld University, Faculty of Business Administration and Economics, Universitätsstraße 25, 33615
+Bielefeld, Germany, annette.moeller@uni-bielefeld.de
+‡University of Hildesheim, Institute of Mathematics and Applied Informatics, Samelsonplatz 1, 31141
+Hildesheim, Germany, juergen.gross@uni-hildesheim.de
+arXiv:2402.00555v1 [stat.AP] 1 Feb 2024
+1 Introduction
+Weather prediction is usually based on numerical weather prediction (NWP) models,
+which are run multiple times with different model and/or initial and boundary conditions
+(Gneiting et al., 2005; Leutbecher and Palmer, 2008). The output is a forecast ensemble
+which allows for a probabilistic forecast to quantify forecast uncertainty (Palmer, 2002).
+In practice the NWP ensemble forecasts suffer from systematic errors, such as systematic
+bias and underdispersion and thus may benefit from statistical postprocessing based on
+past data to improve calibration and forecast skill. A well established and widely used
+postprocessing model is the so-called Ensemble Model Output Statistics (EMOS, Gneiting
+et al., 2005). This method allows to provide a full predictive distribution where summary
+statistics of the forecast ensemble, such as, e.g., the mean or standard deviation are
+linked to the distribution parameters. The original EMOS was developed for Gaussian
+distributed weather quantities, as e.g., temperature or air pressure, and later extended
+for other weather quantities (see, e.g., Schefzik et al., 2013; Gneiting and Katzfuss, 2014;
+Hemri et al., 2014).
+Although the use of time series models for weather forecasting is quite common (see,
+e.g., Tol (1996), Cao and Wei (2004), and Campbell and Diebold (2005) for temperature
+time series models and Brown et al. (1984), Tol (1997), and Benth and Benth (2010)
+for wind speed time series models) these approaches were only finding their way into the
+context of ensemble postprocessing when Möller and Groß (2016) proposed a time series
+motivated model, the autoregressive adjusted EMOS (AR-EMOS), for postprocessing of
+2 m surface temperature forecasts. To account for possible autocorrelations in the one-
+step-ahead forecasts errors, they construct a predictive Gaussian distribution based on an
+autoregressive (AR)-adjusted forecast ensemble. Later, Möller and Groß (2019) extended
+AR-EMOS, where they allow to vary the scale parameter of the Gaussian distribution
+by a convex combination of the empirical ensemble spread of the AR-adjusted forecast
+ensemble and the square root of mean variances obtained from the autoregressive process
+for arbitrary lead times. In a benchmark study by Demaeyer et al. (2023), AR-EMOS
+shows comparable results to well-known as well as machine-learning based postprocessing
+techniques. Recently, Tolomei (2022) proposed a multivariate postprocessing method
+which exploits the autoregressive property of the forecast errors and further extends this
+model using neural networks to incorporate spatial and temporal information.
+However, the basic version of AR-EMOS by Möller and Groß (2019) shows some draw-
+backs. The method is estimated by two rolling training periods, one for the AR-process
+and one for the weights in the convex combination, respectively. Besides of the determi-
+nation of appropriate lengths for the sliding windows, the model needs to be estimated
+for every time point again. Furthermore, it is common in the operational practice of
+postprocessing models to use a static instead of a rolling training period (Hess, 2020).
+This approach can be motivated by studies as e.g. Lang et al. (2020) outlining that the
+use of longer training data often leads to a better performance, independently of poten-
+tial changes in the considered NWP model or the meteorological conditions. Additionally,
+AR-EMOS is a plug-in based model, i.e. the location and scale parameter of the predictive
+distribution are estimated in two steps, which can lead to a reduced forecast performance.
+Last but not least, the model does not take account of a general autoregressive conditional
+heteroscedasticity (GARCH) behavior in the distribution.
+2
+To tackle all these issues, we utilize a modification of the smooth EMOS (SEMOS) model
+by Lang et al. (2020) as baseline model. In its original formulation, the location and
+log-transformed scale parameter of the Gaussian distribution are described by a seasonal
+varying intercept and slope linked to the ensemble mean and standard deviation, respec-
+tively. Instead of using cyclic regression splines for modeling the seasonality, we use finite
+Fourier series. Consequently, SEMOS can be seen as a time series model explicitly con-
+sidering seasonality and trend but not any autoregressive behaviour yet. Therefore, we
+extend SEMOS in the AR-EMOS philosophy in three directions:
+(i) Assuming an autoregressive process for the forecast errors of the mean we introduce
+the deseasonalized autoregressive SEMOS model (DAR-SEMOS).
+(ii) Since the squared forecast errors of the DAR-SEMOS model show small (G)ARCH
+effects we adapt the DAR-SEMOS model by splitting the variance up into a sea-
+sonal variance component and an generalized autoregressive conditional variance
+component, resulting in the DAR-GARCH-SEMOS model.
+(iii) Assuming an autoregressive process for the standardized forecast errors of the
+SEMOS model leads to the model class we call standardized AR-SEMOS (SAR-
+SEMOS). In comparison to the DAR-GARCH-SEMOS model where the autore-
+gressive behavior in the mean and variance is considered separately, this approach
+elegantly models the autoregressive behavior of the forecast errors and standard
+deviation at the same time.
+SEMOS,DAR-SEMOS,DAR-GARCH-SEMOSandSAR-SEMOSwillbefittedonastatic
+training period, facilitating more stable parameter estimates (Lang et al., 2020). An ad-
+ditional advantage of the proposed methods is the fact that the parameters are estimated
+simultaneously by minimizing a proper scoring rule, in contrast to the two-step approach
+in the original AR-EMOS model. Another convenient feature of the suggested methods
+is their ability to postprocess forecasts of arbitrary lead time.
+To the best of the authors knowledge, the previously mentioned time series based EMOS
+models have not been suggested yet or further analyzed in the context of this application.
+Therefore, we investigate these models in comparison to the benchmark models EMOS
+and AR-EMOS in a case study for postprocessing of 2 m surface temperature forecasts
+in Germany using five different lead times. Our proposed methods are able to signifi-
+cantly outperform the benchmark methods EMOS and AR-EMOS at the majority of the
+considered 283 observation stations, independently of the lead time. On the whole, the
+SAR-SEMOS approach yields the most noticeable improvements for all stations and lead
+times. Its seamless approach of jointly modelling the time series behaviour in the mean
+and standard deviation makes the SAR-SEMOS model appealing for practical and possi-
+bly operational use. To make our methods available for other researchers we provide an
+R-package called tsEMOS (Jobst, 2023).
+Therestofthepaperisorganizedasfollows: InSection2, thedatasetforourapplicationis
+described. A brief overview of the benchmark ensemble postprocessing methods including
+a detailed description of our suggested time series based EMOS extensions is given in
+Section 3. The verification methods used for the comparison of the different models are
+reviewed in Section 4. In Section 5, we discuss the results of our application. We close
+with a conclusion and outlook in Section 6.
+3
+2 Data
+In our case study we locally postprocess 2 m surface temperature forecasts for the five
+lead times 24 h, 48 h, 72 h, 96 h and 120 h. The ensemble forecasts are delivered by the
+European Centre for Medium-Range Weather Forecasts (ECMWF) (2021), consisting of
+50 perturbed ensemble members. These forecasts are initialized at 1200 UTC on a grid
+with resolution 0.25◦ × 0.25◦ (≈ 28 km squared). The gridded data is bilinearly inter-
+polated to the observation stations. The 2 m surface temperature observations provided
+by DWD Climate Data Center (CDC) (2018) contained 499 observation stations between
+January 2, 2015 to December 31, 2020. After selecting the stations with maximal 5%
+missing observations and maximal three successive missing values at each synoptic ob-
+servation station in the considered period, we obtained 283 observation stations in total.
+The missing observations are imputed by exponential weighted moving averaging using
+the R-package imputeTS by Moritz and Bartz-Beielstein (2017). For lead times greater
+than 24 h we impute those observations that are missing due to the lead time in the same
+way as just described. AR-EMOS uses its own imputation method for these cases (Möller
+and Groß, 2019).
+47.5
+50.0
+52.5
+55.0
+4 8 12 16
+Longitude
+Latitude
+0
+500
+1000
+Elevation (m)
+Figure 1: Observation stations for 2 m surface temperature. Station Metzingen is
+marked by △ in south-west Germany.
+In the following,
+x := 1 m m∑ i=1 xi and s := /radicaltp/radicalvertex/radicalvertex√ 1 m− 1 m∑ i=1 (x−xi)2, (2.1)
+will denote the ensemble mean and standard deviation of a m = 50 member ensemble
+x1,...,xm for the weather quantity 2 m surface temperature. The response variable 2 m
+surface temperature is represented by Y with corresponding realization y.
+We use the period of 2015-2019 as training set and methods driven by a sliding training
+window use data of 2020 as well. A comparison of all methods is based on the whole year
+4
+2020 as independent validation. The data set in use is provided by Jobst et al. (2023b).
+For the computations we apply the statistical software R running version 3.6.3 by R Core
+Team (2020). More information about the implementation of the methods can be found
+on https://github.com/jobstdavid/paper_tsEMOS.
+3 Methods
+For all methods, we assume a Gaussian distribution for the weather quantity 2 m surface
+temperature, i.e. Y ∼N (µ,σ2) which is reasonable and exhibits only minor differences
+to other distribution assumptions (Gebetsberger et al., 2019; Taillardat, 2021). In the
+following, we shortly describe the benchmark methods EMOS, AR-EMOS using a rolling
+training window with training dates in 2019 and 2020. Afterwards, we explain the pro-
+posed time series extensions of the EMOS model using the static training period 2015-2019
+in more detail. A summary of the model properties is given in Table 1.
+Parameter µ σ2
+Method season trend autoregression season trend autoregression
+EMOS
+AR-EMOS ✓ ✓
+SEMOS ✓ ✓ ✓ ✓
+DAR-SEMOS ✓ ✓ ✓ ✓ ✓
+DAR-GARCH-SEMOS ✓ ✓ ✓ ✓ ✓ ✓
+SAR-SEMOS ✓ ✓ ✓ ✓ ✓ ✓
+Table 1: Overview of model specifications. If a property is directly integrated in the
+location µ or in the (squared) scale parameter σ2 is indicated by a checkmark (✓).
+3.1 EMOS
+For comparison, we use the Ensemble Model Output Statistics (EMOS) proposed by
+Gneiting et al. (2005), with
+µ(t) := a0 + a1x(t), (3.1)
+log(σ(t)) := b0 + b1 log(s(t)), (3.2)
+wherex(t) denotes the ensemble mean, s(t) the empirical ensemble standard deviation at
+day t and coefficients a0,a1,b0,b1 ∈ R. We use a fixed rolling training period with window
+size of 30 days which is a common length for this model (Gneiting et al., 2005; Möller
+and Groß, 2016) for all lead times. The coefficients of the parameters are estimated
+via minimization of a proper scoring rule for which we choose the continuous ranked
+probability score (CRPS, see Section 4). This score yields more robust estimations as e.g.
+the logarithmic score according to Gebetsberger et al. (2018), and it can be calculated
+analytically.
+5
+3.2 AR-EMOS
+As further benchmark method we use the autoregressive adjusted EMOS (AR-EMOS)
+proposed by Möller and Groß (2016) and Möller and Groß (2019). For each ensemble
+forecast xi(t) at day t, the respective error series ri(t) := Y (t) −xi(t) is defined and
+an autoregressive (AR) process of order pi is fitted to each ri(t) individually. Based on
+the estimated parameters of the AR(pi) processes an AR-adjusted forecast ensemble is
+obtained via
+~xi(t) := xi(t) + ˆri(t) = xi(t) + ηi +
+pi∑
+j=1
+τi,j
+(
+ˆri(t−j) −ηi
+)
+, (3.3)
+where ηi,τi,j ∈ R, j = 1,...,pi are the coefficients of the respective AR(pi) process, and
+ˆri(t), i = 1,...,m the corresponding residuals obtained from past observations y(t−j).
+The adjusted ensemble forecasts are employed to estimate the location parameter via
+µ(t) := 1 m m∑ i=1 ~xi(t), (3.4)
+and the scale parameter via
+σ(t) := ωσ1(t) + (1 −ω)σ2(t), (3.5)
+where σ1(t) :=
+√
+1
+m
+m∑
+i=1
+γ2 i (t) is computed from the empirical variances γ2 i (t) of the AR(pi)
+process, σ2(t) is the empirical standard deviation of the AR-adjusted forecasts ~xi(t),
+and ω ∈ [0, 1] is a weight obtained by minimizing the CRPS of the predictive Gaussian
+distribution. We make use of the R-package ensAR proposed by Groß and Möller (2018),
+where we follow their recommendation by using a fixed rolling training period of 90 days
+for the parameter estimation of the AR processes and additional 30 days for the weight
+estimation for each of the lead times.
+For ensemble forecasts in (0, 24] h in advance, the residuals ˆri(t) utilized in Equation
+(3.3) can directly be computed from past observations. However, for forecast horizons
+24k + (0, 24] h with k ∈ N, the residuals ˆri(t−k),...,ˆri(t− 1) are not available, as
+y(t−k),...,y(t−1) have not been observed yet. To overcome this hurdle, we successively
+predict the missing residuals based on the recursion formula for the AR process, see Möller
+and Groß (2019) for details. We will make use of this trick for the following time series
+models as well in those cases where the residuals are not available in practice due to the
+lead time.
+3.3 SEMOS
+Lang et al. (2020) proposed a smooth EMOS model (SEMOS) for Y ∼N (µS,σ2 S) with
+µS(t) := a0 + f0(t) + (a1 + f1(t)) ·x(t) = a0 + f0(t) + f1(t) ·x(t) + a1 ·x(t), (3.6)
+log(σS(t)) := b0 + g0(t) + (b1 + g1(t)) ·s(t) = b0 + g0(t) + g1(t) ·s(t) + b1 ·s(t), (3.7)
+6
+where f0,f1,g0,g1 employ cyclic regression splines conditional on the day of the year t.
+We modify this approach for our situation and define
+fi(t) := αi1 sin
+( 2πt
+365.25
+)
++ αi2 cos
+( 2πt
+365.25
+)
++ αi3 sin
+( 4πt
+365.25
+)
++ αi4 cos
+( 4πt
+365.25
+)
+, (3.8)
+gi(t) := βi1 sin
+( 2πt
+365.25
+)
++ βi2 cos
+( 2πt
+365.25
+)
++ βi3 sin
+( 4πt
+365.25
+)
++ βi4 cos
+( 4πt
+365.25
+)
+, (3.9)
+where αi,j,βi,j ∈ R for i = 0, 1, j = 1, 2, 3, 4. To the best of our knowledge, this model
+has not been considered with truncated Fourier series instead of cyclic regression splines,
+yet. All real valued coefficients are optimized via CRPS minimization.
+The selection of a truncated Fourier series to model the cyclic mean and variance behavior
+of surface temperature is a common approach in literature, see e.g. Alaton et al. (2002),
+Campbell and Diebold (2005), and Benth and Benth (2007) for time series models and
+e.g. Hemri et al. (2014), Dabernig et al. (2017), and Simon et al. (2017) for the ensemble
+postprocessing context, where similar orders for the truncated Fourier series are selected.
+−0.5
+0.0
+0.5
+1.0
+1.5
+0 100 200 300
+Day of the year
+Effect
+Effect
+a0 + f0(t)
+a1 + f1(t)
+b0 + g0(t)
+b1 + g1(t)
+(a)
+−5
+0
+5
+2016 2018 2020
+Date
+y(t) − μS(t)
+(b)
+0.0
+0.1
+0.2
+0.3
+0 5 10 15 20 25 30
+Lag
+ACF
+(c)
+Figure 2: (a) estimated seasonal intercept and slope effects for location (purple) and
+log-scale (green), (b) forecast residuals, (c) autocorrelation function (ACF) for the
+forecast residuals at station Metzingen.
+Considering SEMOS in a time series framework, the model explicitly accounts for sea-
+sonality in the location and log-transformed scale by a seasonal effect for the intercept,
+a0 + f0(t) and b0 + g0(t), and a seasonal interaction effect, f1(t) ·x(t) and g1(t) ·s(t).
+This becomes visible in Figure 2 (a) for station Metzingen, where we observe that the
+seasonal intercept clearly varies over the year for both distribution parameters, while the
+seasonal interaction effect is not that strongly pronounced in this example. By adding
+7
+the terms a1 ·x(t) and b1 ·s(t) to the linear predictor, which both capture the respective
+trend behavior, the model implicitly accounts for trend. Autoregressive effects are not
+accounted for, which are, however, clearly visible in Figure 2 (c). This motivates our
+extensions proposed in the following.
+3.4 DAR-SEMOS
+CaoandWei(2004)stated, thatbesidesofe.g. trendbehaviorandseasonalcyclicpatterns
+of the daily temperature, one should include the autoregressive property of temperature
+change in the daily temperature prediction, i.e. a warm day is most likely followed by
+another warm day and vice versa. Therefore, Cao and Wei (2004) applied an AR(p) model
+on the daily temperature errors after removing mean and trend. In the deseasonalized au-
+toregressive SEMOS model (DAR-SEMOS), we make use of the idea of an autoregressive
+error series by Cao and Wei (2004) and transfer it to the ensemble postprocessing context
+as in the AR-EMOS model of Möller and Groß (2016) and Möller and Groß (2019).
+In a nutshell, DAR-SEMOS is based on the SEMOS model, where we assume an au-
+toregressive process for the deseasonalized error series r(t) := Y (t) −µS(t). To be more
+precise, we suppose
+r(t) := η +
+p∑
+j=1
+τj
+(
+r(t−j) −η
+)
++ ε(t), ε(t) := σ(t) ·z(t), (3.10)
+which denotes the AR(p) process with coefficients η,τj ∈ R for j = 1,...,p. Furthermore,
+the AR-model error term ε(t) is specified by multiplication of σ(t) := σS(t) as introduced
+in Equation (3.7) with a white noise process z(t) ∼N (0, 1). The parameters for the
+predictive distribution N (µ,σ2) can be recovered by
+µ(t) := µS(t) + η +
+p∑
+j=1
+τj
+(
+ˆr(t−j) −η
+)
+, σ(t) := σS(t), (3.11)
+based on residuals ˆr(t) obtained from past observations. The model estimation consists
+of two stages, i.e. initialization and optimization of all necessary coefficients. We found
+that the coefficient initialization is crucial for this and all following methods in order to
+ensure convergence in the estimation procedure.
+I. Initialization:
+1. Estimate the initial coefficients for µS(t) by the linear regression model
+y(t) = µS(t) + r∗(t) with white noise r∗(t) ∼N (0,σ2 r∗ ) using the ordinary least
+squares method.
+2. Use the residuals ˆr∗(t) of the linear regression model to estimate the initial order
+p and the related coefficients of the AR(p) process
+r(t) = η +
+p∑
+j=1
+τj
+(
+r(t−j) −η
+)
++ ε∗(t) with white noise ε∗(t) ∼N (0,σ2 ε∗ ) by the
+R-function ar in default settings.
+3. Set the initial coefficients for the scale parameter σS(t) all to 0, except for b1 = 1.
+8
+II. Optimization: Fix order p of the AR(p) process and optimize all coefficients si-
+multaneously with respect to CRPS using the R-function optim with method Broyden-
+Fletcher-Goldfarb-Shanno (BFGS). Therefore, each optimization iteration consists of the
+following steps:
+1. Calculate ˆµS(t) = ˆa0 + ˆf0(t) + (ˆa1 + ˆf1(t)) ·x(t), ˆr(t) = y(t) −ˆµS(t).
+2. Predict the model residuals ˆr(t) = ˆη +
+p∑
+j=1
+ˆτj
+(
+ˆr(t−j) −ˆη
+)
+.
+3. Update ˆµ(t) = ˆµS(t) + ˆr(t), ˆσ(t) = exp
+(ˆb0 + ˆg0(t) + (ˆb1 + ˆg1(t)) ·s(t) ) .
+4. Calculate CRPS(N (ˆµ(t),ˆσ2(t))).
+This estimation procedure provides in contrast to the one of AR-EMOS a joint optimiza-
+tion of the coefficients of both parameters.
+3.5 DAR-GARCH-SEMOS
+Having a look at the squared residuals ˆε2(t) of the DAR-SEMOS models in Table 2, we
+can observe (G)ARCH effects. This is in line with the results of Campbell and Diebold
+(2005) and Benth and Benth (2012a), both detecting these effects for temperature time
+series, as well. Therefore, one might include this behavior in the DAR-SEMOS model, too.
+Consequently, we extended the DAR-SEMOS model by a multiplicative and an additive
+version for the variance, as proposed by Benth and Benth (2012a) and Campbell and
+Diebold (2005), respectively. Due to minor differences among both model formulations,
+we restrict ourselves to the multiplicative version, called DAR-GARCH-SEMOS, in the
+following.
+Lead time k = 1 k = 2 k = 3 k = 4 k = 5 k = 10
+24 h 80.57 78.80 77.03 77.74 75.62 73.50
+48 h 81.98 83.04 80.21 79.86 78.80 73.14
+72 h 81.27 80.57 78.09 75.62 75.27 69.61
+96 h 84.81 82.33 74.20 78.09 80.21 75.62
+120 h 76.68 76.33 69.26 82.33 84.10 83.04
+Table 2: Significance of dependence (in %) over all stations in the squared residuals
+ˆε2(t) = (y(t) −ˆµ(t))2 of the estimated DAR-SEMOS models up to lag k. The p-values of
+the performed Ljung-Box test were corrected by the Benjamini-Hochberg procedure
+with significance level of α = 0.05.
+The DAR-GARCH-SEMOS has basically the same model assumptions, as DAR-SEMOS
+in Equation (3.10) only with a slightly different parametrization of the variance σ2(t) to
+account for seasonality and GARCH effects. Therefore, the variance σ2(t) consists of a
+seasonal variance factor σ2 S(t) and a conditional variance factor σ2 G(t), i.e.
+σ2(t) := σ2 S(t) ·σ2 G(t), (3.12)
+9
+where σS(t) is specified as in Equation (3.7). Inserting σ(t) of Equation (3.12) into the
+error series ε(t) = σ(t) ·z(t) of Equation (3.10) yields
+ε(t) = σS(t) ·σG(t) ·z(t) ⇔ ε(t) σS(t)/bracehtipupleft /bracehtipdownright/bracehtipdownleft /bracehtipupright
+=:ρ(t)
+= σG(t) ·z(t). (3.13)
+Due to simplicity, we assume ρ∼ GARCH(1, 1) with
+σ2 G(t) := ω0 + ω1σ2 G(t− 1) + ω2ρ2(t− 1), (3.14)
+where ω0,ω1,ω2 ≥ 0. Different orders for r,s of the GARCH(r,s) model are left for further
+research. The parameters for the predictive distribution N (µ,σ2) can be derived by
+µ(t) := µS(t) + η +
+p∑
+j=1
+τj
+(
+ˆr(t−j) −η
+)
+, σ(t) := σS(t) ·σG(t), (3.15)
+with residuals ˆr(t) obtained from past observations. Analogously to DAR-SEMOS, the
+estimation of the DAR-GARCH SEMOS model consists of an initialization and an opti-
+mization step:
+I. Initialization:
+1. Perform the initialization steps 1. and 2. as in DAR-SEMOS to obtain µS(t) and
+the initial order as well as coefficients of the AR(p) process. Additionally, calculate
+the residuals ˆε∗(t) of the initial AR(p) process.
+2. Estimate the initial coefficients for σS(t) by the linear regression model
+log(ˆs(t)) = log(σS(t)) + ˜r(t) with empirically observed standard deviation ˆs(t)
+and white noise ˜r(t) ∼N (0,σ2 ˜r) using the ordinary least squares method. The
+quantity ˆs(t) is obtained by calculating the empirical standard deviation based on
+the observations of symmetric training windows around the day of the year t.
+3. Calculate the deseasonalized residuals ˆρ(t) =
+ˆε∗(t)
+ˆσS(t) with initial residuals ˆε∗(t)
+for which a GARCH(1, 1) model is fitted to get the corresponding initial values√
+ˆω0, √ ˆω1, √ ˆω2 using the R-package rugarch by Ghalanos (2022).
+II. Optimization: Fix order p of the AR(p) process and optimize all coefficients of
+both parameters with the same settings as for DAR-SEMOS:
+1. Perform optimization steps 1. and 2. as in DAR-SEMOS to obtain ˆµS(t) and ˆr(t).
+2. Calculate the residuals ˆρ(t) =
+ˆε(t)
+ˆσS(t) with updated
+ˆσS(t) = exp
+(ˆb0 + ˆg0(t) + (ˆb1 + ˆg1(t)) ·s(t) ) , ˆε(t) = ˆr(t) −ˆη− p∑
+j=1
+ˆτj
+(
+ˆr(t−j) −ˆη
+)
+.
+3. Update ˆσ2 G(t) = ˆω2 0 + ˆω2 1 ˆσ2 G(t− 1) + ˆω2 2 ˆρ2(t− 1), with squared coefficients ˆω0,ˆω1,ˆω2,
+to ensure their non-negativity.
+4. Update ˆµ(t) = ˆµS(t) + ˆr(t), ˆσ(t) = ˆσS(t) ·ˆσG(t).
+5. Calculate CRPS(N (ˆµ(t),ˆσ2(t))).
+10
+3.6 SAR-SEMOS
+All previously mentioned methods consider the autoregressive behavior of the forecast
+errors and the variance separately. However, modeling the autoregressive behavior of the
+standardized errors
+z(t) := Y (t) −µ(t) σ(t) , (3.16)
+helps to overcome this potential issue and was first considered by Wakaura and Ogata
+(2007), and later again by Schiller et al. (2012) for temperature models. Therefore, we
+follow this approach for the standardized AR-SEMOS (SAR-SEMOS), specify µ(t) :=
+µS(t) and σ(t) := σS(t) as in Equations (3.6), (3.7) and extend the SEMOS model via
+z(t) := η +
+p∑
+j=1
+τj
+(
+z(t−j) −η
+)
++ ξ(t), (3.17)
+where z ∼ AR(p) with coefficients η,τj ∈ R for j = 1,...,p, and ξ(t) ∼N (0,σ2 ξ) is white
+noise. The parameters for the predictive distribution N (µ,σ2) can be obtained by
+µ(t) := µS(t) + σS(t) ·
+
+η +
+p∑
+j=1
+τj
+(
+ˆz(t−j) −η
+)
+
+, σ(t) := σS(t), (3.18)
+with residuals ˆz(t) obtained from past observations. Analogously to DAR-SEMOS, the
+estimation of the SAR-SEMOS model consists of an initialization and an optimization
+step.
+I. Initialization:
+1. Perform the initialization steps 1. of DAR-SEMOS and step 2. of DAR-GARCH-
+SEMOS to obtain ˆµS(t) and ˆσS(t).
+2. Use the standardized residuals ˆz(t) = y(t)−ˆµS (t) ˆσS (t) to estimate the initial order p and
+the related coefficients of the residual AR(p) process in Equation (3.17) by the
+R-function ar in default settings.
+II. Optimization: Fix order p of the AR(p) process and optimize all coefficients of
+both parameters in Equations (3.16), (3.17) simultaneously:
+1. Update
+ˆµS(t) = ˆa0 + ˆf0(t) + (ˆa1 + ˆf1(t)) ·x(t), ˆσS(t) = exp (ˆb0 + ˆg0(t) + (ˆb1 + ˆg1(t)) ·s(t) ) .
+2. Update ˆz(t) = y(t)−ˆµS (t) ˆσS (t) and predict the model residuals
+ˆz(t) = ˆη +
+p∑
+j=1
+ˆτj
+(
+ˆz(t−j) −ˆη
+)
+.
+3. Update ˆµ(t) = ˆµS(t) + ˆσS(t) ·ˆz(t), ˆσ(t) := ˆσS(t).
+4. Calculate CRPS(N (ˆµ(t),ˆσ2(t))).
+11
+4 Verification
+Assessingcalibrationandsharpness. AsarguedbyGneitingetal.(2005)andGneit-
+ing and Raftery (2007), the general aim of probabilistic forecasting is to maximize sharp-
+ness of the predictive distribution subject to calibration. Calibration refers to the statis-
+tical consistency between the predictive cumulative distribution function (CDF) F and
+the associated observation Y. Consequently it is a joint property of the forecasts and the
+verifications. Sharpness refers to the concentration of the predictive distribution F and
+is a property of the probabilistic forecasts only. The more concentrated the forecast, the
+sharper the forecast, and the sharper the better, subject to calibration. In the following,
+we will present methods to measure calibration and sharpness which will be used in the
+subsequent application.
+0.00
+0.05
+0.10
+0.15
+0.20
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17
+Rank
+Relative Frequency
+Raw Ensemble
+Figure 3: Verification rank histogram of the raw ensemble aggregated over all time
+points, stations and lead times in the validation period.
+A continuous predictive probabilistic forecast F is calibrated if F (Y ) is uniformly dis-
+tributed (Dawid, 1984; Gneiting et al., 2007). For the assessment of the calibration a so
+called probability integral transform (PIT) histogram can be used as visual tool, where
+the PIT values are obtained by evaluating the predictive CDF F at the observations.
+Any departures from uniformity of the PIT histogram can indicate that the predictive
+distribution F is miscalibrated in some way. If the predictive distribution F is calibrated,
+the PIT values should have variance Var(U) = 1/12 ≈ 0.0833, representing neutral dis-
+persion. Values smaller/greater than 0.0833 indicate overdispersion/underdispersion of
+the predictive distribution F according to Gneiting and Ranjan (2013).
+A discrete counterpart of the PIT histogram is the so called verification rank histogram
+displaying the histogram of ranks of observations with respect to the corresponding or-
+dered ensemble forecasts (Talagrand et al., 1997). For a calibrated m-member ensemble,
+the ranks should be uniformly distributed on the set {1,...,m + 1}.
+Central prediction interval. Calibration of a predictive distribution can also be as-
+sessed by the (empirical) coverage of a (1 −α) · 100% central prediction interval [l,u]
+for α ∈ (0, 1), where l and u denote the quantiles of the predictive distribution F at
+quantile level α 2 and 1 − α 2 , respectively (Gneiting and Raftery, 2007). The coverage of
+12
+a (1 −α) · 100% central prediction interval is the proportion of validating observations
+between the lower and upper α 2 -quantiles of the predictive distribution. If a predictive
+distribution is calibrated, then (1 −α) · 100% of observations should fall within the range
+of the central prediction interval. Sharpness of a predictive distribution can be validated
+by the width of a (1 −α) · 100% central prediction interval (Gneiting and Raftery, 2007).
+Sharper distributions correspond to narrower prediction intervals. In the case of a m-
+member forecast ensemble, we consider an m−1 m+1 · 100% central prediction interval which
+corresponds to the nominal coverage of the raw forecast ensemble, thus allowing a direct
+comparison of all probabilistic forecasts. The target coverage rate for a m = 50 member
+ensemble is approximately 96.08%.
+Proper scoring rules. Above, we have introduced tools to analyze calibration and
+sharpness of a probabilistic forecast separately. Proper scoring rules assess calibration and
+sharpness properties simultaneously and play therefore important roles in the comparative
+evaluation and ranking of competing forecasts (Gneiting et al., 2007). A proper scoring
+rule which we use in the following case study, is the continuous ranked probability score
+(CRPS) (Matheson and Winkler, 1976). It is defined as
+CRPS(F,y) :=
+∞∫
+−∞
+(F (z) − 1{z ≥y})2 dz, (4.1)
+where F is the predictive CDF, y is the true/observed value and 1 denotes the indicator
+function. For the case of F ∼N (µ,σ2), Gneiting et al. (2005) derived the closed form
+CRPS(F,y) = σ
+(
+y−µ
+σ
+(
+2Φ
+(y−µ
+σ
+)
+− 1
+)
++ 2φ
+(y−µ
+σ
+)
+− 1√π
+)
+, (4.2)
+whereφand Φ denotethePDFandCDFofthestandardnormaldistribution, respectively.
+The mean CRPS over a set of forecast cases will be denoted by CRPS.
+As additional proper scoring rule, we consider the logarithmic score (LogS), which is
+defined as
+LogS(F,y) := − log(f(y)), (4.3)
+where f denotes the density of the predictive distribution F.
+Consistent scoring functions. In practice, a probabilistic forecast is sometimes re-
+duced to a point forecast via a statistical summary function such as the mean or median.
+In this situation, consistent scoring functions provide useful tools for forecast evaluation
+and generate proper scoring rules (Gneiting, 2011). In particular, we use the squared
+error
+SE(F,y) := (mean(F ) −y)2, (4.4)
+for the mean forecast mean(F ). For n forecast cases we get the root mean squared error
+via
+RMSE :=
+/radicaltp/radicalvertex/radicalvertex√ 1
+n
+n∑
+i=1
+SE(Fi,yi). (4.5)
+13
+Relative improvement. To assess the relative improvement of a forecast with respect
+to a given reference forecast, one can calculate the continuous ranked probability skill score
+(CRPSS) via
+CRPSS := 1 − CRPS CRPSref , (4.6)
+where CRPSref denotes the CRPS of the reference forecast.
+Statistical tests. To evaluate the statistical significance of the differences in perfor-
+mance between two competing postprocessing methods, we apply a Diebold-Mariano test
+(Diebold and Mariano, 1995) to the verification score time series of both methods sep-
+arately for each station and lead time case. Afterwards we use the Benjamini-Hochberg
+procedure (Benjamini and Hochberg, 1995) suggested by Wilks (2016), which allows to ac-
+count for multiple testing regarding different stations, and controls the overall probability
+of a type I error, for which we choose α = 0.05 in the subsequent analysis.
+Furthermore, to test for possible autocorrelations in the (squared) forecast residuals, we
+apply the Ljung-Box test by Ljung and Box (1978), which allows to test for the absence of
+serial autocorrelation, up to a specified lag k. We use the standard R-function Box.test to
+make these checks. In case of multiple testing, we perform again the Benjamini-Hochberg
+procedure to control the overall probability of a type I error with α = 0.05.
+The verification of the methods is carried out using the R-package eppverification by
+Jobst (2021).
+5 Results
+In the following subsections, we first evaluate the results of all models over all stations and
+lead times with respect to the scores and methods mentioned in Section 4. Furthermore,
+weinvestigatetheorderpoftheAR-processandweexaminetheremainingautocorrelation
+in the (squared) residuals. Afterwards, we discuss the lead time-specific results of all
+models. In the last subsection, we outline the station-specific results as well as statistical
+significance of our suggested models in comparison to EMOS, AR-EMOS and SEMOS.
+5.1 General results
+Figure 4 shows the PIT histograms of the models considered in Section 3. All methods
+clearly improve the calibration in comparison to the raw ensemble, which shows a strong
+underdispersion in the verification rank histogram in Figure 3. The PIT histograms of all
+methods exhibit a slight underdispersion at the left end, indicating that the lower tail of
+the distribution is a bit too light. Furthermore, all PIT histograms, except of the one for
+EMOS, exhibit a small bump shape approximately at PIT value 0.75, which outlines a
+slight overdispersion. Looking at the variance of the PIT values, DAR-GARCH-SEMOS
+yields a value of 0.082 which is the closest to the reference variance of 0.0833 indicating
+neutral dispersion, where the variance of the PIT values of the other methods slightly
+fluctuate around this value. With respect to the coverage assessing calibration, SEMOS
+yields the closest value to the nominal coverage of 95.25%.
+14
+0.0
+0.5
+1.0
+1.5
+0.00 0.25 0.50 0.75 1.00
+PIT value
+Density
+Var(PIT) = 0.0941
+EMOS
+0.0
+0.5
+1.0
+1.5
+0.00 0.25 0.50 0.75 1.00
+PIT value
+Density
+Var(PIT) = 0.086
+AR−EMOS
+0.0
+0.5
+1.0
+1.5
+0.00 0.25 0.50 0.75 1.00
+PIT value
+Density
+Var(PIT) = 0.0774
+SEMOS
+0.0
+0.5
+1.0
+1.5
+0.00 0.25 0.50 0.75 1.00
+PIT value
+Density
+Var(PIT) = 0.0796
+DAR−SEMOS
+0.0
+0.5
+1.0
+1.5
+0.00 0.25 0.50 0.75 1.00
+PIT value
+Density
+Var(PIT) = 0.0832
+DAR−GARCH−SEMOS
+0.0
+0.5
+1.0
+1.5
+0.00 0.25 0.50 0.75 1.00
+PIT value
+Density
+Var(PIT) = 0.0789
+SAR−SEMOS
+Figure 4: PIT histograms of the methods aggregated over all time points, stations and
+lead times in the validation period.
+Method CRPS LogS RMSE Width Coverage
+Raw ensemble 1.165 − 2.060 4.935 74.69
+EMOS 1.007 2.183 1.899 6.407 90.08
+AR-EMOS 0.943 1.952 1.787 6.442 93.41
+SEMOS 0.908 1.880 1.747 6.688 95.25
+DAR-SEMOS 0.902 1.885 1.734 6.458 94.67
+DAR-GARCH-SEMOS 0.902 1.906 1.735 6.282 93.93
+SAR-SEMOS 0.890 1.865 1.711 6.401 94.94
+Table 3: Verification scores aggregated over all time points, stations and lead times in
+the validation period. Bold value represents the best value for each score.
+Further looking at Table 3, we observe that all methods improve the raw ensemble with
+respect to CRPS by around 14%-24% and RMSE by around 8%-17%. In terms of the
+previously mentioned scores including the LogS, SEMOS is already able to obviously
+outperform EMOS and AR-EMOS. This shows, that a proper modeling of the season-
+ality for methods using longer training data can yield to tremendous enhancements in
+comparison to methods using rolling training periods. Furthermore, the proposed models
+DAR-SEMOS, DAR-GARCH-SEMOS and SAR-SEMOS show further improvements over
+SEMOS, while SAR-SEMOS yields the lowest CRPS, LogS and RMSE of all considered
+methods. Last but not least DAR-GARCH-SEMOS provides the sharpest forecasts indi-
+cated by the lowest width, while this comes along with a loss in calibration in comparison
+to new proposed time series based models.
+The results underline, that the inclusion of an autoregressive process for the forecast
+errors and an autoregressive conditional variance can improve the forecasting performance
+even more. Similar to Möller and Groß (2016), we found that the lower orders p =
+15
+1, 2, 3 for the AR(p) process are mostly chosen and sufficient for DAR-SEMOS, DAR-
+GARCH-SEMOS and SAR-SEMOS. Furthermore, AR(2) is the most prominent type of
+AR-structure, followed by AR(1) and AR(3). Table 4 highlights for these three extensions,
+that they effectively remove the autocorrelation in the residuals ˆε(t). Moreover, Table 5
+outlines that there are (G)ARCH effects in the squared residuals ˆε2(t) of DAR-SEMOS
+and SAR-SEMOS left, while DAR-GARCH-SEMOS removes nearly all of these effects.
+Moreover, modeling the autoregressive behavior of the forecast residuals and standard
+deviation simultaneously seems to be more effective than modeling the autoregression of
+both quantities separately with respect to the considered scores.
+Method k = 1 k = 5 k = 10 k = 15 k = 20 k = 25 k = 30
+DAR-SEMOS 0.00 0.00 0.00 0.07 0.07 0.07 0.21
+DAR-GARCH-SEMOS 0.00 0.00 0.14 0.14 0.14 0.21 0.42
+SAR-SEMOS 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+Table 4: Significance of dependence (%) over all stations and lead times in the residuals
+ˆε(t) of the estimated methods up to lag k. The p-values of the performed Ljung-Box test
+were corrected by the Benjamini-Hochberg procedure with significance level α = 0.05.
+Method k = 1 k = 2 k = 3 k = 4 k = 5 k = 10
+DAR-SEMOS 80.99 80.14 75.69 78.87 78.80 74.77
+DAR-GARCH-SEMOS 17.17 16.75 16.11 16.54 15.12 14.56
+SAR-SEMOS 68.90 69.12 67.35 67.77 66.50 59.08
+Table 5: Significance of dependence (%) over all stations and lead times in the squared
+residuals ˆε2(t) of the estimated methods up to lag k. The p-values of the performed
+Ljung-Box test were corrected by the Benjamini-Hochberg procedure with significance
+level α = 0.05.
+5.2 Lead time-specific results
+For the investigation of an effect of the lead time on predictive performance of the methods
+we consider several verification scores depending on the lead time in Figure 5. In terms of
+CRPS, LogS and RMSE, SAR-SEMOS yields the lowest, and therefore best scores for all
+leadtimes, followedbySEMOS,DAR-SEMOSandDAR-GARCH-SEMOS.Incomparison
+to the benchmark methods EMOS and AR-EMOS there are pronounced differences with
+respect to the mentioned scores independently of the lead time, indicating that our models
+provide a strong improvement.
+All in all, these scores become larger with increasing lead time, as the raw ensemble yields
+a poorer performance. However, with increasing lead time the performance differences
+between SEMOS and the methods DAR-SEMOS, DAR-GARCH-SEMOS, SAR-SEMOS
+decrease. This effect can possibly be led back to the fact, that the higher the lead time
+is, the more residuals need to be predicted for the time series based EMOS extensions.
+Consequently, its forecasts become less accurate. Nonetheless, for example SAR-SEMOS
+16
+0.8
+1.0
+1.2
+24 48 72 96 120
+Lead time (h)
+CRPS (°C)
+0
+10
+20
+30
+24 48 72 96 120
+Lead time (h)
+CRPSS (%)
+Method
+Raw ensemble
+EMOS
+AR−EMOS
+SEMOS
+DAR−SEMOS
+DAR−GARCH−SEMOS
+SAR−SEMOS
+(a) CRPS (left) and CRPSS over raw ensemble (right).
+1.6
+1.8
+2.0
+2.2
+2.4
+24 48 72 96 120
+Lead time (h)
+LogS (°C)
+1.50
+1.75
+2.00
+2.25
+24 48 72 96 120
+Lead time (h)
+RMSE (°C)
+(b) LogS (left) and RMSE (right).
+3
+4
+5
+6
+7
+8
+24 48 72 96 120
+Lead time (h)
+Width (°C)
+0.7
+0.8
+0.9
+24 48 72 96 120
+Lead time (h)
+Coverage (°C)
+(c) Width (left) and coverage (right).
+Figure 5: Lead time specific scores for all methods aggregated over all time points and
+stations in the validation period.
+still yields CRPSS improvements of 4%, 3%, 2%, 1%, 1% in comparison to SEMOS for the
+five considered lead times, respectively, underlining its superiority over the other methods.
+Considering the width, DAR-GAR-SEMOS yields the sharpest forecasts over all lead
+times, while SEMOS has the highest width, introducing a higher uncertainty into the
+17
+forecasts. However, this yields to more calibrated forecasts for SEMOS and less calibrated
+forecastsforDAR-GARCH-SEMOS.Ourotherextensionsshowasimilarperformanceand
+outperform EMOS and AR-EMOS as well, almost independent of the lead time.
+5.3 Station-specific results and statistical significance
+Additionally to the effect of the lead time, we investigate the station-specific perfor-
+mance of DAR-SEMOS, DAR-GARCH-SEMOS and SAR-SEMOS over SEMOS, as latter
+method has already proven that it clearly outperforms EMOS and AR-EMOS in terms
+of CRPS as well as CRPSS (see Figure 5).
+47.5
+50.0
+52.5
+55.0
+4 8 12 16
+Longitude
+Latitude
+−1
+0
+1
+2
+3
+4
+5
+CRPSS over SEMOS (%)
+Method
+DAR−GARCH−SEMOS (23)
+DAR−SEMOS (2)
+SAR−SEMOS (258)
+Figure 6: Station-wise highest CRPSS of the considered methods across all lead times
+over SEMOS in % in the validation period.
+Figure 6 shows the color coded highest CRPSS values across all lead times over SEMOS,
+at all considered stations. For 99% of the stations, one of the methods DAR-SEMOS,
+DAR-GARCH-SEMOSorSAR-SEMOSperformsbetterthanSEMOSintermsofCRPSS.
+Furthermore, for about 91% of the stations, SAR-SEMOS yields the highest CRPSS over
+SEMOS, followed by DAR-GARCH-SEMOS (8%) and DAR-SEMOS (1%). At some
+stations, even CRPSS improvements over SEMOS of up to 5% are possible, especially in
+mountainous areas.
+Toconclude, wehavealookatthestatisticalsignificanceofthedifferencesinthepredictive
+performance with respect to CRPS among the methods in Figure 7. The (i,j)-entry in the
+i-throwandj-thcolumnrepresentsthepercentageoftestsoverallstationsandleadtimes,
+where the null hypothesis of equal predictive performance of the corresponding one-sided
+DM test is rejected in favor of the model in the i-th row when compared to the model in
+the j-th column. The difference between the sum of the (i,j)-th and the (j,i)-th entry to
+100% is the percentage where the score differences are not significant. All postprocessing
+18
+methods yield a substantial portion of cases with significant CRPS improvements over the
+raw ensemble, while EMOS (35.96%) and AR-EMOS (65.16%) yield the lowest, and SAR-
+SEMOS (90.81%) the highest portion of significant cases, followed by the DAR-SEMOS
+(87.21%), DAR-GARCH-SEMOS (85.72%) and SEMOS (85.09%) models. Furthermore it
+is remarkable that SAR-SEMOS, DAR-GARCH-SEMOS and SEMOS yield significantly
+lower CRPS values than EMOS in over 85% of all lead time-station combinations. Last
+but not least, it should be outlined that SAR-SEMOS significantly outperforms SEMOS in
+terms of CRPS in over the half of all lead time-stations combinations, while DAR-SEMOS
+and DAR-GARCH-SEMOS do so in around a quarter of the cases.
+NA
+36.96
+65.16
+85.09
+87.21
+85.72
+90.81
+11.52
+NA
+50.32
+87.14
+95.34
+91.66
+97.95
+0.00
+0.07
+NA
+29.05
+55.76
+56.18
+75.19
+0.00
+0.00
+0.00
+NA
+26.36
+23.89
+52.79
+0.00
+0.14
+0.21
+0.35
+NA
+0.99
+22.90
+0.07
+0.00
+0.07
+1.70
+5.09
+NA
+17.53
+0.00
+0.00
+0.00
+0.00
+0.00
+0.00
+NA
+Raw ensemble
+EMOS
+AR−EMOS
+SEMOS
+DAR−SEMOS
+DAR−GARCH−SEMOS
+SAR−SEMOS
+Raw ensemble
+EMOS
+AR−EMOS
+SEMOS
+DAR−SEMOS
+DAR−GARCH−SEMOS
+SAR−SEMOS
+0
+25
+50
+75
+%
+Figure 7: Percentage of pair-wise Diebold-Mariano (DM) tests with respect to lead
+time-station combinations indicating statistically significant CRPS differences after
+applying the Benjamini-Hochberg procedure with significance level α = 0.05.
+6 Conclusion and outlook
+This work presents further time series motivated adaptions and extensions of the AR-
+EMOS model by Möller and Groß (2016) and Möller and Groß (2019), and is accompanied
+by the R-package tsEMOS. Starting from the smooth EMOS model which takes account
+of seasonality in the location and scale parameter of the Gaussian distribution via finite
+Fourier series, this model is extended with respect to the autoregressive behavior in the
+forecasts errors by DAR-SEMOS. To take additionally account of autoregression in the
+variance, the DAR-GARCH-SEMOS model is introduced. Modeling autoregressive be-
+havior in the location and scale parameter simultaneously using the standardized errors
+yields to the SAR-SEMOS model.
+All suggested modifications are able to successfully postprocess forecasts of arbitrary lead
+times and yield to a better performance in comparison to the benchmark methods EMOS
+19
+and AR-EMOS for nearly each lead time. Furthermore, our modifications significantly
+outperform the benchmark methods in most of the lead time-station cases. Due to the si-
+multaneous modeling of the autoregression in mean and standard deviation, SAR-SEMOS
+yields to the highest improvement over all methods at all stations and forecast horizons.
+As the PIT histograms in Figure 4 are not completely uniform, they suggest that there
+mightstillbeadeficitintheproposedtimeseriesextensionsofEMOS.Thismaybecaused
+by a lack of important predictor variables or too inflexible marginal distributions. There-
+fore, we plan to investigate the latter by allowing more adjustable distribution functions,
+as e.g. the skew Gaussian distribution or skew Student-t distribution. Furthermore, we
+plan to incorporate the autoregressive behavior of the (standardized) errors into machine
+learning techniques, such as e.g. gradient-boosted EMOS (Messner et al., 2017), to join
+the power of statistical methods as well as machine learning methods. Table 5 indicates,
+that SAR-SEMOS might profit from a GARCH extension as well. Last but not least, as
+our suggested methods are in general not restricted to any distribution assumption, adap-
+tation to the postprocessing of other weather quantities, e.g. wind speed or precipitation
+is on top of our agenda.
+While we focused in this work on the statistical postprocessing of single stations, our
+approachescouldbealsoextendedinthespatialdirection. AGaussianrandomfieldmodel
+as proposed by Scheuerer and Büermann (2013) or a trend surface model as suggested
+by Benth and Benth (2012b) could be utilized to interpolate the estimated parameters of
+the time series based EMOS models to unobserved locations. Alternatively, the Gaussian
+Markov random field approach proposed by Möller et al. (2016) could be applied to the
+(standardized) errors using the integrated nested Laplace approximation (INLA; Rue and
+Held, 2005; Lindgren et al., 2011) framework to account for autoregressive behavior as
+well. These approaches allow to be locally adaptive, while additionally taking account of
+spatial relationships. Furthermore, copula methods, such as the ensemble copula coupling
+(ECC) by Schefzik et al. (2013), the Gaussian copula by Möller et al. (2013) or vine copula
+based methods, such as proposed by Jobst et al. (2023a) could be investigated to retain
+the spatial dependencies. Taking account of spatial autocorrelations by employing, e.g.
+a conditional autoregressive (CAR; Besag, 1974) model might further improve local and
+global prediction performance. Last but not least, inter-variable or temporal dependencies
+could be further analyzed for which the previously mentioned copula methods could be a
+good starting point.
+Acknowledgements
+We are grateful to the European Centre for Medium-Range Weather Forecasts (ECMWF)
+and the German Weather Service (DWD) for providing forecasts and observation data,
+respectively. Furthermore, the authors acknowledge support of the research by Deutsche
+Forschungsgemeinschaft (DFG) Grant Number 395388010, and by the Hungarian Na-
+tional Research, Development and Innovation Office under Grant Number NN125679.
+Annette Möller acknowledges support by the Helmholtz Association’s pilot project “Un-
+certainty Quantification” and by Deutsche Forschungsgemeinschaft (DFG) Grant Number
+520017589.
+20
+References
+Alaton, P., Djehiche, B., and Stillberger, D. (2002). On modelling and pricing weather
+derivatives. In: Applied Mathematical Finance 9.1, pp. 1–20. doi: 10 . 1080 /
+13504860210132897.
+Benjamini, Y. and Hochberg, Y. (1995). Controlling the False Discovery Rate: A Practical
+andPowerfulApproachtoMultipleTesting.In: Journal of the Royal Statistical Society:
+Series B (Methodological) 57.1, pp. 289–300. doi: 10 . 1111 / j . 2517 - 6161 . 1995 .
+tb02031.x.
+Benth, J. Š. and Benth, F. E. (2012a). A critical view on temperature modelling for
+application in weather derivatives markets. In: Energy Economics 34.2, pp. 592–602.
+doi: 10.1016/j.eneco.2011.09.012.
+Benth, J. Š. and Benth, F. E. (2010). Analysis and modelling of wind speed in New York.
+In: Journal of Applied Statistics 37.6,pp.893–909. doi: 10.1080/02664760902914490.
+Benth, J. Š. and Benth, F. E. (2012b). Modeling and Pricing in Financial Markets for
+Weather Derivatives. WORLD SCIENTIFIC. doi: 10.1142/8457.
+Benth, J. Š. and Benth, F. E. (2007). The volatility of temperature and pricing of
+weather derivatives. In: Quantitative Finance 7.5, pp. 553–561. doi: 10 . 1080 /
+14697680601155334.
+Besag, J. (1974). Spatial Interaction and the Statistical Analysis of Lattice Systems. In:
+Journal of the Royal Statistical Society: Series B (Methodological) 36.2, pp. 192–225.
+doi: 10.1111/j.2517-6161.1974.tb00999.x.
+Brown,B.G.,Katz,R.W.,andMurphy,A.H.(1984).TimeSeriesModelstoSimulateand
+ForecastWindSpeedandWindPower.In: Journal of Climate and Applied Meteorology
+23.8, pp. 1184–1195. doi: 10.1175/1520-0450(1984)023<1184:tsmtsa>2.0.co;2.
+Campbell, S. D. and Diebold, F. X. (2005). Weather Forecasting for Weather Derivatives.
+In: Journal of the American Statistical Association 100.469, pp. 6–16. doi: 10.1198/
+016214504000001051.
+Cao, M. and Wei, J. (2004). Weather derivatives valuation and market price of weather
+risk. In: Journal of Futures Markets 24.11, pp. 1065–1089. doi: 10.1002/fut.20122.
+Dabernig, M. et al. (2017). Spatial ensemble post-processing with standardized anomalies.
+In: Quarterly Journal of the Royal Meteorological Society 143.703, pp. 909–916. doi:
+10.1002/qj.2975.
+Dawid, A. P. (1984). Present Position and Potential Developments: Some Personal Views:
+Statistical Theory: The Prequential Approach. In: Journal of the Royal Statistical
+Society. Series A (General) 147.2, pp. 278–292. doi: 10.2307/2981683.
+Demaeyer, J. et al. (2023). The EUPPBench postprocessing benchmark dataset v1.0. In:
+Earth System Science Data 15.6, pp. 2635–2653. doi: 10.5194/essd-15-2635-2023.
+Diebold, F. X. and Mariano, R. S. (1995). Comparing Predictive Accuracy. In: Journal
+of Business & Economic Statistics 13.3, pp. 253–263. doi: 10.1080/07350015.1995.
+10524599.
+DWD Climate Data Center (CDC) (2018). Historische stündliche Stationsmessungen
+der Lufttemperatur und Luftfeuchte für Deutschland, Version v006. DWD Climate
+Data Center (CDC). url: https : / / opendata . dwd . de / climate _ environment /
+CDC / observations _ germany / climate / hourly / air _ temperature / historical /
+BESCHREIBUNG_obsgermany_climate_hourly_tu_historical_de.pdf.
+21
+European Centre for Medium-Range Weather Forecasts (ECMWF) (2021). Gridded fore-
+cast. Creative Commons Attribution 4.0 International (CC BY 4.0). url: https :
+//www.ecmwf.int.
+Gebetsberger, M. et al. (2018). Estimation Methods for Nonhomogeneous Regression
+Models: Minimum Continuous Ranked Probability Score versus Maximum Likelihood.
+In: Monthly Weather Review 146.12, pp. 4323–4338. doi: 10.1175/mwr-d-17-0364.1.
+Gebetsberger, M. et al. (2019). Skewed logistic distribution for statistical temperature
+post-processing in mountainous areas. In: Advances in Statistical Climatology, Meteo-
+rology and Oceanography 5.1, pp. 87–100. doi: 10.5194/ascmo-5-87-2019.
+Ghalanos, A. (2022). rugarch: Univariate GARCH models. R package version 1.4-9.
+Gneiting, T. (2011). Making and Evaluating Point Forecasts. In: Journal of the American
+Statistical Association 106.494, pp. 746–762. doi: 10.1198/jasa.2011.r10138.
+Gneiting, T., Balabdaoui, F., and Raftery, A. E. (2007). Probabilistic forecasts, calibra-
+tion and sharpness. In: Journal of the Royal Statistical Society: Series B (Statistical
+Methodology) 69.2, pp. 243–268. doi: 10.1111/j.1467-9868.2007.00587.x.
+Gneiting, T. and Katzfuss, M. (2014). Probabilistic Forecasting. In: Annual Review of
+Statistics and Its Application 1.1, pp. 125–151. doi: 10.1146/annurev-statistics-
+062713-085831.
+Gneiting, T. and Raftery, A. E. (2007). Strictly Proper Scoring Rules, Prediction, and
+Estimation. In: Journal of the American Statistical Association 102.477, pp. 359–378.
+doi: 10.1198/016214506000001437.
+Gneiting, T. and Ranjan, R. (2013). Combining predictive distributions. In: Electronic
+Journal of Statistics 7.0, pp. 1747–1782. doi: 10.1214/13-ejs823.
+Gneiting, T. et al. (2005). Calibrated Probabilistic Forecasting Using Ensemble Model
+Output Statistics and Minimum CRPS Estimation. In: Monthly Weather Review 133.5,
+pp. 1098–1118. doi: 10.1175/mwr2904.1.
+Groß, J. and Möller, A. (2018). ensAR: autoregressive postprocessing methods for ensem-
+ble forecasts. Version 0.2.0.9000. url: https://github.com/JuGross/ensAR.
+Hemri, S. et al. (2014). Trends in the predictive performance of raw ensemble weather
+forecasts. In: Geophysical Research Letters 41.24, pp. 9197–9205. doi: 10 . 1002 /
+2014gl062472.
+Hess, R. (2020). Statistical postprocessing of ensemble forecasts for severe weather at
+Deutscher Wetterdienst. In: Nonlinear Processes in Geophysics 27.4, pp. 473–487. doi:
+10.5194/npg-27-473-2020.
+Jobst, D. (2021). eppverification. doi: 10.5281/zenodo.5574572. url: https://github.
+com/jobstdavid/eppverification.
+Jobst, D. (2023). tsEMOS. Version 0.1.0. url: https : / / github . com / jobstdavid /
+tsEMOS.
+Jobst, D., Möller, A., and Groß, J. (Sept. 2023a). D-Vine GAM Copula based Quantile
+Regression with Application to Ensemble Postprocessing. In: arXiv: 2309.05603.
+Jobst, D., Möller, A., andGroß, J. (2023b). Data set forthe ensemblepostprocessing of 2m
+surface temperature forecasts in Germany for five different lead times. Version 0.1.0.
+doi: 10.5281/zenodo.8193645. url: https://doi.org/10.5281/zenodo.8193645.
+Lang, M. N. et al. (2020). Remember the past: a comparison of time-adaptive training
+schemes for non-homogeneous regression. In: Nonlinear Processes in Geophysics 27.1,
+pp. 23–34. doi: 10.5194/npg-27-23-2020.
+22
+Leutbecher, M. and Palmer, T. N. (2008). Ensemble forecasting. In: Journal of Compu-
+tational Physics 227.7, pp. 3515–3539. doi: 10.1016/j.jcp.2007.02.014.
+Lindgren,F.,Rue,H.,andLindström,J.(2011).AnExplicitLinkbetweenGaussianFields
+and Gaussian Markov Random Fields: The Stochastic Partial Differential Equation
+Approach. In: Journal of the Royal Statistical Society Series B: Statistical Methodology
+73.4, pp. 423–498. doi: 10.1111/j.1467-9868.2011.00777.x.
+Ljung, G. M. and Box, G. E. P. (1978). On a measure of lack of fit in time series models.
+In: Biometrika 65.2, pp. 297–303. doi: 10.1093/biomet/65.2.297.
+Matheson, J. E. and Winkler, R. L. (1976). Scoring Rules for Continuous Probability
+Distributions. In: Management Science 22.10, pp. 1087–1096. doi: 10.1287/mnsc.
+22.10.1087.
+Messner, J. W., Mayr, G. J., and Zeileis, A. (2017). Nonhomogeneous Boosting for Predic-
+tor Selection in Ensemble Postprocessing. In: Monthly Weather Review 145.1, pp. 137–
+147. doi: 10.1175/mwr-d-16-0088.1.
+Möller, A. and Groß, J. (2016). Probabilistic temperature forecasting based on an en-
+semble autoregressive modification. In: Quarterly Journal of the Royal Meteorological
+Society 142.696, pp. 1385–1394. doi: 10.1002/qj.2741.
+Möller, A. and Groß, J. (2019). Probabilistic temperature forecasting with a heteroscedas-
+tic autoregressive ensemble postprocessing model. In: Quarterly Journal of the Royal
+Meteorological Society 146.726, pp. 211–224. doi: 10.1002/qj.3667.
+Möller,A.,Lenkoski,A.,andThorarinsdottir,T.L.(2013).Multivariateprobabilisticfore-
+casting using ensemble Bayesian model averaging and copulas. In: Quarterly Journal
+of the Royal Meteorological Society 139.673, pp. 982–991. doi: 10.1002/qj.2009.
+Möller, A. et al. (2016). Spatially adaptive, Bayesian estimation for probabilistic temper-
+ature forecasts. In: arXiv: 1507.05066.
+Moritz, S. and Bartz-Beielstein, T. (2017). imputeTS: Time Series Missing Value Impu-
+tation in R. In: The R Journal 9.1, pp. 207–218. doi: 10.32614/RJ-2017-009.
+Palmer, T. N. (2002). The economic value of ensemble forecasts as a tool for risk assess-
+ment: From days to decades. In: Quarterly Journal of the Royal Meteorological Society
+128.581, pp. 747–774. doi: 10.1256/0035900021643593.
+R Core Team (2020). R: A Language and Environment for Statistical Computing. R Foun-
+dation for Statistical Computing. Vienna, Austria. url: https://www.R- project.
+org/.
+Rue, H. and Held, L. (2005). Gaussian Markov Random Fields. Chapman and Hall/CRC.
+doi: 10.1201/9780203492024.
+Schefzik, R., Thorarinsdottir, T. L., and Gneiting, T. (2013). Uncertainty Quantifica-
+tion in Complex Simulation Models Using Ensemble Copula Coupling. In: Statistical
+Science 28.4. doi: 10.1214/13-sts443.
+Scheuerer, M. and Büermann, L. (2013). Spatially Adaptive Post-Processing of Ensem-
+ble Forecasts for Temperature. In: Journal of the Royal Statistical Society Series C:
+Applied Statistics 63.3, pp. 405–422. doi: 10.1111/rssc.12040.
+Schiller, F., Seidler, G., and Wimmer, M. (2012). Temperature models for pricing
+weather derivatives. In: Quantitative Finance 12.3, pp. 489–500. doi: 10 . 1080 /
+14697681003777097.
+Simon, T. et al. (2017). Boosting Multivariate Gaussian Models for Probabilistic Tem-
+perature Forecasts. In: Proceedings of the 32nd International Workshop on Statistical
+23
+Modelling, Groningen, Netherlands. https://iwsm2017.webhosting.rug.nl/IWSM_
+2017_V1.pdf. University of Groningen, pp. 143–148.
+Taillardat, M. (2021). Skewed and Mixture of Gaussian Distributions for Ensemble Post-
+processing. In: Atmosphere 12.8, p. 966. doi: 10.3390/atmos12080966.
+Talagrand, O., Vautard, R., and Strauss, B. (1997). Evaluation of probabilistic prediction
+systems. In: Proc. Workshop on Predictability, pp. 1–25. url: https://www.ecmwf.
+int/en/elibrary/12555-evaluation-probabilistic-prediction-systems.
+Tol, R. S. J. (1996). Autoregressive conditional heteroscedasticity in daily temperature
+measurements. In: Environmetrics 7.1, pp. 67–75. doi: 10 . 1002 / (sici ) 1099 -
+095x(199601)7:1<67::aid-env164>3.0.co;2-d.
+Tol, R. S. J. (1997). Autoregressive Conditional Heteroscedasticity in daily wind speed
+measurements. In: Theoretical and Applied Climatology 56.1-2, pp. 113–122. doi: 10.
+1007/bf00863788.
+Tolomei, D. (2022). Multivariate Postprocessing of Temporal Dependencies with Au-
+toregressive and LSTM Neural Networks. MA thesis. Utrecht University. url:
+https : / / studenttheses . uu . nl / bitstream / handle / 20 . 500 . 12932 / 41500 /
+DanielTolomeiThesisFinal.pdf?sequence=1&isAllowed=y.
+Wakaura, M. and Ogata, Y. (2007). A time series analysis on the seasonality of air tem-
+perature anomalies. In: Meteorological Applications 14.4, pp. 425–434. doi: 10.1002/
+met.41.
+Wilks, D. S. (2016). The Stippling Shows Statistically Significant Grid Points: How Re-
+search Results are Routinely Overstated and Overinterpreted, and What to Do about
+It. In: Bulletin of the American Meteorological Society 97.12, pp. 2263–2273. doi:
+10.1175/bams-d-15-00267.1.
+24

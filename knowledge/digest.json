@@ -25,7 +25,7 @@
 "bid\u2011ask spread"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "DOESN'T FIT MY DATA - The idea requires simulated market\u2011making agent behavior, inventory paths, and custom reward calculations not present in the available historical columns. Volta's dataset lacks the necessary per\u2011trade inventory and cash\u2011flow details to evaluate the RL reward function.",
 "url": "https://arxiv.org/abs/2611.09012v1",
 "date": "2026-11-15"
 },
@@ -39,7 +39,7 @@
 "empirical vs. simulated training environments"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "NOT CONFIRMED on my data: 461 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -7.0 bp of QQQ per trade (placebo avg -4.3, p=0.720), halves -4.9/-9.1, win 51%, worst -730 bp, positive in 3/9 years, sell trades return -4.9% of max risk; 2% of its sell days are high-gamma days (the known edge)",
 "url": "https://arxiv.org/abs/2611.10956v1",
 "date": "2026-11-15"
 },
