@@ -1,0 +1,30 @@
+name: scoreboard
+# One honest table of every live claim vs what actually happened (scoreboard.py). Refreshes /scoreboard every morning
+# and posts it to the briefing channel once a week, on Sunday.
+on:
+  schedule:
+    - cron: "20 9 * * *"       # daily refresh of /scoreboard (posts only on Sundays, once per week)
+    - cron: "20 11 * * 0"      # second Sunday try (GitHub sometimes drops scheduled runs)
+  workflow_dispatch:
+    inputs:
+      dry: { description: "dry run (print only)", default: "yes" }
+permissions:
+  contents: write
+concurrency:
+  group: scoreboard
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt
+      - run: |
+          if [ "${{ github.event.inputs.dry }}" = "yes" ]; then python scoreboard.py --dry; else python scoreboard.py; fi
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      - if: always()
+        run: for i in 1 2 3; do bash .github/actions_common.sh "scoreboard" && break; sleep $((RANDOM % 20 + 5)); done
