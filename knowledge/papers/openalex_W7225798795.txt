@@ -1,0 +1,935 @@
+Prediction Inference for Hybrid Models on Realized
+Volatility Forecasting
+Kyle Parrella1 and Kejin Wu1
+1Loyola University Chicago, Department of Mathematics and Statistics
+Abstract
+GARCH-LSTM hybrid models have become increasingly popular in the volatility forecasting
+literature. To date, these models have almost exclusively focused on point estimation and
+accuracy measures such as RMSE and MAPE, while failing to assess the uncertainty of these
+point estimates. We approach this gap in two ways. First, we extend the existing GARCH-
+LSTM model by modeling the conditional mean with an ARMA structure. Second, we develop
+a forward bootstrap algorithm to build multi-step-ahead prediction intervals for future realized
+volatility. In order to address the notorious undercoverage of prediction intervals, we imple-
+ment two solutions. One draws bootstrap innovations from the empirical residual distribution
+to mimic the fat-tail property of financial series. The other utilizes principles from conformal
+prediction to systematically extend the prediction interval length. We evaluate the methods
+in simulations with heavy-tailed and time-varying GARCH processes and in rolling-window
+forecasts of four U.S. stock indices from 2020 to 2025. The ARMA-based hybrid gives the low-
+est point-forecast errors in most settings, and combining both remedies with the mean-based
+hybrid yields intervals closest to the nominal level among competing methods.
+1 Introduction
+Volatility forecasting plays a critical role in many fields of finance, such as derivative pricing and
+portfolio risk management. As a result, reliable and accurate methods for volatility forecasting are
+essential to the success of these industries. Traditionally, these markets have used the econometric
+ARCH and GARCH-type models proposed by Engle (1982) and Bollerslev (1986) to meet this
+need. Over the years, variations of these models, such as the EGARCH (Nelson, 1991) and GJR-
+GARCH models (Glosten et al., 1993), have evolved from their predecessors as improved methods
+in certain use cases. Similarly, the EWMA model was originated with Roberts (1959) and further
+refined by Longerstaey and Spencer (1996); see Francq and Zakoïan (2019) for a comprehensive
+introduction of GARCH-type models.
+In response to the limitations of traditional econometric techniques for volatility forecasting,
+researchers have turned to machine learning techniques because of their ability to better capture
+nonlinear and nonparametric trends. It is well-known that neural networks have the universal
+approximation property, i.e., they can approximate any functions under some smoothness condi-
+tions; see McCulloch and Pitts (1943) and Cybenko (1989); Hornik et al. (1989); Yarotsky (2018);
+Yarotsky and Zhevnerchuk (2020) for this property displayed in simple, multilayer and deep feed-
+forward neural networks, respectively. Motivated by this powerful estimation ability, researchers
+1
+arXiv:2611.13212v1 [stat.AP] 9 Nov 2026
+have increasingly applied these neural network-type models to a wide range of scientific areas,
+including finance. In financial mathematics, researchers derive the prediction of volatility directly
+from a well-trained neural network and prediction is conducted a priori. One unfortunate feature
+of the neural networks in this application is that they function as a sort of “black box”, which makes
+statistical reasoning between predictions and historical series difficult. Instead of purely relying
+on neural networks, Hajizadeh et al. (2012) took the output from standard GARCH models as the
+input of neural networks to improve the accuracy of forecasting volatility, resulting in a so-called
+hybrid model. Similar works include those of García-Medina and Aguayo-Moreno (2024) and Wang
+and Lu (2024). Kim and Won (2018) proposed the idea of feeding the estimated parameters of dif-
+ferent types of GARCH models with other explanatory variables as input to the Long Short-Term
+Memory (LSTM) model, a form of recurrent neural networks originally proposed by Hochreiter
+and Schmidhuber (1997). LSTM models have modeling applications in a variety of fields including
+physics, chemistry, and finance; see Zhang et al. (2020), Mandis et al. (2024) and Moghar and
+Hamiche (2020) for more details, respectively.
+GARCH-LSTM models have become increasingly common in volatility forecasting literature.
+This is due to the theoretical and empirical advantages these models have (Kim and Won, 2018;
+García-Medina and Aguayo-Moreno, 2024). The fundamental idea of the hybrid proposed by Kim
+and Won (2018) is that the LSTM is exceptional in leveraging the high-level temporal patterns of
+the time series, which are revealed by the parameters of various GARCH models. By combining
+the networks and classical models, hybrids are able to capture the econometric and deep learning
+techniques each model presents individually. GARCH creates a structured framework for defining
+conditional volatility, while LSTM is able to capture long-range and nonlinear interactions that
+can be missed by GARCH. Hybrid models also offer computational benefits, as they can be less
+computationally intensive than strict LSTM modeling (Wang and Lu, 2024).
+However, the existing literature on this topic emphasizes point estimation and improving em-
+pirical accuracy metrics such as root mean squared error (RMSE) and mean absolute percentage
+error (MAPE). There is a lack of literature that references more rigorous statistical measures, such
+as prediction intervals or uncertainty measures. Motivated by the forward bootstrap prediction
+methods developed gradually in Pan and Politis (2016); Politis and Wu (2023); Wu and Politis
+(2024a), we propose a form of forward bootstrap algorithm to build prediction intervals for volatil-
+ity forecasting involving LSTM. In short, the forward bootstrap prediction technique offers an
+approach to evaluate the whole distribution of forecasting. We additionally propose a systematic
+wayinspiredbytheconformalpredictionideaofVovketal.(2005)towidenthepredictionintervals,
+improving the coverage rate for finite sample cases. Similar to the usage of a confidence interval
+in quantifying the accuracy of parameter estimations, the prediction interval can be utilized as a
+complementary tool to guide the decisions of economists on determining the prices of derivative
+goods, the risk of assets and the allocation of portfolios, etc. Moreover, we further improve the
+current GARCH-LSTM model in Kim and Won (2018) by modeling the mean component of the
+financial series with an ARMA model; consistent with the idea of ARMA-GARCH modeling. Our
+contributions are summarized as follows in Section 1.1.
+1.1 Our contributions
+• We refine the hybrid model in the seminal work Kim and Won (2018) to forecast realized
+volatility. More specifically, we incorporate a machine learning model with the ARMA-
+2
+GARCH framework to perform volatility forecasting. To train the model, we define a specific
+MSE loss criterion that trains an LSTM model to approximate the conditional variance when
+the true variance is not observed. Moreover, we propose a maximum likelihood estimation
+algorithm to train all parameters of the LSTM and the ARMA-GARCH framework simulta-
+neously.
+• Beyond point prediction, we propose the forward bootstrap algorithm to make (multiple-
+step-ahead) prediction intervals for realized volatility. Additionally, we further provide two
+strategies to improve the coverage rate of the prediction interval in finite sample cases: (1) we
+propose a systematic way to extend the prediction interval using the principles of conformal
+prediction; (2) we use empirical residuals, instead of the normally distributed error usually
+assumedintheGARCHmodel, toignitetheforwardbootstrapprocedurefortheconstruction
+of prediction intervals with a hybrid model. This modification emulates the fat-tail property
+of financial returns. It is also of note that our forward bootstrap algorithm can be applied
+to naive LSTM or other model-based machine-learning methods.
+• Comprehensive simulation and real data analyses are deployed to compare our methods with
+classical models. Several empirical findings are clear: (1) the hybrid LSTM models with the
+additional information from the estimated variance and coefficients of classical models have
+a better point prediction performance compared to naive LSTM and classical models; (2)
+the naive LSTM method can be beaten even by classical models for some simulations and
+real data scenarios; (3) even predictions over long horizons perform remarkably well, with
+the hybrid models outperforming classical models in coverage on horizons of 20 days (see
+Tables 3 and 4).
+The paper is organized as follows. The structure of the hybrid model is explained in Section
+2. Then, our algorithm to construct the prediction interval is illustrated in Section 3. Simulations
+and real-data analysis are given in Sections 4 and 5, respectively. Section 6 concludes this work.
+2 Hybrid Model
+2.1 GARCH model
+The ARCH model, introduced by Engle (1982), allowed for the modeling of conditional variances,
+which are generally common for real-world financial time series data. Subsequently, the GARCH
+model was introduced by Bollerslev (1986) to improve the generalizability and provide a more
+flexible lag structure of the ARCH model.
+The GARCH(p,q) process is used to model the future variance by considering the past q vari-
+ances and p error terms. We define εt to be a real-valued discrete-time stochastic process and Ft
+to be the information set of all information available through time t. The GARCH(p,q) process is
+then given by
+εt|Ft−1 ∼ N
+ 
+0, σ2 t  ,
+σ2 t = α0 +
+pX
+i=1
+αiε2 t−i +
+qX
+j=1
+βj σ2 t−j .
+3
+2.2 EGARCH model
+While innovative and more practical than ARCH models, the GARCH(p,q) process was flawed
+in certain applications. Nelson (1991) identified and reconciled three major flaws. The first of
+these issues was that the GARCH(p,q) process failed to capture some trends that were observed in
+financial data. Namely, the negative correlation of stock returns and changes in returns volatility
+that was observed by researchers was not captured in the model. Secondly, it was difficult to
+interpret the “persistence” of shocks to the conditional variance. The final flaw identified was that
+the non-negativity constraints of certain variables were restrictive in practice.
+To reconcile these flaws, Nelson (1991) proposed a new GARCH mechanism known as expo-
+nential GARCH (EGARCH). It is obvious that if σ2 t is the conditional variance given Ft−1, i.e.,
+the information at time t − 1, then it must be nonnegative with probability one. As opposed to
+other GARCH models that ensure nonnegativity by making σ2 t a linear combination of positive
+random variables, Nelson (1991) adopted a different function to ensure σ 2 t remained nonnegative:
+ln(σ2 t ) = α0 +
+pX
+i=1
+h
+αi
+ 
+|zt−i| − E|zt−i|
+
++ θi zt−i
+i
++
+qX
+j=1
+γj ln(σ2 t−j ),
+where
+zt = εt/
+q
+σ2 t .
+2.3 EWMA model
+The Exponentially Weighted Moving Average (EWMA) is a statistic that represents the average
+of a value of interest over a given time period of length T where the values of earlier inputs are
+given less weight in the EWMA value. By including a weighting factor λ, the EWMA’s sensitivity
+to drift can be adjusted. Our definition of the EWMA process originates from Roberts (1959) and
+is as follows:
+St = λSt−1 + (1 − λ)Yt,
+where t = 1, 2, ..., T; Yt is the point observation at time t, and St is the weighted average of interest
+a time t. By the definition above, we can determine the EWMA process’s “depth,” that is, how
+much past observations impact St, by adjusting λ ∈ (0, 1], where the larger λ is, the more weight
+past observations have.
+2.4 Mean Hybrid GARCH model
+The estimated parameters of the above three models (GARCH, EGARCH, EWMA) will be fed
+into an LSTM to enrich the information, further improving the prediction accuracy of our model.
+First, we present the first prediction method, namely the Mean Hybrid GARCH (M-H-GARCH)
+model, based on the work of Kim and Won (2018) as follows,
+Yt = µt + εt,
+εt = σtηt, εt | Ft−1 ∼ N
+ 
+0, σ2 t  ,
+σt = G(Θ, Ft−1),
+(1)
+where Yt is the financial series, e.g., log-returns; ηt
+i.i.d.
+∼ N (0, 1); µt is the mean part of Yt, which
+is approximated by the mean of historical observations ˆµt := 1 p Pp i=1 Yt−i, where p determines the
+4
+number of previous observations to be averaged; εt := σt · ηt represents the error term from the
+mean at a given time t; Θ represents all parameters from GARCH, EGARCH and EWMA models;
+G(·) is the LSTM model which takes the hidden information implied by parameter set Θ and other
+explanatory variables generated from Ft−1 as input and returns an estimation of the conditional
+variance as its output.
+Notably, Hansen and Lunde (2005) provided compelling evidence that the GARCH(1,1) model
+cannot be beaten by variants with other order structures. Moreover, the GARCH(1,1) model
+is the parsimonious version of the ARCH(∞) model. Therefore, for simplicity, we consider the
+GARCH(1,1) model, which is the most popular GARCH-type model to fit the volatility of financial
+time series, in our hybrid modeling. In addition to the GARCH(1,1) model, the hybrid model
+also incorporates the estimated parameters from EGARCH(1,1) and EWMA models, since they
+have different advantages in modeling volatility; see Kim and Won (2018) for more discussion
+on this point. In short, the hybrid model attempts to leverage all the high-level information
+implied by the parameters of GARCH, EGARCH, and EWMA models. As a result, we define
+Θ :=
+ 
+α(G) 0 , α(G) 1 , β(G) 1 , α(E) 0 , α(E) 1 , γ(E) 1 , θ(E) 1 , λ(W )⊤ , where the superscripts G, E and W refer to
+the GARCH(1,1), EGARCH(1,1) and EWMA processes, respectively, as defined in Sections 2.1
+to 2.3. For the LSTM model, we utilize the basic three-gate structure with an input gate, a forget
+gate and an output gate. Our LSTM is constructed as
+gt = f s(Ug xt + Wg ht−1 + bg ),
+it = f s(Uixt + Wiht−1 + bi),
+˜ct = tanh(Ucxt + Wcht−1 + bc),
+ct = gt ⊙ ct−1 + it ⊙ ˜ct,
+ot = f s(Uoxt + Woht−1 + bo),
+ht = ot ⊙ tanh(ct),
+(2)
+where it, gt and ot denote the input, forget and output gates, respectively; ct is the memory
+cell and ht the hidden state of the LSTM at time t; and the input xt is the time-indexed vector
+Θt =
+ 
+α(G) 0,t , α(G) 1,t , β(G) 1,t , α(E) 0,t , α(E) 1,t , γ(E) 1,t , θ(E) 1,t , λ(W ) t ⊤ . In the equations above, U· and W· are weight
+matrices and b· are bias vectors for · ∈ {g, i, c, o}; f s(z) = 1/(1 + e−z ) is the sigmoid activation
+function; f s(·) and tanh(·) are applied element-wise; and ⊙ denotes the element-wise product.
+To estimate the LSTM that is deployed to approximate the conditional variance σ 2 t , we use
+mean squared error (MSE) as the loss criterion. However, the true σ2 t is never observed in practice.
+We only observe the financial time series {Yt}. To incorporate the model setting (1), we define our
+MSE loss criterion to train LSTM as follows:
+M SE = 1 T
+TX
+t=1
+(ˆσt − (
+p
+(π/2) · |ˆεt|))2, (3)
+where T is the total number of predictions; ˆσt is the predicted volatility at time t by our M-H-
+GARCH model; ˆεt := Yt − ˆµt such that ˆε2 t is an asymptotically unbiased estimator of σ2 t provided
+ˆµt converges to the true µt in probability under the ergodic condition of the financial time series
+{Yt}.
+To understand the form of the loss criterion in (3), we start with a simple fact, i.e., if Z ∼
+N (0, 1), then the expectation of |Z| is E(|Z|) =
+q
+2
+π . Moreover, by the model setting εt = σtηt is
+5
+assumed to be N
+ 
+0, σ2 t  given historical information Ft−1. Thus, E   |εt| Ft−1  = σt q 2 π . Equiv-
+alently, E
+p π
+2 |εt|
+Ft−1  = σt. In other words, p π 2 |εt| is an unbiased proxy for the latent
+conditional standard deviation σt. Since p π 2 |ˆεt| converges to p π 2 |εt| asymptotically with a con-
+sistent model estimation, we take the loss criterion (3) to train the LSTM empirically so that it
+can estimate the conditional variance.
+2.5 ARMA Hybrid GARCH model
+Instead of modeling the mean part of the financial series Yt by µt, which is simply the average
+value of the previous values, we further propose the ARMA-Hybrid-GARCH (ARMA-H-GARCH)
+model:
+Yt = c +
+LX
+l=1
+ϕl · Yt−l +
+KX
+k=1
+ψkεt−k + εt,
+εt = σtηt, εt | Ft−1 ∼ N
+ 
+0, σ2 t  ,
+σt = G(Θ, Ft−1).
+(4)
+One difference between model setting (1) and (4) hinges on the mean part of Yt series. The
+ARMA-H-GARCH model takes advantage of the ARMA model to regularize the mean part of the
+financial series. Besides, unlike the M-H-GARCH model, in which the parameters of the mean
+and variance parts are estimated separately by the sample mean and the LSTM, we propose a
+maximum likelihood estimation algorithm to estimate all parameters in the ARMA-H-GARCH
+model simultaneously.
+More specifically, let Π = (c, ϕ1, . . . , ϕL, ψ1, . . . , ψK ) denote the ARMA parameters. Our hybrid
+model is
+Yt = µt(Π) + εt, (5)
+where µt(Π) := c + PL l=1 ϕlYt−l + PK k=1 ψkεt−k and εt | Ft−1 ∼ N   0, σ2 t  , σ2 t = G(Θ, Ft−1).
+Moreover, µt(Π) is actually the conditional mean of Yt given the historical information Ft−1,
+i.e., µt(Π) = E (Yt | Ft−1). Thus, under the Gaussian distribution assumption, we can get the
+conditional density of Yt given Ft−1 as follows:
+f (Yt | Ft−1; Π, Θ) = 1p 2πσ2 t (Π, Θ) exp
+
+− [Yt − µt(Π)]2
+2σ2 t (Π, Θ)
+!
+,
+where σ2 t (Π, Θ) is the volatility at the time index t which depends on all model parameters. By the
+chain rule of conditional probability, we have that the joint density of {Yt0 , . . . , YT } is equivalent
+to
+f (Yt0 , . . . , YT | Ft0 −1; Π, Θ) =
+TY
+t=t0
+f (Yt | Ft−1; Π, Θ) , (6)
+where t0 = max(L, K)+1 and we treat the initial values {Y1, . . . , Yt0 −1} as fixed. More specifically,
+the conditional likelihood is applied here. Taking the logarithm of both sides of (6) and dropping
+the constant irrelevant terms, the negative log-likelihood is
+L(Π, Θ) = 1 2N
+TX
+t=t0
+
+log σ2 t (Π, Θ) + εt(Π)2 σ2 t (Π, Θ)  , (7)
+6
+where N := T − t0 + 1; εt := εt(Π) = Yt − µt(Π) based on the ARMA structure of the mean part,
+where the εt can be seen as the residual, which also depends on Π. Subsequently, the LSTM model
+and the ARMA model can be trained together by minimizing the negative log-likelihood function
+(7). The training procedure can be achieved by a specific gradient descent algorithm easily.
+3 Bootstrap prediction interval
+In this section, we introduce the algorithms to build the bootstrap prediction interval with M-
+H-GARCH and ARMA-H-GARCH models. To implement the algorithms, we introduce two ap-
+proaches based on normal errors and the empirical distribution of residuals, respectively. Then,
+we propose a systematic way inspired by conformal prediction to widen the interval length so that
+the notorious undercoverage issue of bootstrap prediction intervals can be mitigated.
+3.1 M-H-GARCH approach
+We first give the forward bootstrap prediction interval of the M-H-GARCH model. Suppose we
+have obtained the trained LSTM model, bG(·); and ˆµT , which is the estimated conditional mean of
+Yt over a window of p. In practice, the value of p is a tuning parameter that can be selected by
+cross-validation. Our goal is to make point predictions and prediction intervals of future realized
+volatility, which is defined as follows:
+RVT,H =
+vuut 1
+H
+HX
+h=1
+ 
+YT +h − Y T,H
+2
+; (8)
+where Y T,H is the average of the log-returns from time T + 1 to T + H and H is the forecast
+horizon (number of future trading days). The detailed algorithm to make point predictions and
+prediction intervals according to the M-H-GARCH approach is illustrated in Algorithm 1. The
+hyperparameters for the training procedure are given in Appendix A.
+7
+Algorithm 1 The bootstrap prediction interval for M-H-GARCH model
+Require: the initial LSTM Model G(·); the observed data series {Y1, Y2, ..., YT }; the hyperparam-
+eters for training.
+1: Get the estimated LSTM model bG(·).
+2: for h in 1 : H do
+3: Generate η∗ T +h from Fη = N (0, 1) and compute ε∗ T +h = ˆσT +h · η∗ T +h, where ˆσT +h is
+bG( bΘ, FT +h−1).
+4: Derive the estimator ˆµT +h by 1 p Pp i=1 YT +h−i.
+5: Compute Y ∗ T +h := ˆµT +h + ε∗ T +h.
+6: Take YT +h as Y ∗ T +h and then redefine the corresponding FT +h.
+7: end for
+8: Repeat the above for loop M times, so we can get M number of H step ahead pseudo series.
+Denote them as {Y (m) T +1, . . . , Y (m) T +H }M m=1.
+9: Compute realized volatility based on M number of H step ahead pseudo series. As a result,
+we can obtain {dRV (m) T,H }M m=1.
+10: Determine the empirical distribution of {dRV (m) T,H }M m=1 as bFRV .
+11: Return The optimal L2 prediction of H-step ahead realized volatility as the mean of bFRV .
+The corresponding (1 − α)-PI as the [ˆqα/2, ˆq1−α/2], where ˆqα/2 and ˆq1−α/2 are α/2 and 1 − α/2
+lower quantiles of bFRV .
+3.2 ARMA-H-GARCH approach
+Rather than approximating the mean part of the time series by the sample mean over a latest
+information window, the ARMA-H-GARCH model estimates the conditional mean of Yt given
+historical information by an ARMA model. As illustrated in Section 2.5, all parameters involved
+in the ARMA-H-GARCH model can be estimated by maximizing the joint likelihood function.
+Similar to Algorithm 1, we propose our Algorithm 2 to make point predictions and prediction
+intervals in the ARMA-H-GARCH approach.
+Algorithm 2 The bootstrap prediction interval for ARMA-H-GARCH model
+Require: the initial LSTM Model G(·); the observed data series {Y1, Y2, ..., YT }; the hyperparam-
+eters for training.
+1: Get estimated LSTM model bG(·) and ARMA model parameters ˆα jointly, through minimizing
+the likelihood (7).
+2: for h in 1 : H do
+3: Generate η∗ T +h from Fη ∼ N (0, 1) and compute ε∗ T +h = ˆσT +h · η∗ T +h, where ˆσT +h is
+bG( bΘ, FT +h−1).
+4: Derive the estimator ˆµT +h = ˆc + PL l=1 ˆϕl · YT +h−l + PK k=1 ˆψk · ε∗ T +h−k. For k ≥ h, ε∗ T +h−k
+is taken as the estimated ˆεT +h−k under the ARMA-H-GARCH setting, i.e., the in-sample fit.
+5: Compute Y ∗ T +h := ˆµT +h + ε∗ T +h.
+6: Take YT +h as Y ∗ T +h and then redefine the corresponding FT +h.
+7: end for
+8: Repeat the above for loops similar to steps 8 to 11 in Algorithm 1 to determine L2 point
+prediction of H-step-ahead realized volatility and build the corresponding prediction interval.
+Remark 3.1 (Make the empirical distribution of η). In our model setting (1) and (4), we assume
+ηt ∼ N (0, 1). However, it is well known that the distribution of financial series typically possesses
+8
+a fatter tail than normal. As a result, the variance of the future volatility may be underestimated if
+η∗ T +h are generated from N (0, 1). Here, we provide an alternative approach to generate η∗ T +h from
+its own empirical distribution. In particular,
+• For the M-H-GARCH model, we can define bFη as the empirical distribution of { Y1 −ˆµ1 ˆσ1 −
+¯c, . . . , YT −ˆµT ˆσT − ¯c}, where {ˆµt} and {ˆσt} are estimated mean and variance at time index t,
+respectively, for t = 1, . . . , T; ¯c is the sample mean of { Y1 −ˆµ1 ˆσ1 , . . . , YT −ˆµT ˆσT }. More specifically,
+ˆµt and ˆσt are estimated by a rolling mean and an LSTM, respectively. To simplify the
+notation, we assume the initial observations before time index 1 exist.
+• For the ARMA-H-GARCH model, we can define bFη as the empirical distribution of { Y1 −ˆµ1 ( ˆΠ) ˆσ1 −
+¯c, . . . , YT −ˆµT ( ˆΠ) ˆσT − ¯c}, where {ˆµt( ˆΠ)} and {ˆσt} are estimated mean and variance at time index
+t, respectively, for t = 1, . . . , T; ¯c is the sample mean of { Y1 −ˆµ1 ( ˆΠ) ˆσ1 , . . . , YT −ˆµT ( ˆΠ) ˆσT }. More
+specifically, ˆµt( ˆΠ) is the mean function based on the ARMA structure defined in (5) with es-
+timated parameter vector ˆΠ. To simplify the notation, we still assume the initial observations
+before time index 1 exist.
+Then, we can get two variants of the Algorithms 1 and 2 by generating η∗ T +h from bFη instead of
+N (0, 1). The performance of these variants will be compared in Section 4. Moreover, a systematic
+way to extend our prediction interval to improve the empirical coverage rate will be provided in
+Section 3.3. Lastly, we should mention that the estimation procedure of ARMA-H-GARCH is still
+based on the likelihood function from normal. Thus, the application of bFη stands for a way to
+mimic the fat tail of financial series distribution.
+3.3 Conformal extension on interval
+It is well known that prediction intervals suffer from undercoverage in practice, especially in finite-
+sample settings. In particular, Politis (2015) provided a perspective to understand this undercover-
+age issue, i.e., the standard prediction interval does not capture the model’s estimation variability;
+see the following Remark 3.2 to understand the effects of model estimation variability on influencing
+the coverage rate of prediction intervals.
+Remark 3.2. Suppose we consider the linear regression model Yi = X T i β + ϵi with n samples.
+By the least squares technique, we can get the estimation of the parameter coefficient ˆβ. Given
+a new predictor xf , we have the predictive root Yf − bYf := xT f β + ϵf − xT f ˆβ = ϵf + ef , where
+ef := xT f β − xT f ˆβ stands for the estimation error. Under standard conditions and a well-specified
+model, E(xT f ˆβ) = xT f β and V ar(xT f ˆβ) = O(1/n), as n → ∞. Since ef p → 0, it is tempting to apply
+[ bYf + bF −1 ϵ,α/2, bYf + bF −1 ϵ,1−α/2] (9)
+as a PI, where bF −1 ϵ,α/2 and bF −1 ϵ,1−α/2 are α/2 and 1 − α/2 quantiles of bFϵ, which is the empirical
+distribution of residuals {ri}n i=1 from regression. In other words, PI (9) treats ef as 0 and typi-
+cally results in undercoverage. However, by Chebyshev’s inequality, ef = Op(1/√n), which is not
+negligible with n being small. Thus, it is important to take the model estimation variability into
+account when the prediction interval is built.
+There are multiple ways to improve the coverage rate of prediction intervals. For example,
+Politis (2015) defined a so-called pertinent prediction interval (PPI) to capture the model esti-
+mation variability by approximating the distribution of the predictive root with the bootstrap
+9
+technique; see more explanation and applications of this pertinent prediction interval in Wang
+and Politis (2026); Wu and Politis (2024b); Wu (2026). However, the procedure to build the PPI
+requires the repetition of the training procedure with the bootstrap data multiple times, which is
+computationally heavy when the complex model estimator is adopted. On the other hand, con-
+formal prediction, which can guarantee the marginal coverage, introduced by Vovk et al. (2005),
+has become increasingly popular recently; see variants of conformal prediction methods from Cher-
+nozhukov et al. (2021); Sesia and Romano (2021); Romano et al. (2019); Lei et al. (2018), for other
+examples. Besides, we should mention that the PPI and conformal prediction can be related; see
+that one specific type of PPI shares a common intermediate step of making the special conformal
+prediction in Chernozhukov et al. (2021); Dai et al. (2026).
+In our case, since the complex LSTM is used for our prediction problems, we propose a system-
+atic way inspired by the conformal prediction idea to extend the length of the prediction intervals
+returned by Algorithms 1 and 2. In short, we use a recursive prediction scheme to compute the
+conformal score based on the miscoverage error in the recursive prediction interval. Then, the lower
+bound and upper bound of the targeted prediction interval are adjusted with the conformal score.
+The concrete algorithm to perform this so-called conformal extension for our prediction interval is
+provided in Algorithm 3.
+Algorithm 3 Conformal extension of prediction intervals returned by Algorithms 1 and 2
+Require: The requirements of Algorithm 1 or Algorithm 2; the initial window size ϖ to compute
+the conformal score.
+1: Perform the necessary estimations on unknown parameters in Algorithm 1 or Algorithm 2 with
+all data.
+2: Define J := T − H − ϖ + 1, i.e., the total number of conformal scores.
+3: for j in 1 : J do
+4: Take data {Y1, . . . , Yϖ+j−1} to build a prediction interval for RVϖ+j−1,H according to
+either Algorithm 1 or Algorithm 2 with model estimation from Step 1. Denote the lower and
+upper bounds of the prediction interval as Lr ϖ+j−1 and U r ϖ+j−1, respectively. The superscript
+“r” means the recursive prediction scheme is taken.
+5: Compute the conformal score at the (ϖ + j − 1)-th recursive prediction as
+Sϖ+j−1 :=
+max
+n
+Lr ϖ+j−1 − dRV ϖ+j−1,H , dRV ϖ+j−1,H − U r ϖ+j−1, 0 o
+U r ϖ+j−1 − Lr ϖ+j−1 , (10)
+where dRV ϖ+j−1,H is computed from the realized time series.
+6: end for
+7: Get J conformal scores {Sϖ , . . . , ST −H }.
+8: Apply Algorithm 1 or Algorithm 2 to build the prediction interval for RVT,H with data
+{Y1, Y2, . . . , YT }. Denote the corresponding lower and upper bounds as LT and UT , respec-
+tively.
+9: Make the conformal extension prediction interval as
+[LT − bqS,1−αWT , UT + bqS,1−αWT ] , (11)
+where WT := UT − LT and bqS,1−α is the 1 − α empirical quantile of {Sϖ , . . . , ST −H }.
+Since the conformal score defined in (10) of Algorithm 3 is always non-negative, the prediction
+10
+interval (11) is always at least as wide as the initial prediction interval returned by Algorithm 1
+or Algorithm 2. Thus, Algorithm 3 stands for a systematic way to extend the prediction interval.
+In the simulation studies, we use the window size ϖ = 200 for T = 250 and ϖ = 400 for T = 500.
+In addition, since RVT,H ≥ 0, we truncate the conformal extension prediction interval from below
+at zero. However, we should mention that our prediction interval (11) does not have the typical
+marginal coverage guarantee property of the conformal prediction interval since the exchangeability
+of conformal scores {Sϖ , . . . , ST −H } is not satisfied. In fact, these conformal scores are correlated
+to each other since the calculation of dRV ϖ+j−1,H for j = 1, . . . , J involves overlapping of observed
+series. Also, the estimated model used to do recursive forecasting is trained with the whole data
+set. A stricter way to compute the conformal score is to separate each conformal score by H time
+index, i.e., we only compute {Sϖ+(k−1)H } for k = 1, . . . ,
+ T −ϖ
+H
+
+. In other words, the dependence
+between the adjacent conformal scores is partially dampened by the separation. Moreover, we
+should retrain the model only with data from the recursively expanding window. However, this
+refitting procedure unavoidably increases the computational burden.
+Furthermore, if {Sϖ+(k−1)H , Sϖ+H , . . . , ST −H } are strictly stationary and ergodic under nec-
+essary conditions for time series and model estimator, it is possible to show that the prediction
+interval (11) satisfies the marginal coverage guarantee asymptotically, i.e.,
+P(RVT,H ∈ [LT − bqS,1−αWT , UT + bqS,1−αWT ]) → 1 − α,
+as T → ∞, ϖ → ∞ and
+ T −ϖ
+H
+
+→ ∞. We decide to postpone the theoretical analysis of the
+conformal extension prediction interval to future work. In this work, the performance of the
+prediction interval (11) will be evaluated by simulation and real data studies.
+4 Simulations
+For the M-H-GARCH method, the conditional mean is the rolling average over the most recent
+p observations. In practice, p is a tuning parameter whose value can be determined by cross-
+validation. In our simulation studies, we take p = {1, . . . , 5} to ensure the simulation is compre-
+hensive and report the optimal p according to the root mean squared error of the point predic-
+tions. For the ARMA-H-GARCH method, the orders (L, K) are selected per replication by AIC
+over L, K ≤ 5. The chosen order is then estimated using the conditional likelihood of Eq. (7)
+with t0 = max(L, K) + 1. For the naive LSTM method, the mean component is also taken as
+the rolling average, as in the M-H-GARCH model. This results in the difference between naive
+LSTM and M-H-GARCH models being due to the inputs of the models; see Appendix A for more
+implementation details of different methods.
+We assess each method by implementing Monte Carlo replication. For a given data-generating
+processandsamplesize T, onereplicationconsistsofsimulatinganindependentseries {Y1, . . . , YT +H },
+fittingeverymethodonthefirst T observations, generatingthepointprediction, constructinga 95%
+prediction interval for RVT,H as defined in Eq. (8), and recording whether that interval contains
+the realized value computed from the held-out continuation {YT +1, . . . , YT +H }. Three quantities
+are held fixed throughout:
+• T ∈ {250, 500}, the length of each simulated series (short data mimics one year of econometric
+data, long data two years);
+11
+• M = 2000, the number of bootstrap draws used to form a single prediction interval;
+• R = 500, the number of independent replications over which coverage and interval length are
+averaged.
+We consider two data-generating processes, which cover 4 scenerios in combination with the two
+sample sizes.
+Model-1 Standard GARCH(1,1) with Student-t errors and ARMA(1,1) mean structure
+Yt = 0.0002 + 0.5 Yt−1 + 0.3 εt−1 + εt,
+εt = σtηt, σ2 t = 0.00001 + 0.73 σ2 t−1 + 0.1 ε2 t−1,
+with {ηt} ∼ i.i.d. Student-t with five degrees of freedom, standardized to unit variance.
+Model-2 Time-varying GARCH(1,1) with Student-t errors and ARMA(1,1) mean structure
+Yt = 0.0002 + 0.5 Yt−1 + 0.3 εt−1 + εt,
+εt = σtηt, σ2 t = 0.00001 + β1,tσ2 t−1 + α1,tε2 t−1,
+Vt = t/T, α1,t = 0.1 − 0.05Vt; β1,t = 0.55 + 0.25Vt, for t = 1, . . . , T + H.
+with {ηt} ∼ i.i.d. Student-t with five degrees of freedom, standardized to unit variance; T =
+250 + H or 500 + H in our simulation cases; H = 5 and H = 20 represent one-week and one-
+month ahead predictions, respectively. All simulation series are generated with 500 discarded
+burn-in observations; see Appendix A for more details on the simulation procedure to guarantee
+reproducibility.
+We use these two models to challenge our methods when the model is misspecified. For Model-
+1, we take the t-distribution to mimic the heavy-tail distribution of the real financial data. For
+Model-2, we take the time-varying GARCH coefficients to mimic the dynamic situation in the real
+world. To simulate data from Model-1, we take initial values Y0 = 0.0004 and σ2 0 = 5.88 × 10−5. To
+simulate data from Model-2, we take initial values Y0 = 0.0004 and σ2 0 = 2.86 × 10−5. These values
+represent the unconditional mean and variance in Model-1 and Model-2 at t = 0, respectively.
+In order to calculate the average interval length and coverage, we write [ bL(r), bU (r) ] for the
+interval produced on the r-th replication of each method and RV (r) T,H for the realized value computed
+from that replication’s held-out continuation. The reported coverage and average interval length
+are thus
+bC1−α = 1 R
+RX
+r=1
+1
+n
+bL(r) ≤ RV (r) T,H ≤ bU (r)
+o
+, cW1−α = 1 R
+RX
+r=1
+
+bU (r) − bL(r)
+
+.
+The RMSE (root mean squared error), MAPE (mean absolute percentage error) and MDAE (me-
+dian absolute error) of the point prediction are computed from the same R replications in an
+analogous way.
+Throughout the study, we consider five methods: (1) M-H-GARCH; (2) ARMA-H-GARCH;
+(3) GARCH(1,1); (4) EGARCH(1,1); and (5) a naive LSTM. GARCH(1,1) and EGARCH(1,1) are
+determined by maximum likelihood estimation; the EWMA decay is estimated with initial value
+λ = 0.94. Both GARCH and EGARCH are estimated by Gaussian quasi-maximum likelihood with
+the arch package in Python. Prediction intervals based on methods (3)–(5) are constructed with
+12
+the same forward bootstrap as Algorithms 1 and 2. All forward bootstrap prediction intervals
+use M = 2000 bootstrap draws at the α = 0.05 level. For methods (1) and (2), we also provide
+the prediction intervals extended by conformal prediction and generating future η ∗ T +h from bFη , as
+defined in Remark 3.1. Thus, in total, we have 11 different prediction intervals to compare. For
+each method, we report (1) the root mean squared error (RMSE) of the point prediction; (2) the
+mean absolute percentage error (MAPE) of the point prediction; (3) the median absolute error
+(MDAE) of the point prediction; (4) the empirical coverage rate of the 95% prediction interval; and
+(5) the interval length. All these metrics are averaged over R = 500 replications. In addition, the
+sample standard deviations of metrics (1), (2), (4) and (5) over 500 replications are also provided.
+4.1 Simulation Results
+All simulation results are presented in Tables 1 to 4, where sample standard deviations over repli-
+cations are given in parentheses; best values, i.e., smallest for RMSE, MAPE and MDAE, closest
+to 0.95 for Coverage and shortest interval length are bold. From the results, we summarize several
+findings as follows:
+1. For point prediction, the ARMA-H-GARCH method dominates other methods. Generally
+speaking, it has the smallest RMSE, MAPE and MDAE for the two simulation models.
+Moreover, it always outperforms the naive LSTM method on point prediction. On the other
+hand, the M-H-GARCH method based on Kim and Won (2018) does not guarantee consis-
+tently superior performance over the naive LSTM method in point predictions. In short, the
+implication is two-fold: (1) using the estimates of variance and the parameters from classical
+models improves the accuracy of the LSTM’s realized volatility forecast; (2) using bootstrap
+prediction intervals, the ARMA mean structure is superior to a rolling mean estimate when
+estimating the mean of financial series. We also note that the naive LSTM method is beaten
+by GARCH(1,1) and EGARCH(1,1). This implies that the solely network-based method
+does not outperform the classical methods in some situations.
+2. For the prediction intervals, all optimal coverage rates come from our ARMA-H-GARCH or
+M-H-GARCH method. Moreover, all optimal coverage rates are obtained based on generating
+η∗ T +h from its empirical distribution bFη , which emphasizes the importance of mimicking the
+fat tail property of financial series as we mentioned in Remark 3.1. In addition, the conformal
+extension always makes the coverage rate larger than the variant without this modification,
+though the sacrifice is the wider prediction interval.
+13
+Table 1: Simulation of Model-1 with H = 5.
+Method η∗ T +h RMSE(×10−3 ) MAPE(%) MDAE(×10−3 ) Coverage Length(×10−3 )
+T = 250
+M-H-GARCH (p = 5) N (0, 1) 4.78 (3.22) 86.60 (104.87) 3.00 0.844 (0.363) 12.45 (5.22)
+ˆFη 0.850 (0.357) 13.61 (5.89)
++ conformal N (0, 1) 0.900 (0.300) 14.49 (9.56)
++ conformal ˆFη 0.906 (0.292) 15.21 (9.56)
+ARMA-H-GARCH N (0, 1) 3.79 (2.59) 64.15 (77.83) 2.17 0.884 (0.321) 10.66 (2.36)
+ˆFη 0.914 (0.281) 11.66 (2.90)
++ conformal N (0, 1) 0.922 (0.268) 12.29 (4.52)
++ conformal ˆFη 0.930 (0.255) 12.81 (4.57)
+GARCH(1,1) N (0, 1) 4.78 (3.21) 90.83 (107.92) 3.22 0.904 (0.295) 16.84 (8.25)
+EGARCH(1,1) N (0, 1) 4.44 (2.76) 89.55 (103.53) 3.16 0.910 (0.286) 15.68 (4.42)
+naive LSTM (p = 1) N (0, 1) 4.39 (3.09) 73.52 (91.24) 2.46 0.922 (0.268) 14.36 (7.32)
+T = 500
+M-H-GARCH (p = 1) N (0, 1) 3.62 (2.19) 72.08 (84.27) 2.60 0.934 (0.249) 15.21 (4.79)
+ˆFη 0.950 (0.218) 17.11 (5.10)
++ conformal N (0, 1) 0.946 (0.226) 15.64 (4.87)
++ conformal ˆFη 0.954 (0.210) 17.31 (5.14)
+ARMA-H-GARCH N (0, 1) 3.32 (2.12) 61.37 (71.31) 2.20 0.902 (0.298) 10.75 (2.32)
+ˆFη 0.924 (0.265) 11.89 (2.50)
++ conformal N (0, 1) 0.946 (0.226) 12.35 (3.51)
++ conformal ˆFη 0.948 (0.222) 12.87 (3.34)
+GARCH(1,1) N (0, 1) 3.89 (2.16) 88.08 (103.35) 2.98 0.900 (0.300) 16.29 (4.84)
+EGARCH(1,1) N (0, 1) 3.87 (2.11) 88.65 (102.82) 3.11 0.900 (0.300) 15.53 (2.96)
+naive LSTM (p = 1) N (0, 1) 3.72 (2.31) 73.48 (92.41) 2.54 0.928 (0.259) 14.93 (5.98)
+Table 2: Simulation of Model-2 with H = 5.
+Method η∗ T +h RMSE(×10−3 ) MAPE(%) MDAE(×10−3 ) Coverage Length(×10−3 )
+T = 250
+M-H-GARCH (p = 1) N (0, 1) 3.77 (2.63) 56.50 (70.68) 2.08 0.926 (0.262) 13.15 (5.33)
+ˆFη 0.950 (0.218) 14.71 (5.62)
++ conformal N (0, 1) 0.932 (0.252) 13.76 (5.73)
++ conformal ˆFη 0.954 (0.210) 14.92 (5.73)
+ARMA-H-GARCH N (0, 1) 3.51 (2.52) 47.84 (59.48) 1.84 0.884 (0.321) 9.22 (1.81)
+ˆFη 0.904 (0.295) 10.09 (2.10)
++ conformal N (0, 1) 0.916 (0.278) 10.98 (3.74)
++ conformal ˆFη 0.924 (0.265) 11.22 (3.35)
+GARCH(1,1) N (0, 1) 3.73 (2.54) 63.19 (85.40) 2.15 0.934 (0.249) 14.17 (5.46)
+EGARCH(1,1) N (0, 1) 3.71 (2.51) 63.36 (86.27) 2.28 0.934 (0.249) 13.15 (3.19)
+naive LSTM (p = 5) N (0, 1) 3.67 (2.54) 57.85 (82.76) 2.06 0.872 (0.334) 10.23 (4.46)
+T = 500
+M-H-GARCH (p = 1) N (0, 1) 4.01 (2.80) 54.54 (66.47) 2.07 0.924 (0.265) 13.92 (5.20)
+ˆFη 0.944 (0.230) 15.89 (5.82)
++ conformal N (0, 1) 0.930 (0.255) 14.63 (6.06)
++ conformal ˆFη 0.950 (0.218) 16.23 (6.49)
+ARMA-H-GARCH N (0, 1) 3.90 (2.75) 47.98 (54.04) 2.06 0.864 (0.343) 9.61 (1.85)
+ˆFη 0.890 (0.313) 10.60 (1.95)
++ conformal N (0, 1) 0.900 (0.300) 12.02 (4.20)
++ conformal ˆFη 0.908 (0.289) 12.17 (3.90)
+GARCH(1,1) N (0, 1) 3.81 (2.49) 59.86 (71.92) 2.41 0.936 (0.245) 14.89 (5.54)
+EGARCH(1,1) N (0, 1) 3.74 (2.41) 58.70 (69.65) 2.39 0.936 (0.245) 13.54 (2.84)
+naive LSTM (p = 1) N (0, 1) 4.07 (2.83) 53.65 (66.52) 2.25 0.910 (0.286) 13.60 (6.84)
+14
+Table 3: Simulation of Model-1 with H = 20.
+Method η∗ T +h RMSE(×10−3 ) MAPE(%) MDAE(×10−3 ) Coverage Length(×10−3 )
+T = 250
+M-H-GARCH (p = 5) N (0, 1) 5.75 (4.08) 53.45 (53.08) 3.30 0.798 (0.402) 14.80 (6.77)
+ˆFη 0.822 (0.383) 15.97 (7.85)
++ conformal N (0, 1) 0.842 (0.365) 16.03 (7.32)
++ conformal ˆFη 0.856 (0.351) 17.05 (8.31)
+ARMA-H-GARCH N (0, 1) 3.97 (2.85) 33.31 (28.83) 2.11 0.802 (0.399) 8.79 (2.40)
+ˆFη 0.860 (0.347) 10.00 (3.18)
++ conformal N (0, 1) 0.864 (0.343) 10.05 (4.02)
++ conformal ˆFη 0.882 (0.323) 10.77 (4.08)
+GARCH(1,1) N (0, 1) 4.34 (3.18) 37.06 (34.12) 2.31 0.880 (0.325) 13.89 (8.26)
+EGARCH(1,1) N (0, 1) 4.05 (2.90) 35.58 (32.65) 2.21 0.858 (0.349) 11.00 (3.97)
+naive LSTM (p = 5) N (0, 1) 5.18 (3.69) 47.33 (47.48) 2.89 0.784 (0.412) 14.51 (9.77)
+T = 500
+M-H-GARCH (p = 5) N (0, 1) 4.82 (2.91) 52.62 (49.86) 3.40 0.854 (0.353) 16.76 (6.34)
+ˆFη 0.872 (0.334) 17.65 (6.29)
++ conformal N (0, 1) 0.894 (0.308) 18.01 (6.58)
++ conformal ˆFη 0.906 (0.292) 18.64 (6.48)
+ARMA-H-GARCH N (0, 1) 3.29 (2.25) 29.89 (29.03) 1.87 0.864 (0.343) 8.93 (1.81)
+ˆFη 0.910 (0.286) 10.42 (2.23)
++ conformal N (0, 1) 0.910 (0.286) 10.69 (3.81)
++ conformal ˆFη 0.928 (0.259) 11.53 (3.62)
+GARCH(1,1) N (0, 1) 3.39 (2.20) 33.65 (32.64) 2.24 0.906 (0.292) 12.90 (4.00)
+EGARCH(1,1) N (0, 1) 3.33 (2.18) 32.90 (32.05) 2.10 0.890 (0.313) 10.56 (1.98)
+naive LSTM (p = 5) N (0, 1) 4.73 (3.04) 48.94 (48.12) 2.90 0.844 (0.363) 17.34 (9.79)
+Table 4: Simulation of Model-2 with H = 20.
+Method η∗ T +h RMSE(×10−3 ) MAPE(%) MDAE(×10−3 ) Coverage Length(×10−3 )
+T = 250
+M-H-GARCH (p = 5) N (0, 1) 4.42 (3.07) 38.09 (38.80) 2.39 0.882 (0.323) 12.25 (5.04)
+ˆFη 0.898 (0.303) 13.12 (5.47)
++ conformal N (0, 1) 0.904 (0.295) 13.00 (5.57)
++ conformal ˆFη 0.912 (0.284) 13.72 (5.89)
+ARMA-H-GARCH N (0, 1) 3.67 (2.67) 25.94 (22.73) 1.70 0.792 (0.406) 7.30 (1.54)
+ˆFη 0.844 (0.363) 8.37 (2.12)
++ conformal N (0, 1) 0.824 (0.381) 8.43 (2.93)
++ conformal ˆFη 0.858 (0.349) 9.11 (2.84)
+GARCH(1,1) N (0, 1) 3.62 (2.61) 26.39 (23.23) 1.78 0.894 (0.308) 10.99 (4.86)
+EGARCH(1,1) N (0, 1) 3.59 (2.61) 25.74 (22.57) 1.70 0.870 (0.337) 8.80 (2.39)
+naive LSTM (p = 5) N (0, 1) 3.90 (2.81) 30.32 (30.30) 1.84 0.850 (0.357) 10.78 (7.12)
+T = 500
+M-H-GARCH (p = 5) N (0, 1) 5.31 (4.03) 39.72 (39.34) 2.63 0.902 (0.298) 14.17 (5.41)
+ˆFη 0.922 (0.268) 15.27 (5.88)
++ conformal N (0, 1) 0.928 (0.259) 15.09 (6.09)
++ conformal ˆFη 0.942 (0.234) 15.88 (6.17)
+ARMA-H-GARCH N (0, 1) 4.87 (3.98) 26.68 (19.97) 1.94 0.804 (0.397) 7.74 (1.61)
+ˆFη 0.864 (0.343) 9.22 (2.58)
++ conformal N (0, 1) 0.858 (0.349) 10.11 (4.79)
++ conformal ˆFη 0.880 (0.325) 10.68 (4.42)
+GARCH(1,1) N (0, 1) 4.75 (3.94) 25.65 (19.97) 1.79 0.922 (0.268) 11.10 (3.92)
+EGARCH(1,1) N (0, 1) 4.81 (3.99) 25.49 (19.60) 1.83 0.868 (0.339) 8.86 (1.86)
+naive LSTM (p = 5) N (0, 1) 5.29 (4.15) 36.04 (37.64) 2.30 0.892 (0.311) 14.40 (9.30)
+15
+5 Real-data analysis
+Beyondthesimulations, weconsidermultiplerealdatasetstocomparethedifferentmethodsapplied
+in the simulation section. The closing prices of four U.S. stock indices, i.e., S&P 500, the NASDAQ
+Composite, the NYSE Composite, and the Dow Jones Industrial Average, from January 2, 2020
+to December 31, 2025 are downloaded from Yahoo Finance. In total, we have 1508 closing prices
+providing 1507 log-returns, which are defined as yt = log(Pt/Pt−1),1 on the same trading dates for
+all four series. This time period was selected because it includes the COVID-19 crash of March
+2020, whenallfourindiceshadtheirlargestone-dayfall(logreturnsof −12.6%to −13.8%onMarch
+16, 2020), the 2022 market decline and the tariff-related swings of April 2025. The log-returns for
+four series are plotted in Figure 1. By looking at the graphs, it is clear that volatility clustering
+happens in early 2020, throughout 2022, and April 2025. These volatile series are deployed to
+challenge our methods on point predictions and constructing meaningful prediction intervals.
+−10
+0
+10
+COVID-19 crash 2022 decline April 2025 tariffs
+S&P 500
+−10
+0
+10
+NASDAQ Composite
+−10
+0
+10
+NYSE Composite
+2020 2021 2022 2023 2024 2025 2026
+−10
+0
+10
+Dow Jones Industrial Average
+Daily log return (%)
+Figure 1: Log-returns of four real series from January 2, 2020 to December 31, 2025.
+To evaluate the performance of different methods, we take a rolling window prediction with
+window sizes of 250 (1-year) and 500 (2-year) to forecast H = 5 and H = 20 step-ahead realized
+volatility defined in Eq. (8). More specifically, we do 1238 rolling window predictions per series
+1Pt represents the closing price at the time index t
+16
+for T = 250 window size and 988 predictions for T = 500 window size. Since we have two rolling
+window sizes (250/500), and two prediction horizons (5/20), we have 16 prediction scenarios in
+total for 4 real series. For each prediction scenario, we compute RMSE, MAPE and MDAE for all
+point predictions over the rolling-window predictions. Since RMSE, MAPE and MDAE differ in
+scale across scenarios, we report the relative performance of different methods to the benchmark
+GARCH(1,1). More specifically, for a metric with value mk,s from method k in scenario s, the
+relative value of method k is defined as the geometric mean exp{ 1 16 P16 s=1 log(mk,s/mGARCH,s)};
+where mGARCH,s is the metric from the GARCH method in scenario s. Particularly, a relative value
+below 1 means that the corresponding metric is smaller than that of GARCH(1,1) on average over
+the 16 scenarios, and GARCH(1,1) itself has a value of 1. All relative values for RMSE, MAPE
+and MDAE are denoted by Rel-RMSE, Rel-MAPE and Rel-MDAE, respectively; see Table 5 for
+details.
+Besides the point prediction metrics, we also summarize the Mean-coverage as a proportion
+of the 95% prediction interval that contains the future realized volatility over all 16 prediction
+scenarios. Also, we consider |Cov − 0.95|, which is the average distance between an interval’s
+coverage and the 0.95 target over all 16 scenarios. In addition, we give the metric Min-coverage,
+which is the interval’s lowest empirical coverage across the 16 scenarios. Since the interval length
+is scale dependent, the relative values, namely Rel-length, of different methods are also provided
+against the benchmark GARCH(1,1) method; see Table 6 for details.
+All in all, from the point prediction perspective, the ARMA-H-GARCH method dominates
+other variants. From the coverage of various prediction intervals, the prediction interval from the
+M-H-GARCHmethodwithconformalextensionand η∗ T +h generatedfrom ˆFη generallyoutperforms
+other variants.
+Integrating the simulation and real data results, we would recommend the ARMA-H-GARCH
+method for the point prediction tasks and the prediction interval based on M-H-GARCH with
+conformal extension and η∗ T +h generated from ˆFη to build the prediction intervals.
+Table 5: Relative performance of different methods compared to GARCH(1,1) on point predictions
+Method Rel-RMSE Rel-MAPE Rel-MDAE
+M-H-GARCH 1.111 1.192 1.158
+ARMA-H-GARCH 0.952 0.919 0.942
+GARCH(1,1) 1.000 1.000 1.000
+EGARCH(1,1) 0.956 0.923 0.942
+naive LSTM 1.394 1.718 1.747
+17
+Table 6: Relative performance of different methods compared to GARCH(1,1) on performance of
+prediction intervals.
+Method η∗ T +h Mean-coverage |Cov − 0.95| Min-coverage Rel-length
+M-H-GARCH N (0, 1) 0.911 0.039 0.876 1.341
+ˆFη 0.919 0.031 0.889 1.405
++ conformal N (0, 1) 0.920 0.030 0.891 1.390
++ conformal ˆFη 0.925 0.025 0.898 1.437
+ARMA-H-GARCH N (0, 1) 0.856 0.094 0.754 0.837
+ˆFη 0.877 0.073 0.779 0.907
++ conformal N (0, 1) 0.874 0.076 0.771 0.934
++ conformal ˆFη 0.886 0.064 0.787 0.972
+GARCH(1,1) N (0, 1) 0.885 0.065 0.793 1.000
+EGARCH(1,1) N (0, 1) 0.853 0.097 0.767 0.864
+naive LSTM N (0, 1) 0.856 0.094 0.782 1.784
+6 Conclusions
+In this work, we give concrete algorithms based on forward bootstrap construction to make point
+predictions and build prediction intervals for future realized volatility. In summary, the hybrid
+LSTM model with the additional information from the estimated variance and coefficients of clas-
+sical models has a better point prediction performance compared to naive LSTM and classical
+models. Moreover, improved by our two strategies, the resulting prediction interval has a good
+coverage on simulation and real data.
+However, it is clear that our prediction interval still undercovers future volatility even after
+being widened by conformal prediction. The reason for this is partially illustrated in Remark
+3.2, i.e., the estimation variability of our model is still not fully captured. A more conservative
+way to further relieve this undercoverage issue is making the so-called pertinent prediction inter-
+val by approximating the predictive root distribution with bootstrap. However, this procedure is
+computationally heavy due to the training procedure needing to be performed on each bootstrap
+data. Recently, Politis (2026) proposed a hybrid resampling scheme to construct pertinent predic-
+tion intervals in a computationally efficient way. A future extension of this work could leverage
+this hybrid resampling scheme to further improve the coverage of prediction intervals from the
+hybrid model. Also, the increasing availability of high-frequency financial data has spurred the
+development of new methods in financial economics. This high-frequency data analysis has wide
+application in financial economics; see Fan et al. (2012) for portfolio selection, Fan and Wang
+(2008) for instantaneous volatility estimation, and Russell and Engle (2010) for an analysis of the
+mechanisms through which prices reach equilibrium. It would be interesting to see how the hybrid
+models proposed in this work handle high-frequency data. Moreover, it is also intriguing to see
+how the hybrid model can take advantage of the high-frequency volatility models, e.g., parallel
+GARCH and realized GARCH models developed by Shephard and Sheppard (2010); Hansen et al.
+(2012).
+7 Acknowledgements
+There is no conflict of interest between the two authors. This work is partially supported by the
+Provost Fellowship of Loyola University Chicago.
+18
+References
+Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. Journal of
+Econometrics, 31(3):307–327.
+Chernozhukov, V., Wüthrich, K., and Zhu, Y. (2021). Distributional conformal prediction.
+Proceedings of the National Academy of Sciences, 118(48):e2107794118.
+Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. Mathematics of
+Control, Signals and Systems, 2(4):303–314.
+Dai, D., Wu, K., and Politis, D. N. (2026). Distributional conformal prediction for Markov pro-
+cesses. arXiv preprint arXiv:2605.24848.
+Engle, R. F. (1982). Autoregressive conditional heteroscedasticity with estimates of the variance
+of United Kingdom inflation. Econometrica, 50(4):987–1007.
+Fan, J., Li, Y., and Yu, K. (2012). Vast volatility matrix estimation using high-frequency data for
+portfolio selection. Journal of the American Statistical Association, 107(497):412–428.
+Fan, J. and Wang, Y. (2008). Spot volatility estimation for high-frequency data. Statistics and Its
+Interface, 1(2):279–288.
+Francq, C. and Zakoïan, J.-M. (2019). GARCH Models: Structure, Statistical Inference and
+Financial Applications. John Wiley & Sons, 2 edition.
+García-Medina, A.andAguayo-Moreno, E.(2024). LSTM–GARCHhybridmodelfortheprediction
+of volatility in cryptocurrency portfolios. Computational Economics, 63(4):1511–1542.
+Glosten, L. R., Jagannathan, R., and Runkle, D. E. (1993). On the relation between the ex-
+pected value and the volatility of the nominal excess return on stocks. The Journal of Finance,
+48(5):1779–1801.
+Hajizadeh, E., Seifi, A., Fazel Zarandi, M. H., and Turksen, I. B. (2012). A hybrid modeling ap-
+proach for forecasting the volatility of S&P 500 index return. Expert Systems with Applications,
+39(1):431–436.
+Hansen, P. R., Huang, Z., and Shek, H. H. (2012). Realized GARCH: A joint model for returns
+and realized measures of volatility. Journal of Applied Econometrics, 27(6):877–906.
+Hansen, P. R. and Lunde, A. (2005). A forecast comparison of volatility models: Does anything
+beat a GARCH(1,1)? Journal of Applied Econometrics, 20(7):873–889.
+Hochreiter, S. and Schmidhuber, J. (1997). Long short-term memory. Neural Computation,
+9(8):1735–1780.
+Hornik, K., Stinchcombe, M., and White, H. (1989). Multilayer feedforward networks are universal
+approximators. Neural Networks, 2(5):359–366.
+Kim, H. Y. and Won, C. H. (2018). Forecasting the volatility of stock price index: A hybrid
+modelintegratingLSTMwithmultipleGARCH-typemodels. ExpertSystemswithApplications,
+103:25–37.
+19
+Lei, J., G’Sell, M., Rinaldo, A., Tibshirani, R. J., and Wasserman, L. (2018). Distribution-free pre-
+dictive inference for regression. Journal of the American Statistical Association, 113(523):1094–
+1111.
+Longerstaey, J. and Spencer, M. (1996). RiskMetrics—technical document. Technical report,
+Morgan Guaranty Trust Company of New York, New York. 4th edition.
+Mandis, M., Baratti, R., Chebeir, J., Tronci, S., and Romagnoli, J. A. (2024). Exploring non-
+traditional LSTM architectures for modeling demethanizer column operations. Computers &
+Chemical Engineering, 183:108591.
+McCulloch, W. S. and Pitts, W. (1943). A logical calculus of the ideas immanent in nervous
+activity. The Bulletin of Mathematical Biophysics, 5(4):115–133.
+Moghar, A. and Hamiche, M. (2020). Stock market prediction using LSTM recurrent neural
+network. Procedia Computer Science, 170:1168–1173.
+Nelson, D. B. (1991). Conditional heteroskedasticity in asset returns: A new approach.
+Econometrica, 59(2):347–370.
+OSG (2006). OSPool.
+OSG (2015). Open Science Data Federation.
+Pan, L. and Politis, D. N. (2016). Bootstrap prediction intervals for linear, nonlinear and nonpara-
+metric autoregressions. Journal of Statistical Planning and Inference, 177:1–27.
+Politis, D. N. (2015). Model-Free Prediction and Regression: A Transformation-Based Approach
+to Inference. Frontiers in Probability and the Statistical Sciences. Springer, Cham.
+Politis, D. N. (2026). Pertinent prediction intervals in linear regression. Stats, 9(4):68.
+Politis, D. N. and Wu, K. (2023). Multi-step-ahead prediction intervals for nonparametric autore-
+gressions via bootstrap: Consistency, debiasing, and pertinence. Stats, 6(3):839–867.
+Pordes, R., Petravick, D., Kramer, B., Olson, D., Livny, M., Roy, A., Avery, P., Blackburn, K.,
+Wenaus, T., Würthwein, F., Foster, I., Gardner, R., Wilde, M., Blatecky, A., McGee, J., and
+Quick, R. (2007). The Open Science Grid. Journal of Physics: Conference Series, 78(1):012057.
+Roberts, S. W. (1959). Control chart tests based on geometric moving averages. Technometrics,
+1(3):239–250.
+Romano, Y., Patterson, E., and Candès, E. (2019). Conformalized quantile regression. Advances
+in Neural Information Processing Systems, 32.
+Russell, J. R. and Engle, R. F. (2010). Analysis of high-frequency data. In Aït-Sahalia, Y. and
+Hansen, L. P., editors, Handbook of Financial Econometrics: Tools and Techniques, pages 383–
+426. Elsevier.
+Sesia, M. and Romano, Y. (2021). Conformal prediction using conditional histograms. Advances
+in Neural Information Processing Systems, 34:6304–6315.
+20
+Sfiligoi, I., Bradley, D. C., Holzman, B., Mhashilkar, P., Padhi, S., and Würthwein, F. (2009).
+The pilot way to grid resources using glideinWMS. In 2009 WRI World Congress on Computer
+Science and Information Engineering, volume 2, pages 428–432. IEEE.
+Shephard, N. and Sheppard, K. (2010). Realising the future: Forecasting with high-frequency-
+based volatility (HEAVY) models. Journal of Applied Econometrics, 25(2):197–231.
+Vovk, V., Gammerman, A., and Shafer, G. (2005). Algorithmic Learning in a Random World.
+Springer, New York.
+Wang, Y. and Politis, D. N. (2026). Model-free bootstrap and conformal prediction in regression:
+Conditionality, conjecture testing, and pertinent prediction intervals. Journal of Nonparametric
+Statistics, 38(1):311–345.
+Wang, Y.-H. (2009). Nonlinear neural network forecasting model for stock index option price:
+Hybrid GJR–GARCH approach. Expert Systems with Applications, 36(1):564–570.
+Wang, Z. and Lu, X. (2024). COMEX copper futures volatility forecasting: Econometric models
+and deep learning. arXiv preprint arXiv:2409.08356.
+Wu, K. (2026). Prediction inference of time series with standard ReLU deep neural networks.
+arXiv preprint arXiv:2608.15362.
+Wu, K. and Politis, D. N. (2024a). Bootstrap prediction inference of nonlinear autoregressive
+models. Journal of Time Series Analysis, 45(5):800–822.
+Wu, K. and Politis, D. N. (2024b). Deep limit model-free prediction in regression. arXiv preprint
+arXiv:2408.09532.
+Yarotsky, D. (2018). Optimal approximation of continuous functions by very deep ReLU networks.
+In Proceedings of the 31st Conference on Learning Theory, volume 75 of Proceedings of Machine
+Learning Research, pages 639–649. PMLR.
+Yarotsky, D. and Zhevnerchuk, A. (2020). The phase diagram of approximation rates for deep
+neural networks. Advances in Neural Information Processing Systems, 33:13005–13015.
+Zhang, R., Liu, Y., and Sun, H. (2020). Physics-informed multi-LSTM networks for metamodeling
+of nonlinear structures. Computer Methods in Applied Mechanics and Engineering, 369:113226.
+A Implementation details
+In this section, we provide more implementation details and the training policies for various meth-
+ods. Every method involving a network (M-H-GARCH, ARMA-H-GARCH, and the naive LSTM)
+uses the same architecture: a single LSTM layer with 32 hidden units, a sequence length of 5, i.e.,
+the 5 most recent inputs, and the Adam optimizer with a learning rate of 10−3. The naive LSTM
+thus differs from the hybrids only in its inputs, which consist of the return series alone without
+the parameter block Θ or the fitted GARCH, EGARCH and EWMA variance series. For these
+variance series, to improve numerical stability, they are truncated to [10−12, 1] whenever they are
+updated along a bootstrap pseudo series {y∗ T +h}. The single LSTM layer structure has been taken
+from previous studies Kim and Won (2018); Hajizadeh et al. (2012); Wang (2009), etc.
+21
+All networks are trained by full-batch Adam, and the number of training epochs is chosen by
+early stopping rather than fixed in advance. For the stopping rule, the last 20% of the training
+sample, t ≥ ϖ (the same window used by Algorithm 3), serves as a validation window. More
+specifically, the network is first fitted on t < ϖ while its training loss, (3) for M-H-GARCH and
+the naive LSTM and (7) for ARMA-H-GARCH, is evaluated on the validation window after every
+epoch. Training stops once the validation loss has not improved for 100 consecutive epochs, or
+at a maximum of 1200 epochs, and the number of epochs e∗ with the smallest validation loss is
+retained. The network is then refitted on the full training sample for e∗ epochs, starting from the
+same initialization. The time-varying network inputs are standardized by their training-sample
+means and standard deviations, and the network output is ˆσt = s · softplus(·) for a fixed training-
+sample volatility level s, so that the re

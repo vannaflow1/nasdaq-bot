@@ -1,0 +1,947 @@
+Dynamic Scenario-Based Portfolio Optimization for Multi-Asset
+ETFs
+Abigail A. Mensah1,*, Ali M. Jaffri3, Nicholas Appiah1, W. Brent Lindquist1, Svetlozar
+T. Rachev1 and Frank J. Fabozzi2
+1 Department of Mathematics & Statistics, Texas Tech University, Lubbock, TX 79409, USA
+2 Carey Business School, Johns Hopkins University, Baltimore, MD 21202, USA
+3 College of Business, North Dakota State University, Fargo, ND 58102, USA
+Correspondence: abigail.a.mensah@ttu.edu
+Abstract
+Portfolio outcomes may depend as much on trading restrictions as on how returns are modeled.
+We compared historical moving-window returns with conditional scenarios from ARMA–GARCH
+models and a Student-t copula for 30 U.S.-listed exchange-traded funds. Matched mean–variance
+and conditional value-at-risk portfolios were evaluated under long-only and limited long–short
+bounds over 946 sessions. Historical portfolios had higher observed reward–risk ratios in most
+comparisons, but no paired difference remained significant after multiple-testing adjustment.
+Conditional scenarios did not consistently reduce realized downside risk. We distinguished
+changes in target weights from trades required to rebalance holdings after market movements.
+Relaxing the target-adjustment limit changed exposures, turnover, and some returns more than
+varying scenario count or seed in the examined tests. These findings suggest that assessments of
+conditional return inputs should consider portfolio constraints and trading requirements.
+Keywords: exchange-traded funds; portfolio optimization; financial risk management; return
+scenarios; conditional value at risk; turnover constraints; transaction costs
+1 Introduction
+Exchange-traded funds (ETFs) allow investors to combine equity, fixed-income, real-asset, and
+alternative exposures. The outcomes of an ETF portfolio depend partly on the returns and risks
+used to choose the holdings, and partly on the limits placed on changing those holdings. Both
+considerations matter when market volatility and dependence vary over time (Markowitz, 1952;
+Gastineau, 2010; Cont, 2001; Longin and Solnik, 2001).
+A historical approach uses the returns observed in a moving estimation window. A conditional
+approach estimates recent return dynamics and generates possible outcomes for the next period.
+Conditional scenarios can represent changing volatility and joint losses, but their use also introduces
+estimation and simulation uncertainty; more detailed return modeling does not necessarily improve
+realized investment results (Michaud, 1989; Best and Grauer, 1991; Chopra and Ziemba, 1993;
+DeMiguel et al., 2009). Related JRFM studies consider heavy-tailed commodity ETF portfolios
+(Appiah et al., 2026) and the role of tail risk and trading costs in predominantly actively managed
+1
+arXiv:2611.16540v1 [q-fin.RM] 12 Nov 2026
+ETFs (Lamptey et al., 2026). The present study examines a broad multi-asset ETF universe under
+matched portfolio construction rules, with particular attention to the distinction between desired
+target weights and the trades required to maintain them.
+We compared historical moving-window inputs with conditional scenarios generated from ARMA–
+GARCH marginal models and a multivariate Student-t copula. Both approaches were applied to
+the same 30 ETFs using mean–variance and conditional value-at-risk (CVaR) objectives, long-only
+and limited long–short bounds, equal-weight starting allocations, and the same baseline target-
+adjustment limit. Realized portfolio returns were calculated from subsequent observed ETF returns,
+not from the simulated scenarios. Holding the portfolio rules fixed made the two input methods
+more directly comparable within the stated design, although a restrictive trading rule could also
+limit the changes either method could make to its holdings.
+The paper makes three empirical contributions. First, it compares the realized returns, downside
+risk, and reward–risk measures of matched historical and conditional portfolios, using paired
+bootstrap inference to describe uncertainty in their differences. Second, it distinguishes adjustments
+between successive target weights from the rebalancing trades required after market returns cause
+holdings to drift. This provides a separate view of portfolio turnover, exposures, and modeled trading
+costs. Third, it examines whether the observed comparisons change when the daily adjustment limit,
+simulated scenario count, random seed, or estimation-window length is varied. The paper does not
+propose a new return model or optimization criterion. Its contribution is the empirical assessment
+of how return-input construction interacts with the rules governing portfolio holdings and trading.
+The evaluation covers 946 trading sessions from December 2022 to September 2026. Execution
+prices, market impact, and short-position financing were not observed, so reported performance
+follows a close-to-close return-attribution convention with illustrative proportional costs. Section 2
+describes the data, Section 3 presents the portfolio methods, Section 4 reports the empirical results,
+and Sections 5 and 6 discuss their implications and limitations.
+2 Data and Portfolio Design
+The analysis included 30 U.S.-listed ETFs spanning equities, fixed income, income-oriented and
+multi-asset funds, real assets, and alternative strategies (Appendix Table A1). This selection
+provided different sources of market exposure, although several funds held overlapping underlying
+assets. The resulting portfolios were therefore diversified across ETF tickers, not necessarily across
+independent economic risks.
+The adjusted closing prices of the 30 U.S.-listed ETFs were downloaded from Yahoo Finance on
+27 October 2026 using Python’s yfinance interface. The download requested daily observations from
+19 December 2018 (inclusive) to 1 October 2026 (exclusive), with auto_adjust=True, actions=True,
+threads=False, and progress=False. Under the specified adjustment option, the returned Close
+field contains Yahoo Finance’s adjusted closing prices, incorporating its treatment of distributions
+and splits. The corporate-action fields were requested but not separately archived in the analysis
+workbook; the provider’s adjustment factors were not independently reconstructed.
+The retrieved price columns were ordered to match the fixed 30-ETF universe. The common
+panel was formed by deleting dates missing a price for any ETF, using dropna(); no interpolation,
+forward filling, or other imputation was applied. Examination of the archived workbook found
+2
+that its Full_Price_Panel and Adjusted_Prices sheets were identical and contained no missing
+or nonpositive prices. The panel comprised 1,955 price observations from 19 December 2018 to
+30 September 2026 and 1,954 one-session arithmetic returns. Its trading dates were compared with
+the New York Stock Exchange session calendar; no missing, extra, or duplicated sessions were
+identified. Recalculating every arithmetic return from successive adjusted prices agreed with the
+saved return sheet to numerical precision.
+As a limited check of corporate-action treatment, issuer and exchange records were examined for
+the one-for-three reverse split of SRET effective 20 December 2022, the BYLD distribution dated
+2 September 2026, and the IYG distribution dated 15 June 2026. These events fell on dates present
+in the archived panel, and the adjusted SRET series showed no mechanical threefold jump across
+the split. The checks did not independently validate every historical dividend or split factor: raw
+unadjusted closing prices and corporate-action fields were not saved with this workbook. The study
+therefore used the provider-adjusted return convention rather than an independently reconstructed
+total-return index.
+For ETF i, the daily arithmetic return was calculated as
+ri,t = Pi,t Pi,t−1 − 1, (1)
+where Pi,t denotes the provider-adjusted closing price for ETF i at session t. The return series
+therefore reflects the provider’s adjustment convention, rather than an independently reconstructed
+distribution-reinvested index.
+The baseline estimation window contained W = 1,008 returns and ended initially on 20 Decem-
+ber 2022. The first evaluated portfolio return was dated 21 December 2022, and 946 out-of-sample
+sessions were evaluated through 30 September 2026. Both optimization methods and all reported
+portfolio performance calculations used the same synchronized return panel; the indexed-price
+figures used the corresponding adjusted prices. Using a common panel removes differences in under-
+lying asset-return samples as an explanation for the compared portfolio histories. The historical
+distribution-adjustment factors supplied by the provider were not independently reconstructed.
+The U.S. three-month Treasury par yield was the risk-free proxy. At each decision date, the
+most recent available yield was converted to an effective daily rate under a 252-session convention
+(Equation 26). The aligned rates were used both in estimated excess-return objectives and in realized
+excess-return ratios.
+The benchmark was an initially equal-weighted buy-and-hold portfolio (BHP), with 1/30 of
+capital allocated to each ETF and no subsequent rebalancing. It provides a common reference for
+realized wealth, although it does not maintain the target exposures of an optimized strategy. All
+wealth paths began at USD 100. The return-correlation matrix and indexed adjusted-price series in
+Appendix Figures A1 and A2 describe the ETF universe rather than portfolio investment outcomes.
+3 Portfolio Construction
+At each decision date, both methods used information from the same moving window of W = 1,008
+daily returns for N = 30 ETFs. The objectives, position bounds, starting weights, and baseline
+target-adjustment cap were held fixed. Only the representation of returns supplied to the optimizer
+3
+differed.
+Let rt = (r1,t,...,rN,t)T denote the vector of arithmetic ETF returns at trading date t. The
+historical approach used the empirical return matrix
+XH t =
+
+
+rT t−W +1
+...
+rT t
+
+∈ RW ×N. (2)
+The observations in this matrix were supplied directly to the mean–variance and conditional value
+at risk (CVaR) optimizers.
+The dynamic approach followed the scenario-based framework described by Lindquist et al.
+(2022, Chapter 7) and Jaffri et al. (2025). For each ETF, an ARMA(1,1)–GARCH(1,1) model was
+estimated using the current moving window (Engle, 1982; Bollerslev, 1986). The conditional mean
+equation was specified as
+ri,ℓ =δ0,i +δ1,iri,ℓ−1 +θiεi,ℓ−1 +εi,ℓ, (3)
+where
+εi,ℓ =σi,ℓzi,ℓ, (4)
+and the conditional variance followed
+σ2 i,ℓ =ωi +αiε2 i,ℓ−1 +βiσ2 i,ℓ−1. (5)
+Here, εi,ℓ denotes the return innovation, σ2 i,ℓ is its conditional variance, and zi,ℓ is the standardized
+innovation. The model parameters were re-estimated for each ETF as the moving window advanced.
+The marginal models were estimated by maximum likelihood using a Student-t innovation speci-
+fication. However, the predictive innovations were not generated directly from the fitted parametric
+Student-t distributions. Instead, the implementation used kernel-based empirical distributions of
+the standardized residuals. Thus, Student-t innovations characterized the estimation likelihood,
+while empirical residual distributions provided the marginal simulation inputs.
+The standardized residuals were calculated as
+ˆzi,ℓ = ˆεi,ℓ ˆσi,ℓ . (6)
+For each ETF, a kernel-based cumulative distribution estimate ˆFi,t was constructed from the
+standardized residuals in the current window. The residual observations were transformed to the
+unit interval using
+ui,ℓ = ˆFi,t (ˆzi,ℓ). (7)
+Before copula fitting, the implementation restricted the kernel-CDF pseudo-observations to the
+open unit interval according to
+u∗ i,ℓ = min{1−ϵ, max (ϵ,ui,ℓ)}, ϵ = 10−6. (8)
+The same clipping was applied to the uniforms generated from the fitted copula before kernel-inverse
+simulation. The transform used a kernel CDF rather than rank-based pseudo-observations.
+4
+A multivariate Student-t copula was fitted to the resulting W× N matrix of transformed
+standardized residuals using MATLAB’s approximate maximum-likelihood procedure. The fitted
+copula represented cross-sectional dependence among ETF innovations, including the symmetric
+tail dependence admitted by the Student-t copula family (McNeil et al., 2005; Patton, 2006). The
+dependence parameters were re-estimated at each portfolio decision. In particular, MATLAB’s
+copulafit with the Student-t family and approximate maximum likelihood returns a copula
+correlation matrix and fitted degrees of freedom, and copularnd draws uniforms using those fitted
+parameters. The model-estimation procedure recorded fitted copula degrees of freedom, selected
+correlation and eigenvalue diagnostics, kernel bandwidths, standardized-residual summaries, and
+numerical warnings. These diagnostics documented model estimation but did not independently
+validate future tail outcomes.
+For each moving window, S = 10,000 joint pseudo-uniform scenario vectors were generated
+from the fitted copula. The simulated standardized innovations were obtained by applying the
+kernel-based empirical inverse distributions:
+zi,s,t+1 = ˆF −1 i,t (ui,s,t+1), s = 1,...,S. (9)
+The one-step-ahead conditional mean forecast was
+ˆµi,t+1 = ˆδ0,i + ˆδ1,iri,t + ˆθiˆεi,t, (10)
+and the corresponding variance forecast was
+ˆσ2 i,t+1 = ˆωi + ˆαiˆε2 i,t + ˆβiˆσ2 i,t. (11)
+The implemented one-step-ahead scenario-return specification is
+rD i,s,t+1 = ˆµi,t+1 + ˆσi,t+1zi,s,t+1. (12)
+The resulting scenario matrix,
+XD t =
+
+
+(rD 1,t+1)T
+...
+(rD S,t+1)T
+
+∈ RS×N, (13)
+was used as the return input for dynamic portfolio optimization. The historical procedure used
+the observed return vectors, while the conditional procedure used simulated vectors drawn from
+estimates based on those same observations. Simulation enlarged the number of optimization inputs
+but did not add market observations. Its potential value lay in changing how volatility and joint
+losses were represented, not in enlarging the underlying information set.
+For either approach, let ˆµt and ˆΣt denote the sample mean vector and covariance matrix of the
+corresponding optimization inputs. Mean–variance optimization followed Markowitz (1952). The
+5
+minimum-variance portfolio was defined by
+minw wT ˆΣtw
+subject to 1Tw = 1,
+ℓ≤w≤u,
+1
+2 ∥w−wt−1∥1 ≤δ.
+(14)
+The associated efficient frontier was obtained by considering feasible target-return conditions,
+ˆµT t w≥µ∗, (15)
+under the same investment constraints.
+The tangent mean–variance portfolio was selected according to the excess-return-to-standard-
+deviation criterion
+SRt(w) =
+ˆµT t w−rf,t√
+wT ˆΣtw
+. (16)
+Here, rf,t denotes the daily risk-free rate available at the portfolio decision date.
+CVaR portfolios were constructed at confidence levels α∈{0.95, 0.99}, following the sample-
+average approximation framework of Rockafellar and Uryasev (2000) and Krokhmal et al. (2002).
+For portfolio weightsw, the loss in scenario s was defined as
+Ls,t(w) =−wTxs,t, (17)
+where xs,t is an empirical return vector under historical optimization or a simulated return vector
+under dynamic optimization.
+Let Mt = W for historical optimization and Mt = S for dynamic optimization. The empirical
+CVaR measure was
+\CVaRα,t(w) = min ζ
+{
+ζ + 1 (1−α)Mt Mt∑ s=1 [Ls,t(w)−ζ]+ } , (18)
+where [x]+ = max(x, 0). The minimum-CVaR portfolio minimized this objective subject to the
+budget, individual weight bounds, and target-turnover restriction. At the 99% confidence level, the
+1,008-return historical window contained approximately 10 observations in the upper 1% loss tail,
+whereas 10,000 conditional scenarios supplied approximately 100 simulated tail observations. The
+latter were generated from estimates based on the same historical window, not from additional
+observed market data.
+The tangent CVaR portfolio was selected by comparing the excess-return-to-CVaR criterion
+TCα,t(w) =
+ˆµT t w−rf,t
+\CVaRα,t(w) (19)
+across the computed frontier portfolios with finite, strictly positive risk denominators. Both methods
+used 20 requested frontier candidates for tangent-CVaR selection. The resulting tangent-CVaR
+6
+selectionswerefinite-gridapproximationsratherthansolutionstoananalyticallycontinuoustangency
+problem. The 100-point mean–variance frontiers displayed in the illustrative figures excluded turnover
+constraints and therefore did not measure the resolution of the turnover-constrained tangent-CVaR
+rule.
+We considered long–only (LO) and long–short (LS) investment specifications. The LO strategy
+imposed
+0≤wi,t ≤ 1, i = 1,...,N, (20)
+while the LS strategy imposed
+− 1 N ≤wi,t ≤ 1 + 1 N, i = 1,...,N. (21)
+Both strategies satisfied
+N∑
+i=1
+wi,t = 1. (22)
+For N = 30, the LS specification permitted each individual short position to have a weight of at
+most approximately 3.33% in magnitude. The bounds did not impose a separate portfolio-level
+gross-exposure restriction and therefore did not guarantee low aggregate leverage (Jagannathan and
+Ma, 2003).
+Let wt denote the target vector selected using information through date t. Its one-way adjustment
+from the previous target is
+τt = 1 2 N∑ i=1 |wi,t −wi,t−1|. (23)
+The baseline cap was δ = 1/(30 × 252) per decision. It limited changes in target weights rather
+than a portfolio’s gross trading activity. All strategies started from the equal-weight vector
+w0 = (1/30,..., 1/30). A sensitivity analysis also considered a 1% daily target-adjustment allowance
+to examine how the restriction affected allocations and realized performance.
+Computational implementation and numerical validation. The 24 portfolio strategies were
+computed in MATLAB R2026a Update 3. Mean–variance portfolios used the Portfolio class and
+quadprog with 10−9 optimality and constraint tolerances; the tangent mean–variance selection
+used the toolbox’s iterative Sharpe-ratio routine. CVaR optimization used PortfolioCVaR and
+TrustRegionCP, with up to 2,000 iterations and absolute and relative gap tolerances of 10−8. The
+tangent-CVaR rule selected the highest admissible ratio from 20 requested frontier candidates. Both
+input methods used the same bounds, the same cap on changes between target weights, and the
+same numerical acceptance tests. Numerical cap overshoots no greater than 10−6 were scaled back
+toward the preceding feasible target; the cap itself was never enlarged. A failed final candidate
+would have led to retention of the preceding target.
+The saved-output audit found that the final portfolio allocations met the specified budget,
+position-bound, and target-adjustment checks. The recorded scale-back counts refer to decisions
+for which at least one optimization candidate required a small numerical correction; they do not
+necessarily count corrected final allocations. Representative tangent-CVaR comparisons using
+finer frontier grids and tighter solver settings produced only small differences in selected historical
+7
+allocations and no recorded differences in the tested conditional allocations. These checks support
+feasibility and stability for the decisions examined, but neither the original candidate-level target-
+return constraints nor global optimality was independently verified. Appendix D reports the
+correction magnitudes, solver settings, and numerical comparisons.
+TheconditionalsimulationusedStudent-testimationlikelihoodsfortheARMA–GARCHmarginal
+models, kernel estimates of their standardized residual distributions, and a fitted Student-t copula.
+The random seed was fixed before the moving-window loop. Because the simulated residual
+innovations were not recentered or rescaled, the fitted one-step forecasts need not equal the exact
+moments of the finite simulated return matrix. The saved diagnostics did not record any reuse
+of prior marginal fits. The detailed settings and recorded innovation moments are reported in
+Appendix D.
+To distinguish target adjustments from trades, let ~wt denote the holdings immediately before
+the target selected at date t is implemented. The previous target, wt−1, is first allowed to drift with
+the realized ETF return vectorrt. For ETF i, the pre-trade weight is
+~wi,t = wi,t−1(1 +ri,t) 1 +wT t−1rt , i = 1,...,N, (24)
+where the denominator is the gross portfolio wealth factor and is required to be positive. The
+one-way implementation turnover needed to move from drifted holdings to the newly selected target
+is
+κt = 1 2 N∑ i=1 |wi,t − ~wi,t|. (25)
+The baseline cap applied to target adjustments τt, not to implementation turnover κt. In the saved
+output workbooks, an allocation selected using information through date t was dated by the next
+trading session, t + 1, whose return it earned. Accordingly, the turnover recorded under that output
+date represented κt, calculated after the return on date t and before the next attributed return.
+The first evaluated allocation had no observed preceding portfolio holdings within the evaluation
+sample, so its initial formation cost was excluded. These conventions did not assume that actual
+trades took place at the closing prices used for portfolio estimation.
+The U.S. three-month Treasury par yield was used as the risk-free-rate proxy. Let yt denote its
+annual percentage quotation. The corresponding effective daily rate was calculated as
+rf,t =
+(
+1 + yt
+100
+)1/252
+− 1. (26)
+The Treasury series was aligned to the ETF return observation dates using the most recently
+available quotation on or before each relevant date. The daily rate available at the end of the
+estimation window was used for portfolio selection, while date-aligned daily rates were used to
+evaluate realized excess returns. The marginal ARMA–GARCH models were fitted to raw arithmetic
+ETF returns, not risk-free-rate-adjusted returns; therefore, the simulated asset returns are already
+on the gross asset-return scale and require no risk-free-rate add-back for portfolio wealth accounting.
+The return panel contained T = 1,954 observations. The first estimation window contained
+observations 1 through 1,008 and ended on 20 December 2022. The next observed return, dated
+21 December 2022, was the first evaluated portfolio return. The number of evaluated observations
+8
+was
+T−W = 1,954− 1,008 = 946. (27)
+The evaluation period ends on 30 September 2026. A window without an available next return was
+not assigned an out-of-sample portfolio return.
+At each trading date, the moving window advanced by one observed return. The historical and
+dynamic approaches updated their portfolio decisions at the same frequency, with a one-observation
+holding period. The dynamic implementation used HOLD = 1. No subsequent realized return
+observation entered the corresponding portfolio optimization problem.
+Let Ft denote the information available through the observed return date t. Portfolio parameters,
+predictive scenarios, and target allocations were calculated from this information set. For weights
+wt, the subsequent portfolio return before trading costs was computed as
+rp,t+1 =
+N∑
+i=1
+wi,tri,t+1. (28)
+The historical and dynamic strategies were evaluated against the same realized ETF returns. Model-
+generated scenarios were used for dynamic portfolio selection and conditional risk estimation, not
+as realized portfolio returns.
+The evaluation employed a close-to-close return accounting convention. Although each target
+was computed using information through the preceding retained observation, actual trade execution
+times and prices were not modeled. In particular, the convention does not establish that targets
+estimated after observing closing prices could be executed at those same closing prices. Consequently,
+the reported gross returns describe the specified weight-attribution convention rather than a fully
+executable trading strategy.
+For comparison across portfolio objectives, mean–variance optimization is denoted by V, while
+CVaR optimization at the 95% and 99% confidence levels is denoted by C95 and C99. Minimum-risk
+and tangent solutions are denoted by M and T, respectively. The resulting portfolios are labeled
+MV, TV, MC95, TC95, MC99, and TC99, with an LO or LS prefix identifying the investment
+specification. For example, LO MC95 denotes the long–only minimum-CVaR portfolio at the 95%
+confidence level, whereas LS TC99 denotes the long–short tangent-CVaR portfolio at the 99%
+confidence level.
+4 Empirical Results
+The long-only frontiers in Figures 1–3 illustrate how return-input construction affected estimated
+choices at the first portfolio decision. Both methods used information through 20 December 2022,
+but the historical frontiers used the observed returns and the conditional frontiers used scenarios
+generated from the fitted models. Because the panels use matched scales, their differences indicate
+that the two procedures did not supply identical estimated opportunity sets. These figures exclude
+the baseline target-adjustment cap, however, and should not be interpreted as the actual constrained
+allocations or as realized performance comparisons. In the CVaR plots, the dashed reference line
+illustrates the selected excess-return-to-tail-risk ratio rather than a tradable capital-market line.
+The positions of the historical and conditional frontiers differed in Figures 1–3. The estimated
+9
+Figure 1: Illustrative long–only historical (left) and dynamic (right) mean–variance efficient frontiers.
+Estimation ends 20 December 2022; evaluated return date 21 December 2022. Return and standard
+deviation are daily percentages. The plots exclude the baseline turnover restriction. The highlighted
+point is a frontier-grid maximum excess-return-to-standard-deviation candidate, not the turnover-
+constrained tangent portfolio.
+Figure 2: Illustrative long–only historical (left) and dynamic (right) CVaR 95% efficient frontiers
+at the same estimation cutoff and with identical plotting scales. The plotted candidate maximizes
+excess expected return divided by CVaR 95% over the grid; no target-turnover constraint is imposed.
+10
+Figure 3: Illustrative long–only historical (left) and dynamic (right) CVaR 99% efficient frontiers.
+The x-axis is daily CVaR 99% in percent. The risk-free reference is an illustrative line through the
+selected excess-return-to-CVaR candidate, not a market-based capital-market line.
+return–risk tradeoffs therefore depended on whether the optimizer received observed returns or
+model-generated scenarios. These plots describe the respective estimated opportunity sets before
+the target-adjustment restriction was imposed. They do not show which return forecasts were more
+accurate or which constrained portfolios subsequently performed better.
+For portfolio outcomes, Figure 4 displays cumulative realized gross investment values of the
+24 baseline strategies and the initially equal-weighted buy-and-hold benchmark. Historical and
+dynamic results are displayed in matched columns, and long–only and long–short strategies are
+grouped consistently. These are gross, next-observation return-attribution paths, not net-of-cost
+executable trading records.
+The historical and conditional wealth paths were often similar for the same objective and
+investment bounds (Figure 4). Both methods earned returns on the same underlying ETF market
+movements, and the tight adjustment limit left relatively little room for their target allocations to
+diverge quickly. Differences among portfolio objectives were at times more visible than differences
+between the two return-input methods. These gross wealth paths are interpreted together with
+turnover and modeled costs below.
+4.1 Full-sample reward–risk performance
+For each of the 24 optimized portfolios, we evaluated four realized daily reward–risk ratios over the
+common 946-session sample. Let xp,t = rp,t−rf,t be the excess arithmetic return, with the daily risk-
+freereturncomputedfromthemostrecentavailablethree-monthTreasuryyieldas (1+yt/100)1/252−1.
+We report the Sharpe ratio x/s(x) (Sharpe, 1994), the positive-part quadratic downside ratio (SS2),
+max(x, 0)/[max(−x, 0)2]1/2, the Rachev ratio at 95/95, TM0.05(x)/TM0.05(−x), and the STAR ratio
+11
+Figure 4: Baseline gross portfolio-value paths (initial investment USD 100), 21 December 2022–
+30 September 2026. Historical results appear on the left and dynamic results on the right. Rows
+show long–only tangent, long–only minimum-risk, long–short tangent, and long–short minimum-risk
+strategies. BHP denotes the common initially equal-weighted unrebalanced benchmark. Portfolio
+weights selected using preceding estimation observations are applied to subsequent realized ETF
+returns.
+12
+at 95%, x/TM0.05(−x); TMp denotes the exact upper-tail average including a fractional cutoff
+observation. These are unannualized daily ratios and are calculated identically in the full-sample
+performance audit and paired bootstrap.
+Table 1: Realized full-sample reward–risk ratios for the 24 baseline portfolios (946 sessions).
+Method Bounds Portfolio Sharpe SS2 Rachev STAR
+Hist. LO MV 0.05216 0.5518 0.9355 0.02335
+Dynamic LO MV 0.05179 0.5509 0.9344 0.02314
+Hist. LO TV 0.05478 0.5521 0.9309 0.02432
+Dynamic LO TV 0.05289 0.5517 0.9376 0.02364
+Hist. LO MC95 0.05184 0.5536 0.9408 0.02310
+Dynamic LO MC95 0.05056 0.5512 0.9373 0.02248
+Hist. LO TC95 0.05658 0.5526 0.9313 0.02526
+Dynamic LO TC95 0.05367 0.5520 0.9357 0.02406
+Hist. LO MC99 0.05226 0.5537 0.9391 0.02329
+Dynamic LO MC99 0.05049 0.5511 0.9376 0.02244
+Hist. LO TC99 0.05648 0.5526 0.9323 0.02524
+Dynamic LO TC99 0.05366 0.5520 0.9358 0.02405
+Hist. LS MV 0.05226 0.5518 0.9368 0.02346
+Dynamic LS MV 0.05219 0.5517 0.9365 0.02342
+Hist. LS TV 0.05547 0.5527 0.9418 0.02478
+Dynamic LS TV 0.05290 0.5517 0.9381 0.02366
+Hist. LS MC95 0.05242 0.5540 0.9415 0.02338
+Dynamic LS MC95 0.05056 0.5512 0.9373 0.02248
+Hist. LS TC95 0.05690 0.5535 0.9367 0.02544
+Dynamic LS TC95 0.05367 0.5520 0.9357 0.02406
+Hist. LS MC99 0.05228 0.5535 0.9411 0.02332
+Dynamic LS MC99 0.05049 0.5511 0.9376 0.02244
+Hist. LS TC99 0.05678 0.5535 0.9379 0.02541
+Dynamic LS TC99 0.05366 0.5520 0.9358 0.02405
+Table 1 shows higher observed reward–risk ratios for historical inputs in most matched compar-
+isons, particularly for several tangent portfolios. A tangent objective trades estimated risk against
+expected excess return, while a minimum-risk objective gives greater weight to limiting dispersion
+or tail loss. As a result, the portfolio with the lowest estimated risk need not provide the highest
+realized return per unit of risk. The rankings in Table 1 describe this sample; the paired tests in
+Section 4.5 assess how far they support broader inference.
+4.2 Descriptive moments and realized return densities
+Tables 2 and 3 described the central tendency, dispersion, and tail shape of the realized gross returns.
+Means and standard deviations are reported in units of 10−4, skewness in units of 10−2, and excess
+kurtosis without scaling. The moments were calculated from the same realized daily portfolio-return
+histories used for performance evaluation, not from simulated scenarios. Figures 5 and 6 complement
+these summaries with empirical return densities.
+13
+Table 2: Descriptive moments of daily realized gross portfolio returns: long–only (H = historical; D
+= dynamic).
+Strategy H LO mean sd skew ex.kurt. D LO mean sd skew ex.kurt.
+MC95 4.45 51.03 3.24 9.66 4.39 51.03 2.82 9.59
+MV 4.63 54.00 3.20 10.71 4.59 53.74 2.52 10.69
+MC99 4.49 51.21 1.13 9.47 4.39 51.01 2.53 9.55
+TC95 4.97 55.85 3.72 12.53 4.77 55.22 4.01 11.46
+TC99 4.97 55.94 4.01 12.56 4.77 55.22 4.04 11.46
+TV 4.66 52.10 2.15 11.02 4.63 53.41 4.06 10.94
+Table 3: Descriptive moments of daily realized gross portfolio returns: limited long–short. Same
+units as Table 2.
+Strategy H LS mean sd skew ex.kurt. D LS mean sd skew ex.kurt.
+MC95 4.50 51.25 4.25 9.76 4.39 51.03 2.82 9.59
+MV 4.68 54.90 3.37 10.87 4.67 54.86 3.34 10.89
+MC99 4.49 51.32 1.47 9.60 4.39 51.01 2.53 9.55
+TC95 4.98 55.77 4.40 12.43 4.77 55.22 4.01 11.46
+TC99 4.98 55.82 4.65 12.41 4.77 55.22 4.04 11.46
+TV 4.73 52.56 4.23 11.53 4.64 53.50 4.14 10.97
+14
+Figure 5: Kernel density estimates for daily gross returns of MV, MC95 and MC99 portfolios.
+Long–only results appear above limited long–short results; historical estimates appear to the left of
+dynamic estimates. Bandwidth is selected separately for each realized series.
+15
+Figure 6: Kernel density estimates for realized daily gross returns of TV, TC95 and TC99 portfolios,
+with matched scales across method and investment-constraint panels.
+The realized return densities in Figures 5 and 6 overlapped for many historical–conditional pairs.
+The shared market returns and limited movement in portfolio weights provide plausible reasons for
+this similarity. Tables 2 and 3 also report skewness and excess kurtosis, indicating that average
+returns and standard deviations do not fully describe the realized return distributions. Similar
+fitted densities should not be interpreted as evidence that the input distributions or their predictive
+accuracy were equivalent.
+4.3 Moving-window reward–risk and downside diagnostics
+A full-sample measure can conceal changes in performance across market conditions. Figure 7 follows
+reward–risk ratios over 252-session moving windows, while Figure 8 summarizes moving variance
+and realized downside-loss measures. The 946-session evaluation yielded 695 overlapping windows.
+Reward–risk measures used daily excess returns, whereas variance, loss value at risk (VaR), and loss
+CVaR used gross returns. Loss VaR was the empirical 95th percentile of negative returns, and loss
+CVaR was the corresponding average upper-tail loss with a fractional cutoff. These overlapping
+windows describe changes through time rather than independent observations.
+16
+Figure 7: 252-observation moving realized reward–risk ratios. Historical portfolios (left) and dynamic
+portfolios (right); colors indicate objectives, line thickness distinguishes LO and LS, and BHP denotes
+the buy-and-hold benchmark. Both method panels use identical axes within each metric.
+17
+Figure 8: Distributions over 695 moving windows of realized daily variance (10−4 units), 95% loss
+VaR, and 95% loss CVaR. Method panels have matched scales for each diagnostic; boxplots describe
+variability over overlapping moving windows and are not independent samples.
+18
+Table 4: Medians across 695 overlapping moving diagnostic windows for minimum-risk portfolios;
+daily variance displayed in 10−4 units, CVaR in decimal daily-return units.
+Constraint Strategy Historical var. Dynamic var. Historical CVaR Dynamic CVaR
+LO MV 0.2522 0.2529 0.01083 0.01084
+LO MC95 0.2347 0.2385 0.01038 0.01048
+LO MC99 0.2346 0.2385 0.01038 0.01048
+LS MV 0.2569 0.2568 0.01096 0.01095
+LS MC95 0.2347 0.2385 0.01040 0.01048
+LS MC99 0.2347 0.2385 0.01040 0.01048
+The moving-window risk measures did not show a consistent reduction in realized losses from
+using conditional scenarios. In Table 4, historical minimum-CVaR portfolios generally had slightly
+lower median realized variance and CVaR than their conditional counterparts, while the minimum-
+variance comparisons were mixed. An optimizer minimizes risk estimated from its inputs, but
+subsequent losses reflect the returns that actually occurred. The evidence therefore does not show
+that the conditional approach systematically improved downside protection over the examined
+period.
+4.4 Portfolio turnover, exposures, and transaction costs
+A stable sequence of optimized weights need not describe a low-trading strategy. Table 5 distinguishes
+one-way changes between successive target weights from one-way trades needed to restore target
+weights after asset prices have changed. The first measure was restricted by the baseline optimization
+cap; the second was not. These turnover summaries excluded the first evaluated allocation because
+its preceding holdings were not available. Annualized figures in Table 5 were calculated from the
+mean of the 945 observed transitions multiplied by 252. Short exposure measures negative ETF
+weights in absolute value, while gross exposure sums absolute weights. Table 6 then relates the
+implementation measure to illustrative trading-cost adjustments.
+19
+Table 5: Baseline annualized target-adjustment and drift-adjusted implementation turnover and
+average short exposure; percentages are indicated in the headings.
+Method Bounds Strategy Target TO (%) Impl. TO (%) Short exposure (%) Cap breaches
+Hist. LO MV 1.47 41.48 0.00 0
+Hist. LO TV 3.24 43.60 0.00 0
+Hist. LO MC95 3.33 41.51 0.00 0
+Hist. LO TC95 3.33 44.75 0.00 0
+Hist. LO MC99 3.33 41.67 0.00 0
+Hist. LO TC99 3.33 44.79 0.00 0
+Dyn. LO MV 1.71 41.48 0.00 0
+Dyn. LO TV 3.13 42.28 0.00 0
+Dyn. LO MC95 3.33 41.49 0.00 0
+Dyn. LO TC95 3.33 43.41 0.00 0
+Dyn. LO MC99 3.33 41.53 0.00 0
+Dyn. LO TC99 3.33 43.42 0.00 0
+Hist. LS MV 0.09 41.72 0.00 0
+Hist. LS TV 3.16 46.07 1.94 0
+Hist. LS MC95 3.33 42.73 0.91 0
+Hist. LS TC95 3.33 46.25 1.48 0
+Hist. LS MC99 3.33 42.57 0.70 0
+Hist. LS TC99 3.33 46.15 1.45 0
+Dyn. LS MV 0.12 41.71 0.00 0
+Dyn. LS TV 3.09 42.22 0.00 0
+Dyn. LS MC95 3.33 41.49 0.00 0
+Dyn. LS TC95 3.33 43.41 0.00 0
+Dyn. LS MC99 3.33 41.53 0.00 0
+Dyn. LS TC99 3.33 43.42 0.00 0
+Table 5 shows that relatively small changes in optimized target weights could coexist with
+much larger implementation turnover. ETF price movements altered the proportions held between
+rebalancing decisions, requiring trades to restore the targets even when the optimizer changed its
+desired allocation very little. The baseline limit constrained the first quantity, not the second. For
+a manager assessing trading needs and costs, target-adjustment turnover alone would therefore
+provide an incomplete measure of portfolio activity.
+Transaction costs were assessed at ten basis points per unit of one-way implementation turnover
+(c = 0.001). For the allocation selected using information through date t, the cost-adjusted return
+attributed to the following observed session was
+rnet p,t+1 = (1−cκt) ( 1 +wT t rt+1 ) − 1. (29)
+Here κt is defined in Equation (25), and the second factor is the gross return in Equation (28).
+The cost charge was thus associated with the target earning the next-session return. In the saved
+daily files, the turnover and return for that holding period share the same next-session date label,
+rather than the decision-date index used in these equations. Initial formation costs, borrowing and
+financing expenses on short positions, and execution frictions beyond the assumed linear cost were
+omitted. The buy-and-hold benchmark was not rebalanced and had no modeled post-formation
+turnover costs. For the gross/net summary, implementation turnover was annualized over the 946
+evaluated returns with day-one turnover set to zero; Table 5 instead annualized the mean over the
+945 observed transitions. Both denominators are stated to distinguish the two summaries.
+20
+Table 6: Gross and transaction-cost-adjusted performance (946 observations). Geometric returns
+and volatility are annualized; daily loss CVaR95 and maximum drawdown are expressed in percent.
+Method Bounds Portfolio Gross return (%) Net return (%) Gross vol. (%) Net CVaR95 (%) MDD net (%)
+Hist. LO MV 11.95 11.90 8.57 1.188 9.99
+Hist. LO TV 12.09 12.04 8.27 1.155 9.86
+Hist. LO MC95 11.51 11.47 8.10 1.126 9.14
+Hist. LO TC95 12.90 12.85 8.87 1.233 10.99
+Hist. LO MC99 11.60 11.55 8.13 1.131 9.15
+Hist. LO TC99 12.89 12.84 8.88 1.234 11.01
+Hist. LS MV 12.09 12.04 8.71 1.205 10.21
+Hist. LS TV 12.25 12.20 8.34 1.158 10.03
+Hist. LS MC95 11.62 11.58 8.14 1.130 9.21
+Hist. LS TC95 12.93 12.88 8.85 1.229 10.93
+Hist. LS MC99 11.61 11.57 8.15 1.132 9.20
+Hist. LS TC99 12.92 12.87 8.86 1.229 10.94
+Dyn. LO MV 11.86 11.81 8.53 1.184 9.94
+Dyn. LO TV 11.98 11.94 8.48 1.177 9.98
+Dyn. LO MC95 11.33 11.28 8.10 1.130 9.16
+Dyn. LO TC95 12.35 12.30 8.77 1.214 10.49
+Dyn. LO MC99 11.32 11.27 8.10 1.129 9.15
+Dyn. LO TC99 12.35 12.30 8.77 1.214 10.49
+Dyn. LS MV 12.07 12.02 8.71 1.204 10.21
+Dyn. LS TV 12.00 11.95 8.49 1.178 10.01
+Dyn. LS MC95 11.33 11.28 8.10 1.130 9.16
+Dyn. LS TC95 12.35 12.30 8.77 1.214 10.49
+Dyn. LS MC99 11.32 11.27 8.10 1.129 9.15
+Dyn. LS TC99 12.35 12.30 8.77 1.214 10.49
+BHP – – 12.21 12.21 9.01 1.246 10.72
+The cost-adjusted returns in Table 6 remained close to the gross results under the assumed
+linear trading-cost schedule. This follows partly from the modest cost rate applied to the estimated
+implementation turnover and should not be interpreted as evidence that daily rebalancing is
+inexpensive in practice. Bid–ask spreads, market impact, financing, and short-borrowing charges
+were outside the calculation. The unrebalanced buy-and-hold benchmark incurred no modeled
+post-formation trading charges but did not maintain the optimized strategies’ exposures.
+4.5 Paired bootstrap inference and block-length sensitivity
+For each of the 12 matched constraint–objective portfolios and four reward–risk measures, we
+calculated ∆ = Ratiodynamic − Ratiohistorical, yielding 48 paired comparisons. The stationary
+bootstrap (Politis and Romano, 1994) resampled common dated indices jointly for the portfolios and
+their aligned risk-free returns. We used 5,000 replicates for each expected block length of 10, 20, and
+40 sessions (seed 12345), and calculated percentile confidence intervals and centered-bootstrap two-
+sided p-values. Holm family-wise error and Benjamini–Hochberg false-discovery-rate adjustments
+(Holm, 1979; Benjamini and Hochberg, 1995) were applied separately across the 48 tests at each
+block length. Appendix E reports individual raw and adjusted p-values; Appendix Tables A5–A8
+give the complete results for alternative block lengths.
+21
+Table 7: Dynamic-minus-historical daily reward–risk differences and unadjusted 95% paired
+stationary-bootstrap percentile confidence intervals. Results use 5,000 resamples with expected
+block length 20; the interval for each comparison is shown in parentheses. Adjusted statistical
+conclusions are reported separately.
+Portfolio ∆Sharpe ∆SS2 ∆Rachev95/95 ∆STAR95
+LO MV
+−0.00037
+(−0.00100, 0.00025)
+−0.00082
+(−0.00182, 0.00029)
+−0.00113
+(−0.00390, 0.00224)
+−0.00021
+(−0.00050, 0.00010)
+LO TV
+−0.00189
+(−0.00737, 0.00271)
+−0.00041
+(−0.00774, 0.00520)
+0.00667
+(−0.00697, 0.02034)
+−0.00068
+(−0.00312, 0.00140)
+LO MC95
+−0.00127
+(−0.00304, 0.00041)
+−0.00239
+(−0.00486, −0.00036)
+−0.00354
+(−0.01005, 0.00301)
+−0.00063
+(−0.00147, 0.00015)
+LO TC95
+−0.00291
+(−0.00816, 0.00121)
+−0.00061
+(−0.01018, 0.00549)
+0.00442
+(−0.01159, 0.02027)
+−0.00120
+(−0.00363, 0.00073)
+LO MC99
+−0.00178
+(−0.00360, 0.00002)
+−0.00266
+(−0.00536, −0.00005)
+−0.00153
+(−0.00924, 0.00820)
+−0.00084
+(−0.00169, 0.00002)
+LO TC99
+−0.00282
+(−0.00795, 0.00123)
+−0.00057
+(−0.01015, 0.00542)
+0.00353
+(−0.01241, 0.01928)
+−0.00119
+(−0.00360, 0.00072)
+LS MV
+−0.00008
+(−0.00014, −0.00001)
+−0.00016
+(−0.00028, −0.00003)
+−0.00030
+(−0.00063, 0.00012)
+−0.00004
+(−0.00007, −4.63 × 10−6 )
+LS TV
+−0.00257
+(−0.00839, 0.00219)
+−0.00099
+(−0.00989, 0.00494)
+−0.00370
+(−0.01751, 0.01047)
+−0.00112
+(−0.00381, 0.00110)
+LS MC95
+−0.00185
+(−0.00417, 0.00026)
+−0.00285
+(−0.00599, −0.00012)
+−0.00421
+(−0.01228, 0.00434)
+−0.00090
+(−0.00200, 0.00009)
+LS TC95
+−0.00323
+(−0.00912, 0.00148)
+−0.00146
+(−0.01189, 0.00528)
+−0.00096
+(−0.01969, 0.01665)
+−0.00138
+(−0.00424, 0.00086)
+LS MC99
+−0.00179
+(−0.00405, 0.00028)
+−0.00246
+(−0.00596, 0.00037)
+−0.00354
+(−0.01282, 0.00663)
+−0.00087
+(−0.00193, 0.00011)
+LS TC99
+−0.00311
+(−0.00884, 0.00145)
+−0.00151
+(−0.01168, 0.00502)
+−0.00205
+(−0.02086, 0.01557)
+−0.00136
+(−0.00413, 0.00084)
+Most dynamic-minus-historical differences in Table 7 were negative, consistent with the observed
+reward–risk ordering. Some individual unadjusted percentile intervals excluded zero. However, no
+paired comparison remained significant after the stated Holm or Benjamini–Hochberg adjustments
+across the full family of tests (Appendix Table A4). The estimated differences therefore do not
+support a claim of general historical superiority, nor does the absence of adjusted rejections establish
+equivalence. Individual adjusted p-values and alternative block-length results are reported in
+Appendices E and G.
+4.6 Tail behavior and Pareto approximation
+The tail analysis compared the observed decay of positive loss and gain magnitudes for the optimized
+portfolios and the buy-and-hold benchmark. Log-survival slopes and Hill estimates were calculated
+using upper-tail thresholds of 5%, 7%, and 10% of each portfolio’s 946 out-of-sample returns
+(de Haan and Ferreira, 2006; Resnick, 2007). At the 7% threshold, 67 observations entered each
+fit. Confidence intervals for the OLS tail-index estimates used 400 stationary-bootstrap resamples
+with an expected block length of 20. These estimates describe selected empirical tails; they do
+not establish an exact Pareto distribution or calibrated future tail-loss probabilities. Table 8 and
+Figure 9 present representative results, with another illustration in Appendix Figure A3.
+22
+Table 8: Illustrative 7% upper-tail OLS and Hill estimates for selected portfolios and the buy-and-
+hold benchmark. The 95% stationary-bootstrap confidence intervals apply to the OLS tail-index
+estimates, not the Hill estimates.
+Portfolio Tail OLS index Hill index 95% OLS CI
+Historical LS TC99 Loss 2.81 2.91 [2.07, 4.70]
+Historical LS TC99 Gain 2.86 3.34 [2.08, 4.56]
+Dynamic LS TC99 Loss 2.89 3.03 [2.07, 4.67]
+Dynamic LS TC99 Gain 2.87 3.29 [2.05, 4.76]
+Historical LS MC99 Loss 2.94 2.96 [2.15, 4.58]
+Historical LS MC99 Gain 3.01 3.63 [2.18, 4.88]
+Dynamic LS MC99 Loss 2.95 2.93 [2.20, 4.60]
+Dynamic LS MC99 Gain 2.97 3.51 [2.11, 4.72]
+BHP Loss 2.90 3.04 [2.09, 4.79]
+BHP Gain 2.87 3.43 [2.12, 4.59]
+The illustrative tail estimates in Table 8 were broadly similar for the matched portfolios, and the
+OLS confidence intervals were wide relative to those differences. The plots describe the observed
+upper tails at selected thresholds; they do not establish a common Pareto law or reliable predictive
+tail calibration. We therefore place more weight on the realized loss comparisons when discussing
+the risk-management implications of the study.
+23
+Figure 9: Empirical log-survival points and OLS fitted lines for positive loss and gain tails of the LS
+TC99 portfolio, historical above and dynamic below. Fits use the largest 67 positive observations in
+each respective tail.
+24
+The allocation and sensitivity results show how the portfolio rules affected holdings and trading,
+providing context for the similar realized outcomes.
+4.7 Allocation and implementation diagnostics
+Figure 10 follows the principal ETF holdings in the minimum-CVaR 95% strategies. The target-
+adjustment restriction allowed positions to move only gradually from their common equal-weight
+start. The resulting allocations nevertheless differed for selected ETFs, suggesting that the return
+inputs influenced portfolio choices even when the rule limited the speed of adjustment. Figure 11
+Figure 10: Evolution of selected ETF portfolio weights in the baseline MC95 portfolios. Historical
+(left) and dynamic (right) are compared under long-only (top) and limited long-short (bottom)
+constraints. The eight ETFs with the largest mean absolute weight are shown separately for each
+portfolio; overlapping series remain distinct assets. Weights are percentages of portfolio net asset
+value.
+separates changes in targets from the trades needed to restore them after the underlying ETFs
+earned different returns. The rebalancing series varied even when target adjustments remained close
+to their permitted limit. Thus, a rule that restrains optimization-driven changes does not necessarily
+impose a comparable limit on the volume of trades required to maintain the portfolio. Figure 12
+compares gross and short exposures for the limited long–short MC95 portfolios. Although both
+input methods permitted negative positions, the historical portfolio developed some short exposure
+while the conditional portfolio remained effectively long-only. Permitting shorts therefore did not
+guarantee that the optimizer would use them within the narrow daily adjustment allowance.
+25
+Figure 11: Baseline MC95 target adjustments (top) and drift-adjusted implementation turnover
+(bottom) for historical and dynamic LO and LS portfolios, as percentages of net asset value per
+trading day. The dashed line is the baseline cap on target adjustments; implementation turnover is
+not subject to this cap. The two top-row curves nearly coincide because adjustments frequently
+approach the cap. Initial portfolio formation is excluded.
+26
+Figure 12: Gross and short exposure for baseline historical and dynamic long-short MC95 portfolios.
+Gross exposure equals the sum of absolute ETF weights; short exposure equals the sum of absolute
+negative ETF weights, each expressed as a percentage of net asset value.
+27
+4.8 Portfolio allocations and concentration
+Table 9 relates the MC95 return and risk findings to the ETF positions actually held. It reports the
+direct holdings in BND and BYLD, the largest ETF weight, concentration, and short and gross
+exposure. These are holdings in traded ETFs, not estimates of the underlying asset classes within
+mixed-allocation funds. Appendix Table A9 provides the corresponding measures for all baseline
+strategies.
+Table 9: MC95 baseline ETF allocations and concentration (946 dates). BND, BYLD, combined
+bond, largest ETF, gross exposure and short exposure are percentages of portfolio capital; HHI is a
+unitless concentration index.
+Method Bounds Objective BND BYLD Bond total Largest ETF HHI Gross Short
+Historical LO MC95 8.57 3.33 11.90 8.57 0.0388 100.00 0.00
+Historical LS MC95 8.65 3.33 11.98 8.65 0.0379 101.82 0.91
+Dynamic LO MC95 8.37 3.38 11.76 8.37 0.0376 100.00 0.00
+Dynamic LS MC95 8.37 3.38 11.76 8.37 0.0376 100.00 0.00
+The MC95 strategies had similar ETF-level concentration and direct holdings in BND and
+BYLD (Table 9). The greater short exposure of the historical long–short portfolio contrasts with
+the conditional portfolio’s effectively long-only positions. The comparison is consistent with the
+view that realized exposures depended on both the estimated inputs and the opportunity to change
+weights under the restrictive adjustment rule. It does not describe look-through fixed-income
+exposure inside other ETFs.
+4.9 Sensitivity analyses
+We examined how portfolio outcomes varied with the permitted change in target weights, the
+simulated scenario count and random seed, and the length of the moving estimation window.
+Each comparison retained the ETF universe and portfolio objectives and used common evaluation
+dates within that experiment. Table 10 summarizes the observed patterns; Appendix J gives the
+strategy-level results. These descriptive exercises were not independent tests of statistical superiority.
+Allowing larger daily changes in target weights had a more visible effect on the portfolios than
+changing the simulation settings. With greater freedom to move toward their selected allocations,
+many strategies traded more and held more concentrated exposures. Several minimum-risk strategies
+experienced lower realized returns alongside lower measured risk, whereas some tangent strategies
+earned higher gross returns. The effect was not uniformly favorable to either return-input method.
+Figure 13 shows the accompanying changes in implementation turnover, modeled costs, and gross
+exposure for MC95 portfolios; Appendix Table A10 reports the portfolio-level gross and net returns.
+The cost estimates retain the same linear trading assumption and exclude initial formation, market
+impact, and short-position financing.
+In contrast, varying the conditional scenario count around its baseline setting led to relatively
+small changes in realized returns (Appendix Table A11). Changing the random seed produced a
+similarly limited response in the conditional portfolios, while historical optimization was unaffected
+(Appendix Table A12). With a restrictive adjustment rule, changes in estimated optimal weights
+could affect actual holdings only gradually; this offers one explanation for the modest sensitivity to
+28
+Table 10: Overview of sensitivity experiments. Changes are descriptive and were not subject to a
+separate multiplicity-adjusted test.
+Experiment Alternatives Main observation
+Daily target-turnover cap 1/(30× 252) versus 0.01 Under the 1% cap, concentration and implementa-
+tion turnover rise across the examined portfolios;
+minimum-risk realized return and risk can both de-
+cline, whereas selected tangent portfolios have higher
+gross returns.
+Dynamic scenario count 5,000, 10,000 and 20,000 Annualized geometric-return changes from the 10,000-
+scenario baseline are small under the restrictive base-
+line turnover cap.
+Random seed 20261015 versus 12345 Historical portfolio returns are unchanged; dynamic
+annualized-return differences are small in the two-seed
+comparison.
+Moving estimation win-
+dow
+756, 1008 and 1260 The shorter window generally produces lower matched
+annualized returns; longer-window effects are mixed
+across strategies.
+Figure 13: MC95 turnover-cap sensitivity for historical and dynamic LO/LS portfolios. Bars compare
+annualized implementation turnover (left), annual modeled costs under a 10-basis-point linear cost
+rate (middle), and average gross exposure (right) for the baseline and 1% daily target-adjustment
+caps. All plotted quantities are percentages; a larger turnover allowance does not guarantee a higher
+net return.
+29
+simulation settings. These results do not establish convergence of simulated tail losses or of the
+unconstrained optimal portfolio.
+Changing the moving estimation window gave a less uniform pattern (Appendix Table A13).
+The shorter window generally had lower matched realized returns, while the longer-window results
+varied by portfolio objective and investment bounds. A shorter history emphasizes more recent
+observations but offers less data for estimating volatility and dependence; a longer history changes
+that balance. The experiment does not identify a uniformly preferable window length. Nor do
+the one-at-a-time tests cover every combination of trading costs, rebalancing schedules, marginal
+models, or dependence specifications.
+5 Discussion
+The matched comparison shows why differences in estimated return distributions need not produce
+similarly large differences in realized portfolio outcomes. The historical and conditional frontiers
+displayed different estimated return–risk opportunities, yet the restrictive adjustment rule often
+kept their subsequent holdings close. This finding does not establish that the underlying forecasts
+were equally accurate: it shows how a common trading restriction shaped the portfolios that could
+be constructed from them.
+Historical inputs generally had higher observed reward–risk ratios, especially in several tangent
+strategies (Table 1). Differences in downside risk were less consistent. A minimum-risk objective
+can favor holdings with lower modeled loss exposure but also less participation in positive market
+returns, while a tangent objective seeks a higher expected excess return relative to a risk measure.
+The outcomes in Tables 4 and 6 are consistent with these portfolio-objective tradeoffs. They do not
+imply that historical returns provided better forecasts in general.
+The paired bootstrap results also limit the inference. Some unadjusted intervals excluded zero,
+but none of the comparisons remained significant after adjustment for multiple testing. The absence
+of adjusted rejections is not evidence that the methods are equivalent. Moreover, the bootstrap used
+the realized return series from already-optimized portfolios rather than repeating the full estimation
+and portfolio-selection exercise within each resample. Its uncertainty statements therefore apply to
+the observed strategy histories under the stated resampling design.
+Implementation adds a separate consideration. The baseline rule limited changes between
+successive target weights, but market movements continually altered the proportions actually
+held. Maintaining the targets could therefore require appreciable rebalancing even while target
+adjustments were small (Table 5 and Figure 11). When the adjustment allowance was relaxed,
+portfolio concentration, short exposure, turnover, and performance responded differently across
+objectives. The return-input comparison consequently depended on the investment rule used to
+translate estimated preferences into holdings.
+The sensitivity results support this interpretation but do not isolate a single causal mechanism.
+Changing scenario counts or seeds had relatively little effect under the baseline cap, whereas the
+effect of a looser cap was more substantial for several strategies; changing the estimation window
+produced mixed outcomes. These comparisons concern the tested settings and sample, and should
+not be extended to other trading restrictions or models without further evaluation.
+Several limitations matter for investment use. The Yahoo Finance price adjustments were
+30
+not independently reconstructed. Reported returns used next-session, close-to-close attribution
+rather than observed executable trades, and transaction costs were modeled without market impact,
+variable spreads, or borrowing and financing costs. The conditional copula permitted joint-tail
+dependence but was not tested for predictive loss calibration. Numerical checks verified feasibility
+and stability at representative decisions, not global optimality across the full path. The single ETF
+universe and evaluation period further limit generalization.
+6 Conclusions
+This paper compared historical moving-window returns with conditional scenario inputs for multi-
+asset ETF optimization under matched portfolio objectives and investment rules. Historical portfolios
+generally had higher realized reward–risk ratios over the evaluation period, but none of the paired
+differences remained significant after adjustment for multiple testing. Conditional scenarios did not
+consistently improve realized downside-risk measures. These findings describe outcomes under the
+specified data and trading conventions, rather than a general ranking of forecasting methods.
+The portfolio implementation results offer the main practical interpretation. A tight constraint on
+changes between target allocations limited the effects of different return inputs on realized holdings,
+while maintaining those allocations still required trades as market prices changed. Relaxing that
+constraint altered trading activity, exposures, and some realized returns. For evaluating portfolio
+risk management, the choice of return inputs should therefore be considered together with the limits
+and costs of implementing the resulting allocations.
+Author Contributions: Conceptualization, A.A.M., W.B.L., S.T.R. and F.J.F.; methodology,
+A.A.M., A.J., W.B.L. and S.T.R.; software, A.A.M. and N.A.; validation, A.A.M., A.J. and N.A.;
+formal analysis, A.A.M., A.J. and N.A.; investigation, A.A.M., A.J. and N.A.; resources, S.T.R.
+and F.J.F.; data curation, A.A.M.; writing—original draft preparation, A.A.M. and N.A.; writing—
+review and editing, A.J., N.A., W.B.L., S.T.R. and F.J.F.; visualization, A.A.M.; supervision,
+W.B.L., S.T.R. and F.J.F.; project administration, S.T.R. and F.J.F.
+Funding: This research received no external funding.
+Institutional Review Board Statement: Not applicable.
+Informed Consent Statement: Not applicable.
+Data Availability Statement: The ETF adjusted closing-price series are obtained from Yahoo
+Finance. The source series are subject to the data provider’s terms. Derived portfolio statistics,
+supplementary results and analysis code may be requested from the corresponding author, subject
+to applicable sharing permissions.
+Conflicts of Interest: The authors declare no conflicts of interest.
+31
+A Data and Supplementary Materials
+Table A1 records the ETF universe used in the analysis. ETF categories are descriptive classifications
+and not look-through estimates of fund asset allocations.
+Table A1: The 30 U.S.-listed ETFs used in the analysis.
+Ticker ETF Broad category
+VT Vanguard Total World Stock Globa

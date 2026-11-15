@@ -370,5 +370,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-14"
+ },
+ {
+  "id": "h33",
+  "date": "2026-11-15",
+  "query": "temperature scaling ensemble forecasts financial time series",
+  "why": "Need academic support for whether temperature scaling can improve calibration of my range forecast ensemble.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

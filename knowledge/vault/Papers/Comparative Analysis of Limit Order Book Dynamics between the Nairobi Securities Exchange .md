@@ -13,7 +13,7 @@ The paper finds that Nairobi’s limit order book is less liquid, has wider spre
 The study focuses on a frontier equity market and provides no direct insight into NASDAQ/S&P futures, options, or volatility trading.
 
 ## Concepts
-[[limit order book]], bid‑ask spread, order‑flow toxicity, liquidity resiliency, [[market microstructure]]
+[[limit order book]], [[bid‑ask spread]], order‑flow toxicity, liquidity resiliency, [[market microstructure]]
 
 
 Part of [[Research engine]]

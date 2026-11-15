@@ -1,5 +1,49 @@
 [
 {
+"title": "Conditional Deep L\u00e9vy Models for Exotic Derivatives: History-Aware Path Generation and P-Q Payoff Diagnostics",
+"learned": "The authors created a deep generative model (DLPM) that produces realistic equity-index price paths conditioned on recent history and contract state, achieving better statistical scores than Gaussian or bootstrap baselines.",
+"concepts": [
+"deep generative models",
+"alpha\u2011stable L\u00e9vy noise",
+"conditional U\u2011Net",
+"CRPS",
+"P\u2011Q payoff diagnostic"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.1145/3858063.3858821",
+"date": "2026-11-15"
+},
+{
+"title": "Towards Robust Reinforcement Learning Market Making: Lessons from Loss Function Experimentation",
+"learned": "Adding explicit penalties for large inventory and low cash to the RL loss function makes market\u2011making agents more profitable and longer\u2011lasting than pure profit\u2011maximisation, while also tightening the bid\u2011ask spread.",
+"concepts": [
+"RL market making",
+"loss function design",
+"inventory penalty",
+"cash penalty",
+"bid\u2011ask spread"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://arxiv.org/abs/2611.09012v1",
+"date": "2026-11-15"
+},
+{
+"title": "Risk-Sensitive Reinforcement Learning for an Options Market Maker: An Empirical Study with Real S&P 500 Options",
+"learned": "Training a reinforcement\u2011learning hedger on real S&P\u202f500 option data gives a modest (~3%) reduction in CVaR\u201195 tail loss versus plain delta hedging, with a larger (~9%) benefit in volatile, falling markets but a 7\u201110% penalty in rising markets. The learned policy keeps a short net delta when the portfolio is negatively\u2011delta, especially after price drops.",
+"concepts": [
+"distributional RL (TD3)",
+"CVaR tail\u2011risk metric",
+"state\u2011dependent hedge ratio",
+"empirical vs. simulated training environments"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://arxiv.org/abs/2611.10956v1",
+"date": "2026-11-15"
+},
+{
 "title": "MODEL ADOPTION #4465: REJECT \u2014 LEDGER BENCH: Apply filter: Session = OFF_SESSION \u2014 improves win rate from 31.5% to 41.9% \u2014 E8 Intelligence Research",
 "learned": "The abstract argues that adding an OFF_SESSION filter to the Ledger Bench model only artificially inflates win rate in a short backtest and likely harms overall performance.",
 "concepts": [

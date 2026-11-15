@@ -1,0 +1,820 @@
+Mitigating Sequence-of-Returns Risk with Regime-
+Switching Asset Allocation: A Comparison of
+Econometric and Deep Learning Models in Portfolio
+Decumulation
+Tom Maurer 
+IU Internationale Hochschule
+Christian Müller-Kett 
+IU Internationale Hochschule
+Thomas Zöller 
+IU Internationale Hochschule
+Research Article
+Keywords: Regime-switching, Dynamic asset allocation, Sequence-of-returns risk, Econometrics, Deep
+learning, Stationary bootstrap
+Posted Date: November 9th, 2026
+DOI: https://doi.org/10.21203/rs.3.rs-11243482/v1
+License:   This work is licensed under a Creative Commons Attribution 4.0 International License.  
+Read Full License
+Additional Declarations: No competing interests reported.
+Mitigating Sequence-of-Returns Risk with
+Regime-Switching Asset Allocation: A Comparison
+of Econometric and Deep Learning Models in
+Portfolio Decumulation
+Tom Maurer
+ 1*, Christian M¨uller-Kett
+ 1 and Thomas Z¨oller
+ 1
+1Data Science, IU Internationale Hochschule, Juri-Gagarin-Ring 152,
+Erfurt, 99084, Thuringia, Germany.
+*Corresponding author(s). E-mail(s): mail@maurer-tom.de;
+Contributing authors: christian.mueller-kett@iu.org;
+thomas.zoeller@iu.org;
+Abstract
+Retirement portfolios under regular withdrawals face sequence-of-returns risk:
+early losses can exhaust capital even when average returns are adequate. We
+examine whether regime-switching dynamic asset allocation mitigates this risk
+for a 60/40 stock-bond portfolio, and whether deep learning identiﬁes regimes
+better than classical econometrics. Five models (a Markov-switching model, a
+multivariate and a univariate Gaussian hidden Markov model, an LSTM, and an
+encoder-only Transformer) are compared under identical data, tuning, and walk-
+forward validation. Their signals, net of transaction costs, feed 10,000 stationary-
+bootstrap retirement paths in three withdrawal scenarios. At 4.0% the MSM, the
+univariate HMM, and the LSTM cut the depletion rate from 3.30% to 0.57%,
+0.60%, and 0.60% with disjoint Wilson intervals; at 6.0% only the LSTM reduces
+it (17.01% against 33.04%), the univariate ﬁlters raising it to about 49% as
+their return sacriﬁce becomes the dominant ruin cause, and the multivariate
+HMM raising it in every scenario. Only the econometric models turn defensive
+in all ﬁve crisis windows; neither network identiﬁes regimes more accurately,
+and the LSTM holds the highest median terminal capital by staying invested
+rather than by timing regimes. Classiﬁcation quality and search diagnostics do
+not predict decumulation value. Regime-switching allocation in decumulation is
+a state-contingent tail hedge: model choice determines the protected risk proﬁle,
+and above a critical withdrawal rate the premium exceeds the payout.
+1
+Keywords: Regime-switching, Dynamic asset allocation, Sequence-of-returns risk,
+Econometrics, Deep learning, Stationary bootstrap
+JEL Classiﬁcation: G11 , G17 , C45 , C58
+1 Introduction
+Pay-as-you-go pension systems in aging societies face sustained demographic pressure,
+and a growing share of retirement income must be ﬁnanced from individually accu-
+mulated capital (Organisation for Economic Co-operation and Development, 2024).
+Market risk thereby shifts into the decumulation phase, in which households withdraw
+from a portfolio instead of contributing to it. Under regular withdrawals, portfolio
+outcomes become path dependent: two return sequences with an identical mean can
+produce sharply diﬀerent terminal wealth and ruin probabilities, because losses real-
+ized early in retirement interact with continued withdrawals and permanently shrink
+the capital base from which any recovery must compound (Pfau, 2013; Soni, 2024).
+This sequence-of-returns risk (SORR) is invisible to mean-variance summary statistics
+and only partially addressed by withdrawal-side rules such as the 4% rule of Bengen
+(1994). On the allocation side, the 60/40 stock-bond portfolio is the conventional refer-
+ence allocation for retirement decumulation. Its risk containment, however, rests on a
+negative stock-bond correlation that is itself regime dependent: during the 2022 mon-
+etary tightening both asset classes lost value simultaneously, and the diversiﬁcation
+underlying the 60/40 design failed precisely when it was needed (ˇSiki´c, 2025).
+A static allocation cannot respond to such state changes by construction; it holds
+the same risk exposure in a calm bull market and in the early stage of a drawdown
+that may be irreversible for a decumulation portfolio. Regime-switching models oﬀer
+a data-driven alternative. Following Hamilton (1989), returns can be described as
+realizations of a small number of latent market regimes, and regime inference matters
+for portfolio choice (Ang & Bekaert, 2004). Regime-switching dynamic asset allocation
+(DAA) operationalizes this idea: a model estimates the probability of a bear regime,
+and the portfolio moves into a risk-free asset whenever this probability exceeds a
+threshold. Economically, such a strategy acts as insurance against bear phases arriving
+early in retirement, paying a premium in transaction costs and missed recoveries in
+exchange for a thinner ruin tail.
+Whether this insurance works, and which model class provides it best, sits at the
+intersection of three literatures that rarely meet. The SORR literature concentrates
+on withdrawal rules and partial annuitization while keeping the allocation essentially
+static (Bengen, 1994; Clare et al., 2021; Soni, 2024). The regime-based allocation
+literature documents drawdown reduction from regime and trend signals (Li & Mulvey,
+2021; Shu et al., 2024), and the deep learning literature nonlinear forecasting gains
+(Fischer & Krauss, 2018; Taneva-Angelova & Granchev, 2025), but both evaluate on
+single historical backtests, without withdrawal dynamics or ruin measures. To our
+knowledge, no study has compared econometric and deep learning regime models under
+identical conditions using decumulation-native outcome metrics.
+2
+This paper addresses that gap along two research questions. RQ1: Does regime-
+switching DAA reduce the ruin probability of a 60/40 portfolio in the decumulation
+phase? RQ2: Do deep learning models identify regime switches more accurately than
+classical econometric models, and does higher classiﬁcation quality translate into better
+decumulation outcomes? Ruin is measured by the depletion rate, the share of simulated
+paths on which capital is exhausted, with maximum drawdown (MDD) as a secondary
+metric.
+We compare ﬁve regime models under fully identical conditions: a Markov-
+switching model (MSM), a multivariate Gaussian hidden Markov model (HMM), a
+univariate HMM included as an ablation, a long short-term memory network (LSTM)
+(Hochreiter & Schmidhuber, 1997), and an encoder-only Transformer (Vaswani et
+al., 2017), the latter two trained on Pagan–Sossounov bull/bear labels (Pagan &
+Sossounov, 2003). All models emit daily bear-regime probabilities for a 60/40 S&P
+500/long-term Treasury portfolio over 1990 to 2026 and are validated in a walk-forward
+design (10-year training and 12-month test windows; 26 folds spanning 25.7 out-of-
+sample years), with hyperparameters tuned on development folds only. The resulting
+allocation signals, net of transaction costs, feed a retirement simulation of 10,000
+stationary-bootstrap return paths (Politis & Romano, 1994) in each of three with-
+drawal scenarios, evaluated with Wilson conﬁdence intervals on depletion rates and
+paired Wilcoxon tests on path-wise outcomes.
+Three ﬁndings emerge. First, regime-switching DAA reduces ruin risk condition-
+ally on the withdrawal rate rather than on the model class: at 4.0% the univariate
+econometric ﬁlters cut the benchmark’s depletion rate by a factor of ﬁve to six, at
+6.0% they raise it by about half, as their return sacriﬁce becomes the dominant ruin
+cause. Second, the two networks separate: the LSTM lowers the depletion rate in all
+three scenarios and holds the highest median terminal capital, but by staying invested
+rather than by timing regimes, whereas the Transformer reacts late or not at all in the
+recent crisis windows and exceeds the benchmark’s depletion rate at the two higher
+rates. Third, classiﬁcation quality and search diagnostics do not predict decumulation
+value: the model with the ﬁeld’s best-equal precision-recall ranking and its best search
+diagnostics ranks second worst on depletion. Regime-switching DAA is therefore a
+state-contingent tail hedge bounded by the withdrawal rate.
+The paper makes four contributions. First, it provides the ﬁrst systematic compar-
+ison of econometric and deep learning regime models in a decumulation setting under
+identical conditions. Second, it delivers distribution-level evidence, based on 10,000
+bootstrap paths per scenario with formal inference, for the withdrawal-rate dependence
+of the tail-versus-median asymmetry of regime-based allocation. Third, the univariate
+HMM ablation disentangles architecture eﬀects from feature-set eﬀects and overturns
+the intuition that richer multivariate inputs improve regime detection; it also shows
+the two univariate speciﬁcations to be one piece of evidence rather than two, agreeing
+on 99.75% of out-of-sample days. Fourth, the complete pipeline, from data ingestion
+to evaluation, is released as an open-source artifact for replication and extension.
+The remainder of the paper is organized as follows. Section 2 reviews related work
+on regime identiﬁcation, deep learning for ﬁnancial time series, and SORR. Section 3
+describes the data, the ﬁve models, the walk-forward and tuning protocol, and the
+3
+retirement simulation. Section 4 reports classiﬁcation quality, crisis-window perfor-
+mance, depletion results, and robustness checks. Section 5 discusses mechanisms,
+implications, and limitations, and Section 6 concludes.
+2 Related Work
+Econometric regime models form the established reference paradigm for regime-based
+asset allocation. Building on the Markov-switching framework of Hamilton (1989) and
+the hidden Markov model with its standard estimation machinery (Rabiner, 1989), a
+substantial body of work shows that latent bull and bear states can be estimated reli-
+ably enough to yield economically exploitable allocation signals (Arimond et al., 2026;
+Fons et al., 2021; Wang et al., 2020). Collin-Dufresne et al. (2020) ﬁnd that actively
+timing volatility and liquidity regimes dominates static strategies, and Erlwein-Sayer
+et al. (2020) show that ﬁlter-based HMM portfolios can beat buy-and-hold bench-
+marks when time-varying correlations are modeled explicitly. Closest to our allocation
+design, Shu et al. (2024) report a reduction of the maximum drawdown from 55%
+to 27% relative to a passive benchmark using regime signals from a statistical jump
+model. The limits of the paradigm are equally well documented: parametric distribu-
+tional assumptions, delayed reactions to abrupt nonlinear breaks (Agal et al., 2025;
+Jung et al., 2022), and unstable transition-probability estimates in turbulent phases
+(Dua & Tuteja, 2021). Throughout this literature, performance is measured with
+accumulation-oriented metrics on single historical backtests.
+The deep learning literature follows a trajectory from recurrent to attention-based
+architectures. LSTM networks established the case for deep learning in ﬁnancial pre-
+diction (Fischer & Krauss, 2018), and recent variants combine them with diﬀerentiable
+risk-budgeting layers, reporting drawdown reductions of around 40% against classi-
+cal methods (Agal et al., 2025). Comparative evidence is mixed, however: Taguchi
+et al. (2022) ﬁnd that econometric regime models capture market structure better
+while recurrent networks predict returns more accurately. Transformer architectures
+are the current focus. Taneva-Angelova and Granchev (2025) report the lowest
+volatility-forecasting errors and the strongest generalization across structural breaks
+for Transformer models, and Song et al. (2025) ﬁnd that an adaptive Transformer
+framework outperforms ARIMA and GARCH benchmarks by a wide margin. Two
+caveats recur: deep models risk memorizing historical idiosyncrasies rather than gen-
+eralizable regime structure (Kumar et al., 2026; Rahaman, 2026), and results are
+sensitive to hyperparameter choices (Agal et al., 2025). A smaller hybrid strand com-
+bines both paradigms, for example recurrent networks that learn no-trade zones around
+HMM allocations (Li & Mulvey, 2021), HMM-based allocation within a generative
+forecasting framework (Oliveira & Costa, 2025), and jump models combined with
+gradient boosting for crash protection (Shu et al., 2025). These are isolated model
+combinations, though: systematic comparisons of the econometric and deep learning
+paradigms under identical data, labels, and backtest protocols remain rare, and none
+of the cited studies evaluates regime signals in a decumulation setting.
+The SORR literature, by contrast, engages directly with the decumulation problem
+introduced in Section 1 but treats the allocation as essentially given. Its instruments
+4
+are withdrawal rules and insurance products: revisions of the 4% rule showing that
+static withdrawal rates raise ruin risk under changed market conditions (Leggio et al.,
+2024), dynamic withdrawal schemes that match observed retiree behavior (Kieren &
+Weber, 2022), and partial annuitization as a buﬀer against early losses (Soni, 2024).
+Clare et al. (2021) are an exception on the allocation side, showing that trend-following
+ﬁlters reduce drawdowns and stabilize sustainable withdrawal rates, extended to the
+full life cycle in Clare et al. (2025). Common to these approaches is that they respond
+to SORR through time (glide paths), rules (withdrawal rates), or products (annuities),
+without using the current market state as an input. Jung et al. (2022) provide the
+only regime-based exception, an HMM framework for surplus optimization in occupa-
+tional pension plans, which targets institutional funding ratios rather than household
+ruin risk. Model-based regime identiﬁcation combined with withdrawal dynamics and
+formal inference on ruin probabilities is, to our knowledge, absent from this strand.
+A ﬁnal issue cuts across the supervised branch of the comparison: bull and
+bear regimes have no unique ground truth. Rule-based dating algorithms such as
+Pagan and Sossounov (2003), which adapt the Bry-Boschan business-cycle dating
+(Bry & Boschan, 1971) to ﬁnancial prices, impose minimum phase lengths and
+amplitudes; threshold-based criteria such as Lunde and Timmermann (2004) trigger
+regime changes on cumulated returns; business-cycle chronologies like the NBER’s
+date the real economy rather than the market, and even their real-time reproduction
+is nontrivial (Chauvet & Piger, 2008; Harding & Pagan, 2002). The choice among
+these constructs determines which crises exist in a supervised training signal at all;
+minimum-duration ﬁlters, in particular the four-month minimum phase used below,
+can exclude short, V-shaped crashes by construction. This construct dependence is
+directly relevant for the deep learning results reported in Section 4.
+Relative to these strands, the present study diﬀers in three respects. First, it com-
+pares ﬁve regime models spanning both paradigms under fully identical conditions:
+the same data, the same label deﬁnition for the supervised models, the same walk-
+forward protocol, tuning budget discipline, and cost assumptions. Second, it evaluates
+the resulting strategies with decumulation-native metrics, at the level of the outcome
+distribution and with formal inference, rather than with accumulation metrics on the
+single realized history. Third, it links classiﬁcation quality, signal dynamics, and port-
+folio outcomes within one design, including an ablation that separates architecture
+eﬀects from feature-set eﬀects. The study thereby connects the regime-allocation, deep
+learning, and SORR strands whose intersection the literature has left unoccupied.
+3 Data and Methodology
+3.1 Data
+The empirical basis consists of daily adjusted closing prices from Yahoo Finance,
+retrieved through the yfinance interface, version 1.5.1 (Aroussi, 2026), and covering
+January 2, 1990 to July 31, 2026, or 9,211 trading days after cleaning. The universe is
+restricted to the two instruments of the benchmark introduced in Section 1, the S&P
+500 index (ˆGSPC) for equity and the Vanguard Long-Term Treasury Fund (VUSTX)
+for long-duration bonds, with the 13-week Treasury bill rate (ˆIRX) as the risk-free
+5
+rate and the return on cash, and the CBOE Volatility Index (ˆVIX) and the 10-
+year Treasury yield (ˆTNX) entering the feature set only. The feature frame supplied
+to the models begins on October 16, 1990 and holds 9,012 rows, because the 200-
+day moving average consumes the earliest observations. The sample spans multiple
+complete market cycles, including the ﬁve crisis windows of Section 3.5; the two-asset
+design isolates the eﬀect of the regime signal on the allocation decision.
+Daily log returns are computed on adjusted closes, rt = ln(At/At−1). The bench-
+mark return is r60/40 t = 0.6 rGSPC t + 0.4 rVUSTX t with constant weights, and the cash
+position accrues at rcash t = ln (1 + IRXt/(100 · 252)). From these series, six model fea-
+tures are derived: the 60/40 log returns, a 10-day rolling mean return as momentum,
+the normalized distance to the 200-day simple moving average, the 20-day rolling
+standard deviation of returns, the VIX, and the term spread, deﬁned as the 10-year
+minus the 3-month yield. Pairwise Pearson correlations stay below |r| = 0.6 for all
+feature pairs except realized versus implied volatility (r = 0.80), and the term spread
+is nearly orthogonal to all other features (maximum |r| = 0.14). The implications of
+the collinear volatility block for the multivariate HMM are taken up in Section 4.
+Table 1 reports descriptive statistics and augmented Dickey-Fuller (ADF) tests.
+The return series show the familiar deviations from normality, with excess kurtosis
+between 4.5 and 10.9 and negative skewness for the equity and portfolio returns, which
+motivates the drawdown- and downside-oriented evaluation metrics used later. The
+ADF test rejects a unit root for all return series and the VIX; the two yield levels are
+non-stationary but enter the feature set only through their diﬀerence. Gaps caused
+by diverging publication calendars of the level series are forward-ﬁlled, and two rows
+without a ﬁll anchor are dropped at the sample start.
+Table 1 Descriptive statistics and augmented Dickey-Fuller (ADF) tests of the daily series,
+January 2, 1990 to July 31, 2026
+Series Mean SD Min Max Skew. Ex. kurt. ADF p
+S&P 500 returns 0.00033 0.01135 −0.1277 0.1096 −0.36 10.86 −17.56 < 0.001
+VUSTX returns 0.00021 0.00725 −0.0605 0.0654 −0.03 4.52 −18.72 < 0.001
+60/40 returns 0.00028 0.00688 −0.0662 0.0584 −0.28 7.65 −21.01 < 0.001
+VIX (level) 19.45 7.74 9.14 82.69 2.21 8.75 −7.32 < 0.001
+10Y yield (level) 4.25 1.93 0.50 9.09 0.33 −0.63 −2.34 0.161
+3M yield (level) 2.72 2.20 −0.11 7.99 0.19 −1.25 −2.35 0.157
+Note: Returns are daily log returns on adjusted closing prices; the VIX is in index points and yields
+are in percentage points. N = 9,211 trading days. ADF: test statistic against a 5% critical value of
+−2.86; the null hypothesis is a unit root. Data: Yahoo Finance.
+An automated quality gate governs ingestion. Observed coverage against a week-
+day calendar is at least 96.2% per series with a maximum gap of one trading day,
+consistent with exchange holidays rather than data loss; raw missing-value shares stay
+below 0.5% per series; and the largest daily moves coincide with documented cri-
+sis days, supporting the plausibility of the adjustment chain. Yahoo Finance allows
+6
+license-free reproduction of the entire pipeline; its residual measurement risk relative
+to commercial vendors is a limitation (Section 5).
+3.2 Regime identiﬁcation models
+All ﬁve models solve the same task: at each trading day t, they map the informa-
+tion available up to t to a probability pt = P (St = bear | Ft) for a binary regime
+variable St ∈ {bull, bear}. The two-regime space is deliberate. It matches the binary
+risk-on/risk-oﬀ character of the allocation decision in decumulation and avoids the
+fragmentation of ﬁner regime partitions. Each probability stream is converted into an
+allocation signal by a model-speciﬁc threshold θ: the portfolio switches to the defen-
+sive position when pt ≥ θ. The threshold is treated as a hyperparameter and tuned
+jointly with each model (Section 3.3) rather than ﬁxed at 0.5, which places models
+with diﬀerently calibrated probability scales on an equal footing.
+The Markov-switching model follows Hamilton (1989) as a two-state speciﬁcation
+with switching mean and switching variance, estimated on the univariate 60/40 return
+series:
+r60/40 t = µSt + εt, εt ∼ N ( 0, σ2 St ) , P (St = j | St−1 = i) = pij . (1)
+The switching variance is essential given the volatility clustering documented in
+Section 3.1. Within each training window, the bear regime is identiﬁed as the state
+with the larger estimated variance, using training parameters only. Out-of-sample
+probabilities are ﬁltered probabilities P (St | r1, . . . , rt) from the forward recursion;
+smoothed probabilities are never used, so the signal at day t contains no look-ahead.
+The hidden Markov model shares the latent ﬁrst-order Markov chain but emits a
+multivariate observation vector with Gaussian emissions (Rabiner, 1989):
+xt | St = k ∼ N (µk, Σk) , xt =
+(
+r60/40 t , VIXt, Spreadt
+)′
+, (2)
+where Σk is state speciﬁc and restricted to be diagonal, selected by the hyperpa-
+rameter search over full, diagonal, and tied variants. The feature subset combines
+price dynamics, implied volatility, and the macroeconomic term spread. Estimation
+uses the Baum-Welch algorithm on observations scaled by median and interquartile
+range ﬁtted on the respective training window, with ten random restarts per training
+window, keeping the ﬁt with the highest training likelihood to tame the initializa-
+tion sensitivity of expectation maximization; the same restart count applies inside
+the hyperparameter search. The bear state is identiﬁed as the state whose training
+days exhibit the higher realized return volatility under the decoded state sequence,
+again using training information only, which keeps the rule identical across covari-
+ance parametrizations and speciﬁcations; ﬁltered inference follows the MSM protocol,
+with the training window serving as burn-in context for the forward pass on the test
+window. The univariate HMM ablation is identical in every respect except that the
+observation vector reduces to the 60/40 return, which is exactly the input space of the
+MSM; it ﬁxes a state-speciﬁc variance and searches only the threshold (Appendix A).
+7
+The resulting design separates architecture from information: MSM against univariate
+HMM, and univariate against multivariate HMM.
+The two deep learning models are trained as supervised classiﬁers on rule-based
+bull/bear labels generated by the Pagan and Sossounov (2003) dating algorithm from
+the S&P 500 price path (8-month turning-point window, 4-month minimum phase, 16-
+month minimum cycle, with the standard 20% amplitude override). Pagan–Sossounov
+is an ex-post algorithm whose centered window revises recent labels once later prices
+arrive. Labels are therefore recomputed at each fold cutoﬀ from the history avail-
+able through it and aligned to the training window, so no test-period price enters a
+training target; this changes 628 fold-training rows relative to one label series com-
+puted on the full sample. Six candidate schemes (MSM- and HMM-implied states,
+Pagan–Sossounov, peak-to-trough, Lunde–Timmermann, and the NBER chronology)
+were compared ex post on the full sample, as a descriptive diagnostic rather than as
+the training construction. The three rule-based schemes agree closely with each other
+and with the NBER chronology (Pagan–Sossounov κ = 0.56 on 91% of days, peak-
+to-trough 0.57 and 91%, Lunde–Timmermann 0.50 and 90%), so the choice within
+this near-congruent block does not drive the outcome; Pagan–Sossounov was taken
+from it as the established market-dating algorithm with explicit duration and ampli-
+tude criteria. HMM-implied labels were rejected for fragmentation (64%, κ = 0.21);
+Appendix B reports the full matrix. Both networks receive the same six features of
+Section 3.1, scaled by median and interquartile range ﬁtted on the respective train-
+ing window only; the sequence length is a tuned hyperparameter and diﬀers between
+them (100 trading days for the LSTM, 220 for the Transformer). Both are trained
+with a class-weighted binary cross-entropy whose positive-class weight
+√
+nbull/nbear
+compensates the scarcity of bear days while damping the overweighting a linear cor-
+rection would induce (Arimond et al., 2026), and both emit a bear probability that is
+thresholded exactly like the econometric ones.
+The LSTM (Hochreiter & Schmidhuber, 1997) serves as the recurrent baseline,
+in the role it has established in ﬁnancial prediction (Fischer & Krauss, 2018): two
+stacked LSTM layers of 32 and 256 units with dropout of 0.25, followed by a dense
+sigmoid head. The Transformer implements an encoder-only architecture (Vaswani et
+al., 2017): a linear projection of the six-dimensional input into an embedding space of
+dimension 128, sinusoidal positional encoding, four encoder layers with eight attention
+heads and a feed-forward width of 32, dropout of 0.05, and a linear head on the
+representation of the ﬁnal time step. All architecture sizes, window lengths, learning
+rates, and thresholds are outcomes of the hyperparameter optimization described in
+Section 3.3; search spaces and ﬁnal conﬁgurations are reported in Appendix A.
+3.3 Allocation rule, backtesting, and hyperparameter
+optimization
+The allocation rule is binary. On a defensive signal (pt ≥ θ), the portfolio holds 100%
+cash accruing rcash t ; otherwise it holds the full 60/40 mix. Signals are executed with a
+delay of one trading day, so the position on day t+1 reﬂects only information available
+at t. Each switch incurs an assumed transaction cost of 10 basis points of portfolio
+value; the sensitivity of all results to this parameter is examined over a range from
+8
+0 to 200 basis points in Section 4.4. Out-of-sample evaluation follows a rolling walk-
+forward protocol (Figure 1): a 10-year training window, the subsequent 12 months as
+the test window, and a 12-month step, yielding 26 non-overlapping test windows from
+October 2000 to July 2026 (6,484 trading days, 25.7 years). All ﬁve models, including
+their labels, scalers, and bear-state identiﬁcation, are re-estimated in every fold on
+the respective training window (Section 3.2). The deep learning models additionally
+warm-start from the previous fold’s weights for ten epochs and average the predicted
+probabilities of ﬁve independently seeded trainings per fold, which dampens retraining
+variance; each fold then trains under a model-speciﬁc epoch budget (30 for the LSTM,
+50 for the Transformer) with early stopping on validation loss at a patience of ﬁve.
+Dot-com GFC EU COVID 2022
+1
+5
+10
+15
+20
+25
+Fold
+1990 1995 2000 2005 2010 2015 2020 2025
+development period: folds 1–16 (tuning, test windows until Dec 2016) holdout: folds 17–26
+10-year training window 12-month test window (OOS) crisis window
+Fig. 1 Walk-forward validation scheme: 26 rolling folds of 10-year training windows and non-
+overlapping 12-month out-of-sample test windows, October 2000 to July 2026. The hyperparameter
+search observes only the 16 development folds whose test windows end by December 2016 (dashed
+line); folds 17 to 26 form the selection-free holdout. Shaded bands mark the ﬁve crisis windows of
+Section 3.5: the dot-com, GFC, and EU debt crisis windows fall into the development period, while
+the COVID crash and the 2022 rate shock lie in the holdout.
+Hyperparameters are tuned with Optuna (Akiba et al., 2019) in an inner cross-
+validation that reuses the exact fold generator of the ﬁnal evaluation. The fold
+structure makes one departure from common practice necessary: 20 of the 26 test win-
+dows contain no bear-market day at all and only two a complete Pagan–Sossounov bear
+phase, so a fold-wise median of any metric is nearly blind to crisis behavior. Each trial
+therefore concatenates the daily net out-of-sample returns of its folds into one pooled
+series and maximizes its Martin ratio, the compound annual growth rate divided by
+the Ulcer index (Martin & McCann, 1989). The concatenation is chronologically con-
+tinuous: the lagged signal, the portfolio position, and the transaction cost are carried
+across fold boundaries, so the pooled evaluation is identical to a single backtest on
+the concatenated out-of-sample signal, veriﬁed as bit-identical for all ﬁve models. The
+objective builds its equity path as the exponential of the cumulative pooled log returns,
+so neither the growth rate nor the Ulcer index inherits a volatility drag from the return
+convention. Because the Ulcer index integrates both depth and duration of drawdowns,
+9
+the rare crisis segments drive the selection. The low-dimensional econometric spaces
+(the signal threshold, plus the covariance parametrization for the multivariate HMM)
+are searched exhaustively on a grid of 36, 108, and 36 conﬁgurations, so the selected
+conﬁgurations are global optima within their grids. The seven- and eight-dimensional
+deep learning spaces are searched with a multivariate tree-structured Parzen estimator
+under a ﬁxed seed, with 300 trials for the LSTM and 400 for the Transformer, of which
+the ﬁrst 50 and 60 are random exploration. Trial pruning is disabled: a median pruner
+would eliminate crisis-protective conﬁgurations on the chronologically early, mostly
+bullish folds. The LSTM study completed 300 trials and the Transformer 400, none
+pruned. The search observes only folds whose test window ends by December 2016,
+a development period that includes the dot-com and global ﬁnancial crises, while the
+ﬁnal walk-forward run applies the frozen conﬁgurations to all 26 folds. The COVID
+crash and the 2022 rate shock therefore remain selection-free and test generalization
+to structurally diﬀerent crises.
+The search is accompanied by four validity diagnostics: a convergence review
+combining fANOVA hyperparameter importances with an edge-of-range check, with
+bounds widened and re-run wherever an optimum sat on a boundary; an objective-
+sensitivity analysis across the candidate metrics (Sharpe, Sortino, Calmar, Ulcer,
+maximum drawdown); deﬂated Sharpe ratios (Bailey & L´opez de Prado, 2014)
+together with the probability of backtest overﬁtting, estimated by combinatorially
+symmetric cross-validation (Bailey et al., 2017); and a multi-seed re-evaluation of the
+top deep learning conﬁgurations. Their outcomes are reported alongside the robustness
+results in Section 4.4; search spaces and ﬁnal conﬁgurations are listed in Appendix A.
+3.4 Retirement simulation
+The walk-forward backtest yields one realized out-of-sample path per strategy. For
+SORR, this single path is insuﬃcient: ruin is a tail event whose probability cannot be
+inferred from one realization. For each strategy, the 25.7-year series of daily net out-of-
+sample returns (transaction costs included) and the accompanying regime signals are
+resampled jointly with the stationary bootstrap of Politis and Romano (1994), which
+concatenates blocks of geometrically distributed length with a mean of 20 trading days.
+Blocks of on average roughly one calendar month preserve the short-range autocor-
+relation and the volatility clustering documented in Section 3.1 while still producing
+diverse multi-decade histories, and the joint resampling of returns and signals keeps
+the two aligned, which the withdrawal mechanics below require. Per strategy and sce-
+nario, 10,000 paths of 7,560 trading days (30 years at 252 trading days) are drawn. All
+scenario-strategy combinations share one common random stream (common random
+numbers), which underpins the paired path-wise comparisons of Section 3.5.
+Each path evolves a capital account. Capital compounds with the resampled daily
+return, and every 21 trading days a ﬁxed nominal withdrawal is deducted. An assumed
+liquidity fee of 0.1% applies to withdrawals taken while the portfolio is invested, reﬂect-
+ing the liquidation of fund shares. Capital is absorbing at zero: once exhausted, a path
+remains ruined. The three scenarios in Table 2 span the relevant risk space. Standard
+anchors on the 4.0% withdrawal rate of the safe-withdrawal-rate literature; Aggressive
+10
+keeps the same capital at a stressed 6.0% rate; Low Capital combines a reduced capi-
+tal base with an intermediate 5.0% rate. The 30-year horizon is the standard of that
+literature (Bengen, 1994; Cooley et al., 1998), which keeps the 4.0% anchor directly
+comparable and makes ruin observable at plausible withdrawal rates rather than only
+at an overstretched one. The withdrawals are deliberately non-adaptive: ﬁxed nominal
+amounts isolate the eﬀect of the allocation from the withdrawal-rule eﬀects studied in
+the literature of Section 2, and the sensitivity to the withdrawal rate itself is examined
+in Section 4.4.
+Table 2 Withdrawal scenarios of the retirement simulation
+Scenario Initial capital (EUR) Monthly withdrawal (EUR) Withdrawal rate (% p.a.)
+Standard 500,000 1,666.67 4.0
+Aggressive 500,000 2,500 6.0
+Low Capital 300,000 1,250 5.0
+Note: Fixed nominal withdrawals every 21 trading days over a 30-year horizon (7,560 trading days);
+the withdrawal rate is stated relative to initial capital. A liquidity fee of 0.1% of the withdrawal
+applies when the portfolio is invested on the withdrawal date.
+The primary outcome of the simulation is the depletion rate, the share of the
+10,000 paths on which capital is exhausted before the end of the 30-year horizon.
+It operationalizes the ruin probability of RQ1 at the level of the outcome distribu-
+tion rather than of the single historical realization, and it is the object on which the
+inference of Section 3.5 operates. The second outcome, the path-wise maximum draw-
+down, is measured on the capital path after withdrawals. A depleted path therefore
+registers −100% by construction, and the higher the withdrawal rate, the more the
+mechanical outﬂow dominates the market component. This decumulation drawdown
+is not a pure market-risk statistic, which is why it can rank strategies diﬀerently from
+the maximum drawdown of the realized backtest path in Section 4.1. As a robustness
+check, the entire simulation is repeated with the ﬁxed-length moving block bootstrap
+of K¨unsch (1989), which draws blocks of constant length of 20 trading days. Across
+the 18 scenario-strategy cells, the depletion rate changes by at most 3.88 percentage
+points between the two resampling schemes, the sign of every regime model’s depletion
+diﬀerence against buy-and-hold is preserved in all 15 model-scenario comparisons, and
+the ranking by depletion rate is identical in two of the three scenarios; the stationary
+bootstrap remains the primary speciﬁcation.
+3.5 Evaluation framework
+The two research questions of Section 1 are formalized as one-sided hypotheses at a
+signiﬁcance level of α = 0.05. Both are evaluated in all three withdrawal scenarios and
+reported in full, with the Aggressive scenario retained as the pre-registered headline
+cell, because the scenario grid spans the range over which the ﬁnding changes sign. H1
+operationalizes RQ1: regime-switching DAA reduces SORR relative to the buy-and-
+hold benchmark. It is evaluated on two levels. At the tail, depletion rates are compared
+11
+through 95% Wilson conﬁdence intervals (Wilson, 1927), which remain calibrated for
+proportions near zero where Wald intervals degenerate; disjoint intervals serve as a
+conservative suﬃcient criterion for a signiﬁcant diﬀerence. At the distribution body,
+one-sided paired Wilcoxon signed-rank tests (Wilcoxon, 1945) compare the path-wise
+maximum drawdowns of each model against buy-and-hold on the 10,000 common-
+random-number paths of Section 3.4; these are the decumulation drawdowns deﬁned
+there, not market drawdowns, and the paired design removes the between-history
+variance component from the comparison. H2 operationalizes RQ2: the attention-
+based architecture translates its representational capacity into better decumulation
+outcomes. It is tested by one-sided paired Wilcoxon tests on path-wise terminal cap-
+ital, comparing the Transformer separately against each competing active strategy
+(MSM, multivariate and univariate HMM, and LSTM). Nonparametric tests are cho-
+sen because terminal wealth and drawdown distributions are heavily skewed and, on
+ruined paths, carry a point mass at zero.
+Beyond the hypothesis tests, the evaluation reports three groups of descriptive met-
+rics. At the backtest level, annualized performance and risk ﬁgures (CAGR, volatility,
+Sharpe ratio (Sharpe, 1966), Sortino ratio (Sortino & van der Meer, 1991), max-
+imum drawdown, Calmar ratio, Ulcer index, and time to recovery for drawdowns
+exceeding 5%) summarize the single realized out-of-sample path; the Sharpe and
+Sortino ratios are computed against a zero risk-free rate, since the cash yield already
+enters each strategy’s return series through the allocation rule. Signal-dynamics statis-
+tics (number of regime switches, share of whipsaws, deﬁned as reversals within ﬁve
+trading days, and cumulative transaction costs) quantify the economic cost of sig-
+nal instability. At the classiﬁcation level, precision, recall, and F1 scores against the
+NBER recession chronology (National Bureau of Economic Research, 2023) provide a
+model-independent external reference for regime identiﬁcation. The chronology enters
+through the FRED series USREC of the Federal Reserve Bank of St. Louis, which is a
+monthly 0/1 indicator; it is forward-ﬁlled to daily frequency and reindexed onto the
+trading-day calendar, so every recession day counted in Section 4.1 and Appendix C
+is a forward-ﬁlled monthly value, and the positive class is aligned to month bound-
+aries rather than to daily turning points. Together with the fact that the chronology
+dates the real economy rather than the market (Section 2), this is why it serves as
+a common yardstick across models rather than as an absolute accuracy measure. At
+the crisis level, cumulative return and maximum drawdown are evaluated within ﬁve
+historical windows chosen to span distinct crisis morphologies, complemented by the
+episode-based recovery durations of Section 4.2: the slowly unfolding dot-com bear
+market (2000 to 2002), the global ﬁnancial crisis (2007 to 2009), the externally trig-
+gered EU debt crisis episode with its fast recovery (2011), the V-shaped COVID crash
+(2020), and the 2022 rate shock, in which equities and bonds fell jointly. Because crisis
+metrics are computed on the out-of-sample result path, the dot-com window is trun-
+cated at the start of that path, October 16, 2000. The ﬁrst three windows fall into
+the development period of the hyperparameter search, whereas COVID and the 2022
+episode lie in the selection-free holdout (Section 3.3); crisis behavior in the last two
+windows therefore measures generalization to unseen crisis types.
+12
+4 Results
+This section reports the empirical results in the order of the evaluation framework of
+Section 3.5: classiﬁcation quality and signal stability ﬁrst, then performance in the ﬁve
+crisis windows, the distribution-level decumulation outcomes, and ﬁnally sensitivity
+and robustness checks. All ﬁgures refer to the 25.7 out-of-sample years of the walk-
+forward protocol, net of transaction costs.
+4.1 Classiﬁcation accuracy and signal stability
+Table 3 reports precision, recall, and F1 of the daily bear signals against the NBER
+recession chronology, pooled over the 26 test windows. The MSM and the univari-
+ate HMM detect 92.2% of recession days at a precision of 0.228. The multivariate
+HMM pushes recall to 0.985 at precision 0.200, ﬂagging a bear state on 2,886 of the
+6,485 classiﬁed out-of-sample days against a recession base rate of 9.0%, which is
+close to a constant-alarm classiﬁer; the Transformer sits in the same corner (recall
+0.980, precision 0.243). The LSTM is the only model with a sparse proﬁle, missing
+38% of recession days (recall 0.618) at the highest precision of the ﬁeld (0.329) and
+the highest F1 (0.430). Two patterns stand out. First, the univariate HMM repro-
+duces the MSM almost cell by cell (identical F1 of 0.366, confusion counts diﬀering
+by four days) and the two agree on 99.75% of all out-of-sample days: the regime
+information in the univariate 60/40 return series is architecture-invariant, so the two
+speciﬁcations are one piece of evidence rather than two, and Tables 4 to 7 report them
+separately only for completeness. Augmenting the observation vector with implied
+volatility and the term spread, by contrast, degrades classiﬁcation rather than sharp-
+ening it. Second, the low recall of the LSTM is consistent with its training signal: labels
+that survive the Pagan–Sossounov minimum-phase ﬁlter cover only prolonged bear
+phases, so the network learns those episodes and stays silent otherwise (Section 3.2).
+The Transformer fails in the opposite direction: its tuned threshold of θ = 0.10
+(Table A2) produces near-constant bear signaling, so it is not label-constrained but
+threshold-degenerate. Threshold-independent ROC and precision-recall curves sepa-
+rate the models diﬀerently (Appendix C): the ranking above is partly a thresholding
+eﬀect.
+Table 3 Classiﬁcation of daily bear signals against the NBER recession chronology, pooled over
+the 26 out-of-sample test windows
+Model Precision Recall F1 TN FP FN TP
+MSM 0.228 0.922 0.366 4,071 1,828 46 540
+HMM (multivariate) 0.200 0.985 0.332 3,590 2,309 9 577
+HMM (univariate) 0.228 0.922 0.366 4,075 1,824 46 540
+LSTM 0.329 0.618 0.430 5,162 737 224 362
+Transformer 0.243 0.980 0.389 4,110 1,789 12 574
+Note: Positive class: NBER recession days. TN, FP, FN, and TP count trading days. The NBER
+chronology serves as a common external yardstick across models, not as an absolute accuracy measure
+(Section 3.5).
+13
+Table 4 quantiﬁes signal stability, and the sensitivity of the univariate economet-
+ric models carries a substantial price: the MSM switches regimes 324 times, 48.9%
+of its phases are whipsaws, the median phase lasts ﬁve trading days, and the per-
+switch charges cumulate to 32.4 percentage points; the univariate HMM behaves
+near-identically. Filtered state probabilities of a daily two-state chain contain no intrin-
+sic smoothing mechanism, consistent with the signal instability documented by Dua
+and Tuteja (2021). The multivariate HMM switches 129 times with a mean phase of
+49.9 days, a 40.0% whipsaw share and 12.9 percentage points of cumulated charges,
+so its near-perfect recall is bought with churn rather than with stability. The LSTM
+produces the calmest trajectory of the ﬁeld: 20 switches, no whipsaws, a median phase
+of 80 days and 2.0 percentage points of charges. The Transformer sits at the oppo-
+site extreme, with 52 switches, the highest whipsaw share of all models (50.9%) and
+a three-day median phase, so the smoothing often attributed to sequence models is a
+property of the LSTM conﬁguration (100-day window, θ = 0.30) rather than of deep
+architectures as such. Stability therefore tracks the tuned threshold and the sequence
+length rather than the model paradigm.
+Table 4 Signal stability of the regime models over the out-of-sample period
+Phase (days)
+Model Switches Whipsaws Share (%) Mean Median Costs (pp)
+MSM 324 159 48.9 20.0 5 32.4
+HMM (multivariate) 129 52 40.0 49.9 6 12.9
+HMM (univariate) 318 153 48.0 20.3 5 31.8
+LSTM 20 0 0.0 308.8 80 2.0
+Transformer 52 27 50.9 122.4 3 5.2
+Note: Whipsaws are regime phases shorter than ﬁve trading days (Section 3.5); Share is the whipsaw
+share of all regime phases, that is, of the number of switches plus one. Mean and Median refer to
+regime-phase lengths in trading days. Costs are the per-switch charges of 10 basis points summed
+over all switches in the 25.7 out-of-sample years, stated in percentage points; they are a sum of cost
+rates over time, not a fraction of portfolio value.
+Table 5 consolidates both dimensions into the annualized balance of the single
+realized out-of-sample path. Despite its cost drag, the MSM delivers the best risk-
+adjusted proﬁle of the ﬁeld: a Sharpe ratio of 0.78 against 0.55 for buy-and-hold, a
+maximum drawdown of −10.91% against −35.08%, and an Ulcer index of 3.77 against
+9.05. The LSTM is the only active strategy whose CAGR exceeds the benchmark
+(6.58% against 5.67%), at intermediate risk; the Transformer falls below it at 4.35%,
+and their identical maximum drawdown of −27.71% reﬂects that both remain fully
+invested through the same episode, the 2022 rate shock. The multivariate HMM is
+the weakest active strategy on return (CAGR 2.95%, Calmar 0.17) and the Trans-
+former the weakest in risk-adjusted terms (Calmar 0.16, Ulcer 7.16), because both pay
+switching costs without a return oﬀset. Figure 2 adds the time dimension: the LSTM
+tracks the benchmark through the 2002 and 2022 declines and the Transformer only
+through 2022, while the benchmark’s deepest drawdown occurs in the global ﬁnancial
+14
+crisis. Period-aggregated metrics average crisis and calm phases into a single number;
+the next subsection therefore disaggregates performance into the ﬁve crisis windows.
+Table 5 Annualized out-of-sample performance and risk metrics, net of transaction costs, October
+2000 to July 2026
+Strategy CAGR Vol. Sharpe Sortino MDD Calmar Ulcer
+Buy-and-hold 5.67% 11.16% 0.55 0.72 −35.08% 0.16 9.05
+MSM 4.59% 6.03% 0.78 0.87 −10.91% 0.42 3.77
+HMM (multivariate) 2.95% 5.50% 0.56 0.57 −17.02% 0.17 5.76
+HMM (univariate) 4.56% 6.04% 0.77 0.87 −11.01% 0.41 3.78
+LSTM 6.58% 9.53% 0.72 0.87 −27.71% 0.24 6.36
+Transformer 4.35% 7.39% 0.61 0.63 −27.71% 0.16 7.16
+Note: CAGR: compound annual growth rate; Vol.: annualized volatility; MDD: maximum drawdown;
+Ulcer: Ulcer index in percent. All metrics are computed on the realized walk-forward path of 6,484
+trading days (25.7 years).
+Fig. 2 Out-of-sample drawdown trajectories of all strategies, October 2000 to July 2026. The uni-
+variate econometric strategies (MSM, univariate HMM) remain above roughly −12%, while the deep
+learning strategies incur their deepest drawdowns in the 2022 rate shock.
+4.2 Crisis performance
+Table 6 reports cumulative return and maximum drawdown within the ﬁve crisis
+windows deﬁned in Section 3.5. The MSM and the univariate HMM produce identical
+crisis ﬁgures because their ﬁrst defensive signals coincide in all ﬁve windows, consistent
+with the 99.75% signal agreement of Section 4.1; they are therefore discussed jointly.
+The three slowly unfolding crises diﬀerentiate the models most clearly. In the global
+ﬁnancial crisis, every model turns defensive within the ﬁrst three weeks of October
+15
+Table 6 Crisis-window performance: cumulative net return and maximum drawdown within each
+window
+Dot-com GFC EU debt COVID Rate shock
+Strategy 2000–2002 2007–2009 2011 2020 2022
+Panel A: Crisis return
+Buy-and-hold −15.77% −26.99% +4.10% −8.55% −24.20%
+MSM −2.45% −2.99% +2.32% +0.73% −6.33%
+HMM (multivariate) −1.60% −1.39% +0.01% +0.73% −7.66%
+HMM (univariate) −2.45% −2.99% +2.32% +0.73% −6.33%
+LSTM −4.82% −2.35% +4.10% −8.55% −24.20%
+Transformer +6.04% −1.74% +4.10% −8.16% −24.20%
+Panel B: Maximum drawdown
+Buy-and-hold −24.81% −35.08% −7.24% −18.53% −26.98%
+MSM −6.22% −4.04% −4.74% −1.81% −8.34%
+HMM (multivariate) −8.40% −2.80% 0.00% −1.81% −8.74%
+HMM (univariate) −6.22% −4.04% −4.74% −1.81% −8.34%
+LSTM −19.02% −19.46% −7.24% −18.53% −26.98%
+Transformer −0.08% −4.56% −7.24% −14.25% −26.98%
+Note: Window deﬁnitions: dot-com, March 2000 to October 2002; global ﬁnancial crisis (GFC),
+October 2007 to March 2009; EU debt crisis, July to November 2011; COVID crash, February to
+March 2020; rate shock, January to October 2022. Crisis metrics are computed on the out-of-sample
+path, so the dot-com column eﬀectively starts at its ﬁrst out-of-sample day, October 16, 2000, rather
+than in March 2000. The ﬁrst three windows lie in the development period of the hyperparameter
+search, COVID and the rate shock in the selection-free holdout (Section 3.3). Identical values for
+MSM and univariate HMM result from coinciding allocation signals in all ﬁve windows.
+2007, between 507 and 525 days before the March 2009 trough, and every model beats
+the benchmark: the MSM and the univariate HMM cap the drawdown at −4.04%
+against −35.08%, while the multivariate HMM posts the best crisis return of the
+ﬁeld (−1.39% against −26.99%), ahead of the Transformer (−1.74%) and the LSTM
+(−2.35%). Buy-and-hold needs 780 trading days beyond the trough to recover its prior
+peak. In the dot-com window, all ﬁve models ﬁrst signal on the opening out-of-sample
+day, October 16, 2000, so the window measures containment rather than detection
+speed (Section 3.5). The Transformer stays defensive throughout and ends positive
+(+6.04%, drawdown −0.08%), the best result of the ﬁeld, which both its low threshold
+and the window boundary favor; the univariate pair contains the drawdown at −6.22%;
+the multivariate HMM contains the loss (−1.60%) at a deeper drawdown (−8.40%);
+and the LSTM re-enters during the decline and gives back most of the protection
+(−4.82%, drawdown −19.02%). In the 2022 rate shock, the univariate econometric
+models switch to cash on January 5, 2022, 282 days before the trough, and limit the
+drawdown to −8.34%; the multivariate HMM follows on January 18 and limits it to
+−8.74%, while both deep learning models remain fully invested through the entire
+episode (−24.20% return, −26.98% drawdown, identical to the benchmark).
+The two fast episodes expose both sides of the insurance trade. In the COVID
+crash, all three econometric models turn defensive on February 24, 2020, 23 days
+before the trough, and convert the benchmark’s −18.53% drawdown into a positive
+crisis return (+0.73%, drawdown −1.81%). The Transformer reacts only on March 13,
+16
+ﬁve days before the trough, and takes most of the loss; the LSTM produces no signal
+at all. The EU debt crisis episode shows the premium side, because the recovery falls
+inside the window: the multivariate HMM spends it entirely in cash (zero drawdown,
+but +0.01% against the benchmark’s +4.10%), the univariate models give up part of
+the rebound (+2.32%), and the deep learning models, again without a signal, collect
+the full benchmark outcome.
+The timing pattern behind these outcomes is systematic rather than episodic.
+Only the three econometric models turn defensive in every window, including the two
+outside the hyperparameter development period, because they respond to shifts in the
+return distribution itself and require no labeled precedent: leads before the respective
+trough are 645, 525, 4, 23 and 282 days for the univariate pair and 645, 507, 38, 23
+and 269 days for the multivariate HMM, so the two speciﬁcations diﬀer in cost and
+precision rather than in timing. The supervised models protect in the two prolonged,
+equity-driven bear markets of their development period, exactly the crisis type their
+training labels contain, and the Transformer additionally, late and partially, in the
+COVID window. Their silence elsewhere follows the label construction: the COVID
+crash never enters the label set because the Pagan–Sossounov minimum-phase ﬁlter
+censors a 26-trading-day decline, and the 2022 joint equity-bond decline appears in the
+labels only after the fact, so no trained pattern was available when it unfolded. The
+LSTM’s failures in the holdout windows are therefore at least partly a label artifact
+rather than an architecture failure. Whether the observed protection translates into
+lower ruin probabilities under withdrawals is a distributional question, which the next
+subsection addresses.
+4.3 Sequence-of-returns risk reduction
+In the outcome distributions of Section 3.4, ruin over 30 years is material at the
+Standard scenario’s 4.0% rate: buy-and-hold depletes on 3.30% of paths [2.97, 3.67].
+The MSM (0.57%), the univariate HMM (0.60%), and the LSTM (0.60%) cut this by a
+factor of ﬁve to six with intervals disjoint from the benchmark; the Transformer (2.97%
+[2.65, 3.32]) overlaps it; the multivariate HMM raises it to 8.88%. Median terminal
+capital ranks them diﬀerently: LSTM EUR 1,533,695, buy-and-hold 1,040,838, MSM
+643,115, univariate HMM 634,032, Transformer 566,457, multivariate HMM 230,545,
+so the defensive ﬁlters pay their crisis insurance in foregone compounding.
+Figure 3 places the three scenarios side by side. In the Standard and the Low
+Capital panel the MSM, the univariate HMM, and the LSTM sit left of the buy-and-
+hold reference and the multivariate HMM far to its right; in the Aggressive panel only
+the LSTM remains left of it. The ordering relative to buy-and-hold reverses at the
+stressed one.
+Table 7 quantiﬁes the tail, and the three scenarios do not agree. At the 6.0% Aggres-
+sive rate, buy-and-hold depletes on 33.04% of paths and only the LSTM improves on
+it (17.01%); the MSM, the univariate HMM, the Transformer, and the multivariate
+HMM all exceed it with disjoint intervals. At the 5.0% Low Capital rate the Stan-
+dard ordering returns, with the LSTM, the MSM, and the univariate HMM below
+the benchmark’s 14.07% and the Transformer and the multivariate HMM above it.
+Table 5 identiﬁes the mechanism behind the disagreement: at 6.0% the ruin ordering
+17
+Fig. 3 Depletion rates with 95% Wilson conﬁdence intervals in the three withdrawal scenarios,
+10,000 stationary-bootstrap paths per strategy and scenario. The dashed line marks the buy-and-
+hold reference of the respective panel.
+reproduces the CAGR ordering without exception (LSTM 6.58%, buy-and-hold 5.67%,
+MSM 4.59%, univariate HMM 4.56%, Transformer 4.35%, multivariate HMM 2.95%),
+whereas at 4.0% it does not. Below a critical withdrawal rate, bracketed between 5.0%
+and 6.0% on this sample, the variance reduction of a defensive overlay dominates its
+return sacriﬁce; above it the sacriﬁce itself becomes the dominant cause of ruin. On
+RQ1, H1 at the tail is therefore conﬁrmed for the MSM, the univariate HMM, and
+the LSTM at 4.0% and 5.0%, at 6.0% for the LSTM alone, and rejected with reversed
+sign for the multivariate HMM everywhere and for the MSM, the univariate HMM,
+and the Transformer at 6.0%. The ablation survives in narrower form: the multivariate
+HMM is worse than the univariate one in every scenario, so adding implied volatility
+18
+and the term spread to the observation space destroys rather than dilutes the protec-
+tion. The wider claim that protection derives from univariate return dynamics does
+not survive, because the LSTM protects best at 6.0% on six multivariate features.
+Table 7 Depletion rates with 95% Wilson conﬁdence intervals, 10,000 stationary-bootstrap paths
+per scenario and strategy
+Strategy Standard Aggressive Low Capital
+Buy-and-hold 3.30% [2.97, 3.67] 33.04% [32.12, 33.97] 14.07% [13.40, 14.77]
+MSM 0.57% [0.44, 0.74] 48.97% [47.99, 49.95] 11.82% [11.20, 12.47]
+HMM (multivariate) 8.88% [8.34, 9.45] 89.54% [88.92, 90.12] 51.99% [51.01, 52.97]
+HMM (univariate) 0.60% [0.47, 0.77] 49.73% [48.75, 50.71] 12.46% [11.83, 13.12]
+LSTM 0.60% [0.47, 0.77] 17.01% [16.29, 17.76] 4.43% [4.04, 4.85]
+Transformer 2.97% [2.65, 3.32] 54.89% [53.91, 55.86] 20.18% [19.40, 20.98]
+Note: Depletion rate: share of paths on which capital is exhausted before the end of the 30-year
+horizon; brackets contain 95% Wilson conﬁdence intervals in percent. Scenario deﬁnitions in Table 2.
+H2 addresses the opposite end of the distribution, and it is rejected: in all three
+scenarios the one-sided paired Wilcoxon tests on path-wise terminal capital conﬁrm the
+Transformer only against the multivariate HMM, not against the MSM, the univariate
+HMM, or the LSTM. In the headline Aggressive cell the diﬀerences in medians are
+−9,310 EUR against the MSM (p = 0.951), −1,657 against the univariate HMM
+(p = 0.444), and −615,996 against the LSTM (p > 0.999); against the multivariate
+HMM both medians are zero and the conﬁrmation (p < 0.001) rests on the path-wise
+diﬀerences. The ﬁrst two are failures to reject, not signiﬁcant reversals; only against
+the LSTM is the ordering decisive. The Standard and Low Capital cells repeat the
+pattern, and the highest median terminal capital in all three scenarios belongs to
+the LSTM. With Section 4.1, the answer to RQ2 is negative on both margins. The
+Transformer is not a weak classiﬁer, matching the ﬁeld’s best precision-recall AUC
+(0.40, Appendix C) and its best search diagnostics (Section 4.4); the failure is in
+translating ranking quality into allocation value.
+The second level of H1, path-wise drawdowns, follows the same rate depen-
+dence. Buy-and-hold’s median decumulation drawdowns are −37.53%, −62.00%, and
+−43.41% at 4.0%, 6.0%, and 5.0%. Against them the LSTM improves in all three
+scenarios (+9.29, +23.07, +11.75 pp), the Transformer only at 4.0% (+4.23, −38.00,
+−13.17 pp), the multivariate HMM in none (−20.91, −38.00, −56.59 pp), and the
+MSM and the univariate HMM at 4.0% (+12.63 and +12.23 pp) but not at 6.0%
+(−36.27 and −37.70 pp). At 5.0% the paired test conﬁrms both univariate ﬁlters
+(p = 8.8 × 10−7 and p = 0.0228) although their medians are 2.51 and 3.84 pp deeper
+than the benchmark’s: it compares the path-wise diﬀerence distribution under common
+random numbers, not the marginal medians. Two properties qualify these verdicts.
+The measure is the decumulation drawdown of Section 3.4, so at 6.0% it approaches
+a survival test and its ranking there is a perfect rank correlation with the depletion
+rates above: H1 and the depletion analysis are one ﬁnding there, not two. And it is
+not the realized-path maximum drawdown of Section 4.1, near −11% for the MSM,
+19
+which contains no withdrawals. Two conclusions follow. The protection proﬁle is rate-
+conditional rather than asymmetric across model classes, since at sustainable rates the
+econometric ﬁlters and the LSTM improve both the tail and the typical drawdown,
+at the stressed rate only the LSTM does and the ﬁlters convert their return sacriﬁce
+into ruin. And the decisive quantity is the joint eﬀect of variance reduction and return
+sacriﬁce. The robustness of these ﬁndings to transaction costs, withdrawal rates, and
+the resampling scheme is examined next.
+4.4 Sensitivity and robustness
+Figure 4 varies the 10 basis point cost calibration of the headline results. At zero cost
+the MSM and the univariate HMM end above the benchmark multiple of 4.14, and
+the crossing lies between 0 and 5 basis points, so already the 10 basis point calibration
+converts their signal advantage into the wealth gap documented in Table 5 (multiples
+of 3.18 and 3.16). Their entire return disadvantage is thus a churning artifact, whereas
+their tail protection at sustainable withdrawal rates, measured net of the same costs,
+survives it. The LSTM, switching 20 times in 25.7 years, is nearly cost-invariant and
+stays above the benchmark up to roughly 100 basis points, falling below it by 150; the
+Transformer, with 52 switches and a 50.9% whipsaw share, is below the benchmark at
+every cost level including zero, as is the multivariate HMM, whose gap reﬂects signal
+quality, not execution costs. A causal signal-smoothing layer, a ﬁve-day minimum
+holding period with a conﬁdence buﬀer around the threshold, is implemented but
+disabled in the headline conﬁguration; the reported results are unsmoothed, and the
+churning of the univariate econometric models is a genuine economic property rather
+than a post-processing choice.
+No strategy exhausts its capital when the realized path is decumulated at 3.5%,
+4.0%, and 5.0% with the Standard scenario’s initial capital and liquidity fee. The
+LSTM ends above the benchmark at every rate and the Transformer only at 5.0%,
+while the ordering between the benchmark and the uni

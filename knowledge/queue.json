@@ -46,6 +46,28 @@
   "text_file": "knowledge/papers/arxiv_2611.07287v1.txt"
  },
  {
+  "id": "openalex:W7221018347",
+  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
+  "abstract": "Realized and range-based volatility measures are statistically grounded and empirically well established, while their intraday contributions are conventionally combined using fixed aggregation rules. We propose Neural Realized Measures (NRM), a forecast-supervised aggregation layer that preserves the original volatility primitive while learning how its intraday contributions should be weighted for forecasting. Positive, mean-normalized weights are generated from a fixed Shape-Time-Local-Global (STLG) representation, with uniform weighting exactly recovering the corresponding raw realized measure (RRM). Because NRM remains an explicit weighted sum of well-established and interpretable primitive contributions, it preserves transparent bar-level attribution. Across SF, HAR, and MIDAS forecasting specifications, NRM is evaluated against corresponding RRM specifications under controlled comparisons. In Heston simulations, NRM reduces RMSE for both contemporaneous and next-day latent integrated variance across all evaluated primitive-regime combinations. On six cryptocurrencies using five-minute data, NRM improves QLIKE in all 54 paired out-of-sample comparisons, with mean gains of 7.23%, 8.15%, and 9.22% under SF, HAR, and MIDAS, respectively. Validationselected NRM specifications also achieve the lowest mean QLIKE across the six assets among the evaluated approaches. Ablation and SHAP analyses reveal systematic time-of-day and nonlinear local-context effects in the learned allocation.",
+  "url": "https://doi.org/10.1145/3858063.3858785",
+  "source": "OpenAlex",
+  "date": "2026-11-14",
+  "score": 16,
+  "queued": "2026-11-15",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W7201867243",
+  "title": "Velocity- and Regime-Aware Detection of Intraday Options Market Manipulation, with Explainable Attribution",
+  "abstract": "Intraday market manipulation is hard to detect because its footprint is brief, buried in millions of quotes, and statistically similar to ordinary volatility. Detectors reach high recall only by flagging so many other days that measured precision collapses, producing alerts no regulator can act on. We show that this manipulation leaves a distinctive dynamic signature: a pump-and-crash pattern visible in the velocity of market state, rather than its level. We build a minute-level detection pipeline, strictly partitioned in time, based on smoothed state velocity: option-Delta velocity for index options and price velocity for equities. We explain every alert with SHAP attribution. We hold the test period strictly out-of-sample and fix all thresholds before evaluation. On the locked Indian BANKNIFTY index-options test, the plain autoencoder recovers 10 of 10 regulator-identified manipulation days. Conditioning detection on market regimes inferred by a hidden Markov model yields an instructive negative result. The regimes are descriptively distinct, but using them trades recall for precision. Under the closed-world assumption that unlabeled days are normal, precision remains near 25%. The same dynamic appears in thinly traded U.S. equities (SEC v. Patel). The shape of the signature survives the transfer; its velocity magnitude does not. A pump-reversal shape score ranks the complaint's alleged manipulation days with AUC 0.91 (ARQQ) and 0.81 (ACY). On the ARQQ worked example, the score peaks inside the complaint's documented minute window. Finally, exact SHAP attribution over every alert shows that unconfirmed alerts share the regulator-identified days' attribution profile (cosine similarity 0.99). The precision ceiling is consistent with incomplete enforcement labels rather than detector failure. What transfers across markets and instrument types is the dynamic signature itself.",
+  "url": "https://doi.org/10.1145/3858063.3858692",
+  "source": "OpenAlex",
+  "date": "2026-11-14",
+  "score": 16,
+  "queued": "2026-11-15",
+  "text_failed": true
+ },
+ {
   "id": "openalex:W7225092638",
   "title": "The Variance Risk Premium in NIFTY Index Options: Smaller than It Looks, Priced in the Wings, and Paid for Tail Risk",
   "abstract": "This research measures the variance risk premium in NIFTY 50 index options using two horizon-matched measures. India VIX exceeds the realised volatility of the following 30 calendar days by 3.26 volatility points on average over 2008\u20132026, and on 82% of days. For weekly options over 2020\u20132026, at-the-money implied volatility exceeds the volatility realised until expiry by 2.22 points. This is less than half the gap obtained when the overnight returns in the same windows are ignored, because overnight moves carry 42% of realised variance. Model-free implied volatility exceeds at-the-money implied volatility by 2.16 points, so much of the premium sits in out-of-the-money options. Implied volatility is a biased forecast of realised volatility. Selling weekly volatility earned positive average returns net of costs, but only a short strangle cleared zero after correction for multiple testing. Five weeks erased 64% of a short straddle's cumulative gain. The premium is real, smaller than a naive measure suggests, and largely compensation for tail risk. JEL codes: G12, G13, G14. This is research, not investment advice.",
@@ -77,6 +99,28 @@
   "score": 14,
   "queued": "2026-11-01",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W7225798795",
+  "title": "Prediction Inference for Hybrid Models on Realized Volatility Forecasting",
+  "abstract": "GARCH-LSTM hybrid models have become increasingly popular in the volatility forecasting literature. To date, these models have almost exclusively focused on point estimation and accuracy measures such as RMSE and MAPE, while failing to assess the uncertainty of these point estimates. We approach this gap in two ways. First, we extend the existing GARCH-LSTM model by modeling the conditional mean with an ARMA structure. Second, we develop a forward bootstrap algorithm to build multi-step-ahead prediction intervals for future realized volatility. In order to address the notorious undercoverage of prediction intervals, we implement two solutions. One draws bootstrap innovations from the empirical residual distribution to mimic the fat-tail property of financial series. The other utilizes principles from conformal prediction to systematically extend the prediction interval length. We evaluate the methods in simulations with heavy-tailed and time-varying GARCH processes and in rolling-window forecasts of four U.S. stock indices from 2020 to 2025. The ARMA-based hybrid gives the lowest point-forecast errors in most settings, and combining both remedies with the mean-based hybrid yields intervals closest to the nominal level among competing methods.",
+  "url": "https://arxiv.org/pdf/2611.13212",
+  "source": "OpenAlex",
+  "date": "2026-11-09",
+  "score": 13,
+  "queued": "2026-11-15",
+  "text_file": "knowledge/papers/openalex_W7225798795.txt"
+ },
+ {
+  "id": "openalex:W7225577738",
+  "title": "Mitigating Sequence-of-Returns Risk with Regime-Switching Asset Allocation: A Comparison of Econometric and Deep Learning Models in Portfolio Decumulation",
+  "abstract": "Abstract Retirement portfolios under regular withdrawals face sequence-of-returns risk: early losses can exhaust capital even when average returns are adequate. We examine whether regime-switching dynamic asset allocation mitigates this risk for a 60/40 stock-bond portfolio, and whether deep learning identifies regimes better than classical econometrics. Five models (a Markov-switching model, a multivariate and a univariate Gaussian hidden Markov model, an LSTM, and an encoder-only Transformer) are compared under identical data, tuning, and walk-forward validation. Their signals, net of transaction costs, feed 10{,}000 stationary-bootstrap retirement paths in three withdrawal scenarios. At 4.0% the MSM, the univariate HMM, and the LSTM cut the depletion rate from 3.30% to 0.57%, 0.60%, and 0.60% with disjoint Wilson intervals; at 6.0% only the LSTM reduces it (17.01% against 33.04%), the univariate filters raising it to about 49% as their return sacrifice becomes the dominant ruin cause, and the multivariate HMM raising it in every scenario. Only the econometric models turn defensive in all five crisis windows; neither network identifies regimes more accurately, and the LSTM holds the highest median terminal capital by staying invested rather than by timing regimes. Classification quality and search diagnostics do not predict decumulation value. Regime-switching allocation in decumulation is a state-contingent tail hedge: model choice determines the protected risk profile, and above a critical withdrawal rate the premium exceeds the payout.",
+  "url": "https://www.researchsquare.com/article/rs-11243482/latest.pdf",
+  "source": "OpenAlex",
+  "date": "2026-11-09",
+  "score": 13,
+  "queued": "2026-11-15",
+  "text_file": "knowledge/papers/openalex_W7225577738.txt"
  },
  {
   "id": "openalex:W7222943913",
@@ -121,6 +165,28 @@
   "score": 12,
   "queued": "2026-11-08",
   "text_file": "knowledge/papers/openalex_W7225333912.txt"
+ },
+ {
+  "id": "openalex:W7213295350",
+  "title": "Diffusion models for dynamic volatility surface generation and data-driven hedging",
+  "abstract": "We develop a diffusion-model framework for dynamic implied-volatility surface generation and evaluate its economic usefulness through data-driven hedging. The framework consists of two models. AD-Seq-Vol jointly learns the conditional evolution of the underlying asset return and the high-dimensional implied-volatility surface, generating adapted multi-period scenarios by sequentially updating the realized market history. AD-Seq-Vol-FT further incorporates option-market structure through post-training penalties for violations of static no-arbitrage conditions. Using daily SPX option data from 2000 to 2023, we show that the proposed models generate coherent surface trajectories while capturing both cross-sectional and temporal dependence. AD-Seq-Vol produces fewer and less severe static-arbitrage violations than the training data and the GAN-based benchmark, while AD-Seq-Vol-FT reduces these violations to nearly zero. We then integrate the generated conditional scenarios into an optimization-based hedging framework. Compared to a range of classical and data-driven benchmarks, the diffusion-based hedges maintain tracking errors near zero, substantially reduce tail risk, and exhibit particularly stable performance during the COVID-19 market disruption. These results establish Adaptive Sequential Diffusion Models as a promising class of market-consistent and economically useful financial scenario generators. Our code is available at: https://github.com/yinbinhan/volatility-surface-simulation.",
+  "url": "https://doi.org/10.1145/3858063.3858716",
+  "source": "OpenAlex",
+  "date": "2026-11-13",
+  "score": 12,
+  "queued": "2026-11-15",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W7203909304",
+  "title": "Deep-MKV-TS: Path-Dependent McKean\u2013Vlasov Control for Financial Time Series Generation",
+  "abstract": "We introduce Deep-MKV-TS, a path-dependent McKean-Vlasov framework for financial scenario generation. The stochastic dynamics are chosen by matching selected path and volatility features of generated scenarios to those observed in the data. Starting from an interpretable reference model, Deep-MKV-TS preserves the reference drift and adjusts its volatility, while a regularization penalty limits unnecessary departures from the calibrated dynamics. We solve the resulting control problem using a neural, sample-based implementation of the stochastic maximum principle. We validate the method against an exactly computable oracle. On Heston and Heston-mixture models, Deep-MKV-TS substantially reduces path-dependent and volatility-related deficiencies of the reference model. In delayed-volatility experiments, the correction remains effective as the forecasting horizon increases, while direct training becomes less reliable. On held-out intraday equity-index futures, the corrected model improves conditional forecasts relative to the reference and reaches a level of performance comparable to flexible generative and historical baselines. The resulting scenarios also support greater exposure than the reference under a fixed drawdown-risk target. These results show that path-dependent McKean-Vlasov control can enrich an interpretable reference model without replacing it.",
+  "url": "https://doi.org/10.1145/3858063.3858852",
+  "source": "OpenAlex",
+  "date": "2026-11-13",
+  "score": 12,
+  "queued": "2026-11-15",
+  "text_failed": true
  },
  {
   "id": "openalex:W7223000370",
@@ -201,6 +267,28 @@
   "text_failed": true
  },
  {
+  "id": "openalex:W7225713860",
+  "title": "Smile-Consistent Analysis of Crude Oil Spread Options",
+  "abstract": "We present an empirical study of the Bachelier implied volatility smile for spread options on crude oil futures. It is known that the at-the-money (ATM) spread implied volatility is simply related to the futures prices and volatilities and their correlation. Assuming that the underlying futures prices follow correlated local volatility models, it was shown recently that a similar relation holds for the ATM spread skew. Using market data from CME Group, we present tests of the spread skew predictions for WTI 1M Calendar Spread Options (CSO) and WTI\u2013Brent crude oil spread options. The predictions are in good qualitative agreement with market data for strikes sufficiently close to the ATM point.",
+  "url": "https://doi.org/10.3390/risks14110261",
+  "source": "OpenAlex",
+  "date": "2026-11-10",
+  "score": 11,
+  "queued": "2026-11-15",
+  "text_failed": true
+ },
+ {
+  "id": "openalex:W7225198865",
+  "title": "Quantifying Repair Risk in Crypto Option Surfaces",
+  "abstract": "Option desks adjust crypto option quotes into price surfaces that remain within bid-ask intervals and satisfy standard no-arbitrage restrictions across strikes before computing Greeks, hedge quantities, or risk measures. For the same quote panel, however, these constraints may admit multiple such surfaces, which we call admissible repairs, with different downstream outputs. We define the resulting variation as repair risk and propose repair-risk validation, a matched framework for quantifying dispersion in Greeks, hedge quantities, and risk measures. The mechanism is finite-difference amplification: two admissible repairs within price distance $\\varepsilon$ can differ in local normalized-strike curvature by $4\\varepsilon/h^2$, where $h$ is local normalized-strike spacing. We evaluate repair risk on Deribit BTC and ETH option chains, using $L_1$ and $L_2$ projections of midpoint prices onto the same admissible set as matched controls. Across 108 matched evaluations spanning 18 sampled calendar months, the median 90th percentile of the scaled spot-gamma gap for $L_2$ versus the $\u03c1=10$ smoothness-penalized repair is nearly twenty times the matched $L_1$--$L_2$ control. We also instantiate NN-Proj, a neural-projection repair, to test whether learned repairs exhibit repair risk. Despite good held-out fit, its downstream outputs remain distinct from those of classical repairs. Across five seeds with the same training window and architecture, its curvature dispersion exceeds the matched $L_1$--$L_2$ control in 17 of 18 months ($p=1.45\\times10^{-4}$). For a USD 1 million risk reversal, switching from $L_2$ to the $\u03c1=10$ repair shifts the median 90th-percentile hedge notional by 18.62 basis points of gross spot notional. VaR-style estimates also exhibit greater dispersion across repairs. The repair rule is therefore part of the risk model, not merely a feasibility check.",
+  "url": "https://doi.org/10.1145/3858063.3858699",
+  "source": "OpenAlex",
+  "date": "2026-11-14",
+  "score": 11,
+  "queued": "2026-11-15",
+  "text_failed": true
+ },
+ {
   "id": "openalex:W7223032026",
   "title": "Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales",
   "abstract": "This work focuses on reconstructing a continuous implied volatility (IV) surface from a small number of option quotes, a fundamental task for option pricing and risk management. We propose Additive Martingale (AddMart), a few-shot IV surface reconstruction framework that satisfies static no-arbitrage conditions by construction. Rather than predicting IVs directly, AddMart maps sparse quotes to non-negative increment densities of an exponential additive martingale, from which valid risk-neutral marginals and IVs are recovered. By incorporating the no-arbitrage structure directly into its architecture, rather than enforcing it through regularization in the learning objective, AddMart produces IV surfaces that satisfy static no-arbitrage conditions throughout the domain. Extensive experiments on ten real-option datasets demonstrate that AddMart achieves competitive reconstruction accuracy with no material static arbitrage violations, while directly enabling the estimation of VaR, CVaR, and crash probabilities.",
@@ -254,6 +342,18 @@
   "score": 10,
   "queued": "2026-11-08",
   "text_file": "knowledge/papers/openalex_W4415239971.txt"
+ },
+ {
+  "id": "arxiv:2611.16540v1",
+  "title": "Dynamic Scenario-Based Portfolio Optimization for Multi-Asset ETFs",
+  "abstract": "Portfolio outcomes may depend as much on trading restrictions as on how returns are modeled. We compared historical moving-window returns with conditional scenarios from ARMA--GARCH models and a Student-$t$ copula for 30 U.S.-listed exchange-traded funds. Matched mean--variance and conditional value-at-risk portfolios were evaluated under long-only and limited long--short bounds over 946 sessions. Historical portfolios had higher observed reward--risk ratios in most comparisons, but no paired difference remained significant after multiple-testing adjustment. Conditional scenarios did not consistently reduce realized downside risk. We distinguished changes in target weights from trades required to rebalance holdings after market movements. Relaxing the target-adjustment limit changed exposures, turnover, and some returns more than varying scenario count or seed in the examined tests. These findings suggest that assessments of conditional return inputs should consider portfolio constraints and trading requirements.",
+  "url": "https://arxiv.org/abs/2611.16540v1",
+  "pdf": "https://arxiv.org/pdf/2611.16540v1",
+  "source": "arXiv",
+  "date": "2026-11-12",
+  "score": 10,
+  "queued": "2026-11-15",
+  "text_file": "knowledge/papers/arxiv_2611.16540v1.txt"
  },
  {
   "id": "arxiv:2610.31141v1",
