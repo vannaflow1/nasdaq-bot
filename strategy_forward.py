@@ -181,7 +181,12 @@ def main():
         for c in C:
             f = F[(F.id == S.spec_id(c["spec"])) & (F.traded)] if len(F) else F
             live = (f"live {len(f)} trades, {f.R.sum():+.1f}R total, win {(f.R > 0).mean():.0%}" if len(f) else "no live trades yet")
-            lines.append(f"- {c['name']}: exam {c['exam'].get('avg_R', 0):+.2f}R/trade; {live}")
+            ex_r = (c.get("exam") or {}).get("avg_R")              # family sleeves / challengers have no 'exam' block (crashed here 25 Oct - 15 Nov 2026)
+            try:                                              # show the later review next to "passed" (a FRAGILE passer is not an edge)
+                import review_prop; rv = str(review_prop.effective(c).get("review", "") or "").split(" (")[0].split(":")[0].strip()
+            except Exception: rv = ""
+            lines.append(f"- {c['name']}: " + (f"exam {ex_r:+.2f}R/trade; " if isinstance(ex_r, (int, float)) else "") + live
+                         + (f" | later review: {rv}" if rv else ""))
     else:
         lines += ["", "Nothing has passed the locked 2024-2026 exam yet. Closest in-sample (2014-2023, after costs):"]
     lines += [f"- {e['name'][:80]}: {e['insample']['n']} trades, {e['insample']['avg_R']:+.2f}R/trade, positive {e['insample']['years_pos']} years"

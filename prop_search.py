@@ -277,7 +277,7 @@ def main():
     M_, X = TE.frame(); D = S.data(); ses = D["M"].session.values
     idxA = np.where(ses <= SEARCH_END)[0]; idxB = np.where((ses > SEARCH_END) & (ses <= VAL_END))[0]
     st = json.load(open(STATE)) if os.path.exists(STATE) else {"pos": 0, "nights": 0}
-    R = pd.read_csv(RES) if os.path.exists(RES) else pd.DataFrame()
+    R = _park_full_results(RES)
     ALL = all_results()
     done = set(ALL.spec_id) if len(ALL) else set()
     done_c = {content_id(json.loads(x)) for x in ALL.spec if isinstance(x, str)} if len(ALL) and "spec" in ALL else set()
@@ -624,6 +624,24 @@ def exam_ledger():
     """spec_id -> latest locked-exam verdict of the prop search (all jobs' candidates; written by job 1 only)."""
     if not os.path.exists(EXLOG): return {}
     E = pd.read_csv(EXLOG); return dict(zip(E.spec_id, E.verdict))
+
+
+PARK_BYTES = 80 * 1024 * 1024       # park a results file long before GitHub's 100 MB hard limit
+
+
+def _park_full_results(res=None, limit=None):
+    """This job's results table. GitHub refuses any push that contains a file over 100 MB - from 25 Oct to 15 Nov 2026
+    results_0.csv / results_1.csv sat right at that limit and every run's results were silently thrown away. A file that
+    has grown past PARK_BYTES is therefore renamed to results_<job>_part<k>.csv (never rewritten again, still read by
+    all_results(), which takes every results_*.csv) and the job starts a fresh, small file with the same columns."""
+    res = res or RES; limit = PARK_BYTES if limit is None else limit
+    if not os.path.exists(res): return pd.DataFrame()
+    if os.path.getsize(res) <= limit: return pd.read_csv(res)
+    stem = res[:-4]; k = 1
+    while os.path.exists(f"{stem}_part{k}.csv"): k += 1
+    os.replace(res, f"{stem}_part{k}.csv")
+    print(f"results file over {limit / 1048576:.0f} MB: parked as {os.path.basename(stem)}_part{k}.csv, starting a fresh one")
+    return pd.read_csv(f"{stem}_part{k}.csv", nrows=0)             # empty table, same columns
 
 
 def all_results():
