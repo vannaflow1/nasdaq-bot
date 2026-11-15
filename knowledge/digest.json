@@ -1,5 +1,20 @@
 [
 {
+"title": "A hybrid fuzzy\u2013ensemble method for time series forecasting",
+"learned": "The paper proposes a rule-free forecasting system that first clusters lagged versions of a univariate series with fuzzy c\u2011means, then trains a separate random\u2011forest regressor for each fuzzy cluster and combines their predictions weighted by membership degrees. Hyper\u2011parameters are jointly tuned via random search.",
+"concepts": [
+"fuzzy c\u2011means clustering",
+"cluster\u2011specific random forest",
+"membership\u2011weighted aggregation",
+"lagged representation",
+"hyper\u2011parameter random search"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.1038/s41598-026-51585-w",
+"date": "2026-11-15"
+},
+{
 "title": "Conditional Deep L\u00e9vy Models for Exotic Derivatives: History-Aware Path Generation and P-Q Payoff Diagnostics",
 "learned": "The authors created a deep generative model (DLPM) that produces realistic equity-index price paths conditioned on recent history and contract state, achieving better statistical scores than Gaussian or bootstrap baselines.",
 "concepts": [

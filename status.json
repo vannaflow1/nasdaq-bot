@@ -95,7 +95,7 @@
   "No FOMC, CPI or jobs report on Mon 16 Nov."
  ],
  "learning": [
-  "LEARNING: 286 papers read (46 more skipped as not relevant enough), 142 ideas tested on my memory, 2 promising.",
+  "LEARNING: 287 papers read (47 more skipped as not relevant enough), 142 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Towards Robust Reinforcement Learning Market Making: Lessons from Loss Function Experimentation (\u2605\u2605\u2605\u2606\u2606)",
   "  Adding explicit penalties for large inventory and low cash to the RL loss function makes market\u2011making agents more profitable and longer\u2011lasting than pure profit\u2011maximisation, while also tightening the bid\u2011ask spread.",
@@ -114,9 +114,9 @@
   "\u2022 Range-Based Volatility Estimation and Forecasting (\u2605\u2605\u2605\u2605\u2606)",
   "  The thesis investigates how to improve daily high\u2011low range forecasts by using more efficient volatility estimators (realized variance, realized range, Parkinson, Garman\u2011Klass, Rogers\u2011Satchell) and by breaking the day in",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 7/9 unseen years",
-  "This week's tests: 54 run - 1 promising, 40 not confirmed, 2 don't fit my data, 11 translation failures",
+  "This week's tests: 55 run - 1 promising, 41 not confirmed, 2 don't fit my data, 11 translation failures",
   "",
-  "60 papers waiting in my queue."
+  "58 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
