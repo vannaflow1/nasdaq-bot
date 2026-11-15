@@ -1,0 +1,28 @@
+name: watchdog
+# Hourly check that the important jobs really ran AND really saved their results (tools/watchdog.py explains why).
+# Posts to Discord only when something new breaks, once a day while it stays broken, and once when it is fixed.
+on:
+  schedule:
+    - cron: "47 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry: { description: "dry run (print only, post nothing)", default: "yes" }
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          if [ "${{ github.event.inputs.dry }}" = "yes" ]; then python3 tools/watchdog.py --dry; else python3 tools/watchdog.py; fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      - if: always()
+        run: for i in 1 2 3; do bash .github/actions_common.sh "watchdog" && break; sleep $((RANDOM % 20 + 5)); done

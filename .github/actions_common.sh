@@ -22,7 +22,8 @@ ahead=$(git rev-list --count "@{u}..HEAD" 2>/dev/null || echo 0)
 if [ "$committed" = "0" ] && [ "$ahead" = "0" ]; then echo "no state change"; exit 0; fi
 [ "$committed" = "0" ] && echo "retrying an earlier commit that was never pushed ($ahead ahead)"
 
-big=$(git ls-files -z | xargs -0 -r stat -c '%s %n' 2>/dev/null | awk '$1 > 99614720 {printf "%s (%.1f MB) ", $2, $1/1048576}')
+# only the files this run is about to upload (a parked, unchanged 99 MB file is fine)
+big=$( (git diff --name-only -z "@{u}..HEAD" 2>/dev/null || true) | xargs -0 -r stat -c '%s %n' 2>/dev/null | awk '$1 > 99614720 {printf "%s (%.1f MB) ", $2, $1/1048576}')
 [ -n "$big" ] && echo "::error::files at or near GitHub's 100 MB limit - the push will be refused: $big"
 
 settle_rebase() {
