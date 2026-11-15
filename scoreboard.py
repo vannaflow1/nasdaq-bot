@@ -175,6 +175,8 @@ def build(now=None):
     for fn in (shortvol_lines, lambda: health_lines(now)):
         try: lines += fn()
         except Exception as e: lines.append(f"(a section could not be read: {type(e).__name__}: {str(e)[:80]})")
+    if len("\n".join(lines)) > 1950:                           # Discord replies are cut at ~2000 characters: drop the context line first
+        lines = [x for x in lines if not x.startswith("   Scale (")]
     return lines, num
 
 

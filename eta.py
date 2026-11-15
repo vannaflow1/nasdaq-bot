@@ -106,6 +106,17 @@ def lines_f13(r=None):
             "F13 did not meet the fast-track speed rule (about $26-31 a month per account at this edge)."]
 
 
+def line_f13_short(r=None):
+    """One compact F13 line for the Discord snapshot (the full three lines: python eta.py)."""
+    r = r or simulate(fam="F13"); p = lambda a, d: float((a <= d).mean()); m = lambda months: months * 21
+    from statistics import NormalDist
+    need = max(0, 60 - r["n0"]); weeks = need / max(r["rate"], 1e-9) / 5
+    return (f"F13 (same breakout, quick targets - shares F10's entries, one bet): belief {r['delta_mu']:+.3f}R ± {r['delta_sd']:.3f}, "
+            f"P(edge > 0) {1 - NormalDist(r['delta_mu'], r['delta_sd']).cdf(0):.0%}, {r['n0']} forward trades"
+            + (f" (~{weeks:.0f} weeks to the 60 needed)" if need else "") + f"; eval-ready within 6 months {p(r['ready'], m(6)):.0%}, "
+            f"killed within 12 months {p(r['kill'], m(12)):.0%}.")
+
+
 def lines(r=None):
     r = r or simulate(); p = lambda a, d: float((a <= d).mean()); m = lambda months: months * 21
     out = ["⏳ F10 (Nasdaq noise-band breakout) - WHAT THE COMING MONTHS WILL TELL ME (v3; a range, not a promise)",
@@ -123,7 +134,7 @@ def lines(r=None):
 def update():
     r = simulate(); L = lines(r); runs = [("v3-F10", r)]
     try:                                                   # F13 block: never allowed to break the F10 lines
-        r13 = simulate(fam="F13"); L = L + [""] + lines_f13(r13); runs.append(("v4-F13", r13))
+        r13 = simulate(fam="F13"); L = L + [line_f13_short(r13)]; runs.append(("v4-F13", r13))   # one line: /wishes has ~2000 characters
     except Exception as e:
         print("eta F13 skipped:", type(e).__name__, e)
     s = json.load(open(STATUS)) if os.path.exists(STATUS) else {}

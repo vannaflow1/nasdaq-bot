@@ -1,0 +1,26 @@
+name: tests
+# Volta's self-check (tests/README.md explains it in plain words). Runs when code changes and once a night
+# (the nightly agents commit with the built-in token, which does not trigger "push" workflows).
+# The watchdog posts to Discord when the latest run of this workflow failed.
+on:
+  push:
+    branches: [main]
+    paths: ["**.py", "tests/**", ".github/**", "requirements.txt", ".gitattributes"]
+  schedule:
+    - cron: "10 4 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tests
+  cancel-in-progress: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt scipy
+      - run: python -W ignore::ResourceWarning -m unittest discover -s tests -v
