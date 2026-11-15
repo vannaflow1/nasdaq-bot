@@ -3,12 +3,27 @@
 # If the rebase stops on a conflict that -X theirs cannot settle (typically knowledge/announce.json: deleted upstream by
 # learn-post after posting, modified here), this run's version of every conflicted file is kept and the rebase continues,
 # so hours of results are never lost to a one-file conflict. A rebase that still cannot finish is aborted before retrying.
+#
+# 15 Nov 2026 fixes (plain words):
+#  * status.json is merged KEY BY KEY (tools/status_merge.py), so one job can no longer overwrite another job's entry.
+#  * A commit that could not be pushed is retried. Before, the second call saw "nothing new to commit" and reported
+#    success while the results were never uploaded (the prop search lost every run from 25 Oct to 15 Nov this way).
+#  * Files close to GitHub's 100 MB limit are reported loudly: GitHub refuses the whole push when one file is over it.
 set -e
 git config user.name "nasdaq-bot"
 git config user.email "nasdaq-bot@users.noreply.github.com"
+git config merge.statusjson.name "status.json key-by-key merge"
+git config merge.statusjson.driver "python3 tools/status_merge.py %O %A %B"
+
 git add -A
-if git diff --cached --quiet; then echo "no state change"; exit 0; fi
-git commit -q -m "state: ${1:-run}"
+committed=0
+if ! git diff --cached --quiet; then git commit -q -m "state: ${1:-run}"; committed=1; fi
+ahead=$(git rev-list --count "@{u}..HEAD" 2>/dev/null || echo 0)
+if [ "$committed" = "0" ] && [ "$ahead" = "0" ]; then echo "no state change"; exit 0; fi
+[ "$committed" = "0" ] && echo "retrying an earlier commit that was never pushed ($ahead ahead)"
+
+big=$(git ls-files -z | xargs -0 -r stat -c '%s %n' 2>/dev/null | awk '$1 > 99614720 {printf "%s (%.1f MB) ", $2, $1/1048576}')
+[ -n "$big" ] && echo "::error::files at or near GitHub's 100 MB limit - the push will be refused: $big"
 
 settle_rebase() {
   local n=0
@@ -34,4 +49,4 @@ for i in 1 2 3 4 5; do
   fi
   sleep $((i*5))
 done
-echo "push failed"; exit 1
+echo "::error::push failed after 5 tries - this run's results are NOT in the repo yet"; exit 1

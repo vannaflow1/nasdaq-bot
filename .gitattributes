@@ -1,0 +1,3 @@
+# status.json is merged key by key (tools/status_merge.py, configured in .github/actions_common.sh), so concurrent
+# jobs cannot overwrite each other's entries. Without that configuration git merges it like any other text file.
+status.json merge=statusjson
