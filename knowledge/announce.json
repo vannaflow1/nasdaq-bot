@@ -2,5 +2,9 @@
  {
   "title": "Review: big overnight range -> NY takes the Asia high?",
   "body": "CONFIRMED as a fact, but no new information. It's real and stable (no look-ahead), but it runs the other way from the question: after a big overnight range NY takes the Asia high LESS often (64% vs 83%). The reason is mechanical: a big night usually leaves the Asia high farther from the open (and on a third of days the open is already above it, which counts as 'taken'). How far the Asia high is from the open predicts much better. With that distance held fixed, a busy night actually makes it slightly more likely - the usual 'busy night, busy day' effect. Stays in the morning read as context, not as an edge."
+ },
+ {
+  "title": "Weekly reflection (week 46, 9-15 Nov)",
+  "body": "Reading stayed thin: only 5 papers entered the library this week (8 and 3 the two weeks before, vs 206 in week 43), and one of them was not a paper at all - a 'MODEL ADOPTION #4465 ... E8 Intelligence' note found by the Asia-high/low-gamma hunt, rated relevance 1. The two arXiv frontier papers were about reinforcement-learning market making; one became an options test that came back NOT CONFIRMED on the real QQQ trades, the other doesn't fit Volta's data. The test engine ran 57 ideas: 1 promising, 43 not confirmed, 2 unfit, 11 failed to translate (down from 21 last week). Of Volta's 19 own questions this week, 17 were not confirmed; the one survivor (big overnight range vs taking the Asia high) is a real but mechanical fact - it runs opposite to the question and is mostly about how far the Asia high sits from the open. No new strategy reached the review and no wish for Claude was open, so nothing was shipped this week."
  }
 ]
