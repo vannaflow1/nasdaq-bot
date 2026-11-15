@@ -103,6 +103,7 @@
   "target": "y_took_asia_high",
   "expr": "k_on_vs_normal",
   "verdict": "PROMISING (stress test: survived) : FACT: happens on 76% of 2907 sessions (2014-19: 76%, 2020-25: 75%). Predictor: lowest-fifth days 64% vs highest-fifth 82%, skill +2.1% vs the base rate, better in 8/9 unseen years",
-  "active": true
+  "active": true,
+  "review": "CONFIRMED (fact, no new information) (Claude, 2026-11-15): no leak - k_range20 matches a past-only 20-session NY-range average (corr 0.9992 vs 0.9962 if today were included). Note the direction is the OPPOSITE of the question: fifths of k_on_vs_normal 83%/80%/74%/77%/64% (bigger overnight range -> LESS likely). Mechanical: y_took_asia_high is 1 by definition on the 33% of sessions that open above the Asia high, and a big overnight range mostly means the Asia high sits farther from the open. Distance from the open to the Asia high (in units of the 20-day range) is far better (walk-forward 2017-25 AUC 0.87 vs 0.58, log-loss 0.416 vs 0.551); holding distance fixed, a bigger overnight range slightly RAISES the odds (e.g. middle distance fifth 59% -> 77%) - the known 'busy night, busy day' range effect. Base-rate fact, not an edge."
  }
 ]
