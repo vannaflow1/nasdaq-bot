@@ -707,5 +707,17 @@
    "guard": null
   },
   "note": "Done (2026-11-15, Claude): the 5-min collector already exists (wish #23, tools/chain_snap.py, CBOE delayed QQQ+NDX chains, 0-DTE + next expiry, +-4% strikes); nothing read it. New tools/chain_series.py turns the snapshots into research series: load() = one row per (quote_ts, contract) with mid/spread/moneyness (sane quotes only, de-duplicated on CBOE quote time), atm_series() = per-snapshot 0-DTE ATM call/put/straddle mid + IV, coverage() = real cadence. Honest limit: GitHub throttles the */5 cron - 2-13 Nov has 5-8 snapshots/day, median gap 50-66 min (QQQ: 67 snapshots, 14,074 quotes, 95% valid mids), so it is an hourly intraday series, not yet 5-minute. A true 5-min feed would need a long-running looping Actions job (more Actions minutes) - owner decision, not done here."
+ },
+ {
+  "id": 42,
+  "date": "2026-11-16",
+  "title": "Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules)",
+  "for": "claude",
+  "type": "fix",
+  "why": "The official rule page text changed since last week (snapshots in knowledge/research_out/rules/).",
+  "evidence": "https://intercom.help/tradeify/en/articles/12268167-essential-trading-rules-overview",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
  }
 ]
