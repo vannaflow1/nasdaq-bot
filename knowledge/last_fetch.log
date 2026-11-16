@@ -1,9 +1,6 @@
-hunt openalex: HTTPError
-hunt openalex: HTTPError
-hunt 'intraday impact of GEX rank on opening price moves': 0 found, queued 0
 scanned 0 papers, queued 0, queue size 58 []
 self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 132 (char 131)
-read 0, AI units today 735/7000
-curiosity asked: Strategy: LowGex_TailGapBreak_Exp70_09_15
-tested: Strategy: LowGex_TailGapBreak_Exp70_09_15 - On low‑gamma day -> NOT CONFIRMED on my data: too few trades (19 in 2014-2023, need 150). in-sample 2014-2023:
-testing used 362 AI units
+read 0, AI units today 1099/7000
+curiosity asked: Strategy: LowGex_GapFill_FadeMid_ATRBlend
+tested: Strategy: LowGex_GapFill_FadeMid_ATRBlend - Fade the overnig -> NOT CONFIRMED on my data: too few trades (9 in 2014-2023, need 150). in-sample 2014-2023: 
+testing used 148 AI units

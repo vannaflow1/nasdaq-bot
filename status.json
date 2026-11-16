@@ -115,7 +115,7 @@
   "\u2022 Range-Based Volatility Estimation and Forecasting (\u2605\u2605\u2605\u2605\u2606)",
   "  The thesis investigates how to improve daily high\u2011low range forecasts by using more efficient volatility estimators (realized variance, realized range, Parkinson, Garman\u2011Klass, Rogers\u2011Satchell) and by breaking the day in",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 7/9 unseen years",
-  "This week's tests: 4 run - 0 promising, 2 not confirmed, 0 don't fit my data, 2 translation failures",
+  "This week's tests: 5 run - 0 promising, 3 not confirmed, 0 don't fit my data, 2 translation failures",
   "",
   "58 papers waiting in my queue."
  ],
