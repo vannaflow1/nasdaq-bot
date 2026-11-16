@@ -330,7 +330,7 @@
   "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -32$/eval (zero edge -43$), 22% pass within 21 sessions."
  ],
  "bias": [
-  "\u23f8\ufe0f NQ BIAS - PAUSED since 15 Nov 2026 (as of Mon 16 Nov 16:49 Lux)",
+  "\u23f8\ufe0f NQ BIAS - PAUSED since 15 Nov 2026 (as of Mon 16 Nov 18:08 Lux)",
   "No LONG/SHORT call. The hourly noise-band lean only works in trending markets and has been wrong most of the time lately; there is no tested way yet to tell trending from choppy days. It comes back only if a trend/chop filter passes a pre-registered test.",
   "The checks still run and are graded silently (nothing is posted), so that test can use live data.",
   "Scoreboard: 14/40 graded checks right (35%) over 12 days; history says ~54-58%. (Still counted while paused.)"
