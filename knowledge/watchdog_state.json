@@ -1,22 +1,5 @@
 {
- "open": {
-  "out:knowledge/prop_search": {
-   "msg": "strategy search results (nothing saved): knowledge/prop_search has not changed when it should have - last change 21 days ago. The job may be running without saving its results.",
-   "since": "2026-11-15T20:18+00:00"
-  },
-  "out:knowledge/eta_history.csv": {
-   "msg": "F10/F13 timer: knowledge/eta_history.csv has not changed when it should have - last change 22 days ago. The job may be running without saving its results.",
-   "since": "2026-11-15T20:18+00:00"
-  },
-  "big:knowledge/prop_search/results_0.csv": {
-   "msg": "knowledge/prop_search/results_0.csv is 100 MB - GitHub refuses pushes with files over 100 MB, so the job writing it will stop saving.",
-   "since": "2026-11-15T20:18+00:00"
-  },
-  "big:knowledge/prop_search/results_1.csv": {
-   "msg": "knowledge/prop_search/results_1.csv is 100 MB - GitHub refuses pushes with files over 100 MB, so the job writing it will stop saving.",
-   "since": "2026-11-15T20:18+00:00"
-  }
- },
+ "open": {},
  "last_alert": "2026-11-15T20:18+00:00",
- "last_run": "2026-11-15T23:27+00:00"
+ "last_run": "2026-11-16T00:34+00:00"
 }
