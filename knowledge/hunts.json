@@ -384,5 +384,14 @@
    "openalex:W7160319740"
   ],
   "searched": "2026-11-15"
+ },
+ {
+  "id": "h34",
+  "date": "2026-11-16",
+  "query": "intraday impact of GEX rank on opening price moves",
+  "why": "Understanding how GEX rank influences the opening volatility could refine the breakout filter and improve edge size.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
