@@ -1,7 +1,7 @@
 {
  "for": "Mon 16 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Mon 16 Nov) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
@@ -28,33 +28,29 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,248 XP, next level at 10,240)",
-  "Papers read 283 | ideas & strategies tested 200 | prop strategies searched 651,533",
-  "Survived unseen 2022-23: 1563 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 11",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Mon 16 Nov 16:30 Lux",
+ "level": "NORMAL",
+ "updated": "Mon 16 Nov 16:43 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Wall Street Slides As Chip Stocks Extend Selloff. Nasdaq Takes Biggest Hit Despite Cooler Inflation  [Yahoo (megacaps)]\n    Fed/macro, shock",
-  "- HSBC downgrades Nvidia, says stock to struggle until new CEO named  [CNBC markets]\n    NVDA, shock",
-  "- Malaysia and Singapore step up Nvidia AI chip probes amidst Jensen Huang controversy  [Tom's Hardware]\n    NVDA, AI chips/capex",
-  "- Nvidia Q3 Earnings Preview:\u00a0What Options Traders Expect After Jensen Huang\u2019s Sudden Exit  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Microsoft outage gives customers a crash course in dependence on Redmond  [The Register]\n    MSFT, shock",
-  "- Cerebras pops after beating on quarterly revenue and announcing Microsoft deal  [CNBC tech]\n    MSFT, earnings",
-  "- AI risks are the biggest threat to the financial system, Fed survey finds  [CNBC economy]\n    Fed/macro"
+  "NEWS (last 64h, ranked by keywords):",
+  "- Researchers allege DeepSeek, Kimi, and other Chinese AI models were trained using banned Nvidia Blackwell GPUs  [Tom's Hardware]\n    NVDA, AI chips/capex, shock",
+  "- U.S. Treasury Secretary questions whether Nvidia knowingly sold AI GPUs to shell companies, says company itself is responsible  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- Nvidia live updates: Interim CEO Kress prepares for Q3 earnings, with Huang reportedly planning comeback  [Yahoo (megacaps)]\n    NVDA, earnings",
+  "- Nvidia's Q3 results will be no ordinary earnings day. Here's what investors need to see.  [Yahoo (megacaps)]\n    NVDA, earnings",
+  "- Should Nvidia stock be a buy ahead of earnings?  [Yahoo (megacaps)]\n    NVDA, earnings",
+  "- Global GovTech Dual-Use Defense Platform Market Report 2026: Size and Forecast to 2030 | Capitalize on AI, cloud, and 15% CAGR with Microsoft, Palantir, Anduril, and BAE Systems  [Yahoo (megacaps)]\n    MSFT, PLTR, earnings",
+  "(sources down: Federal Reserve)"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 64h):",
   "- Mon 15:17 [oil/geopolitics] The new people running 60 Minutes are even worse than their predecessors. A recent study on an attack in the early stages of Iran was not correctly stated. Since February 28, 2026, the start of Epic Fury, Iran has fired between 8,000-9,000 One-way Attack Drones. Only 2 of them\u2026",
   "- Mon 02:40 [oil/geopolitics] A must read!!! If You Think War Is Unpopular, Wait Till You See Defeat: https://www. wsj.com/opinion/if-you-think-w ar-is-unpopular-wait-till-you-see-defeat-04608ab0 View image View image View image",
-  "- Sun 20:21 [oil/geopolitics] Exclusive \u2014 Iraqi President Nizar Amedi: President Trump \u2018Very Significantly Important Man\u2019 in History Who Can Bring Peace, Prosperity to World with End of Iran War: https://www. breitbart.com/politics/2026/11\u2026"
+  "- Sun 20:21 [oil/geopolitics] Exclusive \u2014 Iraqi President Nizar Amedi: President Trump \u2018Very Significantly Important Man\u2019 in History Who Can Bring Peace, Prosperity to World with End of Iran War: https://www. breitbart.com/politics/2026/11\u2026",
+  "- Sun 15:30 [economy] Biden appointed Judge Reyes has delayed, for yet another two weeks, the fix up and reconstruction, by the Department of the Interior, of one of the worst and most dangerous golf courses anywhere in the U.S. \u201cTrash Island,\u201d as it is affectionately known, needs work, and needs it\u2026",
+  "- Sun 14:16 [Fed/rates] The Biden Administration was an FAA disaster. Everything they touched turned bad. Big money spent unwisely, making an old and broken system worse than when they began. We have the knowledge and plan for the Flight Control Systems, we need Congress to give the money, FAST! Our\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
