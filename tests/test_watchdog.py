@@ -49,6 +49,15 @@ class Rules(unittest.TestCase):
         self.assertEqual(bad, {})
         self.assertTrue(W.is_holiday(datetime(2026, 11, 27, 3, 0, tzinfo=UTC), since_h=-1.0))     # the night after counts as the holiday's session
 
+    def test_late_run_that_posted_nothing_is_flagged(self):
+        mon = datetime(2026, 11, 16, 9, 26, tzinfo=UTC)               # what happened on 16 Nov: outlook ran late, posted nothing
+        bad = W.check(mon, fetcher(now=mon, stale_paths=("knowledge/london_today.json",)), root="/nonexistent")
+        self.assertEqual(list(bad), ["out:knowledge/london_today.json"])
+
+    def test_normal_gaps_of_the_five_minute_job_do_not_alarm(self):
+        mon = datetime(2026, 11, 16, 9, 26, tzinfo=UTC)
+        self.assertEqual(W.check(mon, fetcher(now=mon, run_age_h=2.6), root="/nonexistent").get("run:trump.yml:Truth Social watcher"), None)
+
     def test_failing_tests_are_flagged(self):
         bad = W.check(WED_SESSION, fetcher(now=WED_SESSION, failing=("tests.yml",)), root="/nonexistent")
         self.assertEqual(list(bad), ["fail:tests.yml"])

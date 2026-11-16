@@ -36,7 +36,9 @@ BIG_FILE_BYTES = 90 * 1024 * 1024
 # `market` = the proof depends on a US trading session (skipped on NYSE holidays).
 RUNS = [
     # workflow file      label (plain words)                        days     due    end   since / every
-    ("trump.yml",        "Truth Social watcher",                    ALL,     1.0,  24.0, {"every": 120}),
+    # GitHub runs this "every 5 minutes" job about every 40-90 minutes in practice, with gaps up to ~2.5 hours
+    # (16 Nov 2026: a 156-minute gap set off a 2-hour alarm). 4 hours without a run means it is really down.
+    ("trump.yml",        "Truth Social watcher",                    ALL,     1.0,  24.0, {"every": 240}),
     ("outlook.yml",      "London outlook (morning)",                WEEK,    8.5,  11.9, {"since": 6.0}),
     ("outlook.yml",      "NY outlook (before the US open)",         WEEK,   15.5,  24.0, {"since": 12.0}),
     ("morning.yml",      "morning briefing",                        WEEK,   15.0,  24.0, {"since": 12.5}),
@@ -58,6 +60,8 @@ OUTPUTS = [
     ("knowledge/families.json",        "forward-test numbers",                         TUE_SAT, 13.0, 24.0, {"since": 4.0}, True),
     ("knowledge/data/archive",         "futures bar archive files",                    TUE_SAT, 2.5,  20.0, {"since": -1.0}, True),
     ("knowledge/data/chains",          "option-chain snapshot files",                  WEEK,    15.5, 21.0, {"every": 120}, True),
+    # 16 Nov 2026: GitHub dropped all six morning tries; one late run "succeeded" at 09:43 Lux without posting.
+    ("knowledge/london_today.json",    "London outlook was NOT posted this morning",   WEEK,    8.6,  11.9, {"since": 6.0}, False),
     ("knowledge/bias_log.csv",         "bias log (silent checks)",                     WEEK,    17.0, 24.0, {"since": 13.0}, True),
     ("knowledge/outlook_log.csv",      "NY outlook log",                               WEEK,    15.5, 24.0, {"since": 12.0}, True),
     ("knowledge/level.csv",            "evening run reached its last step",            WEEK,    23.5, 24.0, {"since": 20.5}, True),
