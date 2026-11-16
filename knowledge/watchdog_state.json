@@ -1,5 +1,10 @@
 {
- "open": {},
- "last_alert": "2026-11-15T20:18+00:00",
- "last_run": "2026-11-16T05:56+00:00"
+ "open": {
+  "run:trump.yml:Truth Social watcher": {
+   "msg": "Truth Social watcher (trump.yml): no successful run when one was due - last success 2 h ago.",
+   "since": "2026-11-16T09:26+00:00"
+  }
+ },
+ "last_alert": "2026-11-16T09:26+00:00",
+ "last_run": "2026-11-16T09:26+00:00"
 }
