@@ -5,6 +5,6 @@
  },
  {
   "title": "\ud83c\udf81 Wish granted: Firm rules changed: re-check prop_firms.json (Tradeify)",
-  "body": "Done (2026-11-17, Claude): diffed the Tradeify official-page snapshots (29 Oct, 2 Nov, 16 Nov). The rule text is identical; the only change is a help-center date stamp 'October 17, 2026' now printed before the table of contents. So knowledge/prop_firms.json stays as checked on 2026-10-27 (#15, #25) - no plan parameter changed, simulator untouched. tools/rules_watch.py NORM=3 now drops that date stamp and collapses whitespace (verified: 2 Nov and 16 Nov bodies hash equal, a test edit '$1,250 for $50k'->'$1,000' still changes the hash); stored hashes re-baselined from the current snapshots (FundedNext hash unchanged). Commit ac19b7d6.\nUndo: git revert ac19b7d6"
+  "body": "Done (2026-11-17, Claude): diffed the Tradeify official-page snapshots (29 Oct, 2 Nov, 16 Nov). The rule text is identical; the only change is a help-center date stamp 'October 17, 2026' now printed before the table of contents. So knowledge/prop_firms.json stays as checked on 2026-10-27 (#15, #25) - no plan parameter changed, simulator untouched. tools/rules_watch.py NORM=3 now drops that date stamp and collapses whitespace (verified: 2 Nov and 16 Nov bodies hash equal, a test edit '$1,250 for $50k'->'$1,000' still changes the hash); stored hashes re-baselined from the current snapshots (FundedNext hash unchanged). Commit fd79687d.\nUndo: git revert fd79687d"
  }
 ]
