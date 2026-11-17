@@ -339,12 +339,12 @@
   "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -32$/eval (zero edge -43$), 22% pass within 21 sessions."
  ],
  "bias": [
-  "\u23f8\ufe0f NQ BIAS - PAUSED since 15 Nov 2026 (as of Tue 17 Nov 18:25 Lux)",
+  "\u23f8\ufe0f NQ BIAS - PAUSED since 15 Nov 2026 (as of Wed 18 Nov 00:58 Lux)",
   "No LONG/SHORT call. The hourly noise-band lean only works in trending markets and has been wrong most of the time lately; there is no tested way yet to tell trending from choppy days. It comes back only if a trend/chop filter passes a pre-registered test.",
   "The checks still run and are graded silently (nothing is posted), so that test can use live data.",
   "NY outlook: BUSIER day expected (~394 pts high-low, ~200 pts open-to-close); overnight +0.35% (UP), inside yesterday's range.",
   "London outlook: NORMAL London (~76 pts London-to-NY open); Asia range 27,180.50-27,498.00. London breakouts tended to reverse - no London call.",
-  "Scoreboard: 14/40 graded checks right (35%) over 12 days; history says ~54-58%. (Still counted while paused.)"
+  "Scoreboard: 14/42 graded checks right (33%) over 13 days; history says ~54-58%. (Still counted while paused.)"
  ],
  "scoreboard": [
   "\ud83d\udccb VOLTA WEEKLY SCOREBOARD - week to Tue 17 Nov 2026",
