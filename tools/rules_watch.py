@@ -25,11 +25,16 @@ def text_of(url):
     return t
 
 
-NORM = 2   # hash version: v2 hashes only the article body (sidebar 'Related Articles' / feedback footer churn is not a rule change)
+NORM = 3   # hash version: v2 hashes only the article body (sidebar 'Related Articles' / feedback footer churn is not a rule change);
+           # v3 also drops the help-center 'last updated' date stamp in front of the table of contents (wish #42: a bare
+           # 'October 17, 2026' stamp appeared with no rule text changed)
+MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
 
 
 def core(t):
     """The rule text without the help-center footer (related-article links, 'Did this answer your question?')."""
+    t = re.sub(r"\b(?:%s) \d{1,2}, \d{4} (?=Table of contents)" % MONTHS, "", t)   # article date stamp, not a rule
+    t = re.sub(r"\s+", " ", t)                                                    # stripped labels leave double spaces
     return re.split(r"\s(?:Related Articles|Did this answer your question\?)\s", t, maxsplit=1)[0].strip()
 
 
