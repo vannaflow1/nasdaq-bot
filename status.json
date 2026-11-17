@@ -307,7 +307,7 @@
   "Ready for a first eval (statistically; the SIM execution check is not built yet): 3 months 9%, 6 months 23%, 12 months 39%.",
   "Killed as dead (futility): 6 months 0%, 12 months 7%. Formally proven (O'Brien-Fleming): 12 months 1%, 24 months 9%.",
   "Proof of a +0.08R edge at ~1 trade a day takes years; the forward test's real job is to kill F10 early if it is dead and to feed the frozen eval rule (max 3 evals, one at a time, never on the funded account).",
-  "F13 (same breakout, quick targets - shares F10's entries, one bet): belief +0.030R \u00b1 0.033, P(edge > 0) 82%, 29 forward trades (~3 weeks to the 60 needed); eval-ready within 6 months 46%, killed within 12 months 20%."
+  "F13 (same breakout, quick targets - shares F10's entries, one bet): belief +0.029R \u00b1 0.033, P(edge > 0) 81%, 32 forward trades (~3 weeks to the 60 needed); eval-ready within 6 months 40%, killed within 12 months 22%."
  ],
  "families": [
   "MECHANISM FAMILIES (family = mechanism + 20-50 variants; passes only as a plateau beating a placebo family, with a multiplicity-corrected p-value):",
