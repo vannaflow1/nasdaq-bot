@@ -1,7 +1,7 @@
 {
  "for": "Tue 17 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Tue 17 Nov) - risk \ud83d\udfe0 ELEVATED",
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
   "- Low gamma: moves tend to be ~75% bigger than on calm days. Trade 1 contract instead of 2, or keep your stop in points but halve the size.",
   "- NVDA report after the close: big overnight gap risk for NQ. You trade intraday, so just make sure you're flat by the close (you should be anyway)."
  ],
@@ -29,34 +29,25 @@
  "earnings": [
   "  NVDA reports after close: options price a \u00b18.4% move (option covers 2 sessions, so a bit wider than the report alone)"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,517 XP, next level at 10,240)",
-  "Papers read 287 | ideas & strategies tested 220 | prop strategies searched 724,817",
-  "Survived unseen 2022-23: 1608 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 11",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Tue 17 Nov 03:29 Lux",
+ "level": "ELEVATED",
+ "updated": "Tue 17 Nov 14:57 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  TODAY: NVDA earnings after close"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Nvidia earnings scenarios: what a guidance cut could mean for the stock  [Yahoo (megacaps)]\n    NVDA, shock, earnings",
-  "- Tom Lee Blames Nvidia and Anthropic IPO for Ethereum Plunge as Bitmine Buys the Dip  [Yahoo (megacaps)]\n    NVDA, OPENAI, shock",
-  "- Nvidia announces Rubin HPC GPU with 'record number of CUDA cores' at Supercomputing 2026  [Tom's Hardware]\n    NVDA, AI chips/capex",
-  "- Nvidia to report Q3 earnings amid Huang scandal  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Earnings to watch: NVIDIA, Walmart, Home Depot and more report this week  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Nvidia's Colette Kress confronts key questions in first earnings report since Jensen Huang\u2019s exit  [CNBC tech]\n    NVDA, earnings",
-  "- Nvidia gets two more price target cuts from analysts ahead of earnings  [CNBC markets]\n    NVDA, earnings",
-  "- Micron, AMD and other AI stocks fall as the chip sector\u2019s selloff intensifies  [MarketWatch]\n    AMD, MU, shock"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Nvidia board establishes National Security and Export Control Oversight Committee in wake of Jensen Huang scandal  [Tom's Hardware]\n    NVDA, export/geo",
+  "- Nvidia warns chip buyers of legal risks tied to China AI access, sources tell CNBC  [CNBC tech]\n    NVDA, shock",
+  "- Nvidia earnings live updates: Wall Street braces for first report since Huang's ouster  [CNBC tech]\n    NVDA, earnings",
+  "- Nvidia's Kress faces earnings test after stock drags Wall Street into the red  [CNBC tech]\n    NVDA, earnings",
+  "- Nvidia shares slightly up after days of decline ahead of earnings  [CNBC tech]\n    NVDA, earnings",
+  "- Nvidia earnings: Three things investors are watching  [CNBC markets]\n    NVDA, earnings"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Tue 01:44 [oil/geopolitics] Despite the United States having the MOST ABUNDANT Supply, and LOWEST COST Natural Gas in the World, Citizens in Blue States like New York have been paying 3X-7X more for Natural Gas due to the costly Anti-Energy Policies pushed by Blue State Governors and Political leaders. We\u2026",
-  "- Tue 01:42 [fiscal/policy, economy] Under my leadership, our Economy is booming! New Businesses created in America have reached ALL-TIME HIGHS \u2014 Over 500,000 new Businesses formed every month this year. Unlike the Communists that want to tax our Small Business Owners to \u201cdeath,\u201d my Administration and Republicans\u2026",
-  "- Mon 15:17 [oil/geopolitics] The new people running 60 Minutes are even worse than their predecessors. A recent study on an attack in the early stages of Iran was not correctly stated. Since February 28, 2026, the start of Epic Fury, Iran has fired between 8,000-9,000 One-way Attack Drones. Only 2 of them\u2026"
+  "- Tue 01:42 [fiscal/policy, economy] Under my leadership, our Economy is booming! New Businesses created in America have reached ALL-TIME HIGHS \u2014 Over 500,000 new Businesses formed every month this year. Unlike the Communists that want to tax our Small Business Owners to \u201cdeath,\u201d my Administration and Republicans\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -122,7 +113,7 @@
  ],
  "today": [
   "TODAY:",
-  "  no scheduled macro events or megacap earnings"
+  "  TODAY: NVDA earnings after close"
  ],
  "nerd": [
   "LIVE options read - Tue 17 Nov 14:28 Lux (08:28 NY), quotes ~15 min delayed, QQQ 664.78",
