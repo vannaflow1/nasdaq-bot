@@ -1,7 +1,7 @@
 {
- "session": "2026-11-18",
- "fc_frac": 0.02091,
+ "session": "2026-11-19",
+ "fc_frac": 0.0193,
  "stop_share_of_range": 0.2,
- "made_utc": "2026-11-17 21:28",
+ "made_utc": "2026-11-18 21:57",
  "how_to_use": "stop distance in points = stop_share_of_range x fc_frac x the 08:30 Chicago open, rounded to the tick, at least 8 ticks. Use it ONLY when 'session' is today's date in Chicago; otherwise do not trade."
 }
