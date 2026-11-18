@@ -1,5 +1,22 @@
 {
- "open": {},
- "last_alert": "2026-11-16T16:26+00:00",
- "last_run": "2026-11-18T07:58+00:00"
+ "open": {
+  "run:session.yml:live session loop": {
+   "msg": "live session loop (session.yml): no successful run when one was due - last success 16 h ago.",
+   "since": "2026-11-18T16:51+00:00"
+  },
+  "run:chain-snap.yml:option-chain snapshots": {
+   "msg": "option-chain snapshots (chain-snap.yml): no successful run when one was due - last success 24 h ago.",
+   "since": "2026-11-18T16:51+00:00"
+  },
+  "run:nerd-live.yml:options nerd": {
+   "msg": "options nerd (nerd-live.yml): no successful run when one was due - last success 16 h ago.",
+   "since": "2026-11-18T16:51+00:00"
+  },
+  "run:bias.yml:hourly bias check (silent while paused)": {
+   "msg": "hourly bias check (silent while paused) (bias.yml): no successful run when one was due - last success 17 h ago.",
+   "since": "2026-11-18T16:51+00:00"
+  }
+ },
+ "last_alert": "2026-11-18T16:51+00:00",
+ "last_run": "2026-11-18T16:51+00:00"
 }
