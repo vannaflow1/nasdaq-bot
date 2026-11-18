@@ -338,9 +338,10 @@
   "Fastest with >= 20% passing inside a month: lucid_pro_25k risk 0.20 - E[EV] -32$/eval (zero edge -43$), 22% pass within 21 sessions."
  ],
  "bias": [
-  "\u23f8\ufe0f NQ BIAS - PAUSED since 15 Nov 2026 (as of Wed 18 Nov 08:17 Lux)",
+  "\u23f8\ufe0f NQ BIAS - PAUSED since 15 Nov 2026 (as of Wed 18 Nov 14:13 Lux)",
   "No LONG/SHORT call. The hourly noise-band lean only works in trending markets and has been wrong most of the time lately; there is no tested way yet to tell trending from choppy days. It comes back only if a trend/chop filter passes a pre-registered test.",
   "The checks still run and are graded silently (nothing is posted), so that test can use live data.",
+  "NY outlook: BUSIER day expected (~392 pts high-low, ~199 pts open-to-close); overnight +0.47% (UP), inside yesterday's range.",
   "London outlook: WIDE London (~93 pts London-to-NY open); Asia range 27,093.00-27,609.75. London breakouts tended to reverse - no London call.",
   "Scoreboard: 14/42 graded checks right (33%) over 13 days; history says ~54-58%. (Still counted while paused.)"
  ],
