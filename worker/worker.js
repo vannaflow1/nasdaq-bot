@@ -251,7 +251,14 @@ async function odds(i, s, repo) {
   return lines.join("\n");
 }
 
+import { backstop } from "./backstop.js";
+
 export default {
+  // Every 5 minutes (wrangler.toml [triggers]): start important jobs that GitHub's scheduler skipped (backstop.js).
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(backstop(env, new Date(event.scheduledTime)).catch((e) => console.log("backstop failed:", String(e))));
+  },
+
   async fetch(req, env, ctx) {
     if (req.method !== "POST") return new Response("Volta is running");
     if (new URL(req.url).pathname === "/ai") {                 // private: background reading uses the free AI quota

@@ -5,7 +5,7 @@ name: tests
 on:
   push:
     branches: [main]
-    paths: ["**.py", "tests/**", ".github/**", "requirements.txt", ".gitattributes"]
+    paths: ["**.py", "tests/**", ".github/**", "requirements.txt", ".gitattributes", "worker/**"]
   schedule:
     - cron: "10 4 * * *"
   workflow_dispatch:
@@ -24,3 +24,4 @@ jobs:
         with: { python-version: "3.12", cache: pip }
       - run: pip install -q -r requirements.txt scipy
       - run: python -W ignore::ResourceWarning -m unittest discover -s tests -v
+      - run: node worker/backstop.test.mjs                 # the Cloudflare backstop's decisions (no network)

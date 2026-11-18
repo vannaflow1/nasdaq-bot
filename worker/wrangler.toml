@@ -6,3 +6,8 @@ keep_vars = true            # keep DISCORD_PUBLIC_KEY / REPO set in the Cloudfla
 
 [ai]
 binding = "AI"
+
+# Every 5 minutes: backstop.js starts Volta's important GitHub jobs when GitHub's own scheduler skipped them.
+# Does nothing until the owner adds the Cloudflare secret DISPATCH_TOKEN (see backstop.js).
+[triggers]
+crons = ["*/5 * * * *"]
