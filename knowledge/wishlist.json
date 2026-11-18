@@ -581,10 +581,10 @@
   "for": "owner",
   "type": "decision",
   "why": "Several self\u2011actions target low\u2011gamma breakouts but I need a formal family with a grid of parameters (entry offset, stop size, target R) to test systematically and submit for evaluation.",
-  "evidence": "Edge on low\u2011gamma days +0.2% (diary), 2 new candidate specs ready.",
+  "evidence": "Current edge on low\u2011gex days \u22480.2% but no intraday capture; 146 strategies tested, only 1 passed; a focused family could raise power.",
   "impact": "high",
   "status": "open",
-  "votes": 1
+  "votes": 2
  },
  {
   "id": 35,
@@ -627,10 +627,10 @@
   "for": "owner",
   "type": "data",
   "why": "All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intraday.",
-  "evidence": "Self\u2011action entry uses gex_rank < 0.2 at open; finer granularity could increase signal reliability by up to 0.1% R.",
+  "evidence": "All failing translations cite missing intraday GEX; without it we cannot evaluate low\u2011gamma breakouts precisely.",
   "impact": "high",
   "status": "open",
-  "votes": 4
+  "votes": 5
  },
  {
   "id": 38,
