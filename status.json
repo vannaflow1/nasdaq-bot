@@ -1,8 +1,9 @@
 {
  "for": "Wed 18 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Wed 18 Nov) - risk \u26aa NORMAL",
-  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
+  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
+  "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
  ],
  "gamma": [
   "",
@@ -28,33 +29,24 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,650 XP, next level at 10,240)",
-  "Papers read 287 | ideas & strategies tested 229 | prop strategies searched 755,617",
-  "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 11",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +2 tests"
- ],
- "updated": "Wed 18 Nov 00:05 Lux",
+ "level": "ELEVATED",
+ "updated": "Wed 18 Nov 14:57 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Nvidia earnings scenarios: numbers, guidance, and leadership in focus  [Yahoo (megacaps)]\n    NVDA, shock, earnings",
-  "- Nvidia beats on results and guidance in first earnings report since Huang's exit: Live updates  [CNBC tech]\n    NVDA, shock, earnings",
-  "- Nvidia employee warns of 'irreplaceable' talent exodus if Jensen Huang not reinstated  [Tom's Hardware]\n    NVDA, shock",
-  "- Nvidia warns customers of new US rule that could expose them to lawsuits for serving Chinese clients  [Tom's Hardware]\n    NVDA, shock",
-  "- NVIDIA Announces Financial Results for Third Quarter Fiscal 2027  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Update: S&P 500 Pullback Extends to Fourth Day Ahead of Nvidia's Earnings  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Stocks down ahead of Nvidia's post-scandal earnings report  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Nvidia Slips Ahead Of Earnings. Report Out Soon. (Live Coverage)  [Yahoo (megacaps)]\n    NVDA, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Chase Coleman\u2019s Tiger Global Made Nvidia Its Biggest Bet With 12 Million Shares, Dethroning Taiwan Semiconductor. Then the Stock Fell 32%  [Yahoo (megacaps)]\n    NVDA, TSM, export/geo",
+  "- Stock Market Today: Dow Falls As Fed Official Calls For Larger Hike; Nvidia Shares Jump On Earnings (Live Coverage)  [Yahoo (megacaps)]\n    NVDA, Fed/macro, earnings",
+  "- Broadcom Has a $27 Billion Advantage Over Taiwan Semiconductor as Your Portfolio\u2019s AI Anchor  [Yahoo (megacaps)]\n    AVGO, TSM, export/geo",
+  "- Intel vs. Taiwan Semiconductor Manufacturing: Which Tech Stock Is a Better Buy for 2027?  [Yahoo (megacaps)]\n    TSM, INTC, export/geo",
+  "- China\u2019s military seeks Nvidia\u2019s advanced chips for AI capabilities, commission says  [CNBC tech]\n    NVDA, export/geo",
+  "- Nvidia's revenue hits $115.8 billion as Vera Rubin generates $20 billion in another record-setting quarter  [Tom's Hardware]\n    NVDA, AI chips/capex, earnings"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "  (Truth Social feed: HTTPError)"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- Wed 08:44 [trade/tariffs, China/Taiwan] I am now heading to China, from the Philippines, where we had a wonderful meeting on Trade, National Security, and other subjects. I am pleased to announce that we made a new and completely different Trade Deal with the Philippines, one that will be a true landmark and, in\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
@@ -120,7 +112,7 @@
  ],
  "today": [
   "TODAY:",
-  "  TODAY: NVDA earnings after close"
+  "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
   "LIVE options read - Wed 18 Nov 01:54 Lux (19:54 NY), quotes ~15 min delayed, QQQ 657.16",
