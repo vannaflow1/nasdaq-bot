@@ -29,7 +29,14 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": "ELEVATED",
+ "level": [
+  "VOLTA LEVEL 16  (9,652 XP, next level at 10,240)",
+  "Papers read 287 | ideas & strategies tested 230 | prop strategies searched 755,617",
+  "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
+  "Brain upgrades: 0 | self-discovered powers: 11",
+  "XP only for verified progress: tests passed on unseen data count far more than activity.",
+  "Since yesterday: +1 tests"
+ ],
  "updated": "Wed 18 Nov 21:41 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
@@ -179,7 +186,7 @@
   "   high 27,498 (my far level 28,157 \u2705), low 26,658 (my far level 26,345 \u2705)"
  ],
  "strategies": [
-  "STRATEGY LAB - 146 strategies tested (33 designed by Volta itself), 3 locked exams taken, 1 passed.",
+  "STRATEGY LAB - 147 strategies tested (34 designed by Volta itself), 3 locked exams taken, 1 passed.",
   "",
   "PASSED THE EXAM - now forward-tested every day:",
   "- with the open's side of the overnight range at 08:31, no red-folder news: live 2 trades, -2.0R total, win 0% | later review: FRAGILE",
