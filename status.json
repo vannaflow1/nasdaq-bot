@@ -115,7 +115,7 @@
   "\u2022 Range-Based Volatility Estimation and Forecasting (\u2605\u2605\u2605\u2605\u2606)",
   "  The thesis investigates how to improve daily high\u2011low range forecasts by using more efficient volatility estimators (realized variance, realized range, Parkinson, Garman\u2011Klass, Rogers\u2011Satchell) and by breaking the day in",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.531% (+0.1%), better in 7/9 unseen years",
-  "This week's tests: 21 run - 0 promising, 15 not confirmed, 0 don't fit my data, 6 translation failures",
+  "This week's tests: 24 run - 0 promising, 17 not confirmed, 0 don't fit my data, 7 translation failures",
   "",
   "58 papers waiting in my queue."
  ],
@@ -198,14 +198,15 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-18)",
-  "I keep confirming a ~0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but none of my intraday rules exploit it, and my range forecasts are still ~38% off, hurting position sizing. Near\u2011miss features suggest the first\u2011hour breakout after the Asian high may be the right moment. I also see that my idea pipeline is stalling because many tests fail on missing intraday option data or on translation limits.",
+  "VOLTA'S SELF-CHECK (2026-11-19)",
+  "I keep seeing a ~0.2% edge on low dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but none of my intraday rules exploit it. My range forecasts still miss ~38% of the true daily range, hurting sizing. Near\u2011miss features suggest that weighting recent range measures helps a little, but the gamma signal is the strongest single predictor I have. Today I will test a simple breakout rule that only fires on low\u2011gex days and see if it lifts the R per trade.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",
   "#34 [needs the owner] Finalize Low\u2011Gamma Open Breakout family proposal - Several self\u2011actions target low\u2011gamma breakouts but I need a formal family with a grid of parameters (entry offset, stop size, target R) to ",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
+  "#43 [needs the owner] Family proposal: LowGex_OpenBreakout - A clear one\u2011sentence mechanism (low dealer gamma \u2192 larger early moves) exists but no systematic family of variants has been built yet. A fam",
   "",
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],

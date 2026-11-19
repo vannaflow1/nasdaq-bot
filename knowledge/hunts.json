@@ -394,5 +394,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-16"
+ },
+ {
+  "id": "h35",
+  "date": "2026-11-19",
+  "query": "GEX rank predictive opening price move",
+  "why": "Understanding how GEX rank influences the direction and magnitude of the opening price move would help refine filters for the LowGex breakout strategy.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]
