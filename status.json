@@ -81,11 +81,11 @@
   "spx_factor": 1.1163
  },
  "live": [
-  "LIVE - Thu 19 Nov 18:14 Lux",
-  "NQ 26,809 | range so far 1,090 pts (4.01%), high 27,838 / low 26,748 | data as of 12:04 NY (may lag a few minutes)",
-  "Brain this morning: ~994 pts for the day (3.66%) - 110% of it already used.",
-  "Updated with what happened so far: full day ~1,254 pts (80%: 1,090-1,753) -> typically ~164 more pts to come (80%: 0-663).",
-  "(brain + neural net, re-estimated at 11:00 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "LIVE - Thu 19 Nov 18:33 Lux",
+  "NQ 26,988 | range so far 1,164 pts (4.28%), high 27,838 / low 26,674 | data as of 12:23 NY (may lag a few minutes)",
+  "Brain this morning: ~994 pts for the day (3.66%) - 117% of it already used.",
+  "Updated with what happened so far: full day ~1,298 pts (80%: 1,164-1,782) -> typically ~134 more pts to come (80%: 0-619).",
+  "(brain + neural net, re-estimated at 11:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
   "Far levels today: high 28,195 / low 26,055 (~90% of days stay inside each)"
  ],
  "playbook": [
