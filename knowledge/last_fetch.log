@@ -1,7 +1,6 @@
-hunt 'GEX rank predictive opening price move': 15 found, queued 0
 scanned 0 papers, queued 0, queue size 58 []
-self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 118 (char 117)
-read 0, AI units today 592/7000
-curiosity asked: Strategy: LowGex_FadeYHigh_earlyPWgap
-tested: Strategy: LowGex_FadeYHigh_earlyPWgap - Low‑gamma day with s -> NOT CONFIRMED on my data: too few trades (10 in 2014-2023, need 150). in-sample 2014-2023:
-testing used 362 AI units
+self-triage failed: JSONDecodeError Expecting ',' delimiter: line 1 column 120 (char 119)
+read 0, AI units today 957/7000
+curiosity asked: Strategy: LowGex_Exp90Break_GapTake_Afternoon
+tested: Strategy: LowGex_Exp90Break_GapTake_Afternoon - Break above  -> NOT CONFIRMED on my data: too few trades (85 in 2014-2023, need 150). in-sample 2014-2023:
+testing used 154 AI units
