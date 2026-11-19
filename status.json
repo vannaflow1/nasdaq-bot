@@ -1,9 +1,8 @@
 {
  "for": "Thu 19 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Thu 19 Nov) - risk \ud83d\udfe0 ELEVATED",
-  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
-  "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
   "",
@@ -29,31 +28,20 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,654 XP, next level at 10,240)",
-  "Papers read 287 | ideas & strategies tested 231 | prop strategies searched 755,617",
-  "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 11",
-  "XP only for verified progress: tests passed on unseen data count far more than activity."
- ],
- "updated": "Thu 19 Nov 14:01 Lux",
+ "level": "NORMAL",
+ "updated": "Thu 19 Nov 15:02 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- US Equity Markets Mixed After Nvidia's Results, Fed's October Minutes  [Yahoo (megacaps)]\n    NVDA, Fed/macro, earnings",
-  "- Dow Drops 561 Points. Nvidia Reverses Rally As Fed Signals More Rate Hikes.  [Yahoo (megacaps)]\n    NVDA, Fed/macro",
-  "- Cantor Fitzgerald's Nvidia business interests targeted in Democrats' Lutnick probe  [CNBC tech]\n    NVDA, shock",
-  "- China threatens 'countermeasures' in the face of new AI GPU rental and export restrictions  [Tom's Hardware]\n    AI chips/capex, export/geo",
-  "- Nvidia Delivers Reassuring Results, Outlook. But Wall Street Split.  [Yahoo (megacaps)]\n    NVDA, earnings",
-  "- Nvidia sinks after earnings, dragging down neoclouds CoreWeave, Iren  [CNBC tech]\n    NVDA, earnings",
-  "- 'Who and what comes next': Analysts expect Nvidia investor uncertainty despite earnings beat  [CNBC tech]\n    NVDA, earnings",
-  "- Jim Cramer\u2019s key takeaway from Nvidia\u2019s first earnings since Huang\u2019s resignation  [CNBC tech]\n    NVDA, earnings"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Why Microsoft\u2019s Stickier Revenue Gives It the Edge Over Apple Heading Into 2027  [Yahoo (megacaps)]\n    MSFT, AAPL, earnings",
+  "- Can Anthropic\u2019s IPO do for the stock market what Nvidia\u2019s earnings couldn\u2019t?  [MarketWatch]\n    NVDA, OPENAI, earnings",
+  "- Jim Cramer says Nvidia has a new problem \u2014 and it has nothing to do with earnings  [CNBC tech]\n    NVDA, earnings"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "  (Truth Social feed: HTTPError)"
  ],
  "forecast": [
