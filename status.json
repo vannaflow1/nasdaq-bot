@@ -81,10 +81,10 @@
   "spx_factor": 1.1163
  },
  "live": [
-  "LIVE - Thu 19 Nov 15:32 Lux",
-  "NQ 27,698 | range so far 662 pts (2.43%), high 27,830 / low 27,169 | data as of 09:22 NY (may lag a few minutes)",
+  "LIVE - Thu 19 Nov 15:42 Lux",
+  "NQ 27,750 | range so far 662 pts (2.43%), high 27,830 / low 27,169 | data as of 09:32 NY (may lag a few minutes)",
   "Brain this morning: ~994 pts for the day (3.66%) - 67% of it already used.",
-  "Updated with what happened so far: full day ~1,023 pts (80%: 708-1,593) -> typically ~361 more pts to come (80%: 46-932).",
+  "Updated with what happened so far: full day ~1,014 pts (80%: 702-1,580) -> typically ~353 more pts to come (80%: 40-919).",
   "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
   "Far levels today: high 28,195 / low 26,055 (~90% of days stay inside each)"
  ],
@@ -247,34 +247,33 @@
   "event_day": false
  },
  "powers": [
-  "OPEN READ - Wed 18 Nov (NY open 27,252) (posted 17:51 Lux)",
-  "Yesterday's high 27,351: 81% chance it gets taken today (avg 48%)",
-  "Yesterday's low  26,658: 21% chance it gets taken today (avg 42%)",
-  "Gap +0.61% from yesterday's close 27,086: 79% chance it fills today (avg 50%)",
-  "Tail-day risk (range 1.8x+ its normal): 10% (avg 8%)",
-  "Asia 27,093-27,485 | London 27,170-27,424",
-  "Asia range intact: NY takes the Asia high 68% / low 55%; once one side goes, the other follows only ~30%",
+  "OPEN READ - Thu 19 Nov (NY open 27,666) (posted 15:42 Lux)",
+  "Opened ABOVE yesterday high (27,326 / 26,922) - already outside yesterday's range",
+  "Gap +1.75% from yesterday's close 27,192: 28% chance it fills today (avg 50%)",
+  "Tail-day risk (range 1.8x+ its normal): 8% (avg 8%)",
+  "Asia 27,303-27,742 | London 27,628-27,830",
+  "London already took the Asia HIGH -> NY takes the Asia LOW 48% of the time (coin flip, no edge)",
   "NY takes the London high 75% / London low 69% of days",
   "Tested 2017-2025 on unseen years; odds were well calibrated. Base rates, not signals - no direction call.",
   "",
-  "POWERS VOLTA DISCOVERED ITSELF - Wed 18 Nov",
-  "\u26a1 When London already took the Asia high, does NY close above yesterday's high more often?\n   today: no -> 22% on such days (1012 in history; all days 35%)",
+  "POWERS VOLTA DISCOVERED ITSELF - Thu 19 Nov",
+  "\u26a1 When London already took the Asia high, does NY close above yesterday's high more often?\n   today: yes -> 42% on such days (1796 in history; all days 35%)",
   "\u26a1 Does the size of the overnight range change how often NY takes the overnight high?\n   today: top fifth of history -> 52% on such days (581 in history; all days 65%)",
   "\u26a1 SMT at the Asia high: when only ONE of NQ/ES took its Asia high before the open, does NY take the overnight LOW more often? (vs 51% when both took it)\n   today: no -> 57% on such days (2574 in history; all days 58%)",
   "\u26a1 On days where gex_rank < 0.2 (low dealer gamma) does the absolute NQ range (y_high - y_low) exceed the median range of all days by a statistically significant margin?\n   today: low of history -> 1.74 on such days (579 in history; all days 1.44)",
   "\u26a1 When the NQ opens near the high of the Asian session (k_open_vs_asia = 1), are we more likely to break yesterday's high during the NY session?\n   today: middle of history -> 59% on such days (562 in history; all days 56%)",
   "\u26a1 Do larger overnight gaps (k_gap) increase the probability that NQ closes above yesterday's high (y_closed_above_yday_high)?\n   today: top fifth of history -> 63% on such days (562 in history; all days 35%)",
-  "\u26a1 On days when the market\u2019s implied overnight move (impl) is larger than the observed overnight range (k_on_range), are we more likely to see NQ trade above the overnight high (y_took_overnight_high) du\n   today: middle of history -> 66% on such days (581 in history; all days 65%)",
-  "\u26a1 When the overnight gap as a proportion of the 20\u2011day average NY range (k_gap / k_range20) is large, are we more likely to close the NQ session above yesterday's high (y_closed_above_yday_high)?\n   today: high of history -> 43% on such days (561 in history; all days 35%)",
+  "\u26a1 On days when the market\u2019s implied overnight move (impl) is larger than the observed overnight range (k_on_range), are we more likely to see NQ trade above the overnight high (y_took_overnight_high) du\n   today: low of history -> 63% on such days (581 in history; all days 65%)",
+  "\u26a1 When the overnight gap as a proportion of the 20\u2011day average NY range (k_gap / k_range20) is large, are we more likely to close the NQ session above yesterday's high (y_closed_above_yday_high)?\n   today: top fifth of history -> 64% on such days (562 in history; all days 35%)",
   "\u26a1 On days when the London session range is unusually large relative to its 20\u2011day average, are first\u2011hour NQ ranges disproportionately larger than the typical 20\u2011day average range?\n   today: high of history -> 0.61 on such days (581 in history; all days 0.58)",
   "\u26a1 On days when the overnight range is unusually large relative to its 20\u2011day average (k_on_vs_normal), are we more likely to see NQ trade above the Asia high during the NY session (y_took_asia_high)?\n   today: top fifth of history -> 64% on such days (581 in history; all days 76%)"
  ],
  "powers_raw": {
-  "date": "2026-11-18",
-  "pw_takes_pdh": 0.812,
-  "pw_takes_pdl": 0.2051,
-  "pw_gap_fill": 0.7879,
-  "pw_tail_day": 0.1004
+  "date": "2026-11-19",
+  "pw_takes_pdh": 0.9958,
+  "pw_takes_pdl": 0.0065,
+  "pw_gap_fill": 0.2832,
+  "pw_tail_day": 0.0763
  },
  "book": [
   "VOLTA'S BOOK - account #1 (since 2026-10-20)",
