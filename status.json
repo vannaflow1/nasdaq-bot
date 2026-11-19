@@ -36,7 +36,7 @@
   "Brain upgrades: 0 | self-discovered powers: 11",
   "XP only for verified progress: tests passed on unseen data count far more than activity."
  ],
- "updated": "Thu 19 Nov 13:26 Lux",
+ "updated": "Thu 19 Nov 14:01 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
@@ -54,7 +54,7 @@
  ],
  "trump": [
   "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- nothing market-relevant"
+  "  (Truth Social feed: HTTPError)"
  ],
  "forecast": [
   "No forecasts yet.",
