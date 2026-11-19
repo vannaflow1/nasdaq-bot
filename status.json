@@ -347,12 +347,12 @@
   "Scoreboard: 14/42 graded checks right (33%) over 13 days; history says ~54-58%. (Still counted while paused.)"
  ],
  "scoreboard": [
-  "\ud83d\udccb VOLTA WEEKLY SCOREBOARD - week to Wed 18 Nov 2026",
+  "\ud83d\udccb VOLTA WEEKLY SCOREBOARD - week to Thu 19 Nov 2026",
   "Every live claim next to what actually happened. No forecasts, no spin.",
-  "1) Hourly bias (PAUSED - still graded silently): 14/42 checks right (33%) over 13 days; this week 2/13. The backtest said 54-58%.",
+  "1) Hourly bias (PAUSED - still graded silently): 14/42 checks right (33%) over 13 days; this week 1/8. The backtest said 54-58%.",
   "   Verdict: worse than a coin flip live - not usable.",
-  "2) Day-size outlook (NY): 12 days graded. Typical miss of the expected high-low range: 50%.",
-  "   Days called BUSIER/WIDE (7): real range 735 pts on average vs 516 pts on the other 5 days - bigger, as called. (too few to judge)",
+  "2) Day-size outlook (NY): 13 days graded. Typical miss of the expected high-low range: 44%.",
+  "   Days called BUSIER/WIDE (8): real range 694 pts on average vs 516 pts on the other 5 days - bigger, as called. (too few to judge)",
   "3) London breakout tracker: 16/31 breaks reversed before the NY open (52%); in 12 years of history 52-55% did. Volta makes no London call from this.",
   "4) Forward tests on real futures bars (the only candidates for a prop edge; F10, F12 and F13 share entries = ONE bet):",
   "   F10/F12: 19 trades, average +0.00R per trade so far (mostly luck at this count). Belief about the true edge: +0.027R \u00b1 0.043, P(edge > 0) 74%. Status CONTINUE; 41 more trades before the eval rule can be asked.",
@@ -360,6 +360,6 @@
   "   Scale (Lucid simulation of 13 Nov 2026): a true edge of +0.03R is worth roughly $30 a month per prop account, first payout after ~5 months, 18% of accounts reach one.",
   "5) Short-vol paper trade: no trade opened yet (needs a high-gamma day).",
   "6) Strategy search: 755,617 strategies tested in total (leaderboard and luck bar: /search).",
-  "   Machine health: watchdog last ran 2 h ago; no open problems."
+  "   Machine health: watchdog last ran 1 h ago; no open problems."
  ]
 }
