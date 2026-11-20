@@ -2,8 +2,9 @@
 tags: [concept]
 ---
 # implied volatility
-10 papers mention this:
+11 papers mention this:
 
+- [[A Review of Methods for Predicting Stock Volatility A Comparison of Traditional Econometri]]
 - [[An International Comparison of Implied, Realized, and GARCH Volatility Forecasts]]
 - [[Does herding affect volatility Implications for the Spanish stock market]]
 - [[Essays on equity option behavior surrounding macroeconomic announcements]]

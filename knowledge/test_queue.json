@@ -1,1 +1,18 @@
-[]
+[
+ {
+  "id": "openalex:W7224277285",
+  "title": "A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility, and Machine Learning Methods",
+  "idea": "Compare a simple GARCH(1,1) forecast of next\u2011day realized volatility (using l_rv20 or l_rng) to a forecast that adds the 7\u2011day implied volatility (from the options pack) as an extra regressor, and evaluate which reduces out\u2011of\u2011sample QLIKE error.",
+  "relevance": 3,
+  "added": "2026-11-20",
+  "hunt": null
+ },
+ {
+  "id": "openalex:W7223675687",
+  "title": "The Limits of Machine Learning in Daily Return Forecasting: Evidence from Volatility Regimes, Tail Risk, and Multi-Asset Markets",
+  "idea": "Enter a long (short) position in the S&P 500 (or QQQ) when the 5\u2011day rolling average of past daily log returns is positive (negative); exit or reverse the position the next day.",
+  "relevance": 3,
+  "added": "2026-11-20",
+  "hunt": null
+ }
+]

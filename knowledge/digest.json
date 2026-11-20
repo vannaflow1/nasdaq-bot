@@ -1,5 +1,35 @@
 [
 {
+"title": "The Limits of Machine Learning in Daily Return Forecasting: Evidence from Volatility Regimes, Tail Risk, and Multi-Asset Markets",
+"learned": "The paper finds that daily return predictability is dominated by a simple linear momentum signal\u2014the 5\u2011day rolling mean return\u2014while a sophisticated ML model (XGBoost) offers no statistical edge over plain linear regression.",
+"concepts": [
+"5\u2011day rolling mean",
+"linear momentum",
+"daily return forecasting",
+"EGARCH volatility",
+"tail risk"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://etamaths.com/index.php/ijaa/article/download/5493/1963",
+"date": "2026-11-20"
+},
+{
+"title": "A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility, and Machine Learning Methods",
+"learned": "The paper reviews three families of volatility forecasts \u2013 traditional econometric models (GARCH, HAR, Realized GARCH, CARR), implied\u2011volatility based methods, and machine\u2011learning approaches \u2013 and concludes that no single method dominates universally. Traditional models are still strong baselines, implied volatility adds value when variance risk premium and maturity are matched, and machine learning only helps in high\u2011dimensional settings with careful time\u2011series validation.",
+"concepts": [
+"GARCH/ARCH",
+"Realized volatility",
+"Implied volatility",
+"Machine\u2011learning forecasts",
+"Forecast evaluation (MSE, QLIKE, Diebold\u2011Mariano)"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://journals.zeuspress.org/index.php/FER/article/download/1605/1540",
+"date": "2026-11-20"
+},
+{
 "title": "A hybrid fuzzy\u2013ensemble method for time series forecasting",
 "learned": "The paper proposes a rule-free forecasting system that first clusters lagged versions of a univariate series with fuzzy c\u2011means, then trains a separate random\u2011forest regressor for each fuzzy cluster and combines their predictions weighted by membership degrees. Hyper\u2011parameters are jointly tuned via random search.",
 "concepts": [

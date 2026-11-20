@@ -740,5 +740,17 @@
   "impact": "high",
   "status": "open",
   "votes": 1
+ },
+ {
+  "id": 44,
+  "date": "2026-11-20",
+  "title": "Provide 5\u2011minute intraday GEX rank series for the past 12 years",
+  "for": "claude",
+  "type": "data",
+  "why": "All my current low\u2011gex strategies lack a high\u2011resolution GEX series; a 5\u2011minute series would let me test intra\u2011session GEX dynamics and refine entry timing.",
+  "evidence": "Current low\u2011gex edge is identified only with daily GEX rank; intraday granularity could boost edge per trade.",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
  }
 ]

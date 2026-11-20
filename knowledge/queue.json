@@ -1,39 +1,5 @@
 [
  {
-  "id": "openalex:W639708223",
-  "title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
-  "abstract": "State-of-the-art object detection networks depend on region proposal algorithms to hypothesize object locations. Advances like SPPnet [1] and Fast R-CNN [2] have reduced the running time of these detection networks, exposing region proposal computation as a bottleneck. In this work, we introduce a Region Proposal Network (RPN) that shares full-image convolutional features with the detection network, thus enabling nearly cost-free region proposals. An RPN is a fully convolutional network that simultaneously predicts object bounds and objectness scores at each position. The RPN is trained end-to-end to generate high-quality region proposals, which are used by Fast R-CNN for detection. We further merge RPN and Fast R-CNN into a single network by sharing their convolutional features-using the recently popular terminology of neural networks with 'attention' mechanisms, the RPN component tells the unified network where to look. For the very deep VGG-16 model [3] , our detection system has a frame rate of 5 fps (including all steps) on a GPU, while achieving state-of-the-art object detection accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with only 300 proposals per image. In ILSVRC and COCO 2015 competitions, Faster R-CNN and RPN are the foundations of the 1st-place winning entries in several tracks. Code has been made publicly available.",
-  "track": "self",
-  "url": "https://arxiv.org/pdf/1506.01497",
-  "source": "OpenAlex (about itself)",
-  "topic": "self: algorithmic trading system design",
-  "score": 4,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W639708223.txt"
- },
- {
-  "id": "openalex:W7224277285",
-  "title": "A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility, and Machine Learning Methods",
-  "abstract": "Stock volatility forecasting serves as a crucial underpinning for derivatives pricing, asset allocation, and risk management. This paper examines volatility proxy variables, empirical applications, as well as forecasting evaluation metrics, and then reviews representative models and empirical evidence across three research pathways. The comparison concerns the information basis and forecasting horizon, taking into account explanatory power, stability, and economic value. A comprehensive review of the literature suggests that traditional models remain a robust benchmark in scenarios with limited data, in which emphasis is placed on interpretability and reproducibility. Implied volatility can provide incremental information beyond historical data; however, its predictive power is influenced by variance risk premiums, liquidity, and maturity matching. Machine learning offers greater flexibility in high-dimensional data environments, but its advantages depend on rigorous time-series validation and control of information leakage. Because of inconsistencies in proxy variables, loss functions, sample partitioning, and market conditions, existing evidence fails to support the universal superiority of any single method across all tasks. Future analysis should conduct cross-market tests under a unified evaluation framework and integrate statistical forecasting accuracy with economic value in risk management and investment decision-making.",
-  "url": "https://journals.zeuspress.org/index.php/FER/article/download/1605/1540",
-  "source": "OpenAlex",
-  "date": "2026-10-29",
-  "score": 16,
-  "queued": "2026-11-01",
-  "text_file": "knowledge/papers/openalex_W7224277285.txt"
- },
- {
-  "id": "openalex:W7223675687",
-  "title": "The Limits of Machine Learning in Daily Return Forecasting: Evidence from Volatility Regimes, Tail Risk, and Multi-Asset Markets",
-  "abstract": "The study analyzes volatility regimes, tail risk and machine learning forecastability of seven financial assets (BTC, ETH, the S&P 500, NASDAQ, Gold, Crude Oil, and US Dollar Index) from 2017 to 2026. Structural break analysis shows that financial instability is characterized by variance, not by a change in the mean. EGARCH is preferred in five out of seven assets, with significant leverage effects in the equity indices. According to EVT analysis, ETH and BTC are the highest-tail-risk assets, while Crude Oil has the heaviest tail. Kupiec and Christoffersen VaR back testing results show that Gold\u2019 s actual exceedance rate at the 95th percentile is almost twice the expected exceedance rate. XGBoost doesn\u2019 t statistically outperform Linear Regression (DM = \\(-\\)0.403, p = 0.687), and the most important predictive element is a 5-day rolling mean return. The results show that most predictive information in daily returns is contained in linear autoregressive features.",
-  "url": "https://etamaths.com/index.php/ijaa/article/download/5493/1963",
-  "source": "OpenAlex",
-  "date": "2026-10-26",
-  "score": 16,
-  "queued": "2026-11-01",
-  "text_file": "knowledge/papers/openalex_W7223675687.txt"
- },
- {
   "id": "arxiv:2611.07287v1",
   "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
   "abstract": "High-frequency volatility forecasting typically separates measurement from prediction: intraday observations are first compressed into a daily realized measure using a fixed aggregation rule, and the resulting statistic is then passed to a forecasting model. This conventional pipeline therefore treats measure construction as forecast-agnostic preprocessing. We ask whether the aggregation stage itself can instead be learned from the downstream forecasting objective while preserving the statistical structure of established realized measures. We propose Neural Realized Measures (NRM), a primitive-preserving, forecast-supervised aggregation framework that retains the original measure-specific intraday contributions but replaces uniform aggregation with positive, mean-normalized context-dependent weights. Uniform weights exactly recover the corresponding raw realized measure (RRM), so the classical construction is nested as a special case. Because NRM remains an explicit weighted sum of established primitive contributions, it also retains direct bar-level attribution. Across SF, HAR, and MIDAS forecasting specifications, NRM is evaluated against corresponding RRM specifications under controlled comparisons. In Heston simulations, NRM reduces RMSE for both contemporaneous and next-day latent integrated variance across all evaluated primitive--regime combinations. On six cryptocurrencies using five-minute data, NRM improves QLIKE in all 54 paired out-of-sample comparisons, with mean gains of 7.23\\%, 8.15\\%, and 9.22\\% under SF, HAR, and MIDAS, respectively. Validation-selected NRM specifications also achieve the lowest mean QLIKE across the six assets among the evaluated approaches. Ablation and SHAP analyses reveal systematic time-of-day and nonlinear local-context effects in the learned allocation.",
