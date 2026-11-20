@@ -1,3 +1,10 @@
+downloading CBOE QQQ chain (can take a minute on a slow connection)...
+[no DISCORD_WEBHOOK / NTFY_TOPIC set - would push] Nasdaq bot ERROR
+Traceback (most recent call last):
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/nasdaq_bot.py", line 559, in <module>
+    ts, d = q.load_chain(None)
+            ^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/qqq_gex_daily.py", line 113, in load_chain
     resp = urllib.request.urlopen(req, timeout=120)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/urllib/request.py", line 215, in urlopen
