@@ -476,5 +476,19 @@
   ],
   "calls_left_today": 94,
   "status": "out_of_time"
+ },
+ {
+  "wish": 44,
+  "title": "Provide 5‑minute intraday GEX rank series for the past 12 years",
+  "outcome": "error",
+  "summary": "daily Gemini budget used up (120 calls)",
+  "how_to_use": "",
+  "date": "2026-11-20",
+  "steps": 14,
+  "models": [
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": -4,
+  "status": "error"
  }
 ]
