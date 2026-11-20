@@ -1,5 +1,50 @@
 [
 {
+"title": "Regime-dependent bitcoin volatility forecasting under alternative information sets: evidence from econometric, deep learning, and hybrid models",
+"learned": "The paper finds that Bitcoin volatility forecasting accuracy varies by market regime and that LSTM models work best in normal periods, while hybrid GARCH\u2011LSTM models perform best during crises, with the optimal hybrid depending on the specific crisis.",
+"concepts": [
+"regime\u2011dependent volatility",
+"GARCH",
+"LSTM",
+"hybrid models",
+"forecast evaluation"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://link.springer.com/content/pdf/10.1007/s42521-026-00229-9.pdf",
+"date": "2026-11-20"
+},
+{
+"title": "The Term Structure of Implied Fee Rates in Liquidity Pools",
+"learned": "The paper proposes a no\u2011arbitrage method to infer the implied fee rates that liquidity providers earn in AMM pools, linking fees to the difference between the pool's current value and its risk\u2011neutral expected payoff.",
+"concepts": [
+"Implied fee rates",
+"Liquidity provider compensation",
+"AMM no\u2011arbitrage pricing",
+"Stochastic\u2011volatility jump diffusion",
+"Range design impact"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://hal.science/hal-05804816",
+"date": "2026-11-20"
+},
+{
+"title": "The Variance Risk Premium in NIFTY Index Options: Smaller than It Looks, Priced in the Wings, and Paid for Tail Risk",
+"learned": "The study finds that the variance risk premium (VRP) in NIFTY index options is much smaller than raw implied\u2011vs\u2011realized volatility gaps suggest, because a large share of realized variance comes from overnight moves and the premium is concentrated in OTM options, reflecting compensation for tail risk.",
+"concepts": [
+"variance risk premium",
+"model\u2011free implied volatility",
+"tail risk",
+"out\u2011of\u2011the\u2011money options",
+"realized variance"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.5281/zenodo.23880589",
+"date": "2026-11-20"
+},
+{
 "title": "Velocity- and Regime-Aware Detection of Intraday Options Market Manipulation, with Explainable Attribution",
 "learned": "The authors find that intraday manipulation in options leaves a distinct \"pump\u2011and\u2011crash\" pattern in the *velocity* of market state (option\u2011Delta velocity for index options) rather than in price levels, and that an autoencoder on minute\u2011level velocity can recover all regulator\u2011identified manipulation days. Adding regime information from a hidden Markov model hurts precision, and the signature seems to transfer across markets but its magnitude changes.",
 "concepts": [
@@ -25,7 +70,7 @@
 "HAR/MIDAS models"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "DOESN'T FIT MY DATA - The idea requires training a Neural Realized Measures model on intraday 5\u2011minute NQ price data and computing out\u2011of\u2011sample QLIKE errors versus a HAR model, which cannot be expressed with the available daily columns and built\u2011in functions.",
 "url": "https://doi.org/10.1145/3858063.3858785",
 "date": "2026-11-20"
 },
@@ -40,7 +85,7 @@
 "interpretability via bar\u2011level attribution"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "DOESN'T FIT MY DATA - The idea requires intra\u2011day 5\u2011minute realized\u2011variance contributions, which are not present in Volta's dataset; only daily aggregates (rng, rng5, rng20) are available.",
 "url": "https://arxiv.org/abs/2611.07287v1",
 "date": "2026-11-20"
 },

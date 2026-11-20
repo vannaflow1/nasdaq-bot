@@ -96,14 +96,14 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 292 papers read (48 more skipped as not relevant enough), 144 ideas tested on my memory, 2 promising.",
+  "LEARNING: 295 papers read (48 more skipped as not relevant enough), 146 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper introduces Neural Realized Measures (NRM), which replace the fixed equal-weight aggregation of intraday volatility contributions with learned, positive, mean\u2011normalized weights that are optimized for forecastin",
-  "  tested: queued for testing",
+  "  tested: DOESN'T FIT MY DATA - The idea requires training a Neural Realized Measures model on intraday 5\u2011minute NQ price data and computing out\u2011of\u2011sample QLIKE errors ve",
   "\u2022 Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes Neural Realized Measures (NRM), which keep the traditional intraday volatility primitives (like realized variance, bipower variation, Garman\u2011Klass) but replace the equal\u2011weight daily aggregation with a",
-  "  tested: queued for testing",
+  "  tested: DOESN'T FIT MY DATA - The idea requires intra\u2011day 5\u2011minute realized\u2011variance contributions, which are not present in Volta's dataset; only daily aggregates (rng",
   "\u2022 The Limits of Machine Learning in Daily Return Forecasting: Evidence from Volatility Regimes, Tail Risk, and M (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper finds that daily return predictability is dominated by a simple linear momentum signal\u2014the 5\u2011day rolling mean return\u2014while a sophisticated ML model (XGBoost) offers no statistical edge over plain linear regress",
   "  tested: NOT CONFIRMED on my data: 2248 signal days, hit 50.4% (always-long 56.5%), strategy -0.2 bps/day vs +1.4 for the same average exposure held constantly -> timing",
@@ -116,9 +116,9 @@
   "\u2022 Risk-Sensitive Reinforcement Learning for an Options Market Maker: An Empirical Study with Real S&P 500 Option (\u2605\u2605\u2605\u2606\u2606)",
   "  Training a reinforcement\u2011learning hedger on real S&P\u202f500 option data gives a modest (~3%) reduction in CVaR\u201195 tail loss versus plain delta hedging, with a larger (~9%) benefit in volatile, falling markets but a 7\u201110% pe",
   "  tested: NOT CONFIRMED on my data: 461 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -7.0 bp of QQQ per trade (placebo avg -4.3, p=0.720), halves -4.9/-9.1,",
-  "This week's tests: 32 run - 0 promising, 24 not confirmed, 0 don't fit my data, 8 translation failures",
+  "This week's tests: 35 run - 0 promising, 25 not confirmed, 2 don't fit my data, 8 translation failures",
   "",
-  "52 papers waiting in my queue."
+  "49 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

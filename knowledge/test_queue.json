@@ -1,18 +1,1 @@
-[
- {
-  "id": "arxiv:2611.07287v1",
-  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
-  "idea": "Train a small neural network to output positive, mean\u2011normalized weights for each 5\u2011minute bar\u2019s realized\u2011variance contribution (r\u00b2) using the daily features available in Volta\u2019s memory (e.g., l_rng, l_iv30, term, gex_rank, time\u2011of\u2011day bins). Compute a weighted sum as the daily volatility input to a HAR or MIDAS model and compare next\u2011day QLIKE against the vanilla equal\u2011weight realized variance.",
-  "relevance": 3,
-  "added": "2026-11-20",
-  "hunt": null
- },
- {
-  "id": "openalex:W7221018347",
-  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
-  "idea": "Train an NRM model on five\u2011minute NQ index futures price data to predict next\u2011day 30\u2011day ATM IV, then compare its QLIKE forecast error to a standard HAR realized variance model; if NRM beats HAR by >5% in out\u2011of\u2011sample, use its forecast to size option positions.",
-  "relevance": 3,
-  "added": "2026-11-20",
-  "hunt": null
- }
-]
+[]

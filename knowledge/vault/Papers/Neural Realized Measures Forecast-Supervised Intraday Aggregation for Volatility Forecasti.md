@@ -19,6 +19,6 @@ neural realized measures, forecast‑supervised weighting, intraday volatility a
 Train an NRM model on five‑minute NQ index futures price data to predict next‑day 30‑day ATM IV, then compare its QLIKE forecast error to a standard HAR realized variance model; if NRM beats HAR by >5% in out‑of‑sample, use its forecast to size option positions.
 
 ## Test
-queued for testing
+[[DOESN'T FIT]] - DOESN'T FIT MY DATA - The idea requires training a Neural Realized Measures model on intraday 5‑minute NQ price data and computing out‑of‑sample QLIKE errors versus a HAR model, which cannot be expressed with the available daily columns and built‑in functions.
 
 Part of [[Research engine]]

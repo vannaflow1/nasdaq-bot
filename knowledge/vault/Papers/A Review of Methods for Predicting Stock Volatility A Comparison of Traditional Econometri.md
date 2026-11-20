@@ -13,7 +13,7 @@ The paper reviews three families of volatility forecasts – traditional econome
 The review summarizes methods relevant to daily volatility forecasting for Nasdaq/S&P futures but provides no new empirical results to change a trader’s current models.
 
 ## Concepts
-garch/arch, [[realized volatility]], [[implied volatility]], machine‑learning forecasts, forecast evaluation
+garch/arch, [[realized volatility]], [[implied volatility]], machine‑learning forecasts, [[forecast evaluation]]
 
 ## Idea
 Compare a simple GARCH(1,1) forecast of next‑day realized volatility (using l_rv20 or l_rng) to a forecast that adds the 7‑day implied volatility (from the options pack) as an extra regressor, and evaluate which reduces out‑of‑sample QLIKE error.

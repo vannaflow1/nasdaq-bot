@@ -1,19 +1,13 @@
-hunt arxiv: HTTPError
-hunt arxiv: HTTPError
-hunt 'dealer GEX rank opening price move Nasdaq': 4 found, queued 0
-hunt arxiv: HTTPError
-hunt arxiv: HTTPError
-hunt 'intraday range forecast improvement using dealer gamma': 15 found, queued 0
-scanned 0 papers, queued 0, queue size 55 []
+scanned 0 papers, queued 0, queue size 52 []
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (3*): Neural Realized Measures: Forecast-Supervised Intraday Aggregation for
+read (2*): The Variance Risk Premium in NIFTY Index Options: Smaller than It Look
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (3*): Neural Realized Measures: Forecast-Supervised Intraday Aggregation for
+read (1*): The Term Structure of Implied Fee Rates in Liquidity Pools
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (2*): Velocity- and Regime-Aware Detection of Intraday Options Market Manipu
-read 3, AI units today 1585/7000
-curiosity asked: Strategy: LowGex_Exp90Break_10_30_PWBlend
-tested: Strategy: LowGex_Exp90Break_10_30_PWBlend - Break above 90%  -> NOT CONFIRMED on my data: too few trades (0 in 2014-2023, need 150). in-sample: no trades 
-tested: Compare a simple GARCH(1,1) forecast of next‑day realized vo -> NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.585% (+0.3%), better in 4/6 unse
-tested: Enter a long (short) position in the S&P 500 (or QQQ) when t -> NOT CONFIRMED on my data: 2248 signal days, hit 50.4% (always-long 56.5%), strategy -0.2 b
-testing used 528 AI units
+read (1*): Regime-dependent bitcoin volatility forecasting under alternative info
+read 3, AI units today 2287/7000
+curiosity asked: Strategy: LowGex_Exp50_BreakOpen_PWBlend_AM
+tested: Strategy: LowGex_Exp50_BreakOpen_PWBlend_AM - Break above th -> NOT CONFIRMED on my data: too few trades (0 in 2014-2023, need 150). in-sample: no trades 
+tested: Train a small neural network to output positive, mean‑normal -> DOESN'T FIT MY DATA - The idea requires intra‑day 5‑minute realized‑variance contributions
+tested: Train an NRM model on five‑minute NQ index futures price dat -> DOESN'T FIT MY DATA - The idea requires training a Neural Realized Measures model on intra
+testing used 521 AI units

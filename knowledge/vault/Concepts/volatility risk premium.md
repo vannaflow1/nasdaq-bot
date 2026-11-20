@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # volatility risk premium
-14 papers mention this:
+15 papers mention this:
 
 - [[A New Star Is Born Does the VIX1D Render Common Volatility Forecasting Models for the US E]]
 - [[Delta-Hedged Gains and the Negative Market Volatility Risk Premium]]
@@ -15,6 +15,7 @@ tags: [concept]
 - [[Term Structure of Interest Rates with Short-run and Long-run Risks]]
 - [[The Pricing of Tail Risk and the Equity Premium Evidence From International Option Markets]]
 - [[The VIX Premium]]
+- [[The Variance Risk Premium in NIFTY Index Options Smaller than It Looks, Priced in the Wing]]
 - [[Uncovering the asymmetric information content of high-frequency options]]
 - [[Variance Risk Premiums]]
 - [[Volatility risk premia and exchange rate predictability]]

@@ -1,38 +1,5 @@
 [
  {
-  "id": "openalex:W7225092638",
-  "title": "The Variance Risk Premium in NIFTY Index Options: Smaller than It Looks, Priced in the Wings, and Paid for Tail Risk",
-  "abstract": "This research measures the variance risk premium in NIFTY 50 index options using two horizon-matched measures. India VIX exceeds the realised volatility of the following 30 calendar days by 3.26 volatility points on average over 2008\u20132026, and on 82% of days. For weekly options over 2020\u20132026, at-the-money implied volatility exceeds the volatility realised until expiry by 2.22 points. This is less than half the gap obtained when the overnight returns in the same windows are ignored, because overnight moves carry 42% of realised variance. Model-free implied volatility exceeds at-the-money implied volatility by 2.16 points, so much of the premium sits in out-of-the-money options. Implied volatility is a biased forecast of realised volatility. Selling weekly volatility earned positive average returns net of costs, but only a short strangle cleared zero after correction for multiple testing. Five weeks erased 64% of a short straddle's cumulative gain. The premium is real, smaller than a naive measure suggests, and largely compensation for tail risk. JEL codes: G12, G13, G14. This is research, not investment advice.",
-  "url": "https://doi.org/10.5281/zenodo.23880589",
-  "source": "OpenAlex",
-  "date": "2026-11-02",
-  "score": 15,
-  "queued": "2026-11-08",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7223074122",
-  "title": "The Term Structure of Implied Fee Rates in Liquidity Pools",
-  "abstract": "We develop a no-arbitrage framework to recover implied fee rates from option implied information and quantify fee compensation for liquidity providers in automated market maker (AMM) pools. Expected accumulated fees equal the current pool value minus the risk-neutral value of its terminal payoff, reducing forward looking LP compensation to pricing the LP payoff. We apply the framework to Uniswap v2 and Uniswap v3 ETH-USDC pools using a stochastic-volatility jump diffusion model calibrated to Deribit options. Implied fee rates are positive, time varying, downward sloping in maturity, and highly sensitive to range design, with tighter near-the-money ranges earning larger implied returns.",
-  "url": "https://hal.science/hal-05804816",
-  "source": "OpenAlex",
-  "date": "2026-10-18",
-  "score": 14,
-  "queued": "2026-10-21",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7223666279",
-  "title": "Regime-dependent bitcoin volatility forecasting under alternative information sets: evidence from econometric, deep learning, and hybrid models",
-  "abstract": "Abstract Bitcoin volatility is challenging to forecast because accuracy depends on model choice, information sets, and market regimes. Existing studies often compare models under inconsistent volatility targets, predictors, samples, or evaluation designs, leaving unclear whether forecast gains arise from model architecture, information content, or regime shifts. This study addresses this gap by proposing a unified rolling out-of-sample framework for daily Bitcoin volatility forecasting that compares GARCH-type models, standalone LSTMs, and state-augmented GARCH\u2013LSTM hybrids under the same volatility target, nested information sets, one-step-ahead forecast horizon, and evaluation design, using balanced daily data from 1 February 2018 to 19 July 2025. Predictors are organized into technical (T), technical plus sentiment (TS), and technical, sentiment, and blockchain (TSB) groups to measure the marginal value of added information. Forecast accuracy is assessed mainly with QLIKE, plus RMSE, MAE, and Diebold\u2013Mariano tests across normal and crisis regimes. Predictability is strongly regime-dependent. In normal markets, LSTM-T achieves the lowest loss, with TGARCH and Hybrid_GARCH_T statistically indistinguishable from it. In crises, hybrids minimize QLIKE, but the best specification differs: Hybrid_TGARCH_TS during COVID-19, Hybrid_EGARCH_TSB during the China mining ban, and Hybrid_APARCH_TS during the crypto winter. Hence, hybrid gains are regime-specific and depend on the interaction of volatility dynamics, information sets, and regime characteristics. For daily one-step-ahead Bitcoin forecasts, the evidence supports regime-sensitive modeling and cautions against broad claims of model superiority based on pooled samples.",
-  "url": "https://link.springer.com/content/pdf/10.1007/s42521-026-00229-9.pdf",
-  "source": "OpenAlex",
-  "date": "2026-10-26",
-  "score": 14,
-  "queued": "2026-11-01",
-  "text_failed": true
- },
- {
   "id": "openalex:W7225798795",
   "title": "Prediction Inference for Hybrid Models on Realized Volatility Forecasting",
   "abstract": "GARCH-LSTM hybrid models have become increasingly popular in the volatility forecasting literature. To date, these models have almost exclusively focused on point estimation and accuracy measures such as RMSE and MAPE, while failing to assess the uncertainty of these point estimates. We approach this gap in two ways. First, we extend the existing GARCH-LSTM model by modeling the conditional mean with an ARMA structure. Second, we develop a forward bootstrap algorithm to build multi-step-ahead prediction intervals for future realized volatility. In order to address the notorious undercoverage of prediction intervals, we implement two solutions. One draws bootstrap innovations from the empirical residual distribution to mimic the fat-tail property of financial series. The other utilizes principles from conformal prediction to systematically extend the prediction interval length. We evaluate the methods in simulations with heavy-tailed and time-varying GARCH processes and in rolling-window forecasts of four U.S. stock indices from 2020 to 2025. The ARMA-based hybrid gives the lowest point-forecast errors in most settings, and combining both remedies with the mean-based hybrid yields intervals closest to the nominal level among competing methods.",
