@@ -1,19 +1,29 @@
 {
- "wish": 42,
- "title": "Firm rules changed: re-check prop_firms.json (Tradeify: essential trading rules)",
- "outcome": "error",
- "summary": "daily Gemini budget used up (120 calls)",
+ "wish": 44,
+ "title": "Provide 5‑minute intraday GEX rank series for the past 12 years",
+ "outcome": "out_of_time",
+ "summary": "stopped after 45 minutes (11 model turns)",
  "how_to_use": "",
- "date": "2026-11-16",
- "steps": 3,
+ "date": "2026-11-20",
+ "steps": 11,
  "models": [
+  "gemini-3.8-flash",
+  "gemini-flash-latest",
   "gemini-flash-lite-latest"
  ],
- "calls_left_today": -3,
- "status": "error",
+ "calls_left_today": 94,
+ "status": "out_of_time",
  "log": [
-  "0: search(pattern='Tradeify') -> './prop_sim.py:50:    \"\"\"The level the trailing floor stops at. Plans with \"eval_lock\": false (e.g. T'",
-  "1: search(pattern='tradeify') -> './tools/rules_watch.py:14:    \"Tradeify: essential trading rules\": \"https://intercom.help/tradeify/e'",
-  "2: list_dir(path='knowledge/research_out') -> 'china_credit.log  (1708 bytes)\\nchina_credit.txt  (1707 bytes)\\nchina_credit_impulse.csv  (4579 bytes)'"
+  "0: search(pattern='gex') -> './nasdaq_bot.py:25:import qqq_gex_daily as q          # validated QQQ GEX logic, history, paper trad'",
+  "1: search(pattern='5m|5_min|5min|parquet|intraday') -> './families.py:98:        sp = json.loads(spec_s); D = S.data(sp.get(\"market\")); e = sp[\"entry\"]; int'",
+  "2: list_dir(path='knowledge') -> 'MISSION.md  (2154 bytes)\\nREADME.md  (27246 bytes)\\nUPGRADE_2026-11-15.md  (2406 bytes)\\nai_budget.json'",
+  "3: list_dir(path='knowledge/data') -> 'archive/\\nchains/\\ncl_1m.parquet  (84602062 bytes)\\necon_events_red.csv  (416702 bytes)\\ngc_1m.parquet  '",
+  "4: search(path_glob='*wishlist.json', pattern='44') -> './knowledge/wishlist.json:163:  \"note\": \"Tested 2026-10-23 by Claude (tools/streak_check.py, researc'",
+  "5: read_file(start_line='740', path='knowledge/wishlist.json', max_lines='40') -> 'knowledge/wishlist.json (756 lines; showing 740-756)\\n740:   \"impact\": \"high\",\\n741:   \"status\": \"open'",
+  "6: read_file(start_line='680', max_lines='65', path='knowledge/wishlist.json') -> 'knowledge/wishlist.json (756 lines; showing 680-744)\\n680:   \"title\": \"Add calibrated temperature sca'",
+  "7: read_file(max_lines='80', path='tools/chain_series.py', start_line='1') -> 'tools/chain_series.py (92 lines; showing 1-80)\\n1: \"\"\"tools/chain_series.py - intraday option mid-pri'",
+  "8: read_file(start_line='1', path='tools/chain_snap.py', max_lines='80') -> 'tools/chain_snap.py (133 lines; showing 1-80)\\n1: \"\"\"tools/chain_snap.py - intraday 0-DTE option chai'",
+  "9: read_file(max_lines='80', path='qqq_gex_daily.py', start_line='1') -> 'qqq_gex_daily.py (291 lines; showing 1-80)\\n1: \"\"\"\\n2: qqq_gex_daily.py  -  daily QQQ dealer-gamma (GE'",
+  "10: (text) "
  ]
 }

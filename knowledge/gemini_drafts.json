@@ -460,5 +460,21 @@
   ],
   "calls_left_today": -3,
   "status": "error"
+ },
+ {
+  "wish": 44,
+  "title": "Provide 5‑minute intraday GEX rank series for the past 12 years",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (11 model turns)",
+  "how_to_use": "",
+  "date": "2026-11-20",
+  "steps": 11,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-latest",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 94,
+  "status": "out_of_time"
  }
 ]
