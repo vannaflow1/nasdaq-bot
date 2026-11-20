@@ -87,11 +87,11 @@
   "low_far": 25284.5
  },
  "live": [
-  "LIVE - Fri 20 Nov 15:42 Lux",
-  "NQ 26,240 | range so far 604 pts (2.27%), high 26,604 / low 26,000 | data as of 09:32 NY (may lag a few minutes)",
-  "Brain this morning: ~1,052 pts for the day (3.96%) - 57% of it already used.",
-  "Updated with what happened so far: full day ~976 pts (80%: 675-1,520) -> typically ~372 more pts to come (80%: 72-917).",
-  "(brain + neural net, re-estimated at 08:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
+  "LIVE - Fri 20 Nov 16:02 Lux",
+  "NQ 26,255 | range so far 604 pts (2.27%), high 26,604 / low 26,000 | data as of 09:52 NY (may lag a few minutes)",
+  "Brain this morning: ~1,053 pts for the day (3.96%) - 57% of it already used.",
+  "Updated with what happened so far: full day ~894 pts (80%: 664-1,340) -> typically ~290 more pts to come (80%: 60-736).",
+  "(brain + neural net, re-estimated at 09:00 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
   "Far levels today: high 27,496 / low 25,284 (~90% of days stay inside each)"
  ],
  "playbook": [
@@ -255,9 +255,9 @@
   "event_day": false
  },
  "powers": [
-  "OPEN READ - Fri 20 Nov (NY open 26,322) (posted 15:42 Lux)",
+  "OPEN READ - Fri 20 Nov (NY open 26,321) (posted 16:02 Lux)",
   "Opened BELOW yesterday low (27,838 / 26,559) - already outside yesterday's range",
-  "Gap -1.01% from yesterday's close 26,589: 72% chance it fills today (avg 50%)",
+  "Gap -1.01% from yesterday's close 26,590: 72% chance it fills today (avg 50%)",
   "Tail-day risk (range 1.8x+ its normal): 16% (avg 8%)",
   "Asia 26,230-26,573 | London 26,077-26,448",
   "London already took the Asia LOW -> NY takes the Asia HIGH 49% of the time (coin flip, no edge)",
@@ -278,10 +278,10 @@
  ],
  "powers_raw": {
   "date": "2026-11-20",
-  "pw_takes_pdh": 0.0303,
-  "pw_takes_pdl": 0.9101,
-  "pw_gap_fill": 0.7178,
-  "pw_tail_day": 0.1612
+  "pw_takes_pdh": 0.0302,
+  "pw_takes_pdl": 0.9103,
+  "pw_gap_fill": 0.7164,
+  "pw_tail_day": 0.1613
  },
  "book": [
   "VOLTA'S BOOK - account #1 (since 2026-10-20)",
