@@ -112,3 +112,4 @@ date,check_ct,bias,price,open,band_pct,dist_bands,close,result,overnight,agree,d
 2026-11-19,14,SHORT,26721.5,27666.25,1.426,-2.4,26589.5,right,UP,no,WIDE
 2026-11-20,9,NONE,26432.0,26321.0,0.866,0.49,,,DOWN,,BUSIER
 2026-11-20,10,SHORT,25906.25,26322.0,1.401,-1.13,,,DOWN,yes,BUSIER
+2026-11-20,11,SHORT,25721.5,26321.0,1.547,-1.47,,,DOWN,yes,BUSIER
