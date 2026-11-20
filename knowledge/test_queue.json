@@ -1,16 +1,16 @@
 [
  {
-  "id": "openalex:W7224277285",
-  "title": "A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility, and Machine Learning Methods",
-  "idea": "Compare a simple GARCH(1,1) forecast of next\u2011day realized volatility (using l_rv20 or l_rng) to a forecast that adds the 7\u2011day implied volatility (from the options pack) as an extra regressor, and evaluate which reduces out\u2011of\u2011sample QLIKE error.",
+  "id": "arxiv:2611.07287v1",
+  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
+  "idea": "Train a small neural network to output positive, mean\u2011normalized weights for each 5\u2011minute bar\u2019s realized\u2011variance contribution (r\u00b2) using the daily features available in Volta\u2019s memory (e.g., l_rng, l_iv30, term, gex_rank, time\u2011of\u2011day bins). Compute a weighted sum as the daily volatility input to a HAR or MIDAS model and compare next\u2011day QLIKE against the vanilla equal\u2011weight realized variance.",
   "relevance": 3,
   "added": "2026-11-20",
   "hunt": null
  },
  {
-  "id": "openalex:W7223675687",
-  "title": "The Limits of Machine Learning in Daily Return Forecasting: Evidence from Volatility Regimes, Tail Risk, and Multi-Asset Markets",
-  "idea": "Enter a long (short) position in the S&P 500 (or QQQ) when the 5\u2011day rolling average of past daily log returns is positive (negative); exit or reverse the position the next day.",
+  "id": "openalex:W7221018347",
+  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
+  "idea": "Train an NRM model on five\u2011minute NQ index futures price data to predict next\u2011day 30\u2011day ATM IV, then compare its QLIKE forecast error to a standard HAR realized variance model; if NRM beats HAR by >5% in out\u2011of\u2011sample, use its forecast to size option positions.",
   "relevance": 3,
   "added": "2026-11-20",
   "hunt": null

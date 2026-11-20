@@ -70,5 +70,14 @@
   "paper": "Range-Based Volatility Estimation and Forecasting",
   "id": "openalex:W839538750",
   "added": "2026-10-25"
+ },
+ {
+  "expr": "garch + lag(iv30, 1)",
+  "template": null,
+  "gain": 0.3,
+  "years": "4/6",
+  "paper": "A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility,",
+  "id": "openalex:W7224277285",
+  "added": "2026-11-20"
  }
 ]

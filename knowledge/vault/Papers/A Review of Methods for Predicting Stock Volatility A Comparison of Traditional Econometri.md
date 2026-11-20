@@ -19,6 +19,9 @@ garch/arch, [[realized volatility]], [[implied volatility]], machine‑learning 
 Compare a simple GARCH(1,1) forecast of next‑day realized volatility (using l_rv20 or l_rng) to a forecast that adds the 7‑day implied volatility (from the options pack) as an extra regressor, and evaluate which reduces out‑of‑sample QLIKE error.
 
 ## Test
-queued for testing
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.585% (+0.3%), better in 4/6 unseen years
+How: feature `garch + lag(iv30, 1)` added to the brain's range model
+Touches: [[Brain]]
+In the [[Near-miss pool]] - re-tested together with the others monthly.
 
 Part of [[Research engine]]

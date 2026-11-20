@@ -1,39 +1,5 @@
 [
  {
-  "id": "arxiv:2611.07287v1",
-  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
-  "abstract": "High-frequency volatility forecasting typically separates measurement from prediction: intraday observations are first compressed into a daily realized measure using a fixed aggregation rule, and the resulting statistic is then passed to a forecasting model. This conventional pipeline therefore treats measure construction as forecast-agnostic preprocessing. We ask whether the aggregation stage itself can instead be learned from the downstream forecasting objective while preserving the statistical structure of established realized measures. We propose Neural Realized Measures (NRM), a primitive-preserving, forecast-supervised aggregation framework that retains the original measure-specific intraday contributions but replaces uniform aggregation with positive, mean-normalized context-dependent weights. Uniform weights exactly recover the corresponding raw realized measure (RRM), so the classical construction is nested as a special case. Because NRM remains an explicit weighted sum of established primitive contributions, it also retains direct bar-level attribution. Across SF, HAR, and MIDAS forecasting specifications, NRM is evaluated against corresponding RRM specifications under controlled comparisons. In Heston simulations, NRM reduces RMSE for both contemporaneous and next-day latent integrated variance across all evaluated primitive--regime combinations. On six cryptocurrencies using five-minute data, NRM improves QLIKE in all 54 paired out-of-sample comparisons, with mean gains of 7.23\\%, 8.15\\%, and 9.22\\% under SF, HAR, and MIDAS, respectively. Validation-selected NRM specifications also achieve the lowest mean QLIKE across the six assets among the evaluated approaches. Ablation and SHAP analyses reveal systematic time-of-day and nonlinear local-context effects in the learned allocation.",
-  "url": "https://arxiv.org/abs/2611.07287v1",
-  "pdf": "https://arxiv.org/pdf/2611.07287v1",
-  "source": "arXiv",
-  "date": "2026-11-05",
-  "score": 16,
-  "queued": "2026-11-08",
-  "text_file": "knowledge/papers/arxiv_2611.07287v1.txt"
- },
- {
-  "id": "openalex:W7221018347",
-  "title": "Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting",
-  "abstract": "Realized and range-based volatility measures are statistically grounded and empirically well established, while their intraday contributions are conventionally combined using fixed aggregation rules. We propose Neural Realized Measures (NRM), a forecast-supervised aggregation layer that preserves the original volatility primitive while learning how its intraday contributions should be weighted for forecasting. Positive, mean-normalized weights are generated from a fixed Shape-Time-Local-Global (STLG) representation, with uniform weighting exactly recovering the corresponding raw realized measure (RRM). Because NRM remains an explicit weighted sum of well-established and interpretable primitive contributions, it preserves transparent bar-level attribution. Across SF, HAR, and MIDAS forecasting specifications, NRM is evaluated against corresponding RRM specifications under controlled comparisons. In Heston simulations, NRM reduces RMSE for both contemporaneous and next-day latent integrated variance across all evaluated primitive-regime combinations. On six cryptocurrencies using five-minute data, NRM improves QLIKE in all 54 paired out-of-sample comparisons, with mean gains of 7.23%, 8.15%, and 9.22% under SF, HAR, and MIDAS, respectively. Validationselected NRM specifications also achieve the lowest mean QLIKE across the six assets among the evaluated approaches. Ablation and SHAP analyses reveal systematic time-of-day and nonlinear local-context effects in the learned allocation.",
-  "url": "https://doi.org/10.1145/3858063.3858785",
-  "source": "OpenAlex",
-  "date": "2026-11-14",
-  "score": 16,
-  "queued": "2026-11-15",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7201867243",
-  "title": "Velocity- and Regime-Aware Detection of Intraday Options Market Manipulation, with Explainable Attribution",
-  "abstract": "Intraday market manipulation is hard to detect because its footprint is brief, buried in millions of quotes, and statistically similar to ordinary volatility. Detectors reach high recall only by flagging so many other days that measured precision collapses, producing alerts no regulator can act on. We show that this manipulation leaves a distinctive dynamic signature: a pump-and-crash pattern visible in the velocity of market state, rather than its level. We build a minute-level detection pipeline, strictly partitioned in time, based on smoothed state velocity: option-Delta velocity for index options and price velocity for equities. We explain every alert with SHAP attribution. We hold the test period strictly out-of-sample and fix all thresholds before evaluation. On the locked Indian BANKNIFTY index-options test, the plain autoencoder recovers 10 of 10 regulator-identified manipulation days. Conditioning detection on market regimes inferred by a hidden Markov model yields an instructive negative result. The regimes are descriptively distinct, but using them trades recall for precision. Under the closed-world assumption that unlabeled days are normal, precision remains near 25%. The same dynamic appears in thinly traded U.S. equities (SEC v. Patel). The shape of the signature survives the transfer; its velocity magnitude does not. A pump-reversal shape score ranks the complaint's alleged manipulation days with AUC 0.91 (ARQQ) and 0.81 (ACY). On the ARQQ worked example, the score peaks inside the complaint's documented minute window. Finally, exact SHAP attribution over every alert shows that unconfirmed alerts share the regulator-identified days' attribution profile (cosine similarity 0.99). The precision ceiling is consistent with incomplete enforcement labels rather than detector failure. What transfers across markets and instrument types is the dynamic signature itself.",
-  "url": "https://doi.org/10.1145/3858063.3858692",
-  "source": "OpenAlex",
-  "date": "2026-11-14",
-  "score": 16,
-  "queued": "2026-11-15",
-  "text_failed": true
- },
- {
   "id": "openalex:W7225092638",
   "title": "The Variance Risk Premium in NIFTY Index Options: Smaller than It Looks, Priced in the Wings, and Paid for Tail Risk",
   "abstract": "This research measures the variance risk premium in NIFTY 50 index options using two horizon-matched measures. India VIX exceeds the realised volatility of the following 30 calendar days by 3.26 volatility points on average over 2008\u20132026, and on 82% of days. For weekly options over 2020\u20132026, at-the-money implied volatility exceeds the volatility realised until expiry by 2.22 points. This is less than half the gap obtained when the overnight returns in the same windows are ignored, because overnight moves carry 42% of realised variance. Model-free implied volatility exceeds at-the-money implied volatility by 2.16 points, so much of the premium sits in out-of-the-money options. Implied volatility is a biased forecast of realised volatility. Selling weekly volatility earned positive average returns net of costs, but only a short strangle cleared zero after correction for multiple testing. Five weeks erased 64% of a short straddle's cumulative gain. The premium is real, smaller than a naive measure suggests, and largely compensation for tail risk. JEL codes: G12, G13, G14. This is research, not investment advice.",

@@ -411,8 +411,9 @@
   "query": "dealer GEX rank opening price move Nasdaq",
   "why": "I need academic or industry evidence that low GEX rank predicts a directional bias in the opening price, to justify the LowGex_OpenFade family.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-11-20"
  },
  {
   "id": "h37",
@@ -420,7 +421,8 @@
   "query": "intraday range forecast improvement using dealer gamma",
   "why": "My range forecasts are 38% off; papers linking dealer gamma to daily range could supply a missing feature to shrink forecast error.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-11-20"
  }
 ]
