@@ -1,38 +1,5 @@
 [
  {
-  "id": "openalex:W7225798795",
-  "title": "Prediction Inference for Hybrid Models on Realized Volatility Forecasting",
-  "abstract": "GARCH-LSTM hybrid models have become increasingly popular in the volatility forecasting literature. To date, these models have almost exclusively focused on point estimation and accuracy measures such as RMSE and MAPE, while failing to assess the uncertainty of these point estimates. We approach this gap in two ways. First, we extend the existing GARCH-LSTM model by modeling the conditional mean with an ARMA structure. Second, we develop a forward bootstrap algorithm to build multi-step-ahead prediction intervals for future realized volatility. In order to address the notorious undercoverage of prediction intervals, we implement two solutions. One draws bootstrap innovations from the empirical residual distribution to mimic the fat-tail property of financial series. The other utilizes principles from conformal prediction to systematically extend the prediction interval length. We evaluate the methods in simulations with heavy-tailed and time-varying GARCH processes and in rolling-window forecasts of four U.S. stock indices from 2020 to 2025. The ARMA-based hybrid gives the lowest point-forecast errors in most settings, and combining both remedies with the mean-based hybrid yields intervals closest to the nominal level among competing methods.",
-  "url": "https://arxiv.org/pdf/2611.13212",
-  "source": "OpenAlex",
-  "date": "2026-11-09",
-  "score": 13,
-  "queued": "2026-11-15",
-  "text_file": "knowledge/papers/openalex_W7225798795.txt"
- },
- {
-  "id": "openalex:W7225577738",
-  "title": "Mitigating Sequence-of-Returns Risk with Regime-Switching Asset Allocation: A Comparison of Econometric and Deep Learning Models in Portfolio Decumulation",
-  "abstract": "Abstract Retirement portfolios under regular withdrawals face sequence-of-returns risk: early losses can exhaust capital even when average returns are adequate. We examine whether regime-switching dynamic asset allocation mitigates this risk for a 60/40 stock-bond portfolio, and whether deep learning identifies regimes better than classical econometrics. Five models (a Markov-switching model, a multivariate and a univariate Gaussian hidden Markov model, an LSTM, and an encoder-only Transformer) are compared under identical data, tuning, and walk-forward validation. Their signals, net of transaction costs, feed 10{,}000 stationary-bootstrap retirement paths in three withdrawal scenarios. At 4.0% the MSM, the univariate HMM, and the LSTM cut the depletion rate from 3.30% to 0.57%, 0.60%, and 0.60% with disjoint Wilson intervals; at 6.0% only the LSTM reduces it (17.01% against 33.04%), the univariate filters raising it to about 49% as their return sacrifice becomes the dominant ruin cause, and the multivariate HMM raising it in every scenario. Only the econometric models turn defensive in all five crisis windows; neither network identifies regimes more accurately, and the LSTM holds the highest median terminal capital by staying invested rather than by timing regimes. Classification quality and search diagnostics do not predict decumulation value. Regime-switching allocation in decumulation is a state-contingent tail hedge: model choice determines the protected risk profile, and above a critical withdrawal rate the premium exceeds the payout.",
-  "url": "https://www.researchsquare.com/article/rs-11243482/latest.pdf",
-  "source": "OpenAlex",
-  "date": "2026-11-09",
-  "score": 13,
-  "queued": "2026-11-15",
-  "text_file": "knowledge/papers/openalex_W7225577738.txt"
- },
- {
-  "id": "openalex:W7222943913",
-  "title": "From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution",
-  "abstract": "Option pricing theory is a cornerstone of modern financial engineering, but the classical Black-Scholes framework relies on continuous price trajectories, constant volatility, and lognormally distributed returns. These assumptions are difficult to reconcile with empirical features such as volatility smiles, fat-tailed returns, volatility clustering, and abrupt price movements. This review examines the evolution of Option pricing models from the Black-Scholes benchmark to stochastic-volatility, jump-diffusion, stochastic-volatility-jump, and affine jump-diffusion specifications. It shows that richer models generally improve cross-sectional pricing accuracy, especially for short-maturity and out-of-the-money options, but that this improvement is accompanied by higher parameter uncertainty, calibration complexity, and hedging instability. The review further emphasizes that evidence from emerging markets, particularly China\u2019s domestic derivatives market, remains comparatively limited and may require models that account for liquidity constraints, retail participation, and clustered jump behavior.",
-  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1505/1497",
-  "source": "OpenAlex",
-  "date": "2026-10-20",
-  "score": 12,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W7222943913.txt"
- },
- {
   "id": "openalex:W7223137491",
   "title": "Multi-dimensional risk profiling of BIST-100 stocks: A comparative analysis of the MEREC-AROMAN MCDM framework and the classical CAPM beta",
   "abstract": "Our study creates a multi-dimensional risk profile for Borsa Istanbul 100 (BIST-100) stocks combining MEREC and AROMAN from multi-criteria decision-making (MCDM) techniques. For this purpose, 7 risk dimensions were calculated using daily price and volume data of 91 BIST-100 stocks for the period between January 1, 2015- April 30, 2026: market beta, downside beta, VaR, CVaR, max drawdown, lower-tail dependence, Amihud illiquidity. In the results obtained, the MEREC-AROMAN ranking was compared with the classical CAPM beta ranking. Accordingly, although the two rankings show a moderate Spearman correlation (+0.28), there is a divergence stemming theoretically from liquidity and tail-risk channels. Furthermore, in out-of-sample tests conducted during the post-2023 monetary policy normalization period, the MEREC-AROMAN ranking predicts realized volatility (Mann-Whitney p = 0.033; Holm-adjusted p = 0.065), whereas the beta ranking works in the opposite direction. In robustness tests, the robustness of findings was confirmed with sectoral fixed effects regression, behavioral regime analysis based on the Risk Appetite Index (RISE) published by the Central Securities Depository, and trapezoidal fuzzy AROMAN extension. Our study presents an important methodological contribution to advanced MCDM in finance by revealing that liquidity-adjusted multi-dimensional risk measures are superior to single-factor beta in regime-change environments.",

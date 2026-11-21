@@ -96,8 +96,14 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 295 papers read (48 more skipped as not relevant enough), 146 ideas tested on my memory, 2 promising.",
+  "LEARNING: 298 papers read (48 more skipped as not relevant enough), 146 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calib",
+  "  tested: queued for testing",
+  "\u2022 Prediction Inference for Hybrid Models on Realized Volatility Forecasting (\u2605\u2605\u2605\u2605\u2606)",
+  "  Adding an ARMA mean model to a GARCH\u2011LSTM hybrid improves point forecasts of realized volatility, and a forward\u2011bootstrap plus conformal\u2011prediction adjustment yields multi\u2011step prediction intervals with near\u2011nominal cove",
+  "  tested: queued for testing",
   "\u2022 Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper introduces Neural Realized Measures (NRM), which replace the fixed equal-weight aggregation of intraday volatility contributions with learned, positive, mean\u2011normalized weights that are optimized for forecastin",
   "  tested: DOESN'T FIT MY DATA - The idea requires training a Neural Realized Measures model on intraday 5\u2011minute NQ price data and computing out\u2011of\u2011sample QLIKE errors ve",
@@ -110,15 +116,9 @@
   "\u2022 A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied V (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper reviews three families of volatility forecasts \u2013 traditional econometric models (GARCH, HAR, Realized GARCH, CARR), implied\u2011volatility based methods, and machine\u2011learning approaches \u2013 and concludes that no sing",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.585% (+0.3%), better in 4/6 unseen years",
-  "\u2022 Towards Robust Reinforcement Learning Market Making: Lessons from Loss Function Experimentation (\u2605\u2605\u2605\u2606\u2606)",
-  "  Adding explicit penalties for large inventory and low cash to the RL loss function makes market\u2011making agents more profitable and longer\u2011lasting than pure profit\u2011maximisation, while also tightening the bid\u2011ask spread.",
-  "  tested: DOESN'T FIT MY DATA - The idea requires simulated market\u2011making agent behavior, inventory paths, and custom reward calculations not present in the available his",
-  "\u2022 Risk-Sensitive Reinforcement Learning for an Options Market Maker: An Empirical Study with Real S&P 500 Option (\u2605\u2605\u2605\u2606\u2606)",
-  "  Training a reinforcement\u2011learning hedger on real S&P\u202f500 option data gives a modest (~3%) reduction in CVaR\u201195 tail loss versus plain delta hedging, with a larger (~9%) benefit in volatile, falling markets but a 7\u201110% pe",
-  "  tested: NOT CONFIRMED on my data: 461 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -7.0 bp of QQQ per trade (placebo avg -4.3, p=0.720), halves -4.9/-9.1,",
-  "This week's tests: 35 run - 0 promising, 25 not confirmed, 2 don't fit my data, 8 translation failures",
+  "This week's tests: 38 run - 0 promising, 27 not confirmed, 2 don't fit my data, 9 translation failures",
   "",
-  "49 papers waiting in my queue."
+  "46 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -199,16 +199,16 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-20)",
-  "I still see a ~0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but my intraday rules never capture it. My range forecasts miss ~38% of the true daily range, limiting position sizing. Near\u2011miss features suggest simple linear combos of recent range (lagged rng) add a tiny lift, so I should try to blend them with the gamma signal. I will focus on turning the low\u2011gamma opening\u2011breakout idea into a concrete family and evaluate a lightweight filter that uses the first\u2011hour return.",
+  "VOLTA'S SELF-CHECK (2026-11-21)",
+  "I still see a ~0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but my intraday rules never capture it, and my range forecasts miss ~38% of the true daily range, hurting position sizing.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",
   "#34 [needs the owner] Finalize Low\u2011Gamma Open Breakout family proposal - Several self\u2011actions target low\u2011gamma breakouts but I need a formal family with a grid of parameters (entry offset, stop size, target R) to ",
+  "#43 [needs the owner] Family proposal: LowGex_OpenBreakout - A clear one\u2011sentence mechanism (low dealer gamma \u2192 larger early moves) exists but no systematic family of variants has been built yet. A fam",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
-  "#43 [needs the owner] Family proposal: LowGex_OpenBreakout - A clear one\u2011sentence mechanism (low dealer gamma \u2192 larger early moves) exists but no systematic family of variants has been built yet. A fam",
-  "#44 [for Claude] Provide 5\u2011minute intraday GEX rank series for the past 12 years - All my current low\u2011gex strategies lack a high\u2011resolution GEX series; a 5\u2011minute series would let me test intra\u2011session GEX dynamics and refi",
+  "#45 [for Claude] Provide 5\u2011minute intraday GEX rank series for the full history - All my near\u2011miss features and the new strategy rely on accurate, high\u2011frequency GEX rank; current series is missing.",
   "",
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],

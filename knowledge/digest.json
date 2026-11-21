@@ -1,5 +1,50 @@
 [
 {
+"title": "From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution",
+"learned": "The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calibrate and hedge.",
+"concepts": [
+"Black\u2011Scholes",
+"stochastic volatility",
+"jump\u2011diffusion",
+"SVJ model",
+"affine jump\u2011diffusion"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://journals.zeuspress.org/index.php/conference/article/download/1505/1497",
+"date": "2026-11-21"
+},
+{
+"title": "Mitigating Sequence-of-Returns Risk with Regime-Switching Asset Allocation: A Comparison of Econometric and Deep Learning Models in Portfolio Decumulation",
+"learned": "The paper finds that regime\u2011switching asset allocation can dramatically cut retirement\u2011portfolio ruin rates at modest withdrawal rates (e.g., 4% withdrawal reduces depletion from 3.30% to about 0.6% using a Markov\u2011switching model or an LSTM), but at higher withdrawal rates the same filters can hurt performance. Deep\u2011learning (LSTM) does not consistently identify regimes better than econometric models, yet it keeps more capital by staying invested rather than by timing.",
+"concepts": [
+"sequence\u2011of\u2011returns risk",
+"regime\u2011switching allocation",
+"Markov\u2011switching model",
+"LSTM",
+"depletion rate"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://www.researchsquare.com/article/rs-11243482/latest.pdf",
+"date": "2026-11-21"
+},
+{
+"title": "Prediction Inference for Hybrid Models on Realized Volatility Forecasting",
+"learned": "Adding an ARMA mean model to a GARCH\u2011LSTM hybrid improves point forecasts of realized volatility, and a forward\u2011bootstrap plus conformal\u2011prediction adjustment yields multi\u2011step prediction intervals with near\u2011nominal coverage even for heavy\u2011tailed returns.",
+"concepts": [
+"ARMA\u2011GARCH\u2011LSTM hybrid",
+"forward bootstrap",
+"conformal prediction",
+"prediction intervals",
+"realized volatility"
+],
+"relevance": 4,
+"verdict": "queued for testing",
+"url": "https://arxiv.org/pdf/2611.13212",
+"date": "2026-11-21"
+},
+{
 "title": "Regime-dependent bitcoin volatility forecasting under alternative information sets: evidence from econometric, deep learning, and hybrid models",
 "learned": "The paper finds that Bitcoin volatility forecasting accuracy varies by market regime and that LSTM models work best in normal periods, while hybrid GARCH\u2011LSTM models perform best during crises, with the optimal hybrid depending on the specific crisis.",
 "concepts": [

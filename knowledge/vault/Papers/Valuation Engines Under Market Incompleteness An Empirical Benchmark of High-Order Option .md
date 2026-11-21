@@ -13,7 +13,7 @@ The paper shows that for crypto options, the Black‑Scholes model is far off; u
 Focuses on crypto options, not Nasdaq/S&P futures, and provides no directly usable numbers for our dataset.
 
 ## Concepts
-[[stochastic volatility]], jump‑diffusion, model error reduction, market incompleteness, [[volatility smile]]
+[[stochastic volatility]], [[jump‑diffusion]], model error reduction, market incompleteness, [[volatility smile]]
 
 
 Part of [[Research engine]]

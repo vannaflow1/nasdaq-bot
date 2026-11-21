@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # neural networks
-17 papers mention this:
+18 papers mention this:
 
 - [[An Empirical Study of Machine Learning Algorithms for Stock Daily Trading Strategy]]
 - [[An Overview of Machine Learning, Deep Learning, and Reinforcement Learning-Based Technique]]
@@ -15,6 +15,7 @@ tags: [concept]
 - [[Empirical asset pricing via machine learning evidence from the European stock market]]
 - [[Enhancing Time-Series Momentum Strategies Using Deep Neural Networks]]
 - [[Historical Perspectives in Volatility Forecasting Methods with Machine Learning]]
+- [[Mitigating Sequence-of-Returns Risk with Regime-Switching Asset Allocation A Comparison of]]
 - [[Méthodes d'apprentissage par renforcement pour les stratégies systématiques de market maki]]
 - [[Neural Control Variates for Variance Reduction]]
 - [[Neural Network–Based Financial Volatility Forecasting A Systematic Review]]

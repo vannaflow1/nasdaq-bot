@@ -17,4 +17,4 @@ Ideas that helped the range forecast a little and fairly consistently. Re-tested
 - 0.5*ewm(rng,10) + 0.3*ewm(rng5,10) + 0.2*ewm(rng20,10) (+0.1%, 7/9 years) - Range-Based Volatility Estimation and Forecasting
 - garch + lag(iv30, 1) (+0.3%, 4/6 years) - A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility,
 
-Last combined test (2026-11-20): NOT CONFIRMED - the combination does not hold on unseen years (picked +1.76%, unseen years -0.46%)
+Last combined test (2026-11-21): NOT CONFIRMED - the combination does not hold on unseen years (picked +1.76%, unseen years -0.46%)

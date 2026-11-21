@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # realized volatility
-22 papers mention this:
+23 papers mention this:
 
 - [[A Hybrid HAR-LSTM-GARCH Model for Forecasting Volatility in Energy Markets]]
 - [[A Practical Guide to Harnessing the HAR Volatility Model]]
@@ -18,6 +18,7 @@ tags: [concept]
 - [[Modeling and Forecasting Realized Volatility]]
 - [[Modelling and forecasting multivariate realized volatility]]
 - [[Nonparametric Estimation and Forecasting for Time-Varying Coefficient Realized Volatility ]]
+- [[Prediction Inference for Hybrid Models on Realized Volatility Forecasting]]
 - [[Range-Based Volatility Estimation and Forecasting]]
 - [[Risk Everywhere Modeling and Managing Volatility]]
 - [[The Variance Risk Premium in NIFTY Index Options Smaller than It Looks, Priced in the Wing]]
