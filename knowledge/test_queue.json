@@ -1,18 +1,1 @@
-[
- {
-  "id": "openalex:W7225798795",
-  "title": "Prediction Inference for Hybrid Models on Realized Volatility Forecasting",
-  "idea": "Each day, train an ARMA\u2011GARCH\u2011LSTM hybrid on the past 250 days of realized NQ volatility (log of NQ high\u2011low range) and use the forward\u2011bootstrap algorithm to generate a 5\u2011day prediction interval for realized volatility; then go long a 5\u2011day NQ straddle when the interval width exceeds its 20\u2011day moving\u2011average, scaling position size by the interval width.",
-  "relevance": 4,
-  "added": "2026-11-21",
-  "hunt": null
- },
- {
-  "id": "openalex:W7222943913",
-  "title": "From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution",
-  "idea": "Use the 7\u2011day/30\u2011day IV term\u2011structure (term column) as a proxy for jump intensity: when term > 1 (steeper short\u2011term IV), bias a delta\u2011neutral straddle trade toward buying OTM puts (expecting jump\u2011down risk).",
-  "relevance": 3,
-  "added": "2026-11-21",
-  "hunt": null
- }
-]
+[]

@@ -1,5 +1,50 @@
 [
 {
+"title": "Mathematical Framework for Dynamic Downside-Minimizing Portfolio with Exotic Option Overlay",
+"learned": "The paper shows how semivariance (downside risk) optimization combined with exotic options\u2014Asian average puts, American puts via LSM, and covered calls\u2014can dramatically boost the Sortino ratio and cut worst\u2011case losses in simulated portfolios, especially when diversifying across many assets and rebalancing frequently.",
+"concepts": [
+"semivariance optimization",
+"Asian average put",
+"Longstaff\u2011Schwartz American put",
+"covered call overlay",
+"calendar rebalancing"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://www.researchsquare.com/article/rs-11613518/latest.pdf",
+"date": "2026-11-21"
+},
+{
+"title": "Perturbation-Specific Reliability of Intrinsic and Post-Hoc Explainable Machine Learning in Volatility Forecasting",
+"learned": "The study finds that classic HAR-RV and spline\u2011based GAM models give the most accurate 5\u2011day realized volatility forecasts, while explainability of complex ML models (LSTM, TabNet, XGBoost) varies a lot depending on the perturbation and the explainer used.",
+"concepts": [
+"HAR\u2011RV",
+"Generalized Additive Model",
+"Intrinsic vs post\u2011hoc XAI",
+"Explanation stability",
+"Walk\u2011forward validation"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://www.researchsquare.com/article/rs-11158626/latest.pdf",
+"date": "2026-11-21"
+},
+{
+"title": "Multi-dimensional risk profiling of BIST-100 stocks: A comparative analysis of the MEREC-AROMAN MCDM framework and the classical CAPM beta",
+"learned": "The paper combines two multi\u2011criteria decision\u2011making (MCDM) methods (MEREC for weighting and AROMAN for ranking) to create a seven\u2011factor risk score for BIST\u2011100 stocks, showing that this composite ranking predicts realized volatility better than the traditional CAPM beta in the post\u20112023 Turkish monetary\u2011policy regime.",
+"concepts": [
+"MCDM weighting (MEREC)",
+"Alternative ranking (AROMAN)",
+"Multi\u2011dimensional risk metrics",
+"Beta vs. liquidity\u2011adjusted risk",
+"Regime\u2011dependent volatility prediction"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://dergipark.org.tr/en/download/article-file/6075663",
+"date": "2026-11-21"
+},
+{
 "title": "From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution",
 "learned": "The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calibrate and hedge.",
 "concepts": [
@@ -10,7 +55,7 @@
 "affine jump\u2011diffusion"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "NOT CONFIRMED on my data: 0 sell-vol + 844 buy-vol trades on real QQQ option prices, avg -7.2 bp of QQQ per trade (placebo avg -5.3, p=0.700), halves -12.8/-1.6, win 44%, worst -973 bp, positive in 3/9 years",
 "url": "https://journals.zeuspress.org/index.php/conference/article/download/1505/1497",
 "date": "2026-11-21"
 },
@@ -40,7 +85,7 @@
 "realized volatility"
 ],
 "relevance": 4,
-"verdict": "queued for testing",
+"verdict": "NOT CONFIRMED on my data: 961 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -3.4 bp of QQQ per trade (placebo avg -4.2, p=0.333), halves -2.5/-4.2, win 53%, worst -730 bp, positive in 4/9 years, sell trades return -3.2% of max risk; 28% of its sell days are high-gamma days (the known edge)",
 "url": "https://arxiv.org/pdf/2611.13212",
 "date": "2026-11-21"
 },
@@ -4249,21 +4294,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://doi.org/10.6084/m9.figshare.34492029",
-"date": "2026-10-18"
-},
-{
-"title": "Overcoming Execution Drag in Volatility Harvesting: Hysteresis and Partial PCA Orthogonalization",
-"learned": "A self-published (not peer-reviewed) Nifty50 study shows that a volatility-risk-premium strategy that looked good on paper (17.85% gross, Sharpe 1.84) turned into an 18.5% net loss once the cost of constantly re-hedging delta and slippage were counted. Only re-hedging less often (a 'deadband' that ignores small delta changes) and stripping out the index's main market factor brought it back to a claimed 11.44% net, Sharpe 2.03. The takeaway for a retail trader: hedging and trading costs can wipe out an options edge entirely, so trade less often and count costs first.",
-"concepts": [
-"volatility risk premium",
-"delta-hedging costs",
-"hysteresis deadband",
-"PCA factor neutralisation",
-"dispersion trading"
-],
-"relevance": 2,
-"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.532% (-0.1%), better in 5/9 unseen years",
-"url": "https://doi.org/10.5281/zenodo.23435585",
 "date": "2026-10-18"
 }
 ]

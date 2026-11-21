@@ -13,7 +13,7 @@ The abstract argues that adding an OFF_SESSION filter to the Ledger Bench model 
 The paper discusses a specific model tweak without providing data or actionable insights for generic trading strategies.
 
 ## Concepts
-overfitting, session filtering, win rate vs profit, walk‑forward validation, model geometry
+overfitting, session filtering, win rate vs profit, [[walk‑forward validation]], model geometry
 
 
 Part of [[Research engine]]

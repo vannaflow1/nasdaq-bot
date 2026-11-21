@@ -96,14 +96,14 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 298 papers read (48 more skipped as not relevant enough), 146 ideas tested on my memory, 2 promising.",
+  "LEARNING: 301 papers read (48 more skipped as not relevant enough), 148 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calib",
-  "  tested: queued for testing",
+  "  tested: NOT CONFIRMED on my data: 0 sell-vol + 844 buy-vol trades on real QQQ option prices, avg -7.2 bp of QQQ per trade (placebo avg -5.3, p=0.700), halves -12.8/-1.6",
   "\u2022 Prediction Inference for Hybrid Models on Realized Volatility Forecasting (\u2605\u2605\u2605\u2605\u2606)",
   "  Adding an ARMA mean model to a GARCH\u2011LSTM hybrid improves point forecasts of realized volatility, and a forward\u2011bootstrap plus conformal\u2011prediction adjustment yields multi\u2011step prediction intervals with near\u2011nominal cove",
-  "  tested: queued for testing",
+  "  tested: NOT CONFIRMED on my data: 961 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -3.4 bp of QQQ per trade (placebo avg -4.2, p=0.333), halves -2.5/-4.2,",
   "\u2022 Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper introduces Neural Realized Measures (NRM), which replace the fixed equal-weight aggregation of intraday volatility contributions with learned, positive, mean\u2011normalized weights that are optimized for forecastin",
   "  tested: DOESN'T FIT MY DATA - The idea requires training a Neural Realized Measures model on intraday 5\u2011minute NQ price data and computing out\u2011of\u2011sample QLIKE errors ve",
@@ -116,9 +116,9 @@
   "\u2022 A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied V (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper reviews three families of volatility forecasts \u2013 traditional econometric models (GARCH, HAR, Realized GARCH, CARR), implied\u2011volatility based methods, and machine\u2011learning approaches \u2013 and concludes that no sing",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.585% (+0.3%), better in 4/6 unseen years",
-  "This week's tests: 38 run - 0 promising, 27 not confirmed, 2 don't fit my data, 9 translation failures",
+  "This week's tests: 41 run - 0 promising, 29 not confirmed, 2 don't fit my data, 10 translation failures",
   "",
-  "46 papers waiting in my queue."
+  "43 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

@@ -431,7 +431,8 @@
   "query": "intraday volatility spill from dealer gamma rank",
   "why": "Understanding how dealer gamma regimes affect short‑term volatility could improve my range forecasts and position sizing.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-11-21"
  }
 ]
