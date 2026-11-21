@@ -750,7 +750,7 @@
   "why": "All my current low‑gex strategies lack a high‑resolution GEX series; a 5‑minute series would let me test intra‑session GEX dynamics and refine entry timing.",
   "evidence": "Current low‑gex edge is identified only with daily GEX rank; intraday granularity could boost edge per trade.",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -759,6 +759,7 @@
    "branch": null,
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-21: duplicate of owner wish #37. A 5-min GEX rank series for 12 years needs intraday SPX/NDX option chains with open interest (paid vendor data, e.g. OPRA/ORATS); no free source exists and the repo has only daily GEX. Owner-only data decision."
  }
 ]
