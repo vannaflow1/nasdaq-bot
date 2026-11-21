@@ -37,7 +37,7 @@
   "XP only for verified progress: tests passed on unseen data count far more than activity.",
   "Since yesterday: +5 papers, +3 tests"
  ],
- "updated": "Sat 21 Nov 18:51 Lux",
+ "updated": "Sat 21 Nov 19:26 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
@@ -53,7 +53,7 @@
  ],
  "trump": [
   "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- nothing market-relevant"
+  "  (Truth Social feed: HTTPError)"
  ],
  "forecast": [
   "No forecasts yet.",
