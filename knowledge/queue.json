@@ -1,38 +1,5 @@
 [
  {
-  "id": "openalex:W7224078659",
-  "title": "Replication package for: Arbitrage-Constrained Neural Interpolation of the Implied Volatility Surface: Evidence from NSE Index Options",
-  "abstract": "Code and derived data behind PNmix (prior-network mixture), an implied volatility surface for NIFTY 50 index options that is free of butterfly and calendar arbitrage by construction. The package builds the evaluation panel from NSE F&O bhavcopy files (2020-2026), fits PNmix and the benchmark methods (SVI, SSVI, Fengler's smoother, thin-plate and cubic splines) on 18 expanding-origin folds, and reproduces every table and figure in the paper, including the intraday backtest in Section VII.",
-  "url": "https://doi.org/10.5281/zenodo.23728871",
-  "source": "OpenAlex",
-  "date": "2026-10-28",
-  "score": 11,
-  "queued": "2026-11-01",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7225121562",
-  "title": "Dynamic h(L)GJMM: conditional volatility surfaces, martingale couplings, and filtration-dependent option pricing",
-  "abstract": "A joint mixture model calibrated to a vanilla surface by one linear programme, Kienitz (2026a)defines a price martingale with exactly the fitted marginals whose augmented state \u2014 price and latentcell \u2014 is Markov, and run forward from any state it generates a whole conditional implied-volatilitysurface in closed form. We ask whether such a perfectly arbitrage-consistent martingale producesplausible conditional surfaces, how its coupling \u2014 which the vanilla surface leaves free \u2014 should beselected, and how the information available to the holder of an early-exercise claim enters its price.The conditional surfaces studied are conditional on the augmented state, the price together with thelatent mixture cell observed at the quoted dates. Conditioning on prices alone averages them over theposterior of the cell, which the prices do not reveal.We consider volatility surfaces fitted by the above method. Then, the conditional surfaces are finitemixtures, free of arbitrage with forward equal to the current price. The calibrated vertex producesdownward-opening (concave) conditional smiles to a non-negligible extend of the states, especiallyon short maturities. They are not arbitrage, and three proved facts explain these shapes. First, thelevel-variance of a period is fixed by the marginals. Second, the jump window caps the kurtosis of alevel jump, and, third, vertices of the programme are sparse.Recalibrating with a wider jump window and then selecting the coupling at the new fitted weightsby a Kullback\u2013Leibler projection reduces the concave smiles from about 30% to below 5% in ourexperiments. The method raises the long-horizon rates slightly. Only the final fixed-weight selectionstep leaves every vanilla price of the re-calibrated model unchanged. A laziness constraint on thecoupling, linear and imposed in the calibration, brings the six-month and one-year frown probabilitiesof a reduced set-up to below 2% at a cost of a fraction of a basis point for the fit. Replacing the linearcalibration programme by an entropic calibration of the whole joint law, a strictly convex programmewith a unique solution, avoids vertices in the weights and in the coupling, and fits better. It bringsthe frown probabilities to about 1% without further constraints. Against Heston and Bates surfaces,whose conditional smiles never open downwards, the orignially calibrated vertex frowns in up to 40%of the states, the entropic calibration with a Laplace reference in below 3% , and a lattice imag",
-  "url": "https://doi.org/10.5281/zenodo.23885551",
-  "source": "OpenAlex",
-  "date": "2026-11-02",
-  "score": 11,
-  "queued": "2026-11-08",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7225181963",
-  "title": "A Comparative Analysis of Volatility Predictions via EGARCH, Transformer and Hybrid EGARCH-Transformer Models: Changes in Forecasting Ability after Introducing Sentiment Factors",
-  "abstract": "The application of cryptocurrency asset volatility forecasting is relevant for real\u2011world risk\u2011management procedures and derivatives pricing in the digital\u2011asset market. This paper assesses out-of-sample forecast performance for three model families: standalone EGARCH, vanilla Transformer, and an EGARCH\u2011Transformer combined hybrid architecture for forecasting Bitcoin volatility. Another goal is to measure whether there is any actual marginal forecasting benefit from investor sentiment obtained from the Reddit posts. We use information from Reddit with the subreddit r/Bitcoin from 25th March 2021 to 30th December 2024. We collaborate with the open-source ProsusAI/finbert language model that has been trained for financial text tasks to construct a daily sentiment score based on the number of upvotes given to the post\u2011comment. In the hybrid model we constructed, the one-step-ahead conditional-variance values produced by EGARCH are used as other features as input to the Transformer network. The results from controlled feature-ablation tests show that, in general, using structured volatility inputs (volatility realized from volatility inputs) and EGARCH conditional volatility outputs yield better forecasts. Social media sentiment data of investors, by comparison, has mixed results. Under specific combinations of features, sentiment boosts the accuracy of predictions, but in other experimental settings, it hinders the accuracy of predictions. We have problems consistently filtering subjective signals from forum text by retail investors with our hybrid EGARCH\u2011Transformer implementation. Results indicate that the performance of hybrid models is much more influenced by the composition of the input features and quality of the raw data than by adding additional predictor variables to the network.",
-  "url": "https://aemps.ewapub.com/article/view/38470.pdf",
-  "source": "OpenAlex",
-  "date": "2026-11-03",
-  "score": 11,
-  "queued": "2026-11-08",
-  "text_file": "knowledge/papers/openalex_W7225181963.txt"
- },
- {
   "id": "openalex:W4389500878",
   "title": "Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-switching L\u00e9vy models",
   "abstract": "We analyze the qualitative differences between prices of double barrier no-touch options in the Heston model and pure jump KoBoL model calibrated to the same set of the empirical data, and discuss the potential for arbitrage opportunities if a jump process fits the joint dynamics of the underlying and exotic option of interest well but the counterparty uses a diffusion model for pricing, which fits vanilla prices equally well or even marginally better. We explain fundamental difficulties for pricing barrier options under L\u00e9vy processes of infinite activity and locally finite variation, with drift, using the numerical methods available in the literature, and develop a new efficient method based on the Gaver-Wynn-Rho acceleration applied to the Bromwich integral. The SINH-acceleration and simplified trapezoid rule are used to evaluate perpetual double barrier options for each value of the spectral parameter in the GWR-algorithm. The program in Matlab running on a Mac with moderate characteristics achieves the precision of the order of E-5 and better in several dozens of milliseconds; the precision E-07 is achievable in about 0.1 s. We extend the GWR-SINH method to regime-switching models and regime-switching models with memory. We outline approximations of models with stochastic volatility and interest rate and lifted Heston model by regime-switching models and the fractional Heston model by a regime-switching model with memory.",

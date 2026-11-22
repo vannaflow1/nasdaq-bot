@@ -2,8 +2,9 @@
 tags: [concept]
 ---
 # GARCH
-17 papers mention this:
+18 papers mention this:
 
+- [[A Comparative Analysis of Volatility Predictions via EGARCH, Transformer and Hybrid EGARCH]]
 - [[An International Comparison of Implied, Realized, and GARCH Volatility Forecasts]]
 - [[Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kin]]
 - [[Conditional Heteroskedasticity in Asset Returns A New Approach]]

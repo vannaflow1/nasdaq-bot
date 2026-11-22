@@ -96,7 +96,7 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 309 papers read (49 more skipped as not relevant enough), 152 ideas tested on my memory, 2 promising.",
+  "LEARNING: 312 papers read (49 more skipped as not relevant enough), 152 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Neural Network Calibration of the Heston Stochastic Volatility Model (\u2605\u2605\u2605\u2606\u2606)",
   "  Neural networks can approximate either the Heston pricing map (MtP) or the inverse map from option surfaces to Heston parameters (PtM). PtM gives the fastest online inference but still needs checks for admissibility and ",
@@ -116,9 +116,9 @@
   "\u2022 Prediction Inference for Hybrid Models on Realized Volatility Forecasting (\u2605\u2605\u2605\u2605\u2606)",
   "  Adding an ARMA mean model to a GARCH\u2011LSTM hybrid improves point forecasts of realized volatility, and a forward\u2011bootstrap plus conformal\u2011prediction adjustment yields multi\u2011step prediction intervals with near\u2011nominal cove",
   "  tested: NOT CONFIRMED on my data: 961 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -3.4 bp of QQQ per trade (placebo avg -4.2, p=0.333), halves -2.5/-4.2,",
-  "This week's tests: 50 run - 0 promising, 34 not confirmed, 4 don't fit my data, 12 translation failures",
+  "This week's tests: 51 run - 0 promising, 35 not confirmed, 4 don't fit my data, 12 translation failures",
   "",
-  "46 papers waiting in my queue."
+  "43 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

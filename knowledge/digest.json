@@ -1,5 +1,50 @@
 [
 {
+"title": "A Comparative Analysis of Volatility Predictions via EGARCH, Transformer and Hybrid EGARCH-Transformer Models: Changes in Forecasting Ability after Introducing Sentiment Factors",
+"learned": "The paper compares three ways to forecast Bitcoin volatility \u2013 a classic EGARCH model, a deep\u2011learning Transformer, and a hybrid that feeds EGARCH\u2019s one\u2011step\u2011ahead variance into a Transformer. Adding Reddit sentiment sometimes helps, sometimes hurts, and overall the quality of features matters more than model complexity.",
+"concepts": [
+"EGARCH",
+"Transformer",
+"Hybrid model",
+"Sentiment features",
+"Volatility forecasting"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://aemps.ewapub.com/article/view/38470.pdf",
+"date": "2026-11-22"
+},
+{
+"title": "Dynamic h(L)GJMM: conditional volatility surfaces, martingale couplings, and filtration-dependent option pricing",
+"learned": "The paper presents a joint mixture model that fits a vanilla volatility surface with a linear program, producing a martingale price process whose augmented state (price and latent mixture cell) is Markov and yields conditional implied volatility surfaces in closed form. The authors investigate the shape of these conditional smiles, noting that the calibrated model can produce downward\u2011opening (concave) smiles, but that using wider jump windows, KL projection or entropic calibration reduces this effect.",
+"concepts": [
+"joint mixture model",
+"conditional volatility surface",
+"martingale coupling",
+"entropic calibration",
+"concave smile"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.5281/zenodo.23885551",
+"date": "2026-11-22"
+},
+{
+"title": "Replication package for: Arbitrage-Constrained Neural Interpolation of the Implied Volatility Surface: Evidence from NSE Index Options",
+"learned": "The paper introduces PNmix, a neural\u2011network based method that builds an implied volatility surface while guaranteeing no butterfly or calendar arbitrage. It is benchmarked against classic parametrizations (SVI, SSVI, splines) on NSE index options from 2020\u20112026 and includes an intraday backtest.",
+"concepts": [
+"arbitrage\u2011free IV surface",
+"neural interpolation",
+"SVI benchmark",
+"expanding\u2011origin validation",
+"intraday backtest"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://doi.org/10.5281/zenodo.23728871",
+"date": "2026-11-22"
+},
+{
 "title": "Information Flow and Market Risk: Transformer-Based Evidence on Sentiment and Volatility Dynamics",
 "learned": "The paper finds that adding transformer\u2011based news sentiment (ModernFinBERT) to strong volatility\u2011persistence models (like HAR) does not consistently improve out\u2011of\u2011sample forecasts for individual US stocks, and the naive persistence benchmark often wins.",
 "concepts": [
@@ -4252,49 +4297,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://arxiv.org/pdf/2410.15195",
-"date": "2026-10-18"
-},
-{
-"title": "High-Frequency Trading and Price Discovery",
-"learned": "High-frequency traders help prices find their correct level: their aggressive (liquidity-taking) orders trade in the direction of lasting price changes and against temporary mispricings, even on the most volatile days. Their passive quotes, on the other hand, tend to get picked off by better-informed traders. Their trading direction predicts price moves only over seconds and is tied to public news, market moves and order book imbalance.",
-"concepts": [
-"high-frequency trading",
-"price discovery",
-"adverse selection",
-"order book imbalance"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://www.econstor.eu/bitstream/10419/154035/1/ecbwp1602.pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Demand-Based Option Pricing",
-"learned": "Because dealers cannot hedge options perfectly, heavy end-user demand for an option pushes its price up, by an amount tied to how much of its risk cannot be hedged away. Using data on actual dealer and end-user positions, the authors show end users are net long index options, especially out-of-the-money puts, which helps explain why index puts look expensive and why the volatility smirk exists. In short, skew is partly a price of demand, not only a forecast of crashes.",
-"concepts": [
-"demand pressure",
-"dealer positioning",
-"unhedgeable risk",
-"volatility smirk",
-"expensive index puts"
-],
-"relevance": 3,
-"verdict": "DOESN'T FIT MY DATA - needs intraday option order flow data to measure end-user net demand by strike",
-"url": "https://academic.oup.com/rfs/article-pdf/22/10/4259/24453427/hhp005.pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Informed Trading around Stock Split Announcements: Evidence from the Option Market",
-"learned": "Looking at option implied volatility around stock-split announcements, the authors find that option traders correctly expect a stock to get more volatile after it splits. There is only weak evidence that options traders anticipate the positive price drift splitting firms tend to show. The option measures help predict post-split volatility levels and changes, but not returns.",
-"concepts": [
-"stock splits",
-"implied volatility",
-"informed trading",
-"event study"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/82E163122F360CD32299EAF002B4B6AC/S0022109017000023a.pdf/div-class-title-informed-trading-around-stock-split-announcements-evidence-from-the-option-market-div.pdf",
 "date": "2026-10-18"
 }
 ]

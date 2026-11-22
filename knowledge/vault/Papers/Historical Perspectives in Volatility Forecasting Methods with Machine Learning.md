@@ -13,7 +13,7 @@ The paper surveys volatility forecasting techniques, comparing classic models li
 Only an abstract is available, so no concrete results or numbers can be extracted for direct trading use.
 
 ## Concepts
-[[volatility forecasting]], [[GARCH]], [[neural networks]], transformer, [[machine learning]]
+[[volatility forecasting]], [[GARCH]], [[neural networks]], [[transformer]], [[machine learning]]
 
 
 Part of [[Research engine]]

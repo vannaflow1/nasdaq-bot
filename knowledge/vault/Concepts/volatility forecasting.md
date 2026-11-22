@@ -2,8 +2,9 @@
 tags: [concept]
 ---
 # volatility forecasting
-13 papers mention this:
+14 papers mention this:
 
+- [[A Comparative Analysis of Volatility Predictions via EGARCH, Transformer and Hybrid EGARCH]]
 - [[A Practical Guide to Harnessing the HAR Volatility Model]]
 - [[An International Comparison of Implied, Realized, and GARCH Volatility Forecasts]]
 - [[Do Jumps Matter for Volatility Forecasting Evidence from Energy Markets]]
