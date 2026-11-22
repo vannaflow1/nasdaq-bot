@@ -1,0 +1,898 @@
+PIRanNN for Option Pricing and Calibration
+PIRanNN: Random-Feature Pricing and Calibration
+under Jump-Diffusion and Stochastic-Volatility Models
+Saurabh Bansal∗1,2, Srikanth K. Iyer3, and Shashi Jain2
+1Department of Mathematical Sciences, Rajiv Gandhi Institute of Petroleum Technology, Jais, Amethi 229304, Uttar
+Pradesh, India
+2Department of Management Studies, Indian Institute of Science, Bengaluru 560012, Karnataka, India
+3Department of Mathematics, Indian Institute of Science, Bengaluru 560012, Karnataka, India
+Abstract
+We study a random-feature method for pricing and calibrating European options under jump-diffusion
+(Merton, Kou) and stochastic-volatility (Heston, SABR) models. The network has one hidden layer with a
+probit activation and fixed random inner weights, so fitting it to the pricing equation, the payoff and the
+boundary conditions is a single regularised least-squares problem, with no iterative training. For Merton
+and Kou the jump integral of each feature is explicit, so no quadrature is needed. One factorisation of the
+least-squares matrix gives the price at every state and time, its Greeks, and the exact derivatives of the prices
+with respect to the model parameters for gradient-based calibration. For the jump models, subtracting the
+Black–Scholes price removes the payoff kink and reduces the pricing error by about two orders of magnitude.
+The method is then about as accurate as a standard Crank–Nicolson finite-difference scheme at the same
+run time, although a finite-difference scheme that also subtracts the Black–Scholes price is about two orders
+of magnitude more accurate still. On the test problems of a recent physics-informed neural network study,
+the method matches that network’s accuracy in seconds instead of about half an hour. The calibration
+experiments show that a solver can fit the quotes and still return wrong parameters when its pricing error is
+not small compared with the effect of the parameters on the prices: without the subtraction the solver misses
+the jump parameters by up to 50%, and with it they are recovered to within 3%. For Heston and SABR,
+used as an applicability study with boundary conditions that need no reference prices, pricing errors are
+about one percent and the calibrated parameters are within about 15% of the true values.
+Keywords: Option pricing; jump-diffusion; stochastic volatility; Heston; SABR; partial integro-differential
+equations; random features; extreme learning machines; model calibration.
+MSC 2020: 65M70, 65M75, 65M32, 91G20, 91G60, 60G51, 68T07.
+1 Introduction
+1.1 The problem
+The Black–Scholes model prices a European option in closed form, but it does not reproduce what is observed in
+option markets. Implied volatility varies with strike and maturity, asset prices occasionally jump, and volatility
+itself fluctuates over time. Two families of models address these features. Jump-diffusion models add random
+jumps to the asset price; we consider the models of Merton [1976], with normally distributed log-jumps, and
+of Kou [2002], with double-exponential log-jumps. Stochastic-volatility models let the variance follow its own
+diffusion, correlated with the asset price; we consider the models of Heston [1993] and Hagan et al. [2002]
+(SABR).
+In each of these models the price of a European option is the expected discounted payoff under the risk-neutral
+measure. By the Feynman–Kac theorem, the price as a function of the current state and the time to maturity
+solves a linear partial differential equation (PDE). For the jump models it solves a partial integro-differential
+equation (PIDE): a PDE with an additional integral term that accounts for the jumps. For the four models
+above, European prices can also be computed quickly and accurately by Fourier methods [Carr and Madan,
+1999, Fang and Oosterlee, 2008]. We use these models because such accurate references exist, which lets us
+measure the error of the method. The PDE route is of most interest for products and settings where transform
+methods are less convenient, for example continuously monitored barrier options under stochastic volatility, or
+the repeated valuation of a portfolio along simulated paths.
+In practice, pricing goes hand in hand with calibration. A model is first calibrated: its parameters are
+chosen so that the model reproduces the quoted prices of liquid options, typically vanilla calls and puts. The
+calibrated model is then used to price and hedge less liquid or non-standard derivatives on the same asset.
+Calibration requires pricing the quoted options at many trial parameter vectors. Gradient-based optimisers,
+∗Corresponding author: sbansal@rgipt.ac.in
+1
+arXiv:2611.19792v1 [q-fin.CP] 15 Nov 2026
+PIRanNN for Option Pricing and Calibration
+such as Gauss–Newton and Levenberg–Marquardt methods, also need at each trial vector the derivative of every
+quoted price with respect to every parameter. A method used for both tasks should therefore deliver prices and
+these derivatives cheaply and reliably.
+1.2 Neural-network solvers and random features
+Why use neural networks for pricing equations at all? For European options in one or two state variables, Fourier
+methods and finite differences are fast, accurate and supported by convergence theory, and they are hard to
+improve upon. The case for neural networks rests on problems that lie outside this setting. The most cited is a
+large number of state variables, for which grids become infeasible; this motivated mesh-free methods such as
+the deep Galerkin method [Sirignano and Spiliopoulos, 2018] and the deep BSDE method [Han et al., 2018]. A
+second is the repeated evaluation of one pricing map, for example during calibration, where a network trained
+once can then be evaluated almost instantly [Horvath et al., 2021, Hainaut and Casas, 2024]. But even in low
+dimension there are two common situations in which classical methods are less convenient. Non-standard payoffs,
+such as barrier or Asian options under jump or stochastic-volatility models, usually have no Fourier solution and
+need a problem-specific grid. And exposure and margin calculations need prices and sensitivities of a trade at
+many states and future dates along simulated paths, which calls for a price surface that can be evaluated and
+differentiated anywhere. A neural network provides exactly such a surface, defined at every state and time and
+differentiable everywhere. These advantages come at a price: training is a slow, nonconvex optimisation whose
+result depends on the initialisation, and it offers no error control comparable to refining a grid. Systematic
+comparisons bear this out. On standard test equations in one to three space dimensions, PINNs have not
+matched finite elements in accuracy or solution time [Grossmann et al., 2024], and a review of machine-learning
+solvers for partial differential equations found that most claims of outperforming classical methods rested on
+comparisons with weak baselines [McGreivy and Hakim, 2024].
+Physics-informed neural networks (PINNs) [Raissi et al., 2019] solve a PDE by training a neural network so
+that it nearly satisfies the equation, the initial condition and the boundary conditions at a large set of sample
+points. They are flexible, but training is a nonconvex optimisation: it is slow, it can stop at different solutions
+depending on the random initialisation, and each step needs derivatives of the network output with respect to
+its inputs, usually obtained by automatic differentiation. For jump models the integral term must in addition be
+approximated by a quadrature rule at every sample point [Bansal et al., 2026].
+Random-feature methods remove the training loop. The inner weights of a one-hidden-layer network are
+drawn at random and then held fixed, so the network output is a linear combination of fixed functions (the
+features) with unknown coefficients (the output weights). The pricing equation is linear: each of its terms is a
+known coefficient multiplied by the unknown price function, by one of its derivatives, or, for the jump models,
+by its average over a jump. If the network output is substituted for the price, the equation at any given point
+therefore becomes a linear equation in the output weights. Imposing it at many sample points, together with
+the payoff and the boundary conditions, gives a system of linear equations for the output weights, which is
+solved once by least squares. This idea, known as the extreme learning machine, has been applied to PDEs from
+physics [Dwivedi and Srinivasan, 2020, Dong and Li, 2021, Chen et al., 2022, Wang and Dong, 2024] and to
+option pricing [Gonon, 2023, Srinivasan et al., 2025].
+1.3 Approach and contributions
+We follow this random-feature approach, with features that apply the standard normal distribution function
+Φ (the probit function) to a random linear combination of the state and the time to maturity, and we call
+the method PIRanNN (physics-informed random neural network). Fitting random features to a linear pricing
+equation by least squares is not new in itself: it is the physics-informed extreme learning machine of Dwivedi
+and Srinivasan [2020], which has already been applied to the Black–Scholes and Heston–Hull–White equations
+[Srinivasan et al., 2025] (Section 2.3). Our contributions are the following.
+1. The jump term is exact. We use the standard normal distribution function Φ as activation. Averaging a
+probit feature over a normal or a double-exponential jump gives an explicit formula (Lemma 4.3). Every
+term of the pricing equation, including the jump integral of the Merton and Kou models, can therefore be
+evaluated exactly for each feature, and the resulting PIDE solver needs no quadrature.
+2. One factorisation serves many purposes. The matrix of the least-squares problem is factorised once, for the
+price, and the factorisation is then reused. The Greeks are derivatives of the fitted price with respect to the
+state, available at every point of the domain. Differentiating the least-squares solution with respect to the
+model parameters gives the exact Jacobian of the solver’s prices, for diffusion and jump parameters alike
+(Proposition 5.1); each parameter costs only a small fraction of the first solve, so calibration needs no offline
+training over a parameter range. The current variance v0 of Heston and the current volatility α0 of SABR
+only move the point at which the price surface is evaluated, so recalibrating them needs no new solve. Other
+2
+PIRanNN for Option Pricing and Calibration
+European payoffs under the same model can also be priced with the same factorisation (Section 4.2). These
+properties follow from linearity, and the Jacobian formula is the classical one of Golub and Pereyra [1973];
+what we add is their combination in one tool for pricing and calibration. Because the fitted price is a formula
+in the state and the time to maturity, all of this is available at any point, with no interpolation on a grid.
+3. For the jump models, a quadrature-free Black–Scholes subtraction removes the main source of error. The call
+payoff has a kink at the strike, which a sum of smooth features represents poorly at short maturities. We
+subtract the Black–Scholes price, which already contains the kink, and solve for the remainder, a classical
+technique (Section 4.5). The jump integral of the Black–Scholes price is also explicit, so this step remains
+quadrature-free. It is the main source of accuracy on the jump models: in the ablation of Section 6.1 it
+reduces the error by a factor of about 100 for Merton and 70 for Kou, and by about 700 and 300 together
+with extra features near the strike, for the same total number of features. The step is not specific to random
+features; it improves a finite-difference scheme by a similar factor. For Heston and SABR, the price of the
+model with the volatility of volatility set to zero, a classical approximation, can be subtracted in the same
+way; in our tests it reduces the error for both models, by an amount that varies from case to case (Sections 6.5
+and 6.6).
+4. Solver accuracy limits identifiability. In the calibration of both jump models, the plain solve fits the quoted
+prices but returns jump parameters that are off by up to 50%, because its pricing error is larger than the
+change in the prices caused by the parameter error. If the calibration is repeated with a new random draw
+of the inner weights, it again fits the quotes but returns different, equally wrong, jump parameters. With
+the Black–Scholes subtraction the pricing error is 30 to 50 times smaller and the parameters are recovered
+to within 3% (Section 6.3). This differs from the known intrinsic difficulty of separating jump and diffusion
+parameters, where the quoted prices themselves do not determine the parameters whatever the pricer [Albani
+and Zubelli, 2020]: here the parameters are identifiable, and the loss is caused by the solver. Indeed, when
+the quotes are generated by the plain solver itself, with the same draw of the inner weights, the same solver
+recovers the parameters exactly. The same consideration applies to any calibration that uses an approximate
+pricer. The exact Jacobian, and repeating the calibration with new random draws of the inner weights, let
+one check a calibration for this problem without a reference price (Section 5.6).
+We test the method on European options in models with one or two state variables, where accurate references
+exist. The jump models receive the full treatment above. There we compare it with a Crank–Nicolson finite-
+difference scheme with an implicit jump term, at equal run time and with the same boundary data, which is
+the kind of strong baseline that McGreivy and Hakim [2024] call for. With the Black–Scholes subtraction, our
+method is about as accurate as this scheme: more accurate for run times of a few seconds and less accurate for
+longer ones, because its error levels off near 10−6 (relative to the strike) while the finite-difference error keeps
+falling. A finite-difference scheme that also subtracts the Black–Scholes price is about two orders of magnitude
+more accurate than either. We therefore do not claim that the method is the most accurate pricer in one space
+dimension. Its case rests on what one solve provides: a price that is a formula in the state and time, its Greeks
+and its exact parameter Jacobian from one factorisation, a jump term without quadrature, and a formulation
+that carries over unchanged to two state variables. Heston and SABR are an applicability study: we use only
+simple boundary conditions that need no reference prices and, for the main results, the plain solve, which is
+what one has when no suitable function to subtract is known. The method then prices and calibrates equations
+whose coefficients depend on the state, at an accuracy of about one percent, partly limited by the payoff kink;
+for Heston, the best ADI schemes remain more accurate in three of the four standard test cases.
+The method is also transparent. For a given draw of the features, the output weights are the unique solution
+of a regularised least-squares problem, whereas a trained PINN depends on its random initialisation, the optimiser
+and the point at which training is stopped. The fitted price, its Greeks and its Jacobian are explicit formulas in
+known functions, and this is what makes the checks of the fourth item possible.
+The method keeps the mesh-free formulation and the smooth price surface of neural-network solvers but
+removes the training step, so the applications of Section 1.2 are direct extensions. A continuously monitored
+barrier adds a boundary condition at the barrier, and for the Merton model the jump term then remains explicit
+(Section 7). An Asian option adds the running average as a state variable, and Lemma 4.2 applies unchanged
+to an operator with more state variables. For exposure and margin calculations, one solve gives prices and
+sensitivities at every state and time in the domain, so valuing a trade along simulated paths needs no further
+solves. These extensions are not tested here.
+1.4 Outline
+Section 2 reviews related work, including the different ways in which neural-network pricers have been used
+for calibration. Section 3 sets out the models, their pricing equations and the boundary conditions. Section 4
+describes the method: the features, the least-squares problem, the explicit formulas (first for Merton, then
+3
+PIRanNN for Option Pricing and Calibration
+in general), the choice of loss weights and the Black–Scholes subtraction. Section 5 derives the Greeks, the
+parameter sensitivities and the calibration procedure. Section 6 reports the numerical experiments, and Section 7
+concludes.
+2 Related work
+2.1 Classical numerical methods
+For European options under jump-diffusion and affine stochastic-volatility models, the most efficient methods
+use the characteristic function of the log-price. The fast Fourier transform method of Carr and Madan [1999]
+and the Fourier-cosine (COS) method of Fang and Oosterlee [2008] compute a European price from a short series
+whose terms involve the characteristic function and the Fourier coefficients of the payoff. When no characteristic
+function is available, or when the product is not European, the pricing equation is usually solved by finite
+differences. For jump models the integral term is then approximated by quadrature at every time step [Cont
+and Voltchkova, 2005]. For two-dimensional stochastic-volatility equations, alternating-direction implicit (ADI)
+schemes are the standard choice [In ’t Hout and Foulon, 2010], and the BENCHOP-SLV project [von Sydow
+et al., 2019] provides highly accurate reference prices for the Heston model.
+Calibration with a finite-difference pricer is also well studied. The gradient of the prices with respect to
+the model parameters can be computed by differentiating the discretised equation, which leads to adjoint
+methods; Albani and Zubelli [2020] use such a gradient to calibrate jump-diffusion models with local volatility.
+Differentiating the solution of a least-squares problem with respect to parameters on which its matrix depends is
+also classical [Golub and Pereyra, 1973]. An exact parameter gradient of a PDE pricer is therefore not new in
+itself. What is new here is obtaining it for a mesh-free, quadrature-free solver at a small fraction of the cost of
+the price itself.
+2.2 Physics-informed neural networks for pricing and calibration
+PINNs [Raissi et al., 2019] have been extended in many directions, for example to periodic activation functions,
+which have also been used to fit PDE residuals [Sitzmann et al., 2020]. In option pricing, Bansal et al. [2026]
+apply PINNs to the Merton and Kou PIDEs, approximating the jump integral by the composite trapezoidal
+rule, and compare with finite differences; Bansal et al. [2025] extend the approach to weather derivatives. For
+stochastic volatility, Hainaut and Casas [2024] train a PINN on the Heston pricing equation over a range of
+option specifications and model parameters, so that new prices require no retraining. Mrad and Iassamen
+[2025] combine supervised learning on simulated payoffs with a PDE penalty for Heston with time-dependent
+parameters. Bae et al. [2024] solve the Black–Scholes equation with a given local volatility surface by a PINN,
+and check the result by recovering the surface from the trained network through Dupire’s formula.
+Physics-informed networks have also been used for calibration, in two main ways.
+• Inverse PINNs treat the unknown model parameters as additional trainable variables and fit them together
+with the network weights, as in the parameter-identification examples of Raissi et al. [2019]. In finance, this
+approach has been used to calibrate the market price of risk in a jump-diffusion PIDE for catastrophe bonds,
+from synthetic prices [Raeisi-Makiani et al., 2026]. The network and the parameters are found by a single
+nonconvex training run, which must be repeated whenever the market data change.
+• Parametric PINNs and physics-informed operator networks take the model parameters as additional inputs
+and are trained once, offline, over a box of parameter values. After training, a price at any parameter vector
+in the box is a fast evaluation, and its derivative with respect to the parameters is available by automatic
+differentiation. Hainaut and Casas [2024] take this approach for Heston, and Chakhoyan et al. [2025] use a
+physics-informed DeepONet with the aim of real-time Heston calibration. The accuracy at a given parameter
+vector is fixed by the offline training and cannot be improved at that vector without retraining.
+The present method takes a third route. At each trial parameter vector the pricing problem is solved directly,
+by a single convex least-squares problem, and its exact derivative with respect to the parameters is obtained
+from the same factorisation. Table 1 summarises the differences.
+2.3 Random-feature methods
+Random-feature methods sit between deep networks and classical spectral methods. A single hidden layer of
+features is drawn from a fixed distribution and held fixed, and only the output weights are fitted. Rahimi and
+Recht [2008] show that if the target function is an average of the features over their sampling distribution,
+with a weight bounded relative to that distribution, then with high probability a combination of m randomly
+drawn features approximates it with an L2 error of order m−1/2. Dwivedi and Srinivasan [2020] introduce the
+4
+PIRanNN for Option Pricing and Calibration
+Table 1: Three ways of calibrating with a physics-informed network.
+Inverse PINN Parametric PINN /
+operator network
+PIRanNN (this paper)
+What is fitted network weights and model
+parameters together
+network weights, offline,
+over a parameter box
+output weights, at each trial
+parameter vector
+Offline cost none large none
+Price at a trial
+parameter vector
+not computed separately evaluation of the trained
+surrogate
+one regularised least-squares
+solve
+Derivative in the
+parameters
+implicit in the joint training automatic differentiation of
+the surrogate
+exact; reuses the factorisation of
+the price
+Parameter range unrestricted limited to the training box unrestricted
+Fitting the network nonconvex nonconvex (offline) convex (least squares)
+physics-informed extreme learning machine, in which the output weights are fitted to the PDE residual by
+least squares. Dong and Li [2021] combine extreme learning machines with domain decomposition for linear
+and nonlinear PDEs, Chen et al. [2022] develop a closely related random feature method, and Wang and
+Dong [2024] extend the approach to dimensions up to thirty. Like the present method, these works build a
+random-feature approximation, impose the equation at random sample points and solve a linear least-squares
+problem. Computing the derivatives of a feature explicitly is straightforward for any smooth activation function,
+including the tanh activation used in these works; it is not what distinguishes the present method. What does is
+the explicit jump integral, which does not arise for the equations they consider, and the derivative with respect
+to the model parameters.
+Closest to our setting, Srinivasan et al. [2025] apply an extreme learning machine to the Black–Scholes and
+Heston–Hull–White equations and include a calibration experiment based on Bayesian optimisation. Bayesian
+optimisation does not use derivatives, so the linear system is solved afresh at every trial parameter vector. The
+exact Jacobian of Proposition 5.1 allows a derivative-based optimiser instead.
+Gonon [2023] proves error bounds without the curse of dimensionality for random-feature networks that
+learn option prices in Black–Scholes and exponential L´evy models, including models with jumps. There the
+network is fitted by regression to samples whose conditional mean is the price, such as simulated payoffs, rather
+than to the pricing equation itself. Neufeld and Schmocker [2023], Neufeld et al. [2025] and Beck et al. [2021]
+develop random-feature and deep-splitting methods for semilinear PIDEs, using time stepping and regression of
+conditional expectations. Jacquier and Zuric [2023] use random neural networks for path-dependent options
+under rough volatility. The Laguerre network of Chen et al. [2021] also uses extreme-learning-machine training,
+but with a fixed polynomial basis: polynomial bases converge very fast for smooth targets, but their jump
+integrals are not available in closed form.
+3 Models and pricing equations
+This section sets out the four models and the equations their prices satisfy. All four equations have the same
+structure, which the method of Section 4 exploits: they are linear in the unknown price function, and their
+coefficients are explicit functions of the state.
+3.1 Setting
+We follow the standard arbitrage-free pricing framework, as presented for diffusion models in Shreve [2004] and
+for jump models in Cont and Tankov [2004]. Let St be the price at time t of the underlying asset, which pays a
+continuous dividend yield q ≥ 0 (for a currency, q is the foreign interest rate). We consider a European derivative
+on this asset that pays g(ST ) at maturity T , for a given payoff function g, and denote by V (S, t) its price at
+time t when St = S.
+For ease of notation, we take the interest rate r to be constant, so the bank account is Bt = ert. Prices are
+computed under a risk-neutral measure Q: a probability measure, equivalent to the real-world measure, under
+which the value of every traded asset, with any dividends reinvested, divided by Bt is a martingale. For the
+underlying, this means that e−(r−q)tSt is a martingale, and the price of the derivative is the expected discounted
+payoff,
+V (S, t) = EQ
+
+e−r(T −t)g(ST )  St = S  . (3.1)
+For the jump and stochastic-volatility models considered here, the risk-neutral measure is not unique, and as
+usual we specify each model directly under Q. In the stochastic-volatility models the state contains, besides St,
+the current variance (Heston) or volatility (SABR), and the conditioning in (3.1) is on the whole state. SABR is
+set under the T -forward measure instead (Section 3.4).
+5
+PIRanNN for Option Pricing and Calibration
+The least-squares method of Section 4 applies to any such payoff: g enters only through the condition at
+maturity and the boundary data. For definiteness we use the European call, g(S) = (S − K)+ = max(S − K, 0)
+with strike K, as the running example, and all experiments with the four models price calls. Other products
+change the problem in identifiable ways: a continuously monitored barrier adds a boundary condition at the
+barrier, and an Asian option adds the running average of the asset price as a further state variable. We do not
+treat them here.
+For the call, to obtain a single payoff for all strikes, we use the log-moneyness x = log(S/K) and the time to
+maturity τ = T − t, and we measure prices in units of the strike:
+V (x, τ ) = 1 K V   Kex, T − τ  .
+At maturity (τ = 0) the normalised price equals the normalised payoff
+V (x, 0) = f (x), f (x) = (ex − 1)+.
+Let Xt = log(St/K) be the log-moneyness process (together with the variance or volatility, for the stochastic-
+volatility models). The models below are time-homogeneous, so (3.1) becomes, in these variables,
+V (x, τ ) = EQ
+
+e−rτ f (Xτ )  X0 = x  .
+By the Feynman–Kac theorem, this expectation solves the equation
+∂τ V = LV − rV , (3.2)
+where L is the generator of X, defined for smooth u by (Lu)(x) = lim
+h→0+
+ 
+E[u(Xh) | X0 = x] − u(x)
+
+/h. For each
+model below we give L explicitly. It is convenient to collect all terms on one side and write the equation as
+M[V ] = 0, M[u] := ∂τ u − Lu + ru. (3.3)
+We call M the pricing operator. It is linear in u: M[au + bw] = a M[u] + b M[w] for constants a, b and functions
+u, w. This linearity is what makes the method of Section 4 a linear least-squares problem.
+3.2 Jump-diffusion models: Merton and Kou
+In an exponential L´evy jump-diffusion model the asset price follows
+dSt
+St−
+= (r − q − λκJ ) dt + σ dWt + (eJ − 1) dNt,
+where W is a standard Brownian motion, N is a Poisson process with intensity λ ≥ 0, and each jump multiplies
+the price by eJ , where the log-jump J has density g and is independent of W and N . The constant κJ = E[eJ − 1]
+is the mean relative jump size; the term −λκJ in the drift compensates for the jumps, so that the discounted
+price is a martingale.
+The generator of the log-moneyness has a diffusion part and a jump part. The jump part is the jump rate λ
+times the expected change in u caused by one jump. We write the expected value of u just after a jump as
+(J u)(x, τ ) := E
+
+u(x + J, τ )
+
+=
+Z
+R
+u(x + y, τ ) g(y) dy.
+The generator is then
+Lu = 1 2 σ2 ∂xxu + µ0 ∂xu + λ   J u − u  , µ0 = r − q − 1 2 σ2 − λκJ ,
+and the pricing equation (3.2) becomes the PIDE
+∂τ V = 1 2 σ2∂xxV + µ0 ∂xV − (r + λ)V + λ J V .
+In the form (3.3), the pricing operator is
+M[u] = ∂τ u − 1 2 σ2∂xxu − µ0 ∂xu + (r + λ) u − λ J u. (3.4)
+The first four terms are local: they involve u and its derivatives at the point x only. The last term is non-local:
+it involves the values of u at all points x + y that a jump can reach.
+6
+PIRanNN for Option Pricing and Calibration
+In the Merton model [Merton, 1976], the log-jump is normal, J ∼ N (µJ , σ2 J ):
+g(y) = 1√ 2π σJ exp  − (y − µJ )2 2σ2 J  , κJ = eµJ + 1 2 σ2 J − 1.
+In the Kou model [Kou, 2002], the log-jump is upward with probability p and then exponentially distributed
+with rate η1, and downward with probability 1 − p and then exponentially distributed with rate η2:
+g(y) = pη1e−η1 y 1{y≥0} + (1 − p)η2eη2 y 1{y<0}, κJ = pη1 η1 − 1 + (1 − p)η2 η2 + 1 − 1. (3.5)
+The condition η1 > 1 ensures that E[eJ ], and hence κJ , is finite. The double-exponential law has heavier tails
+than the normal law, and its upward and downward tails can differ.
+3.3 Heston model
+In the model of Heston [1993] the variance v of the asset follows its own mean-reverting diffusion:
+dSt = (r − q)St dt + √vt St dW (1) t , dvt = κ(¯v − vt) dt + ξ√vt dW (2) t ,
+where the Brownian motions have correlation ρ. The variance reverts to the long-run level ¯v at speed κ, and ξ is
+the volatility of the variance. The variance stays strictly positive if the Feller condition 2κ¯v ≥ ξ2 holds. The
+state is now (x, v), and the pricing equation is the two-dimensional PDE
+∂τ V = 1 2 v ∂xxV + ρξv ∂xvV + 1 2 ξ2v ∂vvV +   r − q − v 2  ∂xV + κ(¯v − v)∂vV − rV , (3.6)
+with pricing operator
+M[u] = ∂τ u − 1 2 v ∂xxu − ρξv ∂xv u − 1 2 ξ2v ∂vv u −   r − q − v 2  ∂xu − κ(¯v − v) ∂v u + r u. (3.7)
+There is no jump term, but the coefficients now depend on the state through v. Two of the benchmark cases of
+Section 6.5 are currency options, with q > 0 the foreign interest rate.
+3.4 SABR model
+The SABR model of Hagan et al. [2002] describes a forward price F and its volatility α:
+dFt = αt F β t dW (1) t , dαt = ν αt dW (2) t , (3.8)
+with correlation ρ between the two Brownian motions, exponent β ∈ [0, 1] and volatility of volatility ν > 0.
+Under the T -forward measure the forward is a martingale and prices are expressed in units of the zero-coupon
+bond, so there is neither a drift nor a discounting term. The undiscounted call price C(F, α, τ ) solves
+∂τ C = 1 2 α2F 2β ∂F F C + ρνα2F β ∂F αC + 1 2 ν2α2∂ααC,
+with pricing operator
+M[u] = ∂τ u − 1 2 α2F 2β ∂F F u − ρνα2F β ∂F αu − 1 2 ν2α2 ∂ααu. (3.9)
+Apart from the time derivative, the equation contains only second derivatives, with coefficients that depend
+on the state through α2F 2β , α2F β and α2. Hagan et al. [2002] give an approximate formula for the implied
+volatility, which is accurate near the money and for moderate maturities but degrades for extreme strikes and
+long maturities. Because it is an approximation, it is not an exact reference; Section 6.6 also compares with
+Monte Carlo simulation of (3.8).
+3.5 Common structure
+All four pricing operators, (3.4), (3.7) and (3.9), are linear in the unknown price function u and have the form
+M[u] =
+X
+|ι|≤2
+aι(z) ∂ιu + c(z) u
+| {z }
+local part
+− λ J u| {z }
+jump part
+, (3.10)
+where z is the vector of state variables and time, ∂ι ranges over the partial derivatives of order at most two
+(including ∂τ ; ι is a multi-index), and the jump part is present only for Merton and Kou. The coefficients aι(z)
+and c(z) are constants for the jump models and simple explicit functions of the state for Heston and SABR.
+The method of Section 4 needs only two properties of (3.10): that it is linear in u, and that its coefficients can
+be evaluated at any given point. The Heston–Hull–White model, with a stochastic short rate as a third state
+variable, has the same form; we do not treat it here.
+7
+PIRanNN for Option Pricing and Calibration
+3.6 Notation
+Table 2 collects the main symbols.
+Table 2: Main notation.
+Symbol Meaning Symbol Meaning
+x = log(S/K) log-moneyness Φ, ϕ standard normal distribution
+function and density
+τ = T − t time to maturity m number of random features
+V (x, τ ) price in units of the strike Ak , ζk inner weight vector and centre of
+feature k
+f (x) = (ex − 1)+ normalised call payoff sk (z) pre-activation Ak · (z − ζk )
+M pricing operator y output weights
+J u = E[u(x + J )] expected value after a jump Nc, N0, Nb numbers of interior, initial, boundary
+points
+λ, g, κJ jump rate, log-jump density,
+E[eJ − 1] wic, wb weights of initial and boundary conditions
+v, ¯v, κ, ξ Heston variance, long-run level,
+speed, vol of var
+γ ridge (Tikhonov) parameter
+F, α, β, ν SABR forward, volatility,
+exponent, vol of vol
+θ, nθ model-parameter vector and its
+length
+ρ correlation of the two Brownian
+motions
+nens number of independent feature draws
+averaged
+ψ boundary data uBS Black–Scholes price
+r, q interest rate, dividend yield
+4 The method
+4.1 Random probit features
+Let z denote the vector of state variables and time: z = (x, τ ) for the jump models, z = (x, v, τ ) for Heston
+and z = (F, α, τ ) for SABR, and let d be its length. We approximate the price by a linear combination of m
+functions of the form Φ(Ak · (z − ζk)). For k = 1, . . . , m we draw, independently,
+• an inner weight vector Ak ∈ Rd whose components are independent and normal, A(j) k ∼ N (0, ω2 j ) for
+j = 1, . . . , d, where the bandwidth ωj > 0 is a fixed choice for each coordinate; and
+• a centre ζk, uniformly distributed over the computational domain.
+These draws are made once and then held fixed. The pre-activation of feature k is
+sk(z) := Ak · (z − ζk),
+and the feature is Φ(sk(z)). The pre-activation is zero at the centre ζk, and more generally at every point z of
+the hyperplane through ζk perpendicular to Ak. On this hyperplane the feature equals Φ(0) = 1 2 . Moving away
+from it in the direction of Ak, the feature rises towards 1; moving in the opposite direction, it falls towards 0.
+The centre therefore fixes where the transition takes place, and Ak fixes its direction and steepness: in coordinate
+j the width of the transition is about 1/
+A(j) k . Large bandwidths ωj give sharp features and small bandwidths
+give smooth ones.
+Definition 4.1 (Random-feature approximation). For output weights y = (y1, . . . , ym) ∈ Rm,
+bV (z; y) :=
+mX
+k=1
+yk Φ
+ 
+sk(z)
+
+. (4.1)
+Only the output weights y are determined from the pricing problem. In neural-network terms, (4.1) is a
+network with one hidden layer of m neurons, whose inner weights are sampled and never trained.
+We use the probit activation Φ for three reasons. First, the approximation (4.1) is flexible enough. Random
+neural networks, in which the inner weights are drawn at random and only the output weights are fitted, have
+the universal approximation property under mild conditions on the activation (it must not be a polynomial
+and must be bounded with bounded derivatives, or a limit of such functions in a weighted norm), which the
+probit function satisfies [Neufeld and Schmocker, 2023, Corollary 3.8], and for suitable target functions the L2
+8
+PIRanNN for Option Pricing and Calibration
+approximation error decreases like m−1/2 [Rahimi and Recht, 2008]. Second, Φ is infinitely differentiable, and its
+derivatives are explicit: Φ′ = ϕ and ϕ′(s) = −s ϕ(s). Third, and most important for the jump models, averaging
+a probit feature over a normal or a double-exponential jump gives an explicit formula (Lemma 4.3). Because
+Φ is smooth, however, a finite sum of probit features cannot reproduce the kink of the call payoff exactly; the
+consequences are discussed in Sections 4.5 and 6.2.
+4.2 Fitting by least squares
+The pricing equations of Section 3 are posed on unbounded domains. We solve them on a bounded box, for
+example x ∈ [xmin, xmax] for the jump models, and impose boundary data ψ on some of its faces. The faces and
+the data used for each model are given with the experiments in Section 6. In all calibrations the data ψ do not
+depend on the model parameters, which lets the calibration Jacobian of Section 5 take its simplest form. In
+several experiments, conditions on some faces are omitted altogether; the least-squares fit is then determined
+there by the equation and the payoff.
+We choose y so that bV satisfies, as closely as possible, the three conditions that define the price: the pricing
+equation M[V ] = 0 inside the domain, the payoff V (·, 0) = f at τ = 0, and the boundary data ψ on the boundary
+faces. Each condition is imposed at a finite set of points, the collocation points:
+• Nc interior points z1, . . . , zNc in the domain with τ > 0;
+• N0 initial points x(0) 1 , . . . , x(0) N0 at τ = 0, a fraction of them clustered near the strike x = 0, where the payoff
+has its kink;
+• Nb boundary points z(b) 1 , . . . , z(b) Nb on the faces where boundary data are imposed.
+Unless an experiment states otherwise, the interior and boundary points are drawn uniformly at random. The
+loss is the weighted sum of the squared errors in the three conditions:
+L(y) :=
+NcX
+i=1
+M[ bV ](zi; y) 2 + w2 ic N0X
+j=1
+ bV (x(0) j , 0; y) − f (x(0) j ) 2 + w2 b NbX
+ℓ=1
+ bV (z(b) ℓ ; y) − ψℓ 2 , (4.2)
+where ψℓ is the boundary value at the point z(b) ℓ . All three terms are sums over the collocation points, so
+the balance between them depends both on the weights and on Nc, N0 and Nb, which we report with each
+experiment. The weights appear squared because, in the matrix form below, each initial or boundary row is
+multiplied by wic or wb.
+The choice of the weights decides how the solve trades the three conditions against each other, since a fixed
+number of output weights must serve all of them. With a small wic the solution fits the equation closely but the
+payoff less well, and the error at τ = 0 then spreads to the whole price surface; with a large wic the opposite
+happens. A small error in the equation alone therefore does not guarantee a small price error. In our experiments
+the accuracy depended on the weights only mildly over a moderate range, and deteriorated only when one
+condition was weighted far more or far less than the others.
+Since M is linear, M[ bV ](z; y) = P k yk M[Φ(sk)](z), and every term in (4.2) is a linear function of y minus
+a target. The loss is therefore a linear least-squares objective,
+L(y) = ∥Ay − b∥2 2 , A ∈ RN ×m, N = Nc + N0 + Nb,
+in which each collocation point contributes one row of A and one entry of b:
+• an interior point zi gives the row
+ 
+M[Φ(sk)](zi)
+m
+k=1 with target 0;
+• an initial point gives the row wic
+ 
+Φ(sk(x(0) j , 0))  k with target wic f (x(0) j );
+• a boundary point gives the row wb
+ 
+Φ(sk(z(b) ℓ ))  k with target wb ψℓ.
+The only entries that need work are M[Φ(sk)](zi), the pricing operator applied to a single feature; Sections 4.3
+and 4.4 show that they are explicit.
+The matrix A is typically very ill-conditioned, because many random features are nearly linear combinations
+of others. We therefore add a small ridge (Tikhonov) penalty, which selects, among the many weight vectors
+that fit almost equally well, one of small norm:
+y∗ = arg min
+y∈Rm
+n
+∥Ay − b∥2 2 + γ ∥y∥2 2
+o
+= H−1A⊤b, H := A⊤A + γI. (4.3)
+9
+PIRanNN for Option Pricing and Calibration
+The matrix H is symmetric and positive definite, and we solve (4.3) with its Cholesky factorisation. This writes
+H = LL⊤, where L is lower triangular, that is, all its entries above the diagonal are zero, and it costs about
+m3/3 operations. Once L is known, a system Hz = r with any other right-hand side r is solved in two cheap
+passes: first Lw = r from the top down, each row giving one more unknown, and then L⊤z = w from the
+bottom up. These two triangular solves cost about 2m2 operations together; for m = 1800 that is about 300
+times less than the factorisation. This factorisation is reused for all sensitivities in Section 5, and for any other
+payoff under the same model. The fitted price is bV (z; y∗), and the price in currency units is K bV .
+The cost of one solve has three parts: assembling A costs O(N m) evaluations of explicit functions, forming
+A⊤A costs O(N m2) operations and the Cholesky factorisation O(m3). For the sizes used in the experiments (m
+from 800 to 1800 for the jump models to several thousand for Heston and SABR) one solve takes seconds to
+minutes on a single machine. Different draws of the features give slightly different prices, so we report results
+averaged over nens independent draws, with nens stated for each experiment. The spread of the prices over the
+draws also indicates the size of the error when no reference price is available (Section 6.5), but only of the part
+of the error that varies between draws (Section 5.6).
+The factorisation can also be reused for other payoffs. The matrix A depends on the model, its parameters
+and the sample points, but not on the payoff: the payoff enters only the targets of the initial and boundary rows.
+Another European payoff under the same model is therefore priced with the same factorisation, at the cost of
+one product with A⊤ and two triangular solves, and gives its whole price surface and Greeks. How accurate that
+price is depends on how well the features resolve the new payoff’s kinks or jumps; the features and sample points
+used here are concentrated at the kink of a call, and we test only calls. With the Black–Scholes subtraction of
+Section 4.5, the subtracted function must also match the new payoff. The same reuse is possible for any linear
+discretisation, including finite differences; the difference is in the cost. A time-stepping scheme must repeat
+its whole march in time for each new payoff, whereas here the expensive steps, assembling and factorising the
+matrix, are done once.
+4.3 The local part of the operator
+We first apply the local part of the pricing operator (3.10) to a single feature; the jump term of the Merton and
+Kou models is treated in Section 4.4. Only two facts are needed: the chain rule for Φ(sk), with ϕ′(s) = −s ϕ(s),
+and the values of the coefficients at the point. Writing A(j) k for the component of Ak along the coordinate zj ,
+∂zj Φ(sk) = A(j) k ϕ(sk), ∂zi ∂zj Φ(sk) = −A(i) k A(j) k sk ϕ(sk). (4.4)
+In the statement below, ι = (ι1, . . . , ιd) is a multi-index, ∂ι = ∂ι1 z1 · · · ∂ιd zd , and Aι k = Q j (A(j) k )ιj .
+Lemma 4.2 (Local operator applied to a feature). Let
+Mloc[u] =
+X
+1≤|ι|≤2
+aι(z) ∂ιu + c(z) u
+be a linear operator of order at most two whose coefficients are finite at the point z. Then
+Mloc[Φ(sk)](z) = c(z) Φ(sk) +
+ 
+Pk(z) sk + Qk(z)
+
+ϕ(sk), (4.5)
+with
+Pk(z) = −
+X
+|ι|=2
+aι(z) Aι k, Qk(z) = X
+|ι|=1
+aι(z) Aι k. (4.6)
+Proof. By the chain rule, ∂ιΦ(sk) = Aι k ϕ(sk) for |ι| = 1 and ∂ιΦ(sk) = −Aι k sk ϕ(sk) for |ι| = 2. Summing over
+ι gives (4.5).
+The operator applied to a feature is the reaction coefficient times the feature, plus the density ϕ(sk) times a
+linear function of sk. The coefficient Pk collects the second-order terms, and Qk the first-order terms, including
+the time derivative. The result is an application of the chain rule and holds for any smooth activation (tanh,
+for example) with the appropriate derivatives in place of ϕ and −sϕ; what is particular to the probit is the
+jump term of Lemma 4.3. Because the coefficients enter only through their values at the point, state-dependent
+coefficients cost no more than constant ones.
+We now give the coefficients for each model, read off from (3.4), (3.7) and (3.9). Here A(x) k , A(v) k , A(F ) k , A(α) k
+and A(τ ) k denote the components of Ak along x, v, F , α and τ .
+For Merton and Kou, with z = (x, τ ), the reaction coefficient is c = r + λ, and the two coefficients are
+constants:
+Pk = 1 2 σ2  A(x) k 2 , Qk = A(τ ) k − µ0 A(x) k . (4.7)
+10
+PIRanNN for Option Pricing and Calibration
+For Heston, with z = (x, v, τ ), the reaction coefficient is c = r and
+
+
+
+Pk(v) = 1 2 v   A(x) k 2 + ρξv A(x) k A(v) k + 1 2 ξ2v   A(v) k 2 ,
+Qk(v) = A(τ ) k −   r − q − v 2  A(x) k − κ(¯v − v) A(v) k . (4.8)
+Both are affine in v.
+For SABR, with z = (F, α, τ ), there is no discounting, so c = 0, and
+
+
+
+Pk(F, α) = 1 2 α2F 2β   A(F ) k 2 + ρνα2F β A(F ) k A(α) k + 1 2 ν2α2  A(α) k 2 ,
+Qk = A(τ ) k . (4.9)
+The nonlinear dependence on F β enters only through the value of Pk at the collocation point.
+4.4 The jump term
+For the Merton and Kou models the pricing operator (3.4) also contains the jump term −λ J u. A jump changes
+x to x + J, and hence changes the pre-activation from sk to sk + A(x) k J. The jump term of (3.4) applied to a
+feature is therefore
+J Φ(sk) = E
+
+Φ
+ 
+sk + A(x) k J  ,
+an expectation over the jump size only. The next lemma gives it in closed form for both jump laws. Part (i) is a
+classical identity for normal integrals [Owen, 1980]; we include its short proof for completeness.
+Lemma 4.3 (Explicit jump term). Let s ∈ R and a ∈ R.
+(i) If J ∼ N (µJ , σ2 J ) (Merton), then
+E
+
+Φ(s + aJ )
+
+= Φ
+
+s + aµJp
+1 + a2σ2 J
+!
+. (4.10)
+(ii) If J has the double-exponential density (3.5) (Kou), then
+E
+
+Φ(s + aJ )
+
+= p G(s, a, η1) + (1 − p) G(s, −a, η2), (4.11)
+where, for a ̸= 0 and η > 0,
+G(s, a, η) := E
+
+Φ(s + aY )
+
+= Φ(s) + 1 2 sgn(a) e−s2 /2 erfcx  as + η√ 2 |a|  , Y ∼ Exp(η), (4.12)
+erfcx(u) = eu2 erfc(u) is the scaled complementary error function, and G(s, 0, η) = Φ(s).
+Proof. (i) Let W be a standard normal variable independent of J, so that Φ(u) = P(W ≤ u). Then E[Φ(s+aJ)] =
+P(W ≤ s + aJ) = P(W − aJ ≤ s). The variable W − aJ is normal with mean −aµJ and variance 1 + a2σ2 J ,
+which gives (4.10).
+(ii) The Kou jump is J = Y1 with probability p and J = −Y2 with probability 1 − p, where Yi ∼ Exp(ηi).
+Conditioning on the direction of the jump gives (4.11), since E[Φ(s − aY2)] = G(s, −a, η2). It remains to compute
+G. Integrating by parts,
+G(s, a, η) =
+Z ∞
+0
+ηe−ηy Φ(s + ay) dy = Φ(s) + a
+Z ∞
+0
+e−ηy ϕ(s + ay) dy.
+To compute the last integral, write the integrand as one exponential:
+e−ηy ϕ(s + ay) = 1√ 2π exp  −  ηy + 1 2 (s + ay)2 .
+The bracket is a quadratic in y, namely 1 2 a2y2 + (as + η)y + 1 2 s2. Completing the square, with
+m = as + η a2 , q = as + η |a| , so that 1 2 a2m2 = 1 2 q2,
+gives ηy + 1 2 (s + ay)2 = 1 2 a2(y + m)2 + 1 2 s2 − 1 2 q2, and hence
+e−ηy ϕ(s + ay) = e(q2 −s2 )/2 1√ 2π e− 1 2 a2 (y+m)2 .
+11
+PIRanNN for Option Pricing and Calibration
+The first factor does not depend on y. In the remaining integral we substitute w = |a|(y + m), so that
+a2(y + m)2 = w2 and dy = dw/|a|; the lower limit y = 0 becomes w = |a|m = q, and the upper limit stays at
++∞ for either sign of a. Therefore
+a
+Z ∞
+0
+e−ηy ϕ(s + ay) dy = a |a| e(q2 −s2 )/2
+Z ∞
+q
+ϕ(w) dw = sgn(a) e(q2 −s2 )/2   1 − Φ(q)  .
+Finally, 1 − Φ(q) = 1 2 e−q2 /2 erfcx(q/ √ 2); the factors e±q2 /2 cancel, which gives (4.12). Because the substitution
+uses |a|, the calculation covers both signs of a. Both identities were also checked against numerical quadrature,
+to machine precision.
+With a = A(x) k and s = sk, Lemma 4.3 gives J Φ(sk) in closed form. Adding it to the local part (Lemma 4.2
+with the coefficients (4.7)), the Merton operator applied to feature k is
+M[Φ(sk)] = (r + λ) Φ(sk) +
+ 
+Pk sk + Qk
+
+ϕ(sk) − λ Φ
+
+ sk + A(x) k µJq
+1 + (A(x) k )2σ2 J
+
+ . (4.13)
+For Kou the last term is replaced by λ times (4.11). Every entry of the interior rows of A is therefore an explicit
+expression in Φ, ϕ and erfcx, evaluated at the collocation point, and no numerical integration over the jump size
+is needed.
+Remark 4.4 (Fourier features). The probit is not the only activation for which both the local part and the
+jump term are explicit. With the pair of features cos sk and sin sk in place of Φ(sk), every derivative of a feature
+is again a multiple of cos sk or sin sk, and the jump term follows from the characteristic function φJ (u) = E[eiuJ ]
+of the jump:
+E
+
+cos(sk + aJ )
+
++ i E
+
+sin(sk + aJ )
+
+= eisk φJ (a).
+For Merton, for example, E[cos(sk + aJ)] = e−a2 σ2 J /2 cos(sk + aµJ ). The residual is again linear in the output
+weights, and the method applies unchanged. These features oscillate over the whole domain and suit smooth
+solutions; Section 6.4 uses them on smooth manufactured test problems, where they are more accurate than
+probit features. A probit feature is a single smooth step, which better matches the local shape of a payoff kink,
+and we use probit features for the option-pricing problems.
+4.5 Subtracting the Black–Scholes price
+The call payoff f (x) = (ex − 1)+ has a kink at the strike x = 0. At short maturities the price is still close to
+this kink, and a finite sum of smooth features cannot reproduce it well. The error of the plain solve is then
+concentrated near the strike at small τ , and it stops decreasing as features are added (Section 6.2). For the jump
+models we remove the difficulty by subtracting a known function that already contains the kink, and solving
+for the remainder. This is the classical technique of singularity subtraction [Fix et al., 1973]; in option pricing
+the kink is more often handled by smoothing the payoff or by special start-up steps of a time-stepping scheme
+[Pooley et al., 2003].
+In general, let h be any function for which M[h] can be evaluated explicitly; for the jump models this includes
+J h. Writing V = h + w and using M[V ] = 0 and the linearity of M, the remainder w solves
+M[w] = −M[h], w(·, 0) = f − h(·, 0), w = ψ − h on the boundary. (4.14)
+This is a problem of the same type as before, with an explicit right-hand side, so it is solved by the same
+least-squares method; the only change is that the interior targets in b become −M[h](zi) instead of 0. The
+decomposition is exact and assumes nothing about w. It improves the accuracy when w is easier to approximate
+than V .
+We take h = uBS, and, as in all our jump-model experiments, set q = 0 in this subsection. Here uBS is the
+normalised Black–Scholes call price with the same strike, interest rate and diffusion volatility σ:
+uBS(x, τ ) = ex Φ(d1) − e−rτ Φ(d2), d1,2 = x + (r ± 1 2 σ2)τ σ√τ .
+It has the same payoff, so the remainder starts from zero, w(x, 0) = f (x) − uBS(x, 0) = 0. It also satisfies the
+Black–Scholes equation ∂τ u − 1 2 σ2∂xxu − (r − 1 2 σ2)∂xu + ru = 0, which is the Merton operator (3.4) without the
+jump terms. Substituting into (4.14), only the jump terms remain on the right-hand side:
+M[w] = F (x, τ ) := λ
+
+J uBS(x, τ ) − uBS(x, τ ) − κJ ∂xuBS(x, τ )
+
+, (4.15)
+12
+PIRanNN for Option Pricing and Calibration
+where ∂xuBS = exΦ(d1) is the normalised Black–Scholes delta.
+The jump average J uBS is explicit for both jump laws. For Merton it is again a Black–Scholes-type price:
+since x + J plus the Black–Scholes log-return is normal with mean x + m, m = (r − 1 2 σ2)τ + µJ , and variance
+q2 = σ2τ + σ2 J ,
+J uBS(x, τ ) = e−rτ
+
+ex+m+q2 /2 Φ  x + m + q2
+q
+
+− Φ
+ x + m
+q
+
+. (4.16)
+For Kou it is expressed through the function G of Lemma 4.3. With b = 1/(σ√τ ),
+J uBS(x, τ ) = ex
+
+pη1
+η1 −1 G(d1, b, η1 − 1) + (1−p)η2 η2 +1 G(d1, −b, η2 + 1)  − e−rτ  p G(d2, b, η1) + (1 − p) G(d2, −b, η2)  ,
+(4.17)
+which follows from the Kou case of Lemma 4.3 after absorbing the factor e±Y into the exponential density; this
+needs η1 > 1, which is already required for κJ to be finite. We checked (4.16) and (4.17) against numerical
+quadrature. The jump identity is thus used twice: once for the jump term J w of the unknown remainder,
+through the features, and once for the right-hand side F . No quadrature enters either.
+The remainder is smoother than the price, but it is not free of structure near the strike. As τ → 0 the
+right-hand side (4.15) tends to λ(J f − f − κJ f ′), and f ′(x) = ex1{x>0} jumps at the strike. The remainder
+therefore has a thin layer near x = 0 at short maturities, of width about σ√τ . To resolve it, we devote a fraction
+of the features to this region: their centres are concentrated near x = 0 and at small τ , and their slopes A(x) k are
+of order 1/(σ√τ ) over a geometric sequence of time scales. These are ordinary probit features, with the same
+explicit jump term, so the solve is unchanged. The ablation in Section 6.1 measures the effect of each step: for
+Merton, the subtraction alone reduces the error by a factor of about 100, the extra features alone by about 7,
+and the two together by about 700 (for Kou, 70, 15 and 300), with the total number of features held fixed in all
+four runs. Nothing in the subtraction is specific to random features: applied to the finite-difference scheme of
+Section 6.1, it reduces that scheme’s error by a factor of about 200 for Merton and 70 for Kou.
+Figure 1 shows the two pipelines side by side. In the experiments we refer to them as the plain solve and the
+solve with Black–Scholes subtraction.
+model parameters
+σ, λ, r; jump law g
+(µJ , σJ ) Merton
+(p, η1 , η2 ) Kou
+payoff and
+boundary data
+f (x) = (ex − 1)+
+faces xmin , xmax : ψ
+fixed probit features
+Φ(sk ), sk = Ak · (z − ζk )
+Ak normal, ζk uniform
+operator applied to each feature: explicit formula
+M[Φ(sk )] = c Φ(sk ) + (Pk sk + Qk ) ϕ(sk ) − λ J Φ(sk )
+local part: Lemma 4.2 jump part: Lemma 4.3
+one regularised least-squares solve
+equation, payoff and boundary rows −→ miny ∥Ay − b∥2 2 + γ∥y∥2 2
+price surface and Greeks
+bV = P k y∗ k Φ(sk ); ∆, Γ, Θ explicit
+subtract Black–Scholes
+V = uBS + w, w(·, 0) = 0
+the payoff kink cancels
+explicit right-hand side
+F = λ (J uBS − uBS − κJ ∂xuBS)
+jump identity used a second time
+add Black–Scholes back
+bV = uBS + bw
+extra features near the strike
+b
+bw
+Plain solve With Black–Scholes subtraction
+Figure 1: The two pipelines for the jump models. Left: the plain solve. Right: the solve with Black–Scholes
+subtraction, which solves the same kind of system for the remainder w = V − uBS, with the explicit right-hand
+side F of (4.15).
+The same step can be used for Heston and SABR, with a different choice of h: the price of the same model
+with the volatility of volatility set to zero. In the jump models, uBS is the price with jump intensity zero, so this
+is the same rule. With ξ = 0, the Heston variance follows the deterministic path dvt = κ(¯v − vt) dt, and h is the
+13
+PIRanNN for Option Pricing and Calibration
+Black–Scholes price in which σ2τ is replaced by the integrated variance
+W (v, τ ) = ¯v τ + (v − ¯v) 1 − e−κτ
+κ .
+With ν = 0 and β = 1, the SABR volatility stays at α, and h is Black’s price with W = α2τ . These are the
+leading terms of the small volatility-of-volatility expansions of Lewis [2000] and Benhamou et al. [2010]; here
+they serve only as the known function in (4.14). As before, h has the payoff of the option, so w starts from zero,
+and h solves the pricing equation with the volatility of volatility set to zero, so only the terms that contain it
+remain on the right-hand side. For Heston,
+−M[h] = ρξv Wv ∂xW h + 1 2 ξ2v W 2 v ∂W W h, Wv = 1 − e−κτ κ ,
+and for SABR, in x = log(F/K),
+−M[h] = 2ρναW ∂xW h + ν2W ∂W h + 2ν2W 2 ∂W W h,
+where ∂W denotes the derivative of the Black–Scholes price with respect to the integrated variance at fixed x and
+τ . These derivatives are explicit, and the right-hand sides stay bounded as τ → 0. The dependence of h on the
+variance matters: subtracting a Black–Scholes price with one fixed volatility removes the kink from the payoff,
+but leaves a right-hand side that grows like τ −1/2 near the strike. For SABR, the far-field condition on the faces
+in α (Section 6.6) is imposed on w instead of on V . Unlike for the jump models, the right-hand side now depends
+on all the parameters of the operator, through h and W , so the exact Jacobian of Section 5 would also need the
+derivatives of the right-hand side. We therefore use this subtraction only for pricing (Sections 6.5 and 6.6).
+5 Sensitivities and calibration
+The fitted price is an explicit function of the state variables and, through the output weights, of the model
+parameters. Differentiating it with respect to the state gives the Greeks (Section 5.1). Differentiating it with
+respect to the model parameters gives the Jacobian needed for calibration (Sections 5.2 to 5.4). Section 5.5
+describes the calibration procedure, and Section 5.6 discusses which parameters a calibration can recover.
+5.1 Greeks
+Write the fitted normalised price as u(z) = P k y∗ k Φ(sk(z)), so that the price of the call in currency units is
+bV (S, t) = K u   log(S/K), T − t  . The derivatives of u are sums of the feature derivatives (4.4) with the same
+weights, for example
+ux =
+X
+k
+y∗ k A(x) k ϕ(sk), uxx = − X
+k
+y∗ k   A(x) k 2 sk ϕ(sk), uτ = X
+k
+y∗ k A(τ ) k ϕ(sk).
+Changing variables from (x, τ ) back to (S, t) gives
+∆ = ∂ bV ∂S = K S ux, Γ = ∂2 bV ∂S2 = K S2   uxx − ux  , Θ = ∂ bV ∂t = −K uτ .
+For Heston, the sensitivity to the current variance is ∂ bV /∂v = K P k y∗ k A(v) k ϕ(sk), and similarly for the SABR
+volatility. Each Greek is one further evaluation of the features at the weights already computed; no new solve is
+needed. When the Black–Scholes price is subtracted, the Greeks of uBS, which are explicit, are added to those of
+the fitted remainder. When results are averaged over several feature draws, the Greeks are averaged in the same
+way as the prices.
+5.2 Parameter sensitivities
+Calibration needs the derivative of the fitted price with respect to each model parameter θp. Unlike the state, a
+model parameter does not enter the features: it enters the least-squares problem, because it changes the pricing
+operator and hence the matrix A and, when the Black–Scholes price is subtracted, the vector b. The output
+weights y∗ therefore depend on θp, and their derivative is obtained by differentiating the normal equations.
+Proposition 5.1 (Parameter sensitivity of the output weights). Let H = A⊤A + γI and e = b − Ay∗ be the
+matrix and the residual of the solve (4.3), and let Ap = ∂A/∂θp and bp = ∂b/∂θp. Then
+∂y∗
+∂θp
+= H−1
+
+A⊤ p e − A⊤Ap y∗ + A⊤bp
+
+. (5.1)
+14
+PIRanNN for Option Pricing and Calibration
+Proof. Differentiate Hy∗ = A⊤b with respect to θp. Since ∂H/∂θp = A⊤ p A + A⊤Ap,
+H ∂y∗
+∂θp
+= A⊤ p b + A⊤bp −   A⊤ p A + A⊤Ap  y∗,
+and A⊤ p b − A⊤ p Ay∗ = A⊤ p e.
+Formula (5.1) is the classical derivative of a regularised least-squares solution with respect to parameters on
+which the problem depends [Golub and Pereyra, 1973]. Three features make it cheap and exact here.
+• The matrix is already factorised. The matrix H in (5.1) is the same matrix whose Cholesky factorisation
+H = LL⊤, with L lower triangular, was computed for the price. Solving (5.1) for one parameter therefore
+needs only two triangular solves with L and L⊤, at a cost of O(m2) operations, instead of a new factorisation,
+which would cost O(m3). Forming the right-hand side costs O(N m) operations.
+• Only the interior rows change. The payoff and the boundary data do not depend on the model parameters
+(Section 4.2), so the initial and boundary rows of A and b are the same for every θ. The rows of Ap for
+the interior points are the parameter derivatives of the explicit expressions of Lemmas 4.2 and 4.3, and are
+themselves explicit; they are listed in Appendix A. In the plain solve bp = 0. When the Black–Scholes price is
+subtracted, the interior entries of b are the values of the right-hand side F of (4.15), and bp is their explicit
+derivative.
+• The result is exact. The derivative of the fitted price at a quoted point z is
+∂ bV (z)
+∂θp
+= K
+X
+k

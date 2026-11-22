@@ -17,5 +17,5 @@ Volta - the whole system. Start here.
 - [[Self-check]]
 - [[Market data]]
 
-Papers read: 301 · concepts linking 2+ papers: 103
-Verdicts: DOESN'T FIT 22, NOT CONFIRMED 65, PROMISING 2, TRANSLATION FAILED 23, untested 189
+Papers read: 304 · concepts linking 2+ papers: 104
+Verdicts: DOESN'T FIT 22, NOT CONFIRMED 65, PROMISING 2, TRANSLATION FAILED 23, untested 192

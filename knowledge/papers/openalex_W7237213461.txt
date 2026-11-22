@@ -1,0 +1,976 @@
+Advances in Continuous 
+and Discrete Models
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 
+https://doi.org/10.1186/s13662-026-04144-6
+R E S E A R C H Open Access
+A hybrid framework for option pricing 
+models via distributed-order time-fractional 
+derivatives with non-smooth solutions
+W. A. Hashem1,2* and Hoda F. Ahmed1
+*Correspondence: 
+waleed.hashim@mu.edu.eg
+1Mathematics Department, Faculty 
+of Science, Minia University, Minia, 
+Egypt
+2Faculty of Computer Science, 
+Nahda University, Beni Suef, Egypt
+Abstract
+Accurate numerical treatment of the distributed-order time-fractional Black–Scholes 
+model becomes especially diﬃcult when the solution lacks smoothness, as 
+commonly occurs in option pricing applications. The distributed-order time-fractional 
+Black–Scholes model (DO-TFBSM) extends the classical Black–Scholes equation by 
+incorporating a continuous range of fractional orders, allowing it to capture memory 
+eﬀects and anomalous temporal behavior more eﬀectively. This study presents a 
+novel and eﬃcient spectral method for the numerical solution of the DO-TFBSM, 
+particularly suited for problems characterized by non-smooth solutions and limited 
+regularity. A new class of fractional shifted Legendre cardinal functions (FSLCFs) is 
+introduced, along with a corresponding operational matrix for distributed-order 
+Caputo derivatives, enabling precise and computationally eﬃcient treatment of 
+memory eﬀects. Building on these components, a hybrid spectral tau scheme is 
+formulated by coupling FSLCFs with standard shifted Legendre cardinal functions 
+(SLCFs), ensuring spectral accuracy even in the presence of nonsmooth functions. 
+A rigorous convergence analysis establishes the theoretical soundness of the 
+proposed approach. Extensive numerical experiments further conﬁrm its accuracy, 
+robustness, and eﬃciency, demonstrating its strong potential as a reliable 
+computational framework for pricing ﬁnancial derivatives in markets governed by 
+evolving memory and non-local temporal dynamics.
+Keywords: Black–Scholes model; Distributed-order; Fractional shifted Legendre 
+cardinal function; Convergence analysis 
+1 Introduction
+Once the stochastic process governing an asset’s price is speciﬁed, the valuation of deriva-
+tive instruments naturally follows. Options are ﬁnancial contracts that grant the holder 
+the right but not the obligation to buy or sell an underlying asset at a predetermined strike 
+price, either on or before a speciﬁed expiration date [1]. They are commonly classiﬁed as 
+European options, which may be exercised only at maturity, or American options, which 
+can be exercised at any time prior to expiration; and further as calls (rights to buy) or puts 
+(rights to sell) [2]. The classical Black–Scholes (BS) model, introduced in 1973, represents 
+© The Author(s) 2026. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which 
+permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit 
+to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The 
+images or other third party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise 
+in a credit line to the material. If material is not included in the article’s Creative Commons licence and your intended use is not 
+permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright 
+holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 2 of 20
+asset dynamics through a geometric Brownian motion under the assumptions of friction-
+less markets, constant volatility, and Markovian behavior. Although it yields a closed-form 
+solution for European options, it fails to reproduce several empirically observed market 
+features, including volatility clustering, heavy-tailed return distributions, and long-range 
+temporal dependence [1, 2].
+These deﬁciencies are quantitative as well as qualitative: implied volatility recovered 
+from traded quotes forms a pronounced smile rather than the ﬂat surface predicted, and 
+the autocorrelation of absolute returns decays as a power law, a signature of persistence 
+that no memoryless description reproduces. Endowing the time derivative with a Caputo 
+order ϑ supplies the kernel (ξ –γ )–ϑ and hence memory, yet a single ϑ imposes one decay 
+exponent across all market regimes and investor horizons; weighting by ϱ(ϑ)superposes a 
+continuum of relaxation rates and recovers the constant-order case when ϱ(ϑ) = δ(ϑ –β). 
+The cost is computational: nonlocality compounded by quadrature in ϑ, together with 
+solutions behaving like tϑ at the origin and a payoﬀ kink at the strike, forfeits polynomial 
+spectral accuracy and motivates the basis developed here.
+Within this fractional framework, a substantial literature has developed [3, 4]. A semi-
+nal contribution in this direction is the ﬁnite moment log-stable model proposed by Carr 
+et al. [5], which has shown improved empirical consistency compared with classical for-
+mulations. This framework has further inspired the development of Fourier-based op-
+tion pricing methods [6]. Subsequently, Cartea et al. [7] established a rigorous connection 
+between the ﬁnite moment log-stable model and spatial fractional derivatives, facilitat-
+ing the formulation of fractional partial diﬀerential equations (FPDEs) for pricing ﬁnan-
+cial derivatives. Building on this foundation, Chen et al. [8] derived closed-form expres-
+sions for European option prices within the ﬁnite moment log-stable setting, oﬀering a 
+more computationally eﬃcient alternative to transform based approaches. On the tem-
+poral side, Wyss [9] introduced a time-fractional variant of the BS model, providing a 
+closed-form solution that accounts for temporal memory characteristics. This formula-
+tion was subsequently examined using Laplace transform techniques by Kumar et al. [10]. 
+Supporting the practical relevance of fractional dynamics, Cartea [11] provided empirical 
+evidence based on high-frequency trading data that option prices evolve according to a 
+time FPDEs involving the Caputo derivative.
+The evolution of fractional BS models has been marked by several key contributions. 
+Jumarie [12, 13] developed space–time fractional variants incorporating Gaussian noise, 
+capturing both memory eﬀects and spatial heterogeneities. Song et al. [14] focused on the 
+numerical resolution of these models using ﬁnite diﬀerence methods. Motivated by analo-
+gies with fractal transmission systems and earlier work on anomalous diﬀusion [15, 16], 
+Liang et al. [17] proposed a bifractional BS model, where both temporal and spatial frac-
+tional derivatives drive the dynamics, reﬂecting the multiscale complexity of ﬁnancial 
+markets. Later extensions have introduced hybrid features, including jump diﬀusion pro-
+cesses [18], stochastic volatility, and distributed-order memory eﬀects [19, 20], aiming 
+to more realistically model the nonlocal and multiscale behavior observed in markets. 
+In addition, Ariel et al. [21] studied European and American options under a pure time-
+fractional framework, while Cen et al. [22] and Zhang et al. [23, 24] proposed tempered 
+fractional models to address issues related to boundary conditions and inﬁnite activity 
+processes.
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 3 of 20
+Alongside these theoretical advances, signiﬁcant progress has been made in the numer-
+ical treatment of FPDEs. Li et al. [25] developed ﬁnite diﬀerence schemes, while Yang et 
+al. [26] employed spectral methods to enhance solution accuracy. Amini et al. [27] in-
+troduced meshless approaches based on radial basis functions, oﬀering greater ﬂexibil-
+ity for handling complex geometries and boundary conditions. Together, these methods 
+have broadened the practical applicability of fractional models in computational ﬁnance. 
+In the multidimensional setting, Chen et al. [28] formulated a two-dimensional space-
+fractional BS model driven by independent geometric Lévy processes. Prathumwan et 
+al. [29] addressed the two-dimensional time-fractional model for European options us-
+ing the Laplace homotopy perturbation method, while Chen et al. [30] proposed a time-
+fractional formulation incorporating a fractal transmission mechanism to better capture 
+the heterogeneous structure of ﬁnancial systems. From an analytical perspective, vari-
+ous techniques have been applied to FPDEs, including the fractional variational iteration 
+method [31], the method of Lagrange multipliers [32], Adomian decomposition [33], and 
+ﬁtted ﬁnite volume schemes [34]. Windcliﬀ et al. [35] examined the stability conditions 
+of fractional models, and Barles et al. [36] studied utility-based valuation approaches for 
+nonlinear BS equations. More recently, Xingyu et al. [37] estimated parameters of the 
+time-fractional BS model using S&P 500 option data, demonstrating that the fractional 
+order, identiﬁed via high order numerical techniques combined with hybrid optimization, 
+serves as a robust indicator of market ﬂuctuations and that the TFBSM outperforms clas-
+sical models under high volatility conditions.
+Despite these signiﬁcant theoretical and numerical advancements, several obstacles 
+continue to limit the practical adoption of fractional models in ﬁnance. In particular, 
+many time-fractional formulations also incorporate spatial-fractional terms, often with-
+out a clear ﬁnancial justiﬁcation [9, 10, 38]. Additionally, a widely accepted rationale for 
+favoring time-fractional dynamics over classical models remains lacking. A major unre-
+solved issue is the absence of a uniﬁed fractional framework capable of simultaneously 
+capturing multiple market features, including stochastic volatility, regime switching be-
+havior, and long-memory eﬀects. Moreover, the accurate and eﬃcient numerical solution 
+of FPDEs especially in the presence of nonsmooth or path dependent payoﬀs remains an 
+active and challenging area of research.
+Traditional fractional models generally utilize a constant-order derivative to account 
+for memory eﬀects. However, such formulations may be inadequate for capturing the 
+dynamic and evolving memory behaviors observed in ﬁnancial markets. To address this 
+limitation, the distributed-order fractional framework has been proposed. This approach 
+allows a continuum of fractional orders, weighted according to a distribution function, 
+providing a more ﬂexible and accurate representation of complex memory structures. In 
+the present study, we investigate a DO-TFBSM deﬁned on the spatial domain ζ ∈ (ζL,ζR)
+and temporal domain ξ ∈ (0,T)as follows [20]:
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ ξ S(ζ,ξ) dϑ + η2 2 ζ2∂2 ζ S(ζ,ξ) + κ ζ ∂ζ S(ζ,ξ) – κ S(ζ,ξ) =0,
+S(ζ,T) =v0(ζ ), S(ζL,ξ) =v1(ξ), S(ζR,ξ) =v2(ξ),
+(1.1)
+where S(ζ,ξ) denotes the European option at asset value ζ and time ξ, ϱ(ϑ) is a non-
+negative weight function which describes the fractional orders distribution of memory, 
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 4 of 20
+η is the volatility and κ is the risk-free interest rate. The operator C 0𝒟ϑ ξ represents the ϑ-
+fractional order Caputo derivative that deﬁned as [39, 40]:
+C
+0𝒟ϑ ξ S(ζ,ξ) = 1 Γ(1–ϑ) ∫︂ ξ 0 ∂γ S(ζ,γ ) (ξ – γ )ϑ dγ, (1.2)
+where in terms of the strike price ε, the European option payoﬀ initial condition v0(ζ )can 
+be given by v0(ζ ) = max(ε – ζ, 0) for a put or v0(ζ ) = max(ζ – ε, 0) for a call. The loga-
+rithmic transformation x= ln(ζ ), t=T – ξ, U (x,t) =S(ex,T –t)facilitates the numerical 
+computation and reduces the complexity of the semi inﬁnite domain. The transformed 
+model becomes:
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t U (x,t) dϑ = η2 2 ∂2U (x,t) ∂x2 + (︃ κ – η2 2 )︃ ∂U (x,t) ∂x – κ U (x,t) + F (x,t),
+(1.3)
+U (x,0) = H0(x), U (a,t) = H1(t), U (b,t) = H2(t), (1.4)
+where F (x,t)represents the source term induced by boundary transformations, and [a,b]
+denotes the truncated spatial domain. This reformulation facilitates application of spec-
+tral techniques to non-smooth payoﬀs and complex memory eﬀects problems. Therefore, 
+providing an eﬃcient framework for pricing derivatives under dynamic memory condi-
+tions.
+This study introduces an innovative spectral technique for solving the DO-TFBSM, with 
+a particular focus on accurately resolving solution behaviors exhibiting weak regularity 
+and non-smooth characteristics. The major contributions of this work are outlined as fol-
+lows:
+• We construct a new family of FSLCFs in summation form which designed as an 
+eﬃcient basis for function approximation, particularly suited for problems involving 
+non-smooth solutions.
+• An FSLCF based operational matrix is derived for the distributed-order Caputo 
+derivative to enable computationally accurate evaluation of memory eﬀects.
+• A hybrid SLCFs-FSLCFs space time spectral tau method is developed to allow a high 
+accuracy even in the presence of low regularity in the solution.
+• A convergence analysis is presented for the proposed hybrid method, establishing its 
+theoretical robustness.
+• Comprehensive numerical experiments are carried out to evaluate the performance of 
+the method, demonstrating its accuracy and capability to capture intricate temporal 
+memory eﬀects in nonsmooth ﬁnancial structures.
+These developments provide a powerful and ﬂexible computational framework for op-
+tion pricing in ﬁnancial markets characterized by evolving memory and non-local tempo-
+ral dynamics.
+The remainder of this paper is organized as follows. Section 2introduces the construc-
+tion and summation formulation of FSLCFs. In Sect. 3, we derive the operational matri-
+ces for distributed-order Caputo derivatives with respect to the FSLCF basis. Section 4
+presents the hybrid tau scheme that combines FSLCFs and SLCFs for solving the DO-
+TFBSM. Section 5contains a detailed convergence analysis of the proposed method. Nu-
+merical experiments are provided in Sect. 6 to demonstrate the accuracy, stability, and 
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 5 of 20
+eﬃciency of the approach. Finally, Sect. 7 concludes the paper with a summary of the 
+main ﬁndings.
+2 Fractional Legendre cardinal polynomial
+The shifted fractional Legendre cardinal functions (S-FLCFs) of order nare deﬁned on the 
+interval [a,b] and serve as basis functions for high-order polynomial interpolation of the 
+nonsmooth functions. They are constructed using the nodes tk, which are mapped from 
+the standard Legendre-Gauss quadrature (LGQ) nodes ξk ∈ [–1,1]as:
+tk = 1 2 [(b–a)ξk +b+a] , k =0,1,2,...,n. (2.1)
+The S-FLCFs Υα j (t)with α ∈ (0,1]are given by the Lagrange interpolation formula:
+Υα j (t) =
+n ∏︂
+k=0
+k̸=j
+tα –tα k
+tα j –tα k , j=0,1,2,...,n. (2.2)
+These functions form a complete basis for the space of polynomials of degree n over the 
+interval [a,b]. To this end, we introduce a more appropriate form of the S-FLCFs as fol-
+lows:
+Υα j (t) = (︁ ζα j )︁–1 n ∑︂
+s=0 
+(–1)n–s e(α,j) n–s tαs, (2.3)
+where
+ζα j =
+n ∏︂
+k=0
+k̸=j
+(tα j –tα k ), e(α,j) n–s = ∑︂
+J⊆{0,1,...,n}\{j}
+|J|=n–s
+∏︂
+k∈J 
+tα k ,
+here, e(α,j) n–s denotes the (n–s)-th elementary symmetric polynomial constructed from the 
+set {t0,t1,...,tn}\{tj} and |J| = n–s denotes that the subset J contains exactly n–s el-
+ements. This transformation allows the polynomial Υα j (t) to be expressed entirely as a 
+sum of monomial terms, which is easier for constructing operational matrices in the next 
+section.
+Lemma 2.1 Let 0<α ≤ 1 and a ≤ t0 < ···< tn ≤ b be nodes with tα j distinct, then the 
+following cardinal Properties hold:
+(i) Υα j (ti) = δij for all i,j=0,...,n,
+(ii)
+n ∑︂
+j=0 
+Υα j (t) =1. (2.4)
+Proof (i) Fix indices i,j. If i ̸=j, then one factor of the numerator is tα i –tα i =0while every 
+denominator factor is nonzero (since the tα k are distinct). Hence Υα j (ti) =0. If i=j, then 
+each numerator factor tα j –tα k equals the corresponding denominator factor, so the product 
+equals 1. Therefore Υα j (tj) =1. Combining the two cases gives Υα j (ti) = δij.
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 6 of 20
+(ii) Each Υα j (t)is a polynomial in the scalar quantity tα of degree ≤ n, so
+S(t) =
+n ∑︂
+j=0 
+Υα j (t),
+is also a polynomial in tα of degree ≤ n. For any node tm, we have from (i) Υα j (ti) = δji, 
+hence S(ti) =1for i=0,...,n. Thus the polynomial S(t) –1in the variable tα of degree ≤ n
+has n+1distinct roots t0,...,tn; therefore it is identically zero. Hence S(t) ≡ 1.
+The S-FLCFs Υα j (t) with α =1turned into the shifted Legendre cardinal function S-
+LCFs Υj(t)which is deﬁned as follows:
+Υj(t) =
+(︁
+ζj
+)︁–1 n ∑︂
+s=0 
+(–1)n–s e(j) n–s ts, ζj =
+n ∏︂
+k=0
+k̸=j
+(tj –tk), e(j) n–s = ∑︂
+J⊆{0,1,...,n}\{j}
+|J|=n–s
+∏︂
+k∈J 
+tk. (2.5)
+Using the S-FLCFs deﬁned in (2.3), any continuous function z(t) ∈ C[a,b]can be approx-
+imated as in the following form:
+Z(t) ≈ Zn(t) =
+n ∑︂
+j=0 
+Z(tj) Υα j (t) =Z⊺𝚼α n (t), (2.6)
+where the coeﬃcient vector Zand the vector of S-FLCFs 𝚼α n (t)are deﬁned as:
+Z=
+[︂
+z(t0) z(t1) ··· z(tn)
+]︂⊺
+, 𝚼α n (t) = [︂ Υα 0 (t) Υα 1 (t) ··· Υα n (t) ]︂⊺ . (2.7)
+Extending this concept to a bivariate case, any function u(x,t) ∈ C([a,b] × [0,τ]) can be 
+approximated by a tensor-product expansion using S-LCFs and S-FLCFs for spatial and 
+temporal variables:
+Z(x,t) ≈ Zm,n(x,t) =
+m ∑︂
+i=0 
+n ∑︂
+j=0 
+Z(xi,tj) Υi(x) Υα j (t) =Z⊺ (𝚼m(x) ⊗ 𝚼α n (t)), (2.8)
+where ⊗denotes the Kronecker product, the vectors Zand 𝚼m(x)have the forms
+Z=
+[︁Z(x0,t0) Z(x0,t1) ··· Z(x0,tn) Z(x1,t0) ······ Z(xm,t0) ··· Z(xm,tn)]︁⊺,
+(2.9)
+𝚼m(x) =
+[︂
+Υ0(x) Υ1(x) ··· Υm(x)
+]︂⊺
+. (2.10)
+□
+3 The distributed-order operational matrix of S-FLCFs
+In this section, we compute the operational matrices for DO and integer-order derivatives 
+corresponding to the S-FLCFs and S-LCFs, respectively. As a ﬁrst step, we deﬁne the LGQ 
+nodes and weights.
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 7 of 20
+Let {yr}|N r=0 be the zeros of the degree-(N +1) Legendre polynomial LN+1(y) on [–1,1], 
+and let {˜ωr}|N r=0 denote the corresponding Christoﬀel numbers [41]. Using the aﬃne map 
+y → d–c 2 y+ c+d 2 , the LGQ nodes and weights on [c,d]are,
+λd c,r = d–c 2 yr + c+d 2 , ωd c,r = d–c (1–y2r )(L′ N+1(yr))2. (3.1)
+Theorem 3.1 Suppose that {λτ 0,r}|N r=0 and {ωτ 0,r}|N r=0 are the LGQ nodes and weights on the 
+interval [0,1], respectively. Then, we have
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t 𝚼α n (t) dϑ = 𝚲α 𝚼α n (t), (3.2)
+where 𝚲α is the distributed order operational matrix of S-FLCFs which has the form
+𝚲α =
+⎡
+⎢⎢⎢⎢⎣
+ℨ00 ℨ01 ··· ℨ0n
+ℨ10 ℨ11 ··· ℨ1n
+... ... ... ...
+ℨn0 ℨn1 ··· ℨnn
+⎤
+⎥⎥⎥⎥⎦ , (3.3)
+and {ℨij}|n i,j=0 are deﬁned from the following relation
+ℨij =
+N∑︂
+r=0 
+n ∑︂
+s=1 
+(–1)n–s ω1 0,r ϱ(λ1 0,r) (︁ ζα i )︁–1 e(α,i) n–s Γ(αs+1) Γ(αs+1–λ1 0,r)t αs–λ1 0,r j (3.4)
+Proof By using (1.2), (2.3) and (3.1), we get
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t Υα j (t) dϑ =
+N∑︂
+r=0 
+ω1 0,r ϱ(λ1 0,r) C 0𝒟 λ1 0,r t Υα j (t)
+=
+N∑︂
+r=0 
+ω1 0,r ϱ(λ1 0,r) (︁ ζα i )︁–1 n ∑︂
+s=0 
+(–1)n–s e(α,i) n–s C 0𝒟 λ1 0,r t tαs
+=
+N∑︂
+r=0 
+n ∑︂
+s=1 
+(–1)n–s ω1 0,r ϱ(λ1 0,r) (︁ ζα i )︁–1 e(α,i) n–s Γ(αs+1) Γ(αs+1–λ1 0,r)tαs–λ1 0,r,
+(3.5)
+Moreover, by approximating tαs–λ1 0,r in terms of (2.6), we get
+tαs–λ1 0,r = n ∑︂
+j=0 
+t
+αs–λ1 0,r
+j Υα j (t). (3.6)
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 8 of 20
+Now, by combining (3.5) and (3.6), we get
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t Υα j (t) dϑ
+=
+N∑︂
+r=0 
+n ∑︂
+s=1 
+(–1)n–s ω1 0,r ϱ(λ1 0,r) (︁ ζα i )︁–1 e(α,i) n–s Γ(αs+1) Γ(αs+1–λ1 0,r) n ∑︂ j=0 t αs–λ1 0,r j Υα j (t)
+=
+n ∑︂
+j=0 
+(︄ N∑︂
+r=0 
+n ∑︂
+s=1 
+(–1)n–s ω1 0,r ϱ(λ1 0,r) (︁ ζα i )︁–1 e(α,i) n–s Γ(αs+1) Γ(αs+1–λ1 0,r)t αs–λ1 0,r j
+)︄
+Υα j (t)
+=
+n ∑︂
+j=0 
+ℨijΥα j (t),
+(3.7)
+therefore, the theorem is demonstrated. □
+Theorem 3.2 Suppose that {λb a,r}|M r=0 and {ωb a,r}|M r=0 are the LGQ nodes and weights on the 
+interval [a,b], respectively. Then, we have
+C
+0𝒟θ x 𝚼m(x) = 𝚵θ 𝚼m(x), (3.8)
+where 𝚵is the θ-integer order operational matrix of S-LCFs which has the form
+𝚵θ =
+⎡
+⎢⎢⎢⎢⎣
+𝔜00 𝔜01 ··· 𝔜0m
+𝔜10 𝔶11 ··· 𝔜1m
+... ... ... ...
+𝔜m0 𝔜m1 ··· 𝔜mm
+⎤
+⎥⎥⎥⎥⎦ , (3.9)
+and {𝔜ij}|m i,j=0 are deﬁned from the following relation
+𝔜ij =
+m ∑︂
+s=⌈θ⌉
+(–1)m–s (︁ ζi )︁–1 e(i) m–s Γ(s+1) Γ(s+1–θ)ts–θ j . (3.10)
+Proof The proof is obtained by applying a procedure similar to Theorem 3.1. So, we omit 
+it. □
+Remark 3.1 We can obtain the β-fractional order derivative from Theorem 3.1 by using 
+the substitution ϱ(ϑ) = δ(ϑ – β), where δ(ϑ – β)is the Dirac delta functions at β ∈ (0,1].
+4 The hybrid based spectral framework
+We develop in this section a spectral numerical technique for distributed-order fractional 
+diﬀerential equations, employing a hybrid of S-FLCFs and S-LCFs. To numerically solve 
+the DO-TFBSM (1.3), we set the following approximations:
+U (x,t) =𝔘⊺ (𝚼m(x) ⊗ 𝚼α n (t)), F (x,t) =ℱ⊺ (𝚼m(x) ⊗ 𝚼α n (t)),
+H0(x) =ℋ⊺ 0 (𝚼m(x) ⊗ 𝚼α n (0)), H1(t) =ℋ⊺ 1 (𝚼m(a) ⊗ 𝚼α n (t)),
+H2(t) =ℋ⊺ 2 (𝚼m(b) ⊗ 𝚼α n (t)),
+(4.1)
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 9 of 20
+where the row matrices 𝔘⊺,ℱ⊺,ℋ⊺ 0,ℋ⊺ 1 and ℋ⊺ 2 are ∈ ℝ(m+1)×(n+1) and can and their entries 
+can be written in terms of the nodes (xi,tj)based in the form of (2.9).
+From (4.1), (3.2) and using the property (PR ⊗ QS) = (P ⊗ Q)(R ⊗ S), we get
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t U (x,t) dϑ
+=
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t
+(︂
+𝔘⊺ (𝚼m(x) ⊗ 𝚼α n (t)) )︂ dϑ
+=𝔘⊺ (︁ 𝚼m(x) ⊗ ∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t 𝚼α n (t) dϑ )︁ =𝔘⊺ (︁ 𝚼m(x) ⊗ 𝚲α 𝚼α n (t) )︁
+=𝔘⊺ (︁ ℑm ⊗ 𝚲α )︁(︁ 𝚼m(x) ⊗ 𝚼α n (t) )︁ ,
+(4.2)
+where ℑm denotes the m-identity matrix.
+Using (4.1), (3.8) and since d2 dx2 = C 0𝒟2 x, we get
+η2
+2 ∂2 x U (x,t) = η2 2 ∂2 x (︁ 𝔘⊺ (𝚼m(x) ⊗ 𝚼α n (t)) )︁ = η2 2 𝔘⊺ (︁ d2 dx2 𝚼m(x) ⊗ 𝚼α n (t) )︁
+= η2
+2 𝔘⊺ (︁ C 0𝒟2 x𝚼m(x) ⊗ 𝚼α n (t) )︁ = η2 2 𝔘⊺ (︁ 𝚵2𝚼m(x) ⊗ 𝚼α n (t) )︁
+= η2
+2 𝔘⊺ (︁ 𝚵2 ⊗ ℑn )︁(︁ 𝚼m(x) ⊗ 𝚼α n (t) )︁ ,
+(4.3)
+where ℑn denotes the n-identity matrix.
+Using (4.1) and (3.8), since d dx = C 0𝒟1 x and proceeding as in (4.3), we obtain
+(κ – η2
+2 ) ∂xU (x,t) = (κ – η2 2 ) 𝔘⊺ (︁ 𝚵1 ⊗ ℑn )︁(︁ 𝚼m(x) ⊗ 𝚼α n (t) )︁ . (4.4)
+The substitution of (4.1)–(4.4) into (1.3) gives
+𝛀 (𝚼m(x) ⊗ 𝚼α n (t)) =0, (4.5)
+where
+𝛀 =𝔘⊺(︁ ℑm ⊗ 𝚲α )︁ – η2
+2 𝔘⊺ (︁ 𝚵2 ⊗ ℑn )︁ – (κ – η2 2 ) 𝔘⊺ (︁ 𝚵1 ⊗ ℑn )︁ + κ 𝔘⊺ –ℱ⊺, (4.6)
+here, 𝛀 =
+[︁
+Ωij
+]︁(m,n)
+i,j=(0,0) is a (m+1)(n+1)-dimensional vector, with each Ωij forming an equa-
+tion in the unknowns of 𝔘. Thus, 𝛀 provides (m+1)(n+1) equations in terms the same 
+number of unknowns.
+Approximation of the initial and boundary conditions of (1.3) yields
+U (x,0) – H0(x) = (𝔘⊺ –ℋ⊺ 0 ) (𝚼m(x) ⊗ 𝚼α n (0)) =0,
+U (a,t) – H1(t) = (𝔘⊺ –ℋ⊺ 1 ) (𝚼m(a) ⊗ 𝚼α n (t)) =0,
+U (b,t) – H2(t) = (𝔘⊺ –ℋ⊺ 2 ) (𝚼m(b) ⊗ 𝚼α n (t)) =0,
+(4.7)
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 10 of 20
+Figure 1 Flowchart illustrating the algorithm steps
+since Υα j (ti) = δij and Υj(xi) = δij, it follows that 𝚼α n (ti) =ℑn and 𝚼m(xi) =ℑm Hence, (4.7) 
+becomes
+U (x,0) – H0(x) = (𝔘⊺ –ℋ⊺ 0 ) (ℑm ⊗ 𝚼α n (0)) =𝓑0,m =0,
+U (a,t) – H1(t) = (𝔘⊺ –ℋ⊺ 1 ) (𝚼m(a) ⊗ ℑn) =𝓑1,n =0,
+U (b,t) – H2(t) = (𝔘⊺ –ℋ⊺ 2 ) (𝚼m(b) ⊗ ℑn) =𝓑2,n =0,
+(4.8)
+where 𝓑0,m =
+[︁
+ℬ0,i
+]︁m
+i=0,𝓑1,n =
+[︁
+ℬ1,j
+]︁n
+j=0 and 𝓑2,n =
+[︁
+ℬ2,j
+]︁n
+j=0. Now, an (m+1)(n+1)algebraic 
+system can be extracted from (4.6) and (4.8) as follows
+Ωij =0, i=0,1,...,m–2, j=0,1,...,n–1,
+ℬ0,i =0 i=0,1,...,m–2,
+ℬl,j =0 l=1,2, j=0,1,...,n.
+(4.9)
+Finally, the system (4.9) can be resolved employing a symbolic package, such as utilizing 
+the Mathematica function FindRoot with zero initial guess.
+Hereafter, The established numerical scheme can be described via the following 
+ﬂowchart in Fig. 1.
+5 Error bound and convergence analysis
+In what follows, we recall the functional setting required for the analysis. The space L2[a,b]
+is the collection of square–integrable functions on [a,b], equipped with the norm [42, 43]
+∥v∥L2(a,b) =
+(︂∫︂ b
+a
+|v(x)|2 dx )︂1/2 , (5.1)
+when considering both space and time domain 𝒪= [a,b] × [0,T], we employ the product 
+space L2(𝒪), whose norm is deﬁned by [42, 43]
+∥w∥L2(𝒪) =
+(︂∫︂ T
+0
+∫︂ b
+a
+|w(x,t)|2 dx dt )︂1/2 . (5.2)
+Theorem 5.1 Consider m,n ∈ ℕ0, a< b, T >0, and 0<α ≤ 1. Assume ∂m+1 x U (x,t) and 
+C
+0𝒟α(n+1) t U (x,t) exist and essentially bounded on 𝒪. Deﬁne (ℐ(α) m,nU )(x,t) = 
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 11 of 20
+∑︁m
+i=0
+∑︁n
+j=0 U (xi,tj) ψi(x) ψα j (t)in terms of S-LCPs and S-FLCPs as in (2.8). If we set
+A(0,0) x = sup 
+(x,t)∈𝒪
+|∂m+1 x U (x,t)| < ∞, A(0,0) t = sup 
+(x,t)∈𝒪
+⃓⃓C
+0𝒟α(n+1) t U (x,t) ⃓⃓ < ∞,
+ωm+1(x) =
+m ∏︂
+i=0 
+(x–xi), Ω(α) n+1(t) =
+n ∏︂
+j=0 
+(︁
+tα –tα j )︁ , (5.3)
+then
+∥U (x,t) –ℐ(α) m,nU (x,t)∥L2(𝒪) ≤ 
+√
+TA(0,0) x
+(m+1)! ∥ωm+1∥L2[a,b]
++ 
+√(b–a) A(0,0) t
+Γ(α(n+1) +1) ∥Ω(α) n+1∥L2[0,T],
+(5.4)
+where
+∥ωm+1∥L2[a,b] = (b–a)m+3 2 (︁2m+2
+m+1 
+)︁ 1 √
+2m+3
+, ∥Ω(α) n+1∥L2[0,T] ≤ 
+√︃
+m+1
+α T α(n+1)+1 2 . (5.5)
+Proof Add and subtract the spatial interpolant taken at the current time to U (x,t) –
+ℐ(α) m,nU (x,t), we get
+U (x,t) –ℐ(α) m,nU (x,t) =Ex +Et, (5.6)
+where
+Ex =
+(︂
+U (x,t) –
+m ∑︂
+i=0 
+U (xi,t) ψi(x)
+)︂
+, Et =
+m ∑︂
+i=0 
+ψi(x)
+(︂
+U (xi,t) –
+n ∑︂
+j=0 
+U (xi,tj)ψα j (t) )︂ .
+(5.7)
+By the triangle inequality [42] in L2(𝒪), we can write (5.6) as
+∥U (x,t) –ℐ(α) m,nU (x,t)∥L2(𝒪) ≤∥Ex∥L2(𝒪) + ∥Et∥L2(𝒪). (5.8)
+For each ﬁxed t, the remainder at Legendre–Gauss nodes gives
+U (x,t) –
+m ∑︂
+i=0 
+U (xi,t)ψi(x) = ∂m+1 x U (ξx,t,t) (m+1)! ωm+1(x), (5.9)
+for some ξx,t ∈ [a,b]and it may depend on both x and t. Taking the L2[a,b]norm of (5.9) 
+and using the essential bound A(0,0) x in (5.3) leads to
+∥Ex(·,t)∥L2[a,b] ≤ A(0,0) x (m+1)! ∥ωm+1∥L2[a,b]. (5.10)
+Integrating (5.10) in t ∈ [0,T]and taking the square root, we get the bound of Ex as follows
+∥Ex∥L2(𝒪) ≤
+√
+TA(0,0) x
+(m+1)! ∥ωm+1∥L2[a,b]. (5.11)
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 12 of 20
+Now, by mapping [a,b] → [–1,1]and using 
+∫︁ 1
+–1 Pm+1(s)2 ds=2/(2m+3)together with the 
+leading coeﬃcient of Pm+1, we get the closed form for ∥ωm+1∥L2(a,b) is obtained as stated 
+in (5.5).
+Apply Cauchy–Schwarz inequality [42] in the ﬁnite index iof Et gives
+∥Et∥2 L2(𝒪) ≤ (︂ m ∑︂
+i=0 
+∥ψi∥2 L2[a,b]
+)︂(︂ m ∑︂
+i=0 
+∥U (xi,·) –
+n ∑︂
+j=0 
+U (xi,tj)ψα j ∥2 L2[0,T]
+)︂
+, (5.12)
+since the nodes {xi}are Legendre–Gauss nodes (mapped to [a,b]), then the Gauss quadra-
+ture identity gives
+m ∑︂
+i=0 
+∥ψi∥2 L2[a,b] =
+m ∑︂
+i=0 
+wi =b–a, (5.13)
+where wi are the mapped Gauss weights. For each spatial node xi, the fractional remainder 
+in the argument tα in (5.12) yields
+U (xi,t) –
+n ∑︂
+j=0 
+U (xi,tj)ψα j (t) = (C 0 Dα(n+1) t U )(xi,ξt,i) Γ(α(n+1) +1) Ω(α) n+1(t), (5.14)
+for some intermediate time value ξt,i ∈ [0,T] at the i-th spatial node. Taking the L2[0,T]
+norm on (5.14) and summing over igives
+m ∑︂
+i=0 
+∥U (xi,·) –
+n ∑︂
+j=0 
+U (xi,tj)ψα j ∥2 L2[0,T] ≤ (m+1) (︂ A(0,0) t Γ(α(n+1) +1) )︂2 ∥Ω(α) n+1∥2 L2[0,T].
+(5.15)
+To bound ∥Ω(α) n+1∥L2[0,T], set s = tα, S = Tα. Then Ω(α) n+1(t) = Ωn+1(s), Ωn+1(s) = ∏︁n j=0(s –
+sj),sj =tα j . Hence, the L2[0,T]-norm becomes
+∥Ω(α) n+1∥2 L2[0,T] = 1 α ∫︂ S 0 |Ωn+1(s)|2 s 1 α –1 ds. (5.16)
+Map [0,S]to [–1,1]by s= S 2 (y+1). Using Pn+1(y) =an+1 ∏︁n j=0(y–sj),an+1 = (2n+2)! 2n+1((n+1)!)2 , we 
+obtain
+Ωn+1(s) = (S/2)n+1
+an+1
+Pn+1
+(︁
+2s/S–1
+)︁
+, (5.17)
+substituting (5.17) into the weighted integral (5.16), since (y+1)
+1 
+α –1 ≤ 2 1 α –1 on [–1,1], and ∫︁ 1
+–1 Pn+1(y)2 dy= 2 2n+3, we have
+∫︂ 1
+–1
+|Pn+1(y)|2(y+1) 1 α –1 dy ≤ 21/α
+2n+3. (5.18)
+Substituting (5.18) into (5.16) and taking the square root gives the bound
+∥Ω(α) n+1∥L2[0,T] ≤ 1 √α T α(n+1)+1 2 1 (︁2n+2 n+1 )︁√ 2n+3 , (5.19)
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 13 of 20
+combining (5.13), (5.15) and (5.19) gives the explicit estimate
+∥Et∥L2(𝒪) ≤
+√(m+1)(b–a) A(0,0) t
+Γ(α(n+1) +1)√α Tα(n+1)+1 2 (︁2n+2 n+1 )︁√ 2n+3 . (5.20)
+Substituting the explicit formulas of (5.11) and (5.20) into (5.8) gives the stated bound. □
+Theorem 5.2 Let m,n ∈ ℕ0, a<b, T >0, and 0<α ≤ 1. Fix an integer r ≥ 0 and a frac-
+tional order ϑ ≥ 0. Deﬁne v(x,t) = ∂r x (︁C 0𝒟ϑ t U (x,t) )︁ . Deﬁne ωm+1(x)and Ω(α) n+1(t)as in (5.3). 
+Assume ∂m+1 x v(x,t)and C 0𝒟α(n+1) t v(x,t)exist and are essentially bounded on 𝒪 with
+A(r,ϑ) x = sup 
+(x,t)∈𝒪
+⃓⃓∂m+1 x v(x,t) ⃓⃓ < ∞; A(r,ϑ) t = sup 
+(x,t)∈𝒪
+⃓⃓C 0𝒟α(n+1) t v(x,t) ⃓⃓ < ∞. (5.21)
+Then for ℰα r,ϑ =v(x,t) –ℐ(α) m,nv(x,t)the interpolation error satisﬁes
+⃦⃦ℰα r,ϑ ⃦⃦ L2(𝒪) ≤ √ TA(r,ϑ) x (m+1)! ∥ωm+1∥L2[a,b] + √(b–a) A(r,ϑ) t Γ(α(n+1) +1) ∥Ω(α) n+1∥L2[0,T], (5.22)
+where ∥ωm+1∥L2[a,b] and ∥Ω(α) n+1∥L2[0,T] are deﬁned in (5.5)
+Proof By applying the hybrid space-time interpolation as in Theorem 5.1 to v(x,t) =
+∂r x(C 0𝒟ϑ t U (x,t)), using the boundedness of its (m+1)-spatial and α(n+1)-Caputo deriva-
+tives with explicit L2-norm bounds (5.5) for ωm+1 and Ω(α) n+1 then yields (5.22). □
+Theorem 5.3 Let U (x,t) and ℐ(α) m,nU (x,t) denote the solutions of problems (1.3) and 
+(4.5), respectively. In view of the assumptions in Theorem 5.1, Theorem 5.2and assuming 
+∥ϱ(ϑ)∥≤λ, the error of the proposed method in L2(𝒪)is given by
+∥E∥L2(𝒪) ≤
+√
+TAx
+(m+1)! ∥ωm+1∥L2[a,b] +
+√(b–a) At
+Γ(α(n+1) +1) ∥Ω(α) n+1∥L2[0,T], (5.23)
+where
+Ax = λA(0,1) x – η2 2 A(2,0) x – ⃓⃓κ – η2 2 ⃓⃓A(1,0) x + |κ|A(0,0) x –A(0,0) x,F ,
+At = λA(0,1) t – η2 2 A(2,0) t – ⃓⃓κ – η2 2 ⃓⃓A(1,0) t + |κ|A(0,0) x –A(0,0) t,F . (5.24)
+Proof The approximate solution of (1.3) is produced by replacing the time–fractional in-
+tegrand and spatial diﬀerential terms by their hybrid interpolants and has the form
+∫︂ 1
+0
+ϱ(ϑ) ℐ(α) m,n (︁C 0𝒟ϑ t U (x,t) )︁ dϑ – η2 2 ℐ(α) m,n∂2 x U (x,t)
+– (κ – η2 2 )ℐ(α) m,n∂xU (x,t) + κℐ(α) m,nU (x,t) –ℐ(α) m,nF (x,t).
+(5.25)
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 14 of 20
+Subtracting (5.25) from (1.3), then applying the L2-norm and the triangle inequality, yields 
+an error expressed as a sum of interpolation terms as follows
+∥E∥L2(𝒪)
+=
+⃦⃦ ∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t U (x,t) dϑ – η2 2 ∂2U (x,t) ∂x2 – (κ – η2 2 ) ∂U (x,t) ∂x + κ U (x,t)
+– F (x,t) –
+∫︂ 1
+0
+ϱ(ϑ) ℐ(α) m,n (︁C 0𝒟ϑ t U (x,t) )︁ dϑ + η2 2 ℐ(α) m,n∂2 x U (x,t)
++ (κ – η2 2 )ℐ(α) m,n∂xU (x,t) – κ ℐ(α) m,nU (x,t) +ℐ(α) m,nF (x,t) ⃦⃦ L2(𝒪)
+≤
+∫︂ 1
+0
+|ϱ(ϑ)| 
+⃦⃦ℰα 0,1 ⃦⃦ L2(𝒪) dϑ – η2 2 ⃦⃦ℰα 2,0 ⃦⃦ L2(𝒪) – ⃓⃓κ – η2 2 ⃓⃓⃦⃦ℰα 1,0 ⃦⃦ L2(𝒪)
++ |κ| ∥ℰα 0,0∥L2(𝒪) – ∥F –ℐ(α) m,nF∥L2(𝒪)
+≤
+√
+T
+(︁
+λA(0,1) x – η2 2 A(2,0) x – ⃓⃓κ – η2 2 ⃓⃓A(1,0) x + |κ|A(0,0) x –A(0,0) x,F )︁
+(m+1)! ∥ωm+1∥L2[a,b]
++
+√(b–a) (︁ λA(0,ϑ) t – η2 2 A(2,0) t – ⃓⃓κ – η2 2 ⃓⃓A(1,0) t + |κ|A(0,0) x –A(0,0) t,F )︁
+Γ(α(n+1) +1) ∥Ω(α) n+1∥L2[0,T]
+=
+√
+TAx
+(m+1)! ∥ωm+1∥L2[a,b] +
+√(b–a) At
+Γ(α(n+1) +1) ∥Ω(α) n+1∥L2[0,T],
+(5.26)
+this completes the proof. □
+6 Numerical examples
+In this section, we intend to demonstrate the eﬃcacy of the method by analyzing three 
+speciﬁc examples. All calculations were performed using Mathematica 12.2. The maxi-
+mum absolute error (MAE) and the convergence order (CO) for a function U (x,t) are 
+deﬁned as follows:
+MAE= max
+(x,t)∈𝒪
+⃓⃓U (x,t) –ℐ(α) m,nU (x,t) ⃓⃓, CO= log (︁ MAE(m1,n1)/MAE(m2,n2) )︁ log (︁ m2n2/m1n1 )︁ .
+Example 6.1 Consider the following DO-TFBSM:
+∫︂ 1
+0
+Γ(λ +1–ϑ) C 0𝒟ϑ t U (x,t) dϑ
+=0.03125 ∂2 x U (x,t) +0.01875 ∂xU (x,t) –0.05 U (x,t)
++
+(︃Γ(λ +1)(1–t–1)
+ln(t) +0.0328125
+)︃
+tλe x 2 ,
+(6.1)
+where a=0, b=1, and T =1. The IBCs are chosen to be consistent with the exact solution 
+U (x,t) =tλe x 2 .
+The numerical results in Table 1and Table 2highlight the importance of FSLCFs in ac-
+curately solving the DO-TFBSM, particularly when the solution lacks smoothness. When 
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 15 of 20
+Table 1 Accuracy and convergence behavior for Example 6.1with m=Nand varying (n,α,λ)
+(n,α,λ) m=3 m=4 m=5 m=6 m=7 m=8
+MAEs (1,0.7,0.7) 4.94 × 10–5 1.50 × 10–6 3.84 × 10–8 8.25 × 10–10 1.52 × 10–11 8.22 × 10–13
+(2,0.9,1.8) 4.93 × 10–5 1.50 × 10–6 3.83 × 10–8 8.34 × 10–10 1.54 × 10–11 7.14 × 10–13
+(3,0.8,2.4) 4.73 × 10–5 1.40 × 10–6 3.52 × 10–8 7.64 × 10–10 1.42 × 10–11 5.37 × 10–13
+COs (1,0.7,0.7) – 12.15 16.43 21.06 25.91 21.85
+(2,0.9,1.8) – 12.14 16.44 20.99 25.90 23.00
+(3,0.8,2.4) – 12.24 16.51 21.01 25.85 24.53
+Table 2 Comparison of the MAEs at n=m=N, and varying α,λfor Example 6.1
+λ α m=3 m=4 m=5 m=6 m=7 m=8
+1.8 0.6 5.03 × 10–5 1.55 × 10–6 3.99 × 10–8 8.62 × 10–10 2.23 × 10–10 3.45 × 10–11
+0.9 5.07 × 10–5 1.54 × 10–6 4.00 × 10–8 8.58 × 10–10 2.01 × 10–11 1.43 × 10–11
+1 2.84 × 10–2 1.42 × 10–2 8.90 × 10–3 6.16 × 10–3 4.78 × 10–3 7.19 × 10–4
+2.4 0.6 6.37 × 10–2 1.40 × 10–6 3.54 × 10–8 7.66 × 10–10 1.86 × 10–10 3.28 × 10–11
+0.8 4.73 × 10–5 1.41 × 10–6 3.54 × 10–8 7.70 × 10–10 4.13 × 10–11 1.83 × 10–11
+1 3.22 × 10–2 1.08 × 10–2 8.07 × 10–3 6.16 × 10–3 1.70 × 10–3 2.41 × 10–4
+using the classical Legendre basis with α =1, the method performs poorly, yielding larger 
+errors and slower convergence. This is because standard polynomials struggle to capture 
+the sharp variations or irregular behavior of the solution near the initial time t=0. In con-
+trast, the FSLCFs, which incorporate fractional orders, adapt more eﬀectively to the mem-
+ory eﬀects and non-smooth features of the solution. Notably, the best results are obtained 
+when α = λ/⌈λ⌉, conﬁrming that the fractional basis provides the necessary ﬂexibility and 
+accuracy for modeling such complex ﬁnancial dynamics.
+Example 6.2 Consider the following DO-TFBSM
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t U (x,t) dϑ = ∂2 x U (x,t) –0.5 ∂xU (x,t) –0.5 U (x,t) + F (x,t), (6.2)
+with the following two cases of the weight and source functions
+(i) ϱ(ϑ) = Γ(λ+1–ϑ), F (x,t) = (t+1)λ
+(︂Γ(λ+1) (︁ 1–(t+1)–1 )︁ (x3+x2+1)
+ln(t+1) + (0.5x3 +2x2 –5x–
+1.5)
+)︂
+,
+(ii) ϱ(ϑ) = δ(ϑ – β), F (x,t) = (t+1)λ
+(︂
+Γ(λ+1)(t+1)–β (x3+x2+1)
+Γ(λ+1–β) + (0.5x3 +2x2 –5x–1.5) )︂ ,
+where δ is the Dirac delta function and 
+∫︁ 1
+0 δ(ϑ – β) C 0𝒟ϑ t U (x,t) dϑ = C 0𝒟β t U (x,t) and the 
+IBCs are chosen to be consistent with the exact solution U (x,t) = (t+1)λ(x3 +x2 +1).
+The results presented in Table 3 and Table 4, along with Fig. 2 and Fig. 3, demonstrate 
+the eﬀectiveness and accuracy of the proposed method for solving the DO-TFBSM in 
+Example 6.2. In Table 3, for case (i) with ϱ(ϑ) = Γ(λ +1–ϑ) and ﬁxed m = N =3, the 
+method achieves remarkably small MAEs on both the standard interval [0,1]and the ex-
+tended domain [–4.6,8.4]. These ﬁndings conﬁrm the stability and robustness of the pro-
+posed method when applied to extended computational domains. In Table 4, for case(ii) 
+with the Dirac delta weight function ϱ(ϑ) = δ(ϑ – β)and ﬁxed λ =2, the method demon-
+strates a clear advantage over previously established discrete implicit approaches pre-
+sented in [24, 37], achieving mean absolute errors (MAEs) as low as 10–15. This high level 
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 16 of 20
+Table 3 The MAEs of case (i) with T =1,m=N=3and varying space intervals for Example 6.2
+n α λ MAEs (a=0,b=1) MAEs (a=–4.6,b=8.4)
+2 0.6 1.2 1.04 × 10–12 9.63 × 10–11
+3 0.7 2.1 9.99 × 10–12 5.33 × 10–10
+4 0.95 3.8 4.69 × 10–11 4.23 × 10–9
+Table 4 Comparison of the MAEs of case (ii) with T =1and λ =2for Example 6.2
+β The method in [24] with 
+x ∈ [0,1]
+The method in [37] with 
+x ∈ [–4.6,8.4]
+Our method with 
+m=3,n=2
+h Δt MAEs h Δt MAEs [0,1] [–4.6,8.4]
+0.1 – – – 1/1571 1/160 8.70 × 10–8 3.33 × 10–15 9.09 × 10–13
+0.5 – – – 1/570 1/160 6.51 × 10–7 3.64 × 10–14 1.36 × 10–12
+0.7 0.01 1/160 9.51 × 10–5 – – – 2.13 × 10–14 4.55 × 10–13
+0.9 – – – 1/207 1/160 4.93 × 10–6 6.66 × 10–15 9.09 × 10–13
+Figure 2 The absolute errors of case (ii) with m=3,n=2,λ =1.2and α =0.6for Example 6.2
+Figure 3 The absolute errors of case (ii) with m=3,n=4,λ =3.4and α =0.85for Example 6.2
+of accuracy is maintained across various values of β, highlighting the method’s adaptability 
+in capturing memory dependent dynamics. The results shown in Fig. 2and Fig. 3further 
+support these conclusions, illustrating the absolute error distributions corresponding to 
+diﬀerent choices of β. The plots conﬁrm that the proposed method maintains high accu-
+racy and stable error proﬁles across the spatial domain, even for complex fractional dy-
+namics. These ﬁndings highlight the strength of the FLCFs basis in resolving non-smooth 
+solutions and suggest the method’s strong potential for practical ﬁnancial modeling appli-
+cations.
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 17 of 20
+Example 6.3 Consider the DO-TFBSM (1.1) incorporating two European options: a call 
+option 
+(︁
+v0(ζ ) =max{ζ – ε,0}, v1(ξ) =0, v2(ξ) = ζR – εe–κ(T–ξ))︁ and a put option (︁ v0(ζ ) =
+max{ε – ζ,0}, v1(ξ) = εe–κ(T–ξ), v2(ξ) =0 )︁ . Here the parameters are η =0.25,κ =0.05,ε =
+50,ζL =0.1,ζR = 100,T =1. Due to the presence of the non-smooth nature of the initial 
+conditions, the model deﬁned in (1.1)does not admit a closed-form analytical solution. 
+Using the log–price transform x=lnζ then (1.1) transformed into
+∫︂ 1
+0
+ϱ(ϑ) C 0𝒟ϑ t U (x,t) dϑ – η2 2 ∂2 x U (x,t) – (κ – η2 2 ) ∂xU (x,t) + κ U (x,t) =0,
+U (x,0) = H0(x),
+U (a,t) = H1(t), U (b,t) = H2(t),
+(6.3)
+where a=ln(ζL), b=ln(ζR)and the initial and boundary data are speciﬁed as follows:
+European call option: H0(x) =max{ex – ε,0}, H1(t) =0, H2(t) =b– εe–κ(T–t),
+European put option: H0(ζ ) =max{ε –ex,0}, H1(t) = εe–κ(T–t), H2(t) =0.
+(6.4)
+After the log–price transform x= ln ζ, the DO–TFBSM reduces to a constant coeﬃcient 
+advection diﬀusion reaction equation, which we solve and then invert to recover prices 
+in ζ. Figure 4 (call) shows a monotone increasing, convex surface in ζ, with T =1dis-
+playing the expected BS type proﬁle: a kink near ζ ≈ ε and near linear growth for large ζ. 
+Figure 5(put) exhibits the complementary behaviour monotone decreasing and convex in 
+ζ with rapid decay for ζ > ε. In both ﬁgures the curves satisfy the boundary conditions and 
+meet the terminal payoﬀ at t=0. The eﬀect of the S–FLCF index α ∈ (0,1]is quantiﬁed in 
+Fig. 6varying α which is equivalent to interpolating in the time variable tα produces only 
+minor changes at T =1, with absolute diﬀerences to α =1remaining very small across ζ. 
+This is consistent with the problem structure: the dominant non–smoothness is spatial 
+(the strike kink in the payoﬀ), whereas the temporal data and dynamics are smooth at the 
+reported horizon. Since α ≤ 1 primarily beneﬁts problems that feature a strong initial–
+time singular layer, its impact here is naturally muted. For short maturities or problems 
+Figure 4 The surface (left) and curve at T =1(right) with α =1,m=10and n=N=8of the call option price 
+for Example 6.3
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 18 of 20
+Figure 5 The surface (left) and curve at T =1(right) with α =1,m=10and n=N=8of the put option price 
+for Example 6.3
+Figure 6 The absolute diﬀerence behavior between α =0.2,0.4,0.6,0.8and α =1for call option (left) and put 
+option (right) with m=10and n=N=8of Example 6.3
+with explicit early time singular behaviour, the time grading induced by α ≤ 1 would be 
+advantageous; in the present setup, accuracy is governed chieﬂy by the spatial treatment, 
+which explains why the curves for diﬀerent α nearly coincide.
+7 Conclusion
+The proposed fractional spectral technique based on FSLCFs oﬀers an accurate and eﬃ-
+cient solution strategy for the DO-TFBSM. By embedding fractional orders into the basis, 
+the method captures memory-dependent and nonsmooth behaviors that SLCFs fail to rep-
+resent. The hybrid tau formulation combining FSLCFs and SLCFs achieves spectral accu-
+racy and excellent performance across both standard and extended spatial domains. A de-
+tailed convergence analysis establishes the theoretical soundness of the proposed scheme, 
+ensuring exponential-type convergence for solutions with suﬃcient regularity and con-
+ﬁrming its stability even when the computational domain is extended. These theoretical 
+ﬁndings are reinforced by numerical experiments, which report exceptionally low maxi-
+mum absolute errors and demonstrate the ability of the fractional basis to adapt eﬀectively 
+to the distributed-order memory eﬀects inherent in the model.
+Author contributions
+WAH: Methodology, Software, Formal analysis, Conceptualization, Validation, Writing -original draft. HFA: Formal analysis, 
+Conceptualization, Validation, review and editing. All authors read and approved the ﬁnal manuscript.
+Funding information
+Open access funding provided by The Science, Technology & Innovation Funding Authority (STDF) in cooperation with 
+The Egyptian Knowledge Bank (EKB). Not applicable.
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 19 of 20
+Data availability
+Data sharing not applicable to this article as no datasets were generated or analyzed during the current study.
+Declarations
+Ethics approval and consent to participate
+Not applicable.
+Competing interests
+The authors declare no competing interests.
+Received: 9 April 2026 Accepted: 1 October 2026
+References
+1. Zhang, W.-G., Xiao, W.-L., He, C.-X.: Equity warrants pricing model under fractional Brownian motion and an empirical 
+study. Expert Syst. Appl. 36(2), 3056–3065 (2009)
+2. Garzarelli, F., Cristelli, M., Pompa, G., Zaccaria, A., Pietronero, L.: Memory eﬀects in stock price dynamics: evidences of 
+technical trading. Sci. Rep. 4(1), 4487 (2014)
+3. Chen, Y., Fan, Z., Li, G.: Solvability of a class of fractional diﬀerential equations under nonequicontinuity and 
+applications. Adv. Cont. Discr. Models 2025(1), 109 (2025)
+4. Xu, C., Cao, Y., Hou, T.: Numerical analysis of a second-order ﬁnite diﬀerence scheme for Riesz space-fractional 
+Allen–Cahn equations. Adv. Cont. Discr. Models 2025(1), 2 (2025)
+5. Carr, P., Wu, L.: The ﬁnite moment log stable process and option pricing. J. Finance 58(2), 753–777 (2003)
+6. Schmelzle, M.: Option Pricing Formulae Using Fourier Transforms: Theory and Application (2010)
+7. Cartea, A., del Castillo-Negrete, D.: Fractional diﬀusion models of option prices in markets with jumps. Phys. A, Stat. 
+Mech. Appl. 374(2), 749–763 (2007)
+8. Chen, W.-T., Xu, X., Zhu, S.-P.: Analytically pricing European-style options under the modiﬁed Black–Scholes equation 
+with a spatial-fractional derivative. Q. Appl. Math. 72(3), 597–611 (2014)
+9. Wyss, W.: The fractional Black–Scholes equation. Fract. Calc. Appl. Anal. 3(1), 51–61 (2000)
+10. Kumar, S., Yildirim, A., Khan, Y., Jafari, H., Sayevand, K., Wei, L.: Analytical solution of fractional Black–Scholes European 
+option pricing equation by using Laplace transform. J. Fract. Calc. Appl. 2(8), 1–9 (2012)
+11. Cartea, A.: Derivatives pricing with marked point processes using tick-by-tick data. Quant. Finance 13(1), 111–123 
+(2013)
+12. Jumarie, G.: Stock exchange fractional dynamics deﬁned as fractional exponential growth driven by (usual) Gaussian 
+white noise. Application to fractional Black–Scholes equations. Insur. Math. Econ. 42(1), 271–287 (2008)
+13. Jumarie, G.: Derivation and solutions of some fractional Black–Scholes equations in coarse-grained space and time. 
+Application to Merton’s optimal portfolio. Comput. Math. Appl. 59(3), 1142–1164 (2010)
+14. Song, L., Wang, W.: Solution of the fractional Black–Scholes option pricing model by ﬁnite diﬀerence method. Abstr. 
+Appl. Anal. 2013(1), 194286 (2013)
+15. Giona, M., Roman, H.E.: Fractional diﬀusion equation on fractals: one dimensional case and asymptotic behaviour. J. 
+Phys. A, Math. Gen. 25(8), 2093–2105 (1992)
+16. Le Méhauté, A.: Transfer processes in fractal media. J. Stat. Phys. 36(5), 665–676 (1984)
+17. Liang, J.-R., Wang, J., Zhang, W.-J., Qiu, W.-Y., Ren, F.-Y.: The solution to a bi-fractional Black–Scholes–Merton diﬀerential 
+equation. Int. J. Pure Appl. Math. 58(1), 99–112 (2010)
+18. Hakim, A., et al.: Analytical and numerical solution for the time fractional Black–Scholes model under jump diﬀusion. 
+J. Comput. Appl. Math. 375, 112759 (2020)
+19. Kumar, Y., Singh, V.K.: Computational approach based on wavelets for ﬁnancial mathematical model governed by 
+distributed order fractional diﬀerential equation. Math. Comput. Simul. 190, 531–569 (2021)
+20. Morgado, L., Rebelo, M.: Black–Scholes equation with distributed order in time. In: Progress in Industrial Mathematics 
+at ECMI 2018. Mathematics in Industry, vol. 30, pp. 313–319. Springer, Cham (2019)
+21. Ariel, K., Dajani, K.: Numerical solution of the time fractional Black–Scholes model governing European options. 
+Comput. Appl. Math. 38(3), 1–21 (2019)
+22. Cen, Z., Huang, J., Xu, A., Le, A.: Numerical approximation of a time-fractional Black–Scholes equation. Comput. Math. 
+Appl. 75(8), 2874–2887 (2018)
+23. Zhang, H., Liu, F., Turner, I., Chen, S.: The numerical simulation of the tempered fractional Black–Scholes equation for 
+European double barrier option. Appl. Math. Model. 40(11–12), 5819–5834 (2016)
+24. Zhang, H., Liu, F., Turner, I., Yang, Q.: Numerical solution of the time fractional Black–Scholes model governing 
+European options. Comput. Math. Appl. 71(9), 1772–1783 (2016)
+25. Li, X., Wang, Y.: A robust numerical solution to a time-fractional Black–Scholes equation. Appl. Numer. Math. 186, 
+176–193 (2023)
+26. Yang, J., Zhang, X.: A space–time spectral method for time-fractional Black–Scholes equation. J. Comput. Phys. 460, 
+111191 (2022)
+27. Amini, M., et al.: A meshless method for numerical solutions of linear and nonlinear time-fractional Black–Scholes 
+models. Eng. Anal. Bound. Elem. 117, 108–120 (2020)
+28. Chen, W., Wang, S.: A 2nd-order ADI ﬁnite diﬀerence method for a 2D fractional Black–Scholes equation governing 
+European two asset option pricing. Math. Comput. Simul. 171, 279–293 (2020)
+29. Prathumwan, D., Trachoo, K.: On the solution of two-dimensional fractional Black–Scholes equation for European put 
+option. Adv. Diﬀer. Equ. 2020(1), 146 (2020)
+30. Chen, W.-T., Xu, X., Zhu, S.-P.: Analytically pricing double barrier options based on a time-fractional Black–Scholes 
+equation. Comput. Math. Appl. 69(12), 1407–1419 (2015)
+Hashem and Ahmed Advances in Continuous and Discrete Models (2026) 2026:86 Page 20 of 20
+31. Elbeleze, A.A., Kılıçman, A., Taib, B.M.: Fractional variational iteration method and its application to fractional partial 
+diﬀerential equation. Math. Probl. Eng. 2013(1), 543848 (2013)
+32. Ghandehari, M.A.M., Ranjbar, M.: European option pricing of fractional Black–Scholes model with new Lagrange 
+multipliers. Comput. Methods Diﬀer. Equ. 2(1), 1–10 (2014)
+33. Bohner, M., Zheng, Y.: On analytical solutions of the Black–Scholes equation. Appl. Math. Lett. 22(3), 309–313 (2009)
+34. Wang, S.: A novel ﬁtted ﬁnite volume method for the Black–Scholes equation governing option pricing. IMA J. 
+Numer. Anal. 24(4), 699–720 (2004)
+35. Windcliﬀ, H., Forsyth, P.A., Vetzal, K.R.: Analysis of the stability of the linear boundary condition for the Black–Scholes 
+equation. J. Comput. Finance 8(1), 65–92 (2004)
+36. Barles, G., Soner, H.M.: Option pricing with transaction costs and a nonlinear Black–Scholes equation. Finance Stoch. 
+2(4), 369–397 (1998)
+37. An, X., Wang, Q., Liu, F., Anh, V.V., Turner, I.W.: Parameter estimation for time-fractional Black–Scholes equation with 
+S&P 500 index option. Numer. Algorithms 95(1), 1–30 (2024)
+38. Huang, F., Liu, F.: The space–time fractional diﬀusion equation with Caputo derivatives. J. Appl. Math. Comput. 19(1), 
+179–190 (2005)
+39. Ahmed, H.F., Hashem, W.A.: Improved Gegenbauer spectral tau algorithms for distributed-order time-fractional 
+telegraph models in multi-dimensions. Numer. Algorithms 93(3), 1013–1043 (2023)
+40. Ahmed, H.F., Hashem, W.A.: A novel spectral technique for 2D fractional telegraph equation models with spatial 
+variable coeﬃcients. J. Taibah Univ. Sci. 16(1), 885–894 (2022)
+41. Gautschi, W.: Orthogonal Polynomials: Computation and Approximation. Numerical Mathematics and Scientiﬁc 
+Computation. Oxford University Press, Oxford (2004)
+42. Adams, R.A., Fournier, J.J.F.: Sobolev Spaces, 2nd edn. Pure and Applied Mathematics, vol. 140. Elsevier/Academic 
+Press, Amsterdam (2003)
+43. Ahmed, H.F., Hashem, W.A.: Novel and accurate Gegenbauer spectral tau algorithms for distributed order nonlinear 
+time-fractional telegraph models in multi-dimensions. Commun. Nonlinear Sci. Numer. Simul. 118, 107062 (2023)
+Publisher’s note
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional aﬃliations.

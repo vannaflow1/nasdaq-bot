@@ -1,5 +1,49 @@
 [
 {
+"title": "Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An Empirical and Numerical Audit on S&P 500 ETF (SPY) Returns",
+"learned": "The paper shows that simple ridge or LSTM models cannot reliably replace full Merton jump\u2011diffusion MLE for parameter estimation, but a directly trained LSTM can modestly improve 21\u2011day realized volatility forecasts versus EWMA and historical volatility, especially when jumps are present (e.g., COVID\u201119 crash).",
+"concepts": [
+"Merton Jump\u2011Diffusion",
+"MLE calibration",
+"Ridge regression surrogate",
+"LSTM volatility forecast",
+"EWMA baseline"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://www.researchsquare.com/article/rs-11729845/latest.pdf",
+"date": "2026-11-22"
+},
+{
+"title": "Algorithmic Market Making Can Lead to Rough Volatility Through the Order Book",
+"learned": "The paper shows that algorithmic market\u2011making desks, each updating order distances by a gradient rule whenever they receive new information, generate order\u2011book volume dynamics that follow a stochastic PDE. The asynchronous updates across desks with different information horizons create power\u2011law memory in order flow, which can produce rough (sub\u2011Brownian) volatility in prices.",
+"concepts": [
+"algorithmic market making",
+"stochastic gradient descent (SGD)",
+"Dean\u2013Kawasaki equation",
+"power\u2011law memory in order flow",
+"rough volatility"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://arxiv.org/abs/2611.24028v1",
+"date": "2026-11-22"
+},
+{
+"title": "Reinforcement Learning-Based Market Making as a Stochastic Control on Non-Stationary Limit Order Book Dynamics",
+"learned": "The paper shows how to train a market\u2011making agent with Proximal Policy Optimization on a simulated limit\u2011order\u2011book that mimics real\u2011world features like clustered order arrivals, time\u2011varying spreads, and inventory risk, and that the resulting RL policy can outperform the classic Avellaneda\u2011Stoikov solution in non\u2011stationary regimes.",
+"concepts": [
+"Reinforcement Learning (PPO)",
+"Market\u2011making inventory control",
+"Non\u2011stationary LOB simulation",
+"State features: RSI, order imbalance, micro\u2011price"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/pdf/2509.12456",
+"date": "2026-11-22"
+},
+{
 "title": "Mathematical Framework for Dynamic Downside-Minimizing Portfolio with Exotic Option Overlay",
 "learned": "The paper shows how semivariance (downside risk) optimization combined with exotic options\u2014Asian average puts, American puts via LSM, and covered calls\u2014can dramatically boost the Sortino ratio and cut worst\u2011case losses in simulated portfolios, especially when diversifying across many assets and rebalancing frequently.",
 "concepts": [
@@ -4249,51 +4293,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://doi.org/10.17615/6dzv-pw48",
-"date": "2026-10-18"
-},
-{
-"title": "Deep hedging 0DTE options",
-"learned": "Using high-frequency SPX option data with real transaction costs, the authors train a reinforcement-learning agent to delta-hedge 0DTE options and find it beats standard Black-Scholes delta hedging at that horizon. The learned hedge kept working during the COVID-19 crash even though it was trained only on calm periods, and the paper also studies how it behaves around price jumps. The abstract gives no headline numbers for the size of the improvement.",
-"concepts": [
-"0DTE options",
-"deep hedging",
-"reinforcement learning",
-"Black-Scholes delta",
-"transaction costs"
-],
-"relevance": 3,
-"verdict": "DOESN'T FIT MY DATA - needs intraday option quotes and trades, as well as a reinforcement learning model implementation",
-"url": "https://doi.org/10.1016/j.jfs.2026.101535",
-"date": "2026-10-18"
-},
-{
-"title": "One Premium in Four Disguises: Volatility Arbitrage, Implied Correlation and the (Apparent) Decay of the Dispersion Premium, 2006\u20132026",
-"learned": "Testing 2006-2026 data, this paper finds that four popular 'volatility arbitrage' trades (implied-vs-realized, VIX calendar, dispersion, skew-gated short vol) are really the same bet: each has a 0.71-0.95 daily correlation with simply shorting VIX futures, and none earns a significant extra return after correcting for testing many variants (best t-stat 2.16, failing a Holm test at p=0.09). The Cboe SKEW index was neither a source of return nor a reliable warning sign. The only add-on that held up out of sample was sizing short-vol positions in proportion to VIX (Sharpe 0.57 to 0.79), and even that is still just the plain variance premium.",
-"concepts": [
-"variance risk premium",
-"multiple-testing correction",
-"implied correlation",
-"SKEW index",
-"VIX-proportional sizing"
-],
-"relevance": 3,
-"verdict": "NOT CONFIRMED on my data: 258 signal days, hit 44.2% (always-long 55.8%), strategy -0.7 bps/day vs -0.9 for the same average exposure held constantly -> timing adds +0.2 bps/day, t=0.16, positive in 2/9 years",
-"url": "https://doi.org/10.5281/zenodo.23355138",
-"date": "2026-10-18"
-},
-{
-"title": "Arbitrage Scenario in India's Option Market - A mathematical modelling breakdown",
-"learned": "Using Nifty 50 and Bank Nifty minute and tick data from January 2025 to April 2026, this self-published paper argues that big institutional selling 'slams' on Wednesday/Thursday expiry afternoons set off retail stop-loss cascades, with a window of about 180-300 seconds between the slam and the peak of the cascade. It claims its 18-model 'Threshold Causal Calculus' suite was right 68.2% of the time during the March 2026 volatility spikes and cut slippage by 85.8% compared with moving-average crossovers. The claims are big, the method is vaguely described, and the comparison is only against a weak baseline.",
-"concepts": [
-"expiry-day gamma trap",
-"stop-loss cascades",
-"intraday price slams",
-"walk-forward backtest",
-"market fragility index"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.6084/m9.figshare.34492029",
 "date": "2026-10-18"
 }
 ]

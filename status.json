@@ -96,8 +96,14 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 301 papers read (48 more skipped as not relevant enough), 148 ideas tested on my memory, 2 promising.",
+  "LEARNING: 304 papers read (48 more skipped as not relevant enough), 148 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An E (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper shows that simple ridge or LSTM models cannot reliably replace full Merton jump\u2011diffusion MLE for parameter estimation, but a directly trained LSTM can modestly improve 21\u2011day realized volatility forecasts vers",
+  "  tested: queued for testing",
+  "\u2022 Algorithmic Market Making Can Lead to Rough Volatility Through the Order Book (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper shows that algorithmic market\u2011making desks, each updating order distances by a gradient rule whenever they receive new information, generate order\u2011book volume dynamics that follow a stochastic PDE. The asynchro",
+  "  tested: queued for testing",
   "\u2022 From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calib",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 844 buy-vol trades on real QQQ option prices, avg -7.2 bp of QQQ per trade (placebo avg -5.3, p=0.700), halves -12.8/-1.6",
@@ -110,15 +116,9 @@
   "\u2022 Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes Neural Realized Measures (NRM), which keep the traditional intraday volatility primitives (like realized variance, bipower variation, Garman\u2011Klass) but replace the equal\u2011weight daily aggregation with a",
   "  tested: DOESN'T FIT MY DATA - The idea requires intra\u2011day 5\u2011minute realized\u2011variance contributions, which are not present in Volta's dataset; only daily aggregates (rng",
-  "\u2022 The Limits of Machine Learning in Daily Return Forecasting: Evidence from Volatility Regimes, Tail Risk, and M (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper finds that daily return predictability is dominated by a simple linear momentum signal\u2014the 5\u2011day rolling mean return\u2014while a sophisticated ML model (XGBoost) offers no statistical edge over plain linear regress",
-  "  tested: NOT CONFIRMED on my data: 2248 signal days, hit 50.4% (always-long 56.5%), strategy -0.2 bps/day vs +1.4 for the same average exposure held constantly -> timing",
-  "\u2022 A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied V (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper reviews three families of volatility forecasts \u2013 traditional econometric models (GARCH, HAR, Realized GARCH, CARR), implied\u2011volatility based methods, and machine\u2011learning approaches \u2013 and concludes that no sing",
-  "  tested: NOT CONFIRMED on my data: range-forecast miss 0.587% -> 0.585% (+0.3%), better in 4/6 unseen years",
-  "This week's tests: 41 run - 0 promising, 29 not confirmed, 2 don't fit my data, 10 translation failures",
+  "This week's tests: 44 run - 0 promising, 30 not confirmed, 2 don't fit my data, 12 translation failures",
   "",
-  "43 papers waiting in my queue."
+  "52 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -199,8 +199,8 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-21)",
-  "I still see a ~0.2% edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but my intraday rules never capture it, and my range forecasts miss ~38% of the true daily range, hurting position sizing.",
+  "VOLTA'S SELF-CHECK (2026-11-22)",
+  "I confirmed that low dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) consistently give a ~0.2% edge, but none of my current intraday rules exploit it. My range\u2011forecast miss\u2011rate (\u224838%) is still the biggest limiter for position sizing. I also noticed that the only modestly successful strategies all involve the open price, suggesting the opening move is the most promising venue for a low\u2011gex edge.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",

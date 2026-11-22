@@ -1,0 +1,669 @@
+Business, Marketing, and Finance Open 
+
+1 
+Strategic Evaluation and Implementation of Machine 
+Learning Models for Predicting Price Volatility in the Steel 
+Commodity Market: A Comparative Study with the Foreign 
+Exchange Market for Commercial Decision-Making 
+
+Amin Jamali 1,*, Mohammad Reza Badami 2 
+ 1 Department of Computer Engineering, Isf.C., Islamic Azad University, Isfahan, Iran; 
+2 Department of Industrial Engineering, Na.C., Islamic Azad University, Najafabad, Iran; 
+
+* Correspondence: aminjamali79@aminjamali.site 
+
+Abstract: This study aimed to implement and strategically compare machine-learning and 
+deep-learning models for predicting price volatility in the Iranian steel commodity market and 
+the EUR/USD foreign-exchange market and to evaluate their usefulness for commercial 
+decision-making. This applied-developmental study used a descriptive-analytical design 
+based on secondary time-series data from January 2019 to January 2024. The foreign-
+exchange dataset included hourly and daily EUR/USD opening, high, low, closing, and 
+volume data extracted from MetaTrader 5. The steel dataset included daily and weekly prices 
+of steel billets and sheets traded on the Iran Mercantile Exchange, together with the unofficial 
+exchange rate, global 62% iron-ore prices, and seasonal demand indicators. After outlier 
+correction, linear interpolation, logarithmic differencing, and feature engineering, Random 
+Forest, XGBoost, Long Short-Term Memory, and Deep Q-Network models were 
+implemented. Model validation was conducted through walk-forward validation using a three-
+year training window and a one-year out-of-sample testing window. Predictive and strategic 
+performance were assessed through forecasting errors, directional accuracy, Sharpe ratio, 
+maximum drawdown, win rate, and profit factor. LSTM significantly outperformed Random 
+Forest and XGBoost in both markets, producing the lowest forecasting errors and the highest 
+directional accuracy and explanatory power. In the steel market, LSTM achieved an RMSE of 
+0.0062, directional accuracy of 70.80%, and R² of 0.77. However, DQN generated the 
+strongest strategic performance, with an annualized return of 28.90%, Sharpe ratio of 1.86, 
+maximum drawdown of 8.70%, and profit factor of 1.84. Bootstrap comparisons confirmed 
+that DQN significantly outperformed LSTM in risk-adjusted trading performance. The steel-
+market models generally exceeded the EUR/USD models because fundamental variables 
+improved predictability. LSTM was the most accurate forecasting model, whereas DQN was 
+the most effective model for converting market information into profitable and risk-controlled 
+commercial decisions. 
+Keywords: Steel market, Price volatility, Machine learning, LSTM, Deep Q-Network, XGBoost, 
+Foreign exchange market, Commercial decision-making 
+
+1. Introduction 
+Price volatility is one of the central sources of uncertainty in financial and 
+commodity markets because it directly affects the valuation of assets, the timing of transactions, the cost of 
+financing, inventory policies, hedging decisions, and the stability of commercial revenues. Volatility does not 
+merely represent random price variation; rather, it reflects the interaction of information flows, investor 
+expectations, macroeconomic shocks, liquidity conditions, regulatory structures, production constraints, and 
+
+Citation: Jamali, A., & Badami, M. R. 
+(2027). Strategic Evaluation and 
+Implementation of Machine Learning 
+Models for Predicting Price Volatility 
+in the Steel Commodity Market: A 
+Comparative Study with the Foreign 
+Exchange Market for Commercial 
+Decision-Making. Business, 
+Marketing, and Finance Open, 4(4), 1-
+18. 
+
+Received: 10 February 2026 
+Revised: 22 July 2026 
+Accepted: 29 July 2026 
+Initial Publication: 30 July 2026 
+Final Publication: 01 July 2027 
+
+Copyright: © 2027 by the authors. 
+Published under the terms and 
+conditions of Creative Commons 
+Attribution-NonCommercial 4.0 
+International (CC BY-NC 4.0) 
+License. 
+
+Jamali & Badami 
+ 2 
+behavioral responses. When volatility increases, firms face greater difficulty in estimating future cash flows, 
+determining appropriate purchase and sale prices, and selecting suitable risk-management strategies. The practical 
+significance of volatility is particularly evident in markets where price changes are transmitted across sectors and 
+assets. For example, industry-level cash-flow volatility has been associated with a higher risk of abrupt stock-price 
+declines, demonstrating that instability in operating conditions can be transformed into broader valuation risk [1]. 
+Similarly, investor sentiment can affect not only market liquidity but also the volatility of liquidity, thereby 
+strengthening the relationship between behavioral expectations and market instability [2]. Financial literacy and 
+decision-making behavior also influence how investors interpret information and respond to price fluctuations, 
+showing that market volatility is partly shaped by heterogeneous cognitive and behavioral characteristics [3]. More 
+recently, financial-news sentiment and investor confidence have been identified as important determinants of 
+stock-price volatility, indicating that the speed, tone, and interpretation of information can intensify or moderate 
+short-term market movements [4]. These findings support the view that price volatility is a multidimensional 
+phenomenon that cannot be explained exclusively through historical prices and requires analytical frameworks 
+capable of processing nonlinear, dynamic, and interacting sources of information. 
+A substantial part of the volatility literature has focused on identifying how corporate policies, market 
+regulations, and institutional mechanisms influence the instability of asset prices. Dividend policy has repeatedly 
+been examined as a factor affecting share-price volatility because changes in dividend payments may alter investor 
+expectations regarding future profitability, cash-flow stability, and firm value. Evidence from the Tehran Stock 
+Exchange has demonstrated the importance of dividend policy in explaining differences in stock-price volatility 
+across companies [5]. Similar relationships have been investigated among Modaraba companies listed on the 
+Pakistan Stock Exchange, where dividend-policy decisions were analyzed in connection with share-price volatility 
+[6]. Research on selected companies in the Nigerian Exchange has further emphasized the relevance of dividend 
+policy to price stability and investor valuation [7], while evidence from construction firms listed on the Nairobi 
+Securities Exchange has extended this discussion to a sector with substantial exposure to business cycles, material 
+costs, and financing conditions [8]. In addition to corporate decisions, regulatory arrangements can affect the 
+magnitude and persistence of market fluctuations. The relationship between short-selling regulation, return 
+volatility, and overall market volatility in the Athens Exchange illustrates how trading restrictions and market 
+design may modify price discovery and risk transmission [9]. Price-control mechanisms in securities exchanges 
+have likewise been examined as institutional tools for limiting excessive fluctuations and preserving orderly 
+trading conditions [10]. Although these studies are primarily concerned with securities markets, they establish an 
+important analytical foundation for commodity markets: observed volatility is influenced not only by changes in 
+supply and demand but also by market rules, participant behavior, liquidity, and the structure through which 
+information is incorporated into prices. 
+Volatility is also transmitted between markets through exchange rates, energy prices, capital flows, and changes 
+in global risk conditions. Exchange-rate movements are especially important because they affect import costs, 
+export competitiveness, inflation expectations, foreign-currency obligations, and the domestic valuation of 
+internationally traded commodities. Evidence from Middle Eastern countries indicates that exchange-rate volatility 
+can influence stock prices, although the magnitude and direction of this relationship may differ according to 
+domestic financial structures and macroeconomic conditions [11]. The dynamic relationship between exchange-
+rate volatility and stock prices has also been examined in the Egyptian real-estate market, with interest rates 
+considered as a moderating macroeconomic factor [12]. In Croatia, return and volatility spillovers between stock 
+ Business, Marketing, and Finance Open, Vol. 4, No. 4 
+ 3 
+prices and exchange rates have been analyzed through spillover methodologies, underscoring the reciprocal and 
+time-varying nature of interactions between currency and equity markets [13]. Evidence from BRIICS economies 
+during the COVID-19 outbreak further showed the importance of dynamic correlations and volatility transmission 
+between stock prices and exchange rates under conditions of global disruption [14]. Volatility interdependence is 
+not limited to traditional assets. The spillover of cryptocurrency-price volatility to the foreign-exchange market 
+demonstrates that increasingly interconnected financial systems allow shocks from emerging digital assets to affect 
+established currency markets [15]. These studies suggest that exchange-rate volatility should not be treated as an 
+isolated financial indicator. In economies where imported inputs, export revenues, and domestic commodity prices 
+are strongly linked to foreign currencies, exchange-rate changes may operate as a fundamental driver of production 
+costs and commodity-price expectations. 
+The transmission of energy-price shocks provides another important perspective on the structure of market 
+volatility. Oil-price fluctuations can affect transportation costs, industrial production, inflation, exchange rates, 
+investment expectations, and the profitability of energy-intensive industries. Research on the Pakistan Stock 
+Exchange has examined how oil-price volatility affects different sectors, indicating that exposure to energy shocks 
+is heterogeneous across industries [16]. The relationship between oil-price volatility and the economic performance 
+reflected in the Nairobi Securities Exchange Index has similarly demonstrated the relevance of commodity shocks 
+to capital-market outcomes in developing economies [17]. Within Iran, the spillover of oil-price volatility to the 
+returns of selected industries in the Tehran Stock Exchange has been studied through regime-switching and 
+variance-decomposition approaches, highlighting the possibility that volatility transmission differs across market 
+regimes [18]. Multivariate GARCH modeling has also been used to measure volatility spillovers among Iran, the 
+United Arab Emirates, and the global oil-price index, illustrating the usefulness of conditional-variance models for 
+examining cross-market risk transmission [19]. The effect of exchange-rate volatility on the price index of petroleum 
+products listed on the Tehran Stock Exchange has further demonstrated that domestic asset prices may respond 
+jointly to currency instability and commodity-market conditions [20]. At a broader level, oil-price volatility shocks 
+may contribute to systemic financial risk rather than remaining confined to individual firms or sectors [21]. 
+Consequently, the strategic management of commodity-price risk requires approaches that consider both direct 
+price movements and the networks through which shocks are transmitted across currencies, inputs, industries, and 
+financial institutions. 
+The steel market is particularly exposed to this multidimensional form of volatility. Steel is simultaneously an 
+industrial input, a tradable commodity, an infrastructure requirement, and a strategic product whose price is 
+affected by energy costs, raw-material prices, exchange rates, construction demand, industrial policy, supply-chain 
+disruptions, environmental regulations, and technological change. In the Iranian market, fluctuations in the 
+unofficial exchange rate can alter the domestic value of exportable steel, the cost of imported machinery and inputs, 
+and the opportunity cost of selling products domestically rather than internationally. Global iron-ore prices 
+influence upstream cost expectations, while domestic seasonal demand from construction and manufacturing can 
+create recurring but unstable price patterns. Furthermore, the steel supply chain includes numerous interdependent 
+actors, from mines and producers to commodity exchanges, distributors, manufacturers, exporters, and large 
+industrial consumers. Research on digital supply-chain risk factors in the steel industry has emphasized the need 
+for integrated decision-support systems capable of identifying, prioritizing, and managing interconnected 
+operational and informational risks [22]. This requirement is becoming more important as digitalization expands 
+the volume and speed of market information available to commercial decision-makers. 
+Jamali & Badami 
+ 4 
+The strategic environment of the steel industry is also being transformed by technological innovation and 
+environmental pressures. The development of green innovations such as FINEX technology illustrates how steel 
+producers are attempting to improve production efficiency, reduce environmental impacts, and create new 
+technological trajectories within an industry traditionally characterized by capital intensity and path dependence 
+[23]. Life-cycle assessment and optimization of carbon-emission-reduction pathways have also become important 
+for calculating the costs associated with the transition toward lower-carbon steel production [24]. These changes 
+can affect expected production costs, capital expenditure, market competitiveness, and the pricing of steel products. 
+Consequently, future steel-price behavior may increasingly reflect not only conventional demand and input-cost 
+variables but also technological transitions, environmental compliance costs, and changes in global trade policies. 
+Financial-risk management in energy-related industrial projects has similarly emphasized the value of hedging 
+models for controlling the combined consequences of currency and oil-price volatility [25]. For steel producers, 
+traders, and industrial purchasers, a forecasting framework must therefore support more than a statistical estimate 
+of future prices; it should facilitate decisions regarding procurement timing, inventory accumulation, sales 
+contracts, export allocation, hedging, and exposure limits. 
+Traditional volatility research has made extensive use of econometric models, including autoregressive 
+specifications, GARCH-family models, vector autoregression, Markov regime-switching models, and spillover 
+indices. These methods remain valuable because they provide interpretable parameters and well-established 
+procedures for estimating conditional variance, persistence, and cross-market transmission. Nevertheless, 
+commodity and financial time series commonly exhibit nonlinear relationships, abrupt regime changes, asymmetric 
+reactions to information, long-range temporal dependencies, and complex interactions among technical and 
+fundamental variables. Under such conditions, the assumptions of linearity, fixed functional form, and stable 
+parameter relationships may restrict predictive performance. A comparison of statistical volatility-analysis models 
+with a numerical water-drop-motion algorithm for the Tehran Stock Exchange price index demonstrates the 
+growing interest in combining conventional statistical analysis with computational optimization methods [26]. 
+Artificial multi-asset market models have likewise been used to examine the interaction of static and dynamic 
+information factors, showing that computational environments can reproduce and analyze complex patterns 
+generated by heterogeneous agents and multiple information sources [27]. These developments indicate a transition 
+from purely explanatory volatility modeling toward data-driven predictive systems capable of learning 
+relationships directly from large and multidimensional datasets. 
+Machine-learning methods are well suited to this transition because they can identify nonlinear associations, 
+interaction effects, thresholds, and high-dimensional patterns without imposing a single predefined functional 
+relationship between predictors and outcomes. Tree-based methods such as Random Forest can capture nonlinear 
+structures and provide relatively robust baseline predictions through ensemble learning. Gradient-boosting models 
+such as XGBoost sequentially correct prediction errors and can effectively model complex relationships among 
+technical indicators, macroeconomic variables, and lagged market observations. Deep recurrent networks such as 
+Long Short-Term Memory models are designed to retain information from previous observations and may 
+therefore be particularly appropriate for financial and commodity series with temporal dependence. Deep 
+reinforcement-learning models approach the problem from a different perspective. Rather than predicting price or 
+volatility as an isolated statistical target, they learn a sequence of actions intended to maximize cumulative reward 
+under changing market conditions. This distinction is strategically significant because the model with the lowest 
+forecasting error is not necessarily the model that produces the highest risk-adjusted commercial return. A 
+ Business, Marketing, and Finance Open, Vol. 4, No. 4 
+ 5 
+forecasting system may correctly estimate average market movement but still generate excessive turnover, large 
+drawdowns, or unprofitable decisions after transaction costs are included. 
+The distinction between statistical accuracy and commercial usefulness is fundamental to the evaluation of 
+predictive models. Standard measures such as root mean square error, mean absolute error, mean absolute 
+percentage error, directional accuracy, and the coefficient of determination assess how closely predictions 
+correspond to observed values. However, commercial decision-makers are also concerned with the profitability, 
+stability, and downside risk of decisions generated from those predictions. The Sharpe ratio evaluates return 
+relative to risk, maximum drawdown measures the largest decline in accumulated capital, win rate indicates the 
+proportion of successful transactions, and profit factor compares gross profits with gross losses. A model that 
+performs well according to statistical criteria may fail strategically if its signals are unstable or if small expected 
+gains are eliminated by transaction costs. Conversely, a model with moderate forecasting accuracy may perform 
+well if it selectively enters positions with favorable reward-to-risk characteristics. This issue is particularly relevant 
+in the steel market, where transactions may involve larger costs, lower frequency, contractual restrictions, delivery 
+considerations, and less continuous liquidity than the foreign-exchange market. 
+The foreign-exchange market provides a useful comparative benchmark for evaluating whether machine-
+learning models can generalize across markets with different structural characteristics. The EUR/USD pair is highly 
+liquid, continuously traded during global market hours, and rapidly responsive to macroeconomic information. Its 
+depth and informational efficiency may reduce persistent forecasting opportunities, but its high-frequency data 
+and relatively standardized market structure make it suitable for model development and backtesting. The steel 
+market, by contrast, is less continuous and more strongly affected by local institutional conditions, production costs, 
+exchange-rate changes, global raw-material prices, and seasonal demand. Comparing the two markets can therefore 
+reveal whether a model’s performance is driven by general learning capacity or by market-specific predictability. 
+It also allows the strategic value of technical variables to be compared with that of combined technical and 
+fundamental features. 
+Despite the extensive literature on stock-price volatility, exchange-rate interactions, oil-price spillovers, dividend 
+policies, investor behavior, and regulatory mechanisms, comparatively limited attention has been devoted to the 
+integrated prediction of steel-market volatility through machine-learning and deep-learning models combined with 
+realistic strategic backtesting. Existing studies provide important evidence regarding the transmission of currency 
+and commodity shocks, but many concentrate on explanatory relationships rather than the direct conversion of 
+forecasts into commercial actions. Moreover, studies conducted in stock and foreign-exchange markets cannot 
+automatically be generalized to the steel commodity market because steel prices reflect distinct production, supply-
+chain, institutional, and seasonal conditions. A comprehensive framework should therefore integrate historical 
+transaction data with technical indicators, exchange-rate changes, global iron-ore prices, and seasonal demand 
+measures; compare conventional machine-learning algorithms with deep sequential models; preserve 
+chronological order through walk-forward validation; and evaluate performance after incorporating actual trading 
+costs and downside-risk criteria. 
+Accordingly, the aim of this study was to implement and strategically evaluate Random Forest, XGBoost, Long 
+Short-Term Memory, and Deep Q-Network models for predicting steel commodity-market price volatility and 
+supporting commercial decisions, while comparatively assessing their predictive and risk-adjusted trading 
+performance against the EUR/USD foreign-exchange market. 
+Jamali & Badami 
+ 6 
+2. Methodology 
+This applied-developmental study adopted a descriptive-analytical design based on the secondary analysis of 
+financial and commodity-market time-series data. The primary objective was to develop, implement, and 
+strategically evaluate machine learning models for predicting price volatility in the steel commodity market and to 
+compare their predictive and trading performance with those obtained in the foreign exchange market. The 
+research process consisted of four interconnected phases: data collection, data preprocessing and feature 
+engineering, algorithmic model development, and strategic evaluation within a historical backtesting environment. 
+Because the study relied exclusively on archival market data, it did not involve human participants. The units of 
+analysis were sequential observations of prices, transaction volumes, technical indicators, and selected 
+fundamental variables recorded between January 2019 and January 2024. Two independent datasets were 
+examined. The foreign exchange dataset consisted of hourly and daily observations for the EUR/USD currency pair, 
+whereas the steel-market dataset included daily and weekly observations relating to steel billet and steel sheet 
+transactions conducted through the Iran Mercantile Exchange. The selection of EUR/USD as the comparative 
+financial market was based on its high liquidity, continuous price formation, substantial transaction volume, and 
+suitability as a benchmark for evaluating the performance of predictive algorithms under relatively mature market 
+conditions. The steel commodity market was selected because its price dynamics are influenced by both market-
+based signals and fundamental economic variables, including exchange-rate movements, global raw-material 
+prices, and seasonal changes in industrial demand. 
+Foreign exchange data were extracted from the MetaTrader 5 trading platform. The dataset included opening, 
+highest, lowest, and closing prices, commonly represented as OHLC variables, together with tick or transaction 
+volume for each hourly and daily interval. Steel-market data were obtained from the historical transaction records 
+of the Iran Mercantile Exchange and included the daily and weekly transaction prices of steel billets and steel sheets. 
+To improve the explanatory capacity of the steel-price forecasting models, the dataset was supplemented with 
+fundamental variables consisting of the unofficial Iranian rial–US dollar exchange rate and the global price of iron 
+ore with a 62% iron content. These variables were selected because exchange-rate fluctuations directly affect the 
+domestic replacement cost, export attractiveness, and import-related components of steel pricing, while global iron-
+ore prices represent a major upstream cost factor in the international steel value chain. The collected datasets were 
+integrated according to their observation dates and adjusted to account for differences in trading calendars and 
+data frequencies. All data extraction, integration, cleaning, and transformation procedures were conducted using 
+Python-based computational tools. The Pandas and NumPy libraries were used for data manipulation and 
+numerical calculations, while Scikit-learn, XGBoost, TensorFlow, and Keras were employed to construct and train 
+the predictive models. Technical indicators were generated programmatically from historical price and volume 
+variables to ensure consistency across the steel and foreign exchange datasets. 
+Data analysis began with preprocessing procedures intended to improve data quality and reduce distortions in 
+model estimation. Extreme observations were identified through a standard-deviation-based approach and were 
+corrected when they represented abnormal deviations unrelated to plausible market movements. Missing 
+observations were reconstructed using linear interpolation, provided that the missing intervals were sufficiently 
+limited to preserve the temporal structure of the series. Because raw price series are commonly nonstationary, 
+logarithmic returns were calculated by taking the first logarithmic difference of consecutive prices. This 
+transformation reduced trend-related instability and enabled the models to learn relative price movements rather 
+ Business, Marketing, and Finance Open, Vol. 4, No. 4 
+ 7 
+than absolute price levels. Feature engineering included the construction of exponential moving averages, the 
+Relative Strength Index, Moving Average Convergence Divergence, Bollinger Bands, and the Average True Range. 
+These technical variables represented trend direction, price momentum, market dispersion, and volatility. For the 
+steel market, additional fundamental features included the rate of change in the unofficial exchange rate, the growth 
+rate of the global iron-ore price, and an index reflecting seasonal fluctuations in steel demand. 
+Four algorithmic models were implemented. Random Forest was used as the baseline tree-based model and 
+consisted of 500 decision trees with a maximum depth of 15. The XGBoost model was developed with a learning 
+rate of 0.01, a maximum tree depth of 6, and a subsampling ratio of 0.80. The Long Short-Term Memory network 
+consisted of two sequential LSTM layers with 64 and 32 processing units. Dropout layers were incorporated to 
+mitigate overfitting, and the rectified linear unit activation function was used in the relevant dense layers. The Deep 
+Q-Network model was designed as a reinforcement-learning trading agent with three possible actions: buying, 
+selling, and holding. Its architecture incorporated a Q-value evaluation network, an experience replay buffer, and 
+an epsilon-greedy policy that balanced exploration with exploitation during training. 
+To prevent future observations from influencing the estimation of past outcomes, model validation was 
+performed through walk-forward validation rather than random data splitting. A rolling three-year window was 
+used for model training, followed by a one-year out-of-sample testing window, thereby preserving the 
+chronological order of the observations and reducing the risk of data leakage . Predictive performance was assessed 
+using forecast-error and directional-accuracy criteria, while strategic performance was examined through historical 
+trading simulations. The backtesting framework incorporated realistic transaction costs and evaluated each model 
+according to the Sharpe ratio, maximum drawdown, win rate, and profit factor. These measures made it possible 
+to distinguish statistical forecasting accuracy from practical commercial usefulness and to determine whether a 
+model capable of predicting price movements could also generate a stable, profitable, and risk-adjusted decision 
+strategy in the steel and foreign exchange markets. 
+3. Findings and Results 
+The raw foreign exchange dataset contained 31,320 hourly and 1,305 daily EUR/USD observations covering the 
+period from January 2019 to January 2024. Following the removal of duplicated timestamps, synchronization of 
+trading calendars, treatment of missing values, and exclusion of the initial observations required for calculating 
+lagged technical indicators, 30,984 hourly observations and 1,298 daily observations remained available for 
+analysis. The raw steel-market dataset consisted of 1,118 daily steel-billet observations, 1,106 daily steel-sheet 
+observations, and 261 weekly observations for each steel product. After matching steel transaction dates with the 
+unofficial exchange rate and the global 62% iron-ore price, the final integrated daily steel dataset contained 1,041 
+complete observations. The proportion of missing observations before interpolation was 0.63% in the EUR/USD 
+dataset and 2.14% in the steel-market dataset. Fewer than 1% of the observations in either market were identified 
+as extreme values through the standard-deviation criterion. Examination of the chronological distribution of the 
+observations showed that the dataset covered periods of relatively stable market activity, the market disruptions 
+associated with the COVID-19 pandemic, post-pandemic commodity-price adjustments, exchange-rate shocks, and 
+episodes of elevated geopolitical and inflationary uncertainty. Therefore, the final data structure provided adequate 
+variation for evaluating model behavior under different volatility regimes. 
+Table 1. Descriptive Statistics for the Main Market Variables 
+Market variable Number of observations Mean Standard deviation Minimum Maximum 
+Jamali & Badami 
+ 8 
+EUR/USD logarithmic return 1,298 0.00004 0.00470 -0.03210 0.02780 
+EUR/USD realized volatility 1,298 0.00680 0.00320 0.00120 0.02460 
+Steel-billet logarithmic return 1,041 0.00170 0.02940 -0.11850 0.13920 
+Steel-sheet logarithmic return 1,041 0.00140 0.02680 -0.10270 0.12640 
+Unofficial exchange-rate change 1,041 0.00200 0.02310 -0.08940 0.11260 
+Global iron-ore price growth 1,041 0.00030 0.02080 -0.08130 0.09470 
+Seasonal steel-demand index 1,041 100.00 12.60 74.20 128.70 
+
+As presented in Table 1, the average daily logarithmic return of EUR/USD was close to zero, which was 
+consistent with the relatively balanced positive and negative movements of the currency pair across the study 
+period. However, its realized volatility varied considerably, ranging from 0.0012 to 0.0246, indicating the presence 
+of both low-volatility and high-volatility periods. The standard deviation of EUR/USD returns was 0.0047, which 
+was substantially lower than the corresponding values for steel billets and steel sheets. The mean logarithmic 
+returns of steel billets and steel sheets were 0.0017 and 0.0014, respectively, suggesting a generally positive long-
+term price tendency during the study period. Nevertheless, their standard deviations were 0.0294 and 0.0268, 
+showing that daily steel-price movements were considerably more dispersed than EUR/USD movements. Steel 
+billets demonstrated slightly greater volatility than steel sheets, as reflected in both their standard deviation and 
+their wider minimum-to-maximum return range. The lowest observed billet return was −0.1185, whereas the 
+highest was 0.1392, indicating that the billet market experienced occasional abrupt price corrections and upward 
+jumps. 
+The unofficial exchange-rate variable also displayed substantial variability, with a mean daily change of 0.0020 
+and a standard deviation of 0.0231. Its relatively wide range supported the inclusion of the exchange rate as an 
+important fundamental predictor of domestic steel prices. The global iron-ore growth variable had a lower mean 
+but remained volatile, with observed changes ranging from −0.0813 to 0.0947. The seasonal steel-demand index had 
+a mean standardized value of 100 and a standard deviation of 12.60, with values varying between 74.20 and 128.70. 
+This dispersion confirmed that domestic steel-market demand was subject to meaningful seasonal fluctuations. The 
+descriptive findings therefore indicated that the steel market was characterized by a more heterogeneous and 
+shock-sensitive data-generating process than the foreign exchange market. This difference was expected to 
+influence the relative performance of the machine-learning models, particularly because the steel models 
+incorporated both technical and fundamental predictors, whereas the EUR/USD models relied primarily on price-
+, volume-, momentum-, and volatility-based indicators. 
+Before model estimation, stationarity was examined for the logarithmic returns and transformed fundamental 
+variables. The augmented Dickey–Fuller tests rejected the null hypothesis of a unit root for all transformed series 
+at the 0.01 significance level. In contrast, the original price-level series were nonstationary. These results supported 
+the use of logarithmic differences and growth rates in model development. Correlation analysis also showed that 
+no pair of predictors exceeded an absolute correlation coefficient of 0.85 after feature screening. Variance inflation 
+factors were below 5 for the retained variables, indicating that severe multicollinearity was not present. The rolling 
+three-year training and one-year out-of-sample testing procedure was then implemented without random shuffling 
+to preserve the temporal order of the observations. 
+Table 2. Out-of-Sample Predictive Performance of the Machine-Learning and Deep-Learning Models 
+Market Model RMSE MAE MAPE (%) Directional accuracy (%) R² 
+Steel commodity market Random Forest 0.0087 0.0064 14.80 61.80 0.57 
+Steel commodity market XGBoost 0.0071 0.0052 11.90 66.90 0.69 
+ Business, Marketing, and Finance Open, Vol. 4, No. 4 
+ 9 
+Steel commodity market LSTM 0.0062 0.0045 10.10 70.80 0.77 
+EUR/USD foreign exchange market Random Forest 0.0024 0.0018 13.70 60.50 0.51 
+EUR/USD foreign exchange market XGBoost 0.0020 0.0015 11.20 65.70 0.64 
+EUR/USD foreign exchange market LSTM 0.0017 0.0013 9.50 69.60 0.72 
+
+Table 2 presents the out-of-sample forecasting results for the Random Forest, XGBoost, and LSTM models. The 
+Deep Q-Network was excluded from the point-forecast error comparison because its principal output was a trading 
+action policy rather than a continuous volatility forecast. It was therefore evaluated separately within the strategic 
+backtesting framework. Across both markets, the LSTM model generated the lowest forecasting errors and the 
+highest explanatory and directional performance. In the steel commodity market, LSTM achieved an RMSE of 
+0.0062, an MAE of 0.0045, and a MAPE of 10.10%. These values represented reductions of approximately 28.74%, 
+29.69%, and 31.76%, respectively, compared with the Random Forest model. The LSTM model also correctly 
+predicted the direction of the next-period change in steel-market volatility in 70.80% of the out-of-sample 
+observations. Its R² value of 0.77 indicated that approximately 77% of the out-of-sample variation in steel-market 
+volatility was explained by the model. 
+XGBoost produced the second-best predictive results in the steel market. Its RMSE of 0.0071 was approximately 
+18.39% lower than that of Random Forest, while its directional accuracy was 66.90%. The Random Forest model 
+provided acceptable baseline performance, with a directional accuracy exceeding 60%, but it was less capable of 
+representing temporal dependencies and nonlinear interactions extending across multiple previous periods. Block-
+bootstrap comparisons of the absolute forecast errors indicated that the improvement of XGBoost over Random 
+Forest was statistically significant, with a mean absolute-error difference of −0.0012 and a 95% confidence interval 
+ranging from −0.0018 to −0.0006. The improvement of LSTM over XGBoost was also statistically significant, with a 
+mean difference of −0.0007 and a 95% confidence interval ranging from −0.0012 to −0.0002. These results suggested 
+that the superior performance of the recurrent neural network was not attributable solely to random variation in a 
+particular test window. 
+A comparable ranking was observed in the EUR/USD market. LSTM produced an RMSE of 0.0017, an MAE of 
+0.0013, and a MAPE of 9.50%. Its directional accuracy was 69.60%, and its R² was 0.72. XGBoost achieved an RMSE 
+of 0.0020 and directional accuracy of 65.70%, whereas Random Forest recorded an RMSE of 0.0024 and directional 
+accuracy of 60.50%. Although the absolute errors were smaller in the foreign exchange market because the scale of 
+EUR/USD volatility was lower, the relative ordering of the models remained unchanged. The slightly lower R² and 
+directional accuracy values obtained in the foreign exchange market indicated that EUR/USD price information 
+was more rapidly incorporated into market prices, thereby limiting the amount of exploitable predictability 
+available to the models. In contrast, the steel models benefited from the inclusion of the unofficial exchange rate, 
+global iron-ore prices, and seasonal demand indicators, which increased the amount of economically meaningful 
+information available for volatility prediction. 
+Analysis of feature importance further clarified the predictive mechanisms. In the XGBoost steel model, the 
+change in the unofficial exchange rate was the most influential variable, accounting for 24.60% of total gain-based 
+importance. The Average True Range accounted for 18.90%, global iron-ore price growth for 15.40%, Bollinger Band 
+width for 12.70%, the Relative Strength Index for 9.80%, and seasonal demand variation for 8.60%. The remaining 
+importance was distributed across the EMA spread, MACD, transaction volume, and lagged return variables. In 
+the EUR/USD model, the Average True Range had the greatest importance at 25.10%, followed by Bollinger Band 
+width at 20.70%, MACD at 16.40%, the difference between short-term and long-term exponential moving averages 
+Jamali & Badami 
+ 10 
+at 14.90%, and RSI at 10.60%. These findings indicated that steel-market volatility was driven by a combination of 
+market microstructure, exchange-rate exposure, international input costs, and demand conditions, whereas foreign 
+exchange volatility was explained predominantly by technical and price-derived information. 
+The LSTM training process also demonstrated stable convergence. The difference between the final training and 
+validation losses was less than 8% in both markets, suggesting that the Dropout layers and walk-forward validation 
+procedure adequately controlled overfitting. Early stopping was activated after 67 epochs in the steel model and 
+after 59 epochs in the EUR/USD model. No substantial deterioration was observed when the models were evaluated 
+in the final out-of-sample periods. Prediction errors increased during extreme volatility episodes, but the LSTM 
+model retained the best relative ranking under both ordinary and high-volatility conditions. 
+Table 3. Net Strategic Backtesting Performance after Transaction Costs 
+Market Strategy Annualized net 
+return (%) 
+Sharpe 
+ratio 
+Maximum 
+drawdown (%) 
+Win 
+rate (%) 
+Profit 
+factor 
+Number of 
+completed trades 
+Steel commodity 
+market 
+Passive market 
+benchmark 
+12.10 0.58 26.40 — — — 
+Steel commodity 
+market 
+Random Forest 
+strategy 
+15.30 1.03 14.10 55.10 1.30 118 
+Steel commodity 
+market 
+XGBoost strategy 20.40 1.38 11.30 58.90 1.51 134 
+Steel commodity 
+market 
+LSTM strategy 25.20 1.63 9.50 61.40 1.69 127 
+Steel commodity 
+market 
+DQN strategy 28.90 1.86 8.70 63.80 1.84 141 
+EUR/USD foreign 
+exchange market 
+Passive market 
+benchmark 
+3.40 0.29 17.80 — — — 
+EUR/USD foreign 
+exchange market 
+Random Forest 
+strategy 
+10.60 0.86 12.90 53.60 1.22 186 
+EUR/USD foreign 
+exchange market 
+XGBoost strategy 15.70 1.23 10.40 57.10 1.41 204 
+EUR/USD foreign 
+exchange market 
+LSTM strategy 20.30 1.48 8.60 59.90 1.58 193 
+EUR/USD foreign 
+exchange market 
+DQN strategy 23.80 1.71 7.70 62.40 1.75 219 
+
+The strategic backtesting results shown in Table 3 demonstrated that forecasting accuracy did not translate 
+mechanically into identical trading performance, although models with better predictive capability generally 
+generated stronger financial outcomes. All algorithmic strategies outperformed their corresponding passive market 
+benchmarks after the inclusion of transaction costs. The backtesting calculations incorporated an assumed total 
+transaction cost of 0.35% for each completed steel-market position and an average spread-equivalent cost of 1.2 
+pips for each completed EUR/USD trade. The Deep Q-Network generated the strongest overall strategic 
+performance in both markets. In the steel market, the DQN strategy produced an annualized net return of 28.90%, 
+a Sharpe ratio of 1.86, a maximum drawdown of 8.70%, a win rate of 63.80%, and a profit factor of 1.84. This 
+performance was achieved through 141 completed trades. The DQN strategy therefore generated approximately 
+16.80 percentage points more annualized return than the passive steel benchmark while reducing maximum 
+drawdown by 17.70 percentage points. 
+The LSTM strategy was the second-best approach in the steel market. It generated an annualized return of 
+25.20%, a Sharpe ratio of 1.63, a maximum drawdown of 9.50%, a win rate of 61.40%, and a profit factor of 1.69. 
+Although LSTM provided the highest point-forecast accuracy, DQN produced superior trading results because it 
+ Business, Marketing, and Finance Open, Vol. 4, No. 4 
+ 11 
+optimized the sequential relationship between actions and cumulative rewards rather than minimizing forecast 
+error alone. DQN was able to remain outside the market during periods in which the expected reward did not 
+compensate for risk and transaction costs. Its learned policy selected the hold action in 41.80% of decision periods, 
+the buy action in 30.60%, and the sell action in 27.60%. This relatively selective behavior reduced unnecessary 
+turnover and limited exposure during unstable market conditions. 
+The XGBoost steel strategy generated an annualized return of 20.40%, a Sharpe ratio of 1.38, and a maximum 
+drawdown of 11.30%. Its win rate of 58.90% and profit factor of 1.51 indicated that the strategy remained 
+commercially viable after transaction costs. Random Forest provided the weakest algorithmic results but still 
+exceeded the passive benchmark in risk-adjusted terms. Its annualized return was 15.30%, and its Sharpe ratio was 
+1.03, compared with a Sharpe ratio of 0.58 for the passive steel-market benchmark. Random Forest also reduced 
+maximum drawdown from 26.40% to 14.10%. Therefore, even the baseline model generated a meaningful 
+improvement in risk control, although its return and profit factor remained below those of the more advanced 
+models. 
+The same strategic ordering was observed in the EUR/USD market. The DQN strategy achieved an annualized 
+net return of 23.80%, a Sharpe ratio of 1.71, a maximum drawdown of 7.70%, a win rate of 62.40%, and a profit 
+factor of 1.75. The LSTM strategy generated an annualized return of 20.30% and a Sharpe ratio of 1.48, while 
+XGBoost generated an annualized return of 15.70% and a Sharpe ratio of 1.23. The Random Forest strategy 
+produced an annualized return of 10.60%, which remained substantially higher than the 3.40% return of the passive 
+EUR/USD benchmark. The passive benchmark also had the lowest Sharpe ratio and one of the largest drawdowns, 
+confirming that continuous exposure to the currency pair was less efficient than model-based position management 
+during the study period. 
+Comparison of the two markets indicated that the algorithmic strategies generally achieved higher returns and 
+profit factors in the steel market. This result suggested that the steel market contained stronger exploitable 
+relationships between price movements and the selected fundamental variables. Nevertheless, the foreign exchange 
+strategies completed more trades because EUR/USD provided more frequent and continuous trading 
+opportunities. The greater number of trades did not lead to superior risk-adjusted returns, partly because repeated 
+exposure increased cumulative transaction costs. In contrast, steel-market signals occurred less frequently but were 
+more strongly associated with exchange-rate movements, iron-ore prices, and seasonal demand conditions. 
+Robustness analysis confirmed that the strategic superiority of DQN was maintained when transaction costs 
+were increased by 25%. Under the higher-cost scenario, the annualized return of the steel DQN strategy declined 
+from 28.90% to 26.70%, while its Sharpe ratio declined from 1.86 to 1.73. The EUR/USD DQN return decreased from 
+23.80% to 21.90%, and its Sharpe ratio decreased from 1.71 to 1.59. Despite these reductions, DQN continued to 
+outperform the LSTM, XGBoost, and Random Forest strategies. When transaction costs were increased by 50%, all 
+algorithmic strategies remained profitable, although the advantage of Random Forest became comparatively small. 
+These findings indicated that the superior performance of the deep-learning strategies was not dependent on 
+unrealistically low transaction costs. 
+Performance was also examined separately during low-, medium-, and high-volatility regimes. In the steel 
+market, the DQN Sharpe ratio was 1.49 during low-volatility periods, 1.92 during medium-volatility periods, and 
+1.78 during high-volatility periods. LSTM achieved corresponding Sharpe ratios of 1.34, 1.70, and 1.51. Random 
+Forest performance deteriorated more substantially during high-volatility periods because individual decision 
+trees were less effective in adapting to abrupt changes in the interaction between technical and fundamental 
+Jamali & Badami 
+ 12 
+variables. In the EUR/USD market, all strategies experienced lower win rates during the highest-volatility regime, 
+but DQN maintained a win rate above 58%. The ability of DQN and LSTM to preserve positive performance during 
+market stress supported their relative robustness. 
+Block-bootstrap testing of Sharpe-ratio differences showed that the DQN strategy significantly outperformed the 
+LSTM strategy in the steel market, with an estimated Sharpe-ratio difference of 0.23 and a bootstrap probability 
+value of 0.026. The corresponding difference in the EUR/USD market was 0.23 and was also statistically significant 
+at a probability value of 0.039. The DQN advantage over XGBoost was larger and statistically significant in both 
+markets. The LSTM strategy also significantly outperformed Random Forest in terms of annualized return, 
+maximum drawdown, and profit factor. Taken together, the predictive and strategic findings showed that LSTM 
+was the most accurate model for forecasting future volatility, whereas DQN was the most effective model for 
+translating market information into risk-adjusted commercial decisions. The comparative analysis further 
+demonstrated that machine-learning performance was stronger in the steel market when fundamental variables 
+were combined with technical indicators, while the highly liquid EUR/USD market remained more difficult to 
+predict because of its greater informational efficiency. 
+4. Discussion and Conclusion 
+The present study compared the predictive and strategic performance of Random Forest, XGBoost, Long Short-
+Term Memory, and Deep Q-Network models in forecasting volatility and supporting trading decisions in the 
+Iranian steel commodity market and the EUR/USD foreign-exchange market. The findings showed that the LSTM 
+model achieved the highest forecasting accuracy in both markets, as indicated by the lowest RMSE, MAE, and 
+MAPE values and the highest directional accuracy and coefficient of determination. In the steel market, LSTM 
+explained approximately 77% of the out-of-sample variation in volatility and correctly predicted the direction of 
+subsequent movements in more than 70% of observations. XGBoost ranked second, while Random Forest provided 
+the weakest, although still acceptable, predictive performance. In contrast, the DQN model generated the strongest 
+strategic backtesting outcomes. It produced the highest annualized return, Sharpe ratio, win rate, and profit factor 
+and the lowest maximum drawdown in both markets. These results demonstrate that forecasting accuracy and 
+trading effectiveness are related but conceptually distinct outcomes. LSTM was more effective in estimating future 
+volatility, whereas DQN was more successful in converting information into sequential buy, sell, and hold decisions 
+that maximized cumulative risk-adjusted reward. This distinction is important because a model with low statistical 
+error does not necessarily provide the most profitable strategy after transaction costs, position timing, and 
+downside risk are considered. 
+The superior predictive performance of LSTM can be explained by the sequential and path-dependent nature of 
+financial and commodity-market data. Steel and foreign-exchange volatility are influenced by previous returns, 
+changing momentum, lagged reactions to information, volatility clustering, and interactions that develop over 
+multiple periods. A recurrent neural network can retain and update information from earlier observations, enabling 
+it to represent temporal dependencies that are more difficult for conventional tree-based models to capture. The 
+finding that LSTM outperformed Random Forest and XGBoost is therefore consistent with the broader transition 
+from static volatility analysis toward computational methods designed to identify dynamic and nonlinear patterns. 
+The comparison of conventional statistical volatility models with the water-drop-motion algorithm in the Tehran 
+Stock Exchange similarly indicates that numerical and intelligent algorithms may improve the representation of 
+complex price behavior when traditional assumptions are restrictive [26]. Likewise, information-based artificial 
+ Business, Marketing, and Finance Open, Vol. 4, No. 4 
+ 13 
+multi-asset market research has demonstrated that market dynamics emerge from the combined influence of static 
+information, evolving signals, and interactions among heterogeneous agents [27]. The current findings extend this 
+computational perspective to the steel commodity market by showing that models capable of processing nonlinear 
+and temporally ordered information can outperform a baseline ensemble-tree approach. 
+The strong performance of XGBoost relative to Random Forest also reflects differences in the learning structure 
+of the two models. Random Forest constructs a large collection of relatively independent trees and averages their 
+predictions, making it robust to noise but less capable of sequentially correcting systematic errors. XGBoost, by 
+contrast, builds trees iteratively so that each stage focuses on residual errors from the previous stage. This 
+mechanism appears to have been advantageous in modeling the complex interaction among technical indicators, 
+exchange-rate changes, iron-ore prices, and seasonal steel demand. The Random Forest model nevertheless 
+exceeded the passive benchmark in the strategic simulation, suggesting that even a comparatively simple nonlinear 
+ensemble can identify commercially meaningful regularities. This finding is relevant to research on market 
+volatility-control mechanisms because it indicates that risk control can be strengthened not only through formal 
+exchange regulations but also through data-based decision-support tools that reduce poorly timed transactions and 
+uncontrolled market exposure [10]. The results also correspond with evidence showing that market regulations and 
+trading structures can influence return and market volatility, as demonstrated in research on short-selling 
+regulation in the Athens Exchange [9]. Algorithmic position management can be viewed as an internal commercial-
+control mechanism that complements external market regulation by determining when market exposure is justified. 
+The higher explanatory power of the steel-market models can be attributed to the incorporation of fundamental 
+variables alongside technical indicators. The feature-importance analysis identified changes in the unofficial 
+exchange rate as the most influential predictor of steel-market volatility, followed by the Average True Range, 
+global iron-ore price growth, Bollinger Band width, RSI, and seasonal demand. This result supports the argument 
+that domestic steel prices cannot be understood solely through their own historical movements. Exchange-rate 
+changes affect the rial value of internationally traded steel, export incentives, imported equipment and input costs, 
+replacement costs, and the relative profitability of domestic and foreign sales. Previous evidence from Middle 
+Eastern economies has shown that exchange-rate volatility can transmit instability to asset prices [11]. Research on 
+the Egyptian real-estate market has likewise demonstrated a dynamic relationship between exchange-rate volatility 
+and sectoral stock prices, with interest rates influencing the strength of that relationship [12]. The current findings 
+transfer this logic from securities to physical commodities and indicate that currency instability is a central 
+component of steel-price risk in an import- and export-sensitive economy. 
+The identified importance of exchange-rate movements also aligns with evidence of return and volatility 
+transmission between currency and equity markets. Research in Croatia has demonstrated that shocks can spill 
+between exchange rates and stock prices in a time-varying manner [13]. Similar evidence from BRIICS economies 
+during the COVID-19 period showed that correlations and volatility spillovers intensified under crisis conditions 
+[14]. The current results suggest that this spillover mechanism extends to the steel commodity market, particularly 
+because exchange-rate movements alter both expected costs and market participants’ anticipatory behavior. Even 
+volatility generated in emerging asset classes can affect currency-market conditions, as indicated by evidence of 
+spillovers between cryptocurrency prices and foreign exchange in Nigeria [15]. Consequently, the predictive 
+contribution of the exchange rate in the steel model should not be interpreted as a simple bilateral correlation. It is 
+more appropriately viewed as part of a wider network through which macroeconomic uncertainty, capital-market 
+expectations, and commodity values are transmitted. 
+Jamali & Badami 
+ 14 
+The importance of global iron-ore prices and volatility indicators further confirms that steel-market behavior is 
+linked to upstream commodity shocks. Although the present study focused on iron ore rather than oil, earlier 
+studies of energy-price volatility provide a relevant explanation of how international commodity shocks are 
+transmitted into sectoral values and financial performance. Oil-price volatility has been shown to affect sectors of 
+the Pakistan Stock Exchange differently, indicating that exposure depends on cost structures and sectoral sensitivity 
+[16]. Evidence from Kenya also links oil-price volatility to changes in economic performance reflected in the Nairobi 
+Securities Exchange Index [17]. In Iran, volatility in global oil prices has been found to spill over to the returns of 
+selected industries, with the strength of the effect varying across market regimes [18]. Multivariate GARCH 
+evidence concerning Iran, the United Arab Emirates, and the global oil-price index further demonstrates that 
+commodity shocks can propagate across national and financial boundaries [19]. These findings support the present 
+conclusion that a steel-price forecasting system should incorporate global raw-material variables because upstream 
+shocks are gradually transmitted through production costs, inventories, expectations, and commercial quotations. 
+The results are also consistent with research indicating that exchange-rate volatility can influence the market 
+valuation of petroleum-product firms in Iran [20]. Although petroleum products and steel differ in production 
+technology, both sectors are capital-intensive, energy-dependent, and exposed to international pricing. The 
+combined influence of currency and commodity-price movements can therefore create nonlinear volatility that is 
+difficult to capture through univariate models. Recent research has also linked oil-price volatility shocks to systemic 
+financial risk, implying that commodity instability may affect the broader financial system rather than remaining 
+limited to a single market [21]. This systemic interpretation helps explain why the steel models benefited from 
+multiple categories of predictors. Steel prices reflect not only internal transaction dynamics but also macroeconomic 
+instability, global input markets, financial expectations, and changes in industrial demand. 
+The DQN strategy’s superior financial performance can be explained by the difference between supervised 
+prediction and reinforcement learning. LSTM was trained to minimize prediction error, whereas DQN was trained 
+to select actions that maximized cumulative rewards after considering market states, transaction costs, and future 
+consequences. The DQN agent frequently selected the hold action, thereby avoiding trades when the expected 
+reward was insufficient to compensate for cost and risk. This selective behavior reduced unnecessary turnover and 
+produced lower drawdowns. The result is strategically important because frequent accurate predictions may still 
+be commercially ineffective when changes are too small to cover trading costs. The DQN model effectively learned 
+that not trading is itself a meaningful decision. This outcome is consistent with the general risk-management 
+principle that the objective of commercial decision-making is not to maximize the number of successful forecasts 
+but to improve the balance among return, exposure, and loss severity. 
+The DQN model also remained superior when transaction costs were increased and when performance was 
+assessed across different volatility regimes. This robustness suggests that its performance was not merely the result 
+of unrealistically low market frictions. The finding has practical relevance for industrial financial-risk management, 
+where hedging models must remain useful despite currency and commodity-price variability. Research on 
+petrochemical development projects has similarly emphasized the need for integrated hedging approaches that 
+consider currency and oil-price volatility simultaneously [25]. In the steel market, an intelligent sequential strategy 
+can perform an analogous role by modifying exposure according to expected changes in volatility and reward. The 
+lower drawdown obtained by DQN is particularly valuable for steel traders and firms because large losses may 
+have consequences beyond portfolio value, including working-capital shortages, disrupted procurement plans, and 
+inability to meet contractual obligations. 
+ Business, Marketing, and Finance Open, Vol. 4, No. 4 
+ 15 
+The finding that the steel strategies generally produced higher returns and profit factors than the EUR/USD 
+strategies can be interpreted in terms of differences in market efficiency and informa

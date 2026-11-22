@@ -13,7 +13,7 @@ The authors fit four 'rough volatility' models and one simpler jump model to int
 Worked from the abstract only (no full text available); a model-calibration study on just five SPX days, of little practical use for NQ/QQQ trading decisions.
 
 ## Concepts
-rough volatility, 0dte smile calibration, bid-ask constraint, [[jump-diffusion]], quadratic rough heston
+[[rough volatility]], 0dte smile calibration, bid-ask constraint, [[jump-diffusion]], quadratic rough heston
 
 ## Idea
 Calibrate jump vs rough-volatility models to intraday QQQ 0DTE smiles.

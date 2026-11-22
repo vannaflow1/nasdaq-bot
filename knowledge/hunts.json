@@ -434,5 +434,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-21"
+ },
+ {
+  "id": "h39",
+  "date": "2026-11-22",
+  "query": "Nasdaq GEX rank opening price move intraday study",
+  "why": "No concrete academic or industry evidence yet on how low/high GEX rank affects the opening price direction; this could validate the low‑gex open‑breakout idea.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

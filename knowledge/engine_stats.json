@@ -28,10 +28,10 @@
   "failed": 11
  },
  "2026-W47": {
-  "tested": 41,
+  "tested": 44,
   "promising": 0,
-  "not_confirmed": 29,
+  "not_confirmed": 30,
   "unfit": 2,
-  "failed": 10
+  "failed": 12
  }
 }

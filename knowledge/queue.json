@@ -1,5 +1,16 @@
 [
  {
+  "id": "openalex:W7171767349",
+  "title": "Strategic Evaluation and Implementation of Machine Learning Models for Predicting Price Volatility in the Steel Commodity Market: A Comparative Study with the Foreign Exchange Market for Commercial Decision-Making",
+  "abstract": "This study aimed to implement and strategically compare machine-learning and deep-learning models for predicting price volatility in the Iranian steel commodity market and the EUR/USD foreign-exchange market and to evaluate their usefulness for commercial decision-making. This applied-developmental study used a descriptive-analytical design based on secondary time-series data from January 2019 to January 2024. The foreign-exchange dataset included hourly and daily EUR/USD opening, high, low, closing, and volume data extracted from MetaTrader 5. The steel dataset included daily and weekly prices of steel billets and sheets traded on the Iran Mercantile Exchange, together with the unofficial exchange rate, global 62% iron-ore prices, and seasonal demand indicators. After outlier correction, linear interpolation, logarithmic differencing, and feature engineering, Random Forest, XGBoost, Long Short-Term Memory, and Deep Q-Network models were implemented. Model validation was conducted through walk-forward validation using a three-year training window and a one-year out-of-sample testing window. Predictive and strategic performance were assessed through forecasting errors, directional accuracy, Sharpe ratio, maximum drawdown, win rate, and profit factor. LSTM significantly outperformed Random Forest and XGBoost in both markets, producing the lowest forecasting errors and the highest directional accuracy and explanatory power. In the steel market, LSTM achieved an RMSE of 0.0062, directional accuracy of 70.80%, and R\u00b2 of 0.77. However, DQN generated the strongest strategic performance, with an annualized return of 28.90%, Sharpe ratio of 1.86, maximum drawdown of 8.70%, and profit factor of 1.84. Bootstrap comparisons confirmed that DQN significantly outperformed LSTM in risk-adjusted trading performance. The steel-market models generally exceeded the EUR/USD models because fundamental variables improved predictability. LSTM was the most accurate forecasting model, whereas DQN was the most effective model for converting market information into profitable and risk-controlled commercial decisions.",
+  "url": "https://bmfopen.com/index.php/bmfopen/article/download/545/393",
+  "source": "OpenAlex",
+  "date": "2027-01-01",
+  "score": 13,
+  "queued": "2026-11-22",
+  "text_file": "knowledge/papers/openalex_W7171767349.txt"
+ },
+ {
   "id": "openalex:W7213295350",
   "title": "Diffusion models for dynamic volatility surface generation and data-driven hedging",
   "abstract": "We develop a diffusion-model framework for dynamic implied-volatility surface generation and evaluate its economic usefulness through data-driven hedging. The framework consists of two models. AD-Seq-Vol jointly learns the conditional evolution of the underlying asset return and the high-dimensional implied-volatility surface, generating adapted multi-period scenarios by sequentially updating the realized market history. AD-Seq-Vol-FT further incorporates option-market structure through post-training penalties for violations of static no-arbitrage conditions. Using daily SPX option data from 2000 to 2023, we show that the proposed models generate coherent surface trajectories while capturing both cross-sectional and temporal dependence. AD-Seq-Vol produces fewer and less severe static-arbitrage violations than the training data and the GAN-based benchmark, while AD-Seq-Vol-FT reduces these violations to nearly zero. We then integrate the generated conditional scenarios into an optimization-based hedging framework. Compared to a range of classical and data-driven benchmarks, the diffusion-based hedges maintain tracking errors near zero, substantially reduce tail risk, and exhibit particularly stable performance during the COVID-19 market disruption. These results establish Adaptive Sequential Diffusion Models as a promising class of market-consistent and economically useful financial scenario generators. Our code is available at: https://github.com/yinbinhan/volatility-surface-simulation.",
@@ -20,6 +31,17 @@
   "score": 12,
   "queued": "2026-11-15",
   "text_failed": true
+ },
+ {
+  "id": "openalex:W7237213461",
+  "title": "A hybrid framework for option pricing models via distributed-order time-fractional derivatives with non-smooth solutions",
+  "abstract": "Accurate numerical treatment of the distributed-order time-fractional Black\u2013Scholes model becomes especially difficult when the solution lacks smoothness, as commonly occurs in option pricing applications. The distributed-order time-fractional Black\u2013Scholes model (DO-TFBSM) extends the classical Black\u2013Scholes equation by incorporating a continuous range of fractional orders, allowing it to capture memory effects and anomalous temporal behavior more effectively. This study presents a novel and efficient spectral method for the numerical solution of the DO-TFBSM, particularly suited for problems characterized by non-smooth solutions and limited regularity. A new class of fractional shifted Legendre cardinal functions (FSLCFs) is introduced, along with a corresponding operational matrix for distributed-order Caputo derivatives, enabling precise and computationally efficient treatment of memory effects. Building on these components, a hybrid spectral tau scheme is formulated by coupling FSLCFs with standard shifted Legendre cardinal functions (SLCFs), ensuring spectral accuracy even in the presence of nonsmooth functions. A rigorous convergence analysis establishes the theoretical soundness of the proposed approach. Extensive numerical experiments further confirm its accuracy, robustness, and efficiency, demonstrating its strong potential as a reliable computational framework for pricing financial derivatives in markets governed by evolving memory and non-local temporal dynamics.",
+  "url": "https://link.springer.com/content/pdf/10.1186/s13662-026-04144-6.pdf",
+  "source": "OpenAlex",
+  "date": "2026-11-20",
+  "score": 12,
+  "queued": "2026-11-22",
+  "text_file": "knowledge/papers/openalex_W7237213461.txt"
  },
  {
   "id": "openalex:W7223000370",
@@ -122,6 +144,39 @@
   "text_failed": true
  },
  {
+  "id": "openalex:W7236482144",
+  "title": "Revisiting Equity-Bond Diversification under Tail Risk and Structural Market Change: Evidence from Global ETFs and Model-Implied Option Prices",
+  "abstract": "This study examines thirty equity--bond and multi-asset exchange-traded funds (ETFs) listed in the United States, Canada, and Australia using daily U.S.-dollar returns over 2020--2024. A rolling-window framework compares minimum-variance and Conditional Value-at-Risk (CVaR) portfolio optimization under long-only and long--short constraints against an equally weighted benchmark. Performance is assessed using risk-adjusted measures, downside risk, extreme-tail estimation, and conditional volatility models. Optimized portfolios exhibit lower empirical VaR and CVaR than the benchmark, with long--short strategies generally providing greater downside-risk reduction. However, the equally weighted benchmark achieves the highest reported Sharpe, Sortino, and Rachev ratios. GARCH and FIGARCH comparisons favor GARCH based on information criteria. A historically estimated Normal Inverse Gaussian model further generates European option prices and model-implied volatility surfaces under a martingale-corrected pricing specification. The findings highlight trade-offs between risk reduction, risk-adjusted performance, and practical implementation costs.",
+  "url": "https://arxiv.org/pdf/2611.21897",
+  "source": "OpenAlex",
+  "date": "2026-11-16",
+  "score": 11,
+  "queued": "2026-11-22",
+  "text_file": "knowledge/papers/openalex_W7236482144.txt"
+ },
+ {
+  "id": "openalex:W7235225918",
+  "title": "PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models",
+  "abstract": "We study a random-feature method for pricing and calibrating European options under jump-diffusion (Merton, Kou) and stochastic-volatility (Heston, SABR) models. The network has one hidden layer with a probit activation and fixed random inner weights, so fitting it to the pricing equation, the payoff and the boundary conditions is a single regularised least-squares problem, with no iterative training. For Merton and Kou the jump integral of each feature is explicit, so no quadrature is needed. One factorisation of the least-squares matrix gives the price at every state and time, its Greeks, and the exact derivatives of the prices with respect to the model parameters for gradient-based calibration. For the jump models, subtracting the Black-Scholes price removes the payoff kink and reduces the pricing error by about two orders of magnitude. The method is then about as accurate as a standard Crank-Nicolson finite-difference scheme at the same run time, although a finite-difference scheme that also subtracts the Black-Scholes price is about two orders of magnitude more accurate still. On the test problems of a recent physics-informed neural network study, the method matches that network's accuracy in seconds instead of about half an hour. The calibration experiments show that a solver can fit the quotes and still return wrong parameters when its pricing error is not small compared with the effect of the parameters on the prices: without the subtraction the solver misses the jump parameters by up to 50%, and with it they are recovered to within 3%. For Heston and SABR, used as an applicability study with boundary conditions that need no reference prices, pricing errors are about one percent and the calibrated parameters are within about 15% of the true values.",
+  "url": "https://arxiv.org/pdf/2611.19792",
+  "source": "OpenAlex",
+  "date": "2026-11-15",
+  "score": 11,
+  "queued": "2026-11-22",
+  "text_file": "knowledge/papers/openalex_W7235225918.txt"
+ },
+ {
+  "id": "openalex:W7236740191",
+  "title": "Loss of directional continuity in intraday markets: Evidence from NASDAQ-100 futures",
+  "abstract": "Type of the article: Research ArticleAbstractThis study examines whether loss of directional continuity (LDC) is associated with weaker subsequent price continuation after local breakouts in Nasdaq-100 futures. The dataset comprises 86,731 one-minute candlesticks recorded between September 14 and December 11, 2025. An LDC event required three features: re-entry into the preceding range after a local breakout, a reduced candlestick body, and a dominant wick in the breakout direction. Thresholds were calibrated in the training sample and applied unchanged to the test sample. Each LDC event was matched to a comparable non-LDC breakout of the same direction. The analysis identified 3,108 LDC events (3.58% of all candlesticks), and 1,314 test-sample pairs had valid outcomes at both the 5- and 10-minute horizons. Across breakout directions and horizons, directional continuity was 11.78 to 23.78 percentage points lower for LDC events than for matched controls. The association persisted in logistic regressions with standard errors clustered by trading session and in a sensitivity analysis excluding overlapping evaluation windows among LDC events. In the component analysis, re-entry and the dominant wick were negatively associated with subsequent continuity, while the reduced body showed a smaller positive association. The findings characterize a candlestick configuration associated with lower short-term directional continuity within the period studied. Assessing trading profitability would require a separate analysis.AcknowledgmentsThe authors acknowledge the support of the academic and professional environment that facilitated the development of this research. Special appreciation is extended to the tools and platforms that enabled access to high-frequency financial data, which were essential for the empirical analysis conducted in this study.",
+  "url": "https://businessperspectives.org/images/pdf/applications/publishing/templates/article/assets/25687/IMFI_2026_04_Perdomo.pdf",
+  "source": "OpenAlex",
+  "date": "2026-11-19",
+  "score": 11,
+  "queued": "2026-11-22",
+  "text_failed": true
+ },
+ {
   "id": "openalex:W7223032026",
   "title": "Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales",
   "abstract": "This work focuses on reconstructing a continuous implied volatility (IV) surface from a small number of option quotes, a fundamental task for option pricing and risk management. We propose Additive Martingale (AddMart), a few-shot IV surface reconstruction framework that satisfies static no-arbitrage conditions by construction. Rather than predicting IVs directly, AddMart maps sparse quotes to non-negative increment densities of an exponential additive martingale, from which valid risk-neutral marginals and IVs are recovered. By incorporating the no-arbitrage structure directly into its architecture, rather than enforcing it through regularization in the learning objective, AddMart produces IV surfaces that satisfy static no-arbitrage conditions throughout the domain. Extensive experiments on ten real-option datasets demonstrate that AddMart achieves competitive reconstruction accuracy with no material static arbitrage violations, while directly enabling the estimation of VaR, CVaR, and crash probabilities.",
@@ -189,6 +244,39 @@
   "text_file": "knowledge/papers/arxiv_2611.16540v1.txt"
  },
  {
+  "id": "openalex:W7202379636",
+  "title": "Remodeling and Application of Stock Option Price Based on Skewed Laplace Distribution Approach",
+  "abstract": "This paper proposed a new model to price a stock option based on the Skewed Laplace distribution approach (SLOP). The approach was considered to provide a better option price than Black Scholes Option Price (BSOP) because Skewed Laplace distribution (SL) has a shape parameter that can capture excess skewness and kurtosis frequently found in stock return underlying the option price. In this study, SL\u2019s shape parameter was estimated using a mixture of the Moment Method and Fourth-Order Taylor Series approach. The estimator was different from the majority of prior SL\u2019s shape parameter that was obtained by Maximum Likelihood Estimation (MLE). The proposed shape parameter was easier to obtain relative to the prior parameter because it did not require a Likelihood Function (LH) and the maximization of LH where involved a complicated numerical method. The performance of SLOP was applied to eleven different enterprises that trade stock options at several strike prices. According to the empirical results in this research, it can be summarized that the SL approach yields a better option price model rather than Black Scholes (BS).",
+  "url": "https://doi.org/10.18860/cauchy.v11i2.44222",
+  "source": "OpenAlex",
+  "date": "2026-11-30",
+  "score": 10,
+  "queued": "2026-11-22",
+  "text_file": "knowledge/papers/openalex_W7202379636.txt"
+ },
+ {
+  "id": "openalex:W7234868316",
+  "title": "A Comparative Analysis of Three Quantitative Pricing Frameworks for SSE 50ETF Options: BS Analytical Model, CRR Binomial Tree Model and Monte Carlo Simulation",
+  "abstract": "This study compares the effectiveness and feasibility of the Black-Scholes (BS) analytical model, the Cox-Ross-Rubinstein (CRR) binomial-tree model and Monte Carlo simulation of SSE 50 ETF European call contracts. With the help of the no-arbitrage condition, risk-neutral valuation and geometric Brownian motion are used to create these three models in Python with the same benchmark parameters and later compare their pricing accuracy, convergence rate and algorithmic efficiency, and their applicability to various applications. The numerical data shows that the three methods give almost the same option price: 0.0846 to the BS model, 0.0847 the 200-step CRR model, and 0.0843 the Monte Carlo simulation of 100, 000 paths. The BS approach is by nature simple and easy to use, but has some limitations. As the number of iterations increases, the CRR framework is inclined to the BS value and thus can be used in American style options. High-dimensional and path-dependent derivatives are best modeled using Monte Carlo simulation, whose accuracy depends on the number of simulated paths and the traditional model is not able to price American contracts directly. These results explain the tradeoff between accuracy, flexibility and computational cost in option pricing model selection.",
+  "url": "https://aemps.ewapub.com/article/view/39090.pdf",
+  "source": "OpenAlex",
+  "date": "2026-11-17",
+  "score": 10,
+  "queued": "2026-11-22",
+  "text_file": "knowledge/papers/openalex_W7234868316.txt"
+ },
+ {
+  "id": "openalex:W7234499221",
+  "title": "Timing the Window: A gated regime engine for issuance and rotation in crypto-asset markets \u2014 architecture, calibration from operator heuristics, and conditional derivations for cascade rotation and treasury-levered equity exposure",
+  "abstract": "Capital markets open and close windows capriciously, and an issuer who must act once, irreversibly, has a different problem from a trader who may act continuously. This paper formalises an instrument built to decide the first problem: an admission clock that states, at any date, whether the window for placing a new instrument is open, how far open, and what dose that grade permits. The instrument is a conjunction of three gates \u2014 internal readiness, market regime, and a veto list \u2014 and not a weighted index, a design choice we defend on the ground that averaging allows an open gate to compensate a closed one, which is precisely the error an irreversible act cannot absorb. The regime gate is driven by a latent-factor engine whose identification rests on a point we believe has been underweighted in practice: an index assembled exclusively from indicators endogenous to the crypto market measures a single factor that is itself a transformation of the price level, and therefore carries no information about the future willingness of capital to finance an unseasoned instrument. We show that the primary equity issuance market supplies an exogenous and leading measurement of that same latent variable, and that the relevant measurement is the count and receptivity of small deals rather than aggregate proceeds \u2014 a distinction the 2026 data make vivid, with record United States proceeds accompanied by a thirty-four per cent fall in the number of deals priced. The paper's technical core converts the tacit knowledge of a daily operator into testable propositions. We obtain three results worth isolating. First, under a margin buffer set proportionally to the prevailing volatility level, the probability that a carry position breaches its buffer is exactly invariant to the level of volatility and depends, to second order, only on the volatility of volatility; the dependence is strictly increasing when the buffer exceeds \u221a2 standard deviations and reverses below it. This gives the lockability gate a defensible threshold variable and explains why a carry bid withdraws in unstable markets without any change in the mean level of risk. Second, the rotation cascade that carries capital from bitcoin outward to the market's tail is asymmetric in its lag structure, not merely in sign: in expansion it propagates head-to-tail with a positive and tier-increasing lag, which is what makes it exploitable and what gives an issuer warning; in contraction it propagates at lag zero with ampli",
+  "url": "https://doi.org/10.5281/zenodo.24284380",
+  "source": "OpenAlex",
+  "date": "2026-11-16",
+  "score": 10,
+  "queued": "2026-11-22",
+  "text_failed": true
+ },
+ {
   "id": "arxiv:2610.31141v1",
   "title": "Intraday Forecasting Ability and Liquidity Provision of Institutional Traders",
   "abstract": "This study uses a high-frequency dataset from a stock exchange to examine how forecasting ability and liquidity provision relate to institutional traders' proprietary intraday profitability. We discover persistent forecasting abilities among traders. Specifically, we demonstrate that hypothetical flow-following strategies based on the execution flows of these skillful traders yield annualized Sharpe ratios ranging from 16 to 63 across various trading frequencies. We match buy and sell executions into positions, linking realized profit and loss (P&L) to horizon-matched forecasting proxies and the liquidity roles of both executions. Our findings indicate a direct correlation between improved forecasting ability and profitability, where a one-standard-deviation increase in the forecasting ability proxy is associated with 1.02 -- 1.19 currency units higher P&L per matched position. Additionally, we measure liquidity-provision intensity within a matched position by its number of passive executions: zero, one, or two. In these regressions, P&L is 1.28 -- 1.31 currency units higher for one passive execution than for none, and a further 3.79 -- 3.82 higher for two than for one, underscoring the significant financial benefits of liquidity provision.",
@@ -211,6 +299,18 @@
   "score": 9,
   "queued": "2026-10-25",
   "text_file": "knowledge/papers/arxiv_2610.30891v1.txt"
+ },
+ {
+  "id": "arxiv:2611.26119v1",
+  "title": "Feasible sub-replicating portfolios for basket options via the block rearrangement algorithm",
+  "abstract": "We construct sub-replicating portfolios of vanilla options for a basket call when the marginal distributions of the underlying assets are known and their dependence is not. To do so, we reduce the n-asset problem to n two-asset problems of the type solved by Hobson, Laurence, and Wang (2005a), and use the Block Rearrangement Algorithm1 (BRA) to approximate the minimising dependence among the assets. The cash component of the portfolio is computed exactly, so that its price is a valid lower bound, and reassembling the BRA output with the original marginals gives an upper bound computed by quadrature; together they bracket the minimum basket-option price. In log-normal examples with three and six assets the bracket has a relative width of at most 0.1%, and the corresponding sub-replicating portfolios are sparse, using only two strikes per asset, while the resulting bounds are tighter than those obtained from a general-purpose multi-marginal optimal-transport algorithm with strikes on a grid. We also give the lower bound and an optimal portfolio in closed form in three special cases: a deep in-the-money basket, a basket with one dominant asset, and jointly mixable marginals.",
+  "url": "https://arxiv.org/abs/2611.26119v1",
+  "pdf": "https://arxiv.org/pdf/2611.26119v1",
+  "source": "arXiv",
+  "date": "2026-11-19",
+  "score": 9,
+  "queued": "2026-11-22",
+  "text_file": "knowledge/papers/arxiv_2611.26119v1.txt"
  },
  {
   "id": "arxiv:2610.25802v2",
