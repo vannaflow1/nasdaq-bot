@@ -1,14 +1,13 @@
-hunt 'Nasdaq GEX rank opening price move intraday study': 0 found, queued 0
-scanned 0 papers, queued 0, queue size 52 []
+scanned 0 papers, queued 0, queue size 49 []
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-skip (2*): Strategic Evaluation and Implementation of Machine Learning Models for
+read (1*): A hybrid framework for option pricing models via distributed-order tim
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (4*): Diffusion models for dynamic volatility surface generation and data-dr
+read (3*): Neural Network Calibration of the Heston Stochastic Volatility Model
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (2*): Deep-MKV-TS: Path-Dependent McKean–Vlasov Control for Financial Time S
-read 3, AI units today 1473/7000
-curiosity asked: Strategy: LowGex_BreakOnHigh_GapFillBlend
-tested: Strategy: LowGex_BreakOnHigh_GapFillBlend - Break above over -> NOT CONFIRMED on my data: too few trades (2 in 2014-2023, need 150). in-sample 2014-2023: 
-tested: Train a diffusion‑model (similar to AD‑Seq‑Vol‑FT) on the da -> DOESN'T FIT MY DATA - The idea requires generating full daily volatility surface scenarios
-tested: Test whether days with higher dealer gamma rank (gex_rank) a -> NOT CONFIRMED on my data: 1130 signal days, hit 43.5% (always-long 56.4%), strategy -3.7 b
-testing used 750 AI units
+read (2*): Information Flow and Market Risk: Transformer-Based Evidence on Sentim
+read 3, AI units today 2696/7000
+curiosity asked: Strategy: LowGex_FadeYHigh_PostMid
+tested: Strategy: LowGex_FadeYHigh_PostMid - Fade yesterday's high o -> NOT CONFIRMED on my data: too few trades (5 in 2014-2023, need 150). in-sample 2014-2023: 
+tested: Train a hybrid LSTM on recent NQ range, 30‑day IV, and reali -> NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.530% (+0.2%), better in 5/9 unse
+tested: Train a PtM convolutional neural network on the historical d -> DOESN'T FIT MY DATA - The idea requires a neural‑network generated estimate of the Heston 
+testing used 755 AI units

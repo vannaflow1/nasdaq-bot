@@ -1,39 +1,5 @@
 [
  {
-  "id": "openalex:W7237213461",
-  "title": "A hybrid framework for option pricing models via distributed-order time-fractional derivatives with non-smooth solutions",
-  "abstract": "Accurate numerical treatment of the distributed-order time-fractional Black\u2013Scholes model becomes especially difficult when the solution lacks smoothness, as commonly occurs in option pricing applications. The distributed-order time-fractional Black\u2013Scholes model (DO-TFBSM) extends the classical Black\u2013Scholes equation by incorporating a continuous range of fractional orders, allowing it to capture memory effects and anomalous temporal behavior more effectively. This study presents a novel and efficient spectral method for the numerical solution of the DO-TFBSM, particularly suited for problems characterized by non-smooth solutions and limited regularity. A new class of fractional shifted Legendre cardinal functions (FSLCFs) is introduced, along with a corresponding operational matrix for distributed-order Caputo derivatives, enabling precise and computationally efficient treatment of memory effects. Building on these components, a hybrid spectral tau scheme is formulated by coupling FSLCFs with standard shifted Legendre cardinal functions (SLCFs), ensuring spectral accuracy even in the presence of nonsmooth functions. A rigorous convergence analysis establishes the theoretical soundness of the proposed approach. Extensive numerical experiments further confirm its accuracy, robustness, and efficiency, demonstrating its strong potential as a reliable computational framework for pricing financial derivatives in markets governed by evolving memory and non-local temporal dynamics.",
-  "url": "https://link.springer.com/content/pdf/10.1186/s13662-026-04144-6.pdf",
-  "source": "OpenAlex",
-  "date": "2026-11-20",
-  "score": 12,
-  "queued": "2026-11-22",
-  "text_file": "knowledge/papers/openalex_W7237213461.txt"
- },
- {
-  "id": "openalex:W7223000370",
-  "title": "Neural Network Calibration of the Heston Stochastic Volatility Model",
-  "abstract": "The Heston stochastic volatility model remains a standard benchmark for equity-option smiles, yet calibration is a nonlinear inverse problem shaped by pricing cost, objective design, parameter constraints and the information contained in the observed option grid. Neural approaches follow two main routes. Parameter-to-price (MtP) networks approximate the forward pricing map and retain an optimiser, whereas price-to-parameter (PtM) networks learn a direct inverse map and amortise calibration into a single inference step. This review compares both routes with differential, physics-informed and hybrid variants. PtM offers the clearest advantage in online latency, while MtP retains an explicit calibration objective and more transparent residual diagnostics. Existing studies do not establish a universal ranking in parameter stability, robustness or data efficiency, because results remain sensitive to the training domain, sampling scheme, quote representation and validation design. Both approaches can be trained on synthetic data, and neither resolves weak parameter identifiability. For practical deployment, neural acceleration should be combined with exact repricing, admissibility checks, uncertainty monitoring, distribution-shift controls and numerical fallback. The most credible architecture is therefore determined by the service requirement and the surrounding validation workflow rather than by the direction of the learned map alone.",
-  "url": "https://aemps.ewapub.com/article/view/37802.pdf",
-  "source": "OpenAlex",
-  "date": "2026-10-20",
-  "score": 11,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W7223000370.txt"
- },
- {
-  "id": "arxiv:2610.39636v1",
-  "title": "Information Flow and Market Risk: Transformer-Based Evidence on Sentiment and Volatility Dynamics",
-  "abstract": "This study examines whether transformer-based financial news sentiment improves equity volatility forecasts beyond conventional market-based predictors. Using data for eleven US stocks, we compare volatility persistence models with specifications incorporating the VIX, AAII investor sentiment, and news sentiment extracted using ModernFinBERT. The forecasting target is annualized volatility constructed from future averages of trailing 252-session Yang-Zhang estimates, evaluated at horizons of 1, 5, and 22 trading days. Models are assessed through walk-forward testing with expanding and rolling estimation windows, fixed initial hyperparameter selection, and statistical comparisons accounting for multiple testing and serial dependence. Results show that a naive persistence benchmark achieves the lowest average QLIKE loss at all horizons. Although HAR-VIX produces the largest number of individual forecasting wins under expanding windows, it does not achieve the lowest mean loss. Adding text-based sentiment improves HAR forecasts in only two of 33 expanding-window comparisons, and neither improvement remains statistically significant under longer HAC bandwidths. A blinded audit of 2,700 news texts further characterizes the agreement and confidence patterns of ModernFinBERT classifications. The findings do not establish a general incremental forecasting advantage from transformer-based news sentiment. They highlight the importance of strong benchmarks, temporal alignment, robust inference, and careful evaluation of text-derived predictors.",
-  "url": "https://arxiv.org/abs/2610.39636v1",
-  "pdf": "https://arxiv.org/pdf/2610.39636v1",
-  "source": "arXiv",
-  "date": "2026-10-29",
-  "score": 11,
-  "queued": "2026-11-01",
-  "text_file": "knowledge/papers/arxiv_2610.39636v1.txt"
- },
- {
   "id": "openalex:W7224078659",
   "title": "Replication package for: Arbitrage-Constrained Neural Interpolation of the Implied Volatility Surface: Evidence from NSE Index Options",
   "abstract": "Code and derived data behind PNmix (prior-network mixture), an implied volatility surface for NIFTY 50 index options that is free of butterfly and calendar arbitrage by construction. The package builds the evaluation panel from NSE F&O bhavcopy files (2020-2026), fits PNmix and the benchmark methods (SVI, SSVI, Fengler's smoother, thin-plate and cubic splines) on 18 expanding-origin folds, and reproduces every table and figure in the paper, including the intraday backtest in Section VII.",

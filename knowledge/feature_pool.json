@@ -79,5 +79,14 @@
   "paper": "A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility,",
   "id": "openalex:W7224277285",
   "added": "2026-11-20"
+ },
+ {
+  "expr": "0.5*iv30 + 0.3*rv20 + 0.2*rng",
+  "template": null,
+  "gain": 0.2,
+  "years": "5/9",
+  "paper": "Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An Empirical a",
+  "id": "openalex:W7235408944",
+  "added": "2026-11-22"
  }
 ]

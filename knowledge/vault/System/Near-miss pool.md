@@ -16,5 +16,6 @@ Ideas that helped the range forecast a little and fairly consistently. Re-tested
 - 0.5*lag(rng,1) + 0.3*lag(rng5,1) + 0.2*lag(rng20,1) (+0.1%, 6/9 years) - Measuring and Forecasting Volatility in Chinese Stock Market Using HAR-CJ-M Model
 - 0.5*ewm(rng,10) + 0.3*ewm(rng5,10) + 0.2*ewm(rng20,10) (+0.1%, 7/9 years) - Range-Based Volatility Estimation and Forecasting
 - garch + lag(iv30, 1) (+0.3%, 4/6 years) - A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility,
+- 0.5*iv30 + 0.3*rv20 + 0.2*rng (+0.2%, 5/9 years) - Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An Empirical a
 
 Last combined test (2026-11-21): NOT CONFIRMED - the combination does not hold on unseen years (picked +1.76%, unseen years -0.46%)

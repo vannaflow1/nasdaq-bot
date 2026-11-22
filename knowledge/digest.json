@@ -1,5 +1,50 @@
 [
 {
+"title": "Information Flow and Market Risk: Transformer-Based Evidence on Sentiment and Volatility Dynamics",
+"learned": "The paper finds that adding transformer\u2011based news sentiment (ModernFinBERT) to strong volatility\u2011persistence models (like HAR) does not consistently improve out\u2011of\u2011sample forecasts for individual US stocks, and the naive persistence benchmark often wins.",
+"concepts": [
+"HAR volatility model",
+"transformer news sentiment",
+"QLIKE loss",
+"walk\u2011forward evaluation",
+"benchmark comparison"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://arxiv.org/abs/2610.39636v1",
+"date": "2026-11-22"
+},
+{
+"title": "Neural Network Calibration of the Heston Stochastic Volatility Model",
+"learned": "Neural networks can approximate either the Heston pricing map (MtP) or the inverse map from option surfaces to Heston parameters (PtM). PtM gives the fastest online inference but still needs checks for admissibility and exact repricing; MtP keeps an explicit calibration objective and transparent residuals but requires an optimizer. Neither approach fixes the fundamental weak identifiability of Heston parameters, so uncertainty monitoring and fallback to classic calibration are essential.",
+"concepts": [
+"Heston stochastic volatility model",
+"parameter-to-price (MtP) surrogate",
+"price-to-parameter (PtM) direct inversion",
+"weak parameter identifiability",
+"hybrid calibration workflow"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - The idea requires a neural\u2011network generated estimate of the Heston parameters, which is not present in Volta's dataset; only the calibrated Heston parameters are available, so the proposed comparison and latency measure cannot be expressed.",
+"url": "https://aemps.ewapub.com/article/view/37802.pdf",
+"date": "2026-11-22"
+},
+{
+"title": "A hybrid framework for option pricing models via distributed-order time-fractional derivatives with non-smooth solutions",
+"learned": "The paper proposes a new spectral numerical method using fractional shifted Legendre cardinal functions to solve distributed-order time-fractional Black\u2011Scholes equations, which can handle nonsmooth payoff shapes and memory effects more accurately.",
+"concepts": [
+"distributed-order fractional derivative",
+"spectral tau method",
+"nonsmooth payoff",
+"memory effects",
+"Caputo derivative"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://link.springer.com/content/pdf/10.1186/s13662-026-04144-6.pdf",
+"date": "2026-11-22"
+},
+{
 "title": "Deep-MKV-TS: Path-Dependent McKean\u2013Vlasov Control for Financial Time Series Generation",
 "learned": "The paper proposes Deep-MKV-TS, a framework that adjusts the volatility of a known reference model using path\u2011dependent McKean\u2011Vlasov control so generated price scenarios better match observed path and volatility features.",
 "concepts": [
@@ -40,7 +85,7 @@
 "EWMA baseline"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.530% (+0.2%), better in 5/9 unseen years",
 "url": "https://www.researchsquare.com/article/rs-11729845/latest.pdf",
 "date": "2026-11-22"
 },
@@ -4250,50 +4295,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/82E163122F360CD32299EAF002B4B6AC/S0022109017000023a.pdf/div-class-title-informed-trading-around-stock-split-announcements-evidence-from-the-option-market-div.pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Machine Learning-Based Latency-Aware Smart Order Routing for U.S. Treasury Securities",
-"learned": "The authors built a machine-learning order router for US Treasuries that tries to account for quotes going stale while an order travels to a venue, and tested it on a simulated order book calibrated to FRED yield volatility. Although the classifier scored 80.1% accuracy, the router beat a simple best-price router on only 2.2% of test rounds and was actually slightly more expensive (6.561 vs 6.548 basis points, t = -3.86). The honest lesson: a high-accuracy model can still make worse decisions when it is confidently wrong on the cases that matter.",
-"concepts": [
-"smart order routing",
-"latency",
-"stale quotes",
-"precision vs recall",
-"simulated order book"
-],
-"relevance": 0,
-"verdict": "not testable with my data yet",
-"url": "https://journal.esrgroups.org/jes/article/download/9815/6353",
-"date": "2026-10-18"
-},
-{
-"title": "Volatility of Volatility and Leverage Effect from Options",
-"learned": "The paper builds model-free estimators of how much volatility itself moves around ('vol of vol') and of the leverage effect (prices falling as volatility rises), using high-frequency prices of short-dated options. It extracts spot volatility from the options and corrects for the noise in option quotes. It is a statistics/methods paper: it shows how to measure these quantities precisely, not a trading result, and the abstract has no market numbers.",
-"concepts": [
-"volatility of volatility",
-"leverage effect",
-"spot volatility",
-"short-dated options",
-"nonparametric estimation"
-],
-"relevance": 2,
-"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.534% (-0.5%), better in 3/9 unseen years",
-"url": "https://arxiv.org/pdf/2305.04137",
-"date": "2026-10-18"
-},
-{
-"title": "Decomposing the Theta Cliff: A SIMDEC Filtering of Asymptotic Time-Decay in Long-Call Options with a Real-Money Intraday Illustration",
-"learned": "This paper proposes scaling the normal Black-Scholes theta (time decay) by a factor that depends on the stock's sector and market regime, found with a sensitivity-analysis method called SIMDEC. Its main 'evidence' is three real-money long-call positions tracked through eleven intraday snapshots plus output from the author's own AI pipeline. There are no clear performance numbers, and the sample is far too small to show that the adjusted theta predicts anything.",
-"concepts": [
-"theta decay",
-"effective theta",
-"SIMDEC decomposition",
-"long calls"
-],
-"relevance": 0,
-"verdict": "not testable with my data yet",
-"url": "https://www.mdpi.com/2673-2688/7/7/257/pdf?version=1783853566",
 "date": "2026-10-18"
 }
 ]
