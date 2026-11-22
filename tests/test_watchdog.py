@@ -59,8 +59,8 @@ class Rules(unittest.TestCase):
         self.assertEqual(W.check(mon, fetcher(now=mon, run_age_h=2.6), root="/nonexistent").get("run:trump.yml:Truth Social watcher"), None)
 
     def test_failing_tests_are_flagged(self):
-        bad = W.check(WED_SESSION, fetcher(now=WED_SESSION, failing=("tests.yml",)), root="/nonexistent")
-        self.assertEqual(list(bad), ["fail:tests.yml"])
+        bad = W.check(WED_SESSION, fetcher(now=WED_SESSION, failing=("tests.yml", "evening.yml")), root="/nonexistent")
+        self.assertEqual(sorted(bad), ["fail:evening.yml", "fail:tests.yml"])
 
     def test_api_error_is_reported_not_swallowed(self):
         def broken(path): raise OSError("network down")

@@ -64,9 +64,11 @@ OUTPUTS = [
     ("knowledge/london_today.json",    "London outlook was NOT posted this morning",   WEEK,    8.6,  11.9, {"since": 6.0}, False),
     ("knowledge/bias_log.csv",         "bias log (silent checks)",                     WEEK,    17.0, 24.0, {"since": 13.0}, True),
     ("knowledge/outlook_log.csv",      "NY outlook log",                               WEEK,    15.5, 24.0, {"since": 12.0}, True),
+    ("brain_preds.csv",                "tomorrow's range forecast (forward tests need it)", WEEK, 23.5, 24.0, {"since": 20.5}, True),
     ("knowledge/level.csv",            "evening run reached its last step",            WEEK,    23.5, 24.0, {"since": 20.5}, True),
 ]
-FAILING = [("tests.yml", "code self-check (tests)")]            # alert when the latest finished run of these FAILED
+FAILING = [("tests.yml", "code self-check (tests)"),
+           ("evening.yml", "evening recap + tomorrow's forecast")]   # 20 Nov 2026: a failed evening = no forecast = no forward trades next day            # alert when the latest finished run of these FAILED
 
 
 def applies(days, due, end, now):

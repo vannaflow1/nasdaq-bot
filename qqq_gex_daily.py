@@ -110,7 +110,14 @@ def load_chain(path=None):
         print("downloading CBOE QQQ chain (can take a minute on a slow connection)...", flush=True)
         req = urllib.request.Request(URL, headers={"User-Agent": "Mozilla/5.0",
                                                    "Accept-Encoding": "gzip"})
-        resp = urllib.request.urlopen(req, timeout=120)
+        for attempt in range(4):                     # CBOE sometimes answers 403/5xx for a while (20 Nov 2026: the whole
+            try:                                     # Friday evening run died on one 403) -> wait and try again
+                resp = urllib.request.urlopen(req, timeout=120); break
+            except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as e:
+                if attempt == 3: raise
+                import time
+                print(f"  CBOE download failed ({e}); retrying in {[20, 60, 180][attempt]} s", flush=True)
+                time.sleep([20, 60, 180][attempt])
         body = resp.read()
         if resp.headers.get("Content-Encoding", "") == "gzip" or body[:2] == b"\x1f\x8b":
             import gzip
