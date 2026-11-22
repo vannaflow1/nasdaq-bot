@@ -1,13 +1,5 @@
 [
  {
-  "id": "arxiv:2611.24028v1",
-  "title": "Algorithmic Market Making Can Lead to Rough Volatility Through the Order Book",
-  "idea": "Test whether days with higher dealer gamma rank (gex_rank) are associated with a lower estimated Hurst exponent of realized volatility, indicating rougher volatility when market\u2011making pressure is high.",
-  "relevance": 3,
-  "added": "2026-11-22",
-  "hunt": null
- },
- {
   "id": "openalex:W7235408944",
   "title": "Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An Empirical and Numerical Audit on S&P 500 ETF (SPY) Returns",
   "idea": "Train a hybrid LSTM on recent NQ range, 30\u2011day IV, and realized volatility (l_rng, l_iv30, l_rv20) to predict the next 21\u2011day realized volatility (y_r) and use it to size option positions.",

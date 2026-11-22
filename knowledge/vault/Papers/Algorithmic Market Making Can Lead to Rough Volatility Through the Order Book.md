@@ -19,6 +19,8 @@ algorithmic market making, stochastic gradient descent, dean–kawasaki equation
 Test whether days with higher dealer gamma rank (gex_rank) are associated with a lower estimated Hurst exponent of realized volatility, indicating rougher volatility when market‑making pressure is high.
 
 ## Test
-queued for testing
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 1130 signal days, hit 43.5% (always-long 56.4%), strategy -3.7 bps/day vs -3.5 for the same average exposure held constantly -> timing adds -0.2 bps/day, t=-0.16, positive in 4/10 years
+How: short/flat on `gex_rank - 0.5` (positive = signal on)
+Touches: [[Options nerd]]
 
 Part of [[Research engine]]

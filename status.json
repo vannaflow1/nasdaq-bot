@@ -96,14 +96,17 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 304 papers read (48 more skipped as not relevant enough), 148 ideas tested on my memory, 2 promising.",
+  "LEARNING: 306 papers read (49 more skipped as not relevant enough), 150 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Diffusion models for dynamic volatility surface generation and data-driven hedging (\u2605\u2605\u2605\u2605\u2606)",
+  "  The paper proposes diffusion\u2011model based generators (AD\u2011Seq\u2011Vol and AD\u2011Seq\u2011Vol\u2011FT) that sequentially produce realistic, arbitrage\u2011free SPX implied\u2011volatility surfaces, and shows that hedging based on these generated scen",
+  "  tested: DOESN'T FIT MY DATA - The idea requires generating full daily volatility surface scenarios with a diffusion model and performing a rolling\u2011horizon portfolio opt",
   "\u2022 Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An E (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper shows that simple ridge or LSTM models cannot reliably replace full Merton jump\u2011diffusion MLE for parameter estimation, but a directly trained LSTM can modestly improve 21\u2011day realized volatility forecasts vers",
   "  tested: queued for testing",
   "\u2022 Algorithmic Market Making Can Lead to Rough Volatility Through the Order Book (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper shows that algorithmic market\u2011making desks, each updating order distances by a gradient rule whenever they receive new information, generate order\u2011book volume dynamics that follow a stochastic PDE. The asynchro",
-  "  tested: queued for testing",
+  "  tested: NOT CONFIRMED on my data: 1130 signal days, hit 43.5% (always-long 56.4%), strategy -3.7 bps/day vs -3.5 for the same average exposure held constantly -> timing",
   "\u2022 From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calib",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 844 buy-vol trades on real QQQ option prices, avg -7.2 bp of QQQ per trade (placebo avg -5.3, p=0.700), halves -12.8/-1.6",
@@ -113,12 +116,9 @@
   "\u2022 Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper introduces Neural Realized Measures (NRM), which replace the fixed equal-weight aggregation of intraday volatility contributions with learned, positive, mean\u2011normalized weights that are optimized for forecastin",
   "  tested: DOESN'T FIT MY DATA - The idea requires training a Neural Realized Measures model on intraday 5\u2011minute NQ price data and computing out\u2011of\u2011sample QLIKE errors ve",
-  "\u2022 Neural Realized Measures: Forecast-Supervised Intraday Aggregation for Volatility Forecasting (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper proposes Neural Realized Measures (NRM), which keep the traditional intraday volatility primitives (like realized variance, bipower variation, Garman\u2011Klass) but replace the equal\u2011weight daily aggregation with a",
-  "  tested: DOESN'T FIT MY DATA - The idea requires intra\u2011day 5\u2011minute realized\u2011variance contributions, which are not present in Volta's dataset; only daily aggregates (rng",
-  "This week's tests: 44 run - 0 promising, 30 not confirmed, 2 don't fit my data, 12 translation failures",
+  "This week's tests: 47 run - 0 promising, 32 not confirmed, 3 don't fit my data, 12 translation failures",
   "",
-  "52 papers waiting in my queue."
+  "49 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

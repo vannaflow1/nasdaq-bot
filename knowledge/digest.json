@@ -1,5 +1,35 @@
 [
 {
+"title": "Deep-MKV-TS: Path-Dependent McKean\u2013Vlasov Control for Financial Time Series Generation",
+"learned": "The paper proposes Deep-MKV-TS, a framework that adjusts the volatility of a known reference model using path\u2011dependent McKean\u2011Vlasov control so generated price scenarios better match observed path and volatility features.",
+"concepts": [
+"McKean\u2011Vlasov control",
+"scenario generation",
+"volatility calibration",
+"stochastic maximum principle",
+"path\u2011dependent features"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.1145/3858063.3858852",
+"date": "2026-11-22"
+},
+{
+"title": "Diffusion models for dynamic volatility surface generation and data-driven hedging",
+"learned": "The paper proposes diffusion\u2011model based generators (AD\u2011Seq\u2011Vol and AD\u2011Seq\u2011Vol\u2011FT) that sequentially produce realistic, arbitrage\u2011free SPX implied\u2011volatility surfaces, and shows that hedging based on these generated scenarios yields near\u2011zero tracking error and lower tail risk versus traditional methods.",
+"concepts": [
+"diffusion models",
+"implied volatility surface simulation",
+"no\u2011arbitrage penalties",
+"scenario\u2011based hedging",
+"tail\u2011risk reduction"
+],
+"relevance": 4,
+"verdict": "DOESN'T FIT MY DATA - The idea requires generating full daily volatility surface scenarios with a diffusion model and performing a rolling\u2011horizon portfolio optimization to compute hedge ratios, which needs intraday option price matrices and simulation of hedging trades. Volta only provides aggregated surface statistics (iv30, atm7, atm30, rr25, bf25, etc.) and cannot represent the diffusion\u2011model generated surfaces or the resulting hedge\u2011ratio calculations.",
+"url": "https://doi.org/10.1145/3858063.3858716",
+"date": "2026-11-22"
+},
+{
 "title": "Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An Empirical and Numerical Audit on S&P 500 ETF (SPY) Returns",
 "learned": "The paper shows that simple ridge or LSTM models cannot reliably replace full Merton jump\u2011diffusion MLE for parameter estimation, but a directly trained LSTM can modestly improve 21\u2011day realized volatility forecasts versus EWMA and historical volatility, especially when jumps are present (e.g., COVID\u201119 crash).",
 "concepts": [
@@ -25,7 +55,7 @@
 "rough volatility"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "NOT CONFIRMED on my data: 1130 signal days, hit 43.5% (always-long 56.4%), strategy -3.7 bps/day vs -3.5 for the same average exposure held constantly -> timing adds -0.2 bps/day, t=-0.16, positive in 4/10 years",
 "url": "https://arxiv.org/abs/2611.24028v1",
 "date": "2026-11-22"
 },
@@ -4264,35 +4294,6 @@
 "relevance": 0,
 "verdict": "not testable with my data yet",
 "url": "https://www.mdpi.com/2673-2688/7/7/257/pdf?version=1783853566",
-"date": "2026-10-18"
-},
-{
-"title": "Uncovering the asymmetric information content of high-frequency options",
-"learned": "The authors split the high-frequency moves of option prices into up-moves and down-moves (semivariances) and signed jumps, using SPY options and 15 single stocks. The downside moves of out-of-the-money calls and the upside moves of OTM puts help predict future volatility, the variance risk premium and next-month excess returns, beyond plain total option volatility. A volatility-timing strategy built on these measures gained up to 206 basis points a year out of sample for a risk-averse investor.",
-"concepts": [
-"realized semivariance",
-"signed jumps",
-"OTM option returns",
-"volatility timing",
-"variance risk premium"
-],
-"relevance": 2,
-"verdict": "DOESN'T FIT MY DATA - The idea requires intraday OTM call and put option prices to compute realized semivariances, which are not available in the provided dataset (only end\u2011of\u2011day surface metrics are present).",
-"url": "https://doi.org/10.1016/j.jbankfin.2026.107720",
-"date": "2026-10-18"
-},
-{
-"title": "Stock Market Uncertainty and the Stock-Bond Return Relation",
-"learned": "This older study links daily stock and Treasury bond moves to stock-market uncertainty, measured by index option implied volatility and unusually high trading volume. When implied volatility is high, stocks and bonds tend to move less together in the following period, and on days when implied volatility jumps, bonds tend to do well relative to stocks (a flight to safety). In plain terms: bonds diversify a stock portfolio best exactly when fear is high. The abstract gives no specific numbers.",
-"concepts": [
-"stock-bond correlation",
-"implied volatility",
-"flight to quality",
-"stock turnover"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.17615/6dzv-pw48",
 "date": "2026-10-18"
 }
 ]

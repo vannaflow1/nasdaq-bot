@@ -13,7 +13,7 @@ This paper studies the use of TimeGAN-generated scenarios in Rachev-ratio portfo
 The paper explores the use of generated scenarios in portfolio optimization, which is relevant to traders and quants, but the focus on Rachev-ratio optimization and TimeGAN scenarios limits its direct applicability.
 
 ## Concepts
-timegan, rachev ratio, portfolio optimization, scenario generation, [[tail risk]]
+timegan, rachev ratio, portfolio optimization, [[scenario generation]], [[tail risk]]
 
 ## Idea
 Can a hybrid approach combining historical and generated scenarios improve portfolio performance in a Rachev-ratio optimization framework?
