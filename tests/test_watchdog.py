@@ -39,13 +39,13 @@ class Rules(unittest.TestCase):
     def test_weekend_does_not_expect_session_jobs(self):
         sat = datetime(2026, 11, 21, 19, 0, tzinfo=UTC)
         bad = W.check(sat, fetcher(now=sat, stale_runs=("chain-snap.yml", "bias.yml", "session.yml"),
-                                   stale_paths=("knowledge/data/chains", "knowledge/bias_log.csv")), root="/nonexistent")
+                                   stale_paths=("knowledge/data/chains/QQQ", "knowledge/bias_log.csv")), root="/nonexistent")
         self.assertEqual(bad, {})
 
     def test_market_holiday_skips_market_outputs_but_not_runs(self):
         thanksgiving = datetime(2026, 11, 26, 19, 0, tzinfo=UTC)
         self.assertTrue(W.is_holiday(thanksgiving))
-        bad = W.check(thanksgiving, fetcher(now=thanksgiving, stale_paths=("knowledge/data/chains", "knowledge/bias_log.csv")), root="/nonexistent")
+        bad = W.check(thanksgiving, fetcher(now=thanksgiving, stale_paths=("knowledge/data/chains/QQQ", "knowledge/bias_log.csv")), root="/nonexistent")
         self.assertEqual(bad, {})
         self.assertTrue(W.is_holiday(datetime(2026, 11, 27, 3, 0, tzinfo=UTC), since_h=-1.0))     # the night after counts as the holiday's session
 

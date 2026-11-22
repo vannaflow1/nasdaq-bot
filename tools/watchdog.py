@@ -59,7 +59,7 @@ OUTPUTS = [
     ("knowledge/eta_history.csv",      "F10/F13 timer",                                ALL,     0.0,  24.0, {"every": 80 * 60}, False),
     ("knowledge/families.json",        "forward-test numbers",                         TUE_SAT, 13.0, 24.0, {"since": 4.0}, True),
     ("knowledge/data/archive",         "futures bar archive files",                    TUE_SAT, 2.5,  20.0, {"since": -1.0}, True),
-    ("knowledge/data/chains",          "option-chain snapshot files",                  WEEK,    15.5, 21.0, {"every": 120}, True),
+    ("knowledge/data/chains/QQQ",      "option-chain snapshots (CBOE data actually saved)",                  WEEK,    15.5, 21.0, {"every": 120}, True),
     # 16 Nov 2026: GitHub dropped all six morning tries; one late run "succeeded" at 09:43 Lux without posting.
     ("knowledge/london_today.json",    "London outlook was NOT posted this morning",   WEEK,    8.6,  11.9, {"since": 6.0}, False),
     ("knowledge/bias_log.csv",         "bias log (silent checks)",                     WEEK,    17.0, 24.0, {"since": 13.0}, True),
