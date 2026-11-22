@@ -1,0 +1,10 @@
+[
+ {
+  "title": "🗓️ Sunday review, 22 Nov 2026",
+  "body": "Nothing to judge this week: the review queue is empty (the idea engine produced 0 PROMISING results in week 47) and no new PROMISING STRATEGY appeared in the strategy lab. All 18 strategies the lab logged from 15-20 Nov ended 'NOT CONFIRMED: too few trades' (several with 0-10 trades in 2014-2023) - the generated specs keep stacking 3-4 narrow filters (gex_rank, pw_gap_fill, pw_takes_pdh, tail-day) on top of a level confluence, which leaves almost no qualifying days. No wishes for Claude were open, so no self-upgrade was made; the 5 open wishes (#19, #28, #34, #37, #43) are for Yannis (intraday GEX data, family decisions)."
+ },
+ {
+  "title": "🪞 Weekly reflection (week 47)",
+  "body": "Week 47 was the quietest test week since tracking began: the engine tested 44 ideas (58, 56 and 58 in the three weeks before), 30 were NOT CONFIRMED, 2 did not fit the data, 12 failed to translate, and none were PROMISING. The library gained 21 papers (15-22 Nov, none dated 16-19 Nov), dominated by market-making reinforcement learning, realized-volatility forecasting and option-pricing reviews. Every one that could be run on real QQQ option prices lost money per trade (e.g. -7.0 bp on 461 sell-vol trades, -3.4 bp on 961, -7.2 bp on 844 buy-vol trades), and the volatility-forecast review improved the range-forecast miss by only 0.3% (0.587% -> 0.585%). The 'limits of ML in daily return forecasting' paper replicated its own title on Volta's data: hit rate 50.4% against 56.5% for always-long. Three ideas needed intraday 5-minute realized-variance or simulated order-book data that Volta does not have, and two (rough volatility from market making, Merton jump-diffusion calibration) are still queued."
+ }
+]
