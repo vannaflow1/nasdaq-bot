@@ -797,9 +797,9 @@
   "gemini": {
    "status": "out_of_time",
    "date": "2026-11-23",
-   "attempts": 1,
+   "attempts": 2,
    "branch": null,
-   "summary": "stopped after 45 minutes (5 model turns)",
+   "summary": "stopped after 45 minutes (11 model turns)",
    "guard": null
   }
  }

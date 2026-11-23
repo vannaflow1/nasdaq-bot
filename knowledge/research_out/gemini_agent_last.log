@@ -2,20 +2,26 @@
  "wish": 46,
  "title": "Provide full 5‑minute intraday GEX rank series for 12 years",
  "outcome": "out_of_time",
- "summary": "stopped after 45 minutes (5 model turns)",
+ "summary": "stopped after 45 minutes (11 model turns)",
  "how_to_use": "",
  "date": "2026-11-23",
- "steps": 5,
+ "steps": 11,
  "models": [
   "gemini-flash-lite-latest"
  ],
- "calls_left_today": 85,
+ "calls_left_today": 6,
  "status": "out_of_time",
  "log": [
   "0: search(pattern='gex') -> './outlook.py:168:    import qqq_gex_daily as q\\n./outlook.py:300:    import qqq_gex_daily as q\\n./opti'",
-  "1: search(path_glob='*.py', pattern='gex') -> './outlook.py:168:    import qqq_gex_daily as q\\n./outlook.py:300:    import qqq_gex_daily as q\\n./opti'",
-  "2: search(pattern='intraday') -> './om.py:101:# ---------------------------------------------------------------- intraday confluences '",
-  "3: search(pattern='chain_snap') -> './tools/chain_snap.py:1:\"\"\"tools/chain_snap.py - intraday 0-DTE option chain snapshots (wish #23, 1 '",
-  "4: list_dir(path='tools') -> '__init__.py  (0 bytes)\\nbar_archive.py  (3040 bytes)\\nbuild_market_bars.py  (3842 bytes)\\nchain_series.'"
+  "1: search(pattern='gex_history') -> './qqq_gex_daily.py:23:  gex_history.csv   - date, gexn (seeded with 2011-2025 history; appends daily'",
+  "2: list_dir(path='.') -> '.gitattributes  (257 bytes)\\n.github/\\n.gitignore  (118 bytes)\\nREADME.md  (1052 bytes)\\n__pycache__/\\nai'",
+  "3: read_file(start_line='1', path='qqq_gex_daily.py', max_lines='100') -> 'qqq_gex_daily.py (286 lines; showing 1-100)\\n1: \"\"\"\\n2: qqq_gex_daily.py  -  daily QQQ dealer-gamma (G'",
+  "4: search(path_glob='*.py', pattern='intraday') -> './om.py:101:# ---------------------------------------------------------------- intraday confluences '",
+  "5: search(pattern='chain', path_glob='tools/*.py') -> 'tools/chain_snap.py:1:\"\"\"tools/chain_snap.py - intraday 0-DTE option chain snapshots (wish #23, 1 No'",
+  "6: read_file(max_lines='120', start_line='1', path='tools/chain_series.py') -> 'tools/chain_series.py (92 lines; showing 1-92)\\n1: \"\"\"tools/chain_series.py - intraday option mid-pri'",
+  "7: search(path_glob='*.py', pattern='gex') -> './outlook.py:168:    import qqq_gex_daily as q\\n./outlook.py:300:    import qqq_gex_daily as q\\n./opti'",
+  "8: search(path_glob='*.py', pattern='gex_rank') -> './idea_lab.py:19:BASE = [\"l_bot\", \"l_rng\", \"l_rng5\", \"l_rng20\", \"event_prem\", \"term\", \"l_iv30\", \"gex'",
+  "9: search(path_glob='*.py', pattern='gexn') -> './nasdaq_bot.py:134:        g, past = h.gexn.iloc[-1], h.gexn.iloc[:-1].tail(252).to_numpy(float)\\n./'",
+  "10: search(path_glob='*.py', pattern='gex_history') -> './qqq_gex_daily.py:23:  gex_history.csv   - date, gexn (seeded with 2011-2025 history; appends daily'"
  ]
 }
