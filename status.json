@@ -96,8 +96,10 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 312 papers read (49 more skipped as not relevant enough), 152 ideas tested on my memory, 2 promising.",
+  "LEARNING: 314 papers read (50 more skipped as not relevant enough), 152 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-s (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper shows that double\u2011no\u2011touch (DNT) option prices can differ dramatically between diffusion (Heston) and pure\u2011jump (KoBoL) models, especially when barriers are close, and proposes a fast numerical method (GWR\u2011SINH",
   "\u2022 Neural Network Calibration of the Heston Stochastic Volatility Model (\u2605\u2605\u2605\u2606\u2606)",
   "  Neural networks can approximate either the Heston pricing map (MtP) or the inverse map from option surfaces to Heston parameters (PtM). PtM gives the fastest online inference but still needs checks for admissibility and ",
   "  tested: DOESN'T FIT MY DATA - The idea requires a neural\u2011network generated estimate of the Heston parameters, which is not present in Volta's dataset; only the calibrat",
@@ -113,12 +115,9 @@
   "\u2022 From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calib",
   "  tested: NOT CONFIRMED on my data: 0 sell-vol + 844 buy-vol trades on real QQQ option prices, avg -7.2 bp of QQQ per trade (placebo avg -5.3, p=0.700), halves -12.8/-1.6",
-  "\u2022 Prediction Inference for Hybrid Models on Realized Volatility Forecasting (\u2605\u2605\u2605\u2605\u2606)",
-  "  Adding an ARMA mean model to a GARCH\u2011LSTM hybrid improves point forecasts of realized volatility, and a forward\u2011bootstrap plus conformal\u2011prediction adjustment yields multi\u2011step prediction intervals with near\u2011nominal cove",
-  "  tested: NOT CONFIRMED on my data: 961 sell-vol + 0 buy-vol trades on real QQQ option prices, avg -3.4 bp of QQQ per trade (placebo avg -4.2, p=0.333), halves -2.5/-4.2,",
-  "This week's tests: 51 run - 0 promising, 35 not confirmed, 4 don't fit my data, 12 translation failures",
+  "This week's tests: 3 run - 0 promising, 2 not confirmed, 0 don't fit my data, 1 translation failures",
   "",
-  "43 papers waiting in my queue."
+  "40 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -199,8 +198,8 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-22)",
-  "I confirmed that low dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) consistently give a ~0.2% edge, but none of my current intraday rules exploit it. My range\u2011forecast miss\u2011rate (\u224838%) is still the biggest limiter for position sizing. I also noticed that the only modestly successful strategies all involve the open price, suggesting the opening move is the most promising venue for a low\u2011gex edge.",
+  "VOLTA'S SELF-CHECK (2026-11-23)",
+  "I confirmed the ~0.2% edge on low\u2011dealer\u2011gamma days but still have no intraday entry rule that captures it. My range forecasts still miss ~38% of the daily swing, limiting position sizing and risk estimates. Near\u2011miss features that blend recent range and iv (e.g., 0.5*iv30+0.3*rv20+0.2*rng) gave tiny lifts but never crossed significance. I need a concrete, testable mechanism that links low GEX rank to the opening price move and then to a profitable early\u2011session trade.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",
@@ -208,7 +207,7 @@
   "#43 [needs the owner] Family proposal: LowGex_OpenBreakout - A clear one\u2011sentence mechanism (low dealer gamma \u2192 larger early moves) exists but no systematic family of variants has been built yet. A fam",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
-  "#45 [for Claude] Provide 5\u2011minute intraday GEX rank series for the full history - All my near\u2011miss features and the new strategy rely on accurate, high\u2011frequency GEX rank; current series is missing.",
+  "#46 [for Claude] Provide full 5\u2011minute intraday GEX rank series for 12 years - All current tests lack sufficient granularity; a complete intraday GEX time\u2011series will let me evaluate entry timing, intra\u2011session dynamics",
   "",
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],

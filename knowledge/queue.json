@@ -1,38 +1,5 @@
 [
  {
-  "id": "openalex:W4389500878",
-  "title": "Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-switching L\u00e9vy models",
-  "abstract": "We analyze the qualitative differences between prices of double barrier no-touch options in the Heston model and pure jump KoBoL model calibrated to the same set of the empirical data, and discuss the potential for arbitrage opportunities if a jump process fits the joint dynamics of the underlying and exotic option of interest well but the counterparty uses a diffusion model for pricing, which fits vanilla prices equally well or even marginally better. We explain fundamental difficulties for pricing barrier options under L\u00e9vy processes of infinite activity and locally finite variation, with drift, using the numerical methods available in the literature, and develop a new efficient method based on the Gaver-Wynn-Rho acceleration applied to the Bromwich integral. The SINH-acceleration and simplified trapezoid rule are used to evaluate perpetual double barrier options for each value of the spectral parameter in the GWR-algorithm. The program in Matlab running on a Mac with moderate characteristics achieves the precision of the order of E-5 and better in several dozens of milliseconds; the precision E-07 is achievable in about 0.1 s. We extend the GWR-SINH method to regime-switching models and regime-switching models with memory. We outline approximations of models with stochastic volatility and interest rate and lifted Heston model by regime-switching models and the fractional Heston model by a regime-switching model with memory.",
-  "url": "https://arxiv.org/pdf/2312.03915",
-  "source": "OpenAlex",
-  "date": "2026-11-04",
-  "score": 11,
-  "queued": "2026-11-08",
-  "text_file": "knowledge/papers/openalex_W4389500878.txt"
- },
- {
-  "id": "openalex:W7225268591",
-  "title": "Cross validation protocol sensitivity in small sample financial deep learning for gold price classification",
-  "abstract": "This study develops a pretrained visual representation pipeline for financial time series classification, applied to gold futures (GC = F) direction prediction, under a chronologically purged and embargoed cross validation protocol that avoids residual leakage a randomly assigned protocol can permit between non overlapping windows. Gold futures closing prices (2000\u20132025) are segmented into 207 non overlapping 30 day windows, rendered as three encodings (line, candlestick, Gramian Angular Field), and processed by pretrained visual encoders (DINOv2, ConvNeXt Tiny, CLIP) with balanced three class labels (SELL/HOLD/BUY). An exploratory encoder selection stage identifies the dual fusion of ConvNeXt Tiny and CLIP as the best of seven combinations (single split accuracy 73.8%; cross validated accuracy 64.0% \u00b1 6.0%); DINOv2 is evaluated only at this stage. This study\u2019s primary, confirmatory result comes from a single pass, five fold, purged and embargoed cross validation applied to six model and fusion variants: a raw OHLC baseline and three sequence native baselines (LSTM, GRU, a lightweight Transformer) remain indistinguishable from the 33.3% chance level, while the two pretrained visual representations retain a smaller but positive signal (ConvNeXt+CLIP: 44.0% accuracy, MCC = 0.158; Multi Encoding Fusion: 42.0% accuracy, MCC = 0.129). The 44.0% figure, not the exploratory 64.0% estimate, is this study\u2019s headline finding; a transaction cost backtest of the four non visual representations shows flat to mildly positive returns despite near chance accuracy. Pretrained visual representations retain a modest, above chance signal under a conservative protocol, underscoring that reporting cross validation protocol alongside headline accuracy is essential at this sample size.",
-  "url": "https://www.nature.com/articles/s41598-026-77141-0_reference.pdf",
-  "source": "OpenAlex",
-  "date": "2026-11-04",
-  "score": 11,
-  "queued": "2026-11-08",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7225713860",
-  "title": "Smile-Consistent Analysis of Crude Oil Spread Options",
-  "abstract": "We present an empirical study of the Bachelier implied volatility smile for spread options on crude oil futures. It is known that the at-the-money (ATM) spread implied volatility is simply related to the futures prices and volatilities and their correlation. Assuming that the underlying futures prices follow correlated local volatility models, it was shown recently that a similar relation holds for the ATM spread skew. Using market data from CME Group, we present tests of the spread skew predictions for WTI 1M Calendar Spread Options (CSO) and WTI\u2013Brent crude oil spread options. The predictions are in good qualitative agreement with market data for strikes sufficiently close to the ATM point.",
-  "url": "https://doi.org/10.3390/risks14110261",
-  "source": "OpenAlex",
-  "date": "2026-11-10",
-  "score": 11,
-  "queued": "2026-11-15",
-  "text_failed": true
- },
- {
   "id": "openalex:W7225198865",
   "title": "Quantifying Repair Risk in Crypto Option Surfaces",
   "abstract": "Option desks adjust crypto option quotes into price surfaces that remain within bid-ask intervals and satisfy standard no-arbitrage restrictions across strikes before computing Greeks, hedge quantities, or risk measures. For the same quote panel, however, these constraints may admit multiple such surfaces, which we call admissible repairs, with different downstream outputs. We define the resulting variation as repair risk and propose repair-risk validation, a matched framework for quantifying dispersion in Greeks, hedge quantities, and risk measures. The mechanism is finite-difference amplification: two admissible repairs within price distance $\\varepsilon$ can differ in local normalized-strike curvature by $4\\varepsilon/h^2$, where $h$ is local normalized-strike spacing. We evaluate repair risk on Deribit BTC and ETH option chains, using $L_1$ and $L_2$ projections of midpoint prices onto the same admissible set as matched controls. Across 108 matched evaluations spanning 18 sampled calendar months, the median 90th percentile of the scaled spot-gamma gap for $L_2$ versus the $\u03c1=10$ smoothness-penalized repair is nearly twenty times the matched $L_1$--$L_2$ control. We also instantiate NN-Proj, a neural-projection repair, to test whether learned repairs exhibit repair risk. Despite good held-out fit, its downstream outputs remain distinct from those of classical repairs. Across five seeds with the same training window and architecture, its curvature dispersion exceeds the matched $L_1$--$L_2$ control in 17 of 18 months ($p=1.45\\times10^{-4}$). For a USD 1 million risk reversal, switching from $L_2$ to the $\u03c1=10$ repair shifts the median 90th-percentile hedge notional by 18.62 basis points of gross spot notional. VaR-style estimates also exhibit greater dispersion across repairs. The repair rule is therefore part of the risk model, not merely a feasibility check.",

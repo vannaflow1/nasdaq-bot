@@ -1,4 +1,4 @@
-scanned 0 papers, queued 0, queue size 46 []
+scanned 0 papers, queued 0, queue size 43 []
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
@@ -66,12 +66,15 @@ scanned 0 papers, queued 0, queue size 46 []
 /home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (2*): Replication package for: Arbitrage-Constrained Neural Interpolation of
+read (3*): Alternative models for FX, arbitrage opportunities and efficient prici
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (2*): Dynamic h(L)GJMM: conditional volatility surfaces, martingale coupling
+skip (2*): Cross validation protocol sensitivity in small sample financial deep l
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (2*): A Comparative Analysis of Volatility Predictions via EGARCH, Transform
-read 3, AI units today 3747/7000
-curiosity asked: On days when the market shows trending behavior (Hurst > 0.5), does a higher volatility risk premium (vrp) increase the probability that Nasdaq‑100 trades above the overnight high (y_took_overnight_high)?
-tested: On days when the market shows trending behavior (Hurst > 0.5 -> NOT CONFIRMED on my data: FACT: happens on 65% of 2907 sessions (2014-19: 65%, 2020-25: 65
-testing used 141 AI units
+read (1*): Smile-Consistent Analysis of Crude Oil Spread Options
+read 3, AI units today 259/7000
+self-check: I confirmed the ~0.2% edge on low‑dealer‑gamma days but still have no intraday entry rule that captures it. My range forecasts still miss ~38% of the daily swing, limiting position sizing and risk est | queued 2 | new wishes 1
+curiosity asked: On days when the overnight gap is large relative to the 20‑day average NY range **and** the short‑term IV term structure is steep (term > 1.2), is the probability of the gap being filled lower than on other days?
+tested: What is the average signed return of NQ in the first 30 minu -> NOT CONFIRMED on my data: FACT: average 0.00915, median 0.0259 over 2907 sessions (2014-19
+tested: Strategy: LowGex_OpenBreakout -> TRANSLATION FAILED - stop must be {points: 2-200}, {range: 0.03-1.5} or (oco only) {other_
+tested: On days when the overnight gap is large relative to the 20‑d -> NOT CONFIRMED on my data: FACT: happens on 63% of 2808 sessions (2014-19: 63%, 2020-25: 62
+testing used 568 AI units

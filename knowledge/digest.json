@@ -1,5 +1,34 @@
 [
 {
+"title": "Smile-Consistent Analysis of Crude Oil Spread Options",
+"learned": "The paper tests a theoretical relation between ATM spread implied volatility and the underlying futures' volatilities & correlation, extending it to the ATM spread skew using local volatility models on crude oil spread options.",
+"concepts": [
+"ATM spread volatility",
+"spread skew",
+"local volatility model",
+"crude oil calendar spreads"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.3390/risks14110261",
+"date": "2026-11-23"
+},
+{
+"title": "Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-switching L\u00e9vy models",
+"learned": "The paper shows that double\u2011no\u2011touch (DNT) option prices can differ dramatically between diffusion (Heston) and pure\u2011jump (KoBoL) models, especially when barriers are close, and proposes a fast numerical method (GWR\u2011SINH) for pricing such options in L\u00e9vy and regime\u2011switching models.",
+"concepts": [
+"double\u2011no\u2011touch options",
+"pure\u2011jump L\u00e9vy models",
+"regime\u2011switching",
+"Gaver\u2011Wynn\u2011Rho acceleration",
+"model mis\u2011pricing arbitrage"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://arxiv.org/pdf/2312.03915",
+"date": "2026-11-23"
+},
+{
 "title": "A Comparative Analysis of Volatility Predictions via EGARCH, Transformer and Hybrid EGARCH-Transformer Models: Changes in Forecasting Ability after Introducing Sentiment Factors",
 "learned": "The paper compares three ways to forecast Bitcoin volatility \u2013 a classic EGARCH model, a deep\u2011learning Transformer, and a hybrid that feeds EGARCH\u2019s one\u2011step\u2011ahead variance into a Transformer. Adding Reddit sentiment sometimes helps, sometimes hurts, and overall the quality of features matters more than model complexity.",
 "concepts": [
@@ -4269,34 +4298,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://doi.org/10.3386/w15260",
-"date": "2026-10-18"
-},
-{
-"title": "Time Series Momentum",
-"learned": "Across 58 liquid futures (equity indexes, currencies, commodities, bonds), an asset's own past 1-12 month return predicts its next month: winners keep rising and losers keep falling, with some reversal over longer horizons. A diversified portfolio of these trend trades earned strong returns with little exposure to normal risk factors and did best in extreme markets. Speculators profit from it at the expense of hedgers.",
-"concepts": [
-"time series momentum",
-"trend following",
-"futures",
-"under-reaction"
-],
-"relevance": 2,
-"verdict": "NOT CONFIRMED on my data: 2227 signal days, hit 56.4% (always-long 56.5%), strategy +3.4 bps/day vs +5.4 for the same average exposure held constantly -> timing adds -2.0 bps/day, t=-0.74, positive in 4/10 years",
-"url": "https://www.sciencedirect.com/science/article/pii/S0304405X11002613/pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Risk Premia in the Bitcoin Market",
-"learned": "Bitcoin is far more volatile than the S&P 500 and its options carry a larger variance risk premium (sellers of volatility are paid more). Most of the S&P 500's equity premium comes from mildly negative return days, while for Bitcoin those moderate down moves explain only about a third of its premium. Bitcoin's premia shift between two regimes: in calm markets investors pay more for variance and upside, and in volatile markets the premium is more balanced and smaller.",
-"concepts": [
-"variance risk premium",
-"bitcoin options",
-"risk-neutral density",
-"volatility regimes"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://arxiv.org/pdf/2410.15195",
 "date": "2026-10-18"
 }
 ]
