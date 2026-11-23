@@ -88,8 +88,13 @@
   "No FOMC, CPI or jobs report on Fri 20 Nov."
  ],
  "learning": [
-  "LEARNING: 314 papers read (50 more skipped as not relevant enough), 152 ideas tested on my memory, 2 promising.",
+  "LEARNING: 317 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in o",
+  "  tested: DOESN'T FIT MY DATA - The idea requires daily full option\u2011price surfaces and a calibrated jump\u2011diffusion model, which need per\u2011strike option data and a pricing ",
+  "\u2022 Revisiting Equity-Bond Diversification under Tail Risk and Structural Market Change: Evidence from Global ETFs (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper compares minimum\u2011variance and CVaR\u2011based portfolio optimization for equity\u2011bond ETFs (2020\u20112024), finding lower VaR/CVaR but not higher risk\u2011adjusted returns versus an equal\u2011weight benchmark; GARCH outperforms ",
   "\u2022 Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-s (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper shows that double\u2011no\u2011touch (DNT) option prices can differ dramatically between diffusion (Heston) and pure\u2011jump (KoBoL) models, especially when barriers are close, and proposes a fast numerical method (GWR\u2011SINH",
   "\u2022 Neural Network Calibration of the Heston Stochastic Volatility Model (\u2605\u2605\u2605\u2606\u2606)",
@@ -101,15 +106,9 @@
   "\u2022 Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An E (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper shows that simple ridge or LSTM models cannot reliably replace full Merton jump\u2011diffusion MLE for parameter estimation, but a directly trained LSTM can modestly improve 21\u2011day realized volatility forecasts vers",
   "  tested: NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.530% (+0.2%), better in 5/9 unseen years",
-  "\u2022 Algorithmic Market Making Can Lead to Rough Volatility Through the Order Book (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper shows that algorithmic market\u2011making desks, each updating order distances by a gradient rule whenever they receive new information, generate order\u2011book volume dynamics that follow a stochastic PDE. The asynchro",
-  "  tested: NOT CONFIRMED on my data: 1130 signal days, hit 43.5% (always-long 56.4%), strategy -3.7 bps/day vs -3.5 for the same average exposure held constantly -> timing",
-  "\u2022 From Black-Scholes to Jump-Diffusion: A Narrative Review of Option pricing Model Evolution (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper reviews how option pricing moved from Black\u2011Scholes to models that add stochastic volatility, jumps, and their combination, noting that richer models price short\u2011dated OTM options better but are harder to calib",
-  "  tested: NOT CONFIRMED on my data: 0 sell-vol + 844 buy-vol trades on real QQQ option prices, avg -7.2 bp of QQQ per trade (placebo avg -5.3, p=0.700), halves -12.8/-1.6",
-  "This week's tests: 3 run - 0 promising, 2 not confirmed, 0 don't fit my data, 1 translation failures",
+  "This week's tests: 5 run - 0 promising, 3 not confirmed, 1 don't fit my data, 1 translation failures",
   "",
-  "40 papers waiting in my queue."
+  "37 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

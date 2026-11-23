@@ -1,5 +1,50 @@
 [
 {
+"title": "PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models",
+"learned": "The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in one linear least\u2011squares solve, yielding prices, Greeks and exact price\u2011sensitivities to model parameters for fast gradient\u2011based calibration. Subtracting a Black\u2011Scholes baseline dramatically reduces pricing error (\u2248100\u00d7 for jumps), making calibrated jump parameters accurate to within ~3% versus errors up to 50% without the subtraction.",
+"concepts": [
+"random\u2011feature extreme learning machine",
+"jump\u2011diffusion pricing",
+"analytic jump integral",
+"Black\u2011Scholes subtraction",
+"gradient\u2011based calibration"
+],
+"relevance": 3,
+"verdict": "DOESN'T FIT MY DATA - The idea requires daily full option\u2011price surfaces and a calibrated jump\u2011diffusion model, which need per\u2011strike option data and a pricing engine that Volta does not provide. Only aggregated implied vol metrics (atm7, atm30, etc.) and Heston parameters are available, insufficient for calibrating a Merton jump\u2011diffusion model each day.",
+"url": "https://arxiv.org/pdf/2611.19792",
+"date": "2026-11-23"
+},
+{
+"title": "Revisiting Equity-Bond Diversification under Tail Risk and Structural Market Change: Evidence from Global ETFs and Model-Implied Option Prices",
+"learned": "The paper compares minimum\u2011variance and CVaR\u2011based portfolio optimization for equity\u2011bond ETFs (2020\u20112024), finding lower VaR/CVaR but not higher risk\u2011adjusted returns versus an equal\u2011weight benchmark; GARCH outperforms FIGARCH for volatility modeling, and a Normal Inverse Gaussian model is used to generate option prices.",
+"concepts": [
+"CVaR optimization",
+"GARCH vs FIGARCH",
+"Normal Inverse Gaussian",
+"downside\u2011risk metrics",
+"ETF diversification"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://arxiv.org/pdf/2611.21897",
+"date": "2026-11-23"
+},
+{
+"title": "Quantifying Repair Risk in Crypto Option Surfaces",
+"learned": "When building risk models for crypto options, the way you smooth or adjust raw option quotes into an arbitrage\u2011free surface (the \"repair\") can cause large differences in Greeks and hedge sizes even if the adjusted prices are very close.",
+"concepts": [
+"surface repair",
+"arbitrage\u2011free interpolation",
+"Greek dispersion",
+"repair risk",
+"neural projection"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.1145/3858063.3858699",
+"date": "2026-11-23"
+},
+{
 "title": "Smile-Consistent Analysis of Crude Oil Spread Options",
 "learned": "The paper tests a theoretical relation between ATM spread implied volatility and the underlying futures' volatilities & correlation, extending it to the ATM spread skew using local volatility models on crude oil spread options.",
 "concepts": [
@@ -4255,49 +4300,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://utoronto.scholaris.ca/bitstreams/e68dd3e1-7442-48ae-b2ad-1bd9980a8452/download",
-"date": "2026-10-18"
-},
-{
-"title": "An Empirical Analysis of Stock and Bond Market Liquidity",
-"learned": "Modelling bid-ask spreads, depth, returns, volatility and order flow in stocks and Treasuries together, the authors find that liquidity and volatility shocks in the two markets are significantly correlated, so common forces drive both. Volatility shocks help predict later changes in liquidity, and in crises monetary easing goes with better liquidity. Money flowing into government bond funds forecasts bond market liquidity. The abstract gives no specific numbers.",
-"concepts": [
-"market liquidity",
-"bid-ask spread",
-"cross-market dynamics",
-"volatility shocks",
-"fund flows"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.2139/ssrn.289219",
-"date": "2026-10-18"
-},
-{
-"title": "Option Return Predictability",
-"learned": "For single-stock options, the return to writing delta-hedged calls can be predicted from company traits: it is lower for high-priced, more profitable firms and higher for firms with lots of cash, volatile cash flows, new share issuance, distress risk and analysts who disagree. Long-short option portfolios built this way had annual Sharpe ratios above two and stayed profitable after trading costs. Two option-specific factors explain the profits; ordinary stock risk factors do not.",
-"concepts": [
-"delta-hedged option returns",
-"cross-section",
-"firm characteristics",
-"option factors"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://utoronto.scholaris.ca/bitstreams/5c530340-f282-4a35-a281-76336e3757b1/download",
-"date": "2026-10-18"
-},
-{
-"title": "The Determinants of Stock and Bond Return Comovements",
-"learned": "Using a model that ties stock-bond co-movement to interest rates, inflation, growth, cash flows, risk aversion, uncertainty and liquidity, the authors find that macro fundamentals explain little of how stocks and bonds move together; liquidity measures matter more. Macro factors help explain bond volatility, while the variance premium is key for explaining stock volatility. The model mostly fails to fit the stock-bond covariance itself. The abstract gives no specific numbers.",
-"concepts": [
-"stock-bond correlation",
-"dynamic factor model",
-"liquidity",
-"variance premium"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.3386/w15260",
 "date": "2026-10-18"
 }
 ]
