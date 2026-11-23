@@ -1,17 +1,17 @@
-== Wed Nov 18 16:53:45 UTC 2026
+== Mon Nov 23 09:05:27 UTC 2026
 
- ⛅️ wrangler 3.90.0 (update available 4.164.0)
+ ⛅️ wrangler 3.90.0 (update available 4.166.0)
 ----------------------------------------------
 
-Total Upload: 27.08 KiB / gzip: 10.09 KiB
+Total Upload: 28.00 KiB / gzip: 10.36 KiB
 Your worker has access to the following bindings:
 - AI:
   - Name: AI
-Uploaded minivanna (1.99 sec)
-Deployed minivanna triggers (0.70 sec)
+Uploaded minivanna (1.36 sec)
+Deployed minivanna triggers (0.34 sec)
   schedule: */5 * * * *
-Current Version ID: 3381fcde-ded6-4937-887d-78be4d01b894
+Current Version ID: 8dd2224a-7c9f-4119-8b4e-4ee2be644eb3
 
 health check -> Volta is running
 == workers on this account:
-['minivanna'] []
+['minivanna', 'vecton-worker'] []
