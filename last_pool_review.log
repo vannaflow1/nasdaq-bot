@@ -68,8 +68,8 @@
   D = I.memory()[I.BASE + ["y_rng"]].join(F, rsuffix="_p").replace([np.inf, -np.inf], np.nan).dropna()
 skip garch + lag(iv30, 1) unknown column 'garch'
 {
- "date": "2026-11-21",
- "pool_size": 8,
+ "date": "2026-11-23",
+ "pool_size": 9,
  "pick_years": [
   2020,
   2021,
@@ -81,15 +81,17 @@ skip garch + lag(iv30, 1) unknown column 'garch'
   2025
  ],
  "chosen": [
+  "0.5*iv30 + 0.3*rv20 + 0.2*rng",
+  "next_opex",
   "log(impl) * rank(iv30, 252)",
-  "next_opex"
+  "0.5*lag(rng,1) + 0.3*lag(rng5,1) + 0.2*l"
  ],
- "gain_pick": 1.76,
+ "gain_pick": 2.77,
  "gain_test": [
-  -0.73,
-  -0.63,
-  -0.02
+  -0.39,
+  -0.77,
+  -0.44
  ],
- "avg_test": -0.46,
+ "avg_test": -0.54,
  "verdict": "NOT CONFIRMED - the combination does not hold on unseen years"
 }
