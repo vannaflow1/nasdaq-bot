@@ -10,6 +10,9 @@ permissions:
 concurrency:
   group: chain-snap        # own group: never displaces the queued 'state' runs; new files only, so pushes rebase cleanly
   cancel-in-progress: false
+env:                                                   # CBOE fallback through Volta's worker (cboe.py)
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 jobs:
   snap:
     runs-on: ubuntu-latest

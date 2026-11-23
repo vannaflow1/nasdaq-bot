@@ -10,6 +10,9 @@ permissions:
 concurrency:
   group: session
   cancel-in-progress: false
+env:                                                   # CBOE fallback through Volta's worker (cboe.py)
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 jobs:
   loop:
     runs-on: ubuntu-latest

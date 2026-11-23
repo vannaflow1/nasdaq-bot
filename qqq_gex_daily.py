@@ -108,21 +108,9 @@ def load_chain(path=None):
         raw = json.load(open(path))
     else:
         print("downloading CBOE QQQ chain (can take a minute on a slow connection)...", flush=True)
-        req = urllib.request.Request(URL, headers={"User-Agent": "Mozilla/5.0",
-                                                   "Accept-Encoding": "gzip"})
-        for attempt in range(4):                     # CBOE sometimes answers 403/5xx for a while (20 Nov 2026: the whole
-            try:                                     # Friday evening run died on one 403) -> wait and try again
-                resp = urllib.request.urlopen(req, timeout=120); break
-            except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as e:
-                if attempt == 3: raise
-                import time
-                print(f"  CBOE download failed ({e}); retrying in {[20, 60, 180][attempt]} s", flush=True)
-                time.sleep([20, 60, 180][attempt])
-        body = resp.read()
-        if resp.headers.get("Content-Encoding", "") == "gzip" or body[:2] == b"\x1f\x8b":
-            import gzip
-            body = gzip.decompress(body)
-        print(f"  got {len(body)/1e6:.1f} MB", flush=True)
+        import cboe                                  # direct, or via Volta's worker when CBOE refuses GitHub (since 20 Nov 2026)
+        body = cboe.download(URL, 120)
+        print(f"  got {len(body)/1e6:.1f} MB via {cboe.LAST['via']}", flush=True)
         raw = json.loads(body)
     rows = raw["data"]["options"]
     d = pd.DataFrame(rows)

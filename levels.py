@@ -146,11 +146,8 @@ def wall_lines(w, nq_level, qqq_per_nq=None):
 
 # ------------------------------------------------------------------ earnings implied moves
 def fetch_chain(sym, timeout=240):
-    url = f"https://cdn-api.cboe.com/api/global/delayed_quotes/options/{sym}.json"
-    body = urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout).read()
-    if body[:2] == b"\x1f\x8b":
-        body = gzip.decompress(body)
-    return json.loads(body)
+    import cboe                                       # direct, or via Volta's worker when CBOE refuses GitHub
+    return cboe.chain(sym, timeout)
 
 
 def earnings_move(sym, report_day, when, ts):

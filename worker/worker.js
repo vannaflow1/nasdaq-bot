@@ -261,6 +261,17 @@ export default {
 
   async fetch(req, env, ctx) {
     if (req.method !== "POST") return new Response("Volta is running");
+    if (new URL(req.url).pathname === "/cboe") {               // private relay: CBOE refuses GitHub's servers since 20 Nov 2026
+      const key = req.headers.get("X-Learn-Key") || "";
+      if (!env.LEARN_KEY || key !== env.LEARN_KEY) return new Response("forbidden", { status: 403 });
+      let code = "";
+      try { code = String((await req.json()).code || ""); } catch (e) { /* bad body */ }
+      if (!/^_?[A-Z]{1,6}$/.test(code)) return new Response("bad code", { status: 400 });
+      const up = await fetch(`https://cdn-api.cboe.com/api/global/delayed_quotes/options/${code}.json`, {
+        headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36",
+                   "Accept": "application/json,text/plain,*/*", "Referer": "https://www.cboe.com/" } });
+      return new Response(up.body, { status: up.status, headers: { "Content-Type": "application/json", "X-Via": "volta-worker" } });
+    }
     if (new URL(req.url).pathname === "/ai") {                 // private: background reading uses the free AI quota
       const key = req.headers.get("X-Learn-Key") || "";
       if (!env.LEARN_KEY || key !== env.LEARN_KEY) return new Response("forbidden", { status: 403 });

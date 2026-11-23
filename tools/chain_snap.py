@@ -34,11 +34,8 @@ def in_session(now):
 
 
 def fetch(code):
-    u = f"https://cdn-api.cboe.com/api/global/delayed_quotes/options/{code}.json"
-    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0", "Accept-Encoding": "gzip"})
-    body = urllib.request.urlopen(req, timeout=120).read()
-    if body[:2] == b"\x1f\x8b": body = gzip.decompress(body)
-    return json.loads(body)
+    import cboe                                       # direct, or via Volta's worker when CBOE refuses GitHub (since 20 Nov 2026)
+    return cboe.chain(code, 120)
 
 
 def tidy(raw, sym, today):

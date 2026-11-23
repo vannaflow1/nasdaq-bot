@@ -17,11 +17,8 @@ UA = {"User-Agent": "Mozilla/5.0", "Accept-Encoding": "gzip"}
 def fetch(url=URL, path=None, timeout=180):
     if path:
         return json.load(open(path))
-    resp = urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout)
-    body = resp.read()
-    if body[:2] == b"\x1f\x8b":
-        body = gzip.decompress(body)
-    return json.loads(body)
+    import cboe                                       # direct, or via Volta's worker when CBOE refuses GitHub
+    return cboe.chain(url, timeout)
 
 
 def parse(raw, roots=("NDX", "NDXP")):

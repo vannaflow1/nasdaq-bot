@@ -10,9 +10,8 @@ OUT = os.path.join(HERE, "knowledge", "spx_daily.csv")
 
 
 def load():
-    req = urllib.request.Request(URL, headers={"User-Agent": "Mozilla/5.0", "Accept-Encoding": "gzip"})
-    body = urllib.request.urlopen(req, timeout=240).read()
-    if body[:2] == b"\x1f\x8b": body = gzip.decompress(body)
+    import cboe                                       # direct, or via Volta's worker when CBOE refuses GitHub
+    body = cboe.download(URL, 240)
     print(f"got {len(body) / 1e6:.1f} MB")
     raw = json.loads(body); d = pd.DataFrame(raw["data"]["options"])
     ltt = pd.to_datetime(d.get("last_trade_time"), errors="coerce").dropna() if "last_trade_time" in d else pd.Series(dtype="datetime64[ns]")
