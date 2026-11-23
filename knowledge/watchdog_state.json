@@ -1,14 +1,14 @@
 {
  "open": {
-  "run:prop-search.yml:strategy search": {
-   "msg": "strategy search (prop-search.yml): no successful run when one was due - last success 11 h ago.",
-   "since": "2026-11-23T14:56+00:00"
+  "out:knowledge/data/chains/QQQ": {
+   "msg": "option-chain snapshots (CBOE data actually saved): knowledge/data/chains/QQQ has not changed when it should have - last change 4 days ago. The job may be running without saving its results.",
+   "since": "2026-11-23T16:16+00:00"
   },
   "fail:evening.yml": {
    "msg": "evening recap + tomorrow's forecast (evening.yml): the latest run FAILED - a recent code change broke something.",
    "since": "2026-11-22T15:41+00:00"
   }
  },
- "last_alert": "2026-11-23T14:56+00:00",
- "last_run": "2026-11-23T14:56+00:00"
+ "last_alert": "2026-11-23T16:16+00:00",
+ "last_run": "2026-11-23T16:16+00:00"
 }
