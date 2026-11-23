@@ -1,9 +1,8 @@
 {
- "for": "Fri 20 Nov",
+ "for": "Mon 23 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU - risk \ud83d\udfe0 ELEVATED",
-  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size.",
-  "- Trump posted about tariffs/China/the Fed recently. These have caused sharp, fast drops before (e.g. 10 Oct 2025, China tariff threat: Nasdaq -3.6% that day). Keep stops tight, don't add to losers, don't chase the first spike."
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
+  "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
   "",
@@ -29,30 +28,23 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,673 XP, next level at 10,240)",
-  "Papers read 292 | ideas & strategies tested 238 | prop strategies searched 755,617",
-  "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 11",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +5 papers, +3 tests"
- ],
- "updated": "Sun 22 Nov 18:41 Lux",
+ "level": "NORMAL",
+ "updated": "Mon 23 Nov 15:02 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 16h, ranked by keywords):",
-  "- Nvidia Stock Plunges 12% After Reuters Reports an SEC Probe of Its Accounting. It\u2019s Nvidia\u2019s Worst Day Since DeepSeek and It Has Lost $2.7 Trillion Since October  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- Nvidia, Nasdaq Slide Deepens After Report of SEC Accounting Probe  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- Nvidia shares fall 11.5% as report of SEC accounting probe adds to pressure  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- Nvidia\u2019s accounting practices are focus of probe by Wall Street regulators: report  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- Nvidia stock plunges 12%, rides longest weekly losing streak since 2008 financial crisis  [CNBC tech]\n    NVDA, shock",
-  "- OpenAI's AI models boost AMD's upcoming flagship GPU design by up to 14% in PPA  [Tom's Hardware]\n    AMD, OPENAI, AI chips/capex"
+  "NEWS (last 64h, ranked by keywords):",
+  "- Not Good: Broadcom Loses $200 Billion as Chips Crash and Google Reportedly Cuts AI Chip Plans  [Yahoo (megacaps)]\n    AVGO, GOOGL, AI chips/capex, shock",
+  "- Tollbooths Like Taiwan Semiconductor Rarely Get This Cheap and With October Revenue Up 60%, I am Taking Advantage  [Yahoo (megacaps)]\n    TSM, export/geo, earnings",
+  "- Nvidia shares rise in premarket trading while Anthropic is flat after major tech sell-off  [CNBC tech]\n    NVDA, OPENAI, shock",
+  "- Stock Market Today: Tech Futures, Nvidia Surge After Market Sell-Off; CrowdStrike Plunges On Zscaler Deal (Live Coverage)  [Yahoo (megacaps)]\n    NVDA, shock",
+  "- Nvidia stock plunges 14%, wraps up longest weekly losing streak since 2008 financial crisis  [CNBC tech]\n    NVDA, shock",
+  "- Trump wants Jensen Huang back at Nvidia. What will it take to stop the tech selloff?  [MarketWatch]\n    NVDA, shock"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 64h):",
   "  (Truth Social feed: HTTPError)"
  ],
  "forecast": [
