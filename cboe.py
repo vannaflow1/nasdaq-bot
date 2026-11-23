@@ -73,6 +73,15 @@ def chain(url_or_code, timeout=180):
     return raw
 
 
+def describe(raw):
+    """One line on what a chain holds (rows, quotes with prices, newest trade) - to tell 'refused' from 'empty'."""
+    o = (raw.get("data") or {}).get("options") or []
+    priced = sum(1 for r in o if (r.get("bid") or 0) > 0 and (r.get("ask") or 0) > 0)
+    last = max((str(r.get("last_trade_time") or "") for r in o), default="")
+    return (f"timestamp {raw.get('timestamp')}, spot {(raw.get('data') or {}).get('current_price')}, "
+            f"{len(o)} options, {priced} with bid and ask > 0, newest trade {last or 'none'}")
+
+
 if __name__ == "__main__":
-    c = sys.argv[1] if len(sys.argv) > 1 else "QQQ"
-    b = download(c); print(f"{c}: {len(b) / 1e6:.1f} MB via {LAST['via']}")
+    for c in (sys.argv[1:] or ["QQQ"]):
+        raw = chain(c); print(f"{c}: via {LAST['via']}: {describe(raw)}")
