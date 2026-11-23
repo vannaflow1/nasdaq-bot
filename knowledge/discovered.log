@@ -1,1 +1,5 @@
-no NY open yet
+/home/runner/work/nasdaq-bot/nasdaq-bot/discovered_read.py:29: Pandas4Warning: Timestamp.dayofweek is deprecated and will be removed in a future version. Use Timestamp.day_of_week instead.
+  "k_on_return": (o / float(on.Open.iloc[0]) - 1) * 100, "k_dow": float(s.dayofweek),
+/home/runner/work/nasdaq-bot/nasdaq-bot/discovered_read.py:29: Pandas4Warning: Timestamp.dayofweek is deprecated and will be removed in a future version. Use Timestamp.day_of_week instead.
+  "k_on_return": (o / float(on.Open.iloc[0]) - 1) * 100, "k_dow": float(s.dayofweek),
+no evening features for today
