@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: state
+  group: evening                                   # own group: in the shared 'state' group a newer waiting run cancels this one (23 Nov 2026)
   cancel-in-progress: false
 env:                                                   # CBOE fallback through Volta's worker (cboe.py)
   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

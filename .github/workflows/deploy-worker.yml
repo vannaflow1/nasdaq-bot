@@ -7,7 +7,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: state
+  group: deploy-worker                                   # own group: in the shared 'state' group a newer waiting run cancels this one (23 Nov 2026)
   cancel-in-progress: false
 jobs:
   deploy:
