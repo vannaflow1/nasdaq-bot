@@ -111,7 +111,13 @@ def main(sym="QQQ"):
         p = os.path.join(tmp, f"{s}_{kind}.parquet")
         if not os.path.exists(p):
             print(f"downloading {kind} for {sym}...", flush=True)
-            urllib.request.urlretrieve(BASE.format(s, kind), p)
+            req = urllib.request.Request(BASE.format(s, kind), headers={"User-Agent": "Mozilla/5.0 (volta research)"})
+            with urllib.request.urlopen(req, timeout=600) as r, open(p + ".part", "wb") as f:   # the host refuses Python's default agent
+                while True:
+                    b = r.read(1 << 22)
+                    if not b: break
+                    f.write(b)
+            os.replace(p + ".part", p)
         paths[kind] = p; print(f"  {kind}: {os.path.getsize(p) / 1e6:.0f} MB", flush=True)
     have = pq.ParquetFile(paths["options"]).schema_arrow.names
     missing = [c for c in COLS if c not in have]

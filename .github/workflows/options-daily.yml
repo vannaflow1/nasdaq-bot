@@ -21,7 +21,8 @@ jobs:
       - run: |
           mkdir -p knowledge/data/options_daily
           for s in ${{ github.event.inputs.symbols }}; do
-            python -u tools/options_daily.py "$s" 2>&1 | tee -a knowledge/data/options_daily/build_log.txt || echo "FAILED $s" | tee -a knowledge/data/options_daily/build_log.txt
+            python -u tools/options_daily.py "$s" > /tmp/od.txt 2>&1 || echo "FAILED $s" >> /tmp/od.txt
+            tail -n 25 /tmp/od.txt | tee -a knowledge/data/options_daily/build_log.txt
           done
       - if: always()
         run: for i in 1 2 3; do bash .github/actions_common.sh "options-daily" && break; sleep $((RANDOM % 20 + 5)); done
