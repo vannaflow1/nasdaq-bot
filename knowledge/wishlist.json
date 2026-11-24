@@ -476,7 +476,8 @@
   "evidence": "Low\u2011gex days (gex_rank < 0.2) show +0.2% edge, yet no intraday trades exploit it.",
   "impact": "high",
   "status": "open",
-  "votes": 1
+  "votes": 1,
+  "note": "Owner 2026-11-24: no purchase planned. He is asking around for someone who can share per-strike option data (end-of-day chains with open interest are enough to approximate an intraday GEX profile with 1-min NQ); if nobody can, this data will not come. Do not refile."
  },
  {
   "id": 29,
@@ -632,7 +633,8 @@
   "evidence": "All failing translations cite missing intraday GEX; without it we cannot evaluate low\u2011gamma breakouts precisely.",
   "impact": "high",
   "status": "open",
-  "votes": 5
+  "votes": 5,
+  "note": "Owner 2026-11-24: no purchase planned. He is asking around for someone who can share per-strike option data (end-of-day chains with open interest are enough to approximate an intraday GEX profile with 1-min NQ); if nobody can, this data will not come. Do not refile."
  },
  {
   "id": 38,
