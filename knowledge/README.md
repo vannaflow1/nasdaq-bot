@@ -220,3 +220,10 @@ Diagnosis: Volta's edges are small (~0.05R per trade) against ~1.5-2R of noise p
 
 ## Streak sizing check (wish #11, 23 Oct 2026)
 - `tools/streak_check.py` (read-only; `research_out/streak_check.json`): F10 frozen variant 43, seen years 2014-23 only (1544 days, 2391 trades). Days after >= 2 profit days averaged -0.042R vs +0.108R otherwise (permutation p = 0.75 for "streaks help"); lag-1 daily-R autocorrelation -0.069 (p = 0.006, two-sided). The proposed rule (+0.5x per profit day after the first, cap 2x) cuts edge per unit risked from +0.091 to +0.078R/day and raises the max drawdown from 92.7R to 109.4R. Streak (anti-martingale) sizing is NOT adopted. The negative autocorrelation is a post-hoc observation, not a finding: any sizing rule built on it would be a new candidate needing its own frozen rule (owner/Claude chat), never a change to F10's forward test.
+
+## Owner decisions (24 Nov 2026)
+- Alpha slots: the remaining v2 slots (knowledge/frozen/alpha_slots.json) are kept for EXCEPTIONALLY promising results only.
+  Family wishes #18/#19/#22/#24/#26/#34/#39/#43 (low-gamma open breakout, gamma-flip reversal) declined; F12 already covers low-gamma.
+- Duplicate wishes: introspect.py merges any new wish into an earlier one on the same topic (any status) as a vote, so settled
+  wishes (5-min GEX, low-gamma family, temperature scaling) are no longer refiled.
+- Intraday GEX data (#37/#28): owner is weighing vendor prices; until he decides, it stays an open owner wish.

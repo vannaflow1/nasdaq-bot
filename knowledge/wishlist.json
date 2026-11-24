@@ -289,7 +289,7 @@
   "why": "Low\u2011gamma days show a modest edge, but I lack a systematic, multi\u2011variant strategy to capture it. A family of entry\u2011filter\u2011stop\u2011target combos around the open can generate many independent trades across NQ and ES, providing the statistical power needed for the prop evaluation.",
   "evidence": "Diary: low\u2011gamma adds +0.2% edge; near\u2011miss features improve on low\u2011gamma; only 0.03R edge seen in LowGammaFadeOnHigh (179 trades).",
   "impact": "high",
-  "status": "needs",
+  "status": "declined",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -299,7 +299,7 @@
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
   },
-  "note": "Claude 2026-10-28: family registration is owner/Claude-chat only - the v2 alpha budget is nearly spent (alpha_slots.json: slot 4 = F11, then 0.0023, 0.0023, then nothing), so a new family must be chosen deliberately, not by the self-upgrade run. Evidence so far is thin (LowGammaFadeOnHigh +0.03R over 179 trades). Raise in chat if you want it to take a slot."
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. The low-gamma open breakout is already covered by F12's frozen forward test; a new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 19,
@@ -310,8 +310,9 @@
   "why": "Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the first 15\u202fmin. A family of specs testing entry at the flip, short\u2011term target/stop, and variations in filter (gex_rank, iv30) could provide the needed power.",
   "evidence": "Near\u2011miss +0.2% edge on low\u2011gamma (gex_rank\u202f<\u202f0.2) across 6/9 features; only 1 passed in\u2011sample strategy so far.",
   "impact": "high",
-  "status": "open",
-  "votes": 1
+  "status": "declined",
+  "votes": 1,
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. A new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 20,
@@ -356,9 +357,9 @@
   "why": "Low\u2011gamma days show consistent modest edge; a systematic family of open\u2011breakout variants (different windows, filters, stop/target ratios) can be tested quickly and may yield a robust edge across NQ and ES.",
   "evidence": "Recent diary notes and near\u2011miss features (+0.2% edge on low\u2011gamma days).",
   "impact": "high",
-  "status": "needs",
+  "status": "declined",
   "votes": 1,
-  "note": "Duplicate of wish #18/#20 (Low-Gamma Open Breakout family). Claude 2026-10-31: family registration is owner/Claude-chat only - the v2 alpha budget is nearly spent (alpha_slots.json: slot 4 = F11, then 0.0023, 0.0023, then nothing), so the self-upgrade run does not register families."
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. The low-gamma open breakout is already covered by F12's frozen forward test; a new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 23,
@@ -390,7 +391,7 @@
   "why": "Current low\u2011gamma insights have no systematic trade; a structured family of variants (different entry offsets, stop/target multiples, filter thresholds) could uncover a robust edge.",
   "evidence": "Near\u2011miss +0.2% edge on gex_rank<0.2 across 9/10 features; 179 low\u2011gamma trades historically gave +0.03R but not statistically significant.",
   "impact": "high",
-  "status": "needs",
+  "status": "declined",
   "votes": 1,
   "gemini": {
    "status": "give_up",
@@ -400,7 +401,7 @@
    "summary": "Wish #24 (Family proposal: Low-Gamma Open Breakout (expanded grid)) is already implemented by family F12 ('F2 on Nasdaq, low-gamma days only'), which passed its family test on 22 Oct 2026 and runs on forward test. Registering a new family requires owner/Claude-chat approval and an available v2 alpha slot per protocol rules.",
    "guard": null
   },
-  "note": "Claude 2026-11-02: not granted by the upgrade session - new families may only be registered by the owner/Claude chat (alpha budget nearly spent: alpha_slots.json slot 4 = F11, then 0.0023, 0.0023, then nothing). Also largely a duplicate: F12 (F2 on Nasdaq, low-gamma days, gex rank < 0.5) is already on forward test; an expanded grid of variants would be a post-hoc search on the same low-gamma signal and would need its own slot."
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. The low-gamma open breakout is already covered by F12's frozen forward test; a new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 25,
@@ -432,7 +433,7 @@
   "why": "My diary shows persistent low\u2011gamma edge but no systematic trade; a family of variants (different ATR multipliers, entry windows, and stop\u2011loss rules) would let us test the mechanism with enough volume to power\u2011curve.",
   "evidence": "Low\u2011gamma days (gex_rank < 0.2) appear in ~20% of sessions and correlate with +0.2% edge; current best low\u2011gamma intraday strategy yields only +0.03R over 179 trades.",
   "impact": "high",
-  "status": "needs",
+  "status": "declined",
   "votes": 1,
   "gemini": {
    "status": "error",
@@ -442,7 +443,7 @@
    "summary": "daily Gemini budget used up (120 calls)",
    "guard": null
   },
-  "note": "Claude 2026-11-03: a new mechanism family needs an alpha slot (knowledge/frozen/alpha_slots.json: slot 4 = F11, then two 0.0023 slots, then none). Scheduled sessions must not register families; owner/Claude chat decides whether this low-gamma open breakout earns one of the remaining slots."
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. The low-gamma open breakout is already covered by F12's frozen forward test; a new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 27,
@@ -583,8 +584,9 @@
   "why": "Several self\u2011actions target low\u2011gamma breakouts but I need a formal family with a grid of parameters (entry offset, stop size, target R) to test systematically and submit for evaluation.",
   "evidence": "Current low\u2011gex edge \u2248 +0.2% per trade; opening\u2011price moves dominate successful strategies.",
   "impact": "high",
-  "status": "open",
-  "votes": 3
+  "status": "declined",
+  "votes": 3,
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. The low-gamma open breakout is already covered by F12's frozen forward test; a new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 35,
@@ -662,7 +664,7 @@
   "why": "A clear mechanism (low dealer gamma \u2192 reduced option\u2011priced uncertainty \u2192 price tends to drift away from overnight extremes at open) exists, but I have no formal strategy family with variant grid to test.",
   "evidence": "Near\u2011miss +0.2% edge on gex_rank\u202f<\u202f0.2 days; 0.2% edge on low\u2011gamma observed across 2024\u20112026 data.",
   "impact": "high",
-  "status": "needs",
+  "status": "declined",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -672,7 +674,7 @@
    "summary": "stopped after 45 minutes (12 model turns)",
    "guard": null
   },
-  "note": "Claude 2026-11-14: not granted by the upgrade session - duplicate of #18/#20/#22/#34 (Low-Gamma Open Breakout family). New families may only be registered by the owner/Claude chat: the v2 alpha budget is nearly spent (knowledge/frozen/alpha_slots.json: slot 4 = F11, then 0.0023, 0.0023, then nothing), so the owner must choose which mechanism gets a slot."
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. The low-gamma open breakout is already covered by F12's frozen forward test; a new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 40,
@@ -738,8 +740,9 @@
   "why": "A clear one\u2011sentence mechanism (low dealer gamma \u2192 larger early moves) exists but no systematic family of variants has been built yet. A family of 20\u201130 parameterised breakout specs will let us test the edge power\u2011fully across NQ and ES.",
   "evidence": "Low\u2011GEX edge measured +0.0020R per trade (p\u22480.24) across 292 low\u2011GEX days; current intraday rules have 0.00R net over 155 tests.",
   "impact": "high",
-  "status": "open",
-  "votes": 3
+  "status": "declined",
+  "votes": 3,
+  "note": "Owner decision 2026-11-24: the last alpha slots are kept for EXCEPTIONALLY promising results only. The low-gamma open breakout is already covered by F12's frozen forward test; a new family proposal needs strong independent evidence (many trades, clear mechanism, works on NQ and ES). Repeats of this wish now only add a vote (introspect duplicate guard)."
  },
  {
   "id": 44,
