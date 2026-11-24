@@ -10,6 +10,35 @@ STATE, WISH, DIARY = (os.path.join(K, f) for f in ("introspect_state.json", "wis
 HUNTS = os.path.join(K, "hunts.json")
 
 
+# Duplicate guard (owner, 2026-11-24): the self-check kept refiling the same wish under new wording (5-min GEX x8,
+# low-gamma breakout family x7). A new wish now merges into ANY earlier wish on the same topic, whatever its status:
+# open/approved -> +1 vote; already settled (needs/blocked/declined/frozen) -> +1 vote on that one, nothing new filed.
+SETTLED = ("needs", "blocked", "declined", "frozen")
+_STOP = set("a an the of to for in on at by with and or from into my me i is are be full complete provide add daily series data "
+            "feed proposal family finalize new past years year history whole every".split())
+
+
+def _words(t):
+    out = set()
+    for w in re.findall(r"[a-z0-9]+", t.lower().replace("\u2011", "-")):
+        if w in _STOP or len(w) < 2: continue
+        out.add(w[:-1] if w.endswith("s") and len(w) > 3 else w)
+    return out
+
+
+def similar_wish(title, W):
+    """The earlier wish this title duplicates (open/approved first, then settled ones), or None."""
+    t = title.lower(); a = _words(title)
+    best, score = None, 0.0
+    for x in W:
+        if x.get("status") not in ("open", "approved") + SETTLED: continue
+        b = _words(x["title"]); r = difflib.SequenceMatcher(None, x["title"].lower(), t).ratio()
+        cont = len(a & b) / max(1, min(len(a), len(b))) if a and b else 0.0
+        s = max(r / 0.72, cont / 0.75)  # >= 1 means duplicate
+        if s >= 1 and (s + (0.5 if x["status"] in ("open", "approved") else 0)) > score: best, score = x, s + (0.5 if x["status"] in ("open", "approved") else 0)
+    return best
+
+
 def _jl(path):
     return [json.loads(l) for l in open(path) if l.strip()] if os.path.exists(path) else []
 
@@ -51,7 +80,15 @@ def digest():
     Q = _jl(os.path.join(K, "questions.jsonl"))
     if Q: out.append(f"QUESTIONS I ASKED: {len(Q)}. Latest: " + " | ".join(f"{q['question'][:70]} -> {str(q['verdict'])[:60]}" for q in Q[-5:]))
     W = json.load(open(WISH)) if os.path.exists(WISH) else []
-    if W: out.append("MY WISHES ALREADY FILED: " + "; ".join(f"#{w['id']} [{w['status']}] {w['title'][:70]}" for w in W[-12:]))
+    if W:
+        out.append("MY WISHES ALREADY FILED: " + "; ".join(f"#{w['id']} [{w['status']}] {w['title'][:70]}" for w in W[-12:]))
+        st, seen = [], []
+        for w in reversed(W):
+            if w["status"] in SETTLED and not similar_wish(w["title"], seen): seen.append(w); st.append(f"#{w['id']} [{w['status']}] {w['title'][:60]} ({str(w.get('note', ''))[:90]})")
+        if st: out.append("SETTLED WISHES - do NOT file these again in other words (a repeat only adds a vote): " + "; ".join(st[:14]))
+    out.append("OWNER DECISION (2026-11-24): the last alpha slots are kept for EXCEPTIONALLY promising results only. "
+               "File a family proposal only with strong independent evidence (many trades, a clear mechanism, works on NQ and ES); "
+               "the low-gamma open breakout is already covered by F12's forward test.")
     rec = [x for x in sorted(lib, key=lambda x: x.get("date", ""))[-12:] if (x.get("relevance") or 0) >= 4]
     if rec: out.append("RECENT GOOD PAPERS: " + "; ".join(x["title"][:80] for x in rec[-5:]))
     pr = [x for x in lib if x.get("track") == "prop" and x.get("lesson")][-6:]
@@ -182,20 +219,22 @@ def run(ask):
     hunts = add_hunts([h for h in (r.get("paper_hunts") or [])[:2] if isinstance(h, dict)], "self-check")
     # 3. wishes -> wishlist (merged with similar open wishes instead of duplicated)
     W = json.load(open(WISH)) if os.path.exists(WISH) else []
-    new = []
+    new, dupes = [], []
     for w in (r.get("wishes") or [])[:2]:
         if not isinstance(w, dict) or not w.get("title"): continue
         t = str(w["title"])[:120]
-        same = [x for x in W if x["status"] in ("open", "approved") and difflib.SequenceMatcher(None, x["title"].lower(), t.lower()).ratio() > 0.72]
+        same = similar_wish(t, W + new)
         if same:
-            same[0]["votes"] = same[0].get("votes", 1) + 1; same[0]["evidence"] = str(w.get("evidence", same[0].get("evidence", "")))[:300]; continue
+            same["votes"] = same.get("votes", 1) + 1
+            if same["status"] in ("open", "approved"): same["evidence"] = str(w.get("evidence", same.get("evidence", "")))[:300]
+            dupes.append(f"#{same['id']} [{same['status']}] {same['title'][:60]}"); continue
         item = {"id": (max([x["id"] for x in W]) + 1) if W else 1, "date": today, "title": t,
                 "for": "owner" if str(w.get("for", "")).lower().startswith(("o", "y")) else "claude",
                 "type": str(w.get("type", "other"))[:12], "why": str(w.get("why", ""))[:400], "evidence": str(w.get("evidence", ""))[:300],
                 "impact": str(w.get("impact", "medium"))[:8], "status": "open", "votes": 1}
         W.append(item); new.append(item)
     json.dump(W, open(WISH, "w"), indent=1)
-    with open(DIARY, "a") as f: f.write(json.dumps({"date": today, "diary": diary, "queued": queued, "new_wishes": [w["id"] for w in new]}) + "\n")
+    with open(DIARY, "a") as f: f.write(json.dumps({"date": today, "diary": diary, "queued": queued, "new_wishes": [w["id"] for w in new], "dup_wishes": dupes}) + "\n")
     body = [diary]
     if queued: body += ["", "I queued for myself:"] + [f"- {q}" for q in queued]
     if hunts: body += ["", "I'm hunting for research on:"] + [f"- {h['query']} ({h['why'][:120]})" for h in hunts]
