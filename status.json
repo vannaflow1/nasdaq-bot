@@ -337,6 +337,7 @@
   "\u23f8\ufe0f NQ BIAS - PAUSED since 15 Nov 2026 (as of Tue 24 Nov 14:06 Lux)",
   "No LONG/SHORT call. The hourly noise-band lean only works in trending markets and has been wrong most of the time lately; there is no tested way yet to tell trending from choppy days. It comes back only if a trend/chop filter passes a pre-registered test.",
   "The checks still run and are graded silently (nothing is posted), so that test can use live data.",
+  "NY outlook: WIDE day expected (~469 pts high-low, ~227 pts open-to-close); overnight -1.66% (DOWN), BELOW yesterday's low.",
   "London outlook: NORMAL London (~75 pts London-to-NY open); Asia range 26,684.00-27,036.00. London breakouts tended to reverse - no London call.",
   "Scoreboard: 24/52 graded checks right (46%) over 15 days; history says ~54-58%. (Still counted while paused.)"
  ],
