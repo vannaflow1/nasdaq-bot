@@ -451,7 +451,8 @@
   "query": "nasdaq dealer gamma exposure opening price impact",
   "why": "I have no concrete literature confirming that low GEX produces a directional bias in the first 30‑45 min, which is essential for the LowGex_OpenDrift rule.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-11-24"
  }
 ]

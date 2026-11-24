@@ -13,7 +13,7 @@ Anomalous transport describes how particle motion deviates from normal diffusion
 The paper studies physical diffusion, not financial markets, so its direct applicability to NQ futures prop trading is minimal.
 
 ## Concepts
-subdiffusion, time‑varying volatility, non‑gaussian returns, model selection via propagators, heterogeneous environments
+subdiffusion, time‑varying volatility, [[non‑gaussian returns]], model selection via propagators, heterogeneous environments
 
 
 Part of [[Research engine]]

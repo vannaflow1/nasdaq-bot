@@ -94,8 +94,10 @@
   "No FOMC, CPI or jobs report on Tue 24 Nov."
  ],
  "learning": [
-  "LEARNING: 320 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
+  "LEARNING: 323 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Call Option Price using Pearson Diffusion Processes (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper proposes pricing European call options by modeling log\u2011returns with Pearson diffusion processes, whose stationary distribution (Pearson Type\u202fIV) can capture skewness and excess kurtosis; they prove risk\u2011neutral",
   "\u2022 Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper introduces AddMart, a machine\u2011learning framework that builds a continuous, arbitrage\u2011free implied volatility surface from only a few quoted options by modeling an exponential additive martingale, ensuring stati",
   "\u2022 PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models (\u2605\u2605\u2605\u2606\u2606)",
@@ -108,12 +110,9 @@
   "\u2022 Neural Network Calibration of the Heston Stochastic Volatility Model (\u2605\u2605\u2605\u2606\u2606)",
   "  Neural networks can approximate either the Heston pricing map (MtP) or the inverse map from option surfaces to Heston parameters (PtM). PtM gives the fastest online inference but still needs checks for admissibility and ",
   "  tested: DOESN'T FIT MY DATA - The idea requires a neural\u2011network generated estimate of the Heston parameters, which is not present in Volta's dataset; only the calibrat",
-  "\u2022 Diffusion models for dynamic volatility surface generation and data-driven hedging (\u2605\u2605\u2605\u2605\u2606)",
-  "  The paper proposes diffusion\u2011model based generators (AD\u2011Seq\u2011Vol and AD\u2011Seq\u2011Vol\u2011FT) that sequentially produce realistic, arbitrage\u2011free SPX implied\u2011volatility surfaces, and shows that hedging based on these generated scen",
-  "  tested: DOESN'T FIT MY DATA - The idea requires generating full daily volatility surface scenarios with a diffusion model and performing a rolling\u2011horizon portfolio opt",
-  "This week's tests: 8 run - 0 promising, 4 not confirmed, 1 don't fit my data, 3 translation failures",
+  "This week's tests: 9 run - 0 promising, 4 not confirmed, 1 don't fit my data, 4 translation failures",
   "",
-  "34 papers waiting in my queue."
+  "31 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

@@ -1,5 +1,50 @@
 [
 {
+"title": "Call Option Price using Pearson Diffusion Processes",
+"learned": "The paper proposes pricing European call options by modeling log\u2011returns with Pearson diffusion processes, whose stationary distribution (Pearson Type\u202fIV) can capture skewness and excess kurtosis; they prove risk\u2011neutral measure validity and claim better pricing performance versus Black\u2011Scholes and Heston on Nifty 50 options.",
+"concepts": [
+"Pearson diffusion",
+"Pearson Type IV distribution",
+"risk\u2011neutral measure",
+"Novikov condition",
+"non\u2011Gaussian returns"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://arxiv.org/pdf/2508.14577",
+"date": "2026-11-24"
+},
+{
+"title": "DerivFlow Finance: option pricing and risk in Python",
+"learned": "The paper describes a Python library called DerivFlow Finance that implements pricing for many option types, Greeks, Monte\u2011Carlo variance reduction, the Heston stochastic\u2011volatility model, volatility surfaces, and portfolio VaR, validated against other libraries.",
+"concepts": [
+"Python option library",
+"European/American pricing",
+"Heston model",
+"Monte Carlo variance reduction",
+"portfolio VaR"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.5281/zenodo.23932347",
+"date": "2026-11-24"
+},
+{
+"title": "Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread Options",
+"learned": "The paper builds an arithmetic (Bachelier\u2011type) multi\u2011factor stochastic volatility model for WTI crude\u2011oil futures that can price vanilla and calendar\u2011spread options in semi\u2011closed form, and shows that three volatility factors are needed to fit the term structure and that including calendar\u2011spread prices improves the model\u2019s decorrelation estimates.",
+"concepts": [
+"arithmetic (Bachelier) model",
+"multi\u2011factor stochastic volatility",
+"calendar spread options",
+"unscented Kalman filter estimation",
+"hedging with volatility factors"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/pdf/2610.28071",
+"date": "2026-11-24"
+},
+{
 "title": "Pricing European Options under Logistic Stock-Price Dynamics with a Continuous Dividend Yield",
 "learned": "The paper develops a no\u2011arbitrage option pricing model where the underlying follows a stochastic logistic process with a continuous dividend yield, using a state\u2011dependent market price of risk and solving the resulting PDE via Crank\u2011Nicolson and a closed\u2011form transformation.",
 "concepts": [
@@ -4256,51 +4301,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://doi.org/10.51483/ijaiml.5.2.2025.1-15",
-"date": "2026-10-18"
-},
-{
-"title": "A bid\u2013ask constrained calibration framework for 0DTE SPX option pricing rough versus jump\u2013diffusion volatility models",
-"learned": "The authors fit four 'rough volatility' models and one simpler jump model to intraday SPX same-day (0DTE) volatility smiles over five days, counting a fit as good only if model prices land inside the bid-ask spread. One rough model (QRH+) fit best on days with a sharply curved downside smile, but the simpler jump-diffusion model matched or beat every rough model on the other days and on average. The takeaway is that fancy rough-volatility models are not required to price 0DTE options well.",
-"concepts": [
-"rough volatility",
-"0DTE smile calibration",
-"bid-ask constraint",
-"jump-diffusion",
-"Quadratic Rough Heston"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://www.sciencedirect.com/science/article/pii/S3050700626000824/pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Where Does the Hedging Error Go? A Greek-by-Greek Decomposition for At-the-Money 0DTE Options under Heston",
-"learned": "The authors split the hedging error of at-the-money same-day (0DTE) options into seven Greek pieces across 1,015 SPY sessions and find gamma explains about 66% of the error's variance and vega about 38%; a delta-hedged position lost 2.41 basis points per session on average (t = -8.87). Most of the error cannot be hedged away by trading faster: about 86% of SPY's one-minute error (85% for SPX) is a fixed floor, and hedging every 10 seconds on tick data still leaves 93-98% of it. QQQ and NDX showed the same ranking, with gamma the biggest source.",
-"concepts": [
-"0DTE hedging error",
-"gamma risk",
-"vega risk",
-"delta hedging frequency",
-"Heston model"
-],
-"relevance": 3,
-"verdict": "DOESN'T FIT MY DATA - needs intraday option and stock prices, as well as dealer gamma positions, which are not available in the provided data",
-"url": "https://doi.org/10.5281/zenodo.23271888",
-"date": "2026-10-18"
-},
-{
-"title": "A New Star Is Born: Does the VIX1D Render Common Volatility Forecasting Models for the US Equity Market Obsolete?",
-"learned": "VIX1D is Cboe's index of how much the S&P 500 is expected to move over just the next day, built from the shortest-dated (largely 0DTE) options. The authors find it usually sits below the 30-day VIX but jumps around more, drifts upward during the trading day, and on average overstates the next day's actual move because it contains a risk premium. After a simple adjustment for that premium, VIX1D alone forecast next-day S&P volatility more accurately than the standard HAR forecasting models (the abstract gives no exact error figures).",
-"concepts": [
-"VIX1D",
-"one-day implied volatility",
-"volatility risk premium",
-"HAR model",
-"0DTE options"
-],
-"relevance": 4,
-"verdict": "NOT CONFIRMED on my data: 1257 sell-vol + 838 buy-vol trades on real QQQ option prices, avg -8.0 bp of QQQ per trade (placebo avg -4.9, p=0.917), halves -8.7/-7.2, win 47%, worst -973 bp, positive in 1/9 years, sell trades return -3.9% of max risk; 36% of its sell days are high-gamma days (the known edge)",
-"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/fut.70023",
 "date": "2026-10-18"
 }
 ]

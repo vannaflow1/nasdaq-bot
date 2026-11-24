@@ -18,4 +18,4 @@ Ideas that helped the range forecast a little and fairly consistently. Re-tested
 - garch + lag(iv30, 1) (+0.3%, 4/6 years) - A Review of Methods for Predicting Stock Volatility: A Comparison of Traditional Econometric Models, Implied Volatility,
 - 0.5*iv30 + 0.3*rv20 + 0.2*rng (+0.2%, 5/9 years) - Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An Empirical a
 
-Last combined test (2026-11-23): NOT CONFIRMED - the combination does not hold on unseen years (picked +2.77%, unseen years -0.54%)
+Last combined test (2026-11-24): NOT CONFIRMED - the combination does not hold on unseen years (picked +2.77%, unseen years -0.54%)

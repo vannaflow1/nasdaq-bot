@@ -13,7 +13,7 @@ The authors split the hedging error of at-the-money same-day (0DTE) options into
 Worked from the abstract only (no full text available); relevant for anyone selling or market-making QQQ/NDX 0DTE options because it shows the risk is gamma and volatility jumps, not hedging speed, but it gives no daily forecasting signal I can test.
 
 ## Concepts
-0dte hedging error, [[dealer gamma]], vega risk, delta hedging frequency, Heston model
+0dte hedging error, [[dealer gamma]], vega risk, delta hedging frequency, [[Heston model]]
 
 ## Idea
 Measure the intraday delta-hedging P&L of ATM QQQ 0DTE options and relate it to dealer gamma.

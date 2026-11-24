@@ -1,38 +1,5 @@
 [
  {
-  "id": "openalex:W7223136003",
-  "title": "Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread Options",
-  "abstract": "We develop an arithmetic multi-factor stochastic volatility model for commodity futures and options. The arithmetic specification yields a low-dimensional Markovian representation of the futures curve and semi-closed-form pricing formulas for vanilla and basket options, including calendar spread options. These properties make the model suitable for large-scale empirical estimation. We estimate the model using an unscented Kalman filter on a panel of WTI crude oil futures, vanilla options, and calendar spread options spanning 2013-2024. We find that three stochastic volatility factors are needed to capture both the level and slope of the volatility term structure, and that hedges based on these factors remove almost all of the daily risk of a portfolio of vanilla options. Calendar spread options provide information about the dependence structure of futures prices that is not captured by futures and vanilla options alone. A model estimated without calendar spread options systematically overprices them by overstating the decorrelation between adjacent futures contracts. Including these options in the estimation brings the model's decorrelation close to the observed decorrelation, which removes the overpricing and improves their hedges, at only a small loss of accuracy in the pricing and hedging of vanilla options. Finally, we show that the arithmetic model fits futures and vanilla options better than its geometric counterpart and hedges the vanilla options slightly better.",
-  "url": "https://arxiv.org/pdf/2610.28071",
-  "source": "OpenAlex",
-  "date": "2026-10-20",
-  "score": 10,
-  "queued": "2026-10-25",
-  "text_file": "knowledge/papers/openalex_W7223136003.txt"
- },
- {
-  "id": "openalex:W7225177789",
-  "title": "DerivFlow Finance: option pricing and risk in Python",
-  "abstract": "A Python library for European and American option pricing, Greeks, implied volatility, Monte Carlo with variance reduction, barrier and Asian options, the Heston model, volatility surfaces and portfolio VaR, with results cross-checked against QuantLib, py_vollib and published reference values.",
-  "url": "https://doi.org/10.5281/zenodo.23932347",
-  "source": "OpenAlex",
-  "date": "2026-11-03",
-  "score": 10,
-  "queued": "2026-11-08",
-  "text_failed": true
- },
- {
-  "id": "openalex:W4415239971",
-  "title": "Call Option Price using Pearson Diffusion Processes",
-  "abstract": "This study introduces a framework for pricing European call options using Pearson diffusion processes with linear drift and quadratic squared diffusion. This class of diffusion processes follows Pearson type IV distribution as its invariant distribution which can effectively capture skewness and excess kurtosis, key empirical features of financial returns. We verify the Novikov condition for risk-neutral measure, and establish the existence of a unique strong solution of stock prices under this measure. We apply the method to Nifty 50 index options and find encouraging results compared to the Black-Scholes and Heston models.",
-  "url": "https://arxiv.org/pdf/2508.14577",
-  "source": "OpenAlex",
-  "date": "2026-11-06",
-  "score": 10,
-  "queued": "2026-11-08",
-  "text_file": "knowledge/papers/openalex_W4415239971.txt"
- },
- {
   "id": "arxiv:2611.16540v1",
   "title": "Dynamic Scenario-Based Portfolio Optimization for Multi-Asset ETFs",
   "abstract": "Portfolio outcomes may depend as much on trading restrictions as on how returns are modeled. We compared historical moving-window returns with conditional scenarios from ARMA--GARCH models and a Student-$t$ copula for 30 U.S.-listed exchange-traded funds. Matched mean--variance and conditional value-at-risk portfolios were evaluated under long-only and limited long--short bounds over 946 sessions. Historical portfolios had higher observed reward--risk ratios in most comparisons, but no paired difference remained significant after multiple-testing adjustment. Conditional scenarios did not consistently reduce realized downside risk. We distinguished changes in target weights from trades required to rebalance holdings after market movements. Relaxing the target-adjustment limit changed exposures, turnover, and some returns more than varying scenario count or seed in the examined tests. These findings suggest that assessments of conditional return inputs should consider portfolio constraints and trading requirements.",

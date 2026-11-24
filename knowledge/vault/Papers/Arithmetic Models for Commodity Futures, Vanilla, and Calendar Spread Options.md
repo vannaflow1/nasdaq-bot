@@ -1,24 +1,19 @@
 ---
 tags: [paper]
 relevance: 2
-read: 2026-10-21
+read: 2026-11-24
 ---
 # Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread Options
-★★☆☆☆  ·  arXiv  ·  [source](https://arxiv.org/abs/2610.28071v1)
+★★☆☆☆  ·  OpenAlex  ·  [source](https://arxiv.org/pdf/2610.28071)
 
 ## What Volta learned
-The paper builds an arithmetic (Bachelier) multi‑factor stochastic‑volatility HJM model for commodity futures, showing it needs three volatility factors to fit the level and slope of the volatility term structure and that including calendar‑spread options in calibration greatly improves the model’s decorrelation between adjacent contracts and pricing of those spreads.
+The paper builds an arithmetic (Bachelier‑type) multi‑factor stochastic volatility model for WTI crude‑oil futures that can price vanilla and calendar‑spread options in semi‑closed form, and shows that three volatility factors are needed to fit the term structure and that including calendar‑spread prices improves the model’s decorrelation estimates.
 
 ## Why it matters (or not)
-Focuses on WTI oil futures rather than equity index futures, but the idea that calendar spread options reveal true contract decorrelation could be adapted to NQ spreads.
+The work focuses on commodity futures (WTI oil) and does not directly address equity index futures or options that retail traders typically trade.
 
 ## Concepts
-arithmetic futures model, multi‑factor stochastic volatility, calendar spread options, kalman filter estimation, decorrelaton of futures curve
+arithmetic model, [[multi‑factor stochastic volatility]], [[calendar spread options]], unscented kalman filter estimation, hedging with volatility factors
 
-## Idea
-Use the implied decorrelation inferred from NQ calendar‑spread option prices (or synthetic spreads) to adjust the hedge ratio between near‑month and next‑month NQ futures, aiming to improve the daily P&L variance of a gamma‑neutral option book.
-
-## Test
-not testable with my data yet
 
 Part of [[Research engine]]
