@@ -149,7 +149,7 @@
   "Status: gamma regime = validated. Everything else = context; tested, did NOT improve forecasts."
  ],
  "shortvol": [
-  "SHORT-VOL CHECK Tue 24 Nov 15:45 NY - QQQ 635.27, gamma rank 0.23 (needs > 0.7)",
+  "SHORT-VOL CHECK Tue 24 Nov 15:50 NY - QQQ 635.25, gamma rank 0.23 (needs > 0.7)",
   "Not a short-vol day: no paper trade.",
   "(rank vs last 252 readings; 25 of them live from 2026 - it gets sharper as live history builds)",
   "",
