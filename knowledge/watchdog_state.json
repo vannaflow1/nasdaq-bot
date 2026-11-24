@@ -1,10 +1,10 @@
 {
  "open": {
   "run:prop-search.yml:strategy search": {
-   "msg": "strategy search (prop-search.yml): no successful run when one was due - last success 11 h ago.",
+   "msg": "strategy search (prop-search.yml): no successful run when one was due - last success 12 h ago.",
    "since": "2026-11-24T01:56+00:00"
   }
  },
  "last_alert": "2026-11-24T01:56+00:00",
- "last_run": "2026-11-24T01:56+00:00"
+ "last_run": "2026-11-24T03:16+00:00"
 }
