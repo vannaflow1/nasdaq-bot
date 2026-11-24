@@ -1,7 +1,7 @@
 {
  "for": "Tue 24 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Tue 24 Nov) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Nothing special. Trade your normal plan."
  ],
  "gamma": [
@@ -28,28 +28,24 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,727 XP, next level at 10,240)",
-  "Papers read 320 | ideas & strategies tested 251 | prop strategies searched 755,617",
-  "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 11",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +3 papers, +2 tests"
- ],
- "updated": "Tue 24 Nov 05:31 Lux",
+ "level": "NORMAL",
+ "updated": "Tue 24 Nov 15:01 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Wall Street Roars Back From Brutal Selloff. Nvidia's 31% Surge Sends Nasdaq Soaring 6.5%.  [Yahoo (megacaps)]\n    NVDA, shock",
-  "- The Last Time the Fed Kept Raising Rates, the S&P 500 Fell 25%. History Says Long-Term Investors Still Came Out Ahead.  [Yahoo (megacaps)]\n    Fed/macro",
-  "- Meta\u2019s AI Chief Warns \u201cSuperintelligence Is Arriving.\u201d Lawmakers Are Now Quoting Him to Push a Ban  [Yahoo (megacaps)]\n    META, shock"
+  "NEWS (last 16h, ranked by keywords):",
+  "- IREN Fell 42% This Month Even After The Market Jump on NVIDIA News: This Wall Street Pro Maintains That 440% Returns Are Coming After Q3 Earnings Downgrades  [Yahoo (megacaps)]\n    NVDA, shock, earnings",
+  "- U.S. adds Megaspeed to trade blacklist over export control concerns amid Nvidia controversy  [CNBC tech]\n    NVDA, export/geo",
+  "- This billionaire bought Nvidia in anticipation of Jensen Huang\u2019s return \u2014 and warns the S&P 500 could fall by a third  [MarketWatch]\n    NVDA, shock",
+  "- Amazon faces FAA probe after delivery drone strikes Michigan fiber cable, garage  [CNBC tech]\n    AMZN, shock",
+  "- Why France is at risk of recession \u2014 and what could keep it out of one  [CNBC economy]\n    Fed/macro",
+  "- Bulls Expect AMD Revenues to Grow 80% Next Year on Hyper-Accelerated Data Center Growth, $725 in Sight  [Yahoo (megacaps)]\n    AMD, AI chips/capex"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
-  "- Mon 19:00 [oil/geopolitics] Iowa is a very special place to me, a place that I won, by substantial margins, in all three Elections but, whether I won or lost, would never deter me from making a correct decision. As everyone knows, there is a Military \u201cclean up\u201d operation, without which, a very dangerous\u2026"
+  "TRUMP on Truth Social (market-relevant, last 16h):",
+  "- nothing market-relevant"
  ],
  "forecast": [
   "No forecasts yet.",
