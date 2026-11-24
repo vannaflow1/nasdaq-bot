@@ -1,38 +1,5 @@
 [
  {
-  "id": "openalex:W7236740191",
-  "title": "Loss of directional continuity in intraday markets: Evidence from NASDAQ-100 futures",
-  "abstract": "Type of the article: Research ArticleAbstractThis study examines whether loss of directional continuity (LDC) is associated with weaker subsequent price continuation after local breakouts in Nasdaq-100 futures. The dataset comprises 86,731 one-minute candlesticks recorded between September 14 and December 11, 2025. An LDC event required three features: re-entry into the preceding range after a local breakout, a reduced candlestick body, and a dominant wick in the breakout direction. Thresholds were calibrated in the training sample and applied unchanged to the test sample. Each LDC event was matched to a comparable non-LDC breakout of the same direction. The analysis identified 3,108 LDC events (3.58% of all candlesticks), and 1,314 test-sample pairs had valid outcomes at both the 5- and 10-minute horizons. Across breakout directions and horizons, directional continuity was 11.78 to 23.78 percentage points lower for LDC events than for matched controls. The association persisted in logistic regressions with standard errors clustered by trading session and in a sensitivity analysis excluding overlapping evaluation windows among LDC events. In the component analysis, re-entry and the dominant wick were negatively associated with subsequent continuity, while the reduced body showed a smaller positive association. The findings characterize a candlestick configuration associated with lower short-term directional continuity within the period studied. Assessing trading profitability would require a separate analysis.AcknowledgmentsThe authors acknowledge the support of the academic and professional environment that facilitated the development of this research. Special appreciation is extended to the tools and platforms that enabled access to high-frequency financial data, which were essential for the empirical analysis conducted in this study.",
-  "url": "https://businessperspectives.org/images/pdf/applications/publishing/templates/article/assets/25687/IMFI_2026_04_Perdomo.pdf",
-  "source": "OpenAlex",
-  "date": "2026-11-19",
-  "score": 11,
-  "queued": "2026-11-22",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7223032026",
-  "title": "Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales",
-  "abstract": "This work focuses on reconstructing a continuous implied volatility (IV) surface from a small number of option quotes, a fundamental task for option pricing and risk management. We propose Additive Martingale (AddMart), a few-shot IV surface reconstruction framework that satisfies static no-arbitrage conditions by construction. Rather than predicting IVs directly, AddMart maps sparse quotes to non-negative increment densities of an exponential additive martingale, from which valid risk-neutral marginals and IVs are recovered. By incorporating the no-arbitrage structure directly into its architecture, rather than enforcing it through regularization in the learning objective, AddMart produces IV surfaces that satisfy static no-arbitrage conditions throughout the domain. Extensive experiments on ten real-option datasets demonstrate that AddMart achieves competitive reconstruction accuracy with no material static arbitrage violations, while directly enabling the estimation of VaR, CVaR, and crash probabilities.",
-  "url": "https://doi.org/10.48550/arxiv.2610.25671",
-  "source": "OpenAlex",
-  "date": "2026-10-19",
-  "score": 10,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W7223032026.txt"
- },
- {
-  "id": "openalex:W7222935937",
-  "title": "Pricing European Options under Logistic Stock-Price Dynamics with a Continuous Dividend Yield",
-  "abstract": "Logistic stock-price dynamics have been proposed as a way of representing assets whose growth is bounded by competition, saturation or finite market capacity, but the derivations available in the literature retain a logistic drift while invoking a delta-hedging argument that removes it. This paper resolves that inconsistency and extends the framework to dividend-paying assets. It is first shown that, for a traded asset, no-arbitrage forces the logistic term out of the pricing equation; the logistic model is therefore developed as an incomplete-market model in which a state-dependent market price of risk fixes the pricing measure, and the pricing partial differential equation is obtained from the Feynman\u2013Kac representation rather than from hedging. The resulting equation carries a continuous dividend yield and reduces to the Black\u2013Scholes\u2013Merton equation as the carrying capacity grows without bound. A closed-form solution of the price process is derived through the reciprocal transformation, which linearises the stochastic logistic equation and expresses the price as a geometric Brownian motion divided by an exponential functional. Prices are computed by a Crank\u2013Nicolson scheme with Rannacher start-up; second-order convergence is demonstrated and the scheme is cross-validated against Monte Carlo simulation of the closed-form representation. Sensitivity analyses quantify the effect of carrying capacity, dividend yield and volatility, and a forward-price diagnostic measures the departure from put\u2013call parity, for which a first-order analytic expression is derived and verified numerically.",
-  "url": "https://www.irejournals.com/formatedpaper/1724119.pdf",
-  "source": "OpenAlex",
-  "date": "2026-10-19",
-  "score": 10,
-  "queued": "2026-10-21",
-  "text_failed": true
- },
- {
   "id": "openalex:W7223136003",
   "title": "Arithmetic Models for Commodity Futures, Vanilla, and Calendar Spread Options",
   "abstract": "We develop an arithmetic multi-factor stochastic volatility model for commodity futures and options. The arithmetic specification yields a low-dimensional Markovian representation of the futures curve and semi-closed-form pricing formulas for vanilla and basket options, including calendar spread options. These properties make the model suitable for large-scale empirical estimation. We estimate the model using an unscented Kalman filter on a panel of WTI crude oil futures, vanilla options, and calendar spread options spanning 2013-2024. We find that three stochastic volatility factors are needed to capture both the level and slope of the volatility term structure, and that hedges based on these factors remove almost all of the daily risk of a portfolio of vanilla options. Calendar spread options provide information about the dependence structure of futures prices that is not captured by futures and vanilla options alone. A model estimated without calendar spread options systematically overprices them by overstating the decorrelation between adjacent futures contracts. Including these options in the estimation brings the model's decorrelation close to the observed decorrelation, which removes the overpricing and improves their hedges, at only a small loss of accuracy in the pricing and hedging of vanilla options. Finally, we show that the arithmetic model fits futures and vanilla options better than its geometric counterpart and hedges the vanilla options slightly better.",

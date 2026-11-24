@@ -86,8 +86,10 @@
   "No FOMC, CPI or jobs report on Tue 24 Nov."
  ],
  "learning": [
-  "LEARNING: 317 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
+  "LEARNING: 320 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper introduces AddMart, a machine\u2011learning framework that builds a continuous, arbitrage\u2011free implied volatility surface from only a few quoted options by modeling an exponential additive martingale, ensuring stati",
   "\u2022 PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in o",
   "  tested: DOESN'T FIT MY DATA - The idea requires daily full option\u2011price surfaces and a calibrated jump\u2011diffusion model, which need per\u2011strike option data and a pricing ",
@@ -101,12 +103,9 @@
   "\u2022 Diffusion models for dynamic volatility surface generation and data-driven hedging (\u2605\u2605\u2605\u2605\u2606)",
   "  The paper proposes diffusion\u2011model based generators (AD\u2011Seq\u2011Vol and AD\u2011Seq\u2011Vol\u2011FT) that sequentially produce realistic, arbitrage\u2011free SPX implied\u2011volatility surfaces, and shows that hedging based on these generated scen",
   "  tested: DOESN'T FIT MY DATA - The idea requires generating full daily volatility surface scenarios with a diffusion model and performing a rolling\u2011horizon portfolio opt",
-  "\u2022 Physical-Measure Merton Jump-Diffusion Calibration Surrogates and Direct Realized Volatility Forecasting: An E (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper shows that simple ridge or LSTM models cannot reliably replace full Merton jump\u2011diffusion MLE for parameter estimation, but a directly trained LSTM can modestly improve 21\u2011day realized volatility forecasts vers",
-  "  tested: NOT CONFIRMED on my data: range-forecast miss 0.531% -> 0.530% (+0.2%), better in 5/9 unseen years",
-  "This week's tests: 5 run - 0 promising, 3 not confirmed, 1 don't fit my data, 1 translation failures",
+  "This week's tests: 8 run - 0 promising, 4 not confirmed, 1 don't fit my data, 3 translation failures",
   "",
-  "37 papers waiting in my queue."
+  "34 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -187,8 +186,8 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-23)",
-  "I confirmed the ~0.2% edge on low\u2011dealer\u2011gamma days but still have no intraday entry rule that captures it. My range forecasts still miss ~38% of the daily swing, limiting position sizing and risk estimates. Near\u2011miss features that blend recent range and iv (e.g., 0.5*iv30+0.3*rv20+0.2*rng) gave tiny lifts but never crossed significance. I need a concrete, testable mechanism that links low GEX rank to the opening price move and then to a profitable early\u2011session trade.",
+  "VOLTA'S SELF-CHECK (2026-11-24)",
+  "I keep seeing a ~0.2% edge on low\u2011dealer\u2011gamma (gex_rank < 0.2) days, yet none of my intraday strategies harvest it. My range forecasts still miss ~38% of the true daily swing, which hurts sizing. I need a cheap, high\u2011frequency rule that translates the low\u2011GEX signal into a repeatable entry around the open, and I must verify that the signal truly moves the price in the first 30\u201145\u202fminutes.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",
@@ -196,7 +195,6 @@
   "#43 [needs the owner] Family proposal: LowGex_OpenBreakout - A clear one\u2011sentence mechanism (low dealer gamma \u2192 larger early moves) exists but no systematic family of variants has been built yet. A fam",
   "#19 [needs the owner] Family proposal: GammaFlip_15min_Reversal - Low\u2011gamma days show a small edge but I lack a concrete mechanism; research suggests a gamma\u2011flip may trigger a rapid reversal within the fir",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
-  "#46 [for Claude] Provide full 5\u2011minute intraday GEX rank series for 12 years - All current tests lack sufficient granularity; a complete intraday GEX time\u2011series will let me evaluate entry timing, intra\u2011session dynamics",
   "",
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],

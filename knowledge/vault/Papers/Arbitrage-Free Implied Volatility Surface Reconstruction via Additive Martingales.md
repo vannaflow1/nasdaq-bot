@@ -1,24 +1,19 @@
 ---
 tags: [paper]
-relevance: 4
-read: 2026-10-20
+relevance: 3
+read: 2026-11-24
 ---
 # Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales
-★★★★☆  ·  arXiv  ·  [source](https://arxiv.org/abs/2610.25671v1)
+★★★☆☆  ·  OpenAlex  ·  [source](https://doi.org/10.48550/arxiv.2610.25671)
 
 ## What Volta learned
-The paper proposes Additive Martingale (AddMart), a framework for reconstructing a continuous implied volatility (IV) surface from sparse option quotes, ensuring static no-arbitrage conditions by construction.
+The paper introduces AddMart, a machine‑learning framework that builds a continuous, arbitrage‑free implied volatility surface from only a few quoted options by modeling an exponential additive martingale, ensuring static no‑arbitrage by design.
 
 ## Why it matters (or not)
-The paper presents a novel approach to reconstructing implied volatility surfaces, which is highly relevant to traders and quants working with options, especially those focused on market making, risk management, and volatility trading.
+Provides a new method for constructing clean IV surfaces, useful for pricing and risk metrics, but does not directly change trading tactics.
 
 ## Concepts
-additive martingale, implied volatility surface, no-arbitrage conditions, [[risk-neutral density]]
+[[arbitrage‑free iv surface]], [[additive martingale]], few‑shot reconstruction, static no‑arbitrage, risk‑neutral marginals
 
-## Idea
-Using an Additive Martingale framework to reconstruct IV surfaces from sparse quotes, ensuring no-arbitrage conditions and enabling the estimation of VaR, CVaR, and crash probabilities.
-
-## Test
-[[DOESN'T FIT]] - DOESN'T FIT MY DATA - requires intraday option quotes and a method to interpolate the volatility surface, not directly feasible with the provided daily closing data
 
 Part of [[Research engine]]

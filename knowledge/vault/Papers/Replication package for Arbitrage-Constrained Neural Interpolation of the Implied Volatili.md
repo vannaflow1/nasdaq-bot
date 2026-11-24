@@ -13,7 +13,7 @@ The paper introduces PNmix, a neural‑network based method that builds an impli
 The method is about constructing arbitrage‑free volatility surfaces, which is generally useful but the paper focuses on NSE data and does not provide results for US equity index options.
 
 ## Concepts
-arbitrage‑free iv surface, neural interpolation, svi benchmark, expanding‑origin validation, intraday backtest
+[[arbitrage‑free iv surface]], neural interpolation, svi benchmark, expanding‑origin validation, intraday backtest
 
 ## Idea
 Fit the PNmix neural surface to daily QQQ option data (using columns like l_impl, l_iv30, term, skew, gex_rank) and compare its out‑of‑sample pricing error to standard SVI/SSVI fits; if PNmix yields lower error, use its implied vol predictions for a delta‑neutral straddle trading signal.

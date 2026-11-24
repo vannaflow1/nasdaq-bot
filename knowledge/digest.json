@@ -1,5 +1,50 @@
 [
 {
+"title": "Pricing European Options under Logistic Stock-Price Dynamics with a Continuous Dividend Yield",
+"learned": "The paper develops a no\u2011arbitrage option pricing model where the underlying follows a stochastic logistic process with a continuous dividend yield, using a state\u2011dependent market price of risk and solving the resulting PDE via Crank\u2011Nicolson and a closed\u2011form transformation.",
+"concepts": [
+"logistic stock dynamics",
+"incomplete market pricing",
+"state\u2011dependent market price of risk",
+"Feynman\u2011Kac PDE",
+"dividend yield effect"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://www.irejournals.com/formatedpaper/1724119.pdf",
+"date": "2026-11-24"
+},
+{
+"title": "Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales",
+"learned": "The paper introduces AddMart, a machine\u2011learning framework that builds a continuous, arbitrage\u2011free implied volatility surface from only a few quoted options by modeling an exponential additive martingale, ensuring static no\u2011arbitrage by design.",
+"concepts": [
+"arbitrage\u2011free IV surface",
+"additive martingale",
+"few\u2011shot reconstruction",
+"static no\u2011arbitrage",
+"risk\u2011neutral marginals"
+],
+"relevance": 3,
+"verdict": "",
+"url": "https://doi.org/10.48550/arxiv.2610.25671",
+"date": "2026-11-24"
+},
+{
+"title": "Loss of directional continuity in intraday markets: Evidence from NASDAQ-100 futures",
+"learned": "The study defines a \u2018loss of directional continuity\u2019 (LDC) candlestick pattern in Nasdaq\u2011100 futures that occurs when a breakout is followed by a quick re\u2011entry into the prior range, a small body, and a long wick in the breakout direction, and finds that such events lead to 12\u201124% lower short\u2011term price continuation than ordinary breakouts.",
+"concepts": [
+"LDC candlestick",
+"breakout continuation",
+"intraday price behavior",
+"logistic regression",
+"directional continuity"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://businessperspectives.org/images/pdf/applications/publishing/templates/article/assets/25687/IMFI_2026_04_Perdomo.pdf",
+"date": "2026-11-24"
+},
+{
 "title": "PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models",
 "learned": "The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in one linear least\u2011squares solve, yielding prices, Greeks and exact price\u2011sensitivities to model parameters for fast gradient\u2011based calibration. Subtracting a Black\u2011Scholes baseline dramatically reduces pricing error (\u2248100\u00d7 for jumps), making calibrated jump parameters accurate to within ~3% versus errors up to 50% without the subtraction.",
 "concepts": [
@@ -4256,50 +4301,6 @@
 "relevance": 4,
 "verdict": "NOT CONFIRMED on my data: 1257 sell-vol + 838 buy-vol trades on real QQQ option prices, avg -8.0 bp of QQQ per trade (placebo avg -4.9, p=0.917), halves -8.7/-7.2, win 47%, worst -973 bp, positive in 1/9 years, sell trades return -3.9% of max risk; 36% of its sell days are high-gamma days (the known edge)",
 "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/fut.70023",
-"date": "2026-10-18"
-},
-{
-"title": "Revisiting local expansions for zero days-to-expiry option pricing",
-"learned": "Same-day-expiry (0DTE) options are hard to price because over a few hours prices move in jumps and lopsided ways that the normal bell-curve model misses. The authors price them with a fast 'local expansion' formula that adds corrections for skew and fat tails, and find that letting jumps follow a fat-tailed (tempered stable) shape prices SPX 0DTE options clearly better than assuming bell-shaped jumps; the method also held up on DAX and Euro Stoxx 50 0DTE options. The abstract gives no specific error numbers.",
-"concepts": [
-"0DTE options",
-"jump-diffusion",
-"Edgeworth expansion",
-"tempered stable jumps",
-"fat tails"
-],
-"relevance": 2,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.1016/j.finr.2025.100053",
-"date": "2026-10-18"
-},
-{
-"title": "Retail Trading in Options and the Rise of the Big Three Wholesalers",
-"learned": "Retail trading in US options has surged and now exceeds 60% of total market volume, helped by payment for order flow, and nearly 90% of that payment comes from three wholesalers. Using new trade flags to isolate wholesaler-executed trades, the authors build a measure of retail options activity that drops during brokerage outages. Retail traders favor cheap weekly options with an average bid-ask spread of 12.6%, and they lose money on average.",
-"concepts": [
-"retail options trading",
-"payment for order flow",
-"wholesalers",
-"weekly options",
-"bid-ask spread"
-],
-"relevance": 3,
-"verdict": "DOESN'T FIT MY DATA - needs intraday options trade data with wholesaler flags",
-"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/jofi.13285",
-"date": "2026-10-18"
-},
-{
-"title": "Illiquidity Premia in the Equity Options Market",
-"learned": "This peer-reviewed paper (Review of Financial Studies, 2017) studies whether less liquid equity options earn different returns than liquid ones. The queue held no real abstract and the full text could not be opened (the site blocks automated reading), so no results or numbers could be checked in this session. Nothing more is claimed here.",
-"concepts": [
-"option illiquidity",
-"bid-ask spread",
-"equity options",
-"liquidity premium"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://utoronto.scholaris.ca/bitstreams/e68dd3e1-7442-48ae-b2ad-1bd9980a8452/download",
 "date": "2026-10-18"
 }
 ]
