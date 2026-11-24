@@ -1,0 +1,27 @@
+name: options-daily
+# Builds the daily options tables (tools/options_daily.py) from the free 2008-2025 dataset. Manual; run once.
+on:
+  workflow_dispatch:
+    inputs:
+      symbols: { description: "symbols", default: "QQQ SPY IWM" }
+permissions:
+  contents: write
+concurrency:
+  group: options-daily
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt
+      - run: |
+          mkdir -p knowledge/data/options_daily
+          for s in ${{ github.event.inputs.symbols }}; do
+            python -u tools/options_daily.py "$s" 2>&1 | tee -a knowledge/data/options_daily/build_log.txt || echo "FAILED $s" | tee -a knowledge/data/options_daily/build_log.txt
+          done
+      - if: always()
+        run: for i in 1 2 3; do bash .github/actions_common.sh "options-daily" && break; sleep $((RANDOM % 20 + 5)); done

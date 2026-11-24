@@ -18,6 +18,7 @@ Run them all:  `python -m unittest discover -s tests -v`   (about a minute)
 | `test_prop_search.py` | result files are parked before they reach GitHub's 100 MB limit |
 | `worker/backstop.test.mjs` (Node) | the Cloudflare backstop starts only jobs GitHub really skipped, never on weekends, never without a token |
 | `test_cboe.py` | options downloads fall back to the Cloudflare relay when CBOE refuses GitHub |
+| `test_options_daily.py` | the daily options table: GEX sign, ATM IV, term ratio, skew, rank looks only backwards |
 | `test_sim_inputs.py` | the stop input published for the SIM script is the same number the forward test uses |
 
 If a test fails after a change, the change broke something: undo it or fix it before trusting Volta's output.
