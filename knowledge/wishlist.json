@@ -792,7 +792,7 @@
   "why": "All current tests lack sufficient granularity; a complete intraday GEX time‑series will let me evaluate entry timing, intra‑session dynamics, and improve both the low‑GEX breakout rule and range‑forecast models.",
   "evidence": "Current failures list ‘needs intraday GEX rank series’; low‑GEX edge never captured (diary).",
   "impact": "high",
-  "status": "open",
+  "status": "needs",
   "votes": 1,
   "gemini": {
    "status": "out_of_time",
@@ -801,6 +801,7 @@
    "branch": null,
    "summary": "stopped after 45 minutes (11 model turns)",
    "guard": null
-  }
+  },
+  "note": "Claude 2026-11-24: duplicate of owner wish #37 (and #29/#30/#31/#35/#44/#45). A 12-year 5-min GEX rank series needs intraday index option chains with per-strike open interest (paid vendor data); no free source exists, OI updates only daily, and the repo keeps only a daily net-GEX series (gex_history.csv). Owner-only data decision - see #37."
  }
 ]
