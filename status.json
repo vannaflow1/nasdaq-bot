@@ -117,7 +117,7 @@
   "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
-  "LIVE options read - Wed 25 Nov 00:22 Lux (18:22 NY), quotes ~15 min delayed, QQQ 636.92",
+  "LIVE options read - Wed 25 Nov 13:06 Lux (07:06 NY), quotes ~15 min delayed, QQQ 636.92",
   "",
   "VOLATILITY: 30-day IV 32.4% -> higher than 95% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -125,11 +125,11 @@
   "",
   "TERM STRUCTURE - what each expiry prices (QQQ move to expiry):",
   "  Wed 25 Nov (1d): \u00b11.74% (~457 NQ pts), ATM IV 41.8%",
-  "  Fri 27 Nov (3d): \u00b12.44% (~640 NQ pts), ATM IV 34.3%",
+  "  Fri 27 Nov (3d): \u00b12.44% (~639 NQ pts), ATM IV 34.3%",
   "  Mon 30 Nov (6d): \u00b13.21% (~843 NQ pts), ATM IV 31.4%",
-  "  Tue 01 Dec (7d): \u00b13.64% (~956 NQ pts), ATM IV 32.9%",
+  "  Tue 01 Dec (7d): \u00b13.64% (~955 NQ pts), ATM IV 32.9%",
   "  Wed 02 Dec (8d): \u00b14.02% (~1,056 NQ pts), ATM IV 34.0%",
-  "  Thu 03 Dec (9d): \u00b14.36% (~1,144 NQ pts), ATM IV 34.7%",
+  "  Thu 03 Dec (9d): \u00b14.36% (~1,143 NQ pts), ATM IV 34.7%",
   "  normal upward slope (front 31.4% < month 33.4%): calm near term",
   "",
   "SKEW (~30d): 25-delta puts +10.7 vol pts vs calls; wings +0.6 pts vs ATM",
