@@ -36,3 +36,5 @@
 2026-11-25 14:16 NDX ERROR ModuleNotFoundError: No module named 'cboe'
 2026-11-25 14:31 QQQ ERROR ModuleNotFoundError: No module named 'cboe'
 2026-11-25 14:31 NDX ERROR ModuleNotFoundError: No module named 'cboe'
+2026-11-25 14:46 QQQ ERROR ModuleNotFoundError: No module named 'cboe'
+2026-11-25 14:46 NDX ERROR ModuleNotFoundError: No module named 'cboe'
