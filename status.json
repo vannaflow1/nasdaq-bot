@@ -1,7 +1,7 @@
 {
  "for": "Wed 25 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Wed 25 Nov) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
@@ -28,29 +28,23 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,787 XP, next level at 10,240)",
-  "Papers read 326 | ideas & strategies tested 253 | prop strategies searched 755,617",
-  "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 12",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +3 papers, +2 tests, +1 powers"
- ],
- "updated": "Tue 24 Nov 22:57 Lux",
+ "level": "NORMAL",
+ "updated": "Wed 25 Nov 15:01 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Update: Wall Street Mixed as AI Concerns Drive Nvidia, Anthropic Sell-Off  [Yahoo (megacaps)]\n    NVDA, OPENAI, shock",
-  "- Nvidia, Anthropic end sharply lower as AI selloff resumes  [Yahoo (megacaps)]\n    NVDA, OPENAI, shock",
-  "- Consumer confidence shoots up after Democrats' midterm victories \u2014 though inflation worries persist  [CNBC economy]\n    Fed/macro",
-  "- US Equity Markets Mixed Amid Decline in AI Stocks, US Proposed Tariff Increase  [Yahoo (megacaps)]\n    export/geo",
-  "- Micron\u2019s stock falls as an analyst warns about a future supply glut  [MarketWatch]\n    MU, shock"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Stock Market Today: Dow Dives On Surprise Inflation Data; Nvidia, Anthropic Plunge (Live Coverage)  [Yahoo (megacaps)]\n    NVDA, OPENAI, Fed/macro, shock",
+  "- Jensen Huang's Nvidia return shows the U.S.-China AI race is about more than chips  [CNBC tech]\n    NVDA, export/geo",
+  "- Nvidia\u2019s Top Lawyer Sold $4.5 Million of Nvidia Stock the Day Before Its 14% Plunge  [Yahoo (megacaps)]\n    NVDA, shock",
+  "- This Acer Nitro V laptop with Nvidia RTX 5060 GPU is $1,049 at Best Buy  [Tom's Hardware]\n    NVDA, AI chips/capex",
+  "- PCE Inflation Overshoots As Fed Fears Worsen AI-Stock Volatility (Live Coverage)  [Yahoo (megacaps)]\n    Fed/macro",
+  "- Fed\u2019s preferred inflation gauge accelerated to 3.8% in October, likely sealing rate hike  [CNBC economy]\n    Fed/macro"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- nothing market-relevant"
  ],
  "forecast": [
