@@ -13,7 +13,7 @@ The paper shows how to combine Extreme Value Theory with deep reinforcement lear
 The work is methodological and does not provide concrete trading rules or results for Nasdaq/S&P futures, so it offers little actionable insight for retail traders.
 
 ## Concepts
-cvar, extreme value theory, peaks‑over‑threshold, policy gradient, [[deep hedging]]
+[[cvar]], extreme value theory, peaks‑over‑threshold, policy gradient, [[deep hedging]]
 
 
 Part of [[Research engine]]

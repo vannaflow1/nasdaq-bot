@@ -1,39 +1,5 @@
 [
  {
-  "id": "arxiv:2611.16540v1",
-  "title": "Dynamic Scenario-Based Portfolio Optimization for Multi-Asset ETFs",
-  "abstract": "Portfolio outcomes may depend as much on trading restrictions as on how returns are modeled. We compared historical moving-window returns with conditional scenarios from ARMA--GARCH models and a Student-$t$ copula for 30 U.S.-listed exchange-traded funds. Matched mean--variance and conditional value-at-risk portfolios were evaluated under long-only and limited long--short bounds over 946 sessions. Historical portfolios had higher observed reward--risk ratios in most comparisons, but no paired difference remained significant after multiple-testing adjustment. Conditional scenarios did not consistently reduce realized downside risk. We distinguished changes in target weights from trades required to rebalance holdings after market movements. Relaxing the target-adjustment limit changed exposures, turnover, and some returns more than varying scenario count or seed in the examined tests. These findings suggest that assessments of conditional return inputs should consider portfolio constraints and trading requirements.",
-  "url": "https://arxiv.org/abs/2611.16540v1",
-  "pdf": "https://arxiv.org/pdf/2611.16540v1",
-  "source": "arXiv",
-  "date": "2026-11-12",
-  "score": 10,
-  "queued": "2026-11-15",
-  "text_file": "knowledge/papers/arxiv_2611.16540v1.txt"
- },
- {
-  "id": "openalex:W7202379636",
-  "title": "Remodeling and Application of Stock Option Price Based on Skewed Laplace Distribution Approach",
-  "abstract": "This paper proposed a new model to price a stock option based on the Skewed Laplace distribution approach (SLOP). The approach was considered to provide a better option price than Black Scholes Option Price (BSOP) because Skewed Laplace distribution (SL) has a shape parameter that can capture excess skewness and kurtosis frequently found in stock return underlying the option price. In this study, SL\u2019s shape parameter was estimated using a mixture of the Moment Method and Fourth-Order Taylor Series approach. The estimator was different from the majority of prior SL\u2019s shape parameter that was obtained by Maximum Likelihood Estimation (MLE). The proposed shape parameter was easier to obtain relative to the prior parameter because it did not require a Likelihood Function (LH) and the maximization of LH where involved a complicated numerical method. The performance of SLOP was applied to eleven different enterprises that trade stock options at several strike prices. According to the empirical results in this research, it can be summarized that the SL approach yields a better option price model rather than Black Scholes (BS).",
-  "url": "https://doi.org/10.18860/cauchy.v11i2.44222",
-  "source": "OpenAlex",
-  "date": "2026-11-30",
-  "score": 10,
-  "queued": "2026-11-22",
-  "text_file": "knowledge/papers/openalex_W7202379636.txt"
- },
- {
-  "id": "openalex:W7234868316",
-  "title": "A Comparative Analysis of Three Quantitative Pricing Frameworks for SSE 50ETF Options: BS Analytical Model, CRR Binomial Tree Model and Monte Carlo Simulation",
-  "abstract": "This study compares the effectiveness and feasibility of the Black-Scholes (BS) analytical model, the Cox-Ross-Rubinstein (CRR) binomial-tree model and Monte Carlo simulation of SSE 50 ETF European call contracts. With the help of the no-arbitrage condition, risk-neutral valuation and geometric Brownian motion are used to create these three models in Python with the same benchmark parameters and later compare their pricing accuracy, convergence rate and algorithmic efficiency, and their applicability to various applications. The numerical data shows that the three methods give almost the same option price: 0.0846 to the BS model, 0.0847 the 200-step CRR model, and 0.0843 the Monte Carlo simulation of 100, 000 paths. The BS approach is by nature simple and easy to use, but has some limitations. As the number of iterations increases, the CRR framework is inclined to the BS value and thus can be used in American style options. High-dimensional and path-dependent derivatives are best modeled using Monte Carlo simulation, whose accuracy depends on the number of simulated paths and the traditional model is not able to price American contracts directly. These results explain the tradeoff between accuracy, flexibility and computational cost in option pricing model selection.",
-  "url": "https://aemps.ewapub.com/article/view/39090.pdf",
-  "source": "OpenAlex",
-  "date": "2026-11-17",
-  "score": 10,
-  "queued": "2026-11-22",
-  "text_file": "knowledge/papers/openalex_W7234868316.txt"
- },
- {
   "id": "openalex:W7234499221",
   "title": "Timing the Window: A gated regime engine for issuance and rotation in crypto-asset markets \u2014 architecture, calibration from operator heuristics, and conditional derivations for cascade rotation and treasury-levered equity exposure",
   "abstract": "Capital markets open and close windows capriciously, and an issuer who must act once, irreversibly, has a different problem from a trader who may act continuously. This paper formalises an instrument built to decide the first problem: an admission clock that states, at any date, whether the window for placing a new instrument is open, how far open, and what dose that grade permits. The instrument is a conjunction of three gates \u2014 internal readiness, market regime, and a veto list \u2014 and not a weighted index, a design choice we defend on the ground that averaging allows an open gate to compensate a closed one, which is precisely the error an irreversible act cannot absorb. The regime gate is driven by a latent-factor engine whose identification rests on a point we believe has been underweighted in practice: an index assembled exclusively from indicators endogenous to the crypto market measures a single factor that is itself a transformation of the price level, and therefore carries no information about the future willingness of capital to finance an unseasoned instrument. We show that the primary equity issuance market supplies an exogenous and leading measurement of that same latent variable, and that the relevant measurement is the count and receptivity of small deals rather than aggregate proceeds \u2014 a distinction the 2026 data make vivid, with record United States proceeds accompanied by a thirty-four per cent fall in the number of deals priced. The paper's technical core converts the tacit knowledge of a daily operator into testable propositions. We obtain three results worth isolating. First, under a margin buffer set proportionally to the prevailing volatility level, the probability that a carry position breaches its buffer is exactly invariant to the level of volatility and depends, to second order, only on the volatility of volatility; the dependence is strictly increasing when the buffer exceeds \u221a2 standard deviations and reverses below it. This gives the lockability gate a defensible threshold variable and explains why a carry bid withdraws in unstable markets without any change in the mean level of risk. Second, the rotation cascade that carries capital from bitcoin outward to the market's tail is asymmetric in its lag structure, not merely in sign: in expansion it propagates head-to-tail with a positive and tier-increasing lag, which is what makes it exploitable and what gives an issuer warning; in contraction it propagates at lag zero with ampli",

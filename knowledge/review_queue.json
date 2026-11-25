@@ -1,1 +1,19 @@
-[]
+[
+ {
+  "id": "q:2026-11-25:0",
+  "title": "Volta's own question (inspired by: Arbitrage-Free Implied Volatility Surface Reconstruction via; Arithmetic Models for Commodity Futures, Vanilla, and Calend)",
+  "idea": "On days when the short\u2011term IV term structure is steep (term\u202f>\u202f1.1) but the implied event move is modest (event_prem\u202f\u2264\u202f1), does the Nasdaq\u2011100 session range tend to be larger relative to its 20\u2011day average range?",
+  "relevance": 6,
+  "spec": {
+   "kind": "question",
+   "question": "On days when the short\u2011term IV term structure is steep (term\u202f>\u202f1.1) but the implied event move is modest (event_prem\u202f\u2264\u202f1), does the Nasdaq\u2011100 session range tend to be larger relative to its 20\u2011day average range?",
+   "target": "y_range / k_range20",
+   "expr": "term * (1 - clip(event_prem, 0, 1))",
+   "explain": "The term column captures the steepness of the IV curve (7d\u202fIV\u202f/\u202f30d\u202fIV). Prior research asked about steep term together with large event\u2011premiums. I want to see the opposite situation: a steep term but no big event, and whether that combination still leads to an amplified intraday range."
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: average 1.03, median 0.907 over 2906 sessions (2014-19: 1.03, 2020-25: 1.03). Predictor: lowest-fifth days 0.916 vs highest-fifth 1.29, skill +7.3% vs the base rate, better in 9/9 unseen years",
+  "how": "Q: On days when the short\u2011term IV term structure is steep (term\u202f>\u202f1.1) but the implied event move is modest (event_prem\u202f\u2264\u202f1), does the Nasdaq\u2011100 session range tend to be larger relative to its 20\u2011day average range? | answer = `y_range / k_range20` | predicted by `term * (1 - clip(event_prem, 0, 1))` | stress: skill +7.30; nudged formulas kept >= half the skill in 5/6; stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-11-25"
+ }
+]

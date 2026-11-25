@@ -2,7 +2,8 @@
 tags: [concept]
 ---
 # scenario generation
-2 papers mention this:
+3 papers mention this:
 
 - [[Deep-MKV-TS Path-Dependent McKean–Vlasov Control for Financial Time Series Generation]]
+- [[Dynamic Scenario-Based Portfolio Optimization for Multi-Asset ETFs]]
 - [[Rachev-Ratio Portfolio Optimization with TimeGAN Scenarios Replacement versus Supplementat]]

@@ -1,5 +1,50 @@
 [
 {
+"title": "A Comparative Analysis of Three Quantitative Pricing Frameworks for SSE 50ETF Options: BS Analytical Model, CRR Binomial Tree Model and Monte Carlo Simulation",
+"learned": "The paper shows that Black\u2011Scholes, a 200\u2011step CRR binomial tree, and a Monte\u2011Carlo simulation with 100\u202fk paths produce virtually identical prices for a European call on China's SSE\u202f50ETF (\u22480.0845). It highlights the trade\u2011off: BS is fastest but limited to European options; CRR can handle American features with more compute; Monte\u2011Carlo handles high\u2011dimensional or path\u2011dependent payoffs but needs many paths.",
+"concepts": [
+"Black\u2011Scholes formula",
+"CRR binomial tree",
+"Monte Carlo simulation",
+"model convergence",
+"computational cost"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://aemps.ewapub.com/article/view/39090.pdf",
+"date": "2026-11-25"
+},
+{
+"title": "Remodeling and Application of Stock Option Price Based on Skewed Laplace Distribution Approach",
+"learned": "The paper proposes pricing options with a Skewed Laplace distribution (SLOP) instead of Black\u2011Scholes, estimating the shape parameter via moments and a 4th\u2011order Taylor series rather than MLE.",
+"concepts": [
+"Skewed Laplace distribution",
+"Option pricing model",
+"Moment estimation",
+"Shape parameter",
+"Black\u2011Scholes comparison"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://doi.org/10.18860/cauchy.v11i2.44222",
+"date": "2026-11-25"
+},
+{
+"title": "Dynamic Scenario-Based Portfolio Optimization for Multi-Asset ETFs",
+"learned": "The paper tests whether using ARMA\u2011GARCH marginal models plus a Student\u2011t copula to generate conditional return scenarios improves multi\u2011ETF portfolio performance versus simply using historical rolling\u2011window returns. Across 946 daily rebalancing periods, the scenario\u2011based method did not consistently deliver higher risk\u2011adjusted returns or lower downside risk, and results were sensitive to trading constraints.",
+"concepts": [
+"ARMA\u2011GARCH",
+"Student\u2011t copula",
+"scenario generation",
+"mean\u2011variance",
+"CVaR"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://arxiv.org/abs/2611.16540v1",
+"date": "2026-11-25"
+},
+{
 "title": "Call Option Price using Pearson Diffusion Processes",
 "learned": "The paper proposes pricing European call options by modeling log\u2011returns with Pearson diffusion processes, whose stationary distribution (Pearson Type\u202fIV) can capture skewness and excess kurtosis; they prove risk\u2011neutral measure validity and claim better pricing performance versus Black\u2011Scholes and Heston on Nifty 50 options.",
 "concepts": [
@@ -4256,51 +4301,6 @@
 "relevance": 2,
 "verdict": "not testable with my data yet",
 "url": "https://arxiv.org/pdf/2609.33470",
-"date": "2026-10-18"
-},
-{
-"title": "Empirical Performance of Alternative Option Pricing Models",
-"learned": "This classic study (Bakshi, Cao and Chen) builds an option model where volatility, interest rates and sudden jumps can all vary, and tests simpler versions against it on S&P 500 options. Adding changing volatility and jumps matters most for pricing options accurately and for making the implied numbers line up with actual market behavior. For hedging, though, a model with changing volatility alone worked best; the abstract gives no specific error numbers.",
-"concepts": [
-"stochastic volatility",
-"jump risk",
-"option pricing models",
-"hedging performance",
-"S&P 500 options"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.1997.tb02749.x",
-"date": "2026-10-18"
-},
-{
-"title": "Harvesting the Volatility Risk Premium: A Learning-to-Rank Approach",
-"learned": "The author uses a machine-learning ranker each morning at 10:00 ET to choose which of eight same-day (0DTE) SPX short puts to sell, from 5-delta to 45-delta, or to skip the day, with position size scaled up when 0DTE implied volatility is rich versus recent realized volatility. After margin, fees and bid-to-mid fills, the 2025 hold-out year showed Sharpe ratios of 4.31-5.76 and a -2.28% max drawdown, versus 1.90-3.11 in the 2021-2024 walk-forward, and returns rose with realized volatility. Most of the edge came from choosing the strike and when to skip; the extra risk controls added only 0.54 Sharpe, and the hold-out is a single year.",
-"concepts": [
-"volatility risk premium",
-"0DTE short puts",
-"learning-to-rank",
-"implied vs realized vol edge",
-"margin-aware sizing"
-],
-"relevance": 4,
-"verdict": "NOT CONFIRMED on my data: 1145 signal days, hit 58.5% (always-long 58.5%), strategy +7.0 bps/day vs +3.8 for the same average exposure held constantly -> timing adds +3.2 bps/day, t=2.09, positive in 7/9 years",
-"url": "https://arxiv.org/pdf/2608.24786",
-"date": "2026-10-18"
-},
-{
-"title": "The Synergistic Impact of AI-Driven Strategies on Retail Options Trading within the European Derivatives Market: A Comparative Analysis of Liquidity and Market Efficiency",
-"learned": "This descriptive study compares US and European index options and argues that AI trading tools work better where markets are deeper: SPX trades about 1.2 million contracts a day versus about 300,000 for Euro Stoxx 50, with spreads of roughly 0.25% versus 0.40%. It cites options volume rising 18% in the US versus 9% in Europe after CPI releases and claims AI reduces retail behavioral biases, but this rests largely on industry reports rather than a tested model.",
-"concepts": [
-"AI trading",
-"retail options",
-"liquidity",
-"bid-ask spread",
-"US vs Europe market structure"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.51483/ijaiml.5.2.2025.1-15",
 "date": "2026-10-18"
 }
 ]
