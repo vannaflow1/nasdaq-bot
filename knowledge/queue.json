@@ -1,40 +1,5 @@
 [
  {
-  "id": "openalex:W7234499221",
-  "title": "Timing the Window: A gated regime engine for issuance and rotation in crypto-asset markets \u2014 architecture, calibration from operator heuristics, and conditional derivations for cascade rotation and treasury-levered equity exposure",
-  "abstract": "Capital markets open and close windows capriciously, and an issuer who must act once, irreversibly, has a different problem from a trader who may act continuously. This paper formalises an instrument built to decide the first problem: an admission clock that states, at any date, whether the window for placing a new instrument is open, how far open, and what dose that grade permits. The instrument is a conjunction of three gates \u2014 internal readiness, market regime, and a veto list \u2014 and not a weighted index, a design choice we defend on the ground that averaging allows an open gate to compensate a closed one, which is precisely the error an irreversible act cannot absorb. The regime gate is driven by a latent-factor engine whose identification rests on a point we believe has been underweighted in practice: an index assembled exclusively from indicators endogenous to the crypto market measures a single factor that is itself a transformation of the price level, and therefore carries no information about the future willingness of capital to finance an unseasoned instrument. We show that the primary equity issuance market supplies an exogenous and leading measurement of that same latent variable, and that the relevant measurement is the count and receptivity of small deals rather than aggregate proceeds \u2014 a distinction the 2026 data make vivid, with record United States proceeds accompanied by a thirty-four per cent fall in the number of deals priced. The paper's technical core converts the tacit knowledge of a daily operator into testable propositions. We obtain three results worth isolating. First, under a margin buffer set proportionally to the prevailing volatility level, the probability that a carry position breaches its buffer is exactly invariant to the level of volatility and depends, to second order, only on the volatility of volatility; the dependence is strictly increasing when the buffer exceeds \u221a2 standard deviations and reverses below it. This gives the lockability gate a defensible threshold variable and explains why a carry bid withdraws in unstable markets without any change in the mean level of risk. Second, the rotation cascade that carries capital from bitcoin outward to the market's tail is asymmetric in its lag structure, not merely in sign: in expansion it propagates head-to-tail with a positive and tier-increasing lag, which is what makes it exploitable and what gives an issuer warning; in contraction it propagates at lag zero with ampli",
-  "url": "https://doi.org/10.5281/zenodo.24284380",
-  "source": "OpenAlex",
-  "date": "2026-11-16",
-  "score": 10,
-  "queued": "2026-11-22",
-  "text_failed": true
- },
- {
-  "id": "arxiv:2610.31141v1",
-  "title": "Intraday Forecasting Ability and Liquidity Provision of Institutional Traders",
-  "abstract": "This study uses a high-frequency dataset from a stock exchange to examine how forecasting ability and liquidity provision relate to institutional traders' proprietary intraday profitability. We discover persistent forecasting abilities among traders. Specifically, we demonstrate that hypothetical flow-following strategies based on the execution flows of these skillful traders yield annualized Sharpe ratios ranging from 16 to 63 across various trading frequencies. We match buy and sell executions into positions, linking realized profit and loss (P&L) to horizon-matched forecasting proxies and the liquidity roles of both executions. Our findings indicate a direct correlation between improved forecasting ability and profitability, where a one-standard-deviation increase in the forecasting ability proxy is associated with 1.02 -- 1.19 currency units higher P&L per matched position. Additionally, we measure liquidity-provision intensity within a matched position by its number of passive executions: zero, one, or two. In these regressions, P&L is 1.28 -- 1.31 currency units higher for one passive execution than for none, and a further 3.79 -- 3.82 higher for two than for one, underscoring the significant financial benefits of liquidity provision.",
-  "url": "https://arxiv.org/abs/2610.31141v1",
-  "pdf": "https://arxiv.org/pdf/2610.31141v1",
-  "source": "arXiv",
-  "date": "2026-10-22",
-  "score": 9,
-  "queued": "2026-10-25",
-  "text_file": "knowledge/papers/arxiv_2610.31141v1.txt"
- },
- {
-  "id": "arxiv:2610.30891v1",
-  "title": "Equilibria and Learning in Competitive Market Making",
-  "abstract": "We propose a market-making game played among $N \\ge 2$ strategic market makers and a single non-strategic representative trader. In a continuous quote space, standard finite-game arguments do not apply, while non-convex and discontinuous payoffs rule out classical continuous existence results and complicate learning. Nonetheless, we characterize pure-strategy Nash equilibria (PSNEs) and show that at least one PSNE always exists under minimal assumptions on the underlying asset value distribution, and that the equilibrium bid-ask spread widens strictly with asset value volatility. To obtain a tractable learning framework, we discretize prices and, under an additional regularity condition, show that the time-averaged play of no-internal-regret learners approaches the continuous Nash price envelope as the tick size vanishes. Finally, we empirically validate our theoretical results through numerical simulations.",
-  "url": "https://arxiv.org/abs/2610.30891v1",
-  "pdf": "https://arxiv.org/pdf/2610.30891v1",
-  "source": "arXiv",
-  "date": "2026-10-22",
-  "score": 9,
-  "queued": "2026-10-25",
-  "text_file": "knowledge/papers/arxiv_2610.30891v1.txt"
- },
- {
   "id": "arxiv:2611.26119v1",
   "title": "Feasible sub-replicating portfolios for basket options via the block rearrangement algorithm",
   "abstract": "We construct sub-replicating portfolios of vanilla options for a basket call when the marginal distributions of the underlying assets are known and their dependence is not. To do so, we reduce the n-asset problem to n two-asset problems of the type solved by Hobson, Laurence, and Wang (2005a), and use the Block Rearrangement Algorithm1 (BRA) to approximate the minimising dependence among the assets. The cash component of the portfolio is computed exactly, so that its price is a valid lower bound, and reassembling the BRA output with the original marginals gives an upper bound computed by quadrature; together they bracket the minimum basket-option price. In log-normal examples with three and six assets the bracket has a relative width of at most 0.1%, and the corresponding sub-replicating portfolios are sparse, using only two strikes per asset, while the resulting bounds are tighter than those obtained from a general-purpose multi-marginal optimal-transport algorithm with strikes on a grid. We also give the lower bound and an optimal portfolio in closed form in three special cases: a deep in-the-money basket, a basket with one dominant asset, and jointly mixable marginals.",

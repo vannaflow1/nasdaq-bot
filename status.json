@@ -94,7 +94,7 @@
   "No FOMC, CPI or jobs report on Wed 25 Nov."
  ],
  "learning": [
-  "LEARNING: 326 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
+  "LEARNING: 329 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Call Option Price using Pearson Diffusion Processes (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes pricing European call options by modeling log\u2011returns with Pearson diffusion processes, whose stationary distribution (Pearson Type\u202fIV) can capture skewness and excess kurtosis; they prove risk\u2011neutral",
@@ -110,9 +110,9 @@
   "\u2022 Neural Network Calibration of the Heston Stochastic Volatility Model (\u2605\u2605\u2605\u2606\u2606)",
   "  Neural networks can approximate either the Heston pricing map (MtP) or the inverse map from option surfaces to Heston parameters (PtM). PtM gives the fastest online inference but still needs checks for admissibility and ",
   "  tested: DOESN'T FIT MY DATA - The idea requires a neural\u2011network generated estimate of the Heston parameters, which is not present in Volta's dataset; only the calibrat",
-  "This week's tests: 12 run - 1 promising, 5 not confirmed, 1 don't fit my data, 5 translation failures",
+  "This week's tests: 13 run - 1 promising, 6 not confirmed, 1 don't fit my data, 5 translation failures",
   "",
-  "28 papers waiting in my queue."
+  "25 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

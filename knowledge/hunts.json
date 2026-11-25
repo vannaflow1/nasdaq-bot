@@ -461,7 +461,8 @@
   "query": "low gex rank opening price movement nasdaq futures",
   "why": "I have no academic or industry evidence that low dealer‑gamma days generate predictable opening price moves; a focused literature search could reveal mechanisms or precedent studies.",
   "source": "self-check",
-  "status": "open",
-  "papers": []
+  "status": "nothing found",
+  "papers": [],
+  "searched": "2026-11-25"
  }
 ]
