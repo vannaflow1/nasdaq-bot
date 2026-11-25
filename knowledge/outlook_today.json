@@ -1,17 +1,17 @@
 {
- "date": "2026-11-24",
+ "date": "2026-11-25",
  "made_ct": "07:06",
- "price": 26372.5,
- "on_ret": -0.01656,
- "asia_ret": 0.00151,
- "london_ret": -0.01804,
- "on_range_pct": 2.961,
- "on_range_z": 1.62,
+ "price": 25512.5,
+ "on_ret": -0.02935,
+ "asia_ret": -0.01921,
+ "london_ret": -0.01034,
+ "on_range_pct": 3.45,
+ "on_range_z": 1.83,
  "size": "WIDE",
- "exp_move_pts": 227,
- "exp_range_pts": 469,
+ "exp_move_pts": 219,
+ "exp_range_pts": 454,
  "location": "BELOW yesterday's low",
  "overnight_dir": "DOWN",
- "vix": 26.62,
- "vix_term": 1.043921568627451
+ "vix": 26.36,
+ "vix_term": 1.0349430702787594
 }
