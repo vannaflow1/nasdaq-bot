@@ -547,5 +547,20 @@
   ],
   "calls_left_today": 6,
   "status": "out_of_time"
+ },
+ {
+  "wish": 47,
+  "title": "Add a fast‑update dealer gamma exposure estimator to live feed",
+  "outcome": "out_of_time",
+  "summary": "stopped after 45 minutes (13 model turns)",
+  "how_to_use": "",
+  "date": "2026-11-26",
+  "steps": 13,
+  "models": [
+   "gemini-3.8-flash",
+   "gemini-flash-lite-latest"
+  ],
+  "calls_left_today": 47,
+  "status": "out_of_time"
  }
 ]
