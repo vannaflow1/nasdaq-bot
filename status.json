@@ -1,7 +1,7 @@
 {
  "for": "Thu 26 Nov",
  "advice": [
-  "WHAT THIS MEANS FOR YOU TOMORROW (Thu 26 Nov) - risk \u26aa NORMAL",
+  "WHAT THIS MEANS FOR YOU - risk \u26aa NORMAL",
   "- Gamma on the low side: slightly bigger moves than usual. Normal plan, no extra size."
  ],
  "gamma": [
@@ -28,35 +28,25 @@
  "earnings": [
   "  no megacap earnings tomorrow"
  ],
- "level": [
-  "VOLTA LEVEL 16  (9,795 XP, next level at 10,240)",
-  "Papers read 330 | ideas & strategies tested 255 | prop strategies searched 755,617",
-  "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
-  "Brain upgrades: 0 | self-discovered powers: 12",
-  "XP only for verified progress: tests passed on unseen data count far more than activity.",
-  "Since yesterday: +1 papers, +1 tests"
- ],
- "updated": "Thu 26 Nov 13:46 Lux",
+ "level": "NORMAL",
+ "updated": "Thu 26 Nov 15:02 Lux",
  "events": [
   "NEXT 5 TRADING DAYS:",
   "  no scheduled macro events or megacap earnings"
  ],
  "news": [
-  "NEWS (last 24h, ranked by keywords):",
-  "- Nasdaq Plunges 4.6% Before Dramatic Rebound. Wall Street Faces A Triple Threat From AI, Inflation And Trump Tariffs.  [Yahoo (megacaps)]\n    export/geo, Fed/macro, shock",
-  "- Nvidia sellers seek new buyers as U.S. curbs China AI chip access, sources tell CNBC  [CNBC tech]\n    NVDA, AI chips/capex, export/geo",
-  "- Update: US Equity Indexes Mixed, Treasury Yields Drop as Investors Rotate Out of Chipmakers While Assessing Trade Tariffs  [Yahoo (megacaps)]\n    export/geo, Fed/macro",
-  "- Is Berkshire Hathaway Stock a Buy if the Fed Keeps Raising Rates?  [Yahoo (megacaps)]\n    Fed/macro",
-  "- Fed\u2019s preferred inflation gauge accelerated to 3.8% in October, raising the 2027 stakes for the central bank  [CNBC economy]\n    Fed/macro",
-  "- The Fed says inflation hasn\u2019t gotten any better ahead of its key December vote to raise rates  [MarketWatch]\n    Fed/macro",
-  "- AMD's Radeon RX 9060 XT sets new GPU frequency world record of 4.837 GHz  [Tom's Hardware]\n    AMD, AI chips/capex",
-  "- Jury finds Huawei stole US tech, laundered money, and broke sanctions  [The Register]\n    export/geo"
+  "NEWS (last 16h, ranked by keywords):",
+  "- Export-banned Nvidia Blackwell B300 servers are openly for sale in China for up to $3.4 million  [Tom's Hardware]\n    NVDA, AI chips/capex, shock",
+  "- S&P warns Nvidia credit rating could be cut over 'rising' management and governance risk  [CNBC tech]\n    NVDA, shock",
+  "- Microsoft hotpatches hotpatch that could crash Windows Server 2025  [The Register]\n    MSFT, shock",
+  "- Trump Is Hiking Tariffs Again. Here Are the New Tariff Rates on 14 Countries  [Yahoo (megacaps)]\n    export/geo",
+  "- Global stocks rally as investors shrug off U.S. tariffs and AI jitters to 'fish for bargains'  [CNBC tech]\n    export/geo",
+  "- U.S. tariff-hike threats pile pressure on partners to sign trade deals  [CNBC economy]\n    export/geo"
  ],
  "trump": [
-  "TRUMP on Truth Social (market-relevant, last 24h):",
+  "TRUMP on Truth Social (market-relevant, last 16h):",
   "- Thu 13:38 [economy] \u201cU.S. Q3 GDP just got revised UP to a massive +4.3% \u2014 shattering expert predictions and nearly DOUBLING Q2\u2019s 2.2% growth! The Trump Economy is ROARING, and the mainstream media can\u2019t hide it anymore!\u201d View image",
-  "- Thu 06:47 [oil/geopolitics, fiscal/policy] David E. Sanger, the mediocre reporter for the Failing New York Times, didn\u2019t mention in his recent story on me the successful closing of the Border, best crime stats in years (lowest murder rate since 1900 - 126 years!), biggest Tax and Regulation Cuts, EVER, the most\u2026",
-  "- Wed 18:14 [stock market] Stocks are down sharply because of the November Third Election results. I wasn\u2019t on the Ballot, but if I was, the results, just like all three times before, would have been much different, and the Stock Market, and your 401-k\u2019s, would be BOOMING. I told you so!!! President DJT"
+  "- Thu 06:47 [oil/geopolitics, fiscal/policy] David E. Sanger, the mediocre reporter for the Failing New York Times, didn\u2019t mention in his recent story on me the successful closing of the Border, best crime stats in years (lowest murder rate since 1900 - 126 years!), biggest Tax and Regulation Cuts, EVER, the most\u2026"
  ],
  "forecast": [
   "No forecasts yet.",
