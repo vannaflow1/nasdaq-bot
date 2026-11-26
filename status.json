@@ -349,19 +349,19 @@
   "Scoreboard: 26/54 graded checks right (48%) over 16 days; history says ~54-58%. (Still counted while paused.)"
  ],
  "scoreboard": [
-  "\ud83d\udccb VOLTA WEEKLY SCOREBOARD - week to Wed 25 Nov 2026",
+  "\ud83d\udccb VOLTA WEEKLY SCOREBOARD - week to Thu 26 Nov 2026",
   "Every live claim next to what actually happened. No forecasts, no spin.",
-  "1) Hourly bias (PAUSED - still graded silently): 24/52 checks right (46%) over 15 days; this week 10/10. The backtest said 54-58%.",
+  "1) Hourly bias (PAUSED - still graded silently): 26/54 checks right (48%) over 16 days; this week 7/7. The backtest said 54-58%.",
   "   Verdict: worse than a coin flip live - not usable.",
-  "2) Day-size outlook (NY): 17 days graded. Typical miss of the expected high-low range: 56%.",
-  "   Days called BUSIER/WIDE (12): real range 796 pts on average vs 516 pts on the other 5 days - bigger, as called. (too few to judge)",
-  "3) London breakout tracker: 18/39 breaks reversed before the NY open (46%); in 12 years of history 52-55% did. Volta makes no London call from this.",
+  "2) Day-size outlook (NY): 18 days graded. Typical miss of the expected high-low range: 66%.",
+  "   Days called BUSIER/WIDE (13): real range 821 pts on average vs 516 pts on the other 5 days - bigger, as called. (too few to judge)",
+  "3) London breakout tracker: 18/40 breaks reversed before the NY open (45%); in 12 years of history 52-55% did. Volta makes no London call from this.",
   "4) Forward tests on real futures bars (the only candidates for a prop edge; F10, F12 and F13 share entries = ONE bet):",
-  "   F10/F12: 23 trades, average +0.24R per trade so far (mostly luck at this count). Belief about the true edge: +0.029R \u00b1 0.043, P(edge > 0) 75%. Status CONTINUE; 37 more trades before the eval rule can be asked.",
-  "   F13: 43 trades, average +0.29R per trade so far (mostly luck at this count). Belief about the true edge: +0.033R \u00b1 0.033, P(edge > 0) 85%. Status CONTINUE; 17 more trades before the eval rule can be asked.",
+  "   F10/F12: 24 trades, average +0.30R per trade so far (mostly luck at this count). Belief about the true edge: +0.030R \u00b1 0.043, P(edge > 0) 76%. Status CONTINUE; 36 more trades before the eval rule can be asked.",
+  "   F13: 45 trades, average +0.29R per trade so far (mostly luck at this count). Belief about the true edge: +0.034R \u00b1 0.033, P(edge > 0) 85%. Status CONTINUE; 15 more trades before the eval rule can be asked.",
   "   Scale (Lucid simulation of 13 Nov 2026): a true edge of +0.03R is worth roughly $30 a month per prop account, first payout after ~5 months, 18% of accounts reach one.",
   "5) Short-vol paper trade: no trade opened yet (needs a high-gamma day).",
   "6) Strategy search: 755,617 strategies tested in total (leaderboard and luck bar: /search).",
-  "   Machine health: watchdog last ran 1 h ago; 1 open problem(s): option-chain snapshots (CBOE data actually saved)."
+  "   Machine health: watchdog last ran 1 h ago; no open problems."
  ]
 }
