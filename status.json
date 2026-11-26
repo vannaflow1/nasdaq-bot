@@ -112,7 +112,7 @@
   "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
-  "LIVE options read - Thu 26 Nov 14:51 Lux (08:51 NY), quotes ~15 min delayed, QQQ 633.62",
+  "LIVE options read - Thu 26 Nov 15:03 Lux (09:03 NY), quotes ~15 min delayed, QQQ 633.62",
   "",
   "VOLATILITY: 30-day IV 33.8% -> higher than 97% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -197,22 +197,21 @@
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],
  "plan": [
-  "TRADING PLAN - 2026-11-25  |  expected move \u00b1547 pts, full-day range ~974 pts, risk ['VOLTA LEVEL 16  (9,787 XP, next level at 10,240)', 'Papers read 326 | ideas & strategies tested 253 | prop strategies searched 755,617', 'Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 12', 'XP only for verified progress: tests passed on unseen data count far more than activity.', 'Since yesterday: +3 papers, +2 tests, +1 powers']",
+  "TRADING PLAN - 2026-11-27  |  expected move \u00b1411 pts, full-day range ~874 pts, risk ['VOLTA LEVEL 16  (9,795 XP, next level at 10,240)', 'Papers read 330 | ideas & strategies tested 255 | prop strategies searched 755,617', 'Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 12', 'XP only for verified progress: tests passed on unseen data count far more than activity.', 'Since yesterday: +1 papers, +1 tests']",
   "Size factor today: 100%  (normal conditions)",
-  "SPX DEALER CHECK (2026-11-25): dealer gamma +2.0 (avg +1.5), SPX walls 7000 / 7205 (5.4x their usual distance) -> today's range bigger (+12.7%)",
   "",
   "STOPS on a day like this (share of level touches where price did NOT run past the stop within 30 min):",
-  "    15 pt stop -> survives ~5% of touches",
-  "    25 pt stop -> survives ~9% of touches",
-  "    40 pt stop -> survives ~15% of touches",
-  "    60 pt stop -> survives ~22% of touches",
-  "   109 pt stop -> survives ~40% of touches",
-  "   164 pt stop -> survives ~57% of touches",
-  "  Median overshoot through a level today: ~142 pts.",
+  "    15 pt stop -> survives ~7% of touches",
+  "    25 pt stop -> survives ~12% of touches",
+  "    40 pt stop -> survives ~19% of touches",
+  "    60 pt stop -> survives ~29% of touches",
+  "    82 pt stop -> survives ~40% of touches",
+  "   123 pt stop -> survives ~57% of touches",
+  "  Median overshoot through a level today: ~107 pts.",
   "",
   "SIZE PER $1,000 OF BUFFER (distance to your max-loss limit):",
   "  risk per trade $100, daily stop $200",
-  "  -> 15 pt stop: 3 MNQ  |  40 pt stop: 1 MNQ  |  109 pt stop: 0 MNQ",
+  "  -> 15 pt stop: 3 MNQ  |  40 pt stop: 1 MNQ  |  82 pt stop: 0 MNQ",
   "",
   "Lucid rules to respect: EOD trailing max loss; 40% consistency (no single day > 40% of the cycle's profit).",
   "Use /plan buffer:<$> stop:<pts> for your exact numbers. Sizing guidance, not trade signals or financial advice.",
@@ -220,16 +219,16 @@
   "VOLTA'S BOOK: $25,000 (buffer $1,000) - armed today: short-vol fly if dealer gamma rank > 0.7 at 15:20 NY; with the open's side of the overnight range at 08:31, no red"
  ],
  "plan_data": {
-  "date": "2026-11-25",
-  "move": 547,
-  "range": 974,
+  "date": "2026-11-27",
+  "move": 411,
+  "range": 874,
   "level": [
-   "VOLTA LEVEL 16  (9,787 XP, next level at 10,240)",
-   "Papers read 326 | ideas & strategies tested 253 | prop strategies searched 755,617",
+   "VOLTA LEVEL 16  (9,795 XP, next level at 10,240)",
+   "Papers read 330 | ideas & strategies tested 255 | prop strategies searched 755,617",
    "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
    "Brain upgrades: 0 | self-discovered powers: 12",
    "XP only for verified progress: tests passed on unseen data count far more than activity.",
-   "Since yesterday: +3 papers, +2 tests, +1 powers"
+   "Since yesterday: +1 papers, +1 tests"
   ],
   "mult": 1.0,
   "why": [
