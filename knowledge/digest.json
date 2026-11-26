@@ -1,5 +1,50 @@
 [
 {
+"title": "Financial Time-Series Forecasting: Towards Synergizing Performance And Interpretability Within a Hybrid Machine Learning Approach",
+"learned": "The authors compared several hybrid ML models (linear regression variants, LSTM, decision trees) for Bitcoin price forecasting and found that the linear regressor performed best, while also emphasizing interpretability through time\u2011series preprocessing.",
+"concepts": [
+"Linear regression",
+"LSTM",
+"Decision tree",
+"Time\u2011series decomposition",
+"Model interpretability"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.21203/rs.3.rs-3825306/v1",
+"date": "2026-11-26"
+},
+{
+"title": "Model Risk in European Union Allowance Futures and Options: From Black\u201376 to Institutionally Grounded Models\u2014A Critical Structured Review",
+"learned": "The paper reviews how pricing models for EU emissions allowance futures and options have moved from simple Black\u201176 to more complex models that try to embed regulatory features like the Market Stability Reserve. It argues that the simplest model that matches the current regime and has empirical support should be used, and that many of the more sophisticated models add identification and numerical risks.",
+"concepts": [
+"Black\u201176 benchmark",
+"institutionally\u2011grounded models",
+"regime\u2011dependent dynamics",
+"model risk",
+"risk\u2011neutral valuation"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://journals.zeuspress.org/index.php/conference/article/download/1555/1493",
+"date": "2026-11-26"
+},
+{
+"title": "Marginal Specification and Tail Dependence in Equity Markets",
+"learned": "The study shows that copula results for equity markets are highly sensitive to how individual returns are filtered (empirical CDF vs GARCH) and how daily returns are paired across time zones. While the Student\u2011t copula often gets the highest overall density score, its advantage disappears in many rolling windows and changes with lead\u2011lag adjustments, especially for the S&P\u2011Nikkei pair.",
+"concepts": [
+"copula",
+"GARCH filtering",
+"tail dependence",
+"lead\u2011lag pairing",
+"density scoring"
+],
+"relevance": 2,
+"verdict": "not testable with my data yet",
+"url": "https://journals.zeuspress.org/index.php/conference/article/download/1536/1476",
+"date": "2026-11-26"
+},
+{
 "title": "Active Risk Management",
 "learned": "The paper distinguishes passive market beta from active alpha, explains alpha\u2013beta separation, return attribution (e.g., Brinson), and how tracking error measures active risk relative to a benchmark. It also discusses benchmark design, active risk budgeting, and differences between public and private markets.",
 "concepts": [
@@ -4255,51 +4300,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://arxiv.org/pdf/2401.03737",
-"date": "2026-10-18"
-},
-{
-"title": "Risk Everywhere: Modeling and Managing Volatility",
-"learned": "Using high-frequency data on more than 50 commodities, currencies, equity indices and bonds over 20+ years, the authors (Bollerslev, Hood, Huss and Pedersen) find that realized volatility behaves in very similar ways across markets. Fitting realized-volatility models jointly across many assets (panel estimation) gave better out-of-sample risk forecasts than fitting each asset alone, with significant economic gains in a utility-based test that also accounts for trading costs. The abstract gives no specific error numbers.",
-"concepts": [
-"realized volatility",
-"HAR models",
-"panel estimation",
-"volatility forecasting",
-"risk management"
-],
-"relevance": 3,
-"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.533% (-0.3%), better in 5/9 unseen years",
-"url": "https://academic.oup.com/rfs/article-pdf/31/7/2729/25102779/hhy041.pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Book-to-Market, Mispricing, and the Cross Section of Corporate Bond Returns",
-"learned": "Corporate bonds whose book value is high relative to their market price tend to earn more later: senior bonds, even investment grade, in the top 20% by this ratio beat the bottom 20% by about 3-4% a year after controlling for yield, spread, rating, duration, liquidity and past returns. The edge fades when trading is delayed and appears even where risk differences are small, which the authors read as mispricing rather than compensation for risk.",
-"concepts": [
-"corporate bonds",
-"book-to-market",
-"mispricing",
-"cross-sectional returns",
-"bond liquidity"
-],
-"relevance": 0,
-"verdict": "not testable with my data yet",
-"url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/9F30CC8EE3077365BDF05E801333CB26/S0022109024000048a.pdf/div-class-title-book-to-market-mispricing-and-the-cross-section-of-corporate-bond-returns-div.pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Frictions as a Constraint on Tax Planning",
-"learned": "This law-review article argues that narrow tax reforms aimed at specific tax-avoidance tricks work only when 'frictions' (fees, accounting or regulatory treatment, credit risk) make the workaround costly, and that sharp, all-or-nothing frictions deter end-runs best. It compares two US rules on derivatives, Section 1259 (constructive sales of appreciated stock) and Section 1260 (using derivatives to mimic hedge-fund ownership), which use almost the same wording yet drew different taxpayer responses because of differing frictions.",
-"concepts": [
-"tax planning",
-"frictions",
-"constructive sale (Section 1259)",
-"constructive ownership (Section 1260)",
-"derivatives"
-],
-"relevance": 0,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.2139/ssrn.262174",
 "date": "2026-10-18"
 }
 ]

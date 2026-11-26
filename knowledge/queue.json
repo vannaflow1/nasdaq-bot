@@ -1,39 +1,5 @@
 [
  {
-  "id": "openalex:W7222987075",
-  "title": "Marginal Specification and Tail Dependence in Equity Markets",
-  "abstract": "Copula conclusions for equity markets depend on both marginal filtering and the temporal pairing of daily returns. We analyse S&P 500, FTSE 100, and Nikkei 225 returns from 2010 to 2025 in three pairwise panels. A rolling 756-day training and 63-day evaluation design compares empirical-CDF, Gaussian-GARCH, and Student-t-GARCH margins. The GARCH filters use a standard one-step-ahead recursion, and every candidate copula is estimated by pseudo maximum likelihood. The Student-t copula has the highest window-weighted density score under all three margins, with scores of 0.0924, 0.0703, and 0.0685. It is the numerical winner in eight of nine panel\u2013margin cells, but paired moving-block intervals support a positive advantage in only three cells. A lead\u2013lag check materially changes the S&P 500\u2013Nikkei 225 association, while a joint-downside probability score does not select the same family as the density score. The evidence therefore supports specification-aware conditional-dependence analysis, rather than an invariant model ranking or causal contagion claim.",
-  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1536/1476",
-  "source": "OpenAlex",
-  "date": "2026-10-19",
-  "score": 7,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W7222987075.txt"
- },
- {
-  "id": "openalex:W7222941659",
-  "title": "Model Risk in European Union Allowance Futures and Options: From Black\u201376 to Institutionally Grounded Models\u2014A Critical Structured Review",
-  "abstract": "Pricing models for European Union Allowance (EUA) derivatives are often assessed as statistical specifications even though the EU Emissions Trading System changes the payoff boundary, supply process, and intertemporal value of the underlying compliance asset. This critical structured review examines how EUA futures and options models have developed from Black\u201376 conventions to institutionally grounded equilibrium, structural, and Market Stability Reserve (MSR) specifications; how regulatory mechanisms enter risk-neutral valuation; and what evidence supports model robustness. Fifty-three DOI- or publisher-verified academic records were coded using an Institution\u2013Model\u2013Measure\u2013Evidence (IMME) lens: 47 inform the model-level synthesis and six provide contextual triangulation. The evidence is organized into early benchmarks and deficiencies, institutionally grounded models, and MSR-era pricing and validation. Black\u201376 remains a transparent quotation benchmark, but evidence from physical-measure dynamics and phase boundaries limits its structural interpretation. Structural and equilibrium models make institutional channels explicit, yet add identification and numerical risks. Comparative studies provide some held-out pricing evidence, but the literature still lacks transaction-cost-aware hedging and regime-transport tests. The resulting model-selection principle is conditional adequacy: use the least complex model that is regime-aligned, measure-explicit, empirically identified, and validated for the intended pricing or hedging task.",
-  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1555/1493",
-  "source": "OpenAlex",
-  "date": "2026-10-19",
-  "score": 7,
-  "queued": "2026-10-25",
-  "text_file": "knowledge/papers/openalex_W7222941659.txt"
- },
- {
-  "id": "openalex:W4390582266",
-  "title": "Financial Time-Series Forecasting: Towards Synergizing Performance And Interpretability Within a Hybrid Machine Learning Approach",
-  "abstract": "Abstract In the realm of cryptocurrency, the prediction of Bitcoin prices has garnered substantial attention due to its potential impact on financial markets and investment strategies. This paper propose a comparative study on hybrid machine learning algorithms and leverage on enhancing model interpretability. Specifically, linear regression(OLS, LASSO), long-short term memory(LSTM), decision tree regressors are introduced. Through the grounded experiments, we observe linear regressor achieves the best performance among candidate models. For the interpretability, we carry out a systematic overview on the preprocessing techniques of time-series statistics, including decomposition, auto-correlational function, exponential triple forecasting, which aim to excavate latent relations and complex patterns appeared in the financial time-series forecasting. We believe this work may derive more attention and inspire more researches in the realm of time-series analysis and its realistic applications.",
-  "url": "https://doi.org/10.21203/rs.3.rs-3825306/v1",
-  "source": "OpenAlex (classic)",
-  "date": "2024-01-04",
-  "topic": "backtest overfitting",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
   "id": "openalex:W4386965091",
   "title": "Overreaction to volatility shock and option returns",
   "abstract": "HKUST Electronic Theses Overreaction to volatility shock and option returns by Jingda Yan thesis 2023 1 online resource (xii, 99 pages) : illustrations (some color) I investigate how investors react to volatility shock in stock options market. In sharp contrast\u2026Read more \u203a",

@@ -1,14 +1,11 @@
-hunt 'low dealer gamma exposure opening price impact nasdaq futures': 15 found, queued 0
-hunt 'intraday gex rank predictive power for first 15‑minute breakout': 10 found, queued 0
-scanned 0 papers, queued 0, queue size 22 []
+scanned 0 papers, queued 0, queue size 19 []
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-skip (0*): Implementing BBNJ across fisheries institutions: policy options for in
+read (2*): Marginal Specification and Tail Dependence in Equity Markets
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (1*): Active Risk Management
+read (1*): Model Risk in European Union Allowance Futures and Options: From Black
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-skip (0*): Comparative viral inactivation kinetics of electron beam and gamma irr
-read 3, AI units today 1068/7000
-curiosity asked: Strategy: LowGex_OvernightLow_Break_Exp70Confluent
-tested: Strategy: LowGex_OvernightLow_Break_Exp70Confluent - Break a -> TRANSLATION FAILED - SyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of 
-tested: Train a Neural Filter Estimator on simulated mean‑reverting  -> NOT CONFIRMED on my data: 2224 signal days, hit 50.5% (always-long 56.6%), strategy +4.5 b
-testing used 361 AI units
+read (2*): Financial Time-Series Forecasting: Towards Synergizing Performance And
+read 3, AI units today 1798/7000
+curiosity asked: Strategy: LowGex_PWGapTake_BreakHigh_Exp60
+tested: Strategy: LowGex_PWGapTake_BreakHigh_Exp60 - On low‑gamma da -> NOT CONFIRMED on my data: too few trades (0 in 2014-2023, need 150). in-sample: no trades 
+testing used 359 AI units
