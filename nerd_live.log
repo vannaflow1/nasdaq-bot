@@ -1,6 +1,6 @@
 downloading CBOE QQQ chain (can take a minute on a slow connection)...
   got 5.0 MB via worker
-LIVE options read - Thu 26 Nov 17:51 Lux (11:51 NY), quotes ~15 min delayed, QQQ 633.62
+LIVE options read - Thu 26 Nov 18:00 Lux (12:00 NY), quotes ~15 min delayed, QQQ 633.62
 
 VOLATILITY: 30-day IV 33.8% -> higher than 97% of days since 2011
   options are EXPENSIVE vs history
