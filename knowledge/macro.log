@@ -1,13 +1,13 @@
 vix    ^VIX      4253 days from 2010-01-04
-vix9d  ^VIX9D    3999 days from 2011-01-03
+vix9d  ^VIX9D    3998 days from 2011-01-04
 vix3m  ^VIX3M    4251 days from 2010-01-04
 vvix   ^VVIX     4242 days from 2010-01-04
 vix1d  ^VIX1D    903 days from 2023-04-24
-es     ES=F      4252 days from 2010-01-04
-nq     NQ=F      4252 days from 2010-01-04
+es     ES=F      4253 days from 2010-01-04
+nq     NQ=F      4253 days from 2010-01-04
 spx    ^GSPC     4251 days from 2010-01-04
 tnx    ^TNX      4249 days from 2010-01-04
-dxy    DX-Y.NYB  4252 days from 2010-01-04
+dxy    DX-Y.NYB  4253 days from 2010-01-04
 (4251, 17) 2010-01-04 -> 2026-11-25
 date          2026-11-24  2026-11-25
 vix               26.360      28.290
@@ -19,11 +19,11 @@ vix_term           1.012       1.047
 vix_curve          1.035       1.076
 vix_chg           -0.977       7.322
 vvix_vix           4.327       4.078
-es_ret            -0.510      -0.416
-es_ret5           -1.923      -2.084
-nq_vs_es          -1.475      -0.632
-nq_vs_es5         -1.031      -2.279
+es_ret            -0.510      -0.301
+es_ret5           -1.923      -1.972
+nq_vs_es          -1.475      -0.367
+nq_vs_es5         -1.031      -2.024
 spx_ret           -0.499      -0.254
 us10y              4.904       4.848
 us10y_chg_bp      -1.400      -5.600
-dxy_ret           -0.489      -0.101
+dxy_ret           -0.489      -0.135
