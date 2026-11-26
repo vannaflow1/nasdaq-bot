@@ -19,6 +19,8 @@ amortized neural filtering, mean‑reverting spread modeling, posterior‑based 
 Train a Neural Filter Estimator on simulated mean‑reverting spreads that match the observed residuals of a pair‑trading universe (e.g., NQ/QQQ spreads), then each day compute the posterior probability that the spread will revert within the holding horizon and size the position proportionally to that probability.
 
 ## Test
-queued for testing
+[[NOT CONFIRMED]] - NOT CONFIRMED on my data: 2224 signal days, hit 50.5% (always-long 56.6%), strategy +4.5 bps/day vs -1.0 for the same average exposure held constantly -> timing adds +5.5 bps/day, t=1.77, positive in 6/9 years
+How: long/short on `-((es_ret + nq_vs_es) - r1) * h_kappa` (positive = signal on)
+Touches: [[Options nerd]]
 
 Part of [[Research engine]]

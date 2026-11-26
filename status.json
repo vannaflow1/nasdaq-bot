@@ -96,11 +96,11 @@
   "No FOMC, CPI or jobs report on Thu 26 Nov."
  ],
  "learning": [
-  "LEARNING: 330 papers read (52 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
+  "LEARNING: 331 papers read (54 more skipped as not relevant enough), 154 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes a Neural Filter Estimator that, after being trained on simulated mean\u2011reverting spread paths, provides a calibrated posterior (probability distribution) over the latent state of each spread instead of ",
-  "  tested: queued for testing",
+  "  tested: NOT CONFIRMED on my data: 2224 signal days, hit 50.5% (always-long 56.6%), strategy +4.5 bps/day vs -1.0 for the same average exposure held constantly -> timing",
   "\u2022 Call Option Price using Pearson Diffusion Processes (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes pricing European call options by modeling log\u2011returns with Pearson diffusion processes, whose stationary distribution (Pearson Type\u202fIV) can capture skewness and excess kurtosis; they prove risk\u2011neutral",
   "\u2022 Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales (\u2605\u2605\u2605\u2606\u2606)",
@@ -112,9 +112,9 @@
   "  The paper compares minimum\u2011variance and CVaR\u2011based portfolio optimization for equity\u2011bond ETFs (2020\u20112024), finding lower VaR/CVaR but not higher risk\u2011adjusted returns versus an equal\u2011weight benchmark; GARCH outperforms ",
   "\u2022 Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-s (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper shows that double\u2011no\u2011touch (DNT) option prices can differ dramatically between diffusion (Heston) and pure\u2011jump (KoBoL) models, especially when barriers are close, and proposes a fast numerical method (GWR\u2011SINH",
-  "This week's tests: 16 run - 1 promising, 7 not confirmed, 1 don't fit my data, 7 translation failures",
+  "This week's tests: 18 run - 1 promising, 8 not confirmed, 1 don't fit my data, 8 translation failures",
   "",
-  "22 papers waiting in my queue."
+  "19 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

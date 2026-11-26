@@ -1,5 +1,20 @@
 [
 {
+"title": "Active Risk Management",
+"learned": "The paper distinguishes passive market beta from active alpha, explains alpha\u2013beta separation, return attribution (e.g., Brinson), and how tracking error measures active risk relative to a benchmark. It also discusses benchmark design, active risk budgeting, and differences between public and private markets.",
+"concepts": [
+"alpha-beta separation",
+"tracking error",
+"return attribution",
+"benchmark design",
+"active risk budgeting"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://link.springer.com/content/pdf/10.1007/978-3-032-36706-8_11.pdf",
+"date": "2026-11-26"
+},
+{
 "title": "Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage",
 "learned": "The paper proposes a Neural Filter Estimator that, after being trained on simulated mean\u2011reverting spread paths, provides a calibrated posterior (probability distribution) over the latent state of each spread instead of a single point estimate, and shows that using this posterior for position sizing reduces the over\u2011optimism of traditional point\u2011estimate forecasts by a factor of two to eight.",
 "concepts": [
@@ -10,7 +25,7 @@
 "Calibration via simulation"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "NOT CONFIRMED on my data: 2224 signal days, hit 50.5% (always-long 56.6%), strategy +4.5 bps/day vs -1.0 for the same average exposure held constantly -> timing adds +5.5 bps/day, t=1.77, positive in 6/9 years",
 "url": "https://arxiv.org/abs/2610.25802v2",
 "date": "2026-11-26"
 },
@@ -4285,21 +4300,6 @@
 "relevance": 0,
 "verdict": "not testable with my data yet",
 "url": "https://doi.org/10.2139/ssrn.262174",
-"date": "2026-10-18"
-},
-{
-"title": "Finance-Informed Operator Learning for Option Pricing with Quantum-Compatible Realizations",
-"learned": "The authors train a neural network to price European options quickly under a local-volatility model by letting it learn only a correction on top of a Black-Scholes starting price, with a layer that keeps prices within no-arbitrage bounds. On test data from the same model family it cut overall relative pricing error by nearly ten times versus plain neural-network baselines, but on real index-option quotes it stayed accurate without retraining while still not beating the plain Black-Scholes formula on the same inputs. A 'quantum-compatible' version is also described, with no speed-up claimed.",
-"concepts": [
-"neural operator (DeepONet)",
-"local volatility",
-"no-arbitrage bounds",
-"near-expiry curvature",
-"quantum computing"
-],
-"relevance": 0,
-"verdict": "not testable with my data yet",
-"url": "https://arxiv.org/pdf/2609.33213",
 "date": "2026-10-18"
 }
 ]
