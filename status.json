@@ -94,8 +94,11 @@
   "No FOMC, CPI or jobs report on Thu 26 Nov."
  ],
  "learning": [
-  "LEARNING: 329 papers read (50 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
+  "LEARNING: 330 papers read (52 more skipped as not relevant enough), 153 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage (\u2605\u2605\u2605\u2606\u2606)",
+  "  The paper proposes a Neural Filter Estimator that, after being trained on simulated mean\u2011reverting spread paths, provides a calibrated posterior (probability distribution) over the latent state of each spread instead of ",
+  "  tested: queued for testing",
   "\u2022 Call Option Price using Pearson Diffusion Processes (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes pricing European call options by modeling log\u2011returns with Pearson diffusion processes, whose stationary distribution (Pearson Type\u202fIV) can capture skewness and excess kurtosis; they prove risk\u2011neutral",
   "\u2022 Arbitrage-Free Implied Volatility Surface Reconstruction via Additive Martingales (\u2605\u2605\u2605\u2606\u2606)",
@@ -107,12 +110,9 @@
   "  The paper compares minimum\u2011variance and CVaR\u2011based portfolio optimization for equity\u2011bond ETFs (2020\u20112024), finding lower VaR/CVaR but not higher risk\u2011adjusted returns versus an equal\u2011weight benchmark; GARCH outperforms ",
   "\u2022 Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-s (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper shows that double\u2011no\u2011touch (DNT) option prices can differ dramatically between diffusion (Heston) and pure\u2011jump (KoBoL) models, especially when barriers are close, and proposes a fast numerical method (GWR\u2011SINH",
-  "\u2022 Neural Network Calibration of the Heston Stochastic Volatility Model (\u2605\u2605\u2605\u2606\u2606)",
-  "  Neural networks can approximate either the Heston pricing map (MtP) or the inverse map from option surfaces to Heston parameters (PtM). PtM gives the fastest online inference but still needs checks for admissibility and ",
-  "  tested: DOESN'T FIT MY DATA - The idea requires a neural\u2011network generated estimate of the Heston parameters, which is not present in Volta's dataset; only the calibrat",
-  "This week's tests: 13 run - 1 promising, 6 not confirmed, 1 don't fit my data, 5 translation failures",
+  "This week's tests: 16 run - 1 promising, 7 not confirmed, 1 don't fit my data, 7 translation failures",
   "",
-  "25 papers waiting in my queue."
+  "22 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -193,12 +193,13 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-25)",
-  "I keep confirming a ~0.2% edge on low\u2011dealer\u2011gamma (gex_rank < 0.2) days, but I still have no intraday entry rule that captures it. My range forecast still misses ~38% of the true daily swing, limiting position sizing. I need to tighten the link between the low\u2011gex signal and a concrete, high\u2011frequency entry/exit pattern that works on both NQ and ES.",
+  "VOLTA'S SELF-CHECK (2026-11-26)",
+  "I still see a modest (~0.2%) edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but have no reliable intraday entry that captures it. My range forecasts miss about 38% of the true swing, which hurts sizing. The only live candidate (GammaFlip_PW_TakeBreak) gives a tiny edge and hardly trades. I need a concrete mechanism that ties low\u2011GEX to an opening\u2011price move and a repeatable intraday signal.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
+  "#47 [for Claude] Add a fast\u2011update dealer gamma exposure estimator to live feed - My low\u2011GEX strategies need a real\u2011time gex_rank column; implementing a rolling\u2011window estimator from available option chain snapshots would ",
   "",
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],

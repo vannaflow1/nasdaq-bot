@@ -1,5 +1,20 @@
 [
 {
+"title": "Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage",
+"learned": "The paper proposes a Neural Filter Estimator that, after being trained on simulated mean\u2011reverting spread paths, provides a calibrated posterior (probability distribution) over the latent state of each spread instead of a single point estimate, and shows that using this posterior for position sizing reduces the over\u2011optimism of traditional point\u2011estimate forecasts by a factor of two to eight.",
+"concepts": [
+"Amortized neural filtering",
+"Mean\u2011reverting spread modeling",
+"Posterior\u2011based position sizing",
+"Regime\u2011switching inference",
+"Calibration via simulation"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://arxiv.org/abs/2610.25802v2",
+"date": "2026-11-26"
+},
+{
 "title": "Equilibria and Learning in Competitive Market Making",
 "learned": "The paper proves that in a market with several competing makers, a pure\u2011strategy Nash equilibrium always exists and that the equilibrium bid\u2011ask spread grows linearly with the underlying asset\u2019s volatility, even without collusion or informed traders.",
 "concepts": [
@@ -4285,21 +4300,6 @@
 "relevance": 0,
 "verdict": "not testable with my data yet",
 "url": "https://arxiv.org/pdf/2609.33213",
-"date": "2026-10-18"
-},
-{
-"title": "Option Volume and Stock Prices: Evidence on Where Informed Traders Trade",
-"learned": "This classic paper (Easley, O'Hara and Srinivas) models informed traders choosing between the stock and its options, and shows when they prefer options, for example for the leverage. Testing with intraday option data, the authors find that option volume split into bullish ('positive', such as call buys and put sells) and bearish ('negative') trades carries information about where the stock price goes next. The abstract gives no specific numbers.",
-"concepts": [
-"informed trading",
-"option volume",
-"price discovery",
-"asymmetric information",
-"signed option flow"
-],
-"relevance": 2,
-"verdict": "not testable with my data yet",
-"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/0022-1082.194060",
 "date": "2026-10-18"
 }
 ]

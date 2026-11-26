@@ -630,10 +630,10 @@
   "for": "owner",
   "type": "data",
   "why": "All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intraday.",
-  "evidence": "All failing translations cite missing intraday GEX; without it we cannot evaluate low\u2011gamma breakouts precisely.",
+  "evidence": "Current low\u2011GEX edge (+0.2%) cannot be harvested because live intraday GEX values are unavailable.",
   "impact": "high",
   "status": "open",
-  "votes": 5,
+  "votes": 6,
   "note": "Owner 2026-11-24: no purchase planned. He is asking around for someone who can share per-strike option data (end-of-day chains with open interest are enough to approximate an intraday GEX profile with 1-min NQ); if nobody can, this data will not come. Do not refile."
  },
  {
@@ -808,5 +808,17 @@
    "guard": null
   },
   "note": "Claude 2026-11-24: duplicate of owner wish #37 (and #29/#30/#31/#35/#44/#45). A 12-year 5-min GEX rank series needs intraday index option chains with per-strike open interest (paid vendor data); no free source exists, OI updates only daily, and the repo keeps only a daily net-GEX series (gex_history.csv). Owner-only data decision - see #37."
+ },
+ {
+  "id": 47,
+  "date": "2026-11-26",
+  "title": "Add a fast\u2011update dealer gamma exposure estimator to live feed",
+  "for": "claude",
+  "type": "code",
+  "why": "My low\u2011GEX strategies need a real\u2011time gex_rank column; implementing a rolling\u2011window estimator from available option chain snapshots would enable live execution.",
+  "evidence": "All self\u2011actions and paper hunts hinge on the gex_rank column, which is currently only daily.",
+  "impact": "high",
+  "status": "open",
+  "votes": 1
  }
 ]

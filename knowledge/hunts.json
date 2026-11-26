@@ -464,5 +464,23 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-25"
+ },
+ {
+  "id": "h42",
+  "date": "2026-11-26",
+  "query": "low dealer gamma exposure opening price impact nasdaq futures",
+  "why": "I lack a solid empirical basis for the low‑GEX edge; a focused paper could reveal the exact mechanism and guide better entry filters.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
+ },
+ {
+  "id": "h43",
+  "date": "2026-11-26",
+  "query": "intraday gex rank predictive power for first 15‑minute breakout",
+  "why": "My near‑misses suggest the first 15‑minute high/low may react to GEX levels, but I have no published study to confirm it.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

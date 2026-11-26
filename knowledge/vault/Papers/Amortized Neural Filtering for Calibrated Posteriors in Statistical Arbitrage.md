@@ -1,24 +1,24 @@
 ---
 tags: [paper]
-relevance: 4
-read: 2026-10-20
+relevance: 3
+read: 2026-11-26
 ---
 # Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage
-★★★★☆  ·  arXiv  ·  [source](https://arxiv.org/abs/2610.25802v1)
+★★★☆☆  ·  arXiv  ·  [source](https://arxiv.org/abs/2610.25802v2)
 
 ## What Volta learned
-The paper discusses using a Neural Filter Estimator (NFE) to estimate the posterior distribution of a residual spread in statistical arbitrage, which helps in correctly accounting for uncertainty in trading decisions. The NFE is trained on simulated paths of a mean-reverting process and can return the posterior over the latent state of every spread in a cross-section in one forward pass. The method reduces the gap between forecasted and realized returns by a factor of two to eight.
+The paper proposes a Neural Filter Estimator that, after being trained on simulated mean‑reverting spread paths, provides a calibrated posterior (probability distribution) over the latent state of each spread instead of a single point estimate, and shows that using this posterior for position sizing reduces the over‑optimism of traditional point‑estimate forecasts by a factor of two to eight.
 
 ## Why it matters (or not)
-The paper is highly relevant to traders and quants as it discusses a method for estimating uncertainty in statistical arbitrage, which can be used to improve trading decisions and risk management.
+Introduces a way to incorporate uncertainty of spread state estimates into statistical arbitrage, which could improve risk‑adjusted sizing for futures or pairs strategies.
 
 ## Concepts
-neural filter estimator, statistical arbitrage, posterior distribution, uncertainty estimation
+amortized neural filtering, mean‑reverting spread modeling, posterior‑based position sizing, regime‑switching inference, calibration via simulation
 
 ## Idea
-Use a Neural Filter Estimator to estimate the posterior distribution of a residual spread and size positions based on this distribution to improve statistical arbitrage trading decisions.
+Train a Neural Filter Estimator on simulated mean‑reverting spreads that match the observed residuals of a pair‑trading universe (e.g., NQ/QQQ spreads), then each day compute the posterior probability that the spread will revert within the holding horizon and size the position proportionally to that probability.
 
 ## Test
-[[DOESN'T FIT]] - DOESN'T FIT MY DATA - needs intraday data and/or residuals from a statistical arbitrage strategy to train a neural filter estimator
+queued for testing
 
 Part of [[Research engine]]
