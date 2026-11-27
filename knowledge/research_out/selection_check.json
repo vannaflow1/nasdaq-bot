@@ -1,0 +1,139 @@
+{
+ "what": "In-family selection check (A = 2014-21 picks the best variant, B = 2022-23 judges it). Report only.",
+ "families": {
+  "F1": {
+   "variants": 36,
+   "spearman": 0.536,
+   "best_A_edge_A": 0.0552,
+   "best_A_edge_B": 0.2419,
+   "median_edge_B": 0.1721,
+   "best_A_pct_B": 0.875,
+   "logit": 1.946
+  },
+  "F2": {
+   "variants": 50,
+   "spearman": 0.215,
+   "best_A_edge_A": 0.0329,
+   "best_A_edge_B": 0.151,
+   "median_edge_B": 0.0605,
+   "best_A_pct_B": 0.89,
+   "logit": 2.091
+  },
+  "F3": {
+   "variants": 50,
+   "spearman": 0.788,
+   "best_A_edge_A": -0.0691,
+   "best_A_edge_B": -0.0875,
+   "median_edge_B": -0.1531,
+   "best_A_pct_B": 0.55,
+   "logit": 0.201
+  },
+  "F4": {
+   "variants": 48,
+   "spearman": -0.522,
+   "best_A_edge_A": 0.0761,
+   "best_A_edge_B": -0.1113,
+   "median_edge_B": -0.0708,
+   "best_A_pct_B": 0.406,
+   "logit": -0.379
+  },
+  "F5": {
+   "variants": 50,
+   "spearman": 0.758,
+   "best_A_edge_A": -0.0456,
+   "best_A_edge_B": -0.135,
+   "median_edge_B": -0.1382,
+   "best_A_pct_B": 0.51,
+   "logit": 0.04
+  },
+  "F6": {
+   "variants": 36,
+   "spearman": -0.282,
+   "best_A_edge_A": -0.0254,
+   "best_A_edge_B": -0.113,
+   "median_edge_B": -0.0565,
+   "best_A_pct_B": 0.236,
+   "logit": -1.174
+  },
+  "F7": {
+   "variants": 36,
+   "spearman": 0.631,
+   "best_A_edge_A": -0.0351,
+   "best_A_edge_B": -0.176,
+   "median_edge_B": -0.2174,
+   "best_A_pct_B": 0.708,
+   "logit": 0.887
+  },
+  "F8": {
+   "variants": 50,
+   "spearman": 0.693,
+   "best_A_edge_A": -0.0569,
+   "best_A_edge_B": -0.024,
+   "median_edge_B": -0.0657,
+   "best_A_pct_B": 0.91,
+   "logit": 2.314
+  },
+  "F9": {
+   "variants": 50,
+   "spearman": 0.904,
+   "best_A_edge_A": -0.0816,
+   "best_A_edge_B": -0.0626,
+   "median_edge_B": -0.0876,
+   "best_A_pct_B": 0.83,
+   "logit": 1.586
+  },
+  "F10": {
+   "variants": 50,
+   "spearman": -0.057,
+   "best_A_edge_A": 0.0329,
+   "best_A_edge_B": 0.1081,
+   "median_edge_B": 0.0836,
+   "best_A_pct_B": 0.69,
+   "logit": 0.8
+  },
+  "F12": {
+   "variants": 50,
+   "spearman": -0.177,
+   "best_A_edge_A": 0.1012,
+   "best_A_edge_B": 0.214,
+   "median_edge_B": 0.1078,
+   "best_A_pct_B": 0.95,
+   "logit": 2.944
+  },
+  "F13": {
+   "variants": 50,
+   "spearman": 0.846,
+   "best_A_edge_A": -0.0244,
+   "best_A_edge_B": 0.0495,
+   "median_edge_B": 0.0186,
+   "best_A_pct_B": 0.81,
+   "logit": 1.45
+  },
+  "F14": {
+   "variants": 50,
+   "spearman": 0.377,
+   "best_A_edge_A": 0.6763,
+   "best_A_edge_B": -0.4262,
+   "median_edge_B": -0.3601,
+   "best_A_pct_B": 0.35,
+   "logit": -0.619
+  },
+  "F15": {
+   "variants": 50,
+   "spearman": 0.098,
+   "best_A_edge_A": -0.0937,
+   "best_A_edge_B": -0.0817,
+   "median_edge_B": -0.0947,
+   "best_A_pct_B": 0.67,
+   "logit": 0.708
+  }
+ },
+ "n_families": 14,
+ "pbo_like": 0.214,
+ "median_spearman": 0.457,
+ "caveats": [
+  "one A/B split per family, not full CSCV",
+  "F2, F10, F12, F13 share one mechanism, so they are not independent",
+  "report only: no gate, verdict, frozen design or alpha slot is changed by this"
+ ]
+}

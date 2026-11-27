@@ -829,5 +829,44 @@
    "guard": null
   },
   "note": "Claude 2026-11-26: live-feed change (real-time gex_rank for live execution) is live/briefing side, which is frozen; also needs intraday option-chain snapshots not in the archive. Revisit only if the owner unfreezes the live side."
+ },
+ {
+  "title": "Prediction-market odds for CPI/FOMC/NFP as an event-risk input",
+  "type": "data",
+  "impact": "medium",
+  "why": "Kalshi and Polymarket publish free public market data (Polymarket gamma-api, Kalshi API docs); a public dump of past Polymarket+Kalshi trades exists (github.com/Jon-Becker/prediction-market-analysis). The crowd's probability of a CPI/FOMC surprise could flag red-folder days with real surprise risk vs routine ones.",
+  "evidence": "Found via quantleak.zip (Predict section), 27 Nov 2026. Volta's red-folder filter is binary (scheduled or not).",
+  "status": "needs",
+  "note": "Claude 2026-11-27: briefing/live side is frozen and a new feature for a forward family would need an alpha slot - owner decides. History depth for macro contracts not yet checked.",
+  "id": 48,
+  "date": "2026-11-27",
+  "for": "owner",
+  "votes": 1
+ },
+ {
+  "title": "Volatility-managed sizing (Moreira & Muir 2017) for the noise-band families",
+  "type": "family",
+  "impact": "medium",
+  "why": "Scaling risk down after high realised volatility raised Sharpe in Moreira & Muir (JF 2017, doi 10.1111/jofi.12513). F10/F13 already size by the options-implied day range; a realised-vol overlay is a different, testable sizing rule.",
+  "evidence": "Found via quantleak.zip (Papers #45, Formulas #51), 27 Nov 2026. Not tested in Volta yet.",
+  "status": "needs",
+  "note": "Claude 2026-11-27: this would be a new pre-registered family or a change to a frozen forward design - both are owner decisions (alpha slots 0.0023, 0.0023 left). Do not change F10/F13 forward designs.",
+  "id": 49,
+  "date": "2026-11-27",
+  "for": "owner",
+  "votes": 1
+ },
+ {
+  "title": "Queue-aware limit-order fills for limit-entry models (F14-style)",
+  "type": "code",
+  "impact": "low",
+  "why": "HftBacktest (github.com/nkaz001/hftbacktest, MIT) replays order-book events with queue position and latency. Volta's limit entries assume a fill when price touches/trades through; queue position decides real fills.",
+  "evidence": "Found via quantleak.zip (Systems), 27 Nov 2026. F14 already scored negative (median edge_B -0.36R), so the payoff is only for future limit-entry ideas.",
+  "status": "needs",
+  "note": "Claude 2026-11-27: needs CME NQ order-book (MBO/L2) history, which is not free - owner data.",
+  "id": 50,
+  "date": "2026-11-27",
+  "for": "owner",
+  "votes": 1
  }
 ]

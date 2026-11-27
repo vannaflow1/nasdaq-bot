@@ -227,3 +227,20 @@ Diagnosis: Volta's edges are small (~0.05R per trade) against ~1.5-2R of noise p
 - Duplicate wishes: introspect.py merges any new wish into an earlier one on the same topic (any status) as a vote, so settled
   wishes (5-min GEX, low-gamma family, temperature scaling) are no longer refiled.
 - Intraday GEX data (#37/#28): owner is weighing vendor prices; until he decides, it stays an open owner wish.
+
+## quantleak.zip sweep (27 Nov 2026, owner request)
+Owner asked to mine quantleak.zip (a free index of 693 public quant links: systems, data, filings, terminals, charts,
+papers, formulas, prediction markets, courses, AI prompts). Every section was read. Verdict: no free NQ/ES intraday history,
+no free historical options chains/OI/GEX, no prop-firm simulator; DSR/PBO papers already in library.jsonl. Adopted (report only):
+- `tools/selection_check.py` -> `research_out/selection_check.json`: PBO-style check INSIDE each family grid (best variant
+  picked on 2014-21, ranked on 2022-23). 14 families: 21% of A-best variants land at/below the B median; median Spearman 0.46.
+  F13's grid ranks carry over (rho +0.85, A-best at the 81st percentile on B); F10 (-0.06) and F12 (-0.18) do not -
+  for F10/F12 the family MEDIAN is the evidence, which variant was picked is mostly luck.
+- `tools/kelly_sizing.py` -> `research_out/sizing.json`: fractional Kelly from each forward family's posterior and its
+  frozen sigma (cp_sd_per_trade_R). 27 Nov: F13 kelly 1.67% / half 0.83% / quarter 0.42% of capital per -1R;
+  F10 and F12 0.70% / 0.35% / 0.18%; "safe at the 10th-percentile edge" = 0% for all three (edge not yet established).
+  Own-capital guidance only; prop accounts stay with prop_sim.
+Filed for the owner (status "needs"): #48 prediction-market odds for CPI/FOMC/NFP, #49 volatility-managed sizing
+(Moreira & Muir 2017), #50 queue-aware limit fills (HftBacktest; needs paid CME order-book data).
+Skipped: crypto/DeFi/memecoin bots, prediction-market trading bots, long-horizon equity factors, chart/indicator libraries,
+broker terminals (live side is frozen), CFTC COT/Stooq (daily or weekly - not intraday evidence).

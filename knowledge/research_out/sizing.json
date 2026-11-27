@@ -1,0 +1,47 @@
+{
+ "what": "Fractional-Kelly risk per trade (share of capital lost on a -1R trade) from each forward family's posterior edge. Report only; prop accounts are sized by the prop simulator, not by this.",
+ "families": {
+  "F10": {
+   "posterior_mean_R": 0.0301,
+   "posterior_sd_R": 0.0429,
+   "sigma_R": 2.07,
+   "p_edge_neg": 0.241,
+   "kelly": 0.007,
+   "half_kelly": 0.0035,
+   "quarter_kelly": 0.0018,
+   "safe_at_90": 0.0,
+   "expected_R_per_100_trades": 3.0,
+   "sd_R_per_100_trades": 20.7,
+   "forward_trades": 24,
+   "as_of": "2026-11-27"
+  },
+  "F12": {
+   "posterior_mean_R": 0.0307,
+   "posterior_sd_R": 0.0464,
+   "sigma_R": 2.1,
+   "p_edge_neg": 0.254,
+   "kelly": 0.007,
+   "half_kelly": 0.0035,
+   "quarter_kelly": 0.0017,
+   "safe_at_90": 0.0,
+   "expected_R_per_100_trades": 3.1,
+   "sd_R_per_100_trades": 21.0,
+   "forward_trades": 24,
+   "as_of": "2026-11-27"
+  },
+  "F13": {
+   "posterior_mean_R": 0.0336,
+   "posterior_sd_R": 0.0326,
+   "sigma_R": 1.42,
+   "p_edge_neg": 0.151,
+   "kelly": 0.0167,
+   "half_kelly": 0.0083,
+   "quarter_kelly": 0.0042,
+   "safe_at_90": 0.0,
+   "expected_R_per_100_trades": 3.4,
+   "sd_R_per_100_trades": 14.2,
+   "forward_trades": 45,
+   "as_of": "2026-11-27"
+  }
+ }
+}
