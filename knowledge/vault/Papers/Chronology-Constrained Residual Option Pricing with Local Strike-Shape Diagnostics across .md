@@ -13,7 +13,7 @@ The paper compares several option pricing models, including a chronology‑const
 Focuses on crypto options rather than Nasdaq/S&P futures, offering limited direct insight for typical equity option traders.
 
 ## Concepts
-residual learning, chronology‑constrained training, cryptocurrency options, arbitrage diagnostics, model comparison
+residual learning, chronology‑constrained training, cryptocurrency options, arbitrage diagnostics, [[model comparison]]
 
 ## Idea
 Implement the CCRP model on our daily Deribit BTC/ETH option data (using l_bot, l_impl, gex_rank, etc.) and compare its out‑of‑sample RMSE and arbitrage violations to Black‑Scholes and SVI over rolling 24‑hour windows.

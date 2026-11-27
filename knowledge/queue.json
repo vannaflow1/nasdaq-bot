@@ -1,41 +1,5 @@
 [
  {
-  "id": "openalex:W1966676388",
-  "title": "Comparison of ARIMA and Artificial Neural Networks Models for Stock Price Prediction",
-  "abstract": "This paper examines the forecasting performance of ARIMA and artificial neural networks model with published stock data obtained from New York Stock Exchange. The empirical results obtained reveal the superiority of neural networks model over ARIMA model. The findings further resolve and clarify contradictory opinions reported in literature over the superiority of neural networks and ARIMA model and vice versa.",
-  "url": "https://downloads.hindawi.com/journals/jam/2014/614342.pdf",
-  "source": "OpenAlex (classic)",
-  "date": "2014-01-01",
-  "topic": "GARCH volatility forecasting",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W3183489055",
-  "title": "COVID-19 Pandemic and Romanian Stock Market Volatility: A GARCH Approach",
-  "abstract": "This paper investigates the volatility of daily returns on the Romanian stock market between January 2020 and April 2021. Volatility is analyzed by means of the representative index for Bucharest Stock Exchange (BSE), namely, the Bucharest Exchange Trading (BET) index, along with twelve companies traded on BSE. The quantitative investigation was performed using GARCH approach. In the survey, the GARCH model (1,1) was applied to explore the volatility of the BET and BSE traded shares. Conditional volatility for the daily return series showed noticeable evidence of volatility that shifts over the explored period. In the first quarter of 2020, the Romanian equity market volatility increased to a level very close to that recorded during the global financial crisis of 2007\u20132009. Over the next two quarters, volatility had a downward trend. Besides, after VAR estimation, no causal connection was found among the COVID-19 variables and the BET index.",
-  "url": "https://www.mdpi.com/1911-8074/14/8/341/pdf?version=1626948424",
-  "source": "OpenAlex (classic)",
-  "date": "2021-07-22",
-  "topic": "intraday momentum index futures",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W599938767",
-  "title": "Designing multi-sensory displays for abstract data",
-  "abstract": "The rapid increase in available information has lead to many attempts to automatically locate patterns in large, abstract, multi-attributed information spaces. These techniques are often called data mining and have met with varying degrees of success. An alternative approach to automatic pattern detection is to keep the user in the exploration loop by developing displays for perceptual data mining. This approach allows a domain expert to search the data for useful relationships and can be effective when automated rules are hard to define. However, designing models of the abstract data and defining appropriate displays are critical tasks in building a useful system. Designing displays of abstract data is especially difficult when multi-sensory interaction is considered. New technology, such as Virtual Environments, enables such multi-sensory interaction. For example, interfaces can be designed that immerse the user in a 3D space and provide visual, auditory and haptic (tactile) feedback. It has been a goal of Virtual Environments to use multi-sensory interaction in an attempt to increase the human-to-computer bandwidth. This approach may assist the user to understand large information spaces and find patterns in them. However, while the motivation is simple enough, actually designing appropriate mappings between the abstract information and the human sensory channels is quite difficult. Designing intuitive multi-sensory displays of abstract data is complex and needs to carefully consider human perceptual capabilities, yet we interact with the real world everyday in a multi-sensory way. Metaphors can describe mappings between the natural world and an abstract information space. This thesis develops a division of the multi-sensory design space called the MS-Taxonomy. The MS-Taxonomy provides a concept map of the design space based on temporal, spatial and direct metaphors. The detailed concepts within the taxonomy allow for discussion of low level design issues. Furthermore the concepts abstract to higher levels, allowing general design issues to be compared and discussed across the different senses. The MS-Taxonomy provides a categorisation of multi-sensory design options. However, to design effective multi-sensory displays requires more than a thorough understanding of design options. It is also useful to have guidelines to follow, and a process to describe the design steps. This thesis uses the structure of the MS-Taxonomy to develop the MS-Guidelines and ",
-  "url": "http://hdl.handle.net/2123/4135",
-  "source": "OpenAlex (classic)",
-  "date": "2003-01-01",
-  "topic": "intraday momentum index futures",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
   "id": "openalex:W4387450478",
   "title": "Applying Machine Learning in Retail Demand Prediction\u2014A Comparison of Tree-Based Ensembles and Long Short-Term Memory-Based Deep Learning",
   "abstract": "In the realm of retail supply chain management, accurate forecasting is paramount for informed decision making, as it directly impacts business operations and profitability. This study delves into the application of tree-based ensemble forecasting, specifically using extra tree Regressors (ETRs) and long short-term memory (LSTM) networks. Utilizing over six years of historical demand data from a prominent retail entity, the dataset encompasses daily demand metrics for more than 330 products, totaling 5.2 million records. Additionally, external variables, such as meteorological and COVID-19-related data, are integrated into the analysis. Our evaluation, spanning three perishable product categories, reveals that the ETR model outperforms LSTM in metrics including MAPE, MAE, RMSE, and R2. This disparity in performance is particularly pronounced for fresh meat products, whereas it is marginal for fruit products. These ETR results were evaluated alongside three other tree-based ensemble methods, namely XGBoost, Random Forest Regression (RFR), and Gradient Boosting Regression (GBR). The comparable performance across these four tree-based ensemble techniques serves to reinforce their comparative analysis with LSTM-based deep learning models. Our findings pave the way for future studies to assess the comparative efficacy of tree-based ensembles and deep learning techniques across varying forecasting horizons, such as short-, medium-, and long-term predictions.",

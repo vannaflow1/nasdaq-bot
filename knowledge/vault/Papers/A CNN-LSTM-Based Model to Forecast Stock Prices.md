@@ -13,7 +13,7 @@ The paper proposes a CNN-LSTM model for stock price forecasting, which combines 
 The paper is related to machine learning and stock price forecasting, but it does not specifically focus on volatility, options, or risk management, which are key areas of interest for a trader or quant.
 
 ## Concepts
-cnn-lstm, stock price forecasting, [[machine learning]]
+cnn-lstm, [[stock price forecasting]], [[machine learning]]
 
 ## Idea
 Can a CNN-LSTM model trained on historical stock price data (e.g., QQQ) outperform a simple moving average model in predicting next-day log returns (y_r)?

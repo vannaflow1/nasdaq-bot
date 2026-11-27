@@ -1,15 +1,11 @@
-hunt openalex: HTTPError
-hunt 'opening price bias low gex nasdaq futures intraday': 3 found, queued 0
-scanned 0 papers, queued 0, queue size 13 []
+scanned 0 papers, queued 0, queue size 10 []
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (1*): COVID-19 pandemic and the crude oil market risk: hedging options with 
+read (1*): Comparison of ARIMA and Artificial Neural Networks Models for Stock Pr
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-skip (0*): Machine Learning-Powered Smart Healthcare Systems in the Era of Big Da
+skip (2*): COVID-19 Pandemic and Romanian Stock Market Volatility: A GARCH Approa
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-skip (0*): Supervised machine learning for theory building and testing: Opportuni
-read 3, AI units today 1003/7000
-curiosity asked: Strategy: LowGex_HurstTrend_Exp70Break_GapBias
-tested: Strategy: LowGex_HurstTrend_Exp70Break_GapBias - Low gamma d -> NOT CONFIRMED on my data: too few trades (15 in 2014-2023, need 150). in-sample 2014-2023:
-tested: Identify days with a large one‑day jump in 30‑day ATM IV (e. -> NOT TESTABLE (fewer than 100 trade days)
-tested: When VIX futures term structure is steep (high term ratio) a -> DOESN'T FIT MY DATA - The dataset lacks VIX futures prices and ETF net asset change (AUM) 
-testing used 521 AI units
+skip (0*): Designing multi-sensory displays for abstract data
+read 3, AI units today 1597/7000
+curiosity asked: Strategy: LowGex_MLGapBreak_GC
+tested: Strategy: LowGex_MLGapBreak_GC - On low‑gamma days the marke -> TRANSLATION FAILED - only > < >= <= comparisons allowed
+testing used 365 AI units

@@ -1,5 +1,19 @@
 [
 {
+"title": "Comparison of ARIMA and Artificial Neural Networks Models for Stock Price Prediction",
+"learned": "The paper compares ARIMA and neural network models for stock price prediction, finding neural networks perform better on NYSE data.",
+"concepts": [
+"ARIMA",
+"Artificial Neural Networks",
+"stock price forecasting",
+"model comparison"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://downloads.hindawi.com/journals/jam/2014/614342.pdf",
+"date": "2026-11-27"
+},
+{
 "title": "COVID-19 pandemic and the crude oil market risk: hedging options with non-energy financial innovations",
 "learned": "The paper finds that non-energy ETFs can serve as effective hedges for crude oil risk, especially during the COVID-19 pandemic, using a multivariate volatility model.",
 "concepts": [
@@ -4284,21 +4298,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://academic.oup.com/rof/article-pdf/14/3/385/26300055/rfq007.pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Intraday Price Formation in U.S. Equity Index Markets",
-"learned": "Hasbrouck studied where prices are actually discovered among the instruments that track U.S. stock indexes: floor-traded futures, E-mini futures, ETFs and sector ETFs. For both the S&P 500 and the Nasdaq-100, most price discovery happens in the E-mini futures, meaning futures tend to move first and ETFs like QQQ follow. For the S&P 400 MidCap it is shared between the regular futures and the ETF, and SPY leads the sector ETFs far more than they lead it. Worked from the abstract only (no full text in the repo), so no numeric shares are given.",
-"concepts": [
-"price discovery",
-"E-mini futures",
-"ETFs",
-"information shares",
-"intraday lead-lag"
-],
-"relevance": 2,
-"verdict": "TRANSLATION FAILED - formula gives too little usable data",
-"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1046/j.1540-6261.2003.00609.x",
 "date": "2026-10-18"
 }
 ]
