@@ -1,0 +1,270 @@
+{
+ "window": [
+  "2014-01-01",
+  "2023-12-31"
+ ],
+ "note": "post-hoc, seen years only; hypotheses, not findings",
+ "families": {
+  "F10": {
+   "variant": 43,
+   "params": {
+    "param.EV": 60,
+    "param.MU": 1.2,
+    "stop": {
+     "range": 0.2
+    },
+    "manage": null
+   },
+   "trades": 2391,
+   "days": 1544,
+   "edge_per_trade_seen": 0.0584,
+   "A_vol_managed_rv20": {
+    "days": 1522,
+    "edge_per_risk_flat": 0.0965,
+    "edge_per_risk_managed": 0.0591,
+    "gain": -0.0373,
+    "p_one_sided": 0.8907,
+    "sharpe_daily_ann_flat": 0.576,
+    "sharpe_daily_ann_managed": 0.314,
+    "maxdd_R_flat": 89.5,
+    "maxdd_R_managed": 128.2,
+    "mean_weight": 0.923
+   },
+   "A_vol_managed_iv30": {
+    "days": 1522,
+    "edge_per_risk_flat": 0.0965,
+    "edge_per_risk_managed": 0.0517,
+    "gain": -0.0447,
+    "p_one_sided": 0.989,
+    "sharpe_daily_ann_flat": 0.576,
+    "sharpe_daily_ann_managed": 0.293,
+    "maxdd_R_flat": 89.5,
+    "maxdd_R_managed": 128.2,
+    "mean_weight": 0.855
+   },
+   "B_deflated_sharpe_2022_23": {
+    "family_grid": {
+     "trades": 517,
+     "sr_per_trade": 0.0723,
+     "skew": 1.498,
+     "kurtosis": 3.662,
+     "trials": 50,
+     "sr0_expected_max_of_noise": 0.1002,
+     "dsr_prob": 0.251
+    },
+    "all_families": {
+     "trades": 517,
+     "sr_per_trade": 0.0723,
+     "skew": 1.498,
+     "kurtosis": 3.662,
+     "trials": 706,
+     "sr0_expected_max_of_noise": 0.1389,
+     "dsr_prob": 0.055
+    }
+   },
+   "C_kelly_one_year": {
+    "quarter": {
+     "risk_per_R": 0.0018,
+     "year_return_p5": -0.0893,
+     "year_return_median": 0.0199,
+     "year_return_p95": 0.1449,
+     "p_losing_year": 0.399,
+     "maxdd_median": 0.067,
+     "maxdd_p95": 0.1285
+    },
+    "half": {
+     "risk_per_R": 0.0035,
+     "year_return_p5": -0.1709,
+     "year_return_median": 0.0334,
+     "year_return_p95": 0.2938,
+     "p_losing_year": 0.41,
+     "maxdd_median": 0.1275,
+     "maxdd_p95": 0.2371
+    },
+    "full": {
+     "risk_per_R": 0.007,
+     "year_return_p5": -0.3272,
+     "year_return_median": 0.0453,
+     "year_return_p95": 0.6346,
+     "p_losing_year": 0.438,
+     "maxdd_median": 0.244,
+     "maxdd_p95": 0.4267
+    }
+   }
+  },
+  "F12": {
+   "variant": 43,
+   "params": {
+    "param.EV": 60,
+    "param.MU": 1.2,
+    "stop": {
+     "range": 0.2
+    },
+    "manage": null
+   },
+   "trades": 1345,
+   "days": 872,
+   "edge_per_trade_seen": 0.1149,
+   "A_vol_managed_rv20": {
+    "days": 860,
+    "edge_per_risk_flat": 0.1844,
+    "edge_per_risk_managed": 0.1723,
+    "gain": -0.0121,
+    "p_one_sided": 0.6078,
+    "sharpe_daily_ann_flat": 1.109,
+    "sharpe_daily_ann_managed": 0.928,
+    "maxdd_R_flat": 33.8,
+    "maxdd_R_managed": 55.5,
+    "mean_weight": 0.9
+   },
+   "A_vol_managed_iv30": {
+    "days": 860,
+    "edge_per_risk_flat": 0.1844,
+    "edge_per_risk_managed": 0.1751,
+    "gain": -0.0093,
+    "p_one_sided": 0.6178,
+    "sharpe_daily_ann_flat": 1.109,
+    "sharpe_daily_ann_managed": 1.006,
+    "maxdd_R_flat": 33.8,
+    "maxdd_R_managed": 49.4,
+    "mean_weight": 0.862
+   },
+   "B_deflated_sharpe_2022_23": {
+    "family_grid": {
+     "trades": 252,
+     "sr_per_trade": 0.0845,
+     "skew": 1.489,
+     "kurtosis": 3.685,
+     "trials": 50,
+     "sr0_expected_max_of_noise": 0.1437,
+     "dsr_prob": 0.159
+    },
+    "all_families": {
+     "trades": 252,
+     "sr_per_trade": 0.0845,
+     "skew": 1.489,
+     "kurtosis": 3.685,
+     "trials": 706,
+     "sr0_expected_max_of_noise": 0.1991,
+     "dsr_prob": 0.026
+    }
+   },
+   "C_kelly_one_year": {
+    "quarter": {
+     "risk_per_R": 0.0017,
+     "year_return_p5": -0.0808,
+     "year_return_median": 0.0173,
+     "year_return_p95": 0.1265,
+     "p_losing_year": 0.386,
+     "maxdd_median": 0.0592,
+     "maxdd_p95": 0.1148
+    },
+    "half": {
+     "risk_per_R": 0.0035,
+     "year_return_p5": -0.1639,
+     "year_return_median": 0.0306,
+     "year_return_p95": 0.2709,
+     "p_losing_year": 0.403,
+     "maxdd_median": 0.1197,
+     "maxdd_p95": 0.225
+    },
+    "full": {
+     "risk_per_R": 0.007,
+     "year_return_p5": -0.3138,
+     "year_return_median": 0.0397,
+     "year_return_p95": 0.5797,
+     "p_losing_year": 0.44,
+     "maxdd_median": 0.2301,
+     "maxdd_p95": 0.4092
+    }
+   }
+  },
+  "F13": {
+   "variant": 2,
+   "params": {
+    "param.EV": 15,
+    "param.MU": 1.2,
+    "stop": {
+     "range": 0.2
+    },
+    "param.T": 2.0
+   },
+   "trades": 4941,
+   "days": 1762,
+   "edge_per_trade_seen": -0.0073,
+   "A_vol_managed_rv20": {
+    "days": 1740,
+    "edge_per_risk_flat": -0.0187,
+    "edge_per_risk_managed": -0.0658,
+    "gain": -0.0471,
+    "p_one_sided": 0.9703,
+    "sharpe_daily_ann_flat": -0.125,
+    "sharpe_daily_ann_managed": -0.385,
+    "maxdd_R_flat": 228.1,
+    "maxdd_R_managed": 295.6,
+    "mean_weight": 0.927
+   },
+   "A_vol_managed_iv30": {
+    "days": 1740,
+    "edge_per_risk_flat": -0.0187,
+    "edge_per_risk_managed": -0.0702,
+    "gain": -0.0515,
+    "p_one_sided": 0.9997,
+    "sharpe_daily_ann_flat": -0.125,
+    "sharpe_daily_ann_managed": -0.446,
+    "maxdd_R_flat": 228.1,
+    "maxdd_R_managed": 292.7,
+    "mean_weight": 0.856
+   },
+   "B_deflated_sharpe_2022_23": {
+    "family_grid": {
+     "trades": 1086,
+     "sr_per_trade": 0.0375,
+     "skew": 0.585,
+     "kurtosis": 1.388,
+     "trials": 50,
+     "sr0_expected_max_of_noise": 0.0691,
+     "dsr_prob": 0.146
+    },
+    "all_families": {
+     "trades": 1086,
+     "sr_per_trade": 0.0375,
+     "skew": 0.585,
+     "kurtosis": 1.388,
+     "trials": 706,
+     "sr0_expected_max_of_noise": 0.0958,
+     "dsr_prob": 0.026
+    }
+   },
+   "C_kelly_one_year": {
+    "quarter": {
+     "risk_per_R": 0.0042,
+     "year_return_p5": -0.1484,
+     "year_return_median": 0.0887,
+     "year_return_p95": 0.4143,
+     "p_losing_year": 0.288,
+     "maxdd_median": 0.125,
+     "maxdd_p95": 0.2291
+    },
+    "half": {
+     "risk_per_R": 0.0083,
+     "year_return_p5": -0.2893,
+     "year_return_median": 0.1549,
+     "year_return_p95": 0.9351,
+     "p_losing_year": 0.314,
+     "maxdd_median": 0.237,
+     "maxdd_p95": 0.4105
+    },
+    "full": {
+     "risk_per_R": 0.0167,
+     "year_return_p5": -0.544,
+     "year_return_median": 0.2086,
+     "year_return_p95": 2.3984,
+     "p_losing_year": 0.376,
+     "maxdd_median": 0.4368,
+     "maxdd_p95": 0.6757
+    }
+   }
+  }
+ }
+}

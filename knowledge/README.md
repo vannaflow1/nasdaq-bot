@@ -244,3 +244,18 @@ Filed for the owner (status "needs"): #48 prediction-market odds for CPI/FOMC/NF
 (Moreira & Muir 2017), #50 queue-aware limit fills (HftBacktest; needs paid CME order-book data).
 Skipped: crypto/DeFi/memecoin bots, prediction-market trading bots, long-horizon equity factors, chart/indicator libraries,
 broker terminals (live side is frozen), CFTC COT/Stooq (daily or weekly - not intraday evidence).
+- `tools/quantleak_studies.py` -> `research_out/quantleak_studies.json` (seen years 2014-23 only, frozen forward variants;
+  post-hoc hypotheses, not findings). 27 Nov 2026 results:
+  A. Volatility-managed sizing (Moreira & Muir; previous-close rv20 or iv30, clipped 0.25-2x) HURTS all three: F10 R/day
+     +0.097 -> +0.059 (rv20, shuffle p = 0.89), F12 +0.184 -> +0.172, F13 -0.019 -> -0.066; max drawdown up in every case.
+     The stops already scale with the options-implied range, so the trades are vol-normalised; the breakout pays MORE on
+     high-vol days. Wish #49 stays an owner item but the evidence is against it.
+  B. Deflated Sharpe on 2022-23: F10 0.25 (50 trials) / 0.055 (706 trials = every variant ever scored); F12 0.16 / 0.026;
+     F13 0.15 / 0.026. None of the picked variants beats the expected best-of-noise on validation alone - consistent with
+     Volta's design (the family median + frozen forward test carry the evidence, not the selected variant's backtest).
+  C. F13 per-trade edge over 2014-23 is -0.007R (2014-21 negative, 2022-23 +0.05R): its case rests on the recent regime.
+     One-year bootstrap at the CURRENT posterior edge: F13 half-Kelly (0.83%/R) median +15%, 5th pct -29%, median max
+     drawdown 24% (95th 41%), 31% losing years; quarter-Kelly median +9%, max DD median 13% (95th 23%). F10 half-Kelly
+     (0.35%/R) median +3%, 41% losing years. Daily trades are correlated, so per-trade Kelly overstates safe size:
+     quarter-Kelly or less is the sane ceiling for own capital.
+- `.github/workflows/quantleak-reports.yml`: re-runs all three weekly (Saturday 09:17 UTC).

@@ -1,0 +1,29 @@
+name: quantleak-reports
+# Weekly report-only diagnostics added 27 Nov 2026 (quantleak.zip sweep): in-family selection check, fractional-Kelly
+# sizing from the forward posteriors, and the seen-years studies (vol-managed sizing, deflated Sharpe, Kelly drawdowns).
+# They change no family, frozen design, alpha slot or eta input.
+on:
+  schedule:
+    - cron: "17 9 * * 6"          # Saturday 09:17 UTC (markets closed)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: quantleak-reports
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -q -r requirements.txt scipy
+      - run: |
+          python tools/selection_check.py
+          python tools/kelly_sizing.py
+          python -W ignore tools/quantleak_studies.py --reps 3000 > knowledge/research_out/quantleak_studies_log.txt 2>&1 || tail -40 knowledge/research_out/quantleak_studies_log.txt
+        env: { PYTHONUNBUFFERED: "1" }
+      - if: always()
+        run: for i in 1 2 3 4 5; do bash .github/actions_common.sh "quantleak-reports" && break; sleep $((RANDOM % 20 + 5)); done
