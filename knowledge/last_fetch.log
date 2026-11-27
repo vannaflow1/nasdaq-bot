@@ -1,80 +1,15 @@
-scanned 0 papers, queued 0, queue size 16 []
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
-/home/runner/work/nasdaq-bot/nasdaq-bot/test_engine.py:39: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
-  Q["p_" + c[2:]] = Q[c].shift(1)                     # yesterday's outcome = known today
+hunt openalex: HTTPError
+hunt 'opening price bias low gex nasdaq futures intraday': 3 found, queued 0
+scanned 0 papers, queued 0, queue size 13 []
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (3*): Overreaction to volatility shock and option returns
+read (1*): COVID-19 pandemic and the crude oil market risk: hedging options with 
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (3*): Essays in financial economics
+skip (0*): Machine Learning-Powered Smart Healthcare Systems in the Era of Big Da
 model fell back: qwen3-30b-a3b-fp8 {"error":"AiError: 5028: @cf/qwen/qwen3-30b-a3b-fp8 was deprecated on 2026-11-20. See the model catalog for alternatives
-read (2*): Stock Market Prediction Using Machine Learning and Deep Learning Techn
-read 3, AI units today 316/7000
-self-check: I keep confirming a modest (~0.2%) edge on low‑dealer‑gamma (gex_rank < 0.2) days but still have no reliable intraday entry that captures it. My range forecasts still miss about 38% of the true daily  | queued 2 | new wishes 0
-curiosity asked: On days when the market shows trending behavior (Hurst > 0.5), does a higher volatility risk premium (vrp) increase the likelihood that Nasdaq‑100 closes above yesterday’s high?
-tested: On days with gex_rank < 0.2, does the opening price of NQ te -> TRANSLATION FAILED - SyntaxError: invalid syntax (<unknown>, line 1)
-tested: Strategy: LowGex_OpenBreakout -> TRANSLATION FAILED - stop must be {points: 2-200}, {range: 0.03-1.5} or (oco only) {other_
-tested: On days when the market shows trending behavior (Hurst > 0.5 -> NOT CONFIRMED on my data: FACT: happens on 35% of 2808 sessions (2014-19: 35%, 2020-25: 35
-testing used 604 AI units
+skip (0*): Supervised machine learning for theory building and testing: Opportuni
+read 3, AI units today 1003/7000
+curiosity asked: Strategy: LowGex_HurstTrend_Exp70Break_GapBias
+tested: Strategy: LowGex_HurstTrend_Exp70Break_GapBias - Low gamma d -> NOT CONFIRMED on my data: too few trades (15 in 2014-2023, need 150). in-sample 2014-2023:
+tested: Identify days with a large one‑day jump in 30‑day ATM IV (e. -> NOT TESTABLE (fewer than 100 trade days)
+tested: When VIX futures term structure is steep (high term ratio) a -> DOESN'T FIT MY DATA - The dataset lacks VIX futures prices and ETF net asset change (AUM) 
+testing used 521 AI units

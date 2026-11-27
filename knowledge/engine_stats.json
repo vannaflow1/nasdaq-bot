@@ -35,10 +35,10 @@
   "failed": 12
  },
  "2026-W48": {
-  "tested": 22,
+  "tested": 25,
   "promising": 1,
-  "not_confirmed": 10,
-  "unfit": 1,
+  "not_confirmed": 12,
+  "unfit": 2,
   "failed": 10
  }
 }

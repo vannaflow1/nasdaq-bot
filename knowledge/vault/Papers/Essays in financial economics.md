@@ -19,6 +19,6 @@ etf leverage rebalancing, vix futures pricing bias, short‑both strategy, non�
 When VIX futures term structure is steep (high term ratio) and the daily ETF net asset change is positive (using the ETF AUM series if available), go short the front‑month VIX future and long the next‑month future (a short‑both spread) to capture the leverage‑rebalancing premium.
 
 ## Test
-queued for testing
+[[DOESN'T FIT]] - DOESN'T FIT MY DATA - The dataset lacks VIX futures prices and ETF net asset change (AUM) series needed to compute the front‑month and next‑month spread and the daily ETF net asset flow.
 
 Part of [[Research engine]]

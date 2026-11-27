@@ -96,14 +96,14 @@
   "No FOMC, CPI or jobs report on Thu 26 Nov."
  ],
  "learning": [
-  "LEARNING: 337 papers read (54 more skipped as not relevant enough), 154 ideas tested on my memory, 2 promising.",
+  "LEARNING: 338 papers read (56 more skipped as not relevant enough), 156 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Essays in financial economics (\u2605\u2605\u2605\u2606\u2606)",
   "  ETFs, especially leveraged ones, push VIX futures prices up by about 18.5% per year through rebalancing trades, and betting against that rebalancing has yielded Sharpe >\u202f2.",
-  "  tested: queued for testing",
+  "  tested: DOESN'T FIT MY DATA - The dataset lacks VIX futures prices and ETF net asset change (AUM) series needed to compute the front\u2011month and next\u2011month spread and the",
   "\u2022 Overreaction to volatility shock and option returns (\u2605\u2605\u2605\u2606\u2606)",
   "  The thesis studies how market participants overreact to sudden changes in implied volatility and how that affects subsequent option returns.",
-  "  tested: queued for testing",
+  "  tested: NOT TESTABLE (fewer than 100 trade days)",
   "\u2022 Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes a Neural Filter Estimator that, after being trained on simulated mean\u2011reverting spread paths, provides a calibrated posterior (probability distribution) over the latent state of each spread instead of ",
   "  tested: NOT CONFIRMED on my data: 2224 signal days, hit 50.5% (always-long 56.6%), strategy +4.5 bps/day vs -1.0 for the same average exposure held constantly -> timing",
@@ -114,9 +114,9 @@
   "\u2022 PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in o",
   "  tested: DOESN'T FIT MY DATA - The idea requires daily full option\u2011price surfaces and a calibrated jump\u2011diffusion model, which need per\u2011strike option data and a pricing ",
-  "This week's tests: 22 run - 1 promising, 10 not confirmed, 1 don't fit my data, 10 translation failures",
+  "This week's tests: 25 run - 1 promising, 12 not confirmed, 2 don't fit my data, 10 translation failures",
   "",
-  "13 papers waiting in my queue."
+  "10 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

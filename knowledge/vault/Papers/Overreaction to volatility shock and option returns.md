@@ -19,6 +19,8 @@ volatility shock, [[option returns]], investor overreaction, implied volatility 
 Identify days with a large one‑day jump in 30‑day ATM IV (e.g., >2 σ) and test whether options (especially out‑of‑the‑money calls/puts) earn abnormal returns in the following 5‑10 days, controlling for delta and gamma exposure.
 
 ## Test
-queued for testing
+NOT TESTABLE (fewer than 100 trade days)
+How: `where(z(iv30 - lag(iv30,1),252) > 2, -1, 0)`: > 0 sell volatility (QQQ iron fly, wings 2x the straddle), < 0 buy the straddle, else no trade
+Touches: [[Short-vol strategy]]
 
 Part of [[Research engine]]

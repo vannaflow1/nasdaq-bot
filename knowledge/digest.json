@@ -1,5 +1,20 @@
 [
 {
+"title": "COVID-19 pandemic and the crude oil market risk: hedging options with non-energy financial innovations",
+"learned": "The paper finds that non-energy ETFs can serve as effective hedges for crude oil risk, especially during the COVID-19 pandemic, using a multivariate volatility model.",
+"concepts": [
+"hedging effectiveness",
+"multivariate volatility",
+"structural breaks",
+"non-energy ETFs",
+"crude oil risk"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://jfin-swufe.springeropen.com/counter/pdf/10.1186/s40854-021-00253-1",
+"date": "2026-11-27"
+},
+{
 "title": "Stock Market Prediction Using Machine Learning and Deep Learning Techniques: A Review",
 "learned": "The paper surveys machine\u2011learning methods such as LSTM, CNN, and SVM for predicting stock prices, volatility and trends, discussing their pros, cons and evaluation practices.",
 "concepts": [
@@ -24,7 +39,7 @@
 "non\u2011fundamental price component"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "DOESN'T FIT MY DATA - The dataset lacks VIX futures prices and ETF net asset change (AUM) series needed to compute the front\u2011month and next\u2011month spread and the daily ETF net asset flow.",
 "url": "https://researchonline.lse.ac.uk/id/eprint/135062/1/Todorov_Essays-financial-economics.pdf",
 "date": "2026-11-27"
 },
@@ -39,7 +54,7 @@
 "behavioral bias"
 ],
 "relevance": 3,
-"verdict": "queued for testing",
+"verdict": "NOT TESTABLE (fewer than 100 trade days)",
 "url": "https://repository.hkust.edu.hk/ir/bitstream/1783.1-141007/1/991013223059303412.pdf",
 "date": "2026-11-27"
 },
@@ -4284,21 +4299,6 @@
 "relevance": 2,
 "verdict": "TRANSLATION FAILED - formula gives too little usable data",
 "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1046/j.1540-6261.2003.00609.x",
-"date": "2026-10-18"
-},
-{
-"title": "The Flash Crash: High\u2010Frequency Trading in an Electronic Market",
-"learned": "Kirilenko, Kyle, Samadi and Tuzun used audit-trail, trade-by-trade data from the E-mini S&P 500 futures on May 6, 2010 (the Flash Crash) and the three days before. During the crash a large automated sell program was executed very quickly, and the most active non-designated intermediaries, classified as high-frequency traders, did not change their trading pattern as prices fell: they neither stepped in to absorb the selling nor clearly pulled away. Worked from the abstract only (no full text in the repo), so no further numbers are available.",
-"concepts": [
-"Flash Crash",
-"high-frequency trading",
-"E-mini futures",
-"intraday liquidity",
-"selling pressure"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://doi.org/10.17863/cam.51324",
 "date": "2026-10-18"
 }
 ]

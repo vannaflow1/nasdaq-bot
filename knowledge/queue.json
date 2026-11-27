@@ -1,41 +1,5 @@
 [
  {
-  "id": "openalex:W3161034192",
-  "title": "COVID-19 pandemic and the crude oil market risk: hedging options with non-energy financial innovations",
-  "abstract": "This study examines the hedging effectiveness of financial innovations against crude oil investment risks, both before and during the COVID-19 pandemic. We focus on the non-energy exchange traded funds (ETFs) as proxies for financial innovations given the potential positive correlation between energy variants and crude oil proxies. We employ a multivariate volatility modeling framework that accounts for important statistical features of the non-energy ETFs and oil price series in the computation of optimal weights and optimal hedging ratios. Results show evidence of hedging effectiveness for the financial innovations against oil market risks, with higher hedging performance observed during the pandemic. Overall, we show that sectoral financial innovations provide resilient investment options. Therefore, we propose that including the ETFs in an investment portfolio containing oil could improve risk-adjusted returns, especially in similar financial crisis as witnessed during the pandemic. In essence, our results are useful for investors in the global oil market seeking to maximize risk-adjusted returns when making investment decisions. Moreover, by exploring the role of structural breaks in the multivariate volatility framework, our attempts at establishing robustness for the results reveal that ignoring the same may lead to wrong conclusions about the hedging effectiveness.",
-  "url": "https://jfin-swufe.springeropen.com/counter/pdf/10.1186/s40854-021-00253-1",
-  "source": "OpenAlex (classic)",
-  "date": "2021-05-10",
-  "topic": "intraday momentum index futures",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W4412751296",
-  "title": "Machine Learning-Powered Smart Healthcare Systems in the Era of Big Data: Applications, Diagnostic Insights, Challenges, and Ethical Implications",
-  "abstract": "Healthcare data rapidly increases, and patients seek customized, effective healthcare services. Big data and machine learning (ML) enabled smart healthcare systems hold revolutionary potential. Unlike previous reviews that separately address AI or big data, this work synthesizes their convergence through real-world case studies, cross-domain ML applications, and a critical discussion on ethical integration in smart diagnostics. The review focuses on the role of big data analysis and ML towards better diagnosis, improved efficiency of operations, and individualized care for patients. It explores the principal challenges of data heterogeneity, privacy, computational complexity, and advanced methods such as federated learning (FL) and edge computing. Applications in real-world settings, such as disease prediction, medical imaging, drug discovery, and remote monitoring, illustrate how ML methods, such as deep learning (DL) and natural language processing (NLP), enhance clinical decision-making. A comparison of ML models highlights their value in dealing with large and heterogeneous healthcare datasets. In addition, the use of nascent technologies such as wearables and Internet of Medical Things (IoMT) is examined for their role in supporting real-time data-driven delivery of healthcare. The paper emphasizes the pragmatic application of intelligent systems by highlighting case studies that reflect up to 95% diagnostic accuracy and cost savings. The review ends with future directions that seek to develop scalable, ethical, and interpretable AI-powered healthcare systems. It bridges the gap between ML algorithms and smart diagnostics, offering critical perspectives for clinicians, data scientists, and policymakers.",
-  "url": "https://www.mdpi.com/2075-4418/15/15/1914/pdf?version=1753883702",
-  "source": "OpenAlex (classic)",
-  "date": "2025-07-30",
-  "topic": "realized volatility forecasting HAR",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W4313908906",
-  "title": "Supervised machine learning for theory building and testing: Opportunities in operations management",
-  "abstract": "Abstract Machine learning's (ML's) unique power to approximate functions and identify non\u2010obvious regularities in data have attracted considerable attention from researchers in natural and social sciences. The emergence of predictive modeling applications in OM studies notwithstanding, it remains unclear how OM scholars can effectively leverage supervised ML for theory building and theory testing, the primary goals of scientific research. We attempt to fill this gap by conducting a literature review of recent developments in supervised ML in OM to identify vacancies in the extant literature, shedding light on how ML applications can move beyond problem\u2010solving into theory building, and formulating a procedure to help OM scholars leverage ML for exploratory theory development. Our procedure employs the random forest with well\u2010developed properties and inference toolkits that are crucial for empirical research. We then expand the boundary of ML usage and connect supervised ML to the explanatory modeling and hypothesis testing employed by OM empiricists for decades, and discuss the use of supervised ML for causal inference from observational data. We posit that contemporary ML can facilitate pattern exploration and enhance the validity of theory testing. We conclude by discussing directions for future empirical OM studies that aim to leverage ML.",
-  "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/joom.1228",
-  "source": "OpenAlex (classic)",
-  "date": "2023-01-10",
-  "topic": "realized volatility forecasting HAR",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
   "id": "openalex:W1966676388",
   "title": "Comparison of ARIMA and Artificial Neural Networks Models for Stock Price Prediction",
   "abstract": "This paper examines the forecasting performance of ARIMA and artificial neural networks model with published stock data obtained from New York Stock Exchange. The empirical results obtained reveal the superiority of neural networks model over ARIMA model. The findings further resolve and clarify contradictory opinions reported in literature over the superiority of neural networks and ARIMA model and vice versa.",
