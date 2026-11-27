@@ -80,10 +80,10 @@
   "spx_factor": 1.1275
  },
  "live": [
-  "LIVE - Fri 27 Nov 21:30 Lux",
+  "LIVE - Fri 27 Nov 21:55 Lux",
   "NQ 26,779 | range so far 608 pts (2.29%), high 26,816 / low 26,208 | data as of 13:00 NY (may lag a few minutes)",
   "Brain this morning: ~1,006 pts for the day (3.78%) - 60% of it already used.",
-  "Updated with what happened so far: full day ~640 pts (80%: 614-730) -> typically ~32 more pts to come (80%: 6-123).",
+  "Updated with what happened so far: full day ~639 pts (80%: 613-729) -> typically ~32 more pts to come (80%: 6-122).",
   "(brain + neural net, re-estimated at 14:30 CT; tested 2019-2025: 3% more accurate than without the net, band held 80%)",
   "Far levels today: high 27,097 / low 24,976 (~90% of days stay inside each)"
  ],
@@ -118,7 +118,7 @@
   "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
-  "LIVE options read - Fri 27 Nov 21:36 Lux (15:36 NY), quotes ~15 min delayed, QQQ 649.93",
+  "LIVE options read - Fri 27 Nov 21:55 Lux (15:55 NY), quotes ~15 min delayed, QQQ 649.93",
   "",
   "VOLATILITY: 30-day IV 29.2% -> higher than 91% of days since 2011",
   "  options are EXPENSIVE vs history",
@@ -148,7 +148,7 @@
   "Status: gamma regime = validated. Everything else = context; tested, did NOT improve forecasts."
  ],
  "shortvol": [
-  "SHORT-VOL CHECK Fri 27 Nov 15:51 NY - QQQ 649.93, gamma rank 0.47 (needs > 0.7)",
+  "SHORT-VOL CHECK Fri 27 Nov 15:55 NY - QQQ 649.93, gamma rank 0.47 (needs > 0.7)",
   "Not a short-vol day: no paper trade.",
   "(rank vs last 252 readings; 27 of them live from 2026 - it gets sharper as live history builds)",
   "",
