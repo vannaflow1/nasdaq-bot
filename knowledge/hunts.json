@@ -484,5 +484,14 @@
   "status": "nothing found",
   "papers": [],
   "searched": "2026-11-26"
+ },
+ {
+  "id": "h44",
+  "date": "2026-11-27",
+  "query": "opening price bias low gex nasdaq futures intraday",
+  "why": "I need academic/industry evidence that low dealer‑gamma days systematically push the open toward one side of the overnight range, which would justify the LowGex_OpenBreakout idea.",
+  "source": "self-check",
+  "status": "open",
+  "papers": []
  }
 ]

@@ -1,5 +1,49 @@
 [
 {
+"title": "Stock Market Prediction Using Machine Learning and Deep Learning Techniques: A Review",
+"learned": "The paper surveys machine\u2011learning methods such as LSTM, CNN, and SVM for predicting stock prices, volatility and trends, discussing their pros, cons and evaluation practices.",
+"concepts": [
+"LSTM",
+"CNN",
+"SVM",
+"stock prediction",
+"model interpretability"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://www.mdpi.com/2673-9909/5/3/76/pdf?version=1750779056",
+"date": "2026-11-27"
+},
+{
+"title": "Essays in financial economics",
+"learned": "ETFs, especially leveraged ones, push VIX futures prices up by about 18.5% per year through rebalancing trades, and betting against that rebalancing has yielded Sharpe >\u202f2.",
+"concepts": [
+"ETF leverage rebalancing",
+"VIX futures pricing bias",
+"short\u2011both strategy",
+"non\u2011fundamental price component"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://researchonline.lse.ac.uk/id/eprint/135062/1/Todorov_Essays-financial-economics.pdf",
+"date": "2026-11-27"
+},
+{
+"title": "Overreaction to volatility shock and option returns",
+"learned": "The thesis studies how market participants overreact to sudden changes in implied volatility and how that affects subsequent option returns.",
+"concepts": [
+"volatility shock",
+"option returns",
+"investor overreaction",
+"implied volatility dynamics",
+"behavioral bias"
+],
+"relevance": 3,
+"verdict": "queued for testing",
+"url": "https://repository.hkust.edu.hk/ir/bitstream/1783.1-141007/1/991013223059303412.pdf",
+"date": "2026-11-27"
+},
+{
 "title": "Financial Time-Series Forecasting: Towards Synergizing Performance And Interpretability Within a Hybrid Machine Learning Approach",
 "learned": "The authors compared several hybrid ML models (linear regression variants, LSTM, decision trees) for Bitcoin price forecasting and found that the linear regressor performed best, while also emphasizing interpretability through time\u2011series preprocessing.",
 "concepts": [
@@ -4255,51 +4299,6 @@
 "relevance": 1,
 "verdict": "not testable with my data yet",
 "url": "https://doi.org/10.17863/cam.51324",
-"date": "2026-10-18"
-},
-{
-"title": "Momentum crashes",
-"learned": "Daniel and Moskowitz show that momentum strategies (buy recent winners, short recent losers) usually pay well but occasionally suffer long, painful losing streaks called momentum crashes. These crashes are partly predictable: they happen in panic states, after the market has fallen and when volatility is high, and they coincide with sharp market rebounds that lift the beaten-down losers. A dynamic version that scales momentum down when its forecast mean is low and its variance high roughly doubled the alpha and Sharpe ratio of plain momentum. Worked from the abstract only (no full text in the repo).",
-"concepts": [
-"momentum crashes",
-"panic states",
-"market rebounds",
-"dynamic risk scaling",
-"time-varying volatility"
-],
-"relevance": 2,
-"verdict": "NOT CONFIRMED on my data: 1805 signal days, hit 54.7% (always-long 57.2%), strategy +5.2 bps/day vs +4.2 for the same average exposure held constantly -> timing adds +1.0 bps/day, t=0.44, positive in 7/10 years",
-"url": "https://www.sciencedirect.com/science/article/pii/S0304405X16301490/pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Does Net Buying Pressure Affect the Shape of Implied Volatility Functions?",
-"learned": "Bollen and Whaley show that implied volatility moves with public order flow: when more customers buy options than sell them, implied vol rises, so the shape of the volatility smile is partly driven by demand, not only by expected risk. For S&P 500 index options the biggest driver is buying pressure in index puts, while for single-stock options it is call demand. Delta-neutral option-writing strategies earned abnormal returns roughly matching how far implied vol sat above realized vol. Worked from the abstract only (no full text in the repo), so no specific numbers are available.",
-"concepts": [
-"net buying pressure",
-"implied volatility smile",
-"index put demand",
-"limits to arbitrage",
-"option writing premium"
-],
-"relevance": 3,
-"verdict": "NO EDGE: range-forecast miss 0.531% -> 0.532% (-0.2%), better in 4/9 unseen years",
-"url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-6261.2004.00647.x",
-"date": "2026-10-18"
-},
-{
-"title": "Can Large Language Models Beat Wall Street? Unveiling the Potential of AI in Stock Selection",
-"learned": "MarketSenseAI uses GPT-4 to read news, fundamentals, price trends and macro data and issue buy/hold/sell calls on S&P 100 stocks with written explanations. Over a 15-month test it reported excess returns of 10% to 30% and a cumulative return of up to 72%, with risk similar to the market. The test is short and covers a single period, and the paper is by the framework's own developers.",
-"concepts": [
-"large language models",
-"GPT-4 stock selection",
-"chain-of-thought",
-"news and fundamentals analysis",
-"explainable signals"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://arxiv.org/pdf/2401.03737",
 "date": "2026-10-18"
 }
 ]

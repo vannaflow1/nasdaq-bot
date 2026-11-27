@@ -2,7 +2,7 @@
 tags: [concept]
 ---
 # neural networks
-19 papers mention this:
+20 papers mention this:
 
 - [[An Empirical Study of Machine Learning Algorithms for Stock Daily Trading Strategy]]
 - [[An Overview of Machine Learning, Deep Learning, and Reinforcement Learning-Based Technique]]
@@ -21,5 +21,6 @@ tags: [concept]
 - [[Neural Control Variates for Variance Reduction]]
 - [[Neural Network–Based Financial Volatility Forecasting A Systematic Review]]
 - [[Regime-dependent bitcoin volatility forecasting under alternative information sets evidenc]]
+- [[Stock Market Prediction Using Machine Learning and Deep Learning Techniques A Review]]
 
 Related part of Volta: [[Neural net (live)]]

@@ -1,41 +1,5 @@
 [
  {
-  "id": "openalex:W4386965091",
-  "title": "Overreaction to volatility shock and option returns",
-  "abstract": "HKUST Electronic Theses Overreaction to volatility shock and option returns by Jingda Yan thesis 2023 1 online resource (xii, 99 pages) : illustrations (some color) I investigate how investors react to volatility shock in stock options market. In sharp contrast\u2026Read more \u203a",
-  "url": "https://repository.hkust.edu.hk/ir/bitstream/1783.1-141007/1/991013223059303412.pdf",
-  "source": "OpenAlex (classic)",
-  "date": "2023-01-01",
-  "topic": "dealer gamma hedging pressure",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W3081492967",
-  "title": "Essays in financial economics",
-  "abstract": "In the first paper of my dissertation I study the size and source of exchange-traded funds\u2019 (ETFs) price impact in the most ETF-dominated asset classes: volatility (VIX) and commodities. I show that the introduction of ETFs increased futures prices. To identify ETF-induced price distortions, I propose a model-independent approach to replicate the value of a VIX futures contract. This allows me to isolate a nonfundamental component in VIX futures prices, of 18.5% per year, that is strongly related to the rebalancing of ETFs. To understand the source of that component, I decompose trading demand from ETFs into three main parts: leverage rebalancing, calendar rebalancing, and flow rebalancing. Leverage rebalancing has the largest effects. It amplifies price changes and introduces unhedgeable risks for ETF counterparties. Surprisingly, providing liquidity to leveraged ETFs turns out to be a bet on variance, even in a market with a zero net share of ETFs. Trading against leverage rebalancing delivers large abnormal returns and Sharpe ratios above two across markets. The second paper analyses the impact of the ECB\u2019s Corporate Sector Purchase Programme (CSPP) announcement on prices, liquidity and debt issuance in the European corporate bond market. I find that the quantitative easing (QE) programme increased prices and liquidity of bonds eligible to be purchased substantially. Bond yields dropped on average by 30 bps (8%) after the CSPP announcement. Tri-party repo turnover rose by 8.15 million USD (29%), and bilateral turnover went up by 7.05 million USD (72%). Bid-ask spreads also showed significant liquidity improvement in eligible bonds. QE was successful in boosting corporate debt issuance. Firms issued 2.19 billion EUR (25%) more in QE-eligible debt after the CSPP announcement, compared to other types of debt. Surprisingly, corporates used the attracted funds mostly to increase dividends. These effects were more pronounced for longer-maturity, lower-rated bonds, and for more credit-constrained, lower-rated firms. The third paper (co-authored with Christian Julliard, Zijun Liu, Seyed E. Seyedan and Kathy Yuan) studies the determinants of repo haircuts in the UK market. We find that transaction maturity and collateral quality have first order importance. We also document that counterparties matter in determining haircuts. Hedge funds, as borrowers, receive significantly higher haircuts. Larger borrowers with higher ratings receive lower haircuts, but we find ",
-  "url": "https://researchonline.lse.ac.uk/id/eprint/135062/1/Todorov_Essays-financial-economics.pdf",
-  "source": "OpenAlex (classic)",
-  "date": "2020-05-13",
-  "topic": "dealer gamma hedging pressure",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_file": "knowledge/papers/openalex_W3081492967.txt"
- },
- {
-  "id": "openalex:W4411603790",
-  "title": "Stock Market Prediction Using Machine Learning and Deep Learning Techniques: A Review",
-  "abstract": "The rapid advancement of machine learning and deep learning techniques has revolutionized stock market prediction, providing innovative methods to analyze financial trends and market behavior. This review paper presents a comprehensive analysis of various machine learning and deep learning approaches utilized in stock market prediction, focusing on their methodologies, evaluation metrics, and datasets. Popular models such as LSTM, CNN, and SVM are examined, highlighting their strengths and limitations in predicting stock prices, volatility, and trends. Additionally, we address persistent challenges, including data quality and model interpretability, and explore emerging research directions to overcome these obstacles. This study aims to summarize the current state of research, provide insights into the effectiveness of predictive models.",
-  "url": "https://www.mdpi.com/2673-9909/5/3/76/pdf?version=1750779056",
-  "source": "OpenAlex (classic)",
-  "date": "2025-06-24",
-  "topic": "intraday momentum index futures",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
   "id": "openalex:W3161034192",
   "title": "COVID-19 pandemic and the crude oil market risk: hedging options with non-energy financial innovations",
   "abstract": "This study examines the hedging effectiveness of financial innovations against crude oil investment risks, both before and during the COVID-19 pandemic. We focus on the non-energy exchange traded funds (ETFs) as proxies for financial innovations given the potential positive correlation between energy variants and crude oil proxies. We employ a multivariate volatility modeling framework that accounts for important statistical features of the non-energy ETFs and oil price series in the computation of optimal weights and optimal hedging ratios. Results show evidence of hedging effectiveness for the financial innovations against oil market risks, with higher hedging performance observed during the pandemic. Overall, we show that sectoral financial innovations provide resilient investment options. Therefore, we propose that including the ETFs in an investment portfolio containing oil could improve risk-adjusted returns, especially in similar financial crisis as witnessed during the pandemic. In essence, our results are useful for investors in the global oil market seeking to maximize risk-adjusted returns when making investment decisions. Moreover, by exploring the role of structural breaks in the multivariate volatility framework, our attempts at establishing robustness for the results reveal that ignoring the same may lead to wrong conclusions about the hedging effectiveness.",

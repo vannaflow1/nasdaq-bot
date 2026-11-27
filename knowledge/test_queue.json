@@ -1,1 +1,18 @@
-[]
+[
+ {
+  "id": "openalex:W4386965091",
+  "title": "Overreaction to volatility shock and option returns",
+  "idea": "Identify days with a large one\u2011day jump in 30\u2011day ATM IV (e.g., >2\u202f\u03c3) and test whether options (especially out\u2011of\u2011the\u2011money calls/puts) earn abnormal returns in the following 5\u201110 days, controlling for delta and gamma exposure.",
+  "relevance": 3,
+  "added": "2026-11-27",
+  "hunt": null
+ },
+ {
+  "id": "openalex:W3081492967",
+  "title": "Essays in financial economics",
+  "idea": "When VIX futures term structure is steep (high term ratio) and the daily ETF net asset change is positive (using the ETF AUM series if available), go short the front\u2011month VIX future and long the next\u2011month future (a short\u2011both spread) to capture the leverage\u2011rebalancing premium.",
+  "relevance": 3,
+  "added": "2026-11-27",
+  "hunt": null
+ }
+]

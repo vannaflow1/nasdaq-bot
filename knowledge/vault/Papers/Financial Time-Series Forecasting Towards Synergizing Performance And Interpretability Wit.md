@@ -13,7 +13,7 @@ The authors compared several hybrid ML models (linear regression variants, LSTM,
 Focuses on Bitcoin rather than the Nasdaq/S&P indices and lacks concrete performance numbers for broader markets.
 
 ## Concepts
-linear regression, [[neural networks]], decision tree, time‑series decomposition, model interpretability
+linear regression, [[neural networks]], decision tree, time‑series decomposition, [[model interpretability]]
 
 
 Part of [[Research engine]]

@@ -96,8 +96,14 @@
   "No FOMC, CPI or jobs report on Thu 26 Nov."
  ],
  "learning": [
-  "LEARNING: 334 papers read (54 more skipped as not relevant enough), 154 ideas tested on my memory, 2 promising.",
+  "LEARNING: 337 papers read (54 more skipped as not relevant enough), 154 ideas tested on my memory, 2 promising.",
   "",
+  "\u2022 Essays in financial economics (\u2605\u2605\u2605\u2606\u2606)",
+  "  ETFs, especially leveraged ones, push VIX futures prices up by about 18.5% per year through rebalancing trades, and betting against that rebalancing has yielded Sharpe >\u202f2.",
+  "  tested: queued for testing",
+  "\u2022 Overreaction to volatility shock and option returns (\u2605\u2605\u2605\u2606\u2606)",
+  "  The thesis studies how market participants overreact to sudden changes in implied volatility and how that affects subsequent option returns.",
+  "  tested: queued for testing",
   "\u2022 Amortized Neural Filtering for Calibrated Posteriors in Statistical Arbitrage (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper proposes a Neural Filter Estimator that, after being trained on simulated mean\u2011reverting spread paths, provides a calibrated posterior (probability distribution) over the latent state of each spread instead of ",
   "  tested: NOT CONFIRMED on my data: 2224 signal days, hit 50.5% (always-long 56.6%), strategy +4.5 bps/day vs -1.0 for the same average exposure held constantly -> timing",
@@ -108,13 +114,9 @@
   "\u2022 PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in o",
   "  tested: DOESN'T FIT MY DATA - The idea requires daily full option\u2011price surfaces and a calibrated jump\u2011diffusion model, which need per\u2011strike option data and a pricing ",
-  "\u2022 Revisiting Equity-Bond Diversification under Tail Risk and Structural Market Change: Evidence from Global ETFs (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper compares minimum\u2011variance and CVaR\u2011based portfolio optimization for equity\u2011bond ETFs (2020\u20112024), finding lower VaR/CVaR but not higher risk\u2011adjusted returns versus an equal\u2011weight benchmark; GARCH outperforms ",
-  "\u2022 Alternative models for FX, arbitrage opportunities and efficient pricing of double barrier options in regime-s (\u2605\u2605\u2605\u2606\u2606)",
-  "  The paper shows that double\u2011no\u2011touch (DNT) option prices can differ dramatically between diffusion (Heston) and pure\u2011jump (KoBoL) models, especially when barriers are close, and proposes a fast numerical method (GWR\u2011SINH",
-  "This week's tests: 19 run - 1 promising, 9 not confirmed, 1 don't fit my data, 8 translation failures",
+  "This week's tests: 22 run - 1 promising, 10 not confirmed, 1 don't fit my data, 10 translation failures",
   "",
-  "16 papers waiting in my queue."
+  "13 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -192,13 +194,12 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-26)",
-  "I still see a modest (~0.2%) edge on low\u2011dealer\u2011gamma days (gex_rank\u202f<\u202f0.2) but have no reliable intraday entry that captures it. My range forecasts miss about 38% of the true swing, which hurts sizing. The only live candidate (GammaFlip_PW_TakeBreak) gives a tiny edge and hardly trades. I need a concrete mechanism that ties low\u2011GEX to an opening\u2011price move and a repeatable intraday signal.",
+  "VOLTA'S SELF-CHECK (2026-11-27)",
+  "I keep confirming a modest (~0.2%) edge on low\u2011dealer\u2011gamma (gex_rank\u202f<\u202f0.2) days but still have no reliable intraday entry that captures it. My range forecasts still miss about 38% of the true daily swing, limiting my position sizing. The best back\u2011tested strategy (LowGex_09_45_Trend_FadeGap) barely breaks even, so I need a cleaner mechanism that works across NQ and ES. I will focus on the opening price behavior on low\u2011gex days and try to turn the ~0.2% edge into a repeatable trade.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",
   "#28 [needs the owner] Add daily GEX rank time\u2011series to live feed - Low\u2011gex edge appears robust, but I lack a real\u2011time GEX rank series integrated into the live tracker for immediate strategy triggers.",
-  "#47 [for Claude] Add a fast\u2011update dealer gamma exposure estimator to live feed - My low\u2011GEX strategies need a real\u2011time gex_rank column; implementing a rolling\u2011window estimator from available option chain snapshots would ",
   "",
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],

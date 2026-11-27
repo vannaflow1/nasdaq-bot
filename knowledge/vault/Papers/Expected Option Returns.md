@@ -13,7 +13,7 @@ The paper finds that expected call option returns are higher than the underlying
 The abstract provides insights into option returns and their relationship with strike prices and betas, which can be useful for traders, especially those trading S&P index options.
 
 ## Concepts
-option returns, asset-pricing theory, [[stochastic volatility]]
+[[option returns]], asset-pricing theory, [[stochastic volatility]]
 
 ## Idea
 Investigate the relationship between option strike prices and returns, focusing on S&P index options, and explore if incorporating volatility factors improves return predictions.

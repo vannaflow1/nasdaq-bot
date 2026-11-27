@@ -13,7 +13,7 @@ This study compares the performance of Artificial Neural Networks (ANN) and Supp
 The study focuses on direction prediction of stock indexes using ANN and SVM, which is somewhat relevant but not directly applicable to Nasdaq/S&P index futures and options trading.
 
 ## Concepts
-ann, svm, [[technical indicators]], [[financial time series]]
+ann, [[svm]], [[technical indicators]], [[financial time series]]
 
 ## Idea
 Can an ANN model outperform an SVM model in predicting the direction of daily Nasdaq-100 index movements using technical indicators derived from trading data?
