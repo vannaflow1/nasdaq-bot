@@ -60,16 +60,24 @@
   "  stayed inside the options-priced move: 58% of days (backtest: ~55-70%)"
  ],
  "brain_pred": {
-  "pred": 0.03356,
+  "pred": 0.03784,
   "nq": 26100.25,
   "day": "Fri 27 Nov",
   "date": "2026-11-27",
   "gex_rank": 0.27,
   "event_prem": 0.712,
-  "high_mid": 26475.34,
-  "high_far": 26984.1,
-  "low_mid": 25760.46,
-  "low_far": 25103.49
+  "high_mid": 26523.16,
+  "high_far": 27096.79,
+  "low_mid": 25717.14,
+  "low_far": 24976.41,
+  "raw": {
+   "pred": 0.03356,
+   "high_mid": 26475.34,
+   "high_far": 26984.1,
+   "low_mid": 25760.46,
+   "low_far": 25103.49
+  },
+  "spx_factor": 1.1275
  },
  "live": [
   "LIVE - Thu 26 Nov 21:55 Lux",
@@ -107,31 +115,31 @@
   "  no scheduled macro events or megacap earnings"
  ],
  "nerd": [
-  "LIVE options read - Fri 27 Nov 14:51 Lux (08:51 NY), quotes ~15 min delayed, QQQ 633.62",
+  "LIVE options read - Fri 27 Nov 15:04 Lux (09:04 NY), quotes ~15 min delayed, QQQ 648.61",
   "",
-  "VOLATILITY: 30-day IV 33.8% -> higher than 97% of days since 2011",
+  "VOLATILITY: 30-day IV 30.9% -> higher than 94% of days since 2011",
   "  options are EXPENSIVE vs history",
-  "  realized vol (20d) 47.8% -> premium -14.0 pts: options price LESS movement than the market is delivering (buyers favored)",
+  "  realized vol (20d) 47.8% -> premium -16.9 pts: options price LESS movement than the market is delivering (buyers favored)",
   "",
   "TERM STRUCTURE - what each expiry prices (QQQ move to expiry):",
-  "  Fri 27 Nov (2d): \u00b12.10% (~548 NQ pts), ATM IV 36.5%",
-  "  Mon 30 Nov (5d): \u00b13.28% (~856 NQ pts), ATM IV 35.0%",
-  "  Tue 01 Dec (6d): \u00b13.83% (~1,000 NQ pts), ATM IV 37.4%",
-  "  Wed 02 Dec (7d): \u00b14.24% (~1,106 NQ pts), ATM IV 38.3%",
-  "  Thu 03 Dec (8d): \u00b14.60% (~1,198 NQ pts), ATM IV 38.9%",
-  "  Fri 04 Dec (9d): \u00b14.97% (~1,295 NQ pts), ATM IV 39.5%",
+  "  Fri 27 Nov (2d): \u00b11.04% (~278 NQ pts), ATM IV 56.2%",
+  "  Mon 30 Nov (5d): \u00b12.43% (~648 NQ pts), ATM IV 31.8%",
+  "  Tue 01 Dec (6d): \u00b12.97% (~794 NQ pts), ATM IV 34.2%",
+  "  Wed 02 Dec (7d): \u00b13.37% (~900 NQ pts), ATM IV 35.0%",
+  "  Thu 03 Dec (8d): \u00b13.73% (~995 NQ pts), ATM IV 35.5%",
+  "  Fri 04 Dec (9d): \u00b14.08% (~1,089 NQ pts), ATM IV 36.0%",
   "  flat: no special near-term fear",
   "",
-  "SKEW (~30d): 25-delta puts +11.1 vol pts vs calls; wings +0.5 pts vs ATM",
+  "SKEW (~30d): 25-delta puts +9.1 vol pts vs calls; wings +0.3 pts vs ATM",
   "  normal put skew - people always pay a bit extra for crash protection",
   "",
   "DEALER GREEKS (estimate - assumes dealers long calls / short puts):",
-  "  GAMMA: per 1% QQQ move dealers trade $3.1B WITH the move (they amplify it)",
-  "  VANNA: if IV drops 1 pt, dealers BUY ~$952M of QQQ -> falling vol supports the market (classic 'vanna rally')",
-  "  CHARM: time decay alone makes dealers BUY ~$7.8B per day overall; this week's expiries alone: BUY $7.1B/day (biggest into expiry)",
+  "  GAMMA: per 1% QQQ move dealers trade $556M WITH the move (they amplify it)",
+  "  VANNA: if IV drops 1 pt, dealers BUY ~$1.4B of QQQ -> falling vol supports the market (classic 'vanna rally')",
+  "  CHARM: time decay alone makes dealers BUY ~$8.2B per day overall; this week's expiries alone: BUY $7.3B/day (biggest into expiry)",
   "",
-  "MAX PAIN 18 Dec monthly: 675 (QQQ now 633.62) - where option buyers lose most. Weak magnet at best, mostly in expiry week.",
-  "BIGGEST OI (next 5 weeks): calls 700, 680, 720 | puts 550, 600, 580",
+  "MAX PAIN 18 Dec monthly: 670 (QQQ now 648.61) - where option buyers lose most. Weak magnet at best, mostly in expiry week.",
+  "BIGGEST OI (next 5 weeks): calls 700, 680, 720 | puts 580, 600, 550",
   "PUT/CALL volume today 1.15 (normal)",
   "",
   "Status: gamma regime = validated. Everything else = context; tested, did NOT improve forecasts."
@@ -188,21 +196,22 @@
   "Recently granted: #25 Firm rules changed: re-check prop_firms.json (Tradeify: esse; #41 Intraday QQQ option mid\u2011price 5\u2011minute series; #42 Firm rules changed: re-check prop_firms.json (Tradeify: esse"
  ],
  "plan": [
-  "TRADING PLAN - 2026-11-27  |  expected move \u00b1411 pts, full-day range ~874 pts, risk ['VOLTA LEVEL 16  (9,795 XP, next level at 10,240)', 'Papers read 330 | ideas & strategies tested 255 | prop strategies searched 755,617', 'Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 12', 'XP only for verified progress: tests passed on unseen data count far more than activity.', 'Since yesterday: +1 papers, +1 tests']",
+  "TRADING PLAN - 2026-11-27  |  expected move \u00b1464 pts, full-day range ~988 pts, risk ['VOLTA LEVEL 16  (9,801 XP, next level at 10,240)', 'Papers read 334 | ideas & strategies tested 256 | prop strategies searched 755,617', 'Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0', 'Brain upgrades: 0 | self-discovered powers: 12', 'XP only for verified progress: tests passed on unseen data count far more than activity.']",
   "Size factor today: 100%  (normal conditions)",
+  "SPX DEALER CHECK (2026-11-27): dealer gamma -7.7 (avg +1.5), SPX walls 7175 / 7250 (2.0x their usual distance) -> today's range bigger (+12.7%)",
   "",
   "STOPS on a day like this (share of level touches where price did NOT run past the stop within 30 min):",
-  "    15 pt stop -> survives ~7% of touches",
-  "    25 pt stop -> survives ~12% of touches",
-  "    40 pt stop -> survives ~19% of touches",
-  "    60 pt stop -> survives ~29% of touches",
-  "    82 pt stop -> survives ~40% of touches",
-  "   123 pt stop -> survives ~57% of touches",
-  "  Median overshoot through a level today: ~107 pts.",
+  "    15 pt stop -> survives ~6% of touches",
+  "    25 pt stop -> survives ~11% of touches",
+  "    40 pt stop -> survives ~17% of touches",
+  "    60 pt stop -> survives ~26% of touches",
+  "    93 pt stop -> survives ~40% of touches",
+  "   139 pt stop -> survives ~57% of touches",
+  "  Median overshoot through a level today: ~121 pts.",
   "",
   "SIZE PER $1,000 OF BUFFER (distance to your max-loss limit):",
   "  risk per trade $100, daily stop $200",
-  "  -> 15 pt stop: 3 MNQ  |  40 pt stop: 1 MNQ  |  82 pt stop: 0 MNQ",
+  "  -> 15 pt stop: 3 MNQ  |  40 pt stop: 1 MNQ  |  93 pt stop: 0 MNQ",
   "",
   "Lucid rules to respect: EOD trailing max loss; 40% consistency (no single day > 40% of the cycle's profit).",
   "Use /plan buffer:<$> stop:<pts> for your exact numbers. Sizing guidance, not trade signals or financial advice.",
@@ -211,15 +220,14 @@
  ],
  "plan_data": {
   "date": "2026-11-27",
-  "move": 411,
-  "range": 874,
+  "move": 464,
+  "range": 988,
   "level": [
-   "VOLTA LEVEL 16  (9,795 XP, next level at 10,240)",
-   "Papers read 330 | ideas & strategies tested 255 | prop strategies searched 755,617",
+   "VOLTA LEVEL 16  (9,801 XP, next level at 10,240)",
+   "Papers read 334 | ideas & strategies tested 256 | prop strategies searched 755,617",
    "Survived unseen 2022-23: 1631 (best EV per eval 2794.1) | passed the locked exam: 1 | live winners: 0",
    "Brain upgrades: 0 | self-discovered powers: 12",
-   "XP only for verified progress: tests passed on unseen data count far more than activity.",
-   "Since yesterday: +1 papers, +1 tests"
+   "XP only for verified progress: tests passed on unseen data count far more than activity."
   ],
   "mult": 1.0,
   "why": [
@@ -308,7 +316,7 @@
   "- F15 F15 (fast 3): noise-band breakout in the LONDON session (Nasdaq futures): FAILED (p=0.97835, median 2022-23 -0.0947R)"
  ],
  "spx_morning": [
-  "SPX DEALER CHECK (2026-11-25): dealer gamma +2.0 (avg +1.5), SPX walls 7000 / 7205 (5.4x their usual distance) -> today's range bigger (+12.7%)"
+  "SPX DEALER CHECK (2026-11-27): dealer gamma -7.7 (avg +1.5), SPX walls 7175 / 7250 (2.0x their usual distance) -> today's range bigger (+12.7%)"
  ],
  "power": [
   "\u26a1 POWER CURVE - THE SCOREBOARD (family F10 trades, null v3 with shared draws, 400 worlds): can my family test find a planted edge?",
