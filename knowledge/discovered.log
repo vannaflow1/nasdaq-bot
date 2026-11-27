@@ -1,1 +1,17 @@
-no NY open yet
+Traceback (most recent call last):
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/discovered_read.py", line 101, in <module>
+    main()
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/discovered_read.py", line 46, in main
+    pm = premarket(F.yahoo_bars(), now.date())
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nasdaq-bot/nasdaq-bot/discovered_read.py", line 29, in premarket
+    "k_on_return": (o / float(on.Open.iloc[0]) - 1) * 100, "k_dow": float(s.dayofweek),
+                              ~~~~~~~~~~~~^^^
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexing.py", line 1342, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexing.py", line 2432, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexing.py", line 2365, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
