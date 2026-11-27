@@ -1,6 +1,0 @@
-[
- {
-  "title": "\ud83c\udf81 Wish granted: quantleak studies - vol-managed sizing, deflated Sharpe, Kelly drawdowns",
-  "body": "Seen years 2014-23 only, frozen forward variants, report only. Vol-managed sizing (Moreira & Muir) HURTS F10/F12/F13 (F10 R/day +0.097 -> +0.059, p=0.89). Deflated Sharpe of the picked variants on 2022-23 is 0.15-0.25 (50 trials), 0.03-0.06 (706 trials): the evidence is the family median + forward test, not the backtest. F13 lost -0.007R/trade over 2014-23; its edge is a 2022+ regime. At today's posterior, F13 half-Kelly: median +15%/yr, median max drawdown 24% (95th 41%); quarter-Kelly: +9%, 13% (23%). Weekly re-run: .github/workflows/quantleak-reports.yml. Undo: git revert <this commit>"
- }
-]
