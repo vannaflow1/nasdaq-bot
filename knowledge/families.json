@@ -727,16 +727,16 @@
   "forward_variant": 43,
   "scored": "2026-10-22",
   "forward": {
-   "date": "2026-11-26",
+   "date": "2026-11-27",
    "decision": "CONTINUE",
    "n": 24,
-   "edge": 0.2992,
+   "edge": 0.2981,
    "posterior_mean": 0.0301,
    "posterior_sd": 0.0429,
    "p_edge_pos": 0.758,
    "cond_power": 0.222,
    "cusum": 0.0,
-   "z": 0.9569,
+   "z": 0.9537,
    "look": 0
   }
  },
@@ -925,16 +925,16 @@
    "record": "knowledge/ledgers/null_v3_rescore.json"
   },
   "forward": {
-   "date": "2026-11-26",
+   "date": "2026-11-27",
    "decision": "CONTINUE",
    "n": 24,
-   "edge": 0.2992,
+   "edge": 0.2981,
    "posterior_mean": 0.0307,
    "posterior_sd": 0.0464,
    "p_edge_pos": 0.746,
    "cond_power": 0.217,
    "cusum": 0.0,
-   "z": 0.9569,
+   "z": 0.9537,
    "look": 0
   }
  },
@@ -1026,16 +1026,16 @@
   },
   "scored": "2026-10-24",
   "forward": {
-   "date": "2026-11-26",
+   "date": "2026-11-27",
    "decision": "CONTINUE",
    "n": 45,
-   "edge": 0.2905,
+   "edge": 0.2902,
    "posterior_mean": 0.0336,
    "posterior_sd": 0.0326,
    "p_edge_pos": 0.849,
    "cond_power": 0.252,
    "cusum": 0.0,
-   "z": 1.7738,
+   "z": 1.7734,
    "look": 0
   }
  },
