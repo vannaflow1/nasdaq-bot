@@ -15,5 +15,22 @@
   "verdict": "PROMISING (stress test: survived) : FACT: average 1.03, median 0.907 over 2906 sessions (2014-19: 1.03, 2020-25: 1.03). Predictor: lowest-fifth days 0.916 vs highest-fifth 1.29, skill +7.3% vs the base rate, better in 9/9 unseen years",
   "how": "Q: On days when the short\u2011term IV term structure is steep (term\u202f>\u202f1.1) but the implied event move is modest (event_prem\u202f\u2264\u202f1), does the Nasdaq\u2011100 session range tend to be larger relative to its 20\u2011day average range? | answer = `y_range / k_range20` | predicted by `term * (1 - clip(event_prem, 0, 1))` | stress: skill +7.30; nudged formulas kept >= half the skill in 5/6; stale copies (lag 1-12 months) clearly worse in 4/4",
   "date": "2026-11-25"
+ },
+ {
+  "id": "self:2026-11-28:0",
+  "title": "Volta's self-check: To quantify the hypothesized opening\u2011price bias on low\u2011gex days and see if it can serve as a trigger.",
+  "idea": "On days with gex_rank < 0.2, does the NQ opening price tend to break the previous day's high or low more often than on other days?",
+  "relevance": 7,
+  "spec": {
+   "kind": "question",
+   "question": "On days with low dealer gamma exposure (gex_rank < 0.2), does the NQ opening price break yesterday's high more often?",
+   "target": "y_took_yday_high",
+   "expr": "where(gex_rank < 0.2, 1, 0)",
+   "explain": "compare opening-break frequency on low\u2011gex vs other days"
+  },
+  "source": "curiosity",
+  "verdict": "PROMISING (stress test: survived) : FACT: happens on 56% of 2808 sessions (2014-19: 57%, 2020-25: 55%). Predictor: lowest-fifth days 40% vs highest-fifth 59%, skill +2.8% vs the base rate, better in 8/9 unseen years",
+  "how": "Q: On days with low dealer gamma exposure (gex_rank < 0.2), does the NQ opening price break yesterday's high more often? | answer = `y_took_yday_high` | predicted by `where(gex_rank < 0.2, 1, 0)` | stress: skill +2.80; nudged formulas kept >= half the skill in 6/6; stale copies (lag 1-12 months) clearly worse in 4/4",
+  "date": "2026-11-28"
  }
 ]

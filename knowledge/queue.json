@@ -1,41 +1,5 @@
 [
  {
-  "id": "openalex:W4387450478",
-  "title": "Applying Machine Learning in Retail Demand Prediction\u2014A Comparison of Tree-Based Ensembles and Long Short-Term Memory-Based Deep Learning",
-  "abstract": "In the realm of retail supply chain management, accurate forecasting is paramount for informed decision making, as it directly impacts business operations and profitability. This study delves into the application of tree-based ensemble forecasting, specifically using extra tree Regressors (ETRs) and long short-term memory (LSTM) networks. Utilizing over six years of historical demand data from a prominent retail entity, the dataset encompasses daily demand metrics for more than 330 products, totaling 5.2 million records. Additionally, external variables, such as meteorological and COVID-19-related data, are integrated into the analysis. Our evaluation, spanning three perishable product categories, reveals that the ETR model outperforms LSTM in metrics including MAPE, MAE, RMSE, and R2. This disparity in performance is particularly pronounced for fresh meat products, whereas it is marginal for fruit products. These ETR results were evaluated alongside three other tree-based ensemble methods, namely XGBoost, Random Forest Regression (RFR), and Gradient Boosting Regression (GBR). The comparable performance across these four tree-based ensemble techniques serves to reinforce their comparative analysis with LSTM-based deep learning models. Our findings pave the way for future studies to assess the comparative efficacy of tree-based ensembles and deep learning techniques across varying forecasting horizons, such as short-, medium-, and long-term predictions.",
-  "url": "https://www.mdpi.com/2076-3417/13/19/11112/pdf?version=1696865296",
-  "source": "OpenAlex (classic)",
-  "date": "2023-10-09",
-  "topic": "realized volatility forecasting HAR",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W2082088739",
-  "title": "Design Principles for Policy Mixes: Cohesion and Coherence in \u2018New Governance Arrangements\u2019",
-  "abstract": "Abstract New Governance Arrangements (NGAs) have emerged as a lively topic in comparative policy studies and are often proposed as solutions to complex policy problems like environmental or health protection. However, assessing the merits and demerits of particular arrangements or instrument mixes is difficult. The paper proposes a variety of tools to tackle the often-overlooked problem of identifying and inventorying the instruments found in instrument mixes and assessing their likelihood to produce optimal results. A framework is developed for evaluating the likelihood of successful implementation of NGA's that exploits the fact that new policy development is almost always constrained by previous policy choices which have become institutionalized. The degree to which this institutionalization has occurred is seen as variable and the implementation to depend on a number of well-understood processes such as increasing returns and other kinds of positive feedback; sunk costs; and incremental policy learning. The applicability of the framework is demonstrated in the context of NGAs found in the forestry sector.",
-  "url": "https://academic.oup.com/policyandsociety/article-pdf/26/4/1/42622172/s1449-4035(07)70118-2.pdf",
-  "source": "OpenAlex (classic)",
-  "date": "2007-01-01",
-  "topic": "options market makers inventory",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W4401889742",
-  "title": "Recurrent Neural Networks: A Comprehensive Review of Architectures, Variants, and Applications",
-  "abstract": "Recurrent Neural Networks (RNNs) have significantly advanced the field of machine learning by enabling the effective processing of sequential data. This paper provides a comprehensive review of RNNs and their applications, highlighting advancements in architectures such as Long Short-Term Memory (LSTM) networks, Gated Recurrent Units (GRUs), Bidirectional LSTM (BiLSTM), and stacked LSTM. The study examines the application of RNNs in different domains, including natural language processing (NLP), speech recognition, financial time series forecasting, bioinformatics, autonomous vehicles, and anomaly detection. Additionally, the study discusses recent innovations, such as the integration of attention mechanisms and the development of hybrid models that combine RNNs with convolutional neural networks (CNNs) and transformer architectures. This review aims to provide machine learning researchers and practitioners with a comprehensive overview of the current state and future directions of RNN research.",
-  "url": "https://www.mdpi.com/2078-2489/15/9/517/pdf?version=1724574257",
-  "source": "OpenAlex (classic)",
-  "date": "2024-08-25",
-  "topic": "machine learning volatility prediction",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
   "id": "openalex:W3121800115",
   "title": "Exchange Traded Funds (ETFs)",
   "abstract": "Over nearly a quarter of a century, ETFs have become one of the most popular passive investment vehicles among retail and professional investors due to their low transaction costs and high liquidity.By the end of 2016, the market share of ETFs topped over 10% of the total market capitalization traded on US exchanges, while representing more than 30% of the overall trading volume.ETFs revolutionized the asset management industry by taking market share from traditional investment vehicles such as mutual funds and index futures.Because ETFs rely on arbitrage activity to synchronize their prices with the prices of the underlying portfolio, trading activity at the ETF level translates to trading of the underlying securities.Researchers found that while ETFs enhance price discovery, they also inject non-fundamental volatility to market prices and affect the correlation structure of returns.Furthermore, ETFs impact the liquidity of the underlying portfolios, especially during events of market stress.",

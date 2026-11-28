@@ -93,7 +93,7 @@
   "No FOMC, CPI or jobs report on Mon 30 Nov."
  ],
  "learning": [
-  "LEARNING: 339 papers read (58 more skipped as not relevant enough), 156 ideas tested on my memory, 2 promising.",
+  "LEARNING: 339 papers read (61 more skipped as not relevant enough), 156 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Essays in financial economics (\u2605\u2605\u2605\u2606\u2606)",
   "  ETFs, especially leveraged ones, push VIX futures prices up by about 18.5% per year through rebalancing trades, and betting against that rebalancing has yielded Sharpe >\u202f2.",
@@ -111,9 +111,9 @@
   "\u2022 PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in o",
   "  tested: DOESN'T FIT MY DATA - The idea requires daily full option\u2011price surfaces and a calibrated jump\u2011diffusion model, which need per\u2011strike option data and a pricing ",
-  "This week's tests: 26 run - 1 promising, 12 not confirmed, 2 don't fit my data, 11 translation failures",
+  "This week's tests: 29 run - 2 promising, 14 not confirmed, 2 don't fit my data, 11 translation failures",
   "",
-  "7 papers waiting in my queue."
+  "4 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",
@@ -194,8 +194,8 @@
   "Every strategy: pessimistic 1-minute fills + costs, must beat random entries, survive a stress test and pass a locked exam."
  ],
  "wishes": [
-  "VOLTA'S SELF-CHECK (2026-11-27)",
-  "I keep confirming a modest (~0.2%) edge on low\u2011dealer\u2011gamma (gex_rank\u202f<\u202f0.2) days but still have no reliable intraday entry that captures it. My range forecasts still miss about 38% of the true daily swing, limiting my position sizing. The best back\u2011tested strategy (LowGex_09_45_Trend_FadeGap) barely breaks even, so I need a cleaner mechanism that works across NQ and ES. I will focus on the opening price behavior on low\u2011gex days and try to turn the ~0.2% edge into a repeatable trade.",
+  "VOLTA'S SELF-CHECK (2026-11-28)",
+  "I keep confirming a modest (~0.2%) edge on low\u2011dealer\u2011gamma (gex_rank\u202f<\u202f0.2) days but still lack a reliable intraday entry that captures it. My range forecasts still miss about 38% of the true daily swing, limiting my sizing. Today I will focus on whether the opening price itself is biased on low\u2011gex days and test a simple breakout\u2011style entry.",
   "",
   "WISHES (what I need to get better):",
   "#37 [needs the owner] 5\u2011minute intraday GEX rank series - All my current self\u2011actions and strategies need gex_rank at 5\u2011minute resolution; without it I cannot reliably filter low\u2011gamma moments intra",
