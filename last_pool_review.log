@@ -68,7 +68,7 @@
   D = I.memory()[I.BASE + ["y_rng"]].join(F, rsuffix="_p").replace([np.inf, -np.inf], np.nan).dropna()
 skip garch + lag(iv30, 1) unknown column 'garch'
 {
- "date": "2026-11-27",
+ "date": "2026-11-28",
  "pool_size": 9,
  "pick_years": [
   2020,
