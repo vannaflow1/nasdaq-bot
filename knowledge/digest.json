@@ -1,5 +1,49 @@
 [
 {
+"title": "Put-Call Parity Violations and Market Frictions in China's SSE 50 ETF Options Market: Evidence from the AI Boom of 2023",
+"learned": "In China's SSE 50 ETF options market during 2023, calls were consistently overpriced relative to puts, driven by retail demand for AI\u2011related bullish bets and constrained arbitrage due to high margin requirements and short\u2011selling limits.",
+"concepts": [
+"put\u2011call parity deviation",
+"retail call demand",
+"option writing margin constraints",
+"AI sentiment shock",
+"no\u2011arbitrage band"
+],
+"relevance": 1,
+"verdict": "",
+"url": "https://journals.zeuspress.org/index.php/conference/article/download/1507/1449",
+"date": "2026-11-28"
+},
+{
+"title": "All in the family Nesting symmetric and asymmetric GARCH models",
+"learned": "The paper proposes a unified GARCH framework that nests many symmetric and asymmetric GARCH specifications and allows for formal nested tests of different asymmetry forms. It finds daily US stock returns favor a model where conditional volatility depends on a shifted absolute shock raised to the 1.5 power plus past volatility.",
+"concepts": [
+"Nested GARCH family",
+"asymmetric volatility",
+"power transformation of shocks",
+"model selection tests"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://www.sciencedirect.com/science/article/pii/0304405X9400821H/pdf",
+"date": "2026-11-28"
+},
+{
+"title": "Exchange Traded Funds (ETFs)",
+"learned": "ETFs have become a huge part of US equity trading, accounting for >10% of market cap and >30% of volume, and their arbitrage mechanisms can inject non\u2011fundamental volatility and affect liquidity, especially in stress periods.",
+"concepts": [
+"ETF arbitrage",
+"price\u2011NAV deviation",
+"liquidity spillover",
+"passive investment growth",
+"market stress effects"
+],
+"relevance": 2,
+"verdict": "",
+"url": "https://doi.org/10.3386/w22829",
+"date": "2026-11-28"
+},
+{
 "title": "Comparison of ARIMA and Artificial Neural Networks Models for Stock Price Prediction",
 "learned": "The paper compares ARIMA and neural network models for stock price prediction, finding neural networks perform better on NYSE data.",
 "concepts": [
@@ -4253,51 +4297,6 @@
 "relevance": 1,
 "verdict": "NO EDGE: range-forecast miss 0.531% -> 0.530% (+0.2%), better in 3/9 unseen years",
 "url": "https://doi.org/10.3386/w4995",
-"date": "2026-10-18"
-},
-{
-"title": "Betting against beta",
-"learned": "Frazzini and Pedersen argue that many investors cannot borrow, so they buy high-beta (extra-jumpy) assets to get more market exposure, which bids those assets up and leaves them with lower risk-adjusted returns. A 'betting against beta' portfolio, long leveraged low-beta assets and short high-beta assets, earned significant positive risk-adjusted returns in US stocks, 20 international stock markets, Treasuries, corporate bonds and futures. It does badly when funding conditions tighten, and tighter funding pushes betas toward one. Worked from the abstract only (no full text in the repo), so no return figures are given.",
-"concepts": [
-"betting against beta",
-"leverage constraints",
-"low-beta anomaly",
-"funding liquidity",
-"factor investing"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://www.sciencedirect.com/science/article/pii/S0304405X13002675/pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Carry Trades and Currency Crashes",
-"learned": "Brunnermeier, Nagel and Pedersen show that the currency carry trade (borrow in low-rate currencies like the yen, invest in high-rate ones like the Australian dollar) earns small steady gains but carries crash risk: its returns are negatively skewed, and across currencies the link between interest-rate gap and skewness is very tight (R-squared of 81%). The crashes come from sudden unwinds when risk appetite and funding liquidity dry up, for example in weeks when the VIX or the TED spread rises. After carry losses, speculators hold smaller positions and pay more for crash insurance (risk reversals), and future crash risk actually falls. Read from the repo's full text.",
-"concepts": [
-"carry trade",
-"crash risk",
-"negative skewness",
-"funding liquidity",
-"risk reversals"
-],
-"relevance": 2,
-"verdict": "NO EDGE: 211 days, hit 51.2% (always-long 51.2%), avg -15.8 bps/day, t=-0.98, positive in 4/9 years",
-"url": "http://www.nber.org/papers/w14473.pdf",
-"date": "2026-10-18"
-},
-{
-"title": "Safe Haven Currencies",
-"learned": "Ranaldo and S\u00f6derlind used high-frequency exchange-rate data from 1993 to 2008 and a factor model linking currencies to stocks, bonds, volatility and liquidity. They find that the Swiss franc and Japanese yen strengthen against the US dollar when US stocks fall, US bond prices rise and FX volatility increases. This safe-haven behaviour shows up from a few hours to several days, grows non-linearly with volatility and in crises, and was especially strong for the yen in 2008. Worked from the abstract only (no full text in the repo).",
-"concepts": [
-"safe haven currencies",
-"Swiss franc",
-"Japanese yen",
-"risk-off flows",
-"FX volatility"
-],
-"relevance": 1,
-"verdict": "not testable with my data yet",
-"url": "https://academic.oup.com/rof/article-pdf/14/3/385/26300055/rfq007.pdf",
 "date": "2026-10-18"
 }
 ]

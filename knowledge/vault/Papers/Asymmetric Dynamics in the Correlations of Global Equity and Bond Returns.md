@@ -13,7 +13,7 @@ Cappiello, Engle and Sheppard modelled how volatility and correlations of nation
 Confirms that equity volatility reacts more to down moves and that correlations rise in sell-offs, which matters for hedging, but it uses weekly international data and a daily asymmetric add-on made my next-day NQ range forecast worse.
 
 ## Concepts
-asymmetric volatility, [[dynamic conditional correlation]], correlation in downturns, [[stock-bond correlation]], [[structural break]]
+[[asymmetric volatility]], [[dynamic conditional correlation]], correlation in downturns, [[stock-bond correlation]], [[structural break]]
 
 ## Idea
 Asymmetric volatility response: add today's squared negative QQQ return and squared positive QQQ return as separate inputs to the next-day NQ range forecast.

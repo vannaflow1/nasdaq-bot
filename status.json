@@ -93,7 +93,7 @@
   "No FOMC, CPI or jobs report on Mon 30 Nov."
  ],
  "learning": [
-  "LEARNING: 339 papers read (61 more skipped as not relevant enough), 156 ideas tested on my memory, 2 promising.",
+  "LEARNING: 342 papers read (61 more skipped as not relevant enough), 156 ideas tested on my memory, 2 promising.",
   "",
   "\u2022 Essays in financial economics (\u2605\u2605\u2605\u2606\u2606)",
   "  ETFs, especially leveraged ones, push VIX futures prices up by about 18.5% per year through rebalancing trades, and betting against that rebalancing has yielded Sharpe >\u202f2.",
@@ -111,9 +111,9 @@
   "\u2022 PIRanNN: Random-Feature Pricing and Calibration under Jump-Diffusion and Stochastic-Volatility Models (\u2605\u2605\u2605\u2606\u2606)",
   "  The paper presents PIRanNN, a random\u2011feature (extreme learning machine) method that solves the pricing PDE/PIDE for European options under jump\u2011diffusion (Merton, Kou) and stochastic\u2011volatility (Heston, SABR) models in o",
   "  tested: DOESN'T FIT MY DATA - The idea requires daily full option\u2011price surfaces and a calibrated jump\u2011diffusion model, which need per\u2011strike option data and a pricing ",
-  "This week's tests: 29 run - 2 promising, 14 not confirmed, 2 don't fit my data, 11 translation failures",
+  "This week's tests: 30 run - 2 promising, 15 not confirmed, 2 don't fit my data, 11 translation failures",
   "",
-  "4 papers waiting in my queue."
+  "1 papers waiting in my queue."
  ],
  "today": [
   "TODAY:",

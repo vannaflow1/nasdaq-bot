@@ -1,40 +1,5 @@
 [
  {
-  "id": "openalex:W3121800115",
-  "title": "Exchange Traded Funds (ETFs)",
-  "abstract": "Over nearly a quarter of a century, ETFs have become one of the most popular passive investment vehicles among retail and professional investors due to their low transaction costs and high liquidity.By the end of 2016, the market share of ETFs topped over 10% of the total market capitalization traded on US exchanges, while representing more than 30% of the overall trading volume.ETFs revolutionized the asset management industry by taking market share from traditional investment vehicles such as mutual funds and index futures.Because ETFs rely on arbitrage activity to synchronize their prices with the prices of the underlying portfolio, trading activity at the ETF level translates to trading of the underlying securities.Researchers found that while ETFs enhance price discovery, they also inject non-fundamental volatility to market prices and affect the correlation structure of returns.Furthermore, ETFs impact the liquidity of the underlying portfolios, especially during events of market stress.",
-  "url": "https://doi.org/10.3386/w22829",
-  "source": "OpenAlex (classic)",
-  "date": "2016-11-01",
-  "topic": "intraday momentum index futures",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_file": "knowledge/papers/openalex_W3121800115.txt"
- },
- {
-  "id": "openalex:W2164923280",
-  "title": "All in the family Nesting symmetric and asymmetric GARCH models",
-  "abstract": "This paper develops a parametric family of models of generalized autoregressive heteroskedasticity (GARCH). The family nests the most popular symmetric and asymmetric GARCH models, thereby highlighting the relation between the models and their treatment of asymmetry. Furthermore, the structure permits nested tests of different types of asymmetry and functional forms. Daily U.S. stock return data reject all standard GARCH models in favor of a model in which, roughly speaking, the conditional standard deviation depends on the shifted absolute value of the shocks raised to the power three halves and past standard deviations.",
-  "url": "https://www.sciencedirect.com/science/article/pii/0304405X9400821H/pdf",
-  "source": "OpenAlex (classic)",
-  "date": "1995-09-01",
-  "topic": "volatility risk premium options returns",
-  "score": 6,
-  "queued": "2026-10-20",
-  "text_failed": true
- },
- {
-  "id": "openalex:W7222942938",
-  "title": "Put-Call Parity Violations and Market Frictions in China's SSE 50 ETF Options Market: Evidence from the AI Boom of 2023",
-  "abstract": "This paper empirically investigates the deviation of the put - call parity (PCP) in China's SSE 50ETF options market (510050 XSHG) for the whole year of 2023-when the release of ChatGPT triggered an unprecedented investor sentiment hype of artificial intelligence. Based on 15,604 pairs of matched call-put options covering all 242 trading days, we detected that there was always a systematic and persistent overpricing of calls over put options. We interpret this phenomenon as follows: The explosive market demand by retail investors on call options-a leveraged sentiment on AI-related market bullishness-out-weighted the arbitrage capacity of constrained arbitrageurs by market frictions to make corrections to the mispricing through a reverse arbitrage strategy (selling call options, buying put options, and buying spot options). Using quarterly dummy variables as proxies for AI market sentiment cycle, we found that by controlling time stage variables, the R\u00b2 rose from 8.9% to 71.67% to confirm that demand dynamics driven by market sentiment rather than the specific features of contracts-are the primary drivers for the variability in the PCP violation phenomena. Compared with the baseline of AI craze hype in the first quarter, the quarterly effect shows monotonically decreasing, while the implied residuals bias the fourth quarter, which is still a positive one. Confirmed is that the permanent structural friction lower limit will persist even after the sentiment premium of AI fades. Our research result provides fresh evidence in terms of behavioral demand shocks' interaction with the institutional friction on in emerging markets, thereby creating option price biases.",
-  "url": "https://journals.zeuspress.org/index.php/conference/article/download/1507/1449",
-  "source": "OpenAlex",
-  "date": "2026-10-19",
-  "score": 6,
-  "queued": "2026-10-21",
-  "text_file": "knowledge/papers/openalex_W7222942938.txt"
- },
- {
   "id": "arxiv:2610.30637v1",
   "title": "Multiple Stopping and Exercise Boundaries for American Put Options",
   "abstract": "This article studies a finite-horizon American put option with up to $m$ exercise rights under the risk-neutral Black--Scholes model, where consecutive exercises must be separated by a prescribed refractory period $\u03b4>0$ and unused rights may expire. For each number of remaining rights, we show that optimal exercise is characterized by a single exercise boundary and that these boundaries are ordered by the number of remaining rights. We prove optimality of the first boundary-hitting time and establish local Lipschitz continuity of the exercise boundaries within each open deadline strip. Away from the deadlines, we derive smooth fit, the associated quasi-variational inequality and free-boundary formulation, an early-exercise-premium representation, recursive Volterra-type boundary equations, and a verification theorem. We also extend the recursive formulation to an independent random termination time, thereby allowing for exogenous termination of the option contract.",
