@@ -13,7 +13,7 @@
    "expected_R_per_100_trades": 3.0,
    "sd_R_per_100_trades": 20.7,
    "forward_trades": 24,
-   "as_of": "2026-11-27"
+   "as_of": "2026-11-28"
   },
   "F12": {
    "posterior_mean_R": 0.0307,
@@ -27,7 +27,7 @@
    "expected_R_per_100_trades": 3.1,
    "sd_R_per_100_trades": 21.0,
    "forward_trades": 24,
-   "as_of": "2026-11-27"
+   "as_of": "2026-11-28"
   },
   "F13": {
    "posterior_mean_R": 0.0336,
@@ -41,7 +41,7 @@
    "expected_R_per_100_trades": 3.4,
    "sd_R_per_100_trades": 14.2,
    "forward_trades": 45,
-   "as_of": "2026-11-27"
+   "as_of": "2026-11-28"
   }
  }
 }
